@@ -1,0 +1,10 @@
+{
+  "name": "omnirag-langgraph-enterprise-studio",
+  "version": "3.1.0",
+  "private": true,
+  "description": "OmniRAG & LangGraph Enterprise Studio: Multi-Format RAG (PDF/DOCX/XLSX), AgentPress MCP Copilot & BuildQ Solar PDF Verifier",
+  "scripts": {
+    "start": "npx serve . -l 3002",
+    "deploy": "npx vercel --prod --yes"
+  }
+}

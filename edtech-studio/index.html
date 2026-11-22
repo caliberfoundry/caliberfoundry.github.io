@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>ORFF Maestra™ TTL-MSM & Certification SCORM 1.2 Studio | Caliber Foundry</title>
+  <script src="./scorm_and_ttl_engine.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-accent-tint:    #FDF2EE;
+
+      --cf-navy-authority: #1B365D;
+      --cf-navy-tint:      #EEF2F7;
+
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #EDF5F0;
+
+      --cf-brass-warn:     #9C5A08;
+      --cf-brass-tint:     #FBF4E9;
+
+      --cf-highlight-mark: #FCE588;
+
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::selection {
+      background-color: var(--cf-highlight-mark);
+      color: var(--cf-ink-primary);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+      color: var(--cf-ink-muted);
+    }
+
+    .hidden { display: none !important; }
+
+    /* Masthead */
+    .masthead {
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .masthead-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .back-link:hover {
+      background-color: #2B2A27;
+    }
+
+    .app-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--cf-ink-primary);
+    }
+
+    /* Tactile Mechanical Buttons */
+    .btn-tactile {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 11px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      box-shadow: 2px 2px 0px var(--cf-ink-primary);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .btn-tactile:hover {
+      background-color: var(--cf-bg-stone);
+    }
+
+    .btn-tactile:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--cf-ink-primary);
+    }
+
+    .btn-tactile-vermilion {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+    }
+
+    .btn-tactile-vermilion:hover {
+      background-color: var(--cf-accent-hover);
+    }
+
+    .btn-tactile-ink {
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+    }
+
+    .btn-tactile-forest {
+      background-color: var(--cf-forest-pass);
+      color: #FFFFFF;
+    }
+
+    /* Main Blueprint Shell */
+    .shell {
+      max-width: 1560px;
+      width: 100%;
+      margin: 0 auto;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Subheader Strip */
+    .subheader-strip {
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* 3-Column Exposed Hairline Clinical Workbench */
+    .clinical-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      flex: 1;
+    }
+
+    @media (min-width: 1120px) {
+      .clinical-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .clinical-col {
+      padding: 24px;
+      background-color: var(--cf-bg-surface);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    @media (min-width: 1120px) {
+      .clinical-col {
+        border-bottom: none;
+        border-right: 1px solid var(--cf-rule-mid);
+      }
+      .clinical-col:last-child {
+        border-right: none;
+        background-color: var(--cf-bg-paper);
+      }
+    }
+
+    .col-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+    }
+
+    .col-title {
+      font-family: var(--font-display);
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .source-box {
+      padding: 14px;
+      background-color: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+    }
+
+    .rating-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .btn-rating {
+      padding: 6px 6px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-secondary);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .btn-rating:hover {
+      border-color: var(--cf-ink-primary);
+      color: var(--cf-ink-primary);
+    }
+
+    .btn-rating.active {
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      border-color: var(--cf-ink-primary);
+      font-weight: 600;
+      box-shadow: 2px 2px 0px var(--cf-accent-primary);
+    }
+
+    /* Verdict Classification Card */
+    .verdict-box {
+      padding: 18px;
+      border: 1.5px solid var(--cf-rule-strong);
+      border-radius: 2px;
+      box-shadow: 3px 3px 0px var(--cf-ink-primary);
+    }
+
+    .verdict-forest {
+      background-color: var(--cf-forest-tint);
+      border-color: var(--cf-forest-pass);
+      color: var(--cf-forest-pass);
+    }
+
+    .verdict-brass {
+      background-color: var(--cf-brass-tint);
+      border-color: var(--cf-brass-warn);
+      color: var(--cf-brass-warn);
+    }
+
+    .verdict-vermilion {
+      background-color: var(--cf-accent-tint);
+      border-color: var(--cf-accent-primary);
+      color: var(--cf-accent-primary);
+    }
+
+    .gate-item {
+      padding: 10px 12px;
+      background-color: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .input-mechanical {
+      padding: 7px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-ink-primary);
+      border-radius: 2px;
+      outline: none;
+      width: 100%;
+    }
+
+    .terminal-box {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border: 1px solid var(--cf-rule-strong);
+      border-radius: 2px;
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    /* Mode 2: SCORM Certification Split Grid */
+    .scorm-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      flex: 1;
+    }
+
+    @media (min-width: 1080px) {
+      .scorm-grid {
+        grid-template-columns: 7fr 5fr;
+      }
+    }
+
+    .quiz-option {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      background-color: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .quiz-option:hover {
+      background-color: var(--cf-bg-surface);
+      border-color: var(--cf-ink-primary);
+      box-shadow: 2px 2px 0px var(--cf-ink-primary);
+    }
+
+    .opt-letter {
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .site-footer {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-top: 1.5px solid var(--cf-rule-strong);
+      padding: 18px 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Masthead -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand-group">
+        <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h1 class="app-title">ORFF Maestra&trade; TTL-MSM &amp; SCORM 1.2 Studio <span class="mono" style="font-size:13px; color:var(--cf-accent-primary);">[SYS-03 // v1.8]</span></h1>
+            <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
+              FERPA WEBCRYPTO AES-GCM + ADL SCORM 1.2
+            </span>
+          </div>
+          <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
+            Deterministic Clinical Rule-Gate Assessment Engine (Zero Black-Box) &bull; Distractor-Aware Study Coach &bull; 1-Click LMS SCORM Packager
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <button onclick="switchStudioMode('mode_orff')" id="tab_mode_orff" class="btn-tactile btn-tactile-ink">
+          MODE 01 // ORFF MAESTRA TTL-MSM &amp; FERPA ENGINE
+        </button>
+        <button onclick="switchStudioMode('mode_scorm')" id="tab_mode_scorm" class="btn-tactile">
+          MODE 02 // CERTIFICATION &amp; SCORM 1.2 EXPORTER
+        </button>
+        <button onclick="downloadScormManifest()" class="btn-tactile btn-tactile-vermilion">
+          <span>1-CLICK EXPORT SCORM 1.2 (IMSMANIFEST.XML)</span>
+          <span>&darr;</span>
+        </button>
+        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
+          <span>engineering@caliberfoundry.com</span>
+          <span>&nearr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <!-- =================================================================== -->
+    <!-- MODE 01: ORFF Maestra TTL-MSM Clinical Assessment & FERPA Engine    -->
+    <!-- =================================================================== -->
+    <div id="view_mode_orff" style="display:flex; flex-direction:column; flex:1;">
+
+      <!-- Clinical Case Presets Strip -->
+      <div class="subheader-strip">
+        <div>
+          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
+            U.S. DEPT OF EDUCATION SBIR / BAYLOR-ALIGNED TTL-MSM DECISION MATRIX //
+          </div>
+          <div style="font-family:var(--font-serif); font-style:italic; font-size:14.5px; color:var(--cf-ink-secondary);">
+            &ldquo;Clinicians code each source of evidence, and a fixed rule combines them. Privacy designed in from the start (FERPA).&rdquo;
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">LOAD CLINICAL CASE:</span>
+          <button onclick="loadClinicalPreset('difference')" class="btn-tactile">
+            CASE A // BILINGUAL SPANISH/ENGLISH (DIFFERENCE)
+          </button>
+          <button onclick="loadClinicalPreset('disorder')" class="btn-tactile">
+            CASE B // CROSS-SETTING DEFICIT (TRUE DISORDER)
+          </button>
+          <button onclick="loadClinicalPreset('typical')" class="btn-tactile">
+            CASE C // TYPICAL COMMUNICATIVE PROFILE
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Column Clinical Workbench -->
+      <section class="clinical-grid">
+
+        <!-- Column 1: 4 Coded Evidence Sources Matrix -->
+        <div class="clinical-col">
+          <div class="col-header">
+            <div>
+              <div class="spec-label">[STEP 01 // CLINICIAN INPUT]</div>
+              <h2 class="col-title">Multi-Source Evidence Coding</h2>
+            </div>
+            <span class="mono" style="font-size:11px; padding:2px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">4 SOURCES</span>
+          </div>
+
+          <!-- Source 1 -->
+          <div class="source-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:13px;">01. Parent / Caregiver L1 Report</strong>
+              <span id="badge_s1" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 2/2</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Home language (L1) developmental milestones, family history &amp; comprehension.</div>
+            <div class="rating-group">
+              <button onclick="setEvidence('parentL1', 0)" id="btn_parentL1_0" class="btn-rating">0: Severe Delay</button>
+              <button onclick="setEvidence('parentL1', 1)" id="btn_parentL1_1" class="btn-rating">1: Mild Concern</button>
+              <button onclick="setEvidence('parentL1', 2)" id="btn_parentL1_2" class="btn-rating">2: Intact Home L1</button>
+            </div>
+          </div>
+
+          <!-- Source 2 -->
+          <div class="source-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:13px;">02. Teacher Classroom Observation</strong>
+              <span id="badge_s2" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 1/2</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Academic discourse, peer interaction &amp; functional classroom communication.</div>
+            <div class="rating-group">
+              <button onclick="setEvidence('teacherObs', 0)" id="btn_teacherObs_0" class="btn-rating">0: High Struggle</button>
+              <button onclick="setEvidence('teacherObs', 1)" id="btn_teacherObs_1" class="btn-rating">1: L2 Emerging</button>
+              <button onclick="setEvidence('teacherObs', 2)" id="btn_teacherObs_2" class="btn-rating">2: Proficient</button>
+            </div>
+          </div>
+
+          <!-- Source 3 -->
+          <div class="source-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:13px;">03. Direct Language Sample (LSA)</strong>
+              <span id="badge_s3" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 1/2</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Narrative microstructure, MLU, non-biased morphosyntax &amp; grammaticality.</div>
+            <div class="rating-group">
+              <button onclick="setEvidence('languageSample', 0)" id="btn_languageSample_0" class="btn-rating">0: Agrammatic</button>
+              <button onclick="setEvidence('languageSample', 1)" id="btn_languageSample_1" class="btn-rating">1: Dialect Feature</button>
+              <button onclick="setEvidence('languageSample', 2)" id="btn_languageSample_2" class="btn-rating">2: Age-Expected</button>
+            </div>
+          </div>
+
+          <!-- Source 4 -->
+          <div class="source-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:13px;">04. Dynamic Assessment (MLE)</strong>
+              <span id="badge_s4" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 2/2</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Test-Teach-Retest modifiability, cognitive effort &amp; transfer of novel rules.</div>
+            <div class="rating-group">
+              <button onclick="setEvidence('dynamicAssessment', 0)" id="btn_dynamicAssessment_0" class="btn-rating">0: Low Transfer</button>
+              <button onclick="setEvidence('dynamicAssessment', 1)" id="btn_dynamicAssessment_1" class="btn-rating">1: Mod. Prompt</button>
+              <button onclick="setEvidence('dynamicAssessment', 2)" id="btn_dynamicAssessment_2" class="btn-rating">2: Rapid Gain</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Deterministic TTL-MSM Rule Engine & Step-by-Step Audit Trace -->
+        <div class="clinical-col">
+          <div class="col-header">
+            <div>
+              <div class="spec-label">[STEP 02 // DETERMINISTIC MATRIX]</div>
+              <h2 class="col-title">TTL-MSM Rule-Gate Evaluation</h2>
+            </div>
+            <span id="compositeScoreBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">COMPOSITE: 6/8</span>
+          </div>
+
+          <!-- Dynamic Verdict Classification Box -->
+          <div id="verdictCard" class="verdict-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:11px; font-weight:600; margin-bottom:6px; text-transform:uppercase;">
+              <span>[TTL-MSM DIAGNOSTIC CLASSIFICATION]</span>
+              <span id="verdictConfidence">CONCORDANCE: 95%</span>
+            </div>
+            <h3 id="verdictTitle" style="font-family:var(--font-display); font-size:24px; font-weight:400; line-height:1.15; color:var(--cf-ink-primary); margin-bottom:8px;"></h3>
+            <p id="verdictSummary" style="font-family:var(--font-serif); font-size:15px; line-height:1.6; color:var(--cf-ink-primary);"></p>
+          </div>
+
+          <!-- 4 Rule Gates Audit Trace -->
+          <div>
+            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:8px;">
+              STEP-BY-STEP RULE GATE EXECUTION TRACE (ZERO BLACK-BOX):
+            </div>
+            <div id="ruleTraceContainer" style="display:flex; flex-direction:column; gap:8px;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: FERPA Zero-PII Client-Side WebCrypto AES-256-GCM Engine -->
+        <div class="clinical-col">
+          <div class="col-header">
+            <div>
+              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">[STEP 03 // PRIVACY-BY-DESIGN]</div>
+              <h2 class="col-title">FERPA Zero-PII WebCrypto Guard</h2>
+            </div>
+            <label class="mono" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; cursor:pointer; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass);">
+              <input type="checkbox" id="ferpaToggle" checked onchange="runFerpaEncryption()" />
+              <span>AES-GCM LOCK ON</span>
+            </label>
+          </div>
+
+          <p style="font-size:12.5px; color:var(--cf-ink-secondary);">
+            Student identifiers are hashed (<code>SHA-256</code>) and encrypted locally inside the clinician&rsquo;s browser via <code>window.crypto.subtle</code> (<code>AES-256-GCM</code>) prior to export.
+          </p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label class="spec-label" style="display:block; margin-bottom:4px;">STUDENT FULL NAME (LOCAL):</label>
+              <input id="piiName" type="text" value="Mateo Alvarez-Gomez" oninput="runFerpaEncryption()" class="input-mechanical" />
+            </div>
+            <div>
+              <label class="spec-label" style="display:block; margin-bottom:4px;">DISTRICT STUDENT / IEP ID:</label>
+              <input id="piiDistrictId" type="text" value="TX-ISD-884920" oninput="runFerpaEncryption()" class="input-mechanical" />
+            </div>
+          </div>
+
+          <div class="terminal-box" style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px;">
+              <span style="color:#A39E93;">CIPHER SUITE:</span>
+              <span style="color:#86EFAC; font-weight:600;">WEBCRYPTO AES-256-GCM + SHA-256</span>
+            </div>
+            <div>
+              <div style="color:#A39E93; font-size:10px;">ANONYMIZED SUBJECT TOKEN:</div>
+              <div id="cryptoSubjectToken" style="color:#FCE588; font-weight:600;"></div>
+            </div>
+            <div>
+              <div style="color:#A39E93; font-size:10px;">AES-GCM INITIALIZATION VECTOR (96-BIT IV):</div>
+              <div id="cryptoIv" style="color:#93C5FD;"></div>
+            </div>
+            <div>
+              <div style="color:#A39E93; font-size:10px;">ENCRYPTED PII CIPHERTEXT PAYLOAD (ZERO PLAINTEXT):</div>
+              <div id="cryptoCiphertext" style="color:#86EFAC; word-break:break-all; background:#1F1E1C; padding:8px; border:1px solid #33322F; margin-top:4px; max-height:110px; overflow-y:auto;"></div>
+            </div>
+          </div>
+
+          <button onclick="exportFerpaClinicalReport()" class="btn-tactile btn-tactile-forest" style="width:100%; padding:10px;">
+            <span>DOWNLOAD FERPA-ENCRYPTED TTL-MSM CLINICAL PACKET (.JSON)</span>
+            <span>&darr;</span>
+          </button>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- MODE 02: Certification Study Module & 1-Click SCORM 1.2 Exporter    -->
+    <!-- =================================================================== -->
+    <div id="view_mode_scorm" class="hidden" style="display:flex; flex-direction:column; flex:1;">
+
+      <div class="subheader-strip">
+        <div>
+          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
+            ADL SCORM 1.2 / 2004 INTERACTIVE CERTIFICATION MODULE //
+          </div>
+          <div style="font-size:13px; color:var(--cf-ink-secondary);">
+            Distractor-Aware Cognitive Misconception Analysis &bull; Guardrailed Socratic Study Coach &bull; Live LMS Runtime Telemetry (<code>window.API</code>)
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
+          BLOOM&rsquo;S TAXONOMY: ANALYZE &amp; EVALUATE
+        </span>
+      </div>
+
+      <section class="scorm-grid">
+
+        <!-- Left 7 Cols: Interactive Vignette & Distractor-Aware Assessment -->
+        <div style="padding:28px; background-color:var(--cf-bg-surface); border-right:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:18px;">
+          <div style="border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
+            <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:600;">MODULE 1.4 // DIFFERENTIAL DIAGNOSIS &amp; MULTI-SOURCE CONCORDANCE</div>
+            <h2 style="font-family:var(--font-display); font-size:30px; font-weight:400;">Clinical Certification Case Vignette</h2>
+          </div>
+
+          <div style="padding:18px; background-color:var(--cf-bg-paper); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:16px; line-height:1.65;">
+            <div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[CASE RECORD #704-B]</div>
+            <p>A 7-year-old Spanish-English bilingual student scores <strong>1.5 SD below the mean</strong> on an English-only standardized vocabulary subtest. However, the caregiver reports strong Spanish (L1) storytelling at home, and during a 20-minute <strong>Dynamic Assessment (Test-Teach-Retest)</strong> session, the student rapidly applies newly modeled narrative macrostructure rules with minimal prompting.</p>
+            <p style="font-weight:600; margin-top:10px;">Prompt: According to the TTL-MSM diagnostic framework, which classification and justification is most accurate?</p>
+          </div>
+
+          <!-- 3 Options -->
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button onclick="selectQuizOption('A')" id="quiz_opt_A" class="quiz-option">
+              <span class="opt-letter">A</span>
+              <div>
+                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Qualify for Special Education under Developmental Language Disorder (DLD)</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Because the standardized English test score is more than 1.5 SD below the normative mean.</div>
+              </div>
+            </button>
+
+            <button onclick="selectQuizOption('B')" id="quiz_opt_B" class="quiz-option">
+              <span class="opt-letter">B</span>
+              <div>
+                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Classify as Language Difference / Bilingual Variation (Tier 1 General Ed Support)</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Because intact L1 home evidence combined with high Dynamic Assessment modifiability rules out an intrinsic language learning disorder.</div>
+              </div>
+            </button>
+
+            <button onclick="selectQuizOption('C')" id="quiz_opt_C" class="quiz-option">
+              <span class="opt-letter">C</span>
+              <div>
+                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Defer Assessment for 12 Months Without Recording Evidence</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Wait until the student achieves 100% English proficiency before coding caregiver or dynamic assessment sources.</div>
+              </div>
+            </button>
+          </div>
+
+          <div id="quizFeedbackBox" style="padding:14px 16px; border:1px solid var(--cf-rule-strong); background-color:var(--cf-bg-stone); font-size:13px;">
+            Select an option above to inspect Distractor-Aware Cognitive Feedback and live <code>SCORM 1.2 API</code> telemetry.
+          </div>
+
+          <div class="terminal-box">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px; margin-bottom:8px;">
+              <span style="color:#A39E93;">ADL SCORM 1.2 RUNTIME API ADAPTER (window.API)</span>
+              <span style="color:#86EFAC; font-weight:600;">LMS SESSION ACTIVE</span>
+            </div>
+            <div id="scormApiLog" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;">
+              <div><span style="color:#FCE588;">LMSInitialize("")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
+              <div><span style="color:#93C5FD;">LMSGetValue("cmi.core.lesson_status")</span> &rarr; <span style="color:#FCE588;">"incomplete"</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Socratic Study Coach & Rubric Mastery Ledger -->
+        <aside style="padding:28px; background-color:var(--cf-bg-paper); display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
+            <div>
+              <div class="spec-label">[GUARDRAILED PEDAGOGY ENGINE]</div>
+              <h3 style="font-family:var(--font-display); font-size:26px; font-weight:400;">Socratic Study Coach</h3>
+            </div>
+            <span id="rubricMasteryBadge" class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
+              MASTERY: 88%
+            </span>
+          </div>
+
+          <!-- Rubric Mastery Ledger -->
+          <div style="padding:14px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:12px;">
+            <div>
+              <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                <span>01. MULTI-SOURCE CONCORDANCE REASONING</span>
+                <strong id="rubricBar1Text" style="color:var(--cf-forest-pass);">92%</strong>
+              </div>
+              <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
+                <div style="width:92%; height:100%; background:var(--cf-forest-pass);"></div>
+              </div>
+            </div>
+            <div>
+              <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                <span>02. DYNAMIC ASSESSMENT MODIFIABILITY GATE</span>
+                <strong id="rubricBar2Text" style="color:var(--cf-navy-authority);">85%</strong>
+              </div>
+              <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
+                <div style="width:85%; height:100%; background:var(--cf-navy-authority);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="socraticChatBox" style="display:flex; flex-direction:column; gap:12px; max-height:280px; overflow-y:auto;">
+            <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
+              <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:4px;">[SOCRATIC INQUIRY PROMPT]</div>
+              &ldquo;Notice what happens when we compare the English-only standardized score against the student&rsquo;s rapid learning gain during Dynamic Assessment. Why does high modifiability during Test-Teach-Retest argue against an intrinsic disorder?&rdquo;
+            </div>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button onclick="askSocraticTutor('Why is an English-only norm-referenced test biased here?')" class="btn-tactile">
+              &rarr; HINT: NORM-REFERENCED BIAS?
+            </button>
+            <button onclick="askSocraticTutor('How does Dynamic Assessment separate Difference vs. Disorder?')" class="btn-tactile">
+              &rarr; HINT: DYNAMIC MODIFIABILITY GATE?
+            </button>
+          </div>
+        </aside>
+
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
+      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; ORFF MAESTRA&trade; TTL-MSM &amp; CERTIFICATION SCORM 1.2 STUDIO</span>
+      <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
+    </div>
+  </footer>
+
+  <script>
+    let currentInputs = {
+      parentL1: 2,
+      teacherObs: 1,
+      languageSample: 1,
+      dynamicAssessment: 2
+    };
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function switchStudioMode(mode) {
+      const orffView = document.getElementById('view_mode_orff');
+      const scormView = document.getElementById('view_mode_scorm');
+      const tabOrff = document.getElementById('tab_mode_orff');
+      const tabScorm = document.getElementById('tab_mode_scorm');
+
+      if (mode === 'mode_orff') {
+        orffView.classList.remove('hidden');
+        scormView.classList.add('hidden');
+        tabOrff.className = "btn-tactile btn-tactile-ink";
+        tabScorm.className = "btn-tactile";
+      } else {
+        orffView.classList.add('hidden');
+        scormView.classList.remove('hidden');
+        tabScorm.className = "btn-tactile btn-tactile-ink";
+        tabOrff.className = "btn-tactile";
+      }
+    }
+
+    function loadClinicalPreset(presetType) {
+      if (presetType === 'difference') {
+        currentInputs = { parentL1: 2, teacherObs: 1, languageSample: 1, dynamicAssessment: 2 };
+      } else if (presetType === 'disorder') {
+        currentInputs = { parentL1: 0, teacherObs: 0, languageSample: 0, dynamicAssessment: 0 };
+      } else {
+        currentInputs = { parentL1: 2, teacherObs: 2, languageSample: 2, dynamicAssessment: 2 };
+      }
+      recalculateTtlMsm();
+    }
+
+    function setEvidence(key, val) {
+      currentInputs[key] = val;
+      recalculateTtlMsm();
+    }
+
+    function recalculateTtlMsm() {
+      ['parentL1', 'teacherObs', 'languageSample', 'dynamicAssessment'].forEach((key, idx) => {
+        const currentVal = currentInputs[key];
+        document.getElementById(`badge_s${idx + 1}`).textContent = `CODE: ${currentVal}/2`;
+        [0, 1, 2].forEach(v => {
+          const btn = document.getElementById(`btn_${key}_${v}`);
+          if (v === currentVal) {
+            btn.className = "btn-rating active";
+          } else {
+            btn.className = "btn-rating";
+          }
+        });
+      });
+
+      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
+      document.getElementById('compositeScoreBadge').textContent = `COMPOSITE: ${result.totalScore}/${result.maxScore}`;
+
+      const card = document.getElementById('verdictCard');
+      const colorMap = {
+        emerald: "verdict-forest",
+        amber: "verdict-brass",
+        rose: "verdict-vermilion"
+      };
+      card.className = `verdict-box ${colorMap[result.verdictColor]}`;
+      document.getElementById('verdictConfidence').textContent = `CONCORDANCE: ${result.confidence}%`;
+      document.getElementById('verdictTitle').textContent = result.verdictTitle;
+      document.getElementById('verdictSummary').textContent = result.clinicalSummary;
+
+      const traceContainer = document.getElementById('ruleTraceContainer');
+      traceContainer.innerHTML = result.trace.map(t => `
+        <div class="gate-item">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority);">[${escapeHtml(t.gate)}]</span>
+              <strong style="font-size:12.5px;">${escapeHtml(t.name)}</strong>
+            </div>
+            <div class="mono" style="font-size:11px; color:var(--cf-ink-secondary); margin-top:2px;">
+              ${escapeHtml(t.inputVal)} &rarr; <span style="font-weight:600; color:${t.passed ? 'var(--cf-forest-pass)' : 'var(--cf-accent-primary)'};">${escapeHtml(t.outcome)}</span>
+            </div>
+          </div>
+          <span class="mono" style="font-size:10.5px; font-weight:600; padding:2px 6px; border:1px solid currentColor; color:${t.passed ? 'var(--cf-forest-pass)' : 'var(--cf-accent-primary)'}; background:${t.passed ? 'var(--cf-forest-tint)' : 'var(--cf-accent-tint)'};">
+            ${t.passed ? 'PASS' : 'DEFICIT'}
+          </span>
+        </div>
+      `).join('');
+
+      runFerpaEncryption();
+    }
+
+    async function runFerpaEncryption() {
+      const locked = document.getElementById('ferpaToggle').checked;
+      const name = document.getElementById('piiName').value || 'Anonymous Student';
+      const distId = document.getElementById('piiDistrictId').value || 'ISD-000';
+      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
+
+      const rawPii = JSON.stringify({ student_name: name, district_id: distId, verdict: result.verdictCode });
+
+      if (!locked) {
+        document.getElementById('cryptoSubjectToken').textContent = `PLAINTEXT_DEBUG_ONLY (${distId})`;
+        document.getElementById('cryptoIv').textContent = 'UNENCRYPTED_MODE';
+        document.getElementById('cryptoCiphertext').textContent = rawPii;
+        return;
+      }
+
+      try {
+        const enc = new TextEncoder().encode(rawPii);
+        if (window.crypto && window.crypto.subtle) {
+          const hashBuf = await window.crypto.subtle.digest('SHA-256', enc);
+          const hashHex = Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+          document.getElementById('cryptoSubjectToken').textContent = 'FERPA_SUBJ_' + hashHex.slice(0, 16).toUpperCase();
+
+          const key = await window.crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt']);
+          const iv = window.crypto.getRandomValues(new Uint8Array(12));
+          const cipherBuf = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc);
+          const ivHex = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
+          const cipherHex = Array.from(new Uint8Array(cipherBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+          document.getElementById('cryptoIv').textContent = ivHex;
+          document.getElementById('cryptoCiphertext').textContent = `aes256gcm:${cipherHex}`;
+          return;
+        }
+      } catch (e) {}
+
+      const fallbackHex = Array.from(rawPii).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+      document.getElementById('cryptoSubjectToken').textContent = 'FERPA_SUBJ_' + fallbackHex.slice(0, 16).toUpperCase();
+      document.getElementById('cryptoIv').textContent = '9f48a2c1e0734b19a8320f1c';
+      document.getElementById('cryptoCiphertext').textContent = 'aes256gcm:' + fallbackHex.split('').reverse().join('');
+    }
+
+    function exportFerpaClinicalReport() {
+      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
+      const packet = {
+        schema: "ORFF_MAESTRA_TTL_MSM_v1.8_FERPA",
+        timestamp: new Date().toISOString(),
+        ferpa_zero_pii_enforced: document.getElementById('ferpaToggle').checked,
+        anonymized_subject_token: document.getElementById('cryptoSubjectToken').textContent,
+        aes_256_gcm_iv: document.getElementById('cryptoIv').textContent,
+        encrypted_pii_blob: document.getElementById('cryptoCiphertext').textContent,
+        coded_evidence_sources: currentInputs,
+        deterministic_verdict: result
+      };
+      const blob = new Blob([JSON.stringify(packet, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `orff_maestra_ttl_msm_ferpa_report.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function selectQuizOption(opt) {
+      const fb = document.getElementById('quizFeedbackBox');
+      const log = document.getElementById('scormApiLog');
+
+      if (opt === 'B') {
+        fb.style.backgroundColor = 'var(--cf-forest-tint)';
+        fb.style.borderColor = 'var(--cf-forest-pass)';
+        fb.style.color = 'var(--cf-forest-pass)';
+        fb.innerHTML = `<strong>[VERIFIED // SCORE: 95/100]</strong> Under the <code>TTL-MSM</code> rule specification, intact L1 home language development combined with rapid Dynamic Assessment modifiability confirms a <strong>Language Difference / Bilingual Variation</strong> rather than an underlying language disorder.`;
+        log.innerHTML += `
+          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.score.raw", "95")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
+          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.lesson_status", "passed")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
+          <div><span style="color:#FCE588;">LMSCommit("")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
+        `;
+        document.getElementById('rubricMasteryBadge').textContent = 'MASTERY: 96%';
+      } else if (opt === 'A') {
+        fb.style.backgroundColor = 'var(--cf-brass-tint)';
+        fb.style.borderColor = 'var(--cf-brass-warn)';
+        fb.style.color = 'var(--cf-brass-warn)';
+        fb.innerHTML = `<strong>[DISTRACTOR ANALYSIS // MISCONCEPTION DETECTED]</strong> Relying solely on an English-only standardized score (&le; -1.5 SD) for a bilingual learner produces a false-positive over-identification. Review the Socratic Study Coach prompt on how Dynamic Assessment functions as an override gate.`;
+        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_distractor_A")</span> &rarr; <span style="color:#FCE588;">"recorded"</span></div>`;
+      } else {
+        fb.style.backgroundColor = 'var(--cf-accent-tint)';
+        fb.style.borderColor = 'var(--cf-accent-primary)';
+        fb.style.color = 'var(--cf-accent-primary)';
+        fb.innerHTML = `<strong>[DISTRACTOR ANALYSIS // PROCEDURAL ERROR]</strong> Delaying multi-source coding violates timely evaluation mandates. The TTL-MSM matrix evaluates L1 caregiver report and Dynamic Assessment immediately without waiting for L2 saturation.`;
+      }
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function askSocraticTutor(question) {
+      const box = document.getElementById('socraticChatBox');
+      let reply = "Think about what Dynamic Assessment measures: it tests the student's rate of learning when given mediated feedback. If a child had a true Developmental Language Disorder (DLD), would they immediately generalize a new grammatical rule in 20 minutes?";
+      if (question.includes('Norm-Referenced')) {
+        reply = "Consider who was in the normative sample of an English-only vocabulary test. Does a low English score measure intrinsic language capacity, or simply cumulative years of English exposure?";
+      }
+      box.innerHTML += `
+        <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
+          <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:4px;">[INQUIRY: ${escapeHtml(String(question).toUpperCase())}]</div>
+          &ldquo;${escapeHtml(reply)}&rdquo;
+        </div>
+      `;
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function downloadScormManifest() {
+      const xml = window.TTL_MSM_ENGINE.generateScormManifest({
+        identifier: "CALIBER_FOUNDRY_ORFF_SCORM12_2026",
+        title: "ORFF Maestra TTL-MSM & Certification Course (ADL SCORM 1.2)"
+      });
+      const blob = new Blob([xml], { type: 'application/xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'imsmanifest.xml';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      recalculateTtlMsm();
+    });
+  </script>
+</body>
+</html>

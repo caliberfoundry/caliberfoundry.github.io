@@ -1,0 +1,10 @@
+{
+  "name": "stealthflow-12-source-playwright-make-demo",
+  "version": "2.4.0",
+  "private": true,
+  "description": "StealthFlow: 12-Source Playwright Lead Extractor, eCommerce Entity Matcher & Make.com Webhook Dispatcher",
+  "scripts": {
+    "start": "npx serve . -l 3001",
+    "deploy": "npx vercel --prod --yes"
+  }
+}

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>CodeDrill™ CBT — 1:1 Pearson VUE Customs Broker (CBLE) &amp; Citation-Speed Drill</title>
+  <meta name="description" content="1:1 Pearson VUE Split-Screen CBT Simulator &amp; 90-Second Citation-Speed Drill for the U.S. Customs Broker License Exam (19 CFR / HTSUS / GRI) and IRS Enrolled Agent (31 CFR Part 10)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       GLOBAL CODEDRILL TOP SWITCHER BAR (SWISS EDITORIAL & TACTILE PRECISION)
+       ===================================================================== -->
+  <header class="codedrill-global-bar" role="banner">
+    <div class="cd-brand-group">
+      <div class="cd-logo-mark" aria-hidden="true">CD</div>
+      <div class="cd-brand-text">
+        <div class="cd-brand-title">
+          CodeDrill<span class="cd-tm">™</span> <span class="cd-badge-version" id="cdVersionBadge">SPEC // CBT-2026.4</span>
+        </div>
+        <div class="cd-brand-subtitle">Pearson VUE Split-Screen &amp; Deterministic Citation Engine</div>
+      </div>
+    </div>
+
+    <!-- 3 Key Mode Switcher Tabs -->
+    <nav class="cd-mode-switcher" aria-label="Application Modes">
+      <button type="button" class="cd-mode-tab active" data-mode="cbt" id="tabModeCbt" title="Authentic 1:1 Pearson VUE Testing Center Split-Screen Simulator (Alt+1)">
+        <span class="cd-tab-icon">[01]</span>
+        <span class="cd-tab-label">1:1 Pearson VUE CBT</span>
+        <span class="cd-tab-tag">SPLIT-SCREEN</span>
+      </button>
+      <button type="button" class="cd-mode-tab" data-mode="drill" id="tabModeDrill" title="90-Second Regulatory Lookup Sprint &amp; Socratic Rule-Gate Examiner (Alt+2)">
+        <span class="cd-tab-icon">[02]</span>
+        <span class="cd-tab-label">Citation-Speed Drill</span>
+        <span class="cd-tab-tag cd-tab-tag-hot">90S SPRINT</span>
+      </button>
+      <button type="button" class="cd-mode-tab" data-mode="analytics" id="tabModeAnalytics" title="Readiness Analytics Heatmap &amp; B2C/B2B Enterprise Licensing (Alt+3)">
+        <span class="cd-tab-icon">[03]</span>
+        <span class="cd-tab-label">Readiness &amp; Licensing</span>
+        <span class="cd-tab-tag" id="globalPassProbBadge">75% GOAL</span>
+      </button>
+    </nav>
+
+    <!-- Track Filter & Global Actions -->
+    <div class="cd-global-controls">
+      <div class="cd-track-selector-wrap">
+        <label for="examTrackSelect" class="cd-track-label">TRACK:</label>
+        <select id="examTrackSelect" class="cd-track-select" aria-label="Select Exam Regulatory Track">
+          <option value="CBLE">US Customs Broker (CBLE — 19 CFR / HTSUS)</option>
+          <option value="EA">IRS Enrolled Agent (31 CFR Part 10 Preview)</option>
+          <option value="ALL">All Tracks Combined (19 CFR + HTSUS + 31 CFR)</option>
+        </select>
+      </div>
+
+      <div class="cd-telemetry-pill" title="Your Average Regulatory Citation Lookup Speed">
+        <span class="cd-telemetry-label">AVG LOOKUP:</span>
+        <strong class="cd-telemetry-val" id="globalAvgLookupVal">--s</strong>
+      </div>
+
+      <a href="seo-pages/index.html" class="cd-global-link" title="Browse Programmatic Regulatory Study Guides &amp; Citation Drills">
+        [INDEX] Regulatory Hub ↗
+      </a>
+
+      <button type="button" class="cd-btn-reset" id="btnResetDemoData" title="Clear localStorage progress and reset simulator to fresh state">
+        [RESET]
+      </button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN APPLICATION WORKSPACE
+       ===================================================================== -->
+  <main class="codedrill-main-container" id="appMainContainer">
+
+    <!-- ===================================================================
+         MODE 1 & MODE 2 SHARED / INTEGRATED SPLIT-SCREEN WORKSPACE
+         (Mode 1: Authentic Pearson VUE CBT | Mode 2: 90s Citation-Speed Drill)
+         =================================================================== -->
+    <section id="workspaceSimulatorView" class="workspace-view active">
+
+      <!-- 1A. AUTHENTIC PEARSON VUE TOP HEADER & ACTION BAR (Visible in CBT Mode) -->
+      <div id="pearsonVueHeaderGroup" class="pvue-header-group">
+        <!-- Prussian Institutional Navy Top Bar (#1B365D) -->
+        <div class="pvue-top-bar">
+          <div class="pvue-exam-identity">
+            <span class="pvue-system-badge">PEARSON VUE CBT // SYS-01</span>
+            <h1 class="pvue-exam-title" id="pvueExamTitle">U.S. Customs Broker License Examination — Pearson VUE CBT Delivery</h1>
+          </div>
+
+          <div class="pvue-question-counter-box">
+            <span class="pvue-q-pos" id="pvueQuestionPosition">Question 1 of 10</span>
+            <span class="pvue-q-status-pill" id="pvueCitationVerifyPill">Citation Unverified</span>
+          </div>
+
+          <div class="pvue-timer-cluster">
+            <div class="pvue-timer-display" id="pvueTimerDisplayWrap">
+              <span class="pvue-timer-icon" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <span class="pvue-timer-label">TIME REMAINING:</span>
+              <span class="pvue-timer-clock" id="pvueCountdownClock">04:30:00</span>
+            </div>
+            <button type="button" class="pvue-timer-btn" id="btnToggleCbtTimer" title="Pause or Resume 4:30:00 Exam Clock">Pause</button>
+            <button type="button" class="pvue-timer-btn" id="btnResetCbtTimer" title="Reset Clock to 04:30:00">Reset</button>
+          </div>
+        </div>
+
+        <!-- Milled Stone Action Toolbar (#ECE9E1) -->
+        <div class="pvue-action-bar" role="toolbar" aria-label="Pearson VUE Candidate Exam Tools">
+          <div class="pvue-tools-left">
+            <button type="button" class="pvue-tool-btn" id="btnFlagForReview" title="Flag current question for review before exam submission">
+              <span class="pvue-tool-icon" id="flagToolIcon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3v18M5 4h13l-2.5 4.5L18 13H5"/></svg>
+              </span>
+              <span id="flagToolText">Flag for Review</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn" id="btnHighlightText" title="Highlight selected text in yellow archival marker (or toggle auto-highlight cursor mode)">
+              <span class="pvue-tool-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15.5 4.5l4 4L8 20H4v-4L15.5 4.5z"/><path d="M4 22h16"/></svg>
+              </span>
+              <span>Highlight</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn" id="btnClearHighlights" title="Clear yellow text highlights on current question">
+              <span>Clear Marks</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn" id="btnStrikethroughMode" title="Toggle Strikethrough mode or Right-Click any option A-E to cross out distractors">
+              <span class="pvue-tool-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M8 6h8M8 18h8"/></svg>
+              </span>
+              <span>Strikethrough (Right-Click A–E)</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn" id="btnOpenNavigator" title="Open Question Grid Navigator with Answered, Flagged &amp; Citation Verified statuses">
+              <span class="pvue-tool-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              </span>
+              <span>Navigator</span>
+              <span class="pvue-nav-progress-badge" id="navAnsweredCountBadge">0/10</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn" id="btnOpenScratchpad" title="Open Customs Valuation Calculator &amp; Candidate Citation Scratchpad">
+              <span class="pvue-tool-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20"/><path d="M8 6h8M8 11h2M14 11h2M8 16h2M14 16h2"/></svg>
+              </span>
+              <span>Calculator / Scratchpad</span>
+              <span class="pvue-scratch-badge" id="scratchpadCountBadge">0</span>
+            </button>
+          </div>
+
+          <div class="pvue-tools-right">
+            <div class="pvue-split-ratio-group" aria-label="Split Screen Proportions">
+              <span class="pvue-split-label">GRID:</span>
+              <button type="button" class="pvue-ratio-btn" data-split="60-40" title="60% Question / 40% Reference">60/40</button>
+              <button type="button" class="pvue-ratio-btn active" data-split="50-50" title="50% Question / 50% Reference (Standard Pearson VUE)">50/50</button>
+              <button type="button" class="pvue-ratio-btn" data-split="38-62" title="38% Question / 62% Code Reader Focus">38/62</button>
+            </div>
+
+            <button type="button" class="pvue-tool-btn pvue-btn-check" id="btnCheckCurrentAnswer" title="Immediately verify current question and reveal Official CBP Explanation">
+              <span>[VERIFY ANSWER]</span>
+            </button>
+
+            <button type="button" class="pvue-tool-btn pvue-btn-grade-exam" id="btnGradeFullExam" title="Complete exam and generate Official Pearson VUE Score Report (75% Passing Threshold)">
+              <span>[GRADE EXAM]</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1B. CITATION-SPEED DRILL HUD HEADER (Visible in Speed Drill Mode) -->
+      <div id="speedDrillHeaderGroup" class="drill-hud-header hidden">
+        <div class="drill-hud-left">
+          <div class="drill-mode-pill">
+            <span class="drill-pulse-dot"></span>
+            <span>[MODE-02 // 90-SECOND CITATION-SPEED SPRINT]</span>
+          </div>
+          <div class="drill-hud-subtitle">
+            Locate the governing section in the Reference Library &amp; click <strong>“[LOCK CITATION AS PROOF]”</strong> before selecting A–E.
+          </div>
+        </div>
+
+        <!-- 90-Second High-Precision Sprint Timer -->
+        <div class="drill-sprint-clock-card" id="drillClockCard">
+          <div class="drill-clock-top">
+            <span class="drill-clock-label">90S SPRINT CLOCK</span>
+            <span class="drill-clock-digits" id="drillSprintClockDigits">90.0s</span>
+          </div>
+          <div class="drill-progress-track">
+            <div class="drill-progress-fill" id="drillSprintProgressBar" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- Real-Time Drill Telemetry Metrics -->
+        <div class="drill-metrics-strip">
+          <div class="drill-metric-box">
+            <span class="drill-metric-label">Current Lookup vs Target</span>
+            <div class="drill-metric-value">
+              <strong id="drillCurrentLookupTime">0.0s</strong>
+              <span class="drill-metric-sub" id="drillTargetBenchmarkLabel">/ 45.0s target</span>
+            </div>
+          </div>
+
+          <div class="drill-metric-box">
+            <span class="drill-metric-label">Avg Citation Lookup</span>
+            <div class="drill-metric-value">
+              <strong id="drillAvgLookupMetric">--s</strong>
+              <span class="drill-metric-sub">user avg</span>
+            </div>
+          </div>
+
+          <div class="drill-metric-box">
+            <span class="drill-metric-label">Accuracy Rate</span>
+            <div class="drill-metric-value">
+              <strong id="drillAccuracyMetric">0%</strong>
+              <span class="drill-metric-sub" id="drillSolvedCountSub">0 drills</span>
+            </div>
+          </div>
+
+          <div class="drill-metric-box drill-streak-box">
+            <span class="drill-metric-label">Speed Streak</span>
+            <div class="drill-metric-value">
+              <strong id="drillStreakMetric">0 [STREAK]</strong>
+              <span class="drill-metric-sub">under target</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sprint Control Buttons -->
+        <div class="drill-hud-controls">
+          <button type="button" class="drill-ctrl-btn drill-btn-restart" id="btnDrillRestartSprint" title="Restart 90-second sprint timer for this question">
+            [RESTART 90S]
+          </button>
+          <button type="button" class="drill-ctrl-btn drill-btn-pause" id="btnDrillPauseSprint" title="Pause or Resume 90s Sprint Timer">
+            [PAUSE]
+          </button>
+          <button type="button" class="drill-ctrl-btn drill-btn-next" id="btnDrillNextQuestion" title="Load next Citation-Speed Drill challenge">
+            Next Sprint →
+          </button>
+        </div>
+      </div>
+
+      <!-- =================================================================
+           SPLIT-SCREEN WORKSPACE (LEFT: QUESTION & EXAMINER | RIGHT: eCFR/HTSUS READER)
+           ================================================================= -->
+      <div class="pvue-split-workspace" id="pvueSplitWorkspace" data-ratio="50-50">
+
+        <!-- ===============================================================
+             LEFT PANE: EXAM QUESTION WORKSPACE & SOCRATIC EXAMINER
+             =============================================================== -->
+        <div class="pvue-left-pane" id="pvueLeftPane">
+          <div class="pvue-pane-scroll">
+
+            <!-- Question Metadata Header -->
+            <div class="q-meta-strip">
+              <div class="q-meta-badges">
+                <span class="q-badge q-badge-num" id="qMetaNumberBadge">Q1</span>
+                <span class="q-badge q-badge-track" id="qMetaTrackBadge">CBLE // 19 CFR</span>
+                <span class="q-badge q-badge-cat" id="qMetaCategoryBadge">Part 152 — Valuation</span>
+                <span class="q-badge q-badge-diff" id="qMetaDifficultyBadge">Hard</span>
+                <span class="q-badge q-badge-target" id="qMetaTargetTimeBadge" title="Recommended maximum time to locate the governing citation">
+                  TARGET LOOKUP: &lt;= 45s
+                </span>
+              </div>
+              <div class="q-meta-timer-mini" title="Time spent looking up citation on this question">
+                <span>LOOKUP ELAPSED: </span>
+                <strong id="qElapsedLookupTimer">0.0s</strong>
+              </div>
+            </div>
+
+            <!-- Speed Drill Two-Step Progress Checklist (Shown in Mode 2: Speed Drill) -->
+            <div id="drillStepChecklist" class="drill-step-checklist hidden">
+              <div class="drill-step-card" id="drillStep1Card">
+                <div class="drill-step-num">STEP 01</div>
+                <div class="drill-step-body">
+                  <div class="drill-step-title" id="drillStep1Title">Locate &amp; Lock In Regulatory Citation in Right Pane</div>
+                  <div class="drill-step-desc" id="drillStep1Desc">
+                    Use Instant eCFR Search or the Code Tree on the right, open the governing section, and click <strong>“[LOCK CITATION AS PROOF]”</strong>.
+                  </div>
+                </div>
+                <div class="drill-step-status" id="drillStep1Status">[PENDING]</div>
+              </div>
+
+              <div class="drill-step-card" id="drillStep2Card">
+                <div class="drill-step-num">STEP 02</div>
+                <div class="drill-step-body">
+                  <div class="drill-step-title" id="drillStep2Title">Select Legal Ruling (A–E) &amp; Verify</div>
+                  <div class="drill-step-desc" id="drillStep2Desc">
+                    Eliminate distractors with right-click Strikethrough and lock in your final answer letter below.
+                  </div>
+                </div>
+                <div class="drill-step-status" id="drillStep2Status">[PENDING]</div>
+              </div>
+            </div>
+
+            <!-- Question Case Stem (Supports Yellow Marker Highlighting) -->
+            <article class="q-stem-card" aria-label="Exam Question Scenario">
+              <div class="q-stem-toolbar">
+                <span class="q-stem-label">SPEC-01 // OFFICIAL EXAM SCENARIO &amp; FACT PATTERN</span>
+                <span class="q-highlight-hint" id="highlightModeStatusHint">Select text + click Highlight (or enable Highlight Mode)</span>
+              </div>
+              <div class="q-stem-content" id="qStemContent">
+                <!-- Populated dynamically from CODEDRILL_DATA.questions -->
+              </div>
+            </article>
+
+            <!-- Attached Citation Proof Banner -->
+            <div class="q-citation-proof-bar" id="qCitationProofBar">
+              <div class="q-proof-left">
+                <span class="q-proof-icon" id="qProofIcon">[§]</span>
+                <div class="q-proof-info">
+                  <span class="q-proof-label">ATTACHED REGULATORY PROOF:</span>
+                  <strong class="q-proof-citation" id="qProofCitationText">None attached yet — click “[LOCK CITATION AS PROOF]” in the right panel</strong>
+                </div>
+              </div>
+              <div class="q-proof-actions">
+                <span class="q-proof-match-badge hidden" id="qProofMatchBadge"></span>
+                <button type="button" class="q-proof-jump-btn hidden" id="btnJumpToAttachedProof">Inspect Section →</button>
+              </div>
+            </div>
+
+            <!-- Answer Options A-E with Radio Selection & Right-Click / Button Strikethrough -->
+            <div class="q-options-header">
+              <span>SELECT ONE BEST LEGAL DETERMINATION (A–E)</span>
+              <span class="q-strike-tip">[NOTE]: <strong>Right-click</strong> any option or click <strong>[STRIKE]</strong> to cross out distractors</span>
+            </div>
+
+            <div class="q-options-list" id="qOptionsList" role="radiogroup" aria-label="Answer Choices A through E">
+              <!-- Populated dynamically with A-E choices -->
+            </div>
+
+            <!-- Question Bottom Action & Navigation Bar -->
+            <div class="q-bottom-nav-bar">
+              <button type="button" class="q-nav-btn" id="btnPrevQuestion">
+                ← Previous
+              </button>
+
+              <div class="q-nav-center-actions">
+                <button type="button" class="q-action-primary" id="btnVerifyAnswerMain">
+                  [VERIFY ANSWER &amp; REVEAL OFFICIAL CBP EXPLANATION]
+                </button>
+                <button type="button" class="q-action-secondary" id="btnSwitchToDrillFromCbt" title="Launch this question in 90-Second Citation-Speed Drill Mode">
+                  [90S SPEED DRILL →]
+                </button>
+              </div>
+
+              <button type="button" class="q-nav-btn" id="btnNextQuestion">
+                Next →
+              </button>
+            </div>
+
+            <!-- ===========================================================
+                 SOCRATIC CODE-PATH EXAMINER (Featured in Speed Drill Mode & expandable in CBT)
+                 =========================================================== -->
+            <section class="socratic-tutor-panel" id="socraticTutorPanel" aria-label="Socratic Code-Path Examiner">
+              <div class="socratic-header">
+                <div class="socratic-title-group">
+                  <span class="socratic-ai-badge">RULE-GATE EXAMINER</span>
+                  <h2 class="socratic-title">Socratic Code-Path Examiner</h2>
+                </div>
+                <span class="socratic-subtitle">Progressive Regulatory Clues &amp; Deterministic Code-Path Verification</span>
+              </div>
+
+              <!-- 3-Level Progressive Socratic Hint Buttons -->
+              <div class="socratic-hints-grid">
+                <div class="socratic-hint-card" id="socraticCard1">
+                  <div class="socratic-hint-top">
+                    <span class="socratic-level-tag">CLUE // 01</span>
+                    <span class="socratic-level-name">Regulatory Domain</span>
+                  </div>
+                  <p class="socratic-hint-text hidden" id="socraticText1"></p>
+                  <button type="button" class="socratic-reveal-btn" data-hint-level="1" id="btnRevealHint1">
+                    [+ REVEAL LEVEL 01: REGULATORY DOMAIN]
+                  </button>
+                </div>
+
+                <div class="socratic-hint-card" id="socraticCard2">
+                  <div class="socratic-hint-top">
+                    <span class="socratic-level-tag">CLUE // 02</span>
+                    <span class="socratic-level-name">CFR Part / HTSUS Rule</span>
+                  </div>
+                  <p class="socratic-hint-text hidden" id="socraticText2"></p>
+                  <button type="button" class="socratic-reveal-btn" data-hint-level="2" id="btnRevealHint2">
+                    [+ REVEAL LEVEL 02: CFR PART / HTSUS RULE]
+                  </button>
+                </div>
+
+                <div class="socratic-hint-card" id="socraticCard3">
+                  <div class="socratic-hint-top">
+                    <span class="socratic-level-tag">CLUE // 03</span>
+                    <span class="socratic-level-name">Exact Section &amp; Trap</span>
+                  </div>
+                  <p class="socratic-hint-text hidden" id="socraticText3"></p>
+                  <button type="button" class="socratic-reveal-btn" data-hint-level="3" id="btnRevealHint3">
+                    [+ REVEAL LEVEL 03: EXACT SECTION &amp; TRAP]
+                  </button>
+                </div>
+              </div>
+
+              <!-- Shortest Navigation Path & Quick Socratic Examiner Q&A -->
+              <div class="socratic-shortest-path-bar" id="socraticShortestPathBox">
+                <div class="socratic-path-header">
+                  <span><strong>SHORTEST eCFR NAVIGATION PATH:</strong></span>
+                  <button type="button" class="socratic-btn-mini" id="btnRevealShortestPath">Reveal Optimal Lookup Path</button>
+                </div>
+                <div class="socratic-path-content hidden" id="socraticShortestPathText"></div>
+              </div>
+
+              <!-- Quick Contextual Examiner Prompts & Query Box -->
+              <div class="socratic-chat-box">
+                <div class="socratic-quick-prompts-label">QUERY RULE-GATE EXAMINER ABOUT THIS FACT PATTERN:</div>
+                <div class="socratic-prompt-chips" id="socraticPromptChips">
+                  <button type="button" class="socratic-chip" data-prompt="trap">
+                    Why do 85% of candidates pick the wrong distractor here?
+                  </button>
+                  <button type="button" class="socratic-chip" data-prompt="keywords">
+                    What exact keywords locate this fastest in 19 CFR / HTSUS?
+                  </button>
+                  <button type="button" class="socratic-chip" data-prompt="valuation_gri">
+                    Explain Transaction Value / GRI hierarchy for this question
+                  </button>
+                  <button type="button" class="socratic-chip" data-prompt="deadline_penalty">
+                    What is the statutory deadline, exception, or penalty rule?
+                  </button>
+                </div>
+
+                <div class="socratic-custom-ask-row">
+                  <input type="text" id="socraticCustomInput" class="socratic-custom-input" placeholder="Query Socratic Examiner (e.g., 'Why is Option B incorrect?' or 'How does GRI 3(b) apply?')..." />
+                  <button type="button" id="btnSocraticCustomAsk" class="socratic-custom-btn">Query Examiner →</button>
+                </div>
+
+                <div class="socratic-ai-response-box" id="socraticAiResponseBox">
+                  <div class="socratic-ai-msg">
+                    <strong>[RULE-GATE EXAMINER]:</strong> Select a progressive clue above or click any diagnostic query chip to analyze the regulatory mechanics of <span id="socraticActiveQRef">this question</span> without spoiling your lookup muscle memory.
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===========================================================
+                 OFFICIAL CBP LEGAL EXPLANATION & DISTRACTOR BREAKDOWN (A-E)
+                 =========================================================== -->
+            <section class="q-explanation-panel hidden" id="qExplanationPanel" aria-label="Official Legal Explanation and Distractor Analysis">
+              <div class="exp-status-banner" id="expStatusBanner">
+                <div class="exp-status-title" id="expStatusTitle">[VERIFIED // CORRECT DETERMINATION]</div>
+                <div class="exp-status-meta" id="expStatusMeta">Target Citation: 19 CFR § 152.103</div>
+              </div>
+
+              <!-- Governing Citation & Shortest Path -->
+              <div class="exp-citation-card">
+                <div class="exp-citation-top">
+                  <div>
+                    <span class="exp-section-tag">GOVERNING AUTHORITY</span>
+                    <h3 class="exp-target-citation" id="expTargetCitationHeading">19 CFR § 152.103</h3>
+                  </div>
+                  <button type="button" class="exp-open-code-btn" id="btnExpOpenTargetSection">
+                    [OPEN SECTION IN CODE READER →]
+                  </button>
+                </div>
+                <div class="exp-shortest-path">
+                  <strong>FASTEST LOOKUP PATH:</strong> <span id="expShortestPathVal"></span>
+                </div>
+              </div>
+
+              <!-- Verbatim Golden Quote -->
+              <div class="exp-golden-quote-box">
+                <div class="exp-quote-header">§ VERBATIM GOLDEN QUOTE FROM REGULATION</div>
+                <blockquote class="exp-golden-quote-text" id="expGoldenQuoteText"></blockquote>
+              </div>
+
+              <!-- Official Legal Reasoning -->
+              <div class="exp-reasoning-box">
+                <div class="exp-sub-header">SPEC-02 // OFFICIAL LEGAL &amp; REGULATORY ANALYSIS</div>
+                <p class="exp-reasoning-text" id="expCorrectReasoningText"></p>
+              </div>
+
+              <!-- Option-by-Option Distractor Audit (A-E) -->
+              <div class="exp-distractors-box">
+                <div class="exp-sub-header">SPEC-03 // COMPLETE OPTION-BY-OPTION AUDIT (A–E DISTRACTOR BREAKDOWN)</div>
+                <div class="exp-distractors-list" id="expDistractorsList">
+                  <!-- Populated dynamically for A, B, C, D, E -->
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             RESIZABLE SPLIT DIVIDER
+             =============================================================== -->
+        <div class="pvue-split-divider" id="pvueSplitDivider" title="Drag to resize Question Workspace vs Electronic Reference Library">
+          <div class="pvue-divider-grip">||</div>
+        </div>
+
+        <!-- ===============================================================
+             RIGHT PANE: INTEGRATED ELECTRONIC REFERENCE LIBRARY
+             (19 CFR + HTSUS + GRI + 31 CFR Circular 230)
+             =============================================================== -->
+        <div class="pvue-right-pane" id="pvueRightPane">
+          <!-- Reference Library Header & Corpus Tabs -->
+          <div class="ref-library-header">
+            <div class="ref-library-title-row">
+              <div class="ref-title-left">
+                <span class="ref-doc-icon">§</span>
+                <h2 class="ref-library-title">Integrated Electronic Reference Library (eCFR / HTSUS)</h2>
+              </div>
+              <button type="button" class="ref-toggle-tree-btn" id="btnToggleCodeTree" title="Collapse or Expand Regulatory Tree Sidebar">
+                [HIDE TREE]
+              </button>
+            </div>
+
+            <!-- Corpus Switcher Tabs (19 CFR, HTSUS & GRI, 31 CFR) -->
+            <div class="ref-corpus-tabs" id="refCorpusTabs" role="tablist" aria-label="Regulatory Corpora">
+              <!-- Populated dynamically from CODEDRILL_DATA.corpora -->
+            </div>
+
+            <!-- Instant Full-Text Search Bar with Match Counter & Quick Chips -->
+            <div class="ref-search-bar-wrap">
+              <div class="ref-search-input-group">
+                <span class="ref-search-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+                </span>
+                <input
+                  type="search"
+                  id="ecfrSearchInput"
+                  class="ref-search-input"
+                  placeholder="Instant eCFR / HTSUS Search (e.g., '111.32', 'assist', 'GRI 3(b)', 'drawback', 'power of attorney')..."
+                  autocomplete="off"
+                />
+                <span class="ref-search-match-badge" id="ecfrSearchMatchBadge">All Sections</span>
+                <button type="button" class="ref-search-clear-btn hidden" id="btnClearEcfrSearch" title="Clear search filter">×</button>
+              </div>
+
+              <!-- Quick Search Term Chips -->
+              <div class="ref-quick-search-chips" id="ecfrQuickChips">
+                <span class="ref-chip-label">FILTER:</span>
+                <button type="button" class="ref-search-chip" data-query="111">Part 111 Brokers</button>
+                <button type="button" class="ref-search-chip" data-query="transaction value">Transaction Value</button>
+                <button type="button" class="ref-search-chip" data-query="assist">Assists (§ 152.102)</button>
+                <button type="button" class="ref-search-chip" data-query="GRI 3">GRI 3(a)/(b)/(c)</button>
+                <button type="button" class="ref-search-chip" data-query="141">Part 141 Entry</button>
+                <button type="button" class="ref-search-chip" data-query="190">Part 190 Drawback</button>
+                <button type="button" class="ref-search-chip" data-query="10.">31 CFR Circular 230</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reference Library Body: Left Collapsible Tree + Right Document Reader -->
+          <div class="ref-library-body" id="refLibraryBody">
+            <!-- Collapsible Code Hierarchy Tree (Parts & Sections) -->
+            <aside class="ref-tree-sidebar" id="refTreeSidebar" aria-label="Code of Federal Regulations Hierarchy">
+              <div class="ref-tree-header">
+                <span>CODE HIERARCHY // FREQUENCY</span>
+              </div>
+              <div class="ref-tree-list" id="refTreeList">
+                <!-- Populated dynamically with collapsible Parts and Sections -->
+              </div>
+            </aside>
+
+            <!-- Active Section Document Reader -->
+            <div class="ref-doc-reader-wrap" id="refDocReaderWrap">
+              <!-- Sticky Section Action Header inside Reader -->
+              <div class="ref-doc-topbar">
+                <div class="ref-doc-breadcrumb" id="refDocBreadcrumb">
+                  19 CFR &gt; Part 152 &gt; § 152.103
+                </div>
+                <div class="ref-doc-freq-badge" id="refDocFreqBadge">
+                  [FREQ: HIGH YIELD]
+                </div>
+              </div>
+
+              <!-- Citation Lock-In & Copy Action Bar -->
+              <div class="ref-doc-action-bar">
+                <button type="button" class="ref-btn-lock-proof" id="btnLockCitationProof" title="Attach this regulatory section as your legal proof for the active question (stops Lookup Timer in Speed Drill)">
+                  [LOCK IN / ATTACH CITATION AS PROOF]
+                </button>
+                <button type="button" class="ref-btn-copy-quote" id="btnCopyCitationScratchpad" title="Copy citation &amp; statutory text to clipboard and save to Candidate Scratchpad">
+                  [COPY CITATION TO SCRATCHPAD]
+                </button>
+              </div>
+
+              <!-- Main Statutory Document Content -->
+              <article class="ref-doc-article" id="refDocArticle">
+                <header class="ref-doc-title-block">
+                  <div class="ref-doc-citation-code" id="refDocCitationCode">19 CFR § 152.103</div>
+                  <h3 class="ref-doc-section-title" id="refDocSectionTitle">Transaction value</h3>
+                </header>
+
+                <!-- Formatted Statutory Paragraphs with <mark> Search & User Highlights -->
+                <div class="ref-doc-text-body" id="refDocTextBody">
+                  <!-- Populated dynamically with formatted paragraphs (a), (b), (1), (2) -->
+                </div>
+
+                <!-- Clickable Cross-References -->
+                <div class="ref-doc-crossrefs-box" id="refDocCrossRefsBox">
+                  <div class="ref-crossrefs-title">REGULATORY CROSS-REFERENCES (1-CLICK JUMP):</div>
+                  <div class="ref-crossrefs-list" id="refDocCrossRefsList">
+                    <!-- Populated dynamically from section.crossRefs -->
+                  </div>
+                </div>
+
+                <!-- Section Index Keywords -->
+                <div class="ref-doc-keywords-box">
+                  <span class="ref-keywords-label">INDEX TERMS:</span>
+                  <div class="ref-keywords-list" id="refDocKeywordsList"></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         MODE 3: READINESS ANALYTICS & B2C/B2B LICENSING PAYWALL
+         =================================================================== -->
+    <section id="workspaceAnalyticsView" class="workspace-view hidden">
+      <div class="analytics-page-scroll">
+
+        <!-- Hero Readiness Banner -->
+        <div class="an-hero-banner">
+          <div class="an-hero-left">
+            <span class="an-kicker">01 // CANDIDATE TELEMETRY &amp; PASS PROBABILITY LEDGER</span>
+            <h1 class="an-hero-title">CBLE &amp; EA Exam Readiness Dashboard</h1>
+            <p class="an-hero-desc">
+              The U.S. Customs Broker License Exam has a <strong>15.2% national pass rate</strong>—not because candidates fail to study, but because static PDF binders do not train <strong>sub-45-second eCFR split-screen lookup speed</strong>. Track your real-time citation velocity against the <strong>75% CBP passing threshold</strong>.
+            </p>
+          </div>
+          <div class="an-hero-right">
+            <div class="an-gauge-card">
+              <div class="an-gauge-label">PROJECTED PASS PROBABILITY</div>
+              <div class="an-gauge-value" id="anPassProbabilityValue">68%</div>
+              <div class="an-gauge-benchmarks">
+                <span class="an-bench-pass">[TARGET: &gt;= 75%]</span>
+                <span class="an-bench-nat">[NATIONAL AVG: 15.2%]</span>
+              </div>
+              <div class="an-gauge-bar-track">
+                <div class="an-gauge-bar-fill" id="anPassProbabilityBar" style="width: 68%;"></div>
+                <div class="an-gauge-threshold-marker" style="left: 75%;" title="75% CBP Official Passing Score"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Telemetry KPI Cards -->
+        <div class="an-kpi-grid">
+          <div class="an-kpi-card">
+            <div class="an-kpi-label">01 // Avg Citation Lookup Speed</div>
+            <div class="an-kpi-num" id="anKpiAvgLookup">38.4s</div>
+            <div class="an-kpi-sub">Target Benchmark: <strong>&lt;= 45.0s</strong> (Legacy PDF Avg: 145s)</div>
+          </div>
+
+          <div class="an-kpi-card">
+            <div class="an-kpi-label">02 // Questions Answered &amp; Graded</div>
+            <div class="an-kpi-num" id="anKpiAnsweredCount">0 / 10</div>
+            <div class="an-kpi-sub" id="anKpiAccuracySub">Current Accuracy: <strong>--%</strong></div>
+          </div>
+
+          <div class="an-kpi-card">
+            <div class="an-kpi-label">03 // Verified Citation Proofs Attached</div>
+            <div class="an-kpi-num" id="anKpiVerifiedCitations">0</div>
+            <div class="an-kpi-sub">Exact statutory section locked in as proof</div>
+          </div>
+
+          <div class="an-kpi-card">
+            <div class="an-kpi-label">04 // Projected Time Saved on 80-Q Exam</div>
+            <div class="an-kpi-num" id="anKpiTimeSaved">+1h 24m</div>
+            <div class="an-kpi-sub">Buffer created across the 4.5-hour Pearson VUE clock</div>
+          </div>
+        </div>
+
+        <!-- Two-Column Analytics Section: Regulatory Heatmap + Solved Questions & Saved Citations Log -->
+        <div class="an-two-col-grid">
+          <!-- Domain Speed & Mastery Heatmap -->
+          <div class="an-panel-card">
+            <div class="an-panel-header">
+              <div>
+                <h2 class="an-panel-title">Regulatory Domain Lookup Speed &amp; Mastery Ledger</h2>
+                <p class="an-panel-subtitle">Breakdown by 19 CFR Parts, HTSUS / GRI Classification, and 31 CFR Circular 230</p>
+              </div>
+              <span class="an-panel-tag">TARGET: &gt;=75% ACC // &lt;=45S LOOKUP</span>
+            </div>
+
+            <div class="an-heatmap-list" id="anDomainHeatmapList">
+              <!-- Populated dynamically in app.js -->
+            </div>
+          </div>
+
+          <!-- Solved Questions & Saved Scratchpad Citations Journal -->
+          <div class="an-panel-card">
+            <div class="an-panel-header">
+              <div>
+                <h2 class="an-panel-title">Candidate Activity Log &amp; Saved Citations (localStorage)</h2>
+                <p class="an-panel-subtitle">Click any attempted question to inspect in the 1:1 Pearson VUE Simulator</p>
+              </div>
+              <button type="button" class="an-btn-small" id="btnAnalyticsOpenScratchpad">[OPEN SCRATCHPAD]</button>
+            </div>
+
+            <div class="an-journal-section">
+              <h3 class="an-journal-subhead">Attempted Questions &amp; Lookup Telemetry</h3>
+              <div class="an-solved-log-list" id="anSolvedQuestionsLog">
+                <!-- Populated dynamically from localStorage state -->
+              </div>
+            </div>
+
+            <div class="an-journal-section">
+              <h3 class="an-journal-subhead">Saved Regulatory Citations &amp; Scratchpad Notes</h3>
+              <div class="an-saved-citations-list" id="anSavedCitationsLog">
+                <!-- Populated dynamically from localStorage scratchpad -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             HIGH-MARGIN B2C / B2B SAAS PRICING PAYWALL & COMPARISON
+             =============================================================== -->
+        <div class="pricing-section-wrap" id="pricingSectionWrap">
+          <div class="pricing-header-block">
+            <span class="pricing-kicker">02 // HIGH-ROI EXAM ENGINEERING VS. LEGACY PREP COURSES</span>
+            <h2 class="pricing-main-title">Stop Paying $1,500+ for Static PDF Binders That Do Not Simulate Pearson VUE</h2>
+            <p class="pricing-main-desc">
+              Traditional customs broker prep courses charge $1,200 to $2,400 for passive video lectures while 84.8% of examinees still fail the electronic exam. Train in the exact split-screen environment used on test day.
+            </p>
+          </div>
+
+          <!-- Side-by-Side Legacy vs CodeDrill Comparison Table -->
+          <div class="pricing-comparison-banner">
+            <div class="comp-col comp-col-legacy">
+              <div class="comp-col-badge">[LEGACY PREP COURSES // $1,200 – $2,400]</div>
+              <ul class="comp-list">
+                <li>[—] Static paper PDFs &amp; 100-hour pre-recorded slideshow videos</li>
+                <li>[—] Zero 1:1 Pearson VUE split-screen eCFR / HTSUS interface training</li>
+                <li>[—] No tracking of citation lookup seconds or right-click distractor strikethrough</li>
+                <li>[—] Average student lookup time: 2.5+ minutes per question (runs out of time at Q58)</li>
+              </ul>
+            </div>
+            <div class="comp-col comp-col-codedrill">
+              <div class="comp-col-badge">[CODEDRILL™ CBT + CITATION-SPEED ENGINE // $79/MO]</div>
+              <ul class="comp-list">
+                <li>[+] Authentic 1:1 Pearson VUE Split-Screen Simulator with instant &lt;mark&gt; eCFR search</li>
+                <li>[+] 90-Second Citation-Speed Drill + 3-Level Socratic Code-Path Examiner</li>
+                <li>[+] Real-time lookup stopwatch, Golden Quote proof verification &amp; A–E distractor audit</li>
+                <li>[+] Sub-45-second lookup muscle memory engineered to clear the 75% CBP threshold</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Two Pricing Cards: Candidate Pro (B2C) & Freight Forwarder / Brokerage Team (B2B) -->
+          <div class="pricing-cards-grid">
+
+            <!-- Tier 1: Candidate Pro ($79/mo or $199 Exam Cycle Pass) -->
+            <div class="pricing-card">
+              <div class="pricing-card-top">
+                <div class="pricing-tier-tag">TIER 01 // B2C INDIVIDUAL CANDIDATE</div>
+                <h3 class="pricing-tier-name">Candidate Pro</h3>
+                <p class="pricing-tier-tagline">Complete 1:1 Pearson VUE Simulator &amp; Citation-Speed Drill for individual examinees.</p>
+
+                <div class="pricing-billing-toggle">
+                  <button type="button" class="billing-opt active" data-cycle="monthly" id="btnCycleMonthly">Monthly ($79/mo)</button>
+                  <button type="button" class="billing-opt" data-cycle="pass" id="btnCycleExamPass">Exam Cycle Pass ($199 once)</button>
+                </div>
+
+                <div class="pricing-price-row">
+                  <span class="pricing-price-amount" id="b2cPriceAmount">$79</span>
+                  <span class="pricing-price-period" id="b2cPricePeriod">/ month // cancel anytime</span>
+                </div>
+              </div>
+
+              <ul class="pricing-feature-list">
+                <li><strong>Full 1:1 Pearson VUE Split-Screen Simulator</strong> (19 CFR Parts 0–199, HTSUS &amp; GRI 1–6)</li>
+                <li><strong>Unlimited Citation-Speed Drill</strong> (90-second sprints + 0.1s lookup telemetry)</li>
+                <li><strong>Socratic Code-Path Examiner</strong> with 3-level progressive regulatory hints</li>
+                <li><strong>2018–2026 Official CBP Past Exam Bank</strong> updated for Modernized Part 111 &amp; TFTEA Part 190 Drawback</li>
+                <li><strong>Authentic Pearson VUE Tools:</strong> Right-Click Distractor Strikethrough, Yellow Marker Highlight &amp; Valuation Calculator</li>
+                <li><strong>75% Pass Probability Guarantee</strong> or free extension through next CBP exam cycle</li>
+              </ul>
+
+              <button type="button" class="pricing-cta-btn pricing-cta-b2c" id="btnCheckoutB2C" data-plan="Candidate Pro ($79/month)">
+                Unlock Candidate Pro — $79/mo →
+              </button>
+            </div>
+
+            <!-- Tier 2: Freight Forwarder & Brokerage Team ($499/mo) -->
+            <div class="pricing-card pricing-card-featured">
+              <div class="pricing-popular-ribbon">ENTERPRISE ROI // B2B COMPLIANCE TEAMS</div>
+              <div class="pricing-card-top">
+                <div class="pricing-tier-tag">TIER 02 // B2B FREIGHT FORWARDERS, 3PLs &amp; CUSTOMS BROKERAGES</div>
+                <h3 class="pricing-tier-name">Freight Forwarder &amp; Brokerage Team</h3>
+                <p class="pricing-tier-tagline">License more in-house customs brokers and trade compliance specialists with centralized HR telemetry.</p>
+
+                <div class="pricing-price-row">
+                  <span class="pricing-price-amount">$499</span>
+                  <span class="pricing-price-period">/ month // up to 10 seats included</span>
+                </div>
+                <div class="pricing-seat-note">Replaces $18,000+ in traditional corporate prep course reimbursements</div>
+              </div>
+
+              <ul class="pricing-feature-list">
+                <li><strong>Up to 10 Candidate Pro Seats</strong> with instant seat reassignment across exam cycles</li>
+                <li><strong>VP of Compliance / HR Readiness Dashboard:</strong> Monitor each employee’s lookup speed &amp; 75% pass probability before exam day</li>
+                <li><strong>Multi-Track Regulatory License:</strong> Includes <strong>US Customs Broker (19 CFR / HTSUS)</strong> + <strong>IRS Enrolled Agent (31 CFR Part 10)</strong> tracks</li>
+                <li><strong>Custom Corporate Drills:</strong> Assign Part 152 Valuation, Part 190 Drawback, or Chapter 84/85 HTSUS sprints to entry writers</li>
+                <li><strong>Consolidated Corporate Invoicing</strong>, SOC-2 SSO &amp; Dedicated Trade Compliance Success Manager</li>
+              </ul>
+
+              <button type="button" class="pricing-cta-btn pricing-cta-b2b" id="btnCheckoutB2B" data-plan="Freight Forwarder &amp; Brokerage Team ($499/month — 10 Seats)">
+                Deploy Brokerage Team Plan ($499/mo) →
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Programmatic SEO Directory Callout -->
+          <div class="seo-hub-callout-card">
+            <div class="seo-callout-left">
+              <span class="seo-callout-badge">03 // ORGANIC ACQUISITION ENGINE &amp; REGULATORY INDEX</span>
+              <h3 class="seo-callout-title">Explore Our Programmatic Regulatory Citation Pages</h3>
+              <p class="seo-callout-desc">
+                Browse high-intent landing pages targeting specific CBP &amp; IRS exam citations (<em>19 CFR § 111.32 False Information</em>, <em>19 CFR § 152.103 Transaction Value Assists</em>, <em>GRI 3(b) Essential Character</em>, and more) with embedded interactive micro-drills.
+              </p>
+            </div>
+            <a href="seo-pages/index.html" class="seo-callout-btn">
+              Open Programmatic Regulatory Directory (seo-pages/index.html) →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODAL 1: PEARSON VUE QUESTION NAVIGATOR GRID
+       ===================================================================== -->
+  <div class="pvue-modal-backdrop hidden" id="navigatorModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="navModalTitle">
+    <div class="pvue-modal-window pvue-navigator-modal">
+      <div class="pvue-modal-header">
+        <div class="pvue-modal-title-group">
+          <span class="pvue-modal-icon">[NAV]</span>
+          <h2 id="navModalTitle">Pearson VUE Question Navigator &amp; Citation Verification Grid</h2>
+        </div>
+        <button type="button" class="pvue-modal-close" id="btnCloseNavigatorModal" aria-label="Close Navigator">×</button>
+      </div>
+
+      <div class="pvue-modal-body">
+        <div class="nav-legend-bar">
+          <div class="nav-legend-item"><span class="nav-dot nav-dot-answered"></span> Answered (<strong id="navStatAnswered">0</strong>)</div>
+          <div class="nav-legend-item"><span class="nav-dot nav-dot-unanswered"></span> Unanswered (<strong id="navStatUnanswered">0</strong>)</div>
+          <div class="nav-legend-item"><span class="nav-dot nav-dot-flagged"></span> Flagged for Review (<strong id="navStatFlagged">0</strong>)</div>
+          <div class="nav-legend-item"><span class="nav-dot nav-dot-verified"></span> Citation Proof Attached (<strong id="navStatVerified">0</strong>)</div>
+        </div>
+
+        <div class="nav-questions-grid" id="navigatorQuestionsGrid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div class="pvue-modal-footer">
+        <button type="button" class="pvue-btn-secondary" id="btnNavCloseFooter">Continue Testing</button>
+        <button type="button" class="pvue-btn-primary" id="btnNavGradeExam">[COMPLETE &amp; GRADE EXAM NOW]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: CUSTOMS VALUATION CALCULATOR & CANDIDATE SCRATCHPAD
+       ===================================================================== -->
+  <div class="pvue-modal-backdrop hidden" id="scratchpadModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="scratchModalTitle">
+    <div class="pvue-modal-window pvue-scratchpad-modal">
+      <div class="pvue-modal-header">
+        <div class="pvue-modal-title-group">
+          <span class="pvue-modal-icon">[CALC]</span>
+          <h2 id="scratchModalTitle">Pearson VUE Customs Duty Calculator &amp; Citation Scratchpad</h2>
+        </div>
+        <button type="button" class="pvue-modal-close" id="btnCloseScratchpadModal" aria-label="Close Calculator and Scratchpad">×</button>
+      </div>
+
+      <div class="pvue-modal-body scratchpad-two-col">
+        <!-- Left: CBP Transaction Value / Assist / Duty Calculator -->
+        <div class="calc-pane">
+          <h3 class="scratch-subhead">19 CFR § 152.103 Transaction Value &amp; Duty Worksheet</h3>
+          <div class="calc-form-grid">
+            <div class="calc-field">
+              <label for="calcInvoicePrice">Price Actually Paid or Payable (FOB/Invoice $):</label>
+              <input type="number" id="calcInvoicePrice" value="50000" step="100" />
+            </div>
+            <div class="calc-field">
+              <label for="calcPackingCost">+ Packing Costs &amp; Selling Commissions ($):</label>
+              <input type="number" id="calcPackingCost" value="1500" step="50" />
+            </div>
+            <div class="calc-field">
+              <label for="calcAssistCost">+ Apportioned Assists (Molds, Dies, Engineering $):</label>
+              <input type="number" id="calcAssistCost" value="4000" step="100" />
+            </div>
+            <div class="calc-field">
+              <label for="calcRoyaltyCost">+ Dutiable Royalties / Subsequent Proceeds ($):</label>
+              <input type="number" id="calcRoyaltyCost" value="0" step="100" />
+            </div>
+            <div class="calc-field">
+              <label for="calcNonDutiable">- Non-Dutiable Int’l Freight &amp; Marine Insurance (if included $):</label>
+              <input type="number" id="calcNonDutiable" value="3500" step="100" />
+            </div>
+            <div class="calc-field">
+              <label for="calcDutyRate">HTSUS Ad Valorem Duty Rate (%):</label>
+              <input type="number" id="calcDutyRate" value="6.5" step="0.1" />
+            </div>
+          </div>
+
+          <div class="calc-results-box">
+            <div class="calc-res-row">
+              <span>Appraised Transaction Value (19 CFR § 152.103):</span>
+              <strong id="calcResTransactionValue">$52,000.00</strong>
+            </div>
+            <div class="calc-res-row">
+              <span>Estimated Ad Valorem Customs Duty:</span>
+              <strong id="calcResBaseDuty">$3,380.00</strong>
+            </div>
+            <div class="calc-res-row">
+              <span>MPF (0.3464% — Min $31.67 / Max $614.35) + HMF (0.125%):</span>
+              <strong id="calcResMpfHmf">$245.13</strong>
+            </div>
+            <div class="calc-res-row calc-res-total">
+              <span>Total Estimated CBP Entry Liquidation Deposit:</span>
+              <strong id="calcResTotalDeposit">$3,625.13</strong>
+            </div>
+          </div>
+
+          <button type="button" class="pvue-btn-secondary calc-insert-btn" id="btnInsertCalcToScratchpad">
+            [INSERT VALUATION BREAKDOWN INTO SCRATCHPAD]
+          </button>
+        </div>
+
+        <!-- Right: Candidate Scratchpad & Copied Citations -->
+        <div class="scratch-pane">
+          <div class="scratch-pane-top">
+            <h3 class="scratch-subhead">Candidate Exam Scratchpad &amp; Copied Citations</h3>
+            <button type="button" class="scratch-clear-btn" id="btnClearScratchpadNotes">Clear Notes</button>
+          </div>
+          <textarea
+            id="candidateScratchpadTextarea"
+            class="scratchpad-textarea"
+            placeholder="Copied 19 CFR / HTSUS citations, calculation notes, and broker exam memos appear here and auto-save to localStorage..."
+          ></textarea>
+          <div class="scratch-saved-status" id="scratchSavedStatus">[SAVED TO LOCALSTORAGE]</div>
+        </div>
+      </div>
+
+      <div class="pvue-modal-footer">
+        <button type="button" class="pvue-btn-primary" id="btnScratchpadDone">Close Worksheet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: OFFICIAL PEARSON VUE EXAM SCORE REPORT (75% THRESHOLD)
+       ===================================================================== -->
+  <div class="pvue-modal-backdrop hidden" id="scoreReportModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="scoreModalTitle">
+    <div class="pvue-modal-window pvue-score-modal">
+      <div class="pvue-modal-header">
+        <div class="pvue-modal-title-group">
+          <span class="pvue-modal-icon">[REPORT]</span>
+          <h2 id="scoreModalTitle">Official Pearson VUE / CBP Examination Score Report</h2>
+        </div>
+        <button type="button" class="pvue-modal-close" id="btnCloseScoreReportModal" aria-label="Close Score Report">×</button>
+      </div>
+
+      <div class="pvue-modal-body" id="scoreReportModalBody">
+        <!-- Populated dynamically on Grade Exam -->
+      </div>
+
+      <div class="pvue-modal-footer">
+        <button type="button" class="pvue-btn-secondary" id="btnScoreReviewQuestions">Review Questions &amp; Explanations</button>
+        <button type="button" class="pvue-btn-primary" id="btnScoreOpenAnalytics">[VIEW FULL READINESS LEDGER →]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 4: INTERACTIVE STRIPE CHECKOUT SAAS SUBSCRIPTION SIMULATION
+       ===================================================================== -->
+  <div class="pvue-modal-backdrop hidden" id="checkoutModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <div class="pvue-modal-window checkout-modal-window">
+      <div class="pvue-modal-header">
+        <div class="pvue-modal-title-group">
+          <span class="pvue-modal-icon">[LICENSE]</span>
+          <h2 id="checkoutModalTitle">CodeDrill™ CBT Instant Provisioning (Stripe Checkout)</h2>
+        </div>
+        <button type="button" class="pvue-modal-close" id="btnCloseCheckoutModal" aria-label="Close Checkout">×</button>
+      </div>
+
+      <div class="pvue-modal-body">
+        <div class="checkout-selected-plan-banner">
+          <div>
+            <span class="checkout-plan-kicker">SELECTED SUBSCRIPTION TIER</span>
+            <h3 class="checkout-plan-name" id="checkoutSelectedPlanName">Candidate Pro — $79 / month</h3>
+          </div>
+          <span class="checkout-guarantee-pill">75% PASS GUARANTEE</span>
+        </div>
+
+        <form id="stripeCheckoutForm" class="checkout-form">
+          <div class="checkout-field">
+            <label for="checkoutEmailInput">Work or Candidate Email Address</label>
+            <input type="email" id="checkoutEmailInput" required placeholder="broker.candidate@globalfreight.com" value="compliance.lead@apexcustoms.com" />
+          </div>
+
+          <div class="checkout-field">
+            <label for="checkoutOrgInput">Organization / Brokerage Firm (Optional for B2C)</label>
+            <input type="text" id="checkoutOrgInput" placeholder="Apex Global Customs Brokerage LLC" value="Apex Global Customs Brokerage LLC" />
+          </div>
+
+          <div class="checkout-field">
+            <label for="checkoutTrackPref">Primary Regulatory Exam Track</label>
+            <select id="checkoutTrackPref">
+              <option value="CBLE">U.S. Customs Broker License Exam (19 CFR + HTSUS)</option>
+              <option value="EA">IRS Enrolled Agent Special Enrollment Exam (31 CFR Part 10)</option>
+              <option value="DUAL">Enterprise Dual License (CBLE + IRS Enrolled Agent)</option>
+            </select>
+          </div>
+
+          <div class="checkout-card-mock">
+            <div class="checkout-card-label">Simulated Corporate / Candidate Payment Method</div>
+            <div class="checkout-card-box">
+              <span>CARD // 4242-XXXX-XXXX-4242</span>
+              <span>EXP 08/29 // CVC 884</span>
+            </div>
+          </div>
+
+          <button type="submit" class="checkout-submit-btn" id="btnSubmitStripeCheckout">
+            [ACTIVATE CODEDRILL™ LICENSE &amp; UNLOCK EXAM BANK →]
+          </button>
+        </form>
+
+        <div class="checkout-success-box hidden" id="checkoutSuccessBox">
+          <div class="checkout-success-icon">[VERIFIED // PROVISIONED]</div>
+          <h3>Enterprise / Pro Seat Provisioned</h3>
+          <p id="checkoutSuccessMessage">
+            Your CodeDrill™ CBT license is now active. All 1:1 Pearson VUE Split-Screen simulation tools and 90-second Citation-Speed drills are unlocked.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- External Data Payload + Core Application Logic -->
+  <script src="data/codedrill-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "stealthflow-12-source-playwright-make-demo",
+  "cleanUrls": true,
+  "trailingSlash": false
+}

@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>OmniRAG™ — Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-accent-tint:    #FDF2EE;
+
+      --cf-navy-authority: #1B365D;
+      --cf-navy-tint:      #EEF2F7;
+
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #EDF5F0;
+
+      --cf-brass-warn:     #9C5A08;
+      --cf-brass-tint:     #FBF4E9;
+
+      --cf-highlight-mark: #FCE588;
+
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::selection {
+      background-color: var(--cf-highlight-mark);
+      color: var(--cf-ink-primary);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+      color: var(--cf-ink-muted);
+    }
+
+    /* Masthead */
+    .masthead {
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .masthead-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .back-link:hover {
+      background-color: #2B2A27;
+    }
+
+    .app-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--cf-ink-primary);
+    }
+
+    /* Tactile Mechanical Buttons */
+    .btn-tactile {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 11px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      box-shadow: 2px 2px 0px var(--cf-ink-primary);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .btn-tactile:hover {
+      background-color: var(--cf-bg-stone);
+    }
+
+    .btn-tactile:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--cf-ink-primary);
+    }
+
+    .btn-tactile-vermilion {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+    }
+
+    .btn-tactile-vermilion:hover {
+      background-color: var(--cf-accent-hover);
+    }
+
+    .btn-tactile-ink {
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+    }
+
+    .btn-tactile-forest {
+      background-color: var(--cf-forest-pass);
+      color: #FFFFFF;
+    }
+
+    /* Main Blueprint Shell */
+    .shell {
+      max-width: 1560px;
+      width: 100%;
+      margin: 0 auto;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top StateGraph Pipeline Telemetry Bar */
+    .pipeline-bar {
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 10px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .nodes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+    }
+
+    @media (min-width: 640px) {
+      .nodes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .nodes-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .node-cell {
+      padding: 12px 16px;
+      border-right: 1px solid var(--cf-rule-mid);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: background-color 0.18s ease;
+    }
+
+    @media (min-width: 1024px) {
+      .node-cell {
+        border-bottom: none;
+      }
+      .node-cell:last-child {
+        border-right: none;
+      }
+    }
+
+    .node-cell.pulsing {
+      background-color: var(--cf-highlight-mark);
+    }
+
+    .node-index {
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Split-Screen Workbench (Left 6 Cols: Citation Stream | Right 6 Cols: Source Document Inspector) */
+    .split-workbench {
+      display: grid;
+      grid-template-columns: 1fr;
+      flex: 1;
+    }
+
+    @media (min-width: 1080px) {
+      .split-workbench {
+        grid-template-columns: 6fr 6fr;
+      }
+    }
+
+    .left-pane {
+      background-color: var(--cf-bg-paper);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 1080px) {
+      .left-pane {
+        border-bottom: none;
+        border-right: 1.5px solid var(--cf-rule-strong);
+      }
+    }
+
+    .right-pane {
+      background-color: var(--cf-bg-surface);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pane-toolbar {
+      padding: 12px 20px;
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    /* Clickable Citation Badges (Westlaw / Editorial Legal Reference Style) */
+    .citation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 1px 7px;
+      margin: 2px 2px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      background-color: var(--cf-accent-tint);
+      color: var(--cf-accent-primary);
+      border: 1px solid var(--cf-accent-primary);
+      cursor: pointer;
+      box-shadow: 1px 1px 0px var(--cf-ink-primary);
+      transition: transform 0.08s ease, background-color 0.12s ease;
+    }
+
+    .citation-badge:hover {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+    }
+
+    .citation-badge:active {
+      transform: translate(1px, 1px);
+    }
+
+    /* Prompt Chips */
+    .prompt-chip {
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: border-color 0.12s ease, background-color 0.12s ease;
+    }
+
+    .prompt-chip:hover {
+      border-color: var(--cf-ink-primary);
+      background-color: var(--cf-highlight-mark);
+    }
+
+    /* Chat & Verification Stream */
+    .stream-viewport {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 540px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      max-width: 88%;
+      background-color: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 12px 16px;
+      border-radius: 2px;
+    }
+
+    .msg-system {
+      width: 100%;
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      box-shadow: 3px 3px 0px var(--cf-rule-mid);
+      padding: 16px 20px;
+      border-radius: 2px;
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--cf-ink-primary);
+    }
+
+    .msg-system ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .msg-system li {
+      margin-bottom: 10px;
+    }
+
+    /* Document Source Chunks */
+    .doc-viewport {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 540px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-color: var(--cf-bg-paper);
+    }
+
+    .doc-chunk {
+      padding: 16px 18px;
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .doc-chunk:hover {
+      border-color: var(--cf-ink-primary);
+    }
+
+    .doc-chunk.source-highlighted {
+      background-color: var(--cf-highlight-mark);
+      border: 1.5px solid var(--cf-ink-primary);
+      box-shadow: 3px 3px 0px var(--cf-ink-primary);
+    }
+
+    .chunk-body-text {
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--cf-ink-primary);
+      margin-top: 8px;
+    }
+
+    .input-mechanical {
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-ink-primary);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .input-mechanical:focus {
+      border-color: var(--cf-accent-primary);
+    }
+
+    .site-footer {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-top: 1.5px solid var(--cf-rule-strong);
+      padding: 18px 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Masthead with 3 Client Presets & Direct Email -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand-group">
+        <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h1 class="app-title">OmniRAG&trade; Document Citation Studio <span class="mono" style="font-size:13px; color:var(--cf-accent-primary);">[SYS-02 // v3.1]</span></h1>
+            <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
+              FASTAPI + STATEGRAPH + PGVECTOR
+            </span>
+          </div>
+          <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
+            Multi-Format Ingestion (<span class="mono" style="font-weight:600;">PDF / DOCX / XLSX</span>) &bull; Hybrid BM25 + Vector RRF &bull; Clickable Page &amp; Cell Coordinate Citations
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">PRESET:</span>
+        <button onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="btn-tactile">
+          01 // ENTERPRISE PDF/DOCX/XLSX
+        </button>
+        <button onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="btn-tactile">
+          02 // AGENTPRESS MCP DEAL DESK
+        </button>
+        <button onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="btn-tactile">
+          03 // BUILDQ SOLAR 200K-PDF VERIFIER
+        </button>
+        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
+          <span>engineering@caliberfoundry.com</span>
+          <span>&nearr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <!-- StateGraph Pipeline Header Bar -->
+    <div class="pipeline-bar">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
+          DETERMINISTIC STATEGRAPH EXECUTION TRACE //
+        </span>
+        <span id="presetSubBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-rule-strong); background:var(--cf-bg-surface); color:var(--cf-accent-primary); font-weight:600;"></span>
+      </div>
+      <div class="mono" style="display:flex; align-items:center; gap:16px; font-size:11.5px;">
+        <span>TTFT: <strong id="metricTtft" style="color:var(--cf-forest-pass);">380ms</strong></span>
+        <span>RRF RECALL@5: <strong style="color:var(--cf-navy-authority);">99.4%</strong></span>
+        <span>QUERY COST: <strong id="metricCost" style="color:var(--cf-accent-primary);">$0.0041</strong></span>
+      </div>
+    </div>
+
+    <!-- 4 StateGraph Nodes Strip -->
+    <section class="nodes-grid">
+      <div id="lg_node_1" class="node-cell">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="node-index">01</div>
+          <div>
+            <div style="font-size:12.5px; font-weight:700;">Document &amp; MCP Router</div>
+            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">PDF + DOCX + XLSX Parser</div>
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">42ms</span>
+      </div>
+
+      <div id="lg_node_2" class="node-cell">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="node-index">02</div>
+          <div>
+            <div style="font-size:12.5px; font-weight:700;">Hybrid pgvector + BM25</div>
+            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Reciprocal Rank Fusion (k=60)</div>
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">128ms</span>
+      </div>
+
+      <div id="lg_node_3" class="node-cell">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="node-index">03</div>
+          <div>
+            <div style="font-size:12.5px; font-weight:700;">Cross-Table &amp; Clause Verifier</div>
+            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">XLSX Row vs. PDF Clause Diff</div>
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">115ms</span>
+      </div>
+
+      <div id="lg_node_4" class="node-cell">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="node-index">04</div>
+          <div>
+            <div style="font-size:12.5px; font-weight:700;">Citation Grounding Guardrail</div>
+            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">100% Coordinate Verification</div>
+          </div>
+        </div>
+        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">95ms</span>
+      </div>
+    </section>
+
+    <!-- Split-Screen Workbench -->
+    <section class="split-workbench">
+
+      <!-- Left 6 Cols: Citation-Grounded Verification Stream -->
+      <div class="left-pane">
+        <div class="pane-toolbar">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
+              LEFT PANE // CITATION-GROUNDED VERIFICATION STREAM (CLICK ANY [CITATION] BADGE)
+            </span>
+            <span class="mono" style="font-size:10.5px; padding:1px 6px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
+              1:1 COORDINATE LOCK
+            </span>
+          </div>
+          <div id="promptChipsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div id="chatMessages" class="stream-viewport">
+          <!-- Populated by JS -->
+        </div>
+
+        <div style="padding:12px 20px; border-top:1px solid var(--cf-rule-mid); background-color:var(--cf-bg-stone);">
+          <form onsubmit="handleCustomQuery(event)" style="display:flex; gap:8px;">
+            <input id="customQueryInput" type="text" placeholder="Query cross-document covenants, tables, and numerical schedules across PDF, DOCX, and XLSX..." class="input-mechanical" style="flex:1;" />
+            <button type="submit" class="btn-tactile btn-tactile-vermilion">
+              <span>EXECUTE VERIFICATION</span>
+              <span>&rarr;</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right 6 Cols: Multi-Format Document & Spreadsheet Source Inspector -->
+      <div class="right-pane">
+        <div class="pane-toolbar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
+          <div id="docTabsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
+            <!-- Populated by JS -->
+          </div>
+          <button onclick="triggerExpertSignOff()" id="btnSignOff" class="btn-tactile btn-tactile-forest">
+            <span>EXPERT SIGN-OFF &amp; EXPORT AUDIT JSON</span>
+            <span>&darr;</span>
+          </button>
+        </div>
+
+        <!-- Active Citation Banner -->
+        <div id="activeCitationBanner" style="padding:9px 20px; background-color:var(--cf-highlight-mark); border-bottom:1px solid var(--cf-rule-strong); display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:11.5px;">
+          <div>
+            <strong>§ SOURCE LOCATOR:</strong>
+            <span id="activeCitationText">Click any [Citation] badge on the left to jump to the exact page, clause, or spreadsheet cell.</span>
+          </div>
+          <span id="activeConfidenceBadge" style="padding:1px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px;">
+            99.6% MATCH
+          </span>
+        </div>
+
+        <div id="documentViewport" class="doc-viewport">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
+      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; OMNIRAG&trade; MULTI-DOCUMENT CITATION &amp; WORKFLOW STUDIO</span>
+      <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
+    </div>
+  </footer>
+
+  <script>
+    const PRESETS = {
+      enterprise_rag: {
+        badge: "SPEC-02A // MULTI-FORMAT PDF / DOCX / XLSX CITATION ENGINE",
+        prompts: [
+          "Compare Q3 EBITDA & cap thresholds across XLSX and MSA DOCX",
+          "Verify SLA penalty caps in PDF vs. Q3_Financials.xlsx Row 14"
+        ],
+        docs: [
+          {
+            id: "doc_xlsx",
+            name: "Q3_Financials.xlsx",
+            format: "XLSX",
+            chunks: [
+              { id: "cit_xlsx_r12", coord: "Sheet 2, Row 12 (Cell D12)", title: "Enterprise Cloud ARR & Gross Margin", text: "Row 12 | Enterprise Tier ARR: $14,820,000 | Gross Margin: 81.4% | YoY Expansion: +34.2% | Verified by Finance ETL." },
+              { id: "cit_xlsx_r14", coord: "Sheet 2, Row 14 (Cell F14)", title: "Quarterly SLA Credit Liability Reserve", text: "Row 14 | Maximum SLA Liability Exposure Cap: $285,000 per fiscal quarter (strictly capped at 12.0% of quarterly contract billings)." },
+              { id: "cit_xlsx_r19", coord: "Sheet 2, Row 19 (Cell E19)", title: "Adjusted EBITDA & Compute Cost Ratio", text: "Row 19 | Adjusted Q3 EBITDA: $4,190,000 (28.2% margin) | Vector DB & Inference Spend: $142,500 ($0.0038/query avg)." }
+            ]
+          },
+          {
+            id: "doc_docx",
+            name: "Master_Service_Agreement.docx",
+            format: "DOCX",
+            chunks: [
+              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Limitation of Liability & SLA Rebate Cap", text: "§4.2 Indemnification & Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
+              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Data Residency & Zero-Retention Policy", text: "§6.1 Enterprise Data Governance: All customer embeddings in PostgreSQL pgvector are isolated by tenant_id with zero third-party training retention." }
+            ]
+          },
+          {
+            id: "doc_pdf",
+            name: "Board_Audit_Report_2026.pdf",
+            format: "PDF",
+            chunks: [
+              { id: "cit_pdf_p4", coord: "Page 4, Table 2.1", title: "Independent Audit Verification of Q3 Covenants", text: "Page 4, Table 2.1: Auditor confirms Q3 Adjusted EBITDA of $4.19M exceeds the $3.50M senior debt covenant threshold by +19.7%, with zero uncapped SLA liabilities." },
+              { id: "cit_pdf_p9", coord: "Page 9, Paragraph 3", title: "SOC2 Type II Cryptographic Citation Audit", text: "Page 9, Para 3: Every automated retrieval response enforces deterministic page-level and row-level citation links prior to streaming to the end user." }
+            ]
+          }
+        ],
+        initialChat: [
+          {
+            role: "user",
+            text: "Cross-check our Q3 SLA liability exposure and Adjusted EBITDA across Q3_Financials.xlsx, Master_Service_Agreement.docx, and the Board Audit PDF."
+          },
+          {
+            role: "assistant",
+            html: `Executed a 4-stage <strong>StateGraph</strong> verification across your <code>XLSX</code>, <code>DOCX</code>, and <code>PDF</code> repositories. All numerical figures and legal covenants are <strong>100% consistent</strong>:
+            <ul>
+              <li><strong>Quarterly SLA Liability Cap ($285,000 / 12.0%):</strong> The financial reserve model in <span onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">[Citation: Q3_Financials.xlsx &mdash; Sheet 2, Row 14]</span> allocates a maximum quarterly exposure of <strong>$285,000 (12.0%)</strong>, which matches the contractual ceiling in <span onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">[Citation: Master_Service_Agreement.docx &mdash; Page 7, §4.2]</span>.</li>
+              <li><strong>Q3 Adjusted EBITDA Covenant ($4.19M vs. $3.50M Floor):</strong> Spreadsheet line item <span onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">[Citation: Q3_Financials.xlsx &mdash; Sheet 2, Row 19]</span> reports <strong>$4,190,000 (28.2% margin)</strong>, independently attested in <span onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">[Citation: Board_Audit_Report_2026.pdf &mdash; Page 4, Table 2.1]</span> (+19.7% above threshold).</li>
+              <li><strong>Tenant Isolation &amp; Data Governance:</strong> Verified compliant with <span onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">[Citation: Master_Service_Agreement.docx &mdash; Page 11, §6.1]</span>.</li>
+            </ul>`
+          }
+        ]
+      },
+
+      agentpress_mcp: {
+        badge: "SPEC-02B // AGENTPRESS B2B DEAL COPILOT + MCP TOOL STREAMING",
+        prompts: [
+          "Run MCP Deal Desk check on Acme Corp $240k Enterprise Renewal",
+          "Draft CFO security & discount justification with page citations"
+        ],
+        docs: [
+          {
+            id: "ap_pdf",
+            name: "Acme_Enterprise_OrderForm.pdf",
+            format: "PDF",
+            chunks: [
+              { id: "ap_cit_p3", coord: "Page 3, Section 2 (Order Schedule)", title: "Acme Corp 3-Year Enterprise Commit ($240,000 ACV)", text: "Page 3, Section 2: 250 Revenue Seats @ $80/seat/mo ($240,000 Annual Contract Value). Requested Custom Discount: 18.5% off list price, contingent on Q4 signature." },
+              { id: "ap_cit_p5", coord: "Page 5, Rider B", title: "Custom MCP On-Premise Connector Addendum", text: "Page 5, Rider B: Customer requires bi-directional Model Context Protocol (MCP) integration with Salesforce CRM, Slack Deal Rooms, and Stripe Billing API." }
+            ]
+          },
+          {
+            id: "ap_xlsx",
+            name: "RevOps_DealDesk_Matrix.xlsx",
+            format: "XLSX",
+            chunks: [
+              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Discount Approval Guardrails ($200k–$500k ACV)", text: "Row 8 | ACV Band: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Multi-Year Commits | Gross Margin Floor: 78.0%." },
+              { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (MCP SKU Pricing)", title: "Enterprise MCP Connector Bundle SKU", text: "Row 15 | SKU: AP-MCP-ENT | Included free of charge for commitments >= $200,000 ACV." }
+            ]
+          },
+          {
+            id: "ap_docx",
+            name: "Security_DPA_Addendum.docx",
+            format: "DOCX",
+            chunks: [
+              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "SOC2 & Subprocessor Authorization", text: "§3.1 Subprocessors: Zero-Data-Retention enterprise inference endpoints pre-authorized under Customer DPA." }
+            ]
+          }
+        ],
+        initialChat: [
+          {
+            role: "user",
+            text: "Evaluate Acme Corp's $240k Order Form against our Deal Desk Matrix and MCP entitlement rules."
+          },
+          {
+            role: "assistant",
+            html: `<strong>AgentPress Deal Desk Engine</strong> queried <code>mcp://salesforce-crm</code> and cross-verified the deal artifacts:
+            <ul>
+              <li><strong>Instant Deal Desk Auto-Approval (18.5% Discount):</strong> Acme Corp's requested <strong>18.5% discount</strong> on a $240,000 ACV 3-year commit in <span onclick="jumpToCitation('ap_pdf','ap_cit_p3')" class="citation-badge">[Citation: Acme_Enterprise_OrderForm.pdf &mdash; Page 3, §2]</span> falls safely within the <strong>20.0% ceiling</strong> in <span onclick="jumpToCitation('ap_xlsx','ap_cit_r8')" class="citation-badge">[Citation: RevOps_DealDesk_Matrix.xlsx &mdash; Sheet 1, Row 8]</span>.</li>
+              <li><strong>$0 Waived Fee for MCP Connector Bundle:</strong> Per <span onclick="jumpToCitation('ap_pdf','ap_cit_p5')" class="citation-badge">[Citation: Acme_Enterprise_OrderForm.pdf &mdash; Page 5, Rider B]</span>, the Salesforce/Slack/Stripe MCP add-on qualifies for a 100% fee waiver under <span onclick="jumpToCitation('ap_xlsx','ap_cit_r15')" class="citation-badge">[Citation: RevOps_DealDesk_Matrix.xlsx &mdash; Sheet 1, Row 15]</span>.</li>
+              <li><strong>DPA Security Sign-Off Ready:</strong> Zero-retention endpoints confirmed in <span onclick="jumpToCitation('ap_docx','ap_cit_s31')" class="citation-badge">[Citation: Security_DPA_Addendum.docx &mdash; Page 4, §3.1]</span>.</li>
+            </ul>`
+          }
+        ]
+      },
+
+      buildq_solar: {
+        badge: "SPEC-02C // BUILDQ 200K-PDF SOLAR PROJECT DUE DILIGENCE VERIFIER",
+        prompts: [
+          "Detect MW capacity & lease term collisions across Solar PDFs & EPC XLSX",
+          "Verify ERCOT Interconnection POI limit vs. BESS inverter schedule"
+        ],
+        docs: [
+          {
+            id: "bq_lease_pdf",
+            name: "Solar_Land_Lease.pdf",
+            format: "PDF",
+            chunks: [
+              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "Parcel B-14 Acreage & Decommissioning Covenant", text: "Page 4, §3.2: Lessor grants 480 contiguous acres in Travis County, TX for a maximum operational term of 35 years (expiring December 31, 2061)." },
+              { id: "bq_cit_p12", coord: "Page 12, Exhibit C", title: "Substation Easement & Transmission Right-of-Way", text: "Page 12, Exhibit C: 138kV Gen-Tie transmission corridor easement recorded under County Instrument #2026-0098412." }
+            ]
+          },
+          {
+            id: "bq_grid_pdf",
+            name: "Grid_Interconnection_Study.pdf",
+            format: "PDF",
+            chunks: [
+              { id: "bq_cit_p18", coord: "Page 18, Table 3 (ERCOT POI Limit)", title: "CRITICAL: Point of Interconnection Maximum Export Limit", text: "Page 18, Table 3 | ERCOT FIS Stability Limit: Maximum continuous net injection at Substation POI is strictly capped at 42.5 MW AC without $11.4M network transformer upgrade." }
+            ]
+          },
+          {
+            id: "bq_epc_xlsx",
+            name: "EPC_Engineering_Spec.xlsx",
+            format: "XLSX",
+            chunks: [
+              { id: "bq_cit_r9", coord: "Sheet 1, Row 9 (Inverter Block BOM)", title: "COLLISION DETECTED: Scheduled Nameplate AC Capacity", text: "Row 9 | Scheduled Sungrow Central Inverter Blocks: 20 x 2.5 MW AC = 50.0 MW AC Continuous Export (Exceeds ERCOT POI Cap by +7.5 MW AC!)." },
+              { id: "bq_cit_r22", coord: "Sheet 1, Row 22 (Financial Model Term)", title: "PPA & Asset Depreciation Horizon", text: "Row 22 | Project Finance Revenue Horizon: 35 Years aligned with December 31, 2061 Land Lease expiration." }
+            ]
+          }
+        ],
+        initialChat: [
+          {
+            role: "user",
+            text: "Run automated cross-document Due Diligence across the Land Lease PDF, ERCOT Grid Interconnection Study PDF, and EPC Engineering Spec XLSX."
+          },
+          {
+            role: "assistant",
+            html: `<div style="padding:10px 12px; background-color:var(--cf-accent-tint); border:1.5px solid var(--cf-accent-primary); color:var(--cf-accent-primary); font-family:var(--font-mono); font-size:11.5px; font-weight:600; margin-bottom:10px;">
+              [ALERT // 1 CRITICAL DILIGENCE COLLISION DETECTED &mdash; SAVES 3 WEEKS OF MANUAL PROJECT FINANCE REVIEW]
+            </div>
+            <ul>
+              <li><strong style="color:var(--cf-accent-primary);">7.5 MW AC Interconnection Mismatch (Action Required):</strong> The ERCOT Facility Study in <span onclick="jumpToCitation('bq_grid_pdf','bq_cit_p18')" class="citation-badge">[Citation: Grid_Interconnection_Study.pdf &mdash; Page 18, Table 3]</span> caps continuous POI export at <strong>42.5 MW AC</strong>, whereas the EPC Bill of Materials in <span onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r9')" class="citation-badge">[Citation: EPC_Engineering_Spec.xlsx &mdash; Sheet 1, Row 9]</span> schedules <strong>50.0 MW AC</strong> of inverter capacity without budgeting the $11.4M substation upgrade.</li>
+              <li><strong style="color:var(--cf-forest-pass);">35-Year Lease &amp; Easement Verified:</strong> The 35-year operational term (through Dec 31, 2061) in <span onclick="jumpToCitation('bq_lease_pdf','bq_cit_p4')" class="citation-badge">[Citation: Solar_Land_Lease.pdf &mdash; Page 4, §3.2]</span> matches the depreciation model in <span onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r22')" class="citation-badge">[Citation: EPC_Engineering_Spec.xlsx &mdash; Sheet 1, Row 22]</span>.</li>
+            </ul>`
+          }
+        ]
+      }
+    };
+
+    let currentPresetKey = 'enterprise_rag';
+    let currentDocId = 'doc_xlsx';
+    let highlightedChunkId = 'cit_xlsx_r14';
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function switchPreset(presetKey) {
+      currentPresetKey = presetKey;
+      const preset = PRESETS[presetKey];
+
+      ['enterprise_rag', 'agentpress_mcp', 'buildq_solar'].forEach(k => {
+        const btn = document.getElementById('preset_' + k);
+        if (k === presetKey) {
+          btn.className = "btn-tactile btn-tactile-vermilion";
+        } else {
+          btn.className = "btn-tactile";
+        }
+      });
+
+      document.getElementById('presetSubBadge').textContent = preset.badge;
+
+      const chipsDiv = document.getElementById('promptChipsContainer');
+      chipsDiv.innerHTML = preset.prompts.map(p => `
+        <button onclick="runPromptChip('${p.replace(/'/g, "\\'")}')" class="prompt-chip">
+          &rarr; ${p}
+        </button>
+      `).join('');
+
+      const chatDiv = document.getElementById('chatMessages');
+      chatDiv.innerHTML = preset.initialChat.map(msg => renderChatMessageHTML(msg)).join('');
+
+      currentDocId = preset.docs[0].id;
+      highlightedChunkId = preset.docs[0].chunks[0].id;
+      renderDocumentTabs();
+      renderDocumentViewport();
+      animateLangGraphNodes();
+    }
+
+    function renderChatMessageHTML(msg) {
+      if (msg.role === 'user') {
+        return `
+          <div class="msg-user">
+            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">[OPERATOR QUERY]</div>
+            <div style="font-size:13px;">${escapeHtml(msg.text)}</div>
+          </div>
+        `;
+      }
+      return `
+        <div class="msg-system">
+          <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px; margin-bottom:10px; font-family:var(--font-mono); font-size:10.5px;">
+            <span style="font-weight:600; color:var(--cf-navy-authority);">[STATEGRAPH CITATION-VERIFIED RESPONSE]</span>
+            <span style="color:var(--cf-forest-pass); font-weight:600;">100% GROUNDED &bull; CLICK BADGES TO INSPECT SOURCE</span>
+          </div>
+          <div>${msg.html}</div>
+        </div>
+      `;
+    }
+
+    function renderDocumentTabs() {
+      const preset = PRESETS[currentPresetKey];
+      const container = document.getElementById('docTabsContainer');
+      container.innerHTML = preset.docs.map(doc => {
+        const active = doc.id === currentDocId;
+        return `
+          <button onclick="selectDocTab('${doc.id}')" class="btn-tactile ${active ? 'btn-tactile-ink' : ''}">
+            <span>[${doc.format}]</span>
+            <span>${doc.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectDocTab(docId) {
+      currentDocId = docId;
+      renderDocumentTabs();
+      renderDocumentViewport();
+    }
+
+    function renderDocumentViewport() {
+      const preset = PRESETS[currentPresetKey];
+      const doc = preset.docs.find(d => d.id === currentDocId) || preset.docs[0];
+      const viewport = document.getElementById('documentViewport');
+
+      viewport.innerHTML = doc.chunks.map(chunk => {
+        const isHighlighted = chunk.id === highlightedChunkId;
+        return `
+          <div id="chunk_${chunk.id}" onclick="jumpToCitation('${doc.id}','${chunk.id}')" class="doc-chunk ${isHighlighted ? 'source-highlighted' : ''}">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="mono" style="font-size:10.5px; font-weight:600; padding:1px 6px; border:1px solid var(--cf-ink-primary); background:${isHighlighted ? 'var(--cf-ink-primary)' : 'var(--cf-bg-paper)'}; color:${isHighlighted ? 'var(--cf-ink-on-dark)' : 'var(--cf-ink-primary)'};">
+                  ${doc.name} &mdash; ${chunk.coord}
+                </span>
+                <span style="font-size:13px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
+              </div>
+              <span class="mono" style="font-size:10.5px; font-weight:600; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
+                ${isHighlighted ? '[§ ACTIVE CITATION SOURCE]' : 'RRF SCORE: 0.996'}
+              </span>
+            </div>
+            <p class="chunk-body-text">
+              &ldquo;${chunk.text}&rdquo;
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function jumpToCitation(docId, chunkId) {
+      currentDocId = docId;
+      highlightedChunkId = chunkId;
+      renderDocumentTabs();
+      renderDocumentViewport();
+
+      const preset = PRESETS[currentPresetKey];
+      const doc = preset.docs.find(d => d.id === docId);
+      const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
+
+      if (doc && chunk) {
+        document.getElementById('activeCitationText').textContent = `${doc.name} (${chunk.coord}) — "${chunk.title}"`;
+      }
+
+      const el = document.getElementById('chunk_' + chunkId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function animateLangGraphNodes() {
+      const ids = ['lg_node_1', 'lg_node_2', 'lg_node_3', 'lg_node_4'];
+      ids.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        setTimeout(() => {
+          el.classList.add('pulsing');
+          setTimeout(() => {
+            el.classList.remove('pulsing');
+          }, 320);
+        }, idx * 100);
+      });
+    }
+
+    function runPromptChip(promptText) {
+      document.getElementById('customQueryInput').value = promptText;
+      handleCustomQuery(new Event('submit'));
+    }
+
+    function handleCustomQuery(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const input = document.getElementById('customQueryInput');
+      const query = (input.value || '').trim();
+      if (!query) return;
+
+      animateLangGraphNodes();
+      const preset = PRESETS[currentPresetKey];
+      const firstDoc = preset.docs[0];
+      const secondDoc = preset.docs[1] || preset.docs[0];
+      const c1 = firstDoc.chunks[0];
+      const c2 = secondDoc.chunks[0];
+
+      const chatDiv = document.getElementById('chatMessages');
+      chatDiv.innerHTML += renderChatMessageHTML({ role: 'user', text: query });
+
+      const replyHtml = `Executed hybrid <code>pgvector + BM25</code> retrieval for <em>&ldquo;${escapeHtml(query)}&rdquo;</em> across all indexed formats:
+        <ul>
+          <li>Primary evidence retrieved from <span onclick="jumpToCitation('${escapeHtml(firstDoc.id)}','${escapeHtml(c1.id)}')" class="citation-badge">[Citation: ${escapeHtml(firstDoc.name)} &mdash; ${escapeHtml(c1.coord)}]</span>: <code>${escapeHtml(c1.text)}</code></li>
+          <li>Cross-verified against <span onclick="jumpToCitation('${escapeHtml(secondDoc.id)}','${escapeHtml(c2.id)}')" class="citation-badge">[Citation: ${escapeHtml(secondDoc.name)} &mdash; ${escapeHtml(c2.coord)}]</span> with <strong>99.6% coordinate grounding confidence</strong>.</li>
+        </ul>`;
+
+      setTimeout(() => {
+        chatDiv.innerHTML += renderChatMessageHTML({ role: 'assistant', html: replyHtml });
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+        jumpToCitation(firstDoc.id, c1.id);
+      }, 240);
+
+      input.value = '';
+    }
+
+    function triggerExpertSignOff() {
+      const preset = PRESETS[currentPresetKey];
+      const auditPayload = {
+        studio_version: "caliberfoundry-omnirag-v3.1.0",
+        preset: currentPresetKey,
+        timestamp: new Date().toISOString(),
+        verified_documents: preset.docs.map(d => ({ name: d.name, format: d.format, chunks_verified: d.chunks.length })),
+        active_citation_inspected: highlightedChunkId,
+        grounding_pass_rate: 1.0,
+        expert_sign_off: "APPROVED_WITH_CRYPTOGRAPHIC_AUDIT_TRAIL"
+      };
+      const blob = new Blob([JSON.stringify(auditPayload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `omnirag_audit_signoff_${currentPresetKey}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      const btn = document.getElementById('btnSignOff');
+      btn.innerHTML = `<span>SIGNED OFF &amp; AUDIT JSON DOWNLOADED</span>`;
+      setTimeout(() => {
+        btn.innerHTML = `<span>EXPERT SIGN-OFF &amp; EXPORT AUDIT JSON</span><span>&darr;</span>`;
+      }, 1800);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      switchPreset('enterprise_rag');
+    });
+  </script>
+</body>
+</html>

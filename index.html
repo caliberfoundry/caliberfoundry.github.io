@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Caliber Foundry — Principal Systems, Data & Software Engineering Studio</title>
+  <meta name="description" content="Caliber Foundry is a US-aligned Principal Systems, Data & Software Engineering Studio delivering turnkey B2B SaaS, distributed data pipelines, and interactive EdTech & RegTech platforms." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-accent-tint:    #FDF2EE;
+
+      --cf-navy-authority: #1B365D;
+      --cf-navy-tint:      #EEF2F7;
+
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #EDF5F0;
+
+      --cf-brass-warn:     #9C5A08;
+      --cf-brass-tint:     #FBF4E9;
+
+      --cf-highlight-mark: #FCE588;
+
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::selection {
+      background-color: var(--cf-highlight-mark);
+      color: var(--cf-ink-primary);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+      color: var(--cf-ink-muted);
+    }
+
+    /* Swiss Architectural Shell */
+    .blueprint-shell {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Masthead */
+    .masthead {
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .masthead-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-left: 1px solid var(--cf-rule-mid);
+      border-right: 1px solid var(--cf-rule-mid);
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--cf-ink-primary);
+    }
+
+    .brand-monogram {
+      width: 34px;
+      height: 34px;
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--cf-rule-strong);
+      border-radius: 2px;
+    }
+
+    .brand-title {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cf-ink-primary);
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--cf-ink-secondary);
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border: 1px solid var(--cf-forest-pass);
+      background-color: var(--cf-forest-tint);
+      color: var(--cf-forest-pass);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .status-square {
+      width: 6px;
+      height: 6px;
+      background-color: var(--cf-forest-pass);
+    }
+
+    /* Tactile Mechanical Buttons (Braun / Teenage Engineering) */
+    .btn-tactile {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      box-shadow: 2px 2px 0px var(--cf-ink-primary);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .btn-tactile:hover {
+      background-color: var(--cf-bg-stone);
+    }
+
+    .btn-tactile:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--cf-ink-primary);
+    }
+
+    .btn-tactile-vermilion {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      border-color: var(--cf-ink-primary);
+    }
+
+    .btn-tactile-vermilion:hover {
+      background-color: var(--cf-accent-hover);
+    }
+
+    .btn-tactile-ink {
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      border-color: var(--cf-ink-primary);
+    }
+
+    .btn-tactile-ink:hover {
+      background-color: #2A2927;
+    }
+
+    /* Editorial Hero Section */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      position: relative;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 8fr 4fr;
+      }
+    }
+
+    .hero-main {
+      padding: 48px 36px;
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    @media (min-width: 1024px) {
+      .hero-main {
+        border-bottom: none;
+        border-right: 1px solid var(--cf-rule-mid);
+      }
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cf-accent-primary);
+      margin-bottom: 18px;
+      padding: 3px 8px;
+      border: 1px solid var(--cf-accent-primary);
+      background-color: var(--cf-accent-tint);
+      border-radius: 2px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 5.2vw, 66px);
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      color: var(--cf-ink-primary);
+      margin-bottom: 22px;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--cf-accent-primary);
+    }
+
+    .hero-lede {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--cf-ink-secondary);
+      max-width: 64ch;
+    }
+
+    .hero-spec-aside {
+      background-color: var(--cf-bg-stone);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .spec-ledger {
+      border-top: 1px solid var(--cf-rule-strong);
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+      font-size: 12px;
+    }
+
+    .spec-row:last-child {
+      border-bottom: none;
+    }
+
+    .spec-key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cf-ink-muted);
+    }
+
+    .spec-val {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--cf-ink-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Section Header Bar */
+    .section-bar {
+      padding: 12px 28px;
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* 3-Column Exposed Swiss Systems Grid */
+    .systems-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+    }
+
+    @media (min-width: 1024px) {
+      .systems-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .system-cell {
+      background-color: var(--cf-bg-surface);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      position: relative;
+      transition: background-color 0.15s ease;
+    }
+
+    @media (min-width: 1024px) {
+      .system-cell {
+        border-bottom: none;
+        border-right: 1px solid var(--cf-rule-mid);
+      }
+      .system-cell:last-child {
+        border-right: none;
+      }
+    }
+
+    .system-cell:hover {
+      background-color: #FAF9F5;
+    }
+
+    /* Calibration Hair-Crosses (+) */
+    .crosshair-tr {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--cf-rule-mid);
+      user-select: none;
+    }
+
+    .cell-header-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+    }
+
+    .spec-index-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border: 1px solid var(--cf-ink-primary);
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      border-radius: 2px;
+    }
+
+    .system-title {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.12;
+      color: var(--cf-ink-primary);
+      margin-bottom: 12px;
+    }
+
+    .system-summary {
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--cf-ink-secondary);
+      margin-bottom: 22px;
+    }
+
+    .spec-list {
+      list-style: none;
+      border-top: 1px solid var(--cf-rule-subtle);
+      margin-bottom: 28px;
+    }
+
+    .spec-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+      font-size: 12.5px;
+      color: var(--cf-ink-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .spec-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cf-accent-primary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .artifact-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--cf-rule-mid);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .artifact-links a {
+      color: var(--cf-ink-secondary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      transition: color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .artifact-links a:hover {
+      color: var(--cf-accent-primary);
+      border-color: var(--cf-accent-primary);
+    }
+
+    /* Flagship Commercial Product Ledger Section */
+    .product-feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      background-color: var(--cf-bg-paper);
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    @media (min-width: 1024px) {
+      .product-feature-grid {
+        grid-template-columns: 7fr 5fr;
+      }
+    }
+
+    .product-left {
+      padding: 36px;
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    @media (min-width: 1024px) {
+      .product-left {
+        border-bottom: none;
+        border-right: 1px solid var(--cf-rule-mid);
+      }
+    }
+
+    .product-right {
+      padding: 36px;
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-top: 1.5px solid var(--cf-rule-strong);
+      padding: 24px 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Masthead -->
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a href="./" class="brand-lockup">
+        <div class="brand-monogram">CF</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span class="brand-title">Caliber Foundry</span>
+            <span class="status-tag">
+              <span class="status-square"></span>
+              <span>SYS-STATUS: OPERATIONAL</span>
+            </span>
+          </div>
+          <div class="brand-subtitle">Principal Systems, Data &amp; Software Engineering Studio &mdash; Turnkey B2B SaaS, Distributed ETL &amp; RegTech</div>
+        </div>
+      </a>
+
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
+          <span>engineering@caliberfoundry.com</span>
+          <span>&nearr;</span>
+        </a>
+        <a href="https://github.com/caliberfoundry" rel="noopener noreferrer" target="_blank" class="btn-tactile">
+          <span>[REPO // GITHUB]</span>
+          <span>&nearr;</span>
+        </a>
+        <a href="./codedrill-cbt/" class="btn-tactile btn-tactile-vermilion">
+          <span>CODEDRILL&trade; CBT SIMULATOR</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="blueprint-shell">
+
+    <!-- Editorial Hero Section -->
+    <section class="hero-grid">
+      <div class="hero-main">
+        <div class="hero-kicker">
+          <span>SPEC-CF-2026.4</span>
+          <span>//</span>
+          <span>VERIFIED PRODUCTION BENCHMARKS &bull; NO LOGIN REQUIRED</span>
+        </div>
+        <h1 class="hero-headline">
+          Working Software Before Our First <em>15-Minute</em> Architecture Call.
+        </h1>
+        <p class="hero-lede">
+          Caliber Foundry replaces multi-month specification delays with immediate, deterministic engineering proof. Inspect our live interactive benchmarks below&mdash;backed by strict Pydantic v2 validation schemas, deterministic state machines, and zero-PII cryptographic guardrails.
+        </p>
+      </div>
+
+      <aside class="hero-spec-aside">
+        <div>
+          <div class="spec-label" style="margin-bottom: 10px; color: var(--cf-ink-primary); font-weight: 600;">
+            [FIG. 00 // STUDIO TELEMETRY LEDGER]
+          </div>
+          <div class="spec-ledger">
+            <div class="spec-row">
+              <span class="spec-key">ENGINEERINGPRACTICE</span>
+              <span class="spec-val">SYSTEMS / ETL / REGTECH</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">BACKEND STACK</span>
+              <span class="spec-val">PYTHON &bull; FASTAPI &bull; PGVECTOR</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">FRONTEND ARCHITECTURE</span>
+              <span class="spec-val">REACT &bull; NEXT.JS &bull; TYPESCRIPT</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">EXTRACTION SLA</span>
+              <span class="spec-val" style="color: var(--cf-forest-pass);">100.0% SCHEMA PASS RATE</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">PRIVACY COMPLIANCE</span>
+              <span class="spec-val">FERPA AES-256-GCM / SOC2</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--cf-ink-secondary); border-left: 2px solid var(--cf-accent-primary); padding-left: 10px;">
+          Every system below runs live in your browser with downloadable JSON/CSV/SCORM artifacts and reference backend engines.
+        </div>
+      </aside>
+    </section>
+
+    <!-- Section Bar -->
+    <div class="section-bar">
+      <span class="spec-label" style="color: var(--cf-ink-primary); font-weight: 600;">
+        SECTION I // INTERACTIVE PRODUCTION SYSTEMS &amp; VERTICAL SLICES (01 &mdash; 03)
+      </span>
+      <span class="spec-label">
+        SELECT ANY BENCHMARK TO LAUNCH LIVE WORKBENCH &darr;
+      </span>
+    </div>
+
+    <!-- 3-Column Exposed Hairline Systems Grid -->
+    <section class="systems-grid">
+
+      <!-- SYSTEM 01: StealthFlow -->
+      <article class="system-cell">
+        <span class="crosshair-tr">+</span>
+        <div>
+          <div class="cell-header-meta">
+            <span class="spec-index-badge">01 // DATA &amp; STEALTH ETL</span>
+            <span class="status-tag">50 VALIDATED RECORDS</span>
+          </div>
+
+          <h2 class="system-title">
+            StealthFlow&trade; 12-Source Playwright &amp; Make.com Hub
+          </h2>
+          <p class="system-summary">
+            Distributed async Playwright extraction cluster bypassing Cloudflare Turnstile, DataDome, and Shopify Plus via direct XHR/GraphQL network interception, deterministic URL canonicalization, and HMAC-SHA256 webhook delivery.
+          </p>
+
+          <ul class="spec-list">
+            <li>
+              <span class="spec-num">01.1</span>
+              <span><strong>12 Isolated Source Templates (S01&ndash;S12):</strong> Filter 50 validated B2B &amp; eCommerce merchant records across 12 anti-bot profiles.</span>
+            </li>
+            <li>
+              <span class="spec-num">01.2</span>
+              <span><strong>Live Make.com Webhook Dispatcher:</strong> Fire HMAC-SHA256 signed JSON batches directly to your Make.com scenario with exponential backoff (2s/4s/8s).</span>
+            </li>
+            <li>
+              <span class="spec-num">01.3</span>
+              <span><strong>URL Canonicalizer &amp; Entity Matcher:</strong> Strips tracking parameters and deduplicates cross-feed SKUs prior to PostgreSQL upsert.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <a href="./stealthflow/" class="btn-tactile btn-tactile-ink" style="width: 100%;">
+            <span>LAUNCH STEALTHFLOW&trade; WORKBENCH</span>
+            <span>&rarr;</span>
+          </a>
+          <div class="artifact-links">
+            <a href="./stealthflow/playwright_12_sources_engine.py" rel="noopener noreferrer" target="_blank">playwright_12_sources_engine.py &nearr;</a>
+            <a href="./stealthflow/extracted_leads_50.json" rel="noopener noreferrer" target="_blank">extracted_leads_50.json &nearr;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- SYSTEM 02: OmniRAG -->
+      <article class="system-cell">
+        <span class="crosshair-tr">+</span>
+        <div>
+          <div class="cell-header-meta">
+            <span class="spec-index-badge">02 // MULTI-DOC CITATION</span>
+            <span class="status-tag">3 INDUSTRY PRESETS</span>
+          </div>
+
+          <h2 class="system-title">
+            OmniRAG&trade; Enterprise Document Citation &amp; Workflow Studio
+          </h2>
+          <p class="system-summary">
+            Split-screen multi-format document retrieval across <strong>PDF, DOCX, and XLSX</strong> powered by a 4-node deterministic state graph, hybrid <code>pgvector + BM25 RRF</code> index, and clickable page/cell source grounding.
+          </p>
+
+          <ul class="spec-list">
+            <li>
+              <span class="spec-num">02.1</span>
+              <span><strong>Preset #1 (Enterprise PDF/DOCX/XLSX):</strong> Click any inline <code>[Citation]</code> badge to auto-scroll and highlight exact Excel rows or PDF tables.</span>
+            </li>
+            <li>
+              <span class="spec-num">02.2</span>
+              <span><strong>Preset #2 (AgentPress MCP Deal Desk):</strong> Bi-directional MCP context cross-checking CRM &amp; Stripe ARR schedules against Deal Desk approval matrices.</span>
+            </li>
+            <li>
+              <span class="spec-num">02.3</span>
+              <span><strong>Preset #3 (BuildQ Solar 200k-PDF Verifier):</strong> Automated cross-PDF collision detection (42.5 MW vs. 50.0 MW AC) with 1-Click Expert Sign-Off.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <a href="./omnirag/" class="btn-tactile btn-tactile-vermilion" style="width: 100%;">
+            <span>LAUNCH OMNIRAG&trade; CITATION STUDIO</span>
+            <span>&rarr;</span>
+          </a>
+          <div class="artifact-links">
+            <a href="./omnirag/fastapi_langgraph_rag.py" rel="noopener noreferrer" target="_blank">fastapi_langgraph_rag.py &nearr;</a>
+            <span>FastAPI &bull; StateGraph &bull; pgvector</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- SYSTEM 03: EdTech & SCORM Studio -->
+      <article class="system-cell">
+        <span class="crosshair-tr">+</span>
+        <div>
+          <div class="cell-header-meta">
+            <span class="spec-index-badge">03 // EDTECH &amp; SCORM 1.2</span>
+            <span class="status-tag">WEBCRYPTO AES-GCM</span>
+          </div>
+
+          <h2 class="system-title">
+            ORFF Maestra&trade; TTL-MSM &amp; Certification SCORM Studio
+          </h2>
+          <p class="system-summary">
+            Dual-mode clinical and educational assessment platform combining a 100% deterministic multi-source rule matrix with client-side FERPA Zero-PII encryption and 1-click ADL SCORM 1.2 LMS packaging.
+          </p>
+
+          <ul class="spec-list">
+            <li>
+              <span class="spec-num">03.1</span>
+              <span><strong>Mode 1 (ORFF Maestra TTL-MSM Engine):</strong> Translates 4 coded clinician evidence sources into a transparent Disorder vs. Difference decision trace.</span>
+            </li>
+            <li>
+              <span class="spec-num">03.2</span>
+              <span><strong>FERPA Privacy-by-Design:</strong> In-browser <code>window.crypto.subtle</code> AES-256-GCM encryption and SHA-256 subject tokenization before report export.</span>
+            </li>
+            <li>
+              <span class="spec-num">03.3</span>
+              <span><strong>Mode 2 (Certification &amp; SCORM 1.2 Packager):</strong> Distractor-aware vignettes, Socratic Study Coach, live LMS API console &amp; <code>imsmanifest.xml</code> export.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <a href="./edtech-studio/" class="btn-tactile btn-tactile-ink" style="width: 100%;">
+            <span>LAUNCH EDTECH &amp; SCORM STUDIO</span>
+            <span>&rarr;</span>
+          </a>
+          <div class="artifact-links">
+            <a href="./edtech-studio/scorm_and_ttl_engine.js" rel="noopener noreferrer" target="_blank">scorm_and_ttl_engine.js &nearr;</a>
+            <a href="./edtech-studio/imsmanifest_generator.py" rel="noopener noreferrer" target="_blank">imsmanifest_generator.py &nearr;</a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Section Bar II -->
+    <div class="section-bar">
+      <span class="spec-label" style="color: var(--cf-ink-primary); font-weight: 600;">
+        SECTION II // COMMERCIAL REGTECH PRODUCT &amp; PROGRAMMATIC STATUTORY ENGINE (04)
+      </span>
+      <span class="spec-label">
+        U.S. CUSTOMS BROKER LICENSE EXAM (19 CFR &amp; HTSUS) &bull; IRS SEE (31 CFR PART 10)
+      </span>
+    </div>
+
+    <!-- Flagship Product Feature Block -->
+    <section class="product-feature-grid">
+      <div class="product-left">
+        <div class="hero-kicker" style="border-color: var(--cf-navy-authority); color: var(--cf-navy-authority); background-color: var(--cf-navy-tint);">
+          <span>04 // FLAGSHIP COMMERCIAL REGTECH PRODUCT</span>
+          <span>&bull;</span>
+          <span>PEARSON VUE 1:1 OPEN-BOOK ARCHITECTURE</span>
+        </div>
+        <h3 style="font-family: var(--font-display); font-size: 38px; font-weight: 400; line-height: 1.08; margin-bottom: 14px;">
+          CodeDrill&trade; CBT &mdash; 1:1 Pearson VUE Open-Book Regulatory Exam Simulator
+        </h3>
+        <p style="font-family: var(--font-serif); font-size: 16.5px; line-height: 1.65; color: var(--cf-ink-secondary); margin-bottom: 24px; max-width: 65ch;">
+          High-speed statutory navigation and Citation Pin-Drop simulator for the U.S. Customs Broker License Exam (<code>19 CFR Parts 0&ndash;199</code> &amp; <code>HTSUS</code>). Candidates practice locating exact verifying paragraphs inside a synchronized split-screen statutory reader under a live countdown clock.
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="./codedrill-cbt/" class="btn-tactile btn-tactile-vermilion">
+            <span>LAUNCH CODEDRILL&trade; 1:1 SIMULATOR</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="./codedrill-cbt/seo-pages/" class="btn-tactile">
+            <span>OPEN 19 CFR &amp; HTSUS STATUTORY HUB (pSEO)</span>
+            <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="product-right">
+        <div>
+          <div class="spec-label" style="color: #A39E93; margin-bottom: 12px;">
+            [CODEDRILL&trade; TECHNICAL ARCHITECTURE SPECIFICATIONS]
+          </div>
+          <div style="border-top: 1px solid #33322F;">
+            <div class="spec-row" style="border-color: #2A2927;">
+              <span class="spec-key" style="color: #A39E93;">VERIFICATION MECHANISM</span>
+              <span class="spec-val" style="color: var(--cf-ink-on-dark);">CITATION PIN-DROP (§ PARAGRAPH ID)</span>
+            </div>
+            <div class="spec-row" style="border-color: #2A2927;">
+              <span class="spec-key" style="color: #A39E93;">STATUTORY CORPUS</span>
+              <span class="spec-val" style="color: var(--cf-ink-on-dark);">19 CFR &bull; HTSUS GRI 1&ndash;6 &bull; 31 CFR</span>
+            </div>
+            <div class="spec-row" style="border-color: #2A2927;">
+              <span class="spec-key" style="color: #A39E93;">PROGRAMMATIC SEO ENGINE</span>
+              <span class="spec-val" style="color: #FCE588;">STATIC HTML + SCHEMA.ORG JSON-LD</span>
+            </div>
+            <div class="spec-row" style="border-color: #2A2927;">
+              <span class="spec-key" style="color: #A39E93;">INFRASTRUCTURE FOOTPRINT</span>
+              <span class="spec-val" style="color: var(--cf-ink-on-dark);">100% CLIENT-SIDE &bull; &lt;35MS LOAD</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #A39E93; display:flex; justify-content:space-between; align-items:center; border-top: 1px solid #33322F; padding-top: 12px;">
+          <span>SITEMAP: <a href="./codedrill-cbt/seo-pages/sitemap.xml" rel="noopener noreferrer" target="_blank" style="color: #FCE588; text-decoration:none;">/codedrill-cbt/seo-pages/sitemap.xml &nearr;</a></span>
+          <span>REV 2026.4</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; PRINCIPAL SYSTEMS, DATA &amp; SOFTWARE ENGINEERING STUDIO</span>
+      <span>DIRECT INQUIRIES: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; ALL SYSTEMS VERIFIED HTTP 200 OK</span>
+    </div>
+  </footer>
+
+</body>
+</html>
