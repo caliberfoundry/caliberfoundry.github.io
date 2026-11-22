@@ -1,0 +1,1613 @@
+/* ==========================================================================
+   DocuShield™ PDF/UA & EAA Remediation Studio — Caliber Foundry Design System
+   "Swiss Editorial & Tactile Industrial Precision"
+   ISO 14289-1 (PDF/UA-1) / Matterhorn Protocol / WCAG 2.2 AA / EU EAA 2019/882
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* 1. Surfaces (Warm Archival Paper & Milled Stone) */
+  --cf-bg-paper:       #F6F4EF;
+  --cf-bg-stone:       #ECE9E1;
+  --cf-bg-surface:     #FFFFFF;
+  --cf-bg-ink-panel:   #141413;
+
+  /* 2. Typography & Ink (High-Contrast Warm Carbon) */
+  --cf-ink-primary:    #141413;
+  --cf-ink-secondary:  #4A4842;
+  --cf-ink-muted:      #78756D;
+  --cf-ink-on-dark:    #F6F4EF;
+
+  /* 3. Structural Grid & Hairlines */
+  --cf-rule-strong:    #141413;
+  --cf-rule-mid:       #C9C4B8;
+  --cf-rule-subtle:    #DFDBD2;
+
+  /* 4. Semantic & Industrial Accents (Zero Neon) */
+  --cf-accent-primary: #C8431F;
+  --cf-accent-hover:   #A63415;
+  --cf-accent-tint:    #FDF2EE;
+
+  --cf-navy-authority: #1B365D;
+  --cf-navy-tint:      #EEF2F7;
+
+  --cf-forest-pass:    #1A5638;
+  --cf-forest-tint:    #EDF5F0;
+
+  --cf-brass-warn:     #9C5A08;
+  --cf-brass-tint:     #FBF4E9;
+
+  --cf-highlight-mark: #FCE588;
+
+  /* 5. Editorial & Technical Typography */
+  --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+  --font-serif:   'Newsreader', Georgia, serif;
+  --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-sans);
+  color: var(--cf-ink-primary);
+  background-color: var(--cf-bg-paper);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font-family: var(--font-sans);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   1. COMPACT GLOBAL HEADER BAR (42px HEIGHT)
+   ========================================================================== */
+.ds-global-header {
+  height: 42px;
+  background: var(--cf-bg-ink-panel);
+  color: var(--cf-ink-on-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--cf-rule-strong);
+  gap: 10px;
+  z-index: 100;
+  user-select: none;
+}
+
+.ds-brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ds-back-link {
+  color: #D2CEC4;
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 7px;
+  border: 1px solid #3D3B37;
+  border-radius: 2px;
+  background: #1E1D1B;
+  white-space: nowrap;
+}
+
+.ds-back-link:hover {
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-rule-mid);
+  background: #2C2B28;
+}
+
+.ds-brand-sep {
+  color: #5C5953;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.ds-logo-mark {
+  width: 24px;
+  height: 24px;
+  border-radius: 0px;
+  background: var(--cf-accent-primary);
+  color: var(--cf-ink-on-dark);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cf-ink-on-dark);
+}
+
+.ds-brand-titles {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.ds-brand-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ds-tm {
+  font-size: 10px;
+  color: var(--cf-accent-primary);
+  vertical-align: super;
+}
+
+.ds-brand-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: #B5B0A4;
+}
+
+/* Packet Selector */
+.ds-packet-selector-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  max-width: 560px;
+}
+
+.ds-packet-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: #B5B0A4;
+}
+
+.ds-packet-select {
+  width: 100%;
+  background: #22211F;
+  color: var(--cf-ink-on-dark);
+  border: 1px solid #5C5953;
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ds-packet-select:focus {
+  outline: 1px solid var(--cf-accent-primary);
+}
+
+/* Right License & Account Cluster */
+.ds-account-cluster {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ds-license-pill {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 0px;
+  background: #22211F;
+  color: var(--cf-highlight-mark);
+  border: 1px solid #5C5953;
+  white-space: nowrap;
+}
+
+.ds-license-pill.pro-active {
+  background: var(--cf-forest-pass);
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-ink-on-dark);
+}
+
+.ds-user-email-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: #D2CEC4;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-header-btn {
+  background: #22211F;
+  color: var(--cf-ink-on-dark);
+  border: 1px solid #5C5953;
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ds-header-btn:hover {
+  border-color: var(--cf-ink-on-dark);
+  background: #2F2E2B;
+}
+
+.ds-btn-accent {
+  background: var(--cf-accent-primary);
+  border-color: var(--cf-ink-on-dark);
+  font-weight: 700;
+}
+
+.ds-btn-accent:hover {
+  background: var(--cf-accent-hover);
+}
+
+.ds-btn-reset {
+  color: #E5A999;
+  border-color: var(--cf-accent-primary);
+}
+
+/* ==========================================================================
+   2. WORKBENCH ACTION & INGESTION TOOLBAR (MILLED STONE)
+   ========================================================================== */
+.ds-workbench-toolbar {
+  min-height: 44px;
+  background: var(--cf-bg-stone);
+  border-bottom: 1px solid var(--cf-rule-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 14px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ds-toolbar-left,
+.ds-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ds-upload-dropzone {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--cf-bg-paper);
+  border: 1px dashed var(--cf-rule-strong);
+  padding: 2px 8px 2px 3px;
+  border-radius: 0px;
+}
+
+.ds-upload-dropzone.drag-over {
+  background: var(--cf-highlight-mark);
+  border-style: solid;
+}
+
+.ds-drop-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-domain-scanner-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ds-domain-input {
+  width: 240px;
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.ds-domain-input:focus {
+  outline: 1px solid var(--cf-accent-primary);
+}
+
+/* Tactile Mechanical Buttons */
+.ds-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cf-ink-primary);
+  background: var(--cf-bg-surface);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  white-space: nowrap;
+}
+
+.ds-tool-btn:hover {
+  background: var(--cf-bg-paper);
+}
+
+.ds-tool-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--cf-rule-strong);
+}
+
+.ds-btn-remediate {
+  background: var(--cf-forest-pass);
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-rule-strong);
+  font-weight: 700;
+}
+
+.ds-btn-remediate:hover {
+  background: #13422B;
+}
+
+.ds-btn-pro-gate {
+  background: var(--cf-bg-paper);
+  color: var(--cf-ink-secondary);
+}
+
+/* ==========================================================================
+   3. "TROJAN-HORSE" PERSONALIZED B2B AUDIT DEEP-LINK BANNER
+   ========================================================================== */
+.ds-trojan-banner {
+  background: var(--cf-navy-authority);
+  color: var(--cf-ink-on-dark);
+  border-bottom: 1.5px solid var(--cf-rule-strong);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ds-trojan-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ds-trojan-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cf-highlight-mark);
+}
+
+.ds-trojan-headline {
+  font-size: 13px;
+  color: var(--cf-ink-on-dark);
+}
+
+.ds-trojan-headline code {
+  font-family: var(--font-mono);
+  background: rgba(20, 20, 19, 0.45);
+  padding: 1px 6px;
+  border: 1px solid rgba(246, 244, 239, 0.3);
+}
+
+.ds-trojan-findings {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #E2DFD5;
+}
+
+.ds-trojan-findings code {
+  color: var(--cf-highlight-mark);
+}
+
+.ds-trojan-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-trojan-cta-btn {
+  background: var(--cf-accent-primary);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-ink-on-dark);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ds-trojan-cta-btn:hover {
+  background: var(--cf-accent-hover);
+}
+
+.ds-trojan-close-btn {
+  background: transparent;
+  color: var(--cf-ink-on-dark);
+  border: 1px solid rgba(246, 244, 239, 0.4);
+  border-radius: 2px;
+  width: 26px;
+  height: 26px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   4. MAIN SPLIT-SCREEN REMEDIATION WORKBENCH
+   ========================================================================== */
+.ds-split-workbench {
+  flex: 1;
+  height: calc(100vh - 86px);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.22fr 0.78fr;
+  overflow: hidden;
+  background: var(--cf-bg-paper);
+}
+
+/* LEFT PANE: DOCUMENT & STRUCTURAL TAG TREE INSPECTOR */
+.ds-left-pane {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1.5px solid var(--cf-rule-strong);
+  overflow: hidden;
+  background: var(--cf-bg-paper);
+}
+
+.ds-doc-meta-bar {
+  background: var(--cf-bg-surface);
+  border-bottom: 1px solid var(--cf-rule-mid);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ds-doc-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ds-meta-code {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+.ds-meta-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cf-ink-primary);
+}
+
+.ds-doc-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ds-meta-pill {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--cf-bg-stone);
+  color: var(--cf-ink-secondary);
+  border: 1px solid var(--cf-rule-mid);
+}
+
+.ds-status-badge {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+
+.ds-status-badge.status-fail {
+  background: var(--cf-accent-tint);
+  color: var(--cf-accent-primary);
+}
+
+.ds-status-badge.status-pass {
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+}
+
+/* 3 Inspector View Switcher Tabs */
+.ds-inspector-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--cf-bg-stone);
+  border-bottom: 1px solid var(--cf-rule-strong);
+}
+
+.ds-insp-tab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--cf-rule-mid);
+  padding: 8px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cf-ink-secondary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.ds-insp-tab:last-child {
+  border-right: none;
+}
+
+.ds-insp-tab:hover {
+  background: var(--cf-bg-paper);
+  color: var(--cf-ink-primary);
+}
+
+.ds-insp-tab.active {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  box-shadow: inset 0 -2px 0 var(--cf-accent-primary);
+}
+
+.ds-left-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 22px 36px 22px;
+}
+
+.ds-tab-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ds-visual-instructions {
+  font-size: 12px;
+  color: var(--cf-ink-secondary);
+  background: var(--cf-bg-stone);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 7px 12px;
+}
+
+/* Simulated Archival Page Sheet with Interactive Bounding Boxes */
+.ds-page-sheet-frame {
+  background: var(--cf-bg-surface);
+  border: 1.5px solid var(--cf-rule-strong);
+  box-shadow: 4px 4px 0px rgba(20, 20, 19, 0.14);
+}
+
+.ds-page-sheet-header {
+  background: var(--cf-bg-ink-panel);
+  color: var(--cf-ink-on-dark);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ds-visual-canvas {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ds-bbox-region {
+  position: relative;
+  border: 1.5px dashed var(--cf-accent-primary);
+  background: var(--cf-accent-tint);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.ds-bbox-region.remediated {
+  border: 1.5px solid var(--cf-forest-pass);
+  background: var(--cf-forest-tint);
+}
+
+.ds-bbox-region.selected {
+  outline: 2px solid var(--cf-rule-strong);
+  box-shadow: 3px 3px 0px var(--cf-rule-strong);
+}
+
+.ds-bbox-tag-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+.ds-bbox-tag-chip {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 1px 6px;
+  background: var(--cf-accent-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+.ds-bbox-region.remediated .ds-bbox-tag-chip {
+  background: var(--cf-forest-pass);
+}
+
+.ds-bbox-clause-ref {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-bbox-preview-content {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--cf-ink-primary);
+}
+
+/* Selected Bounding-Box Node Diff Card */
+.ds-node-inspector-card {
+  background: var(--cf-bg-surface);
+  border: 1.5px solid var(--cf-rule-strong);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ds-node-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--cf-rule-mid);
+  padding-bottom: 8px;
+}
+
+.ds-node-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+}
+
+.ds-node-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cf-ink-primary);
+}
+
+.ds-node-clause-badge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--cf-bg-stone);
+  border: 1px solid var(--cf-rule-mid);
+}
+
+.ds-node-diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ds-diff-col {
+  border: 1px solid var(--cf-rule-mid);
+  padding: 8px 10px;
+}
+
+.ds-diff-before {
+  background: var(--cf-accent-tint);
+  border-left: 3px solid var(--cf-accent-primary);
+}
+
+.ds-diff-after {
+  background: var(--cf-forest-tint);
+  border-left: 3px solid var(--cf-forest-pass);
+}
+
+.ds-diff-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.ds-diff-pre {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* TAB 2: ISO 14289-1 (/StructTreeRoot) TAG TREE DIFF & CATALOG LEDGER */
+.ds-tagtree-diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ds-tree-col {
+  background: var(--cf-bg-surface);
+  border: 1px solid var(--cf-rule-strong);
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-tree-col-header {
+  padding: 7px 10px;
+  background: var(--cf-bg-stone);
+  border-bottom: 1px solid var(--cf-rule-mid);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ds-tree-tag-fail {
+  color: var(--cf-accent-primary);
+}
+
+.ds-tree-tag-pass {
+  color: var(--cf-forest-pass);
+}
+
+.ds-tree-code {
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.ds-ledger-box {
+  background: var(--cf-bg-surface);
+  border: 1px solid var(--cf-rule-strong);
+}
+
+.ds-ledger-header {
+  padding: 8px 12px;
+  background: var(--cf-bg-ink-panel);
+  color: var(--cf-ink-on-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ds-ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.ds-ledger-table th,
+.ds-ledger-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--cf-rule-subtle);
+  text-align: left;
+}
+
+.ds-ledger-table th {
+  background: var(--cf-bg-stone);
+  font-weight: 600;
+  color: var(--cf-ink-secondary);
+}
+
+/* TAB 3: TABLE <TH>/<TD> SCOPE MATRIX & FIGURE ALT-TEXT EDITOR */
+.ds-editor-section {
+  background: var(--cf-bg-surface);
+  border: 1px solid var(--cf-rule-strong);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ds-editor-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--cf-rule-mid);
+  padding-bottom: 8px;
+}
+
+.ds-editor-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+}
+
+.ds-editor-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.ds-editor-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--cf-bg-stone);
+  border: 1px solid var(--cf-rule-mid);
+}
+
+.ds-tables-list,
+.ds-figures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ds-matrix-card,
+.ds-figure-card {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ds-alt-textarea {
+  width: 100%;
+  min-height: 64px;
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  padding: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+}
+
+/* ==========================================================================
+   5. RIGHT PANEL: MATTERHORN PROTOCOL 31-CHECKPOINT SCORECARD & EXPORT
+   ========================================================================== */
+.ds-right-pane {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--cf-bg-surface);
+  overflow: hidden;
+}
+
+.ds-scorecard-hero {
+  padding: 14px 18px;
+  background: var(--cf-bg-paper);
+  border-bottom: 1px solid var(--cf-rule-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ds-score-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ds-score-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cf-ink-muted);
+}
+
+.ds-score-heading {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.ds-risk-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+
+.ds-risk-pill.risk-high {
+  background: var(--cf-accent-tint);
+  color: var(--cf-accent-primary);
+}
+
+.ds-risk-pill.risk-verified {
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+}
+
+.ds-score-metrics-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ds-score-big-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+}
+
+.ds-score-big-num.score-pass {
+  color: var(--cf-forest-pass);
+}
+
+.ds-score-ratio {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cf-ink-primary);
+}
+
+.ds-score-sub {
+  font-size: 11.5px;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-score-bar-track {
+  height: 8px;
+  background: var(--cf-bg-stone);
+  border: 1px solid var(--cf-rule-strong);
+}
+
+.ds-score-bar-fill {
+  height: 100%;
+  background: var(--cf-accent-primary);
+  transition: width 0.25s ease;
+}
+
+.ds-score-bar-fill.fill-pass {
+  background: var(--cf-forest-pass);
+}
+
+/* Checkpoint Filter Bar */
+.ds-cp-filter-bar {
+  padding: 6px 14px;
+  background: var(--cf-bg-stone);
+  border-bottom: 1px solid var(--cf-rule-mid);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.ds-cp-filter-btn {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-secondary);
+  border: 1px solid var(--cf-rule-mid);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ds-cp-filter-btn.active {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-rule-strong);
+}
+
+/* Checkpoints List */
+.ds-checkpoints-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ds-cp-card {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-mid);
+  border-left: 4px solid var(--cf-accent-primary);
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ds-cp-card:hover {
+  border-color: var(--cf-rule-strong);
+}
+
+.ds-cp-card.cp-pass {
+  border-left-color: var(--cf-forest-pass);
+  background: var(--cf-forest-tint);
+}
+
+.ds-cp-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ds-cp-clause {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cf-ink-primary);
+}
+
+.ds-cp-status-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+
+.ds-cp-status-tag.tag-fail {
+  background: var(--cf-accent-tint);
+  color: var(--cf-accent-primary);
+}
+
+.ds-cp-status-tag.tag-pass {
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+}
+
+.ds-cp-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--cf-ink-primary);
+}
+
+.ds-cp-evidence {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cf-ink-secondary);
+  line-height: 1.4;
+}
+
+/* Bottom Export Footer */
+.ds-export-footer {
+  padding: 10px 14px;
+  background: var(--cf-bg-stone);
+  border-top: 1px solid var(--cf-rule-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ds-export-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--cf-rule-strong);
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ds-export-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--cf-rule-strong);
+}
+
+.ds-export-secondary {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+}
+
+.ds-export-primary {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+/* ==========================================================================
+   6. MODALS (VPAT 2.5 CERTIFICATE, EXPORT VIEWER, PRO PAYWALL & INVOICE)
+   ========================================================================== */
+.ds-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 19, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 20px;
+}
+
+.ds-modal-window {
+  background: var(--cf-bg-surface);
+  border: 1.5px solid var(--cf-rule-strong);
+  border-radius: 0px;
+  width: 100%;
+  max-width: 860px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 6px 6px 0px var(--cf-rule-strong);
+  overflow: hidden;
+}
+
+.ds-paywall-modal {
+  max-width: 700px;
+}
+
+.ds-modal-header {
+  background: var(--cf-bg-ink-panel);
+  color: var(--cf-ink-on-dark);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--cf-rule-strong);
+}
+
+.ds-modal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-modal-icon {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cf-highlight-mark);
+}
+
+.ds-modal-title-group h2 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ds-modal-close {
+  background: transparent;
+  color: var(--cf-ink-on-dark);
+  border: 1px solid #5C5953;
+  border-radius: 2px;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ds-modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ds-modal-footer {
+  background: var(--cf-bg-stone);
+  border-top: 1px solid var(--cf-rule-mid);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.ds-btn-primary {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-accent-primary);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ds-btn-secondary {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Export Format Viewer */
+.ds-export-format-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ds-format-btn {
+  background: var(--cf-bg-stone);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 5px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ds-format-btn.active {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+.ds-export-code-box {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-strong);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  max-height: 360px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+/* Paywall & Account Modal */
+.ds-paywall-alert {
+  background: var(--cf-accent-tint);
+  border: 1.5px solid var(--cf-accent-primary);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ds-paywall-alert strong {
+  color: var(--cf-accent-primary);
+}
+
+.ds-auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--cf-rule-strong);
+  background: var(--cf-bg-stone);
+  margin-bottom: 16px;
+}
+
+.ds-auth-tab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--cf-rule-mid);
+  padding: 9px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cf-ink-secondary);
+  cursor: pointer;
+}
+
+.ds-auth-tab:last-child {
+  border-right: none;
+}
+
+.ds-auth-tab.active {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+.ds-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ds-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ds-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-field input {
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font-size: 13px;
+  background: var(--cf-bg-surface);
+}
+
+.ds-plan-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-plan-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ds-plan-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.ds-plan-card.selected {
+  background: var(--cf-navy-tint);
+  border: 1.5px solid var(--cf-rule-strong);
+}
+
+.ds-plan-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ds-plan-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.ds-plan-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.ds-badge-inline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 5px;
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+  border: 1px solid var(--cf-forest-pass);
+  margin-left: 6px;
+}
+
+.ds-plan-desc {
+  font-size: 11.5px;
+  color: var(--cf-ink-secondary);
+}
+
+.ds-submit-btn {
+  background: var(--cf-accent-primary);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  padding: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ds-selected-plan-bar {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ds-plan-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+}
+
+.ds-selected-plan-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.ds-guarantee-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+  border: 1px solid var(--cf-forest-pass);
+}
+
+.ds-pay-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.ds-pay-method-btn {
+  background: var(--cf-bg-paper);
+  color: var(--cf-ink-secondary);
+  border: 1px solid var(--cf-rule-mid);
+  border-radius: 2px;
+  padding: 7px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ds-pay-method-btn.active {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  border: 1.5px solid var(--cf-rule-strong);
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+}
+
+.ds-invoice-preview-box {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-strong);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.ds-invoice-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ds-mailto-btn {
+  flex: 1;
+  text-align: center;
+}
+
+.ds-key-input {
+  font-family: var(--font-mono);
+  font-size: 13px !important;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ds-key-hint {
+  font-size: 11px;
+  color: var(--cf-ink-muted);
+}
+
+.ds-activation-success {
+  margin-top: 12px;
+  padding: 14px;
+  background: var(--cf-forest-tint);
+  border: 1.5px solid var(--cf-forest-pass);
+  text-align: center;
+}
+
+.ds-success-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--cf-forest-pass);
+}
+
+/* Toast Notifications */
+.ds-toast-container {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.ds-toast {
+  background: var(--cf-bg-ink-panel);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-rule-strong);
+  border-left: 4px solid var(--cf-accent-primary);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  box-shadow: 4px 4px 0px rgba(20, 20, 19, 0.25);
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .ds-modal-backdrop:not(.hidden),
+  .ds-modal-backdrop:not(.hidden) * {
+    visibility: visible;
+  }
+  .ds-modal-backdrop:not(.hidden) {
+    position: absolute;
+    inset: 0;
+    background: #FFFFFF;
+    padding: 0;
+  }
+  .ds-modal-window {
+    max-width: 100%;
+    max-height: none;
+    box-shadow: none;
+    border: 1px solid #141413;
+  }
+  .ds-modal-footer,
+  .ds-modal-close {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  html, body { overflow: auto; }
+  .ds-global-header { height: auto; flex-wrap: wrap; padding: 8px; }
+  .ds-split-workbench { grid-template-columns: 1fr; height: auto; overflow: visible; }
+  .ds-node-diff-grid, .ds-tagtree-diff-grid, .ds-two-col { grid-template-columns: 1fr; }
+}

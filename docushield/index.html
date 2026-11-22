@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';" />
+  <title>DocuShield™ — ISO 14289-1 (PDF/UA) &amp; European Accessibility Act (EAA / WCAG 2.2 AA) Remediation Studio</title>
+  <meta name="description" content="Deterministic ISO 14289-1 (PDF/UA-1), Matterhorn Protocol 31-Checkpoint, WCAG 2.2 AA, Section 508, and EU European Accessibility Act (Directive 2019/882) Document &amp; Courseware Remediation Studio by Caliber Foundry." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       1. COMPACT GLOBAL HEADER BAR (SWISS EDITORIAL & TACTILE PRECISION)
+       ===================================================================== -->
+  <header class="ds-global-header" role="banner">
+    <div class="ds-brand-cluster">
+      <a href="../index.html" class="ds-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
+      <span class="ds-brand-sep" aria-hidden="true">/</span>
+      <div class="ds-logo-mark" aria-hidden="true">DS</div>
+      <div class="ds-brand-titles">
+        <span class="ds-brand-name">DocuShield<span class="ds-tm">™</span></span>
+        <span class="ds-brand-sub">PDF/UA &amp; EAA Remediation Studio</span>
+      </div>
+    </div>
+
+    <!-- 6 Built-in Document Packets Selector -->
+    <div class="ds-packet-selector-wrap">
+      <label for="packetSelect" class="ds-packet-label">Packet:</label>
+      <select id="packetSelect" class="ds-packet-select" aria-label="Select Regulatory Document Packet">
+        <option value="EDTECH-01">[FREE] EDTECH-01 — University STEM &amp; Clinical Course Syllabus &amp; Lab Manual (28 pp — Section 508 / Title II ADA)</option>
+        <option value="ECOM-02">[FREE] ECOM-02 — EU Consumer Electronics User Manual &amp; GPSR Safety Dossier (42 pp — EU Directive 2019/882 EAA)</option>
+        <option value="FIN-03">[PRO] FIN-03 — Annual Retail Banking Fee Schedule &amp; TILA Disclosure (64 pp — EAA &amp; ADA Title III)</option>
+        <option value="MED-04">[PRO] MED-04 — Patient Intake, Informed Consent &amp; Clinical Discharge Packet (18 pp — HHS Section 504 &amp; WCAG 2.2 AA)</option>
+        <option value="EDTECH-05">[PRO] EDTECH-05 — K-12 &amp; Professional Certification Digital Textbook Chapter (96 pp — WCAG 2.2 AA &amp; QTI/SCORM)</option>
+        <option value="GOV-06">[PRO] GOV-06 — Municipal Infrastructure RFP &amp; Procurement Specification (112 pp — EN 301 549 &amp; Section 508)</option>
+      </select>
+    </div>
+
+    <!-- Right License & Account Controls -->
+    <div class="ds-account-cluster">
+      <span class="ds-license-pill" id="headerLicenseBadge">Free Diagnostic Tier (2/6 Packets)</span>
+      <span class="ds-user-email-pill hidden" id="headerUserEmailBadge"></span>
+      <button type="button" class="ds-header-btn" id="btnHeaderSignIn">Sign In</button>
+      <button type="button" class="ds-header-btn ds-btn-accent" id="btnHeaderUnlockPro">Unlock Pro Studio ($199)</button>
+      <button type="button" class="ds-header-btn hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
+      <button type="button" class="ds-header-btn ds-btn-reset" id="btnResetStudio" title="Reset session state">Reset</button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. WORKBENCH ACTION & INGESTION TOOLBAR
+       ===================================================================== -->
+  <section class="ds-workbench-toolbar" aria-label="Document Ingestion and Remediation Controls">
+    <div class="ds-toolbar-left">
+      <!-- Local PDF / HTML Client-Side Byte Inspector -->
+      <div class="ds-upload-dropzone" id="fileDropZone" title="Drag and drop a local .pdf or .html file to inspect raw COS structure">
+        <input type="file" id="fileUploadInput" accept=".pdf,.html,.htm" class="hidden" />
+        <button type="button" class="ds-tool-btn" id="btnTriggerFileUpload">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/></svg>
+          <span>Inspect Local PDF / HTML</span>
+        </button>
+        <span class="ds-drop-hint" id="uploadQuotaHint">1 Free Local File Audit</span>
+      </div>
+
+      <!-- Live Domain / PDF URL Scanner Input ("Trojan-Horse" Outreach Bar) -->
+      <div class="ds-domain-scanner-group">
+        <input
+          type="text"
+          id="domainScanInput"
+          class="ds-domain-input"
+          placeholder="https://client-domain.com/manual.pdf"
+          aria-label="Scan Domain or PDF URL"
+        />
+        <button type="button" class="ds-tool-btn" id="domainScanBtn">
+          Scan Domain / URL
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-toolbar-right">
+      <!-- Primary Deterministic Remediation Trigger -->
+      <button type="button" class="ds-tool-btn ds-btn-remediate" id="runRemediationBtn">
+        Run PDF/UA &amp; WCAG 2.2 Auto-Remediation →
+      </button>
+
+      <button type="button" class="ds-tool-btn" id="revertRemediationBtn" title="Revert document to original unremediated COS stream">
+        Revert to Original Unremediated Stream
+      </button>
+
+      <button type="button" class="ds-tool-btn ds-btn-pro-gate" id="btnBatchArchiveMode" title="Batch remediate up to 1,000 PDFs via ZIP archive (Pro)">
+        Batch Archive Mode (PRO)
+      </button>
+
+      <button type="button" class="ds-tool-btn ds-btn-pro-gate" id="btnWebhookApiMode" title="Configure GitHub / LMS / CMS CI/CD Webhook Pipeline (Pro)">
+        CI/CD Webhook API (PRO)
+      </button>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. "TROJAN-HORSE" PERSONALIZED B2B AUDIT DEEP-LINK BANNER (?domain=...&file=...)
+       ===================================================================== -->
+  <section class="ds-trojan-banner hidden" id="trojanHorseBanner" aria-label="Pre-Scanned Domain Compliance Dossier">
+    <div class="ds-trojan-left">
+      <div class="ds-trojan-kicker">Pre-Scanned EAA / ADA Title III &amp; ISO 14289-1 (PDF/UA) Compliance Dossier</div>
+      <div class="ds-trojan-headline">
+        Target Domain: <strong id="thTargetDomain">client-domain.com</strong> · Asset: <code id="thTargetFile">publication-packet.pdf</code>
+      </div>
+      <div class="ds-trojan-findings" id="thFindingsSummary">
+        Detected Structural Failures: <code>/StructTreeRoot absent (Matterhorn 01-006)</code> · <code>Missing XMP pdfuaid:part=1 (06-001)</code> · <code>Unbound &lt;TH scope&gt; &amp; &lt;Figure Alt&gt; (15-002 / 13-004)</code>
+      </div>
+    </div>
+    <div class="ds-trojan-actions">
+      <button type="button" class="ds-trojan-cta-btn" id="btnTrojanUnlockCta">
+        Unlock Full Domain Remediation ($299/mo or $199 Archive Pack) →
+      </button>
+      <button type="button" class="ds-trojan-close-btn" id="btnCloseTrojanBanner" aria-label="Dismiss Audit Banner">×</button>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. MAIN SPLIT-SCREEN REMEDIATION WORKBENCH
+       ===================================================================== -->
+  <main class="ds-split-workbench" id="dsMainWorkbench">
+
+    <!-- ===================================================================
+         LEFT PANEL: DOCUMENT & STRUCTURAL TAG TREE INSPECTOR (3 TABS)
+         =================================================================== -->
+    <section class="ds-left-pane" aria-label="Document and Structural Tag Tree Inspector">
+      <!-- Active Document Metadata Bar -->
+      <div class="ds-doc-meta-bar">
+        <div class="ds-doc-meta-left">
+          <span class="ds-meta-code" id="docMetaCode">EDTECH-01</span>
+          <h1 class="ds-meta-title" id="docMetaTitle">University STEM &amp; Clinical Course Syllabus &amp; Lab Manual</h1>
+        </div>
+        <div class="ds-doc-meta-right">
+          <span class="ds-meta-pill" id="docMetaPages">28 pp · PDF 1.7</span>
+          <span class="ds-meta-pill" id="docMetaStandard">Section 508 / Title II ADA</span>
+          <span class="ds-status-badge status-fail" id="docStatusBadge">UNREMEDIATED (NON-COMPLIANT — HIGH LITIGATION RISK)</span>
+        </div>
+      </div>
+
+      <!-- 3 Inspector View Switcher Tabs -->
+      <nav class="ds-inspector-tabs" role="tablist" aria-label="Document Inspector Views">
+        <button type="button" class="ds-insp-tab active" data-left-tab="visual" id="tabLeftVisual">
+          1. Visual Page &amp; Bounding-Box Inspector
+        </button>
+        <button type="button" class="ds-insp-tab" data-left-tab="tagtree" id="tabLeftTagTree">
+          2. ISO 14289-1 (/StructTreeRoot) Tag Tree (Before vs. After Diff)
+        </button>
+        <button type="button" class="ds-insp-tab" data-left-tab="tables" id="tabLeftTables">
+          3. Table &lt;TH&gt;/&lt;TD&gt; Scope Matrix &amp; Figure Alt-Text Editor
+        </button>
+      </nav>
+
+      <!-- Scrollable Left Inspector Body -->
+      <div class="ds-left-scroll">
+
+        <!-- TAB 1: VISUAL PAGE & BOUNDING-BOX INSPECTOR -->
+        <div class="ds-tab-view" id="leftPanelVisual">
+          <div class="ds-visual-instructions">
+            <span>Click any highlighted bounding box on the page below (or any Matterhorn checkpoint on the right) to inspect its raw COS stream vs. remediated ISO 14289-1 tag node.</span>
+          </div>
+
+          <!-- Simulated Archival Page Sheet with Interactive Bounding Boxes -->
+          <div class="ds-page-sheet-frame">
+            <div class="ds-page-sheet-header">
+              <span id="visualPageHeaderLabel">PAGE 1 OF 28 // COS STREAM BOUNDING-BOX OVERLAY</span>
+              <span id="visualPageTagStateLabel">TAG STATE: UNREMEDIATED (/MarkInfo /Marked false)</span>
+            </div>
+
+            <div class="ds-visual-canvas" id="visualPageCanvas">
+              <!-- Populated dynamically from packet.visualRegions -->
+            </div>
+          </div>
+
+          <!-- Selected Bounding-Box Node Diff Card -->
+          <div class="ds-node-inspector-card" id="selectedRegionInspector">
+            <div class="ds-node-card-header">
+              <div>
+                <span class="ds-node-kicker">SELECTED BOUNDING-BOX NODE</span>
+                <h3 class="ds-node-title" id="inspectorRegionTitle">Region 01 — Document Main Title &amp; Heading Hierarchy</h3>
+              </div>
+              <span class="ds-node-clause-badge" id="inspectorClauseBadge">Matterhorn 01-006 / 14-003</span>
+            </div>
+
+            <div class="ds-node-diff-grid">
+              <div class="ds-diff-col ds-diff-before">
+                <div class="ds-diff-label">Before Tag (Broken COS Stream)</div>
+                <pre class="ds-diff-pre" id="inspectorBeforeTag"></pre>
+              </div>
+              <div class="ds-diff-col ds-diff-after">
+                <div class="ds-diff-label">After Tag (Remediated PDF/UA Node)</div>
+                <pre class="ds-diff-pre" id="inspectorAfterTag"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: ISO 14289-1 (/StructTreeRoot) TAG TREE (BEFORE VS. AFTER DIFF) -->
+        <div class="ds-tab-view hidden" id="leftPanelTagTree">
+          <div class="ds-tagtree-diff-grid">
+            <div class="ds-tree-col ds-tree-before">
+              <div class="ds-tree-col-header">
+                <span>Before Remediation (/MarkInfo &lt;&lt; /Marked false &gt;&gt;)</span>
+                <span class="ds-tree-tag-fail">FAIL: ISO 14289-1</span>
+              </div>
+              <pre class="ds-tree-code" id="tagTreeBeforeCode"></pre>
+            </div>
+
+            <div class="ds-tree-col ds-tree-after">
+              <div class="ds-tree-col-header">
+                <span>After Remediation (/StructTreeRoot + XMP pdfuaid:part=1)</span>
+                <span class="ds-tree-tag-pass">PASS: PDF/UA-1</span>
+              </div>
+              <pre class="ds-tree-code" id="tagTreeAfterCode"></pre>
+            </div>
+          </div>
+
+          <!-- PDF Catalog & XMP Conformance Ledger Table -->
+          <div class="ds-ledger-box">
+            <div class="ds-ledger-header">PDF Catalog Dictionary &amp; XMP Metadata Verification Ledger</div>
+            <table class="ds-ledger-table">
+              <thead>
+                <tr>
+                  <th>Catalog Key / XMP Property</th>
+                  <th>ISO 14289-1 / Matterhorn Clause</th>
+                  <th>Unremediated Stream</th>
+                  <th>Remediated PDF/UA-1 Stream</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="catalogMetadataTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: TABLE <TH>/<TD> SCOPE MATRIX & FIGURE ALT-TEXT EDITOR -->
+        <div class="ds-tab-view hidden" id="leftPanelTables">
+          <!-- Section A: Table <TH>/<TD> Scope & Headers Array Matrix -->
+          <div class="ds-editor-section">
+            <div class="ds-editor-header">
+              <div>
+                <span class="ds-editor-kicker">MATTERHORN CHECKPOINT 15-002 // TABLE HEADER &amp; SCOPE BINDING</span>
+                <h2 class="ds-editor-title">Table &lt;TH scope="col|row"&gt; &amp; /Headers Array Matrix</h2>
+              </div>
+              <span class="ds-editor-tag">WCAG 2.2 SC 1.3.1</span>
+            </div>
+            <div id="tableScopeMatrixContainer" class="ds-tables-list">
+              <!-- Populated dynamically from packet.tables -->
+            </div>
+          </div>
+
+          <!-- Section B: Figure Technical Alt-Text Editor -->
+          <div class="ds-editor-section">
+            <div class="ds-editor-header">
+              <div>
+                <span class="ds-editor-kicker">MATTERHORN CHECKPOINT 13-004 // GRAPHICS &amp; FORMULA /Alt ATTRIBUTES</span>
+                <h2 class="ds-editor-title">Figure Technical Alt-Text Editor (/StructTreeRoot /Figure /Alt)</h2>
+              </div>
+              <span class="ds-editor-tag">WCAG 2.2 SC 1.1.1</span>
+            </div>
+            <div id="figureAltEditorContainer" class="ds-figures-list">
+              <!-- Populated dynamically from packet.figures -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         RIGHT PANEL: MATTERHORN PROTOCOL 31-CHECKPOINT SCORECARD & EXPORT
+         =================================================================== -->
+    <aside class="ds-right-pane" aria-label="Matterhorn Protocol 31-Checkpoint Scorecard and VPAT Export">
+      <!-- Top Compliance Scorecard Summary Card -->
+      <div class="ds-scorecard-hero">
+        <div class="ds-score-top-row">
+          <div>
+            <span class="ds-score-kicker">Matterhorn Protocol &amp; WCAG 2.2 AA Scorecard</span>
+            <h2 class="ds-score-heading" id="scorecardPacketHeading">Audit Telemetry</h2>
+          </div>
+          <span class="ds-risk-pill risk-high" id="scorecardRiskPill">HIGH LITIGATION RISK</span>
+        </div>
+
+        <div class="ds-score-metrics-row">
+          <div class="ds-score-big-num" id="scorecardPercentVal">34%</div>
+          <div class="ds-score-meta-col">
+            <div class="ds-score-ratio" id="scorecardCheckpointsRatio">0 / 8 Core Checkpoints Passed</div>
+            <div class="ds-score-sub" id="scorecardSummarySub">8 Critical Matterhorn Failures Detected</div>
+          </div>
+        </div>
+
+        <div class="ds-score-bar-track">
+          <div class="ds-score-bar-fill" id="scorecardProgressBar" style="width: 34%;"></div>
+        </div>
+      </div>
+
+      <!-- Checkpoint Filter Bar -->
+      <div class="ds-cp-filter-bar" id="checkpointFilterBar" role="tablist" aria-label="Filter Matterhorn Checkpoints">
+        <button type="button" class="ds-cp-filter-btn active" data-cp-filter="ALL">All Checkpoints</button>
+        <button type="button" class="ds-cp-filter-btn" data-cp-filter="FAIL">Failures Only</button>
+        <button type="button" class="ds-cp-filter-btn" data-cp-filter="STRUCTURE">Structure &amp; Tagging</button>
+        <button type="button" class="ds-cp-filter-btn" data-cp-filter="TABLES_FIGURES">Tables &amp; Figures</button>
+        <button type="button" class="ds-cp-filter-btn" data-cp-filter="METADATA_FORMS">Metadata &amp; Forms</button>
+      </div>
+
+      <!-- Scrollable Matterhorn Checkpoints List -->
+      <div class="ds-checkpoints-scroll" id="matterhornCheckpointsList">
+        <!-- Populated dynamically with checkpoints 01-006, 06-001, 09-003, 11-001, 13-004, 14-003, 15-002, 28-001 -->
+      </div>
+
+      <!-- Bottom Export Actions Bar -->
+      <div class="ds-export-footer">
+        <button type="button" class="ds-export-btn ds-export-secondary" id="exportTagTreeBtn">
+          Export Remediated PDF/UA Tag Tree &amp; XMP (.json / .xml)
+        </button>
+        <button type="button" class="ds-export-btn ds-export-primary" id="openCertificateBtn">
+          Generate Printable EU EAA &amp; VPAT 2.5 Certificate →
+        </button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- =====================================================================
+       MODAL 1: OFFICIAL PRINTABLE EU EAA & VPAT 2.5 CONFORMANCE CERTIFICATE
+       ===================================================================== -->
+  <div class="ds-modal-backdrop hidden" id="certificateModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+    <div class="ds-modal-window ds-cert-modal">
+      <div class="ds-modal-header">
+        <div class="ds-modal-title-group">
+          <span class="ds-modal-icon">§</span>
+          <h2 id="certModalTitle">Official ISO 14289-1 (PDF/UA-1), WCAG 2.2 AA &amp; EU EAA Conformance Certificate (VPAT 2.5)</h2>
+        </div>
+        <button type="button" class="ds-modal-close" id="btnCloseCertificateModal" aria-label="Close Certificate">×</button>
+      </div>
+
+      <div class="ds-modal-body" id="certificateModalBody">
+        <!-- Populated dynamically with formal printable certificate & VPAT 2.5 table -->
+      </div>
+
+      <div class="ds-modal-footer">
+        <button type="button" class="ds-btn-secondary" id="btnDownloadAuditBundle">Download JSON/XML Audit Bundle</button>
+        <button type="button" class="ds-btn-primary" id="btnPrintCertificate">Print / Save PDF Certificate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: EXPORTED PDF/UA TAG TREE & XMP PACKET VIEWER (.JSON / .XML)
+       ===================================================================== -->
+  <div class="ds-modal-backdrop hidden" id="exportModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle">
+    <div class="ds-modal-window ds-export-modal">
+      <div class="ds-modal-header">
+        <div class="ds-modal-title-group">
+          <span class="ds-modal-icon">§</span>
+          <h2 id="exportModalTitle">Remediated ISO 14289-1 (/StructTreeRoot) &amp; XMP pdfuaid:part=1 Export</h2>
+        </div>
+        <button type="button" class="ds-modal-close" id="btnCloseExportModal" aria-label="Close Export Viewer">×</button>
+      </div>
+
+      <div class="ds-modal-body">
+        <div class="ds-export-format-tabs">
+          <button type="button" class="ds-format-btn active" data-export-fmt="json" id="btnExportFmtJson">JSON (/StructTreeRoot + Audit Log)</button>
+          <button type="button" class="ds-format-btn" data-export-fmt="xml" id="btnExportFmtXml">XML (XMP pdfuaid:part=1 + Tag Stream)</button>
+        </div>
+        <pre class="ds-export-code-box" id="exportPayloadCodeBox"></pre>
+      </div>
+
+      <div class="ds-modal-footer">
+        <button type="button" class="ds-btn-secondary" id="btnCopyExportPayload">Copy Payload to Clipboard</button>
+        <button type="button" class="ds-btn-primary" id="btnDownloadExportFile">Download File (.json / .xml)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: DOCUSHIELD PRO & ENTERPRISE ACCESS (3 TABS + 3 PAYMENT METHODS)
+       ===================================================================== -->
+  <div class="ds-modal-backdrop hidden" id="paywallModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="paywallModalTitle">
+    <div class="ds-modal-window ds-paywall-modal">
+      <div class="ds-modal-header">
+        <div class="ds-modal-title-group">
+          <span class="ds-modal-icon">§</span>
+          <h2 id="paywallModalTitle">DocuShield™ PRO &amp; Enterprise Access</h2>
+        </div>
+        <button type="button" class="ds-modal-close" id="btnClosePaywallModal" aria-label="Close Paywall Modal">×</button>
+      </div>
+
+      <div class="ds-modal-body">
+        <!-- Paywall Trigger Alert Banner -->
+        <div class="ds-paywall-alert hidden" id="paywallAlertBanner">
+          <strong>Free Diagnostic Tier Limit Reached.</strong>
+          <span id="paywallAlertText">Activate DocuShield™ PRO or generate a Corporate Invoice (with instant 14-day Provisional PRO Unlock) to remediate all 6 industry packets, unlimited local PDFs, and batch archives.</span>
+        </div>
+
+        <!-- 3-Tab Navigation -->
+        <div class="ds-auth-tabs" role="tablist">
+          <button type="button" class="ds-auth-tab active" data-auth-tab="register" id="tabAuthRegister">
+            1. Create Account &amp; Choose Plan
+          </button>
+          <button type="button" class="ds-auth-tab" data-auth-tab="signin" id="tabAuthSignIn">
+            2. Sign In
+          </button>
+          <button type="button" class="ds-auth-tab" data-auth-tab="payment" id="tabAuthPayment">
+            3. Payment &amp; License Activation
+          </button>
+        </div>
+
+        <!-- TAB 1: CREATE ACCOUNT & CHOOSE PLAN -->
+        <div class="ds-auth-panel" id="authPanelRegister">
+          <form id="registerAccountForm" class="ds-form">
+            <div class="ds-two-col">
+              <div class="ds-field">
+                <label for="regFullName">Full Name</label>
+                <input type="text" id="regFullName" required placeholder="Dr. Claire Vance" />
+              </div>
+              <div class="ds-field">
+                <label for="regOrganization">Organization / University / Company</label>
+                <input type="text" id="regOrganization" required placeholder="Northwestern Digital Learning &amp; Compliance" />
+              </div>
+            </div>
+
+            <div class="ds-two-col">
+              <div class="ds-field">
+                <label for="regWorkEmail">Work Email</label>
+                <input type="email" id="regWorkEmail" required placeholder="c.vance@university.edu" />
+              </div>
+              <div class="ds-field">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" required minlength="6" placeholder="Minimum 6 characters" />
+              </div>
+            </div>
+
+            <div class="ds-plan-label">Select Commercial Remediation Plan:</div>
+            <div class="ds-plan-grid" id="planSelectorGrid">
+              <label class="ds-plan-card selected" data-plan-code="ARCHIVE_PACK">
+                <input type="radio" name="dsPlanChoice" value="ARCHIVE_PACK" checked />
+                <div class="ds-plan-body">
+                  <div class="ds-plan-top">
+                    <strong>Single Archive Pack</strong>
+                    <span class="ds-plan-price">$199 one-time</span>
+                  </div>
+                  <div class="ds-plan-desc">Remediate up to 250 PDF pages + full printable VPAT 2.5 &amp; EU EAA Conformance Certificate.</div>
+                </div>
+              </label>
+
+              <label class="ds-plan-card" data-plan-code="GROWTH_B2B">
+                <input type="radio" name="dsPlanChoice" value="GROWTH_B2B" />
+                <div class="ds-plan-body">
+                  <div class="ds-plan-top">
+                    <strong>Growth B2B &amp; EdTech <span class="ds-badge-inline">Most Popular</span></strong>
+                    <span class="ds-plan-price">$299 / month</span>
+                  </div>
+                  <div class="ds-plan-desc">Up to 1,000 PDF pages/month + Continuous Domain Scanner + all 6 industry compliance profiles.</div>
+                </div>
+              </label>
+
+              <label class="ds-plan-card" data-plan-code="ENTERPRISE_UNI">
+                <input type="radio" name="dsPlanChoice" value="ENTERPRISE_UNI" />
+                <div class="ds-plan-body">
+                  <div class="ds-plan-top">
+                    <strong>Enterprise &amp; University</strong>
+                    <span class="ds-plan-price">$799 / month</span>
+                  </div>
+                  <div class="ds-plan-desc">Unlimited PDF pages + GitHub / Canvas LMS / Moodle / CMS CI/CD Webhook API + dedicated SLA.</div>
+                </div>
+              </label>
+            </div>
+
+            <button type="submit" class="ds-submit-btn" id="btnContinueToPayment">
+              Continue to Payment &amp; Activation →
+            </button>
+          </form>
+        </div>
+
+        <!-- TAB 2: SIGN IN -->
+        <div class="ds-auth-panel hidden" id="authPanelSignIn">
+          <form id="signInForm" class="ds-form">
+            <div class="ds-field">
+              <label for="signInEmail">Work Email Address</label>
+              <input type="email" id="signInEmail" required placeholder="c.vance@university.edu" />
+            </div>
+            <div class="ds-field">
+              <label for="signInPassword">Password</label>
+              <input type="password" id="signInPassword" required placeholder="Enter password" />
+            </div>
+            <button type="submit" class="ds-submit-btn" id="btnSubmitSignIn">
+              Sign In to DocuShield™ Studio →
+            </button>
+          </form>
+        </div>
+
+        <!-- TAB 3: PAYMENT & LICENSE ACTIVATION (3 METHODS) -->
+        <div class="ds-auth-panel hidden" id="authPanelPayment">
+          <div class="ds-selected-plan-bar">
+            <div>
+              <span class="ds-plan-kicker">SELECTED TIER</span>
+              <h3 class="ds-selected-plan-title" id="paymentSelectedPlanTitle">Single Archive Pack — $199 one-time</h3>
+            </div>
+            <span class="ds-guarantee-tag">ISO 14289-1 &amp; EAA Guaranteed</span>
+          </div>
+
+          <div class="ds-pay-methods" role="tablist">
+            <button type="button" class="ds-pay-method-btn active" data-pay-method="card" id="btnPayMethodCard">
+              Method A: Instant Card Checkout
+            </button>
+            <button type="button" class="ds-pay-method-btn" data-pay-method="invoice" id="btnPayMethodInvoice">
+              Method B: Corporate Invoice (ACH / Wire / SEPA)
+            </button>
+            <button type="button" class="ds-pay-method-btn" data-pay-method="key" id="btnPayMethodKey">
+              Method C: License Key Activation
+            </button>
+          </div>
+
+          <!-- METHOD A: INSTANT CARD CHECKOUT -->
+          <div class="ds-pay-panel" id="payPanelCard">
+            <form id="cardCheckoutForm" class="ds-form">
+              <div class="ds-two-col">
+                <div class="ds-field">
+                  <label for="cardHolderName">Cardholder Name / Organization</label>
+                  <input type="text" id="cardHolderName" required placeholder="Dr. Claire Vance / Northwestern" value="Dr. Claire Vance" />
+                </div>
+                <div class="ds-field">
+                  <label for="cardBillingEmail">Billing Email</label>
+                  <input type="email" id="cardBillingEmail" required placeholder="c.vance@university.edu" value="c.vance@university.edu" />
+                </div>
+              </div>
+              <div class="ds-field">
+                <label for="cardNumberInput">Card Number</label>
+                <input type="text" id="cardNumberInput" required placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242" />
+              </div>
+              <div class="ds-two-col">
+                <div class="ds-field">
+                  <label for="cardExpiryInput">Expiry (MM/YY)</label>
+                  <input type="text" id="cardExpiryInput" required placeholder="09/29" value="09/29" />
+                </div>
+                <div class="ds-field">
+                  <label for="cardCvcInput">CVC</label>
+                  <input type="text" id="cardCvcInput" required placeholder="842" value="842" />
+                </div>
+              </div>
+              <button type="submit" class="ds-submit-btn" id="btnSubmitCardPayment">
+                Complete Payment &amp; Activate DS-PRO-2026-CALIBER →
+              </button>
+            </form>
+          </div>
+
+          <!-- METHOD B: CORPORATE INVOICE GENERATOR (WITH 14-DAY PROVISIONAL PRO UNLOCK) -->
+          <div class="ds-pay-panel hidden" id="payPanelInvoice">
+            <div class="ds-form">
+              <div class="ds-two-col">
+                <div class="ds-field">
+                  <label for="invCompanyInput">Organization / University Legal Name</label>
+                  <input type="text" id="invCompanyInput" placeholder="Northwestern University Accessibility Office" value="Northwestern University Accessibility Office" />
+                </div>
+                <div class="ds-field">
+                  <label for="invPoNumberInput">Purchase Order # (Optional)</label>
+                  <input type="text" id="invPoNumberInput" placeholder="PO-EAA-2026-881" value="PO-EAA-2026-881" />
+                </div>
+              </div>
+              <button type="button" class="ds-submit-btn" id="btnGenerateCorporateInvoice">
+                Generate Official Invoice &amp; Activate 14-Day Provisional PRO Unlock →
+              </button>
+
+              <div class="ds-invoice-preview-box" id="corporateInvoicePreviewBox">
+                <!-- Populated dynamically -->
+              </div>
+
+              <div class="ds-invoice-actions">
+                <button type="button" class="ds-btn-secondary" id="btnPrintCorporateInvoice">
+                  Print / Save PDF Invoice
+                </button>
+                <a href="mailto:engineering@caliberfoundry.com" class="ds-btn-primary ds-mailto-btn" id="btnMailtoInvoice">
+                  Send Purchase Order via Email →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- METHOD C: LICENSE KEY ACTIVATION -->
+          <div class="ds-pay-panel hidden" id="payPanelKey">
+            <div class="ds-form">
+              <div class="ds-field">
+                <label for="licenseKeyInput">Enter DocuShield™ License Key</label>
+                <input
+                  type="text"
+                  id="licenseKeyInput"
+                  class="ds-key-input"
+                  placeholder="DS-PRO-2026-CALIBER or CF-DOCUSHIELD-ENT"
+                />
+                <span class="ds-key-hint">Accepted formats: <code>DS-PRO-2026-CALIBER</code>, <code>CF-DOCUSHIELD-ENT</code>, <code>DS-PRO-2026-XXXX</code></span>
+              </div>
+              <button type="button" class="ds-submit-btn" id="btnActivateLicenseKey">
+                Validate &amp; Activate License Key →
+              </button>
+            </div>
+          </div>
+
+          <!-- Activation Confirmation Banner -->
+          <div class="ds-activation-success hidden" id="activationSuccessBox">
+            <div class="ds-success-kicker">PRO STUDIO UNLOCKED // ALL 6 PACKETS &amp; UNLIMITED AUDITS ACTIVE</div>
+            <h3 id="activationSuccessKeyHeading">Active License: DS-PRO-2026-CALIBER</h3>
+            <p id="activationSuccessText">
+              All 6 industry packets (FIN-03, MED-04, EDTECH-05, GOV-06), unlimited local PDF/HTML inspections, Batch Archive Mode, and CI/CD Webhook API are now unlocked.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="ds-toast-container" aria-live="polite"></div>
+
+  <!-- External Corpus Payload + Core Application Architecture -->
+  <script src="corpus-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
