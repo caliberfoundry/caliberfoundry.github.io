@@ -219,7 +219,7 @@
 
     @media (min-width: 1120px) {
       .clinical-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
@@ -230,6 +230,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      min-width: 0;
     }
 
     @media (min-width: 1120px) {
@@ -425,9 +426,9 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">ORFF Maestra&trade; TTL-MSM &amp; SCORM 1.2 Studio <span class="mono" style="font-size:13px; color:var(--cf-accent-primary);">[SYS-03 // v1.8]</span></h1>
+            <h1 class="app-title">Clinical Assessment &amp; SCORM 1.2 Studio</h1>
             <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              FERPA WEBCRYPTO AES-GCM + ADL SCORM 1.2
+              FERPA AES-256-GCM + ADL SCORM 1.2
             </span>
           </div>
           <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
@@ -493,7 +494,7 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label">[STEP 01 // CLINICIAN INPUT]</div>
+              <div class="spec-label">STEP 01 · CLINICIAN EVIDENCE</div>
               <h2 class="col-title">Multi-Source Evidence Coding</h2>
             </div>
             <span class="mono" style="font-size:11px; padding:2px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">4 SOURCES</span>
@@ -560,8 +561,8 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label">[STEP 02 // DETERMINISTIC MATRIX]</div>
-              <h2 class="col-title">TTL-MSM Rule-Gate Evaluation</h2>
+              <div class="spec-label">STEP 02 · DIAGNOSTIC MATRIX</div>
+              <h2 class="col-title">Rule-Gate Evaluation</h2>
             </div>
             <span id="compositeScoreBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">COMPOSITE: 6/8</span>
           </div>
@@ -569,7 +570,7 @@
           <!-- Dynamic Verdict Classification Box -->
           <div id="verdictCard" class="verdict-box">
             <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:11px; font-weight:600; margin-bottom:6px; text-transform:uppercase;">
-              <span>[TTL-MSM DIAGNOSTIC CLASSIFICATION]</span>
+              <span>DIAGNOSTIC CLASSIFICATION</span>
               <span id="verdictConfidence">CONCORDANCE: 95%</span>
             </div>
             <h3 id="verdictTitle" style="font-family:var(--font-display); font-size:24px; font-weight:400; line-height:1.15; color:var(--cf-ink-primary); margin-bottom:8px;"></h3>
@@ -591,7 +592,7 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">[STEP 03 // PRIVACY-BY-DESIGN]</div>
+              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">STEP 03 · PRIVACY BY DESIGN</div>
               <h2 class="col-title">FERPA Zero-PII WebCrypto Guard</h2>
             </div>
             <label class="mono" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; cursor:pointer; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass);">

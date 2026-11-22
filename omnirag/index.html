@@ -275,7 +275,7 @@
 
     @media (min-width: 1080px) {
       .split-workbench {
-        grid-template-columns: 6fr 6fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       }
     }
 
@@ -284,6 +284,7 @@
       border-bottom: 1px solid var(--cf-rule-mid);
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     @media (min-width: 1080px) {
@@ -297,6 +298,7 @@
       background-color: var(--cf-bg-surface);
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .pane-toolbar {
@@ -466,9 +468,9 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">OmniRAG&trade; Document Citation Studio <span class="mono" style="font-size:13px; color:var(--cf-accent-primary);">[SYS-02 // v3.1]</span></h1>
+            <h1 class="app-title">OmniRAG&trade; Document Citation Studio</h1>
             <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              FASTAPI + STATEGRAPH + PGVECTOR
+              MULTI-DOCUMENT PAGE &amp; CELL VERIFIER
             </span>
           </div>
           <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
@@ -841,7 +843,7 @@
       if (msg.role === 'user') {
         return `
           <div class="msg-user">
-            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">[OPERATOR QUERY]</div>
+            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">AUDIT QUERY</div>
             <div style="font-size:13px;">${escapeHtml(msg.text)}</div>
           </div>
         `;
@@ -849,7 +851,7 @@
       return `
         <div class="msg-system">
           <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px; margin-bottom:10px; font-family:var(--font-mono); font-size:10.5px;">
-            <span style="font-weight:600; color:var(--cf-navy-authority);">[STATEGRAPH CITATION-VERIFIED RESPONSE]</span>
+            <span style="font-weight:600; color:var(--cf-navy-authority);">VERIFIED ANSWER &amp; CITATIONS</span>
             <span style="color:var(--cf-forest-pass); font-weight:600;">100% GROUNDED &bull; CLICK BADGES TO INSPECT SOURCE</span>
           </div>
           <div>${msg.html}</div>
@@ -894,7 +896,7 @@
                 <span style="font-size:13px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
               </div>
               <span class="mono" style="font-size:10.5px; font-weight:600; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? '[§ ACTIVE CITATION SOURCE]' : 'RRF SCORE: 0.996'}
+                ${isHighlighted ? '§ HIGHLIGHTED SOURCE PASSAGE' : 'VERIFIED SOURCE'}
               </span>
             </div>
             <p class="chunk-body-text">

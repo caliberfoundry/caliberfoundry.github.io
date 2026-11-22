@@ -74,16 +74,19 @@ button, input, select, textarea {
 /* ==========================================================================
    1. COMPACT GLOBAL CODEDRILL TOP SWITCHER BAR (42px HEIGHT)
    ========================================================================== */
-.codedrill-global-bar {
-  height: 42px;
+.codedrill-global-bar,
+.global-suite-bar {
+  height: 40px;
   background: var(--cf-bg-ink-panel);
   color: var(--cf-ink-on-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 10px;
   border-bottom: 1px solid var(--cf-rule-strong);
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow: hidden;
   z-index: 100;
   user-select: none;
 }
@@ -161,11 +164,12 @@ button, input, select, textarea {
   gap: 3px;
 }
 
-.cd-mode-tab {
+.cd-mode-tab,
+.mode-tab-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 11px;
+  gap: 5px;
+  padding: 4px 9px;
   border-radius: 2px;
   border: 1px solid transparent;
   background: transparent;
@@ -200,14 +204,16 @@ button, input, select, textarea {
 .cd-global-controls {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .cd-track-selector-wrap {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 .cd-track-label {
@@ -216,6 +222,7 @@ button, input, select, textarea {
   color: #B5B0A4;
 }
 
+#examTrackSelect,
 .cd-track-select {
   background: #22211F;
   color: var(--cf-ink-on-dark);
@@ -225,7 +232,10 @@ button, input, select, textarea {
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  max-width: 245px;
+  max-width: 195px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .cd-persona-select {
@@ -299,7 +309,7 @@ button, input, select, textarea {
    2. MAIN WORKSPACE & COMPACT PEARSON VUE HEADER CHROME
    ========================================================================== */
 .codedrill-main-container {
-  height: calc(100vh - 42px);
+  height: calc(100vh - 40px);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -444,64 +454,76 @@ button, input, select, textarea {
   background: var(--cf-bg-surface);
 }
 
-/* Milled Stone Action Toolbar (#ECE9E1) — Compact 38px */
-.pvue-action-bar {
-  min-height: 38px;
+/* Milled Stone Action Toolbar (#ECE9E1) — Compact 36px */
+.pvue-action-bar,
+.exam-toolbar {
+  min-height: 36px;
   background: var(--cf-bg-stone);
   border-bottom: 1px solid var(--cf-rule-strong);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 3px 14px;
+  padding: 3px 12px;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .pvue-tools-left,
 .pvue-tools-right {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 5px;
+  flex-wrap: nowrap;
 }
 
 .pvue-tool-btn {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 9px;
+  padding: 4px 9px;
   font-family: var(--font-sans);
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--cf-ink-primary);
-  background: var(--cf-bg-surface);
-  border: 1px solid var(--cf-rule-strong);
+  background: #FFFFFF;
+  border: 1px solid var(--cf-rule-mid);
   border-radius: 2px;
-  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  box-shadow: none;
   cursor: pointer;
+  white-space: nowrap;
   transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.08s ease;
+}
+
+.pvue-tools-left .pvue-tool-btn {
+  box-shadow: none !important;
+  border: 1px solid var(--cf-rule-mid);
+  background: #FFFFFF;
+  padding: 4px 9px;
+  font-size: 11.5px;
+  font-weight: 500;
 }
 
 .pvue-tool-btn:hover {
   background: var(--cf-bg-paper);
+  border-color: var(--cf-rule-strong);
 }
 
 .pvue-tool-btn:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px var(--cf-rule-strong);
+  background: var(--cf-bg-stone);
 }
 
 .pvue-tool-btn.active {
   background: var(--cf-highlight-mark);
   color: var(--cf-ink-primary);
   border-color: var(--cf-rule-strong);
+  font-weight: 600;
 }
 
 .pvue-tool-btn.flagged-active {
   background: var(--cf-brass-tint);
   color: var(--cf-brass-warn);
   border-color: var(--cf-brass-warn);
-  box-shadow: 2px 2px 0px var(--cf-brass-warn);
+  font-weight: 600;
 }
 
 .pvue-tool-icon {
@@ -527,7 +549,7 @@ button, input, select, textarea {
   background: var(--cf-bg-paper);
   padding: 2px 5px;
   border-radius: 0px;
-  border: 1px solid var(--cf-rule-strong);
+  border: 1px solid var(--cf-rule-mid);
 }
 
 .pvue-split-label {
@@ -556,27 +578,36 @@ button, input, select, textarea {
   color: var(--cf-ink-on-dark);
 }
 
+#btnCheckCurrentAnswer,
 .pvue-btn-check {
-  background: var(--cf-forest-tint);
-  color: var(--cf-forest-pass);
-  border-color: var(--cf-forest-pass);
-  box-shadow: 2px 2px 0px var(--cf-forest-pass);
+  background: var(--cf-forest-pass);
+  color: #FFFFFF;
+  border: 1px solid #141413;
+  box-shadow: 2px 2px 0px #141413;
+  font-weight: 700;
+  padding: 4px 11px;
 }
 
+#btnCheckCurrentAnswer:hover,
 .pvue-btn-check:hover {
-  background: #DCECE2;
+  background: #14452C;
+  color: #FFFFFF;
 }
 
+#btnGradeFullExam,
 .pvue-btn-grade-exam {
   background: var(--cf-accent-primary);
-  color: var(--cf-ink-on-dark);
-  border-color: var(--cf-rule-strong);
-  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  color: #FFFFFF;
+  border: 1px solid #141413;
+  box-shadow: 2px 2px 0px #141413;
+  font-weight: 700;
+  padding: 4px 11px;
 }
 
+#btnGradeFullExam:hover,
 .pvue-btn-grade-exam:hover {
   background: var(--cf-accent-hover);
-  color: var(--cf-ink-on-dark);
+  color: #FFFFFF;
 }
 
 /* ==========================================================================
@@ -855,26 +886,28 @@ button, input, select, textarea {
   font-weight: 600;
 }
 
-/* Generous 24px-28px Editorial Padding */
+/* Compact Above-the-Fold Editorial Padding */
 .pvue-pane-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 24px 28px 44px 28px;
+  padding: 12px 22px 32px 22px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 /* ==========================================================================
    5. LEFT PANE: EXAM QUESTION WORKSPACE
    ========================================================================== */
-.q-meta-strip {
+.q-meta-strip,
+.question-meta-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
-  padding-bottom: 10px;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 4px 0 8px 0;
   border-bottom: 1px solid var(--cf-rule-mid);
 }
 
@@ -882,7 +915,7 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .q-badge {
@@ -890,9 +923,11 @@ button, input, select, textarea {
   font-variant-numeric: tabular-nums;
   font-size: 11px;
   font-weight: 600;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 2px;
   border: 1px solid var(--cf-rule-mid);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .q-badge-num {
@@ -911,6 +946,9 @@ button, input, select, textarea {
   background: var(--cf-bg-surface);
   color: var(--cf-ink-primary);
   border-color: var(--cf-rule-mid);
+  max-width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .q-badge-diff {
@@ -931,9 +969,11 @@ button, input, select, textarea {
   font-size: 11px;
   color: var(--cf-ink-secondary);
   background: var(--cf-bg-surface);
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 0px;
   border: 1px solid var(--cf-rule-mid);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .q-meta-timer-mini strong {
@@ -3344,6 +3384,7 @@ mark.ecfr-search-highlight {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .cd-license-pill {
@@ -3764,6 +3805,14 @@ mark.ecfr-search-highlight {
 }
 
 /* Responsive Adjustments */
+@media (max-width: 1550px) {
+  .cd-telemetry-pill,
+  #globalPassProbBadge,
+  .cd-global-link {
+    display: none !important;
+  }
+}
+
 @media (max-width: 1180px) {
   .an-kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .an-two-col-grid,

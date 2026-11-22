@@ -316,7 +316,7 @@
 
     @media (min-width: 1200px) {
       .workbench-grid {
-        grid-template-columns: 8fr 4fr;
+        grid-template-columns: minmax(0, 7.2fr) minmax(0, 4.8fr);
       }
     }
 
@@ -325,6 +325,7 @@
       border-bottom: 1px solid var(--cf-rule-mid);
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     @media (min-width: 1200px) {
@@ -438,6 +439,7 @@
       background-color: var(--cf-bg-paper);
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .inspector-block {
@@ -478,10 +480,10 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">StealthFlow&trade; <span class="mono" style="font-size:13px; color:var(--cf-accent-primary);">[SYS-01 // v2.4]</span></h1>
-            <span class="status-tag">12/12 SCRAPERS HEALTHY</span>
+            <h1 class="app-title">StealthFlow&trade; Data Hub</h1>
+            <span class="status-tag">12/12 SOURCES HEALTHY</span>
             <span class="spec-label" style="border:1px solid var(--cf-rule-mid); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary);">
-              MAKE.COM WEBHOOK DISPATCHER + ENTITY ETL
+              WEBHOOK DISPATCHER + SCHEMA ETL
             </span>
           </div>
           <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
@@ -602,7 +604,7 @@
         <div id="webhookTesterCard" class="inspector-block" style="background-color:var(--cf-bg-stone);">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:600;">[DISPATCHER // MAKE.COM WEBHOOK]</div>
+              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:600;">WEBHOOK DELIVERY TESTER</div>
               <h3 style="font-family:var(--font-display); font-size:22px; font-weight:400;">Live Make.com Webhook Tester</h3>
             </div>
             <span class="status-tag">HMAC READY</span>
@@ -647,7 +649,7 @@
         <div class="inspector-block" style="flex:1;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label">[INSPECTOR // ENTITY RESOLUTION &amp; PYDANTIC V2]</div>
+              <div class="spec-label">NORMALIZED RECORD INSPECTOR</div>
               <h3 style="font-family:var(--font-display); font-size:22px; font-weight:400;">
                 Record Payload: <span id="inspectedLeadId" class="mono" style="font-size:16px; color:var(--cf-accent-primary); font-weight:600;">SF-1001</span>
               </h3>
