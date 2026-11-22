@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Multi-Document Citation Verification Architecture: Page &amp; Cell-Level Source Grounding | Caliber Foundry</title>
+  <meta name="description" content="How to architect deterministic multi-document citation verification for financial, legal, and due diligence workflows. Compare naive chunked vector RAG vs. OmniRAG™ structure-aware page, bounding-box, and spreadsheet cell-coordinate grounding." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html" />
+  <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="Multi-Document Citation Verification Architecture: Page and Cell-Level Source Grounding for Enterprise Workflows" />
+  <meta property="og:description" content="Engineering blueprint for zero-hallucination evidence synthesis across contracts, regulatory filings, and financial spreadsheets with exact page and cell coordinates." />
+  <meta property="og:url" content="https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html" />
+  <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CaliberFoundry" />
+  <meta name="twitter:title" content="Multi-Document Citation Verification Architecture (OmniRAG™) — Caliber Foundry" />
+  <meta name="twitter:description" content="Why naive 512-token chunk RAG fails financial and legal audits—and how structure-aware cell &amp; page coordinate grounding solves it." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html#article",
+        "headline": "Multi-Document Citation Verification Architecture: Page and Cell-Level Source Grounding for Enterprise Financial, Legal, and Due Diligence Workflows",
+        "description": "Systems architecture for deterministic multi-document retrieval and citation verification across PDFs, contracts, and spreadsheets with page and cell-level coordinate grounding.",
+        "datePublished": "2026-11-22",
+        "dateModified": "2026-11-22",
+        "author": {
+          "@type": "Organization",
+          "name": "Caliber Foundry",
+          "url": "https://caliberfoundry.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Caliber Foundry",
+          "url": "https://caliberfoundry.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://caliberfoundry.com/og-image.png"
+          }
+        },
+        "mainEntityOfPage": "https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why do standard vector RAG pipelines fail on financial tables and legal contracts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Fixed-token window chunking (such as 512-token chunks) splits table rows away from their column headers and severs legal exceptions from their parent clauses. When an analyst asks for a specific financial covenant or EBITDA adjustment, pure semantic cosine similarity retrieves orphan numbers without row headers or exact page coordinates."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does OmniRAG verify every claim at the page and cell level?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OmniRAG indexes every document segment with a deterministic coordinate tuple (Document SHA-256, Page Number, Section Path, Table ID, Row/Column Key, and Character Span). A post-generation verification gate validates that every numeric metric and quoted span matches the underlying AST node before displaying the response."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-forest-pass:    #1A5638;
+      --cf-highlight-mark: #FCE588;
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .site-header {
+      border-bottom: 1px solid var(--cf-rule-mid);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
+    .brand-mark {
+      width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
+    .brand-name { font-family: var(--font-display); font-size: 23px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+      padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
+      background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong);
+    }
+    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
+    .btn-primary:hover { background-color: var(--cf-accent-hover); }
+
+    .article-shell { max-width: 960px; margin: 0 auto; padding: 48px 32px 88px; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+    .breadcrumb:hover { color: var(--cf-accent-primary); }
+    .meta-strip {
+      display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--cf-ink-muted); border-top: 1px solid var(--cf-rule-strong); border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 10px 0; margin-bottom: 28px;
+    }
+    .meta-strip span.tag-accent { color: var(--cf-accent-primary); font-weight: 600; }
+    h1.article-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 54px); font-weight: 400; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 22px; }
+    .article-lede { font-family: var(--font-serif); font-size: 21px; line-height: 1.62; color: var(--cf-ink-secondary); margin-bottom: 36px; }
+    .cta-inline {
+      background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 28px 32px; margin: 36px 0;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .cta-inline-label { font-family: var(--font-mono); font-size: 11px; color: var(--cf-accent-primary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; display: block; margin-bottom: 4px; }
+    .cta-inline h3 { font-family: var(--font-display); font-size: 26px; font-weight: 400; }
+    .prose { font-family: var(--font-serif); font-size: 18px; line-height: 1.72; color: var(--cf-ink-primary); }
+    .prose h2 { font-family: var(--font-display); font-size: 34px; font-weight: 400; line-height: 1.15; margin: 48px 0 18px; padding-top: 24px; border-top: 1px solid var(--cf-rule-mid); }
+    .prose p { margin-bottom: 20px; }
+    .prose ul, .prose ol { margin: 0 0 24px 24px; }
+    .prose li { margin-bottom: 10px; }
+    .prose code { font-family: var(--font-mono); font-size: 14px; background-color: var(--cf-bg-stone); padding: 2px 6px; border: 1px solid var(--cf-rule-mid); }
+    .code-panel {
+      background-color: var(--cf-bg-ink-panel); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 12.5px;
+      line-height: 1.7; padding: 24px 28px; border: 1px solid var(--cf-rule-strong); margin: 28px 0; overflow-x: auto;
+    }
+    .data-table {
+      width: 100%; border-collapse: collapse; background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong);
+      margin: 28px 0; font-family: var(--font-sans); font-size: 14px;
+    }
+    .data-table th, .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--cf-rule-subtle); text-align: left; vertical-align: top; }
+    .data-table th { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; background-color: var(--cf-bg-stone); border-bottom: 1px solid var(--cf-rule-strong); }
+    .site-footer {
+      border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted);
+      max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .site-footer a { color: var(--cf-ink-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../" class="brand">
+        <span class="brand-mark">CF</span>
+        <span class="brand-name">Caliber Foundry</span>
+      </a>
+      <div style="display:flex; gap:12px;">
+        <a href="./" class="btn"><span>All Insights</span></a>
+        <a href="../omnirag/" class="btn btn-primary"><span>Launch OmniRAG&trade; Demo</span><span>&rarr;</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-shell">
+    <a href="./" class="breadcrumb">&larr; Back to Engineering &amp; Regulatory Insights</a>
+
+    <div class="meta-strip">
+      <span class="tag-accent">MONOGRAPH // 02</span>
+      <span>SYSTEM: OMNIRAG&trade; VERIFIER</span>
+      <span>DOMAIN: ENTERPRISE DOCUMENT VERIFICATION</span>
+      <span>UPDATED: NOV 2026</span>
+    </div>
+
+    <h1 class="article-title">Multi-Document Citation Verification Architecture: Page and Cell-Level Source Grounding for Enterprise Financial, Legal, and Due Diligence Workflows</h1>
+
+    <p class="article-lede">
+      In M&amp;A due diligence, credit underwriting, and regulatory compliance, an answer without a deterministic page coordinate and table cell provenance is unusable. Here is how we engineer multi-document citation verification pipelines that anchor every synthesized number and legal clause to its exact source coordinate.
+    </p>
+
+    <div class="cta-inline">
+      <div>
+        <span class="cta-inline-label">LIVE SYSTEM // OMNIRAG&trade; VERIFIER</span>
+        <h3>Inspect Multi-Document Page &amp; Cell Citation Highlighting in Your Browser</h3>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="../omnirag/" class="btn btn-primary"><span>Launch Live OmniRAG&trade; App</span><span>&rarr;</span></a>
+        <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Document%20Pipeline%20Prototype" class="btn"><span>Request Custom Prototype</span><span>&nearr;</span></a>
+      </div>
+    </div>
+
+    <article class="prose">
+      <h2>01 // Why Naive Chunk-Based Vector RAG Fails Regulatory Audits</h2>
+      <p>
+        Most off-the-shelf document assistants slice PDFs and spreadsheets into arbitrary 500-to-1,000 token windows, embed them into a vector database, and retrieve top-<em>k</em> chunks by cosine similarity. While acceptable for casual knowledge bases, this pattern breaks down catastrophically in enterprise verification workflows for three structural reasons:
+      </p>
+      <ul>
+        <li><strong>Table Header Decapitation:</strong> When a 40-row financial schedule or fee table is split across token boundaries, rows 25–40 lose their column headers (`FY2024 Audited`, `Pro Forma Adjusted`, `Currency: USD Thousands`) and footnote qualifiers.</li>
+        <li><strong>Cross-Clause Exception Severance:</strong> In commercial leases, MSAs, and federal regulations, a baseline obligation on Page 14 (`Section 4.2: Tenant shall maintain coverage of $5,000,000`) is routinely modified by an addendum or schedule on Page 47 (`Schedule C: Notwithstanding Section 4.2...`). Pure semantic search retrieves the baseline obligation while missing the cross-referenced override.</li>
+        <li><strong>Unverifiable Attribution:</strong> Returning a document filename (`Credit_Agreement_Final.pdf`) forces a human analyst to spend 15 minutes manually searching a 200-page PDF to confirm a single figure.</li>
+      </ul>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Architectural Dimension</th>
+            <th>Standard Chunk Vector RAG</th>
+            <th>OmniRAG&trade; Deterministic Citation Engine</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ingestion Granularity</strong></td>
+            <td>Sliding 512-token character windows</td>
+            <td>Hierarchical AST nodes (Section &rarr; Paragraph &rarr; Table Cell Tuple)</td>
+          </tr>
+          <tr>
+            <td><strong>Table Representation</strong></td>
+            <td>Flattened plain text (loses 2D row/column keys)</td>
+            <td>2D Coordinate Matrix preserving `(sheet, table_id, row_key, col_key, unit)`</td>
+          </tr>
+          <tr>
+            <td><strong>Retrieval Mechanism</strong></td>
+            <td>Dense vector cosine similarity only</td>
+            <td>Hybrid Lexical (BM25 + Exact Clause/Metric Regex) + Structural Graph Traversal</td>
+          </tr>
+          <tr>
+            <td><strong>Verification Gate</strong></td>
+            <td>None (trusts generative output)</td>
+            <td>Deterministic Post-Generation Span &amp; Numeric Reconciliation Gate</td>
+          </tr>
+          <tr>
+            <td><strong>Audit UI Output</strong></td>
+            <td>Text answer + generic document link</td>
+            <td>Split-screen synchronized highlighting of exact page bounding box &amp; table row</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>02 // Structure-Aware Coordinate Indexing</h2>
+      <p>
+        In <a href="../omnirag/">OmniRAG&trade;</a>, no text span or numeric cell enters the index without a deterministic coordinate descriptor. During ingestion, PDFs, DOCX contracts, and XLSX workbooks are parsed into a unified Document Abstract Syntax Tree (AST):
+      </p>
+
+      <div class="code-panel">
+{
+  "evidence_node_id": "DOC-2026-MSA-04::P14::TBL02::R07::C03",
+  "document_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_filename": "Master_Services_Agreement_2026_Executed.pdf",
+  "coordinate": {
+    "page_number": 14,
+    "section_hierarchy": ["Article IV: Financial Covenants", "Section 4.03: Minimum Liquidity"],
+    "table_id": "TBL-02",
+    "row_header": "Consolidated Net Leverage Ratio (Max)",
+    "column_header": "Q4 2026 Covenant Threshold",
+    "bbox_norm": [0.118, 0.442, 0.884, 0.479]
+  },
+  "raw_value": "3.25x",
+  "normalized_numeric": 3.25,
+  "unit": "ratio_multiple",
+  "cross_references": ["Section 1.01 (Defined Terms: Consolidated EBITDA)", "Schedule 4.03(b)"]
+}
+      </div>
+
+      <h2>03 // The 4-Stage Deterministic Verification Pipeline</h2>
+      <p>
+        When an auditor, attorney, or operations lead submits a query across a corpus of hundreds of documents, OmniRAG&trade; executes a four-stage state machine rather than a single prompt call:
+      </p>
+      <ol>
+        <li><strong>Query Decomposition &amp; Entity Extraction:</strong> Decomposes multi-part questions into atomic verification sub-queries, extracting exact statutory citations, contract clause numbers, date ranges, and financial line items.</li>
+        <li><strong>Hybrid Lexical + Structural Retrieval + Cross-Reference Expansion:</strong> Executes BM25 exact-token matching alongside semantic retrieval, then automatically follows internal cross-reference pointers (`as defined in Section 1.01`, `subject to Exhibit B`) so exceptions are pulled into the evidence context alongside primary clauses.</li>
+        <li><strong>Citation-Locked Synthesis:</strong> Every atomic claim generated by the synthesis layer must include an inline machine-verifiable citation pointer (`[REF: DOC-2026-MSA-04::P14::TBL02::R07::C03]`) and an exact verbatim quote span.</li>
+        <li><strong>Post-Generation Verification Gate:</strong> Before the response is rendered to the user, a deterministic validator checks every `[REF: ...]` tag against the retrieved AST nodes. If a number or verbatim quote does not appear in the referenced coordinate node, the claim is flagged or rejected.</li>
+      </ol>
+
+      <h2>04 // Request a Custom Working Prototype on Your Document Corpus</h2>
+      <p>
+        Whether your team is auditing commercial real estate leases, reconciling supplier invoices against master purchase agreements, or verifying regulatory disclosures across 10-K filings, Caliber Foundry builds and deploys private, zero-data-retention citation verification systems tailored to your schema.
+      </p>
+    </article>
+
+    <div class="cta-inline" style="background-color:var(--cf-bg-ink-panel); color:var(--cf-ink-on-dark); margin-top:48px;">
+      <div>
+        <span class="cta-inline-label">24-HOUR WORKING PROOF // OMNIRAG&trade; ARCHITECTURE</span>
+        <h3 style="color:var(--cf-ink-on-dark);">Send us 3 sample PDFs or spreadsheets—we will return a live citation-grounded prototype</h3>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Working%20Prototype%20Request" class="btn btn-primary"><span>Email engineering@caliberfoundry.com</span><span>&nearr;</span></a>
+        <a href="../omnirag/" class="btn"><span>Explore Live OmniRAG&trade; Demo</span><span>&rarr;</span></a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Caliber Foundry &mdash; United States (Remote)</span>
+    <div style="display:flex; flex-wrap:wrap; gap: 20px;">
+      <a href="../">Home</a>
+      <a href="./">All Insights</a>
+      <a href="../omnirag/">OmniRAG&trade; Live</a>
+      <a href="../llms.txt">llms.txt</a>
+      <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+    </div>
+  </footer>
+</body>
+</html>

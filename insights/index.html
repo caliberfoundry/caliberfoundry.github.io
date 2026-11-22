@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Engineering &amp; Regulatory Insights — Systems Architecture &amp; Federal Code Guides | Caliber Foundry</title>
+  <meta name="description" content="Technical monographs and statutory exam blueprints from Caliber Foundry: U.S. Customs Broker Exam (CBLE 19 CFR &amp; HTSUS) navigation strategy, IRS Enrolled Agent Circular 230 (31 CFR Part 10) rules, multi-document citation verification (OmniRAG™), and XHR web data extraction pipelines (StealthFlow™)." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://caliberfoundry.com/insights/" />
+  <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="Engineering &amp; Regulatory Insights — Caliber Foundry Technical Monographs" />
+  <meta property="og:description" content="Deep architectural guides on federal licensing exam CBT navigation (19 CFR, HTSUS, 31 CFR Part 10), deterministic document citation verification, and resilient web data extraction." />
+  <meta property="og:url" content="https://caliberfoundry.com/insights/" />
+  <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CaliberFoundry" />
+  <meta name="twitter:title" content="Engineering &amp; Regulatory Insights — Caliber Foundry" />
+  <meta name="twitter:description" content="Technical monographs on CBLE 19 CFR/HTSUS exam strategy, Circular 230 rules, page/cell-level document verification, and network-layer web data extraction." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://caliberfoundry.com/insights/#collection",
+        "url": "https://caliberfoundry.com/insights/",
+        "name": "Caliber Foundry — Engineering & Regulatory Insights",
+        "description": "Technical monographs and regulatory strategy guides covering the U.S. Customs Broker License Exam (19 CFR & HTSUS), IRS Enrolled Agent Circular 230 (31 CFR Part 10), multi-document citation verification, and resilient web data extraction.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Caliber Foundry",
+          "url": "https://caliberfoundry.com/",
+          "logo": "https://caliberfoundry.com/og-image.png"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://caliberfoundry.com/insights/pass-us-customs-broker-exam-cble-ecfr-strategy.html",
+            "name": "How to Pass the U.S. Customs Broker License Exam (CBLE): Mastering Split-Screen 19 CFR & HTSUS Navigation Under 45 Seconds"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "url": "https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html",
+            "name": "Multi-Document Citation Verification Architecture: Page and Cell-Level Source Grounding for Enterprise Financial, Legal, and Due Diligence Workflows"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "url": "https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html",
+            "name": "Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "url": "https://caliberfoundry.com/insights/irs-enrolled-agent-circular-230-exam-guide.html",
+            "name": "31 CFR Part 10 (Treasury Circular 230) Exam Guide: Key Rules & Traps for IRS Enrolled Agent Candidates"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-accent-tint:    #FDF2EE;
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #EDF5F0;
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--cf-rule-mid);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--cf-ink-primary);
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      background-color: var(--cf-ink-primary);
+      color: var(--cf-ink-on-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 5px;
+      height: 5px;
+      background-color: var(--cf-accent-primary);
+    }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 23px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-links a.nav-item {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--cf-ink-secondary);
+      text-decoration: none;
+    }
+    .nav-links a.nav-item:hover {
+      color: var(--cf-ink-primary);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 2px;
+      border: 1px solid var(--cf-rule-strong);
+      text-decoration: none;
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      box-shadow: 2px 2px 0px var(--cf-rule-strong);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+    }
+    .btn:hover { background-color: var(--cf-bg-stone); }
+    .btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--cf-rule-strong);
+    }
+    .btn-primary {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+    }
+    .btn-primary:hover { background-color: var(--cf-accent-hover); }
+    .btn-dark {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+    }
+    .btn-dark:hover { background-color: #2A2927; }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 56px 32px 88px;
+    }
+
+    .hero-block {
+      border-bottom: 1px solid var(--cf-rule-strong);
+      padding-bottom: 44px;
+      margin-bottom: 48px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cf-accent-primary);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.2vw, 62px);
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      max-width: 18ch;
+    }
+    .page-lede {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      line-height: 1.62;
+      color: var(--cf-ink-secondary);
+      max-width: 66ch;
+    }
+
+    .section-bar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+    }
+    .section-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cf-ink-muted);
+    }
+
+    .monograph-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border: 1px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+      margin-bottom: 64px;
+    }
+    .monograph-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 36px;
+      gap: 24px;
+    }
+    .monograph-row:last-child { border-bottom: none; }
+    @media (min-width: 860px) {
+      .monograph-row {
+        grid-template-columns: 220px 1fr 220px;
+        align-items: start;
+      }
+    }
+    .mono-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--cf-ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .mono-badge {
+      display: inline-block;
+      border: 1px solid var(--cf-accent-primary);
+      color: var(--cf-accent-primary);
+      background-color: var(--cf-accent-tint);
+      padding: 2px 7px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      border-radius: 2px;
+    }
+    .mono-title {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .mono-title a {
+      color: var(--cf-ink-primary);
+      text-decoration: none;
+    }
+    .mono-title a:hover {
+      color: var(--cf-accent-primary);
+    }
+    .mono-abstract {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.62;
+      color: var(--cf-ink-secondary);
+      margin-bottom: 16px;
+    }
+    .mono-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cf-ink-secondary);
+    }
+    .mono-tag {
+      background-color: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-mid);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .mono-action {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .drill-ledger {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      margin-bottom: 64px;
+    }
+    .drill-ledger th, .drill-ledger td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+      font-size: 14px;
+    }
+    .drill-ledger th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background-color: var(--cf-bg-stone);
+      color: var(--cf-ink-secondary);
+      border-bottom: 1px solid var(--cf-rule-strong);
+    }
+    .drill-ledger td.code-cell {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cf-accent-primary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .drill-ledger a {
+      color: var(--cf-ink-primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .drill-ledger a:hover {
+      color: var(--cf-accent-primary);
+      text-decoration: underline;
+    }
+
+    .cta-box {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 44px 40px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cta-box h2 {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      color: #C9C4B8;
+      font-size: 15px;
+      max-width: 58ch;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--cf-rule-mid);
+      padding: 28px 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--cf-ink-muted);
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .site-footer a {
+      color: var(--cf-ink-primary);
+      text-decoration: none;
+    }
+    @media (max-width: 720px) {
+      .nav-links a.nav-item { display: none; }
+      .drill-ledger th:nth-child(3), .drill-ledger td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../" class="brand">
+        <span class="brand-mark">CF</span>
+        <span class="brand-name">Caliber Foundry</span>
+      </a>
+      <nav class="nav-links">
+        <a href="../#capabilities" class="nav-item">Capabilities</a>
+        <a href="../#work" class="nav-item">Live Systems</a>
+        <a href="../codedrill-cbt/" class="nav-item">CodeDrill&trade; CBT</a>
+        <a href="mailto:engineering@caliberfoundry.com?subject=Working%20Prototype%20Request" class="btn btn-primary">
+          <span>Request Free Prototype</span>
+          <span>&rarr;</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-block">
+      <span class="eyebrow">00 // CALIBER FOUNDRY TECHNICAL MONOGRAPHS &amp; REGULATORY GUIDES</span>
+      <h1 class="page-title">Engineering &amp; Regulatory Insights</h1>
+      <p class="page-lede">
+        Architectural blueprints on deterministic document citation verification, resilient network-layer web data extraction, and quantitative exam preparation strategies for the U.S. Customs Broker License Exam (19 CFR / HTSUS) and IRS Enrolled Agent Special Enrollment Examination (31 CFR Part 10).
+      </p>
+    </section>
+
+    <div class="section-bar">
+      <h2 class="section-title">Featured Technical Monographs</h2>
+      <span class="section-code">01 // SYSTEM ARCHITECTURE &amp; FEDERAL CBT</span>
+    </div>
+
+    <div class="monograph-grid">
+      <!-- Article 1 -->
+      <article class="monograph-row">
+        <div class="mono-meta">
+          <span class="mono-badge">MONOGRAPH // 01</span><br />
+          DOMAIN: FEDERAL LICENSING<br />
+          CORPUS: 19 CFR &amp; HTSUS<br />
+          READ TIME: 14 MIN
+        </div>
+        <div>
+          <h3 class="mono-title">
+            <a href="./pass-us-customs-broker-exam-cble-ecfr-strategy.html">How to Pass the U.S. Customs Broker License Exam (CBLE): Mastering Split-Screen 19 CFR &amp; HTSUS Navigation Under 45 Seconds</a>
+          </h3>
+          <p class="mono-abstract">
+            Why 75% to 90% of CBLE examinees fail an open-book examination—and how reducing your eCFR and HTSUS citation lookup latency below 45 seconds transforms the 4.5-hour, 80-question Pearson VUE marathon into a deterministic statutory lookup workflow.
+          </p>
+          <div class="mono-tags">
+            <span class="mono-tag">19 CFR Parts 111–190</span>
+            <span class="mono-tag">HTSUS GRI 1–6</span>
+            <span class="mono-tag">Transaction Value § 152.103</span>
+            <span class="mono-tag">Pearson VUE Split-Screen CBT</span>
+          </div>
+        </div>
+        <div class="mono-action">
+          <a href="./pass-us-customs-broker-exam-cble-ecfr-strategy.html" class="btn btn-dark"><span>Read Monograph</span><span>&rarr;</span></a>
+          <a href="../codedrill-cbt/" class="btn btn-primary"><span>Launch CodeDrill&trade; CBT</span><span>&nearr;</span></a>
+        </div>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="monograph-row">
+        <div class="mono-meta">
+          <span class="mono-badge">MONOGRAPH // 02</span><br />
+          DOMAIN: DOCUMENT VERIFICATION<br />
+          SYSTEM: OMNIRAG&trade;<br />
+          READ TIME: 12 MIN
+        </div>
+        <div>
+          <h3 class="mono-title">
+            <a href="./multi-document-citation-verification-architecture.html">Multi-Document Citation Verification Architecture: Page and Cell-Level Source Grounding for Enterprise Financial, Legal, and Due Diligence Workflows</a>
+          </h3>
+          <p class="mono-abstract">
+            How standard chunk-based vector RAG fails regulatory audits by severing table coordinates and statutory hierarchies—and how we architect structure-aware indexing, hybrid lexical-semantic retrieval, and deterministic page/cell grounding gates.
+          </p>
+          <div class="mono-tags">
+            <span class="mono-tag">Bounding-Box Coordinates</span>
+            <span class="mono-tag">Table Cell Grounding</span>
+            <span class="mono-tag">Hybrid BM25 + Vector</span>
+            <span class="mono-tag">Due Diligence Audit</span>
+          </div>
+        </div>
+        <div class="mono-action">
+          <a href="./multi-document-citation-verification-architecture.html" class="btn btn-dark"><span>Read Monograph</span><span>&rarr;</span></a>
+          <a href="../omnirag/" class="btn"><span>Test OmniRAG&trade; Live</span><span>&nearr;</span></a>
+        </div>
+      </article>
+
+      <!-- Article 3 -->
+      <article class="monograph-row">
+        <div class="mono-meta">
+          <span class="mono-badge">MONOGRAPH // 03</span><br />
+          DOMAIN: DATA PIPELINES &amp; ETL<br />
+          SYSTEM: STEALTHFLOW&trade;<br />
+          READ TIME: 11 MIN
+        </div>
+        <div>
+          <h3 class="mono-title">
+            <a href="./resilient-web-data-extraction-beyond-dom-scraping.html">Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines</a>
+          </h3>
+          <p class="mono-abstract">
+            Why CSS selector and XPath scrapers silently corrupt downstream analytics whenever frontend layouts shift—and how network-layer XHR/Fetch payload interception, strict JSON Schema quarantine gates, and HMAC-SHA256 webhooks achieve 99.9% pipeline uptime.
+          </p>
+          <div class="mono-tags">
+            <span class="mono-tag">Playwright Network Hooks</span>
+            <span class="mono-tag">JSON Schema Quarantine</span>
+            <span class="mono-tag">Entity Deduplication</span>
+            <span class="mono-tag">HMAC-SHA256 Webhooks</span>
+          </div>
+        </div>
+        <div class="mono-action">
+          <a href="./resilient-web-data-extraction-beyond-dom-scraping.html" class="btn btn-dark"><span>Read Monograph</span><span>&rarr;</span></a>
+          <a href="../stealthflow/" class="btn"><span>Test StealthFlow&trade; Live</span><span>&nearr;</span></a>
+        </div>
+      </article>
+
+      <!-- Article 4 -->
+      <article class="monograph-row">
+        <div class="mono-meta">
+          <span class="mono-badge">MONOGRAPH // 04</span><br />
+          DOMAIN: TAX PRACTICE LAW<br />
+          CORPUS: 31 CFR PART 10<br />
+          READ TIME: 13 MIN
+        </div>
+        <div>
+          <h3 class="mono-title">
+            <a href="./irs-enrolled-agent-circular-230-exam-guide.html">31 CFR Part 10 (Treasury Circular 230) Exam Guide: Key Rules &amp; Traps for IRS Enrolled Agent Candidates</a>
+          </h3>
+          <p class="mono-abstract">
+            A section-by-section legal breakdown of Treasury Department Circular No. 230 (31 CFR Part 10) for IRS Special Enrollment Examination (SEE Part 3) candidates—covering conflicting interests (§ 10.29), contingent fees (§ 10.27), client omissions (§ 10.21), and OPR sanctions.
+          </p>
+          <div class="mono-tags">
+            <span class="mono-tag">31 CFR Part 10</span>
+            <span class="mono-tag">Treasury Circular 230</span>
+            <span class="mono-tag">IRS SEE Part 3</span>
+            <span class="mono-tag">Office of Professional Responsibility</span>
+          </div>
+        </div>
+        <div class="mono-action">
+          <a href="./irs-enrolled-agent-circular-230-exam-guide.html" class="btn btn-dark"><span>Read Monograph</span><span>&rarr;</span></a>
+          <a href="../codedrill-cbt/" class="btn btn-primary"><span>Practice Circular 230 CBT</span><span>&nearr;</span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="section-bar">
+      <h2 class="section-title">19 CFR &amp; HTSUS Statutory Drill Ledger</h2>
+      <span class="section-code">02 // DIRECT CODE CITATION DRILLS</span>
+    </div>
+
+    <table class="drill-ledger">
+      <thead>
+        <tr>
+          <th>Statutory Citation</th>
+          <th>Regulation &amp; CBLE Exam Topic</th>
+          <th>Primary Trap / Threshold</th>
+          <th>Interactive Drill</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 111.32</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-111-32-false-information-broker-compliance.html">False Information &amp; Customs Broker Compliance Obligations</a></td>
+          <td>Prohibition against filing known false documents; client separation rules</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-111-32-false-information-broker-compliance.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">HTSUS GRI 3(b)</td>
+          <td><a href="../codedrill-cbt/seo-pages/htsus-gri-3b-essential-character-retail-sets.html">Essential Character &amp; Goods Put Up in Sets for Retail Sale</a></td>
+          <td>Composite goods hierarchy: GRI 3(a) specificity vs. 3(b) essential character vs. 3(c) last numerical</td>
+          <td><a href="../codedrill-cbt/seo-pages/htsus-gri-3b-essential-character-retail-sets.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 152.103</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-152-103-transaction-value-assists-appraisement.html">Transaction Value, Statutory Assists &amp; Customs Appraisement</a></td>
+          <td>Foreign engineering/molds (dutiable assist) vs. buying commissions &amp; international freight (excluded)</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-152-103-transaction-value-assists-appraisement.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 142.3</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-142-3-entry-documentation-release-deadlines.html">Entry Documentation Required for Merchandise Release</a></td>
+          <td>Mandatory entry packet elements &amp; 10-working-day entry summary (CBP Form 7501) deadline</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-142-3-entry-documentation-release-deadlines.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 190.32</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-190-32-modernized-drawback-substitution-tftea.html">Modernized Drawback Substitution Rules Under TFTEA</a></td>
+          <td>8-digit HTSUS subheading substitution, 5-year claim window &amp; 99% refund cap</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-190-32-modernized-drawback-substitution-tftea.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 177.9</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-177-9-administrative-rulings-60-day-revocation.html">Effect of Administrative Ruling Letters &amp; 60-Day Revocation Rule</a></td>
+          <td>Customs Bulletin notice &amp; 60-calendar-day effective delay under 19 U.S.C. 1625(c)</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-177-9-administrative-rulings-60-day-revocation.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 141.86</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-141-86-commercial-invoice-requirements-cble.html">Contents of Commercial Invoices Presented to CBP</a></td>
+          <td>Mandatory itemized invoice fields, currency of purchase, and port of entry</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-141-86-commercial-invoice-requirements-cble.html">Open Drill &rarr;</a></td>
+        </tr>
+        <tr>
+          <td class="code-cell">19 CFR &sect; 113.62</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-113-62-basic-importation-bond-liquidated-damages.html">Basic Importation and Entry Bond Conditions &amp; Liquidated Damages</a></td>
+          <td>3x value (restricted/alcoholic merchandise) vs. 1x value + duties liquidated damages</td>
+          <td><a href="../codedrill-cbt/seo-pages/19-cfr-113-62-basic-importation-bond-liquidated-damages.html">Open Drill &rarr;</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="cta-box">
+      <div>
+        <h2>Need a custom software system or data pipeline?</h2>
+        <p>Send us your specification or target portal URL. Within 24 hours, we deliver a functional working prototype or live extracted data sample before you commit.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px;">
+        <a href="mailto:engineering@caliberfoundry.com?subject=Request%20a%20Working%20Prototype" class="btn btn-primary">
+          <span>engineering@caliberfoundry.com</span>
+          <span>&nearr;</span>
+        </a>
+        <a href="../codedrill-cbt/" class="btn">
+          <span>Launch CodeDrill&trade; CBT</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Caliber Foundry &mdash; United States (Remote)</span>
+    <div style="display:flex; flex-wrap:wrap; gap: 20px;">
+      <a href="../">Home</a>
+      <a href="../codedrill-cbt/">CodeDrill&trade; CBT</a>
+      <a href="../codedrill-cbt/seo-pages/">19 CFR Hub</a>
+      <a href="../llms.txt">llms.txt</a>
+      <a href="../sitemap.xml">Sitemap</a>
+      <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+    </div>
+  </footer>
+</body>
+</html>
