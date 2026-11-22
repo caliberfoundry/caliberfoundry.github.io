@@ -121,39 +121,109 @@
     .header-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 18px 32px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      flex-wrap: wrap;
+      gap: 12px 16px;
     }
-    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cf-ink-primary); }
     .brand-mark {
       width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark);
       font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative;
     }
     .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
-    .brand-name { font-family: var(--font-display); font-size: 23px; }
+    .brand-name { font-family: var(--font-display); font-size: 22px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 13px; font-weight: 600;
-      padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600;
+      padding: 8px 14px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
       background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong);
-      cursor: pointer;
+      cursor: pointer; white-space: nowrap;
     }
     .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
     .btn-primary:hover { background-color: var(--cf-accent-hover); }
 
-    .article-shell { max-width: 1020px; margin: 0 auto; padding: 48px 32px 88px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+    .article-shell { max-width: 1020px; margin: 0 auto; padding: 32px 20px 72px; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 16px; }
     .breadcrumb:hover { color: var(--cf-accent-primary); }
     .meta-strip {
-      display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      display: flex; flex-wrap: wrap; gap: 10px 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
       letter-spacing: 0.08em; color: var(--cf-ink-muted); border-top: 1px solid var(--cf-rule-strong); border-bottom: 1px solid var(--cf-rule-mid);
-      padding: 10px 0; margin-bottom: 28px; font-variant-numeric: tabular-nums;
+      padding: 10px 0; margin-bottom: 20px; font-variant-numeric: tabular-nums;
     }
     .meta-strip span.tag-accent { color: var(--cf-accent-primary); font-weight: 600; }
-    h1.article-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 22px; }
-    .article-lede { font-family: var(--font-serif); font-size: 21px; line-height: 1.62; color: var(--cf-ink-secondary); margin-bottom: 36px; }
+    h1.article-title { font-family: var(--font-display); font-size: clamp(30px, 4.5vw, 48px); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .article-lede { font-family: var(--font-serif); font-size: 18.5px; line-height: 1.55; color: var(--cf-ink-secondary); margin-bottom: 24px; }
+
+    /* Progressive Disclosure Drill-Down Drawers */
+    .table-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    details.drilldown-section {
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      margin: 16px 0;
+    }
+    details.drilldown-section > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 20px;
+      background-color: var(--cf-bg-stone);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      user-select: none;
+    }
+    details.drilldown-section > summary::-webkit-details-marker { display: none; }
+    details.drilldown-section[open] > summary { border-bottom: 1px solid var(--cf-rule-strong); }
+    .drilldown-kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cf-accent-primary);
+      display: block;
+    }
+    .drilldown-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--cf-ink-primary);
+      line-height: 1.2;
+    }
+    .drilldown-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: 1px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      text-transform: uppercase;
+    }
+    .drilldown-body {
+      padding: 22px 24px;
+    }
+    @media (max-width: 640px) {
+      .review-banner { padding: 8px 14px; }
+      .header-inner { padding: 12px 14px; }
+      .article-shell { padding: 22px 14px 56px; }
+      .blueprint-panel { padding: 14px; }
+      .calc-inputs, .calc-outputs, .drilldown-body { padding: 16px; }
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--cf-rule-mid); }
+      .kpi-cell { padding: 16px; }
+    }
 
     /* KPI Summary Grid */
     .kpi-grid {
@@ -389,9 +459,9 @@
         <span class="brand-mark">CF</span>
         <span class="brand-name">Caliber Foundry</span>
       </a>
-      <div style="display:flex; gap:12px;">
+      <div class="header-actions">
         <a href="./" class="btn"><span>All Monographs</span></a>
-        <a href="#calculator" class="btn btn-primary"><span>FX Treasury Calculator</span><span>&darr;</span></a>
+        <a href="#calculator" class="btn btn-primary"><span>FX Calculator &darr;</span></a>
       </div>
     </div>
   </header>
@@ -406,12 +476,13 @@
       <span>UPDATED: NOV 2026</span>
     </div>
 
-    <h1 class="article-title">Raenest Cross-Border Treasury &amp; Settlement Architecture: Eliminating the Emerging-Market FX &amp; Correspondent Banking Bottleneck</h1>
+    <h1 class="article-title">Raenest Cross-Border Treasury &amp; Settlement Architecture</h1>
 
     <p class="article-lede">
-      For global contractors, remote software engineers, and high-growth African and emerging-market enterprises, legacy cross-border banking imposes an invisible 4.5% to 7.2% structural tariff and a 72-to-120 hour liquidity freeze. By unifying named USD/EUR/GBP virtual accounts, automated invoice billing, and hybrid fiat-to-stablecoin settlement rails, Raenest compresses cross-border treasury settlement from five business days to under sixty minutes.
+      Legacy SWIFT wires cost global contractors and borderless teams 4.5%–7.2% in fees and 3–5 business days in clearing delays. By unifying named USD/EUR/GBP accounts, wholesale FX pools, and local + stablecoin rails, Raenest settles cross-border payouts in under 60 minutes while retaining 99.1%+ of capital.
     </p>
 
+    <!-- 1. CONCISE EXECUTIVE KPI STRIP (VISIBLE IMMEDIATELY ABOVE THE FOLD) -->
     <div class="kpi-grid">
       <div class="kpi-cell">
         <span class="kpi-label">01 // LEGACY SWIFT MT103 LATENCY</span>
@@ -436,18 +507,74 @@
     </div>
 
     <article class="prose">
-      <h2>01 // The Anatomy of a Broken SWIFT MT103 Cross-Border Transfer</h2>
-      <p>
-        When a Delaware corporation or London SaaS company pays an engineering team in Lagos, Nairobi, Accra, or Cairo via traditional bank wire, the payment does not travel directly from Point A to Point B. Instead, it traverses a brittle chain of correspondent banks holding bilateral <em>Nostro</em> and <em>Vostro</em> accounts:
-      </p>
-      <ol>
-        <li><strong>Originating Bank Initiation ($25–$45 Outbound Wire Fee):</strong> The U.S. or European employer initiates a SWIFT MT103 payment instruction. Funds are debited immediately, but settlement awaits batch cut-off windows.</li>
-        <li><strong>Intermediary Correspondent Bank Hops ($15–$30 Lifting Fee per Hop):</strong> Because most Tier-1 U.S. banks do not maintain direct local-currency clearing relationships with emerging-market domestic banks, 1 to 2 intermediary correspondent institutions deduct undisclosed &ldquo;lifting fees&rdquo; directly from the principal amount in transit.</li>
-        <li><strong>Forced Beneficiary Bank FX Conversion (350–550 bps Spread):</strong> When the truncated USD or EUR wire arrives at the recipient&rsquo;s local commercial bank, either the funds are forcibly converted at an opaque retail desk rate 4% to 6% worse than mid-market, or they are locked inside a restricted domiciliary account requiring physical branch paperwork to access.</li>
-      </ol>
+      <!-- 2. COMMERCIAL EXPLAINER VIDEO (IMMEDIATELY ACCESSIBLE) -->
+      <div class="blueprint-panel" style="margin-top: 0;">
+        <div class="blueprint-header" style="flex-wrap: wrap; gap: 8px;">
+          <span><strong>[VIDEO. 01 // COMMERCIAL ARCHITECTURE DEMO]</strong> &mdash; RAENEST CROSS-BORDER TREASURY (1920x1080 30FPS)</span>
+          <span><a href="../assets/videos/raenest-architecture-explainer.mp4" download style="color:var(--cf-accent-primary); text-decoration:none;">DOWNLOAD MP4 &darr;</a> &nbsp;|&nbsp; <a href="../assets/videos/raenest-architecture-explainer.webm" download style="color:var(--cf-ink-primary); text-decoration:none;">WEBM &darr;</a></span>
+        </div>
+        <video controls preload="metadata" width="100%" style="display:block; border:1px solid var(--cf-rule-strong); background:#141413;">
+          <source src="../assets/videos/raenest-architecture-explainer.webm" type="video/webm" />
+          <source src="../assets/videos/raenest-architecture-explainer.mp4" type="video/mp4" />
+        </video>
+      </div>
 
+      <!-- 3. INTERACTIVE FX TREASURY SAVINGS CALCULATOR -->
+      <div class="calc-workbench" id="calculator">
+        <div class="calc-bar" style="flex-wrap: wrap; gap: 8px;">
+          <span>INTERACTIVE WORKBENCH // RAENEST CROSS-BORDER SAVINGS CALCULATOR</span>
+          <span>MODEL: DETERMINISTIC FX + LIFTING FEE DELTA</span>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <div class="field-group">
+              <label for="rn-volume">Monthly Cross-Border Payout / Invoice Volume ($ USD)</label>
+              <input type="number" id="rn-volume" class="field-input" value="45000" min="500" max="10000000" step="500" />
+            </div>
+            <div class="field-group">
+              <label for="rn-txcount">Monthly Number of Contractor Payouts / Invoices</label>
+              <input type="number" id="rn-txcount" class="field-input" value="18" min="1" max="5000" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="rn-corridor">Settlement Corridor &amp; Treasury Rail</label>
+              <select id="rn-corridor" class="field-select">
+                <option value="0.052|55|0.0075|1.5">USD (ACH/Wire) &rarr; NGN / West Africa Multi-Rail (Legacy 5.2% FX + $55 wire)</option>
+                <option value="0.048|50|0.0070|1.5">USD / EUR &rarr; KES / East Africa M-Pesa &amp; Bank (Legacy 4.8% FX + $50 wire)</option>
+                <option value="0.045|45|0.0060|1.0">GBP / EUR &rarr; Emerging Market Contractor Hub (Legacy 4.5% FX + $45 wire)</option>
+                <option value="0.042|50|0.0045|0.5">USD Corporate Treasury &rarr; On-Chain USDC / Hybrid Rail (Legacy 4.2% + $50)</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-outputs">
+            <div>
+              <div class="out-row">
+                <span>Legacy Bank Monthly Cost (Wire + Lifting + FX):</span>
+                <strong id="out-legacy-month" style="color:var(--cf-accent-primary);">$3,330.00</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Raenest Monthly Cost (Named Account + FX):</span>
+                <strong id="out-raenest-month" style="color:var(--cf-forest-pass);">$364.50</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Monthly Net Capital Retained:</span>
+                <strong id="out-save-month">$2,965.50 / mo</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Annual Settlement Lockup Time Eliminated:</span>
+                <strong id="out-hours-saved">18,144 settlement-hrs / yr</strong>
+              </div>
+            </div>
+            <div class="out-highlight">
+              <span class="out-highlight-label">ANNUAL RECOVERED TREASURY CAPITAL (12 MONTHS)</span>
+              <span class="out-highlight-val" id="out-save-year">$35,586.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. VECTOR SYSTEM TOPOLOGY SCHEMATIC -->
       <div class="blueprint-panel">
-        <div class="blueprint-header">
+        <div class="blueprint-header" style="flex-wrap: wrap; gap: 8px;">
           <span><strong>[FIG. 01 // ARCHITECTURAL SCHEMATIC]</strong> &mdash; LEGACY 4-HOP SWIFT CHAIN VS. RAENEST UNIFIED TREASURY ENGINE</span>
           <span>SCALE: 1:1 SYSTEM TOPOLOGY</span>
         </div>
@@ -529,185 +656,160 @@
         </svg>
       </div>
 
-      <h2>02 // Raenest&rsquo;s 3-Layer Financial Infrastructure Stack</h2>
-      <p>
-        Rather than acting as another thin remittance wrapper atop SWIFT, Raenest (evolving from Geegpay&rsquo;s creator/freelancer rails into a full B2B and individual multi-currency treasury platform serving 700,000+ users and global teams) re-architects cross-border flow across three decoupled layers:
-      </p>
-      <ul>
-        <li><strong>Layer 1 — Local-First Virtual Account Ingestion (Eliminating Outbound International Wires):</strong> Raenest provisions named USD (ACH &amp; Fedwire), EUR (SEPA), and GBP (UK Faster Payments) bank accounts in the contractor&rsquo;s or enterprise&rsquo;s own legal name. To a U.S. client, marketplace (Upwork, Deel, Toptal), or global customer, paying a Raenest user looks identical to a domestic local bank transfer—eliminating the $35–$50 international SWIFT initiation fee at the source.</li>
-        <li><strong>Layer 2 — Sovereign Multi-Currency Treasury &amp; Wholesale FX Matching:</strong> Incoming funds settle into an inflation-hedged USD, EUR, or GBP balance. Users and CFOs are never subjected to mandatory same-day local currency conversion. When conversion is triggered, Raenest matches orders against deep wholesale liquidity pools and stablecoin settlement corridors (USDC/USDT), compressing spreads from 450 bps down to sub-90 bps.</li>
-        <li><strong>Layer 3 — Programmable Multi-Rail Egress (Local Instant Rails, Stablecoins &amp; Corporate Cards):</strong> Capital can be deployed across three parallel egress channels without leaving the platform:
+      <!-- 5. PROGRESSIVE DISCLOSURE DRILL-DOWN DRAWERS FOR DEEP TECHNICAL PROSE & TABLES -->
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 01</span>
+            <span class="drilldown-title">The Anatomy of a Broken SWIFT MT103 Cross-Border Transfer</span>
+          </div>
+          <span class="drilldown-pill">Expand Analysis</span>
+        </summary>
+        <div class="drilldown-body">
+          <p>
+            When a Delaware corporation or London SaaS company pays an engineering team in Lagos, Nairobi, Accra, or Cairo via traditional bank wire, the payment does not travel directly from Point A to Point B. Instead, it traverses a brittle chain of correspondent banks holding bilateral <em>Nostro</em> and <em>Vostro</em> accounts:
+          </p>
           <ol>
-            <li><em>Instant Local Currency Settlement:</em> Direct payout to domestic bank accounts and mobile money wallets across Nigeria (NIP), Kenya (M-Pesa / Pesalink), Ghana, Egypt, and 50+ jurisdictions in minutes.</li>
-            <li><em>Stablecoin Liquidity Rail:</em> Direct settlement and treasury funding via regulated stablecoin rails (USDC / USDT across low-fee chains) for instant 24/7/365 treasury rebalancing.</li>
-            <li><em>USD Virtual &amp; Physical Cards:</em> Direct USD card spend for AWS, GitHub, Figma, OpenAI, and SaaS subscriptions without suffering double FX conversion (USD &rarr; Local Currency &rarr; USD).</li>
+            <li><strong>Originating Bank Initiation ($25–$45 Outbound Wire Fee):</strong> The U.S. or European employer initiates a SWIFT MT103 payment instruction. Funds are debited immediately, but settlement awaits batch cut-off windows.</li>
+            <li><strong>Intermediary Correspondent Bank Hops ($15–$30 Lifting Fee per Hop):</strong> Because most Tier-1 U.S. banks do not maintain direct local-currency clearing relationships with emerging-market domestic banks, 1 to 2 intermediary correspondent institutions deduct undisclosed &ldquo;lifting fees&rdquo; directly from the principal amount in transit.</li>
+            <li><strong>Forced Beneficiary Bank FX Conversion (350–550 bps Spread):</strong> When the truncated USD or EUR wire arrives at the recipient&rsquo;s local commercial bank, either the funds are forcibly converted at an opaque retail desk rate 4% to 6% worse than mid-market, or they are locked inside a restricted domiciliary account requiring physical branch paperwork to access.</li>
           </ol>
-        </li>
-      </ul>
-
-      <h2>03 // Quantitative Benchmark: Legacy SWIFT vs. P2P Informal vs. Raenest</h2>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Treasury Metric</th>
-            <th>Legacy Bank SWIFT MT103</th>
-            <th>Legacy Payoneer / Wise Borderless</th>
-            <th>Unregulated P2P / OTC Desks</th>
-            <th>Raenest Multi-Currency Treasury</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Named USD / EUR / GBP Accounts</strong></td>
-            <td>Rare / High Minimum Balance</td>
-            <td>Partial (Strict Jurisdictional Caps)</td>
-            <td>None (Third-Party Name Risk)</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">Full Named ACH, SEPA &amp; UK FPS</td>
-          </tr>
-          <tr>
-            <td><strong>Fixed Inbound + Outbound Wire Fee</strong></td>
-            <td class="mono" style="color:var(--cf-accent-primary);">$45.00 – $85.00 / transfer</td>
-            <td class="mono">$15.00 – $30.00 / transfer</td>
-            <td class="mono">$5.00 – $15.00</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">$0.00 – $1.50 (ACH / Local)</td>
-          </tr>
-          <tr>
-            <td><strong>Effective FX Spread vs. Mid-Market</strong></td>
-            <td class="mono" style="color:var(--cf-accent-primary);">3.80% – 6.20%</td>
-            <td class="mono">1.80% – 3.00%</td>
-            <td class="mono">1.50% – 2.50%</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">0.50% – 0.95% Transparent</td>
-          </tr>
-          <tr>
-            <td><strong>End-to-End Settlement Finality</strong></td>
-            <td class="mono">T+3 to T+5 Business Days</td>
-            <td class="mono">T+1 to T+3 Business Days</td>
-            <td class="mono">1–6 Hours (Manual Escrow)</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">Instant to &lt; 60 Minutes (24/7)</td>
-          </tr>
-          <tr>
-            <td><strong>Stablecoin (USDC/USDT) Interop</strong></td>
-            <td>Prohibited</td>
-            <td>Unsupported</td>
-            <td>High Counterparty Freeze Risk</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">Native KYB/KYC Compliant Rail</td>
-          </tr>
-          <tr>
-            <td><strong>Direct USD SaaS Card Spend</strong></td>
-            <td>Blocked / Strict Monthly Limits</td>
-            <td>1.5% – 3.0% Cross-Border Fee</td>
-            <td>None</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">Native Virtual &amp; Physical USD Cards</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2 id="calculator">04 // Interactive Treasury &amp; FX Capital Recovery Simulator</h2>
-      <p>
-        Adjust the parameters below to model the exact annual capital and settlement hours recovered when migrating a distributed contractor payroll or B2B export billing pipeline from legacy SWIFT correspondent wires to Raenest:
-      </p>
-
-      <div class="calc-workbench">
-        <div class="calc-bar">
-          <span>INTERACTIVE WORKBENCH // RAENEST CROSS-BORDER SAVINGS CALCULATOR</span>
-          <span>MODEL: DETERMINISTIC FX + LIFTING FEE DELTA</span>
         </div>
-        <div class="calc-grid">
-          <div class="calc-inputs">
-            <div class="field-group">
-              <label for="rn-volume">Monthly Cross-Border Payout / Invoice Volume ($ USD)</label>
-              <input type="number" id="rn-volume" class="field-input" value="45000" min="500" max="10000000" step="500" />
-            </div>
-            <div class="field-group">
-              <label for="rn-txcount">Monthly Number of Contractor Payouts / Invoices</label>
-              <input type="number" id="rn-txcount" class="field-input" value="18" min="1" max="5000" step="1" />
-            </div>
-            <div class="field-group">
-              <label for="rn-corridor">Settlement Corridor &amp; Treasury Rail</label>
-              <select id="rn-corridor" class="field-select">
-                <option value="0.052|55|0.0075|1.5">USD (ACH/Wire) &rarr; NGN / West Africa Multi-Rail (Legacy 5.2% FX + $55 wire)</option>
-                <option value="0.048|50|0.0070|1.5">USD / EUR &rarr; KES / East Africa M-Pesa &amp; Bank (Legacy 4.8% FX + $50 wire)</option>
-                <option value="0.045|45|0.0060|1.0">GBP / EUR &rarr; Emerging Market Contractor Hub (Legacy 4.5% FX + $45 wire)</option>
-                <option value="0.042|50|0.0045|0.5">USD Corporate Treasury &rarr; On-Chain USDC / Hybrid Rail (Legacy 4.2% + $50)</option>
-              </select>
-            </div>
+      </details>
+
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 02</span>
+            <span class="drilldown-title">Raenest&rsquo;s 3-Layer Financial Infrastructure Stack</span>
           </div>
-          <div class="calc-outputs">
-            <div>
-              <div class="out-row">
-                <span>Legacy Bank Monthly Cost (Wire + Lifting + FX Spread):</span>
-                <strong id="out-legacy-month" style="color:var(--cf-accent-primary);">$3,330.00</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Raenest Monthly Cost (Named Virtual Account + FX):</span>
-                <strong id="out-raenest-month" style="color:var(--cf-forest-pass);">$364.50</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Monthly Net Capital Retained:</span>
-                <strong id="out-save-month">$2,965.50 / mo</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Annual Settlement Lockup Time Eliminated:</span>
-                <strong id="out-hours-saved">18,144 settlement-hrs / yr</strong>
-              </div>
-            </div>
-            <div class="out-highlight">
-              <span class="out-highlight-label">ANNUAL RECOVERED TREASURY CAPITAL (12 MONTHS)</span>
-              <span class="out-highlight-val" id="out-save-year">$35,586.00</span>
-            </div>
+          <span class="drilldown-pill">Expand Architecture</span>
+        </summary>
+        <div class="drilldown-body">
+          <p>
+            Rather than acting as another thin remittance wrapper atop SWIFT, Raenest (evolving from Geegpay&rsquo;s creator/freelancer rails into a full B2B and individual multi-currency treasury platform serving 700,000+ users and global teams) re-architects cross-border flow across three decoupled layers:
+          </p>
+          <ul>
+            <li><strong>Layer 1 — Local-First Virtual Account Ingestion (Eliminating Outbound International Wires):</strong> Raenest provisions named USD (ACH &amp; Fedwire), EUR (SEPA), and GBP (UK Faster Payments) bank accounts in the contractor&rsquo;s or enterprise&rsquo;s own legal name. To a U.S. client, marketplace (Upwork, Deel, Toptal), or global customer, paying a Raenest user looks identical to a domestic local bank transfer—eliminating the $35–$50 international SWIFT initiation fee at the source.</li>
+            <li><strong>Layer 2 — Sovereign Multi-Currency Treasury &amp; Wholesale FX Matching:</strong> Incoming funds settle into an inflation-hedged USD, EUR, or GBP balance. Users and CFOs are never subjected to mandatory same-day local currency conversion. When conversion is triggered, Raenest matches orders against deep wholesale liquidity pools and stablecoin settlement corridors (USDC/USDT), compressing spreads from 450 bps down to sub-90 bps.</li>
+            <li><strong>Layer 3 — Programmable Multi-Rail Egress (Local Instant Rails, Stablecoins &amp; Corporate Cards):</strong> Capital can be deployed across three parallel egress channels without leaving the platform:
+              <ol>
+                <li><em>Instant Local Currency Settlement:</em> Direct payout to domestic bank accounts and mobile money wallets across Nigeria (NIP), Kenya (M-Pesa / Pesalink), Ghana, Egypt, and 50+ jurisdictions in minutes.</li>
+                <li><em>Stablecoin Liquidity Rail:</em> Direct settlement and treasury funding via regulated stablecoin rails (USDC / USDT across low-fee chains) for instant 24/7/365 treasury rebalancing.</li>
+                <li><em>USD Virtual &amp; Physical Cards:</em> Direct USD card spend for AWS, GitHub, Figma, OpenAI, and SaaS subscriptions without suffering double FX conversion (USD &rarr; Local Currency &rarr; USD).</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 03</span>
+            <span class="drilldown-title">Quantitative Benchmark: Legacy SWIFT vs. P2P vs. Raenest</span>
+          </div>
+          <span class="drilldown-pill">Expand Matrix</span>
+        </summary>
+        <div class="drilldown-body">
+          <div class="table-scroll-wrap">
+            <table class="data-table" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>Treasury Metric</th>
+                  <th>Legacy Bank SWIFT MT103</th>
+                  <th>Legacy Payoneer / Wise Borderless</th>
+                  <th>Unregulated P2P / OTC Desks</th>
+                  <th>Raenest Multi-Currency Treasury</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Named USD / EUR / GBP Accounts</strong></td>
+                  <td>Rare / High Minimum Balance</td>
+                  <td>Partial (Strict Jurisdictional Caps)</td>
+                  <td>None (Third-Party Name Risk)</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">Full Named ACH, SEPA &amp; UK FPS</td>
+                </tr>
+                <tr>
+                  <td><strong>Fixed Inbound + Outbound Wire Fee</strong></td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$45.00 – $85.00 / transfer</td>
+                  <td class="mono">$15.00 – $30.00 / transfer</td>
+                  <td class="mono">$5.00 – $15.00</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.00 – $1.50 (ACH / Local)</td>
+                </tr>
+                <tr>
+                  <td><strong>Effective FX Spread vs. Mid-Market</strong></td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">3.80% – 6.20%</td>
+                  <td class="mono">1.80% – 3.00%</td>
+                  <td class="mono">1.50% – 2.50%</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">0.50% – 0.95% Transparent</td>
+                </tr>
+                <tr>
+                  <td><strong>End-to-End Settlement Finality</strong></td>
+                  <td class="mono">T+3 to T+5 Business Days</td>
+                  <td class="mono">T+1 to T+3 Business Days</td>
+                  <td class="mono">1–6 Hours (Manual Escrow)</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">Instant to &lt; 60 Minutes (24/7)</td>
+                </tr>
+                <tr>
+                  <td><strong>Stablecoin (USDC/USDT) Interop</strong></td>
+                  <td>Prohibited</td>
+                  <td>Unsupported</td>
+                  <td>High Counterparty Freeze Risk</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">Native KYB/KYC Compliant Rail</td>
+                </tr>
+                <tr>
+                  <td><strong>Direct USD SaaS Card Spend</strong></td>
+                  <td>Blocked / Strict Monthly Limits</td>
+                  <td>1.5% – 3.0% Cross-Border Fee</td>
+                  <td>None</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">Native Virtual &amp; Physical USD Cards</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
+      </details>
 
-      <h2>05 // 1080p Programmatic Motion Video &amp; 60-Second Remotion Storyboard</h2>
-      <p>
-        For the multimedia &amp; video bounty track, below is the rendered <code>1920x1080</code> Swiss Editorial motion architecture video (<code>.webm</code> &amp; <code>.mp4</code>) alongside the deterministic 6-scene storyboard specification:
-      </p>
-
-      <div class="blueprint-panel">
-        <div class="blueprint-header">
-          <span><strong>[VIDEO. 01 // PROGRAMMATIC MOTION EXPLAINER]</strong> &mdash; RAENEST CROSS-BORDER TREASURY ARCHITECTURE (1920x1080 30FPS)</span>
-          <span><a href="../assets/videos/raenest-architecture-explainer.mp4" download style="color:var(--cf-accent-primary); text-decoration:none;">DOWNLOAD MP4 &darr;</a> &nbsp;|&nbsp; <a href="../assets/videos/raenest-architecture-explainer.webm" download style="color:var(--cf-ink-primary); text-decoration:none;">WEBM &darr;</a></span>
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 04</span>
+            <span class="drilldown-title">30-Second Commercial Video Storyboard Specification</span>
+          </div>
+          <span class="drilldown-pill">Expand Storyboard</span>
+        </summary>
+        <div class="drilldown-body">
+          <div class="storyboard-grid" style="margin: 0;">
+            <div class="scene-row">
+              <div class="scene-time">SCENE 01<br/>00:00 &ndash; 00:06</div>
+              <div class="scene-visual"><strong>The $655 SWIFT Fee &amp; 5-Day Freeze:</strong> Clean focal typography highlighting $655 lost and 120 hours locked on a single $10,000 invoice.</div>
+              <div class="scene-vo">&ldquo;Why does a ten-thousand-dollar cross-border invoice lose six hundred and fifty-five dollars—and wait five days to clear?&rdquo;</div>
+            </div>
+            <div class="scene-row">
+              <div class="scene-time">SCENE 02<br/>00:06 &ndash; 00:12</div>
+              <div class="scene-visual"><strong>3-Step Raenest Architecture:</strong> Sequential spotlight across 3 clean stages: Named USD/EUR/GBP Accounts &rarr; Multi-Currency Treasury &rarr; Instant Local &amp; USDC Payouts.</div>
+              <div class="scene-vo">&ldquo;Raenest replaces four-hop SWIFT chains with named USD, Euro, and Pound accounts wired into instant settlement rails.&rdquo;</div>
+            </div>
+            <div class="scene-row">
+              <div class="scene-time">SCENE 03<br/>00:12 &ndash; 00:18</div>
+              <div class="scene-visual"><strong>Interactive Treasury Savings Zoom:</strong> Smooth focal zoom onto the Treasury Calculator showing $35,586 saved annually on $45,000 monthly payout volume.</div>
+              <div class="scene-vo">&ldquo;Teams processing forty-five thousand dollars a month recover over thirty-five thousand dollars every year.&rdquo;</div>
+            </div>
+            <div class="scene-row">
+              <div class="scene-time">SCENE 04<br/>00:18 &ndash; 00:24</div>
+              <div class="scene-visual"><strong>Before vs. After Verdict:</strong> High-contrast two-column comparison: Legacy SWIFT (5 Days · 6.55% Lost) vs. Raenest (&lt; 60 Min · 99.1%+ Retained).</div>
+              <div class="scene-vo">&ldquo;From five days down to under sixty minutes—retaining over ninety-nine percent of your capital.&rdquo;</div>
+            </div>
+            <div class="scene-row">
+              <div class="scene-time">SCENE 05<br/>00:24 &ndash; 00:30</div>
+              <div class="scene-visual"><strong>Closing Specification Card:</strong> Clean Obsidian sign-off card with live interactive calculator URL.</div>
+              <div class="scene-vo">&ldquo;Borderless work deserves instant settlement. Explore the interactive Raenest research monograph at Caliber Foundry.&rdquo;</div>
+            </div>
+          </div>
         </div>
-        <video controls preload="metadata" width="100%" style="display:block; border:1px solid var(--cf-rule-strong); background:#141413;">
-          <source src="../assets/videos/raenest-architecture-explainer.webm" type="video/webm" />
-          <source src="../assets/videos/raenest-architecture-explainer.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      <div class="storyboard-grid">
-        <div class="scene-row">
-          <div class="scene-time">SCENE 01<br/>00:00 &ndash; 00:09<br/>(Frames 0–540)</div>
-          <div class="scene-visual"><strong>The $10,000 Invoice Decay:</strong> Split-screen counter shows a $10,000 USD invoice leaving San Francisco. As it passes through 3 correspondent bank gates, mechanical red counters deduct -$35 wire fee, -$25 lifting fee, and -$480 forced FX spread, landing at $9,460 after 96 hours.</div>
-          <div class="scene-vo">&ldquo;When global talent or an emerging-market enterprise earns ten thousand dollars, why does the banking system confiscate five hundred and forty dollars—and freeze the rest for four days?&rdquo;</div>
-        </div>
-        <div class="scene-row">
-          <div class="scene-time">SCENE 02<br/>00:09 &ndash; 00:20<br/>(Frames 541–1200)</div>
-          <div class="scene-visual"><strong>Architectural Cutover to Raenest:</strong> The 4-hop SWIFT chain collapses into a crisp Swiss blueprint grid. A named Raenest USD/EUR/GBP Virtual Account badge locks into place with routing/IBAN coordinates.</div>
-          <div class="scene-vo">&ldquo;The bottleneck is correspondent banking. Raenest replaces four-hop SWIFT chains with local named USD, Euro, and Pound accounts wired directly into ACH, SEPA, and UK Faster Payments.&rdquo;</div>
-        </div>
-        <div class="scene-row">
-          <div class="scene-time">SCENE 03<br/>00:20 &ndash; 00:32<br/>(Frames 1201–1920)</div>
-          <div class="scene-visual"><strong>Multi-Currency Treasury Hold &amp; Wholesale FX:</strong> Real-time ledger view showing funds held in inflation-proof USD/EUR/GBP alongside instant conversion sliders into local currency or USDC/USDT at sub-1% wholesale spread.</div>
-          <div class="scene-vo">&ldquo;Your capital settles into a sovereign multi-currency treasury. Hold dollars to hedge currency volatility, or convert on demand through deep wholesale FX and stablecoin liquidity pools.&rdquo;</div>
-        </div>
-        <div class="scene-row">
-          <div class="scene-time">SCENE 04<br/>00:32 &ndash; 00:44<br/>(Frames 1921–2640)</div>
-          <div class="scene-visual"><strong>Multi-Rail Egress (Local Instant + USDC + USD Cards):</strong> Three synchronized output streams fire simultaneously: T+0 local bank payout (&lt;60 min), on-chain USDC settlement, and virtual USD corporate card paying AWS/Figma with zero double-FX loss.</div>
-          <div class="scene-vo">&ldquo;Deploy capital across three instant rails: settle to local bank accounts in under sixty minutes, move liquidity via USDC and USDT, or spend directly in dollars with virtual and physical cards.&rdquo;</div>
-        </div>
-        <div class="scene-row">
-          <div class="scene-time">SCENE 05<br/>00:44 &ndash; 00:53<br/>(Frames 2641–3180)</div>
-          <div class="scene-visual"><strong>Enterprise Payroll &amp; Contractor Scale:</strong> Batch payout ledger executing 50 international contractor payouts across 12 countries in a single click, highlighting $35,586 annual recovered capital.</div>
-          <div class="scene-vo">&ldquo;From independent engineers to distributed enterprises scaling across fifty countries, Raenest turns five-day cross-border friction into instant treasury finality.&rdquo;</div>
-        </div>
-        <div class="scene-row">
-          <div class="scene-time">SCENE 06<br/>00:53 &ndash; 01:00<br/>(Frames 3181–3600)</div>
-          <div class="scene-visual"><strong>Closing Specification Card:</strong> High-contrast Obsidian card displaying Raenest architecture metrics (`&lt; 60 MIN SETTLEMENT`, `NAMED USD/EUR/GBP ACCOUNTS`, `FIAT + STABLECOIN RAILS`).</div>
-          <div class="scene-vo">&ldquo;Borderless work deserves borderless settlement. Explore the Raenest multi-currency architecture today.&rdquo;</div>
-        </div>
-      </div>
+      </details>
     </article>
   </main>
 

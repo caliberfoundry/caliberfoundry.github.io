@@ -86,24 +86,25 @@
       color: var(--cf-ink-muted);
     }
 
-    /* Bar 1: Primary App Bar (48px) */
+    /* Bar 1: Primary App Bar (Flex-wrap safe across all viewports) */
     .app-bar {
-      height: 48px;
+      min-height: 46px;
       border-bottom: 1.5px solid var(--cf-rule-strong);
       background-color: var(--cf-bg-paper);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
-      gap: 12px;
+      flex-wrap: wrap;
+      padding: 6px 16px;
+      gap: 8px 12px;
     }
 
     .brand-cluster {
       display: flex;
       align-items: center;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px 10px;
       min-width: 0;
-      white-space: nowrap;
     }
 
     .back-btn {
@@ -127,7 +128,7 @@
 
     .brand-title {
       font-family: var(--font-display);
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 400;
       letter-spacing: -0.01em;
       color: var(--cf-ink-primary);
@@ -139,16 +140,13 @@
       color: var(--cf-ink-secondary);
       border-left: 1px solid var(--cf-rule-mid);
       padding-left: 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .app-bar-right {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-      white-space: nowrap;
+      flex-wrap: wrap;
+      gap: 6px 8px;
     }
 
     .badge {
@@ -190,28 +188,29 @@
       color: var(--cf-navy-authority);
     }
 
-    /* Bar 2: Context & Scenario Control Bar (44px) — Total Header = 92px <= 104px */
+    /* Bar 2: Context & Scenario Control Bar (Flex-wrap safe across all viewports) */
     .context-bar {
-      height: 44px;
+      min-height: 44px;
       border-bottom: 1px solid var(--cf-rule-mid);
       background-color: var(--cf-bg-stone);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
-      gap: 10px;
+      flex-wrap: wrap;
+      padding: 6px 16px;
+      gap: 8px 10px;
     }
 
     .scenario-strip {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      flex-wrap: wrap;
       background-color: var(--cf-bg-paper);
       border: 1px solid var(--cf-rule-mid);
       border-radius: 2px;
       padding: 2px;
       gap: 2px;
       min-width: 0;
-      overflow-x: auto;
     }
 
     .scenario-tab {
@@ -221,7 +220,7 @@
       color: var(--cf-ink-secondary);
       background: transparent;
       border: 1px solid transparent;
-      padding: 4px 9px;
+      padding: 4px 8px;
       border-radius: 2px;
       cursor: pointer;
       white-space: nowrap;
@@ -242,8 +241,8 @@
     .action-cluster {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 6px 8px;
     }
 
     /* 3-Tier Button Hierarchy */
@@ -502,13 +501,11 @@
 
     .kpi-value {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 600;
       color: var(--cf-ink-primary);
       font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.25;
     }
 
     .kpi-sub {
@@ -516,9 +513,7 @@
       font-size: 10.5px;
       color: var(--cf-ink-muted);
       font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.3;
     }
 
     .section-box {
@@ -753,6 +748,31 @@
       word-break: break-all;
     }
 
+    details.drilldown-box {
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+    }
+
+    details.drilldown-box > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 8px 11px;
+      background-color: var(--cf-bg-stone);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      user-select: none;
+    }
+
+    details.drilldown-box > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.drilldown-box[open] > summary {
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
     @media (max-width: 1180px) {
       .workbench-grid {
         grid-template-columns: minmax(0, 1fr);
@@ -761,11 +781,36 @@
         border-right: none;
         border-bottom: 1px solid var(--cf-rule-mid);
       }
+      .brand-subtitle {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-bar,
+      .context-bar {
+        padding: 6px 10px;
+      }
+      .kpi-grid,
+      .economics-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .kpi-cell:nth-child(2n),
+      .econ-item:nth-child(2n) {
+        border-right: none;
+      }
+      .kpi-cell:nth-child(-n+2),
+      .econ-item:nth-child(-n+2) {
+        border-bottom: 1px solid var(--cf-rule-subtle);
+      }
+      .verdict-banner {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- BAR 1: PRIMARY APP BAR (48px) -->
+  <!-- BAR 1: PRIMARY APP BAR -->
   <header class="app-bar">
     <div class="brand-cluster">
       <a href="../index.html" class="back-btn">← Foundry</a>
@@ -773,13 +818,13 @@
       <span class="brand-subtitle">Autonomous Solana Capital Agent &amp; SAP MCP Telemetry Workbench</span>
     </div>
     <div class="app-bar-right">
-      <span class="badge badge-navy">OOBE Protocol · Steve Capital Runtime</span>
-      <span class="badge badge-pass" id="globalRuntimeBadge">SAP MCP · MultiHopper · Ace MCP Active</span>
+      <span class="badge badge-navy">OOBE Protocol · Steve Capital</span>
+      <span class="badge badge-pass" id="globalRuntimeBadge">SAP MCP · MultiHopper Active</span>
       <button type="button" class="btn-secondary" id="downloadAuditBtn">Export Audit JSON</button>
     </div>
   </header>
 
-  <!-- BAR 2: SCENARIO PRESET & EXECUTION CONTROL BAR (44px) -->
+  <!-- BAR 2: SCENARIO PRESET & EXECUTION CONTROL BAR -->
   <nav class="context-bar" aria-label="Market Regime Scenario Controls">
     <div class="scenario-strip" role="tablist">
       <button type="button" class="scenario-tab active" data-scenario="0" id="tabScenario0">01 Genesis Deploy</button>
@@ -804,17 +849,6 @@
         <span class="spec-label" id="mandateEpochTag">EPOCH #1</span>
       </div>
       <div class="pane-body">
-        <div class="pda-box">
-          <div class="pda-row">
-            <span class="spec-label">Primary OOBE Vault PDA (Non-Custodial)</span>
-            <div class="pda-val" id="primaryVaultPdaDisplay">oobeVaultBT9HP4SXhAfoCfkZg5pdnKjB6NQo3yP1GTx</div>
-          </div>
-          <div class="pda-row">
-            <span class="spec-label">Sub-Agent Delegated Vault PDA</span>
-            <div class="pda-val" id="subAgentVaultPdaDisplay">oobeVault66kkW3BsTegueomKcSS5xnwDNf2VRYAnre6</div>
-          </div>
-        </div>
-
         <div class="control-group">
           <div class="slider-item">
             <div class="slider-label-row">
@@ -870,20 +904,39 @@
           </div>
         </div>
 
-        <div class="guardrail-list" id="guardrailChecklist">
-          <!-- Populated dynamically -->
-        </div>
+        <!-- Drill-Down: Vault PDAs & Guardrails -->
+        <details class="drilldown-box">
+          <summary>
+            <span class="pane-title">+ Non-Custodial Vault PDAs &amp; Guardrail Audit</span>
+            <span class="spec-label">6/6 GATES</span>
+          </summary>
+          <div style="padding: 8px; display: flex; flex-direction: column; gap: 8px;">
+            <div class="pda-box">
+              <div class="pda-row">
+                <span class="spec-label">Primary OOBE Vault PDA (Non-Custodial)</span>
+                <div class="pda-val" id="primaryVaultPdaDisplay">oobeVaultBT9HP4SXhAfoCfkZg5pdnKjB6NQo3yP1GTx</div>
+              </div>
+              <div class="pda-row">
+                <span class="spec-label">Sub-Agent Delegated Vault PDA</span>
+                <div class="pda-val" id="subAgentVaultPdaDisplay">oobeVault66kkW3BsTegueomKcSS5xnwDNf2VRYAnre6</div>
+              </div>
+            </div>
+            <div class="guardrail-list" id="guardrailChecklist">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </details>
       </div>
     </section>
 
     <!-- CENTER COLUMN: SOLANA VENUE MATRIX & BREAK-EVEN ECONOMICS -->
     <section class="pane" aria-label="Solana Venue Allocation Matrix and Rebalance Economics">
       <div class="pane-header">
-        <span class="pane-title">02 // Solana DeFi Allocation Matrix &amp; Anti-Churn Optimizer</span>
+        <span class="pane-title">02 // Executive Summary &amp; Solana Venue Allocations</span>
         <span class="spec-label" id="activeRegimeLabel">REGIME: 01_NORMAL_GENESIS_DEPLOYMENT</span>
       </div>
       <div class="pane-body">
-        <!-- 4-KPI Summary Strip -->
+        <!-- 4-KPI Summary Strip (Concise Above-The-Fold Verdict) -->
         <div class="kpi-grid">
           <div class="kpi-cell">
             <span class="spec-label">Vault Equity / Reserve</span>
@@ -911,7 +964,7 @@
         <div class="section-box">
           <div class="section-box-header">
             <span class="pane-title">Solana Protocol Allocations (Sharpe / Sortino Water-Filling)</span>
-            <span class="spec-label">Ace Data Cloud MCP Conviction Enriched</span>
+            <span class="spec-label">Ace Data Cloud MCP Enriched</span>
           </div>
           <div class="table-wrap">
             <table class="ledger-table">
@@ -953,12 +1006,12 @@
           </div>
         </div>
 
-        <!-- 5-Epoch Multi-Regime Backtest Ledger -->
-        <div class="section-box">
-          <div class="section-box-header">
-            <span class="pane-title">5-Epoch Deterministic Backtest Ledger (Click Row to Inspect Receipt)</span>
+        <!-- Drill-Down: 5-Epoch Multi-Regime Backtest Ledger -->
+        <details class="drilldown-box">
+          <summary>
+            <span class="pane-title">+ 5-Epoch Deterministic Backtest Ledger (Click to Expand)</span>
             <span class="spec-label" id="backtestSummaryTag">5 Regimes Verified</span>
-          </div>
+          </summary>
           <div class="table-wrap">
             <table class="ledger-table">
               <thead>
@@ -977,14 +1030,14 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </details>
       </div>
     </section>
 
     <!-- RIGHT COLUMN: OOBE SAP MCP INSTRUCTION BUNDLE & CRYPTOGRAPHIC RECEIPT -->
     <section class="pane" aria-label="SAP MCP Instruction Bundle and Cryptographic Receipt">
       <div class="pane-header">
-        <span class="pane-title">03 // SAP MCP Instruction Bundle &amp; Receipt</span>
+        <span class="pane-title">03 // SAP MCP Cryptographic Receipt</span>
         <button type="button" class="btn-secondary" id="copyReceiptBtn">Copy Receipt JSON</button>
       </div>
       <div class="pane-body">
@@ -1007,23 +1060,25 @@
           </div>
         </div>
 
-        <div class="section-box">
-          <div class="section-box-header">
-            <span class="pane-title">Serialized Solana Transaction Instructions</span>
+        <details class="drilldown-box" open>
+          <summary>
+            <span class="pane-title">+ Serialized Solana Transaction Instructions</span>
             <span class="spec-label" id="ixCountBadge">8 Instructions</span>
-          </div>
+          </summary>
           <div class="ix-list" id="instructionBundleList">
             <!-- Populated dynamically -->
           </div>
-        </div>
+        </details>
 
-        <div class="terminal-panel">
-          <div class="terminal-header">
-            <span class="spec-label" style="color: #C9C4B8;">VERIFIABLE SAP MCP RECEIPT JSON &amp; TELEMETRY</span>
-            <span class="spec-label" id="copyFeedbackLabel" style="color: #FCE588;">READY</span>
+        <details class="drilldown-box">
+          <summary>
+            <span class="pane-title">+ Raw SAP MCP Execution Receipt JSON</span>
+            <span class="spec-label" id="copyFeedbackLabel">EXPAND JSON</span>
+          </summary>
+          <div class="terminal-panel">
+            <pre class="terminal-pre" id="receiptJsonPreview"></pre>
           </div>
-          <pre class="terminal-pre" id="receiptJsonPreview"></pre>
-        </div>
+        </details>
       </div>
     </section>
   </main>

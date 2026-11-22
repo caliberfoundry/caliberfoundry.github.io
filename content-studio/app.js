@@ -519,15 +519,22 @@
     const preset = getActivePreset();
     const proActive = isProUnlocked();
 
-    // Update Preset Select Options (append · PRO when on FREE tier)
+    // Update Preset Select Options (concise label + tier suffix so dropdown never truncates mid-word)
+    const shortTitleMap = {
+      'n8n-pipeline': 'n8n & Multi-Model Pipeline',
+      'eval-harness': 'Document Eval Harness',
+      'edtech-courseware': 'EdTech & SCORM 1.2 Studio',
+      'fintech-monograph': 'FinTech & Cross-Border Brief'
+    };
     const selectEl = document.getElementById('presetSelect');
     if (selectEl) {
       Array.from(selectEl.options).forEach(opt => {
         const pObj = DATASET.presetsById[opt.value];
         if (!pObj) return;
         const locked = isPresetLocked(opt.value);
-        const tierSuffix = locked ? ' · PRO' : (pObj.tier === 'FREE' ? ' (FREE)' : ' (UNLOCKED)');
-        opt.text = `${pObj.title}${tierSuffix}`;
+        const tierSuffix = locked ? ' · PRO' : (pObj.tier === 'FREE' ? ' (FREE)' : ' (PRO)');
+        const conciseTitle = shortTitleMap[opt.value] || pObj.shortTitle || pObj.title;
+        opt.text = `${conciseTitle}${tierSuffix}`;
       });
       selectEl.value = STATE.activePresetId;
     }

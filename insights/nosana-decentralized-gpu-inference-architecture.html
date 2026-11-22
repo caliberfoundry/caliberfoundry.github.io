@@ -110,34 +110,97 @@
     }
 
     .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1120px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
+    .header-inner { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; }
+    .header-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cf-ink-primary); }
     .brand-mark {
       width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark);
       font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative;
     }
     .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
-    .brand-name { font-family: var(--font-display); font-size: 23px; }
+    .brand-name { font-family: var(--font-display); font-size: 22px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 13px; font-weight: 600;
-      padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600;
+      padding: 8px 14px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
       background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong);
-      cursor: pointer;
+      cursor: pointer; white-space: nowrap;
     }
     .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
     .btn-primary:hover { background-color: var(--cf-accent-hover); }
 
-    .article-shell { max-width: 1020px; margin: 0 auto; padding: 48px 32px 88px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+    .article-shell { max-width: 1020px; margin: 0 auto; padding: 32px 20px 72px; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 16px; }
     .breadcrumb:hover { color: var(--cf-accent-primary); }
     .meta-strip {
-      display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      display: flex; flex-wrap: wrap; gap: 10px 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
       letter-spacing: 0.08em; color: var(--cf-ink-muted); border-top: 1px solid var(--cf-rule-strong); border-bottom: 1px solid var(--cf-rule-mid);
-      padding: 10px 0; margin-bottom: 28px; font-variant-numeric: tabular-nums;
+      padding: 10px 0; margin-bottom: 20px; font-variant-numeric: tabular-nums;
     }
     .meta-strip span.tag-accent { color: var(--cf-accent-primary); font-weight: 600; }
-    h1.article-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 22px; }
-    .article-lede { font-family: var(--font-serif); font-size: 21px; line-height: 1.62; color: var(--cf-ink-secondary); margin-bottom: 36px; }
+    h1.article-title { font-family: var(--font-display); font-size: clamp(30px, 4.5vw, 48px); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .article-lede { font-family: var(--font-serif); font-size: 18.5px; line-height: 1.55; color: var(--cf-ink-secondary); margin-bottom: 24px; }
+
+    /* Progressive Disclosure Drill-Down Drawers */
+    .table-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    details.drilldown-section {
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      margin: 16px 0;
+    }
+    details.drilldown-section > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 20px;
+      background-color: var(--cf-bg-stone);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      user-select: none;
+    }
+    details.drilldown-section > summary::-webkit-details-marker { display: none; }
+    details.drilldown-section[open] > summary { border-bottom: 1px solid var(--cf-rule-strong); }
+    .drilldown-kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cf-accent-primary);
+      display: block;
+    }
+    .drilldown-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--cf-ink-primary);
+      line-height: 1.2;
+    }
+    .drilldown-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: 1px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      text-transform: uppercase;
+    }
+    .drilldown-body { padding: 22px 24px; }
+    @media (max-width: 640px) {
+      .review-banner { padding: 8px 14px; }
+      .header-inner { padding: 12px 14px; }
+      .article-shell { padding: 22px 14px 56px; }
+      .blueprint-panel { padding: 14px; }
+      .calc-inputs, .calc-outputs, .drilldown-body { padding: 16px; }
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--cf-rule-mid); }
+      .kpi-cell { padding: 16px; }
+    }
 
     .kpi-grid {
       display: grid;
@@ -227,9 +290,9 @@
         <span class="brand-mark">CF</span>
         <span class="brand-name">Caliber Foundry</span>
       </a>
-      <div style="display:flex; gap:12px;">
+      <div class="header-actions">
         <a href="./" class="btn"><span>All Monographs</span></a>
-        <a href="#tco-simulator" class="btn btn-primary"><span>GPU TCO Simulator</span><span>&darr;</span></a>
+        <a href="#tco-simulator" class="btn btn-primary"><span>GPU Simulator &darr;</span></a>
       </div>
     </div>
   </header>
@@ -244,12 +307,13 @@
       <span>UPDATED: NOV 2026</span>
     </div>
 
-    <h1 class="article-title">Nosana Decentralized GPU Inference Architecture: Solana-Coordinated Compute Economics vs. Hyperscaler Clouds</h1>
+    <h1 class="article-title">Nosana Decentralized GPU Inference Architecture</h1>
 
     <p class="article-lede">
-      While foundation model pre-training requires tightly coupled InfiniBand clusters of 10,000+ H100s, 85% of enterprise machine learning spend over a model&rsquo;s lifecycle occurs during <strong>production inference</strong>—an embarrassingly parallel workload that does not require $98/hour NVLink islands. Nosana coordinates a global mesh of consumer RTX 4090s and datacenter A100/H100 nodes via Solana smart contracts, cutting inference TCO by up to 80%.
+      85% of enterprise machine learning spend occurs during production inference—a parallel workload that does not require $98/hr NVLink islands. Nosana coordinates a global mesh of RTX 4090 and datacenter A100/H100 nodes via Solana smart contracts, cutting inference TCO by 72%–84%.
     </p>
 
+    <!-- 1. CONCISE EXECUTIVE KPI STRIP (ABOVE THE FOLD) -->
     <div class="kpi-grid">
       <div class="kpi-cell">
         <span class="kpi-label">01 // INFERENCE COST REDUCTION</span>
@@ -274,19 +338,10 @@
     </div>
 
     <article class="prose">
-      <h2>01 // The Structural Asymmetry Between Model Training and Model Inference</h2>
-      <p>
-        Hyperscaler cloud pricing (AWS, GCP, Azure) bundles three expensive primitives into every GPU instance: multi-terabit RDMA/InfiniBand fabrics, multi-zone enterprise storage backplanes, and 60%+ gross cloud margin. Yet once a model checkpoint is trained and quantized (e.g., AWQ, GPTQ, FP8, or GGUF), serving tokens to end users has a completely different systems profile:
-      </p>
-      <ul>
-        <li><strong>Zero Inter-Node Gradient Sync Required:</strong> A single 24GB NVIDIA RTX 4090 (82.6 TFLOPS FP16, 1,008 GB/s memory bandwidth) or dual-4090 / single-A100 80GB node can serve quantized 8B, 32B, and 70B models entirely inside local VRAM without cross-datacenter all-reduce traffic.</li>
-        <li><strong>Bursty Diurnal Traffic Curves:</strong> Production SaaS and agentic inference loads peak 4x–8x during business hours and trough overnight. Hyperscalers force teams to sign 1-to-3 year reserved capacity commitments or suffer quota exhaustion on on-demand instances.</li>
-        <li><strong>Massive Underutilized Global Silicon Supply:</strong> Millions of high-VRAM consumer GPUs (RTX 4090, RTX 3090) and independent Tier-2/3 datacenter racks sit idle or under-allocated outside the big three cloud providers.</li>
-      </ul>
-
-      <div class="blueprint-panel">
-        <div class="blueprint-header">
-          <span><strong>[VIDEO. 01 // PROGRAMMATIC MOTION EXPLAINER]</strong> &mdash; NOSANA SOLANA GPU INFERENCE GRID (1920x1080 30FPS)</span>
+      <!-- 2. COMMERCIAL EXPLAINER VIDEO (IMMEDIATELY ACCESSIBLE) -->
+      <div class="blueprint-panel" style="margin-top: 0;">
+        <div class="blueprint-header" style="flex-wrap: wrap; gap: 8px;">
+          <span><strong>[VIDEO. 01 // COMMERCIAL ARCHITECTURE DEMO]</strong> &mdash; NOSANA SOLANA GPU INFERENCE GRID (1920x1080 30FPS)</span>
           <span><a href="../assets/videos/nosana-gpu-grid-explainer.mp4" download style="color:var(--cf-accent-primary); text-decoration:none;">DOWNLOAD MP4 &darr;</a> &nbsp;|&nbsp; <a href="../assets/videos/nosana-gpu-grid-explainer.webm" download style="color:var(--cf-ink-primary); text-decoration:none;">WEBM &darr;</a></span>
         </div>
         <video controls preload="metadata" width="100%" style="display:block; border:1px solid var(--cf-rule-strong); background:#141413;">
@@ -295,8 +350,61 @@
         </video>
       </div>
 
+      <!-- 3. INTERACTIVE GPU TCO SIMULATOR -->
+      <div class="calc-workbench" id="tco-simulator">
+        <div class="calc-bar" style="flex-wrap: wrap; gap: 8px;">
+          <span>INTERACTIVE WORKBENCH // NOSANA INFERENCE CLUSTER TCO SIMULATOR</span>
+          <span>BENCHMARK: ON-DEMAND CLOUD VS. NOSANA MARKET</span>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <div class="field-group">
+              <label for="ns-gpu">Target GPU Hardware Market Tier</label>
+              <select id="ns-gpu" class="field-select">
+                <option value="1.45|0.32|95">NVIDIA RTX 4090 (24GB) vs. Cloud A10G/L4 ($1.45/hr Cloud vs. $0.32/hr Nosana)</option>
+                <option value="3.95|1.05|160">NVIDIA A100 (80GB HBM2e) ($3.95/hr Cloud vs. $1.05/hr Nosana)</option>
+                <option value="7.50|2.15|310">NVIDIA H100 (80GB HBM3 FP8) ($7.50/hr Cloud vs. $2.15/hr Nosana)</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="ns-nodes">Number of Active GPU Inference Replicas</label>
+              <input type="number" id="ns-nodes" class="field-input" value="8" min="1" max="500" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="ns-hours">Average Active Inference Hours Per Day (1–24h)</label>
+              <input type="number" id="ns-hours" class="field-input" value="18" min="1" max="24" step="1" />
+            </div>
+          </div>
+          <div class="calc-outputs">
+            <div>
+              <div class="out-row">
+                <span>Hyperscaler Cloud Monthly Spend (30 Days):</span>
+                <strong id="ns-out-cloud" style="color:var(--cf-accent-primary);">$6,264.00 / mo</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Nosana Decentralized Grid Monthly Spend:</span>
+                <strong id="ns-out-nosana" style="color:var(--cf-forest-pass);">$1,382.40 / mo</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Effective Cost per 1M Generated Tokens:</span>
+                <strong id="ns-out-tokcost">$0.093 / 1M tok (vs. $0.423 Cloud)</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Monthly Infrastructure Burn Reduction:</span>
+                <strong id="ns-out-pct">77.9% Saved ($4,881.60 / mo)</strong>
+              </div>
+            </div>
+            <div class="out-highlight">
+              <span class="out-highlight-label">ANNUAL COMPUTE RUNWAY SAVED (12 MONTHS)</span>
+              <span class="out-highlight-val" id="ns-out-year">$58,579.20</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. VECTOR SYSTEM TOPOLOGY DIAGRAM -->
       <div class="blueprint-panel">
-        <div class="blueprint-header">
+        <div class="blueprint-header" style="flex-wrap: wrap; gap: 8px;">
           <span><strong>[FIG. 01 // PROTOCOL ARCHITECTURE]</strong> &mdash; NOSANA 4-STAGE SOLANA GPU INFERENCE LIFECYCLE</span>
           <span>LAYER: ON-CHAIN MARKET + OCI RUNTIME</span>
         </div>
@@ -307,7 +415,7 @@
           <rect x="24" y="34" width="250" height="158" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
           <rect x="24" y="34" width="250" height="26" fill="#141413"/>
           <text x="34" y="51" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#F6F4EF">01 // WORKLOAD SPECIFICATION</text>
-          <text x="36" y="80" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">AI Engineer / Client SDK</text>
+          <text x="36" y="80" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Inference Engineer / Client SDK</text>
           <text x="36" y="102" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Define nos_job_def.json (IPFS)</text>
           <text x="36" y="122" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Container: vllm/vllm-openai</text>
           <text x="36" y="142" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Select Market (RTX 4090 / A100)</text>
@@ -358,159 +466,117 @@
           <text x="484" y="292" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#141413">B. Deterministic Solana Settlement &amp; Proof</text>
           <text x="484" y="314" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">Execution Logs &amp; Exit Status Hash Committed to IPFS</text>
           <text x="484" y="334" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">Pro-Rata NOS Payout Disbursed to Node Operator</text>
-          <text x="484" y="362" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">Unspent Escrow Refunded to AI Client Automatically</text>
+          <text x="484" y="362" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">Unspent Escrow Refunded to Client Automatically</text>
         </svg>
       </div>
 
-      <h2>02 // Inside the Nosana Solana State Machine: Markets, Queues, and Attestation</h2>
-      <p>
-        Why did Nosana build its coordination layer on <strong>Solana</strong> rather than an L1/L2 with multi-second block times? Dynamic AI inference orchestration requires high-frequency state transitions—posting jobs, claiming nodes, heartbeating health checks, extending job leases, and settling pro-rata per-second compute fees.
-      </p>
-      <ol>
-        <li><strong>segmented Hardware Markets (`MarketAccount`):</strong> Nosana categorizes GPU supply into deterministic hardware markets (e.g., `nvidia-4090`, `nvidia-3090`, `nvidia-a100-80gb`, `nvidia-h100`). Before a host node can join a market queue, it must pass an automated benchmark suite verifying actual CUDA core throughput, VRAM capacity, network bandwidth, and disk I/O—preventing spoofed device drivers.</li>
-        <li><strong>Dual-Queue Matching Engine:</strong> Each market maintains an on-chain queue. If idle GPU nodes are waiting in the market queue when an engineer submits a `JobAccount`, matching occurs atomically within a single Solana slot (~400ms).</li>
-        <li><strong>Economic Security via NOS Staking &amp; Slashing:</strong> Node operators stake `NOS` tokens and earn an audited reputation score. Malicious termination or failed health-check attestations result in economic penalties and ejection from high-tier enterprise markets.</li>
-      </ol>
+      <!-- 5. PROGRESSIVE DISCLOSURE DRILL-DOWN DRAWERS -->
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 01</span>
+            <span class="drilldown-title">Training vs. Production Inference Systems Asymmetry</span>
+          </div>
+          <span class="drilldown-pill">Expand Analysis</span>
+        </summary>
+        <div class="drilldown-body">
+          <p>
+            Hyperscaler cloud pricing (AWS, GCP, Azure) bundles three expensive primitives into every GPU instance: multi-terabit RDMA/InfiniBand fabrics, multi-zone enterprise storage backplanes, and 60%+ gross cloud margin. Yet once a model checkpoint is trained and quantized (e.g., AWQ, GPTQ, FP8, or GGUF), serving tokens to end users has a completely different systems profile:
+          </p>
+          <ul>
+            <li><strong>Zero Inter-Node Gradient Sync Required:</strong> A single 24GB NVIDIA RTX 4090 (82.6 TFLOPS FP16, 1,008 GB/s memory bandwidth) or dual-4090 / single-A100 80GB node can serve quantized 8B, 32B, and 70B models entirely inside local VRAM without cross-datacenter all-reduce traffic.</li>
+            <li><strong>Bursty Diurnal Traffic Curves:</strong> Production SaaS and agentic inference loads peak 4x–8x during business hours and trough overnight. Hyperscalers force teams to sign 1-to-3 year reserved capacity commitments or suffer quota exhaustion on on-demand instances.</li>
+            <li><strong>Massive Underutilized Global Silicon Supply:</strong> Millions of high-VRAM consumer GPUs (RTX 4090, RTX 3090) and independent Tier-2/3 datacenter racks sit idle or under-allocated outside the big three cloud providers.</li>
+          </ul>
+        </div>
+      </details>
 
-      <h2>03 // Production Deployment Specification: Serving vLLM on Nosana</h2>
-      <p>
-        Unlike proprietary serverless inference wrappers that lock you into a fixed model list, Nosana executes standard OCI/Docker containers with full GPU passthrough. Below is a production Nosana Job Definition (`nos_job_def.json`) deploying an OpenAI-compatible <code>vLLM</code> server running a quantized 32B coding model with readiness health checks:
-      </p>
-
-      <div class="code-panel">
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 02</span>
+            <span class="drilldown-title">Nosana Solana State Machine &amp; vLLM Container Specification</span>
+          </div>
+          <span class="drilldown-pill">Expand Spec &amp; JSON</span>
+        </summary>
+        <div class="drilldown-body">
+          <p>
+            Dynamic inference orchestration requires high-frequency state transitions—posting jobs, claiming nodes, heartbeating health checks, extending job leases, and settling pro-rata per-second compute fees:
+          </p>
+          <ol>
+            <li><strong>Segmented Hardware Markets (`MarketAccount`):</strong> Nosana categorizes GPU supply into deterministic hardware markets (`nvidia-4090`, `nvidia-3090`, `nvidia-a100-80gb`, `nvidia-h100`) verified via automated hardware benchmarks.</li>
+            <li><strong>Dual-Queue Matching Engine:</strong> Matching between `JobAccount` and waiting GPU nodes occurs atomically within a single Solana slot (~400ms).</li>
+            <li><strong>Economic Security via NOS Staking &amp; Slashing:</strong> Node operators stake `NOS` collateral and earn audited reputation scores.</li>
+          </ol>
+          <div class="code-panel" style="margin-bottom: 0;">
 {
   "version": "0.1",
   "type": "container",
-  "meta": {
-    "trigger": "cli",
-    "system_requirements": {
-      "required_vram": 24
-    }
-  },
+  "meta": { "trigger": "cli", "system_requirements": { "required_vram": 24 } },
   "ops": [
     {
       "type": "container/run",
       "id": "vllm-qwen25-coder-32b-inference",
       "args": {
-        "cmd": [
-          "--model", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ",
-          "--quantization", "awq",
-          "--dtype", "half",
-          "--max-model-len", "16384",
-          "--gpu-memory-utilization", "0.92",
-          "--port", "8000"
-        ],
+        "cmd": ["--model", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ", "--quantization", "awq", "--port", "8000"],
         "image": "docker.io/vllm/vllm-openai:latest",
         "gpu": true,
-        "expose": 8000,
-        " health_checks": [
-          {
-            "type": "http",
-            "port": 8000,
-            "path": "/health",
-            "method": "GET",
-            "expected_status": 200,
-            "continuous": true
-          }
-        ]
+        "expose": 8000
       }
     }
   ]
 }
-      </div>
-
-      <h2>04 // Quantitative Benchmark: Hyperscaler Cloud vs. Nosana GPU Grid</h2>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>GPU Tier &amp; VRAM Profile</th>
-            <th>Primary AI Inference Workload</th>
-            <th>Hyperscaler On-Demand (AWS / GCP Equiv.)</th>
-            <th>Nosana Decentralized Grid Rate</th>
-            <th>Net Compute Savings</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>NVIDIA RTX 4090 (24GB GDDR6X)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">82.6 TFLOPS FP16 · 1,008 GB/s BW</span></td>
-            <td>Llama-3.1-8B/32B-AWQ, Qwen-2.5-Coder-32B, Whisper-Large-v3, Flux.1 / SDXL</td>
-            <td class="mono" style="color:var(--cf-accent-primary);">$1.21 – $1.65 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS g5.2xlarge L4/A10G)</span></td>
-            <td class="mono" style="color:var(--cf-forest-pass);">$0.25 – $0.38 / hr</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">~76% – 81% Lower</td>
-          </tr>
-          <tr>
-            <td><strong>NVIDIA A100 (80GB HBM2e)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">312 TFLOPS BF16 · 2,039 GB/s BW</span></td>
-            <td>Llama-3.3-70B-Instruct, DeepSeek-R1-Distill-70B, High-Batch Embeddings</td>
-            <td class="mono" style="color:var(--cf-accent-primary);">$3.67 – $4.10 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS p4de / GCP a2-ultragpu)</span></td>
-            <td class="mono" style="color:var(--cf-forest-pass);">$0.90 – $1.25 / hr</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">~70% – 75% Lower</td>
-          </tr>
-          <tr>
-            <td><strong>NVIDIA H100 (80GB HBM3)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">989 TFLOPS FP16 / 1,979 FP8</span></td>
-            <td>High-Concurrency FP8 Multi-Agent Reasoning, Real-Time Video Generation</td>
-            <td class="mono" style="color:var(--cf-accent-primary);">$6.90 – $8.50 / hr<br/><span style="font-weight:400; font-size:11px;">(Per-GPU p5.48xlarge slice)</span></td>
-            <td class="mono" style="color:var(--cf-forest-pass);">$1.95 – $2.45 / hr</td>
-            <td class="mono" style="color:var(--cf-forest-pass);">~71% – 74% Lower</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2 id="tco-simulator">05 // Interactive GPU Inference TCO &amp; Token Cost Simulator</h2>
-      <p>
-        Configure your production inference cluster below to compare monthly and annual compute expenditure on AWS/GCP versus the Nosana Decentralized GPU Grid:
-      </p>
-
-      <div class="calc-workbench">
-        <div class="calc-bar">
-          <span>INTERACTIVE WORKBENCH // NOSANA INFERENCE CLUSTER TCO SIMULATOR</span>
-          <span>BENCHMARK: ON-DEMAND CLOUD VS. NOSANA MARKET</span>
-        </div>
-        <div class="calc-grid">
-          <div class="calc-inputs">
-            <div class="field-group">
-              <label for="ns-gpu">Target GPU Hardware Market Tier</label>
-              <select id="ns-gpu" class="field-select">
-                <option value="1.45|0.32|95">NVIDIA RTX 4090 (24GB) vs. Cloud A10G/L4 ($1.45/hr Cloud vs. $0.32/hr Nosana)</option>
-                <option value="3.95|1.05|160">NVIDIA A100 (80GB HBM2e) ($3.95/hr Cloud vs. $1.05/hr Nosana)</option>
-                <option value="7.50|2.15|310">NVIDIA H100 (80GB HBM3 FP8) ($7.50/hr Cloud vs. $2.15/hr Nosana)</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label for="ns-nodes">Number of Active GPU Inference Replicas</label>
-              <input type="number" id="ns-nodes" class="field-input" value="8" min="1" max="500" step="1" />
-            </div>
-            <div class="field-group">
-              <label for="ns-hours">Average Active Inference Hours Per Day (1–24h)</label>
-              <input type="number" id="ns-hours" class="field-input" value="18" min="1" max="24" step="1" />
-            </div>
-          </div>
-          <div class="calc-outputs">
-            <div>
-              <div class="out-row">
-                <span>Hyperscaler Cloud Monthly Spend (30 Days):</span>
-                <strong id="ns-out-cloud" style="color:var(--cf-accent-primary);">$6,264.00 / mo</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Nosana Decentralized Grid Monthly Spend:</span>
-                <strong id="ns-out-nosana" style="color:var(--cf-forest-pass);">$1,382.40 / mo</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Effective Cost per 1M Generated Tokens:</span>
-                <strong id="ns-out-tokcost">$0.093 / 1M tok (vs. $0.423 Cloud)</strong>
-              </div>
-              <div class="out-row" style="margin-top:10px;">
-                <span>Monthly Infrastructure Burn Reduction:</span>
-                <strong id="ns-out-pct">77.9% Saved ($4,881.60 / mo)</strong>
-              </div>
-            </div>
-            <div class="out-highlight">
-              <span class="out-highlight-label">ANNUAL COMPUTE RUNWAY SAVED (12 MONTHS)</span>
-              <span class="out-highlight-val" id="ns-out-year">$58,579.20</span>
-            </div>
           </div>
         </div>
-      </div>
+      </details>
+
+      <details class="drilldown-section">
+        <summary>
+          <div>
+            <span class="drilldown-kicker">TECHNICAL DRILL-DOWN 03</span>
+            <span class="drilldown-title">Quantitative Benchmark: Hyperscaler Cloud vs. Nosana GPU Grid</span>
+          </div>
+          <span class="drilldown-pill">Expand Matrix</span>
+        </summary>
+        <div class="drilldown-body">
+          <div class="table-scroll-wrap">
+            <table class="data-table" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>GPU Tier &amp; VRAM Profile</th>
+                  <th>Primary Inference Workload</th>
+                  <th>Hyperscaler On-Demand (AWS / GCP Equiv.)</th>
+                  <th>Nosana Decentralized Grid Rate</th>
+                  <th>Net Compute Savings</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>NVIDIA RTX 4090 (24GB GDDR6X)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">82.6 TFLOPS FP16 · 1,008 GB/s BW</span></td>
+                  <td>Llama-3.1-8B/32B-AWQ, Qwen-2.5-Coder-32B, Whisper-Large-v3, Flux.1 / SDXL</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$1.21 – $1.65 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS g5.2xlarge L4/A10G)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.25 – $0.38 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~76% – 81% Lower</td>
+                </tr>
+                <tr>
+                  <td><strong>NVIDIA A100 (80GB HBM2e)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">312 TFLOPS BF16 · 2,039 GB/s BW</span></td>
+                  <td>Llama-3.3-70B-Instruct, DeepSeek-R1-Distill-70B, High-Batch Embeddings</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$3.67 – $4.10 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS p4de / GCP a2-ultragpu)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.90 – $1.25 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~70% – 75% Lower</td>
+                </tr>
+                <tr>
+                  <td><strong>NVIDIA H100 (80GB HBM3)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">989 TFLOPS FP16 / 1,979 FP8</span></td>
+                  <td>High-Concurrency FP8 Multi-Agent Reasoning, Real-Time Video Generation</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$6.90 – $8.50 / hr<br/><span style="font-weight:400; font-size:11px;">(Per-GPU p5.48xlarge slice)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$1.95 – $2.45 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~71% – 74% Lower</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
     </article>
   </main>
 
