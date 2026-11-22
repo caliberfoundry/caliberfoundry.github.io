@@ -72,18 +72,18 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   1. GLOBAL CODEDRILL TOP SWITCHER BAR (SWISS BLUEPRINT HEADER)
+   1. COMPACT GLOBAL CODEDRILL TOP SWITCHER BAR (42px HEIGHT)
    ========================================================================== */
 .codedrill-global-bar {
-  height: 50px;
+  height: 42px;
   background: var(--cf-bg-ink-panel);
   color: var(--cf-ink-on-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+  padding: 0 12px;
   border-bottom: 1px solid var(--cf-rule-strong);
-  gap: 12px;
+  gap: 10px;
   z-index: 100;
   user-select: none;
 }
@@ -91,19 +91,44 @@ button, input, select, textarea {
 .cd-brand-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
+.cd-back-foundry-link {
+  color: #D2CEC4;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 7px;
+  border: 1px solid #3D3B37;
+  border-radius: 2px;
+  background: #1E1D1B;
+  white-space: nowrap;
+}
+
+.cd-back-foundry-link:hover {
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-rule-mid);
+  background: #2C2B28;
+}
+
+.cd-brand-sep {
+  color: #5C5953;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
 .cd-logo-mark {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 0px;
   background: var(--cf-accent-primary);
   color: var(--cf-ink-on-dark);
   font-family: var(--font-mono);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,12 +136,12 @@ button, input, select, textarea {
 }
 
 .cd-brand-title {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .cd-tm {
@@ -125,48 +150,27 @@ button, input, select, textarea {
   vertical-align: super;
 }
 
-.cd-badge-version {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 1px 6px;
-  border-radius: 0px;
-  background: transparent;
-  color: var(--cf-ink-on-dark);
-  border: 1px solid var(--cf-rule-mid);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.cd-brand-subtitle {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: #B5B0A4;
-  letter-spacing: 0.03em;
-}
-
 /* Mode Switcher Tabs */
 .cd-mode-switcher {
   display: flex;
   align-items: center;
   background: #22211F;
-  padding: 3px;
+  padding: 2px;
   border-radius: 0px;
   border: 1px solid #3D3B37;
-  gap: 4px;
+  gap: 3px;
 }
 
 .cd-mode-tab {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 11px;
+  padding: 4px 11px;
   border-radius: 2px;
   border: 1px solid transparent;
   background: transparent;
   color: #D2CEC4;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -183,53 +187,33 @@ button, input, select, textarea {
   border-color: var(--cf-rule-strong);
 }
 
-.cd-tab-icon {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--cf-accent-primary);
-}
-
-.cd-mode-tab.active .cd-tab-icon {
-  color: var(--cf-accent-primary);
-}
-
 .cd-tab-tag {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: 10px;
-  padding: 1px 5px;
+  padding: 0 5px;
   border-radius: 2px;
   border: 1px solid currentColor;
-  letter-spacing: 0.05em;
-}
-
-.cd-tab-tag-hot {
-  background: var(--cf-accent-primary);
-  color: var(--cf-ink-on-dark);
-  border-color: var(--cf-accent-primary);
 }
 
 /* Right Global Controls */
 .cd-global-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   flex-shrink: 0;
 }
 
 .cd-track-selector-wrap {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .cd-track-label {
   font-family: var(--font-mono);
   font-size: 10.5px;
   color: #B5B0A4;
-  letter-spacing: 0.06em;
 }
 
 .cd-track-select {
@@ -237,10 +221,16 @@ button, input, select, textarea {
   color: var(--cf-ink-on-dark);
   border: 1px solid #5C5953;
   border-radius: 2px;
-  padding: 4px 8px;
-  font-size: 11.5px;
+  padding: 3px 6px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
+  max-width: 245px;
+}
+
+.cd-persona-select {
+  max-width: 220px;
+  border-color: var(--cf-accent-primary);
 }
 
 .cd-track-select:focus {
@@ -250,14 +240,15 @@ button, input, select, textarea {
 .cd-telemetry-pill {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: #22211F;
   border: 1px solid #5C5953;
-  padding: 4px 8px;
+  padding: 3px 7px;
   border-radius: 0px;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 11px;
+  font-size: 10.5px;
+  white-space: nowrap;
 }
 
 .cd-telemetry-label {
@@ -271,10 +262,10 @@ button, input, select, textarea {
 .cd-global-link {
   color: var(--cf-ink-on-dark);
   text-decoration: none;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 500;
-  padding: 4px 8px;
+  font-weight: 600;
+  padding: 3px 7px;
   border-radius: 2px;
   border: 1px solid #5C5953;
   background: #22211F;
@@ -291,8 +282,8 @@ button, input, select, textarea {
   color: #E5A999;
   border: 1px solid var(--cf-accent-primary);
   border-radius: 2px;
-  padding: 4px 8px;
-  font-family: var(--font-mono);
+  padding: 3px 8px;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -305,10 +296,10 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   2. MAIN WORKSPACE & PEARSON VUE HEADER CHROME
+   2. MAIN WORKSPACE & COMPACT PEARSON VUE HEADER CHROME
    ========================================================================== */
 .codedrill-main-container {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 42px);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -323,27 +314,27 @@ button, input, select, textarea {
   overflow: hidden;
 }
 
-/* Prussian Institutional Navy Top Bar (#1B365D) */
+/* Prussian Institutional Navy Top Bar (#1B365D) — Compact 36px */
 .pvue-header-group {
   flex-shrink: 0;
   user-select: none;
 }
 
 .pvue-top-bar {
-  height: 44px;
+  height: 36px;
   background: var(--cf-navy-authority);
   color: var(--cf-ink-on-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 14px;
   border-bottom: 1px solid var(--cf-rule-strong);
 }
 
 .pvue-exam-identity {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .pvue-system-badge {
@@ -351,35 +342,34 @@ button, input, select, textarea {
   font-variant-numeric: tabular-nums;
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   background: var(--cf-bg-ink-panel);
   color: var(--cf-ink-on-dark);
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 0px;
   border: 1px solid var(--cf-rule-mid);
 }
 
 .pvue-exam-title {
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--cf-ink-on-dark);
 }
 
 .pvue-question-counter-box {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .pvue-q-pos {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
   background: rgba(20, 20, 19, 0.35);
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 0px;
   border: 1px solid rgba(246, 244, 239, 0.35);
 }
@@ -389,12 +379,11 @@ button, input, select, textarea {
   font-variant-numeric: tabular-nums;
   font-size: 10.5px;
   font-weight: 600;
-  padding: 2px 8px;
+  padding: 1px 7px;
   border-radius: 2px;
   background: var(--cf-brass-tint);
   color: var(--cf-brass-warn);
   border: 1px solid var(--cf-brass-warn);
-  text-transform: uppercase;
 }
 
 .pvue-q-status-pill.verified {
@@ -406,15 +395,15 @@ button, input, select, textarea {
 .pvue-timer-cluster {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .pvue-timer-display {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: var(--cf-bg-ink-panel);
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 0px;
   border: 1px solid rgba(246, 244, 239, 0.4);
 }
@@ -426,19 +415,17 @@ button, input, select, textarea {
 }
 
 .pvue-timer-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: #D2CEC4;
 }
 
 .pvue-timer-clock {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--cf-highlight-mark);
-  letter-spacing: 0.04em;
 }
 
 .pvue-timer-btn {
@@ -446,8 +433,8 @@ button, input, select, textarea {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 3px 8px;
-  font-family: var(--font-mono);
+  padding: 2px 7px;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -457,15 +444,15 @@ button, input, select, textarea {
   background: var(--cf-bg-surface);
 }
 
-/* Milled Stone Action Toolbar (#ECE9E1) & Tactile Mechanical Switches */
+/* Milled Stone Action Toolbar (#ECE9E1) — Compact 38px */
 .pvue-action-bar {
-  min-height: 44px;
+  min-height: 38px;
   background: var(--cf-bg-stone);
   border-bottom: 1px solid var(--cf-rule-strong);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 14px;
+  padding: 3px 14px;
   gap: 8px;
   flex-wrap: wrap;
 }
@@ -474,17 +461,17 @@ button, input, select, textarea {
 .pvue-tools-right {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .pvue-tool-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  gap: 5px;
+  padding: 3px 9px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--cf-ink-primary);
   background: var(--cf-bg-surface);
@@ -526,7 +513,7 @@ button, input, select, textarea {
 .pvue-scratch-badge {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10.5px;
+  font-size: 10px;
   padding: 0 5px;
   border-radius: 0px;
   background: var(--cf-ink-primary);
@@ -536,16 +523,16 @@ button, input, select, textarea {
 .pvue-split-ratio-group {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   background: var(--cf-bg-paper);
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 0px;
   border: 1px solid var(--cf-rule-strong);
 }
 
 .pvue-split-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   color: var(--cf-ink-secondary);
   margin-right: 2px;
@@ -556,7 +543,7 @@ button, input, select, textarea {
   font-variant-numeric: tabular-nums;
   font-size: 10.5px;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 1px 5px;
   border: 1px solid transparent;
   border-radius: 2px;
   background: transparent;
@@ -574,8 +561,6 @@ button, input, select, textarea {
   color: var(--cf-forest-pass);
   border-color: var(--cf-forest-pass);
   box-shadow: 2px 2px 0px var(--cf-forest-pass);
-  font-family: var(--font-mono);
-  font-size: 11px;
 }
 
 .pvue-btn-check:hover {
@@ -587,8 +572,6 @@ button, input, select, textarea {
   color: var(--cf-ink-on-dark);
   border-color: var(--cf-rule-strong);
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
-  font-family: var(--font-mono);
-  font-size: 11px;
 }
 
 .pvue-btn-grade-exam:hover {
@@ -597,17 +580,17 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   3. MODE 2: CITATION-SPEED DRILL HUD HEADER (INDUSTRIAL CHRONOGRAPH BAR)
+   3. MODE 2: 90S SPEED DRILL HUD HEADER (COMPACT CHRONOGRAPH BAR)
    ========================================================================== */
 .drill-hud-header {
   background: var(--cf-bg-stone);
   color: var(--cf-ink-primary);
-  padding: 8px 16px;
+  padding: 6px 16px;
   border-bottom: 1.5px solid var(--cf-rule-strong);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   flex-shrink: 0;
   flex-wrap: wrap;
 }
@@ -615,26 +598,25 @@ button, input, select, textarea {
 .drill-hud-left {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  max-width: 360px;
+  gap: 2px;
+  max-width: 370px;
 }
 
 .drill-mode-pill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: 11px;
   font-weight: 600;
   color: var(--cf-accent-primary);
-  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .drill-pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 0px;
   background: var(--cf-accent-primary);
   border: 1px solid var(--cf-rule-strong);
@@ -643,19 +625,19 @@ button, input, select, textarea {
 .drill-hud-subtitle {
   font-size: 11.5px;
   color: var(--cf-ink-secondary);
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 /* 90s Sprint Clock Card */
 .drill-sprint-clock-card {
-  min-width: 215px;
+  min-width: 195px;
   background: var(--cf-bg-surface);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 0px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .drill-sprint-clock-card.warning {
@@ -680,13 +662,13 @@ button, input, select, textarea {
   font-size: 10px;
   font-weight: 600;
   color: var(--cf-ink-muted);
-  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .drill-clock-digits {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--cf-ink-primary);
 }
@@ -701,7 +683,7 @@ button, input, select, textarea {
 
 .drill-progress-track {
   width: 100%;
-  height: 6px;
+  height: 5px;
   background: var(--cf-bg-stone);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
@@ -726,26 +708,25 @@ button, input, select, textarea {
 .drill-metrics-strip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .drill-metric-box {
   background: var(--cf-bg-surface);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
-  padding: 5px 10px;
+  padding: 4px 9px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .drill-metric-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--cf-ink-muted);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .drill-metric-value {
@@ -757,7 +738,7 @@ button, input, select, textarea {
 .drill-metric-value strong {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--cf-ink-primary);
 }
 
@@ -779,10 +760,10 @@ button, input, select, textarea {
 }
 
 .drill-ctrl-btn {
-  padding: 6px 11px;
+  padding: 5px 10px;
   border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   border: 1px solid var(--cf-rule-strong);
@@ -850,7 +831,7 @@ button, input, select, textarea {
 
 /* Draggable Split Divider */
 .pvue-split-divider {
-  width: 8px;
+  width: 7px;
   background: var(--cf-bg-stone);
   border-left: 1px solid var(--cf-rule-strong);
   border-right: 1px solid var(--cf-rule-strong);
@@ -869,15 +850,16 @@ button, input, select, textarea {
 
 .pvue-divider-grip {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   color: var(--cf-ink-primary);
   font-weight: 600;
 }
 
+/* Generous 24px-28px Editorial Padding */
 .pvue-pane-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 18px 22px 40px 22px;
+  padding: 24px 28px 44px 28px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -908,10 +890,8 @@ button, input, select, textarea {
   font-variant-numeric: tabular-nums;
   font-size: 11px;
   font-weight: 600;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 2px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   border: 1px solid var(--cf-rule-mid);
 }
 
@@ -951,7 +931,7 @@ button, input, select, textarea {
   font-size: 11px;
   color: var(--cf-ink-secondary);
   background: var(--cf-bg-surface);
-  padding: 3px 9px;
+  padding: 2px 8px;
   border-radius: 0px;
   border: 1px solid var(--cf-rule-mid);
 }
@@ -986,9 +966,9 @@ button, input, select, textarea {
 .drill-step-num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 0px;
   background: var(--cf-ink-primary);
   color: var(--cf-ink-on-dark);
@@ -1019,7 +999,7 @@ button, input, select, textarea {
 .drill-step-status {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--cf-brass-warn);
   white-space: nowrap;
@@ -1035,14 +1015,14 @@ button, input, select, textarea {
   border: 1px solid var(--cf-rule-mid);
   border-left: 3px solid var(--cf-rule-strong);
   border-radius: 0px;
-  padding: 16px 18px;
+  padding: 22px 24px;
 }
 
 .q-stem-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--cf-rule-subtle);
 }
@@ -1051,27 +1031,27 @@ button, input, select, textarea {
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
-  color: var(--cf-ink-primary);
-  letter-spacing: 0.08em;
+  color: var(--cf-ink-secondary);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .q-highlight-hint {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: var(--cf-ink-muted);
 }
 
 .q-stem-content {
   font-family: var(--font-serif);
-  font-size: 16.5px;
+  font-size: 17px;
   line-height: 1.68;
   color: var(--cf-ink-primary);
   max-width: 68ch;
 }
 
 .q-stem-content p + p {
-  margin-top: 11px;
+  margin-top: 12px;
 }
 
 /* Realistic Paper Text Marker */
@@ -1094,7 +1074,7 @@ mark.user-highlight:hover {
   background: var(--cf-bg-stone);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
-  padding: 9px 12px;
+  padding: 9px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1125,9 +1105,9 @@ mark.user-highlight:hover {
 
 .q-proof-icon {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--cf-ink-primary);
+  color: var(--cf-accent-primary);
 }
 
 .q-proof-info {
@@ -1135,15 +1115,14 @@ mark.user-highlight:hover {
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  font-size: 12px;
+  font-size: 12.5px;
 }
 
 .q-proof-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   color: var(--cf-ink-secondary);
   font-weight: 600;
-  letter-spacing: 0.05em;
 }
 
 .q-proof-citation {
@@ -1161,9 +1140,9 @@ mark.user-highlight:hover {
 .q-proof-match-badge {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 2px;
   border: 1px solid currentColor;
 }
@@ -1183,9 +1162,9 @@ mark.user-highlight:hover {
   color: var(--cf-ink-on-dark);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 4px 9px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1197,20 +1176,15 @@ mark.user-highlight:hover {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
   color: var(--cf-ink-secondary);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .q-strike-tip {
-  font-family: var(--font-sans);
-  text-transform: none;
-  letter-spacing: normal;
   font-weight: 500;
-  color: var(--cf-ink-secondary);
+  color: var(--cf-ink-muted);
   font-size: 11.5px;
 }
 
@@ -1224,11 +1198,11 @@ mark.user-highlight:hover {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   background: var(--cf-bg-surface);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
-  padding: 11px 13px;
+  padding: 12px 15px;
   cursor: pointer;
   position: relative;
 }
@@ -1276,7 +1250,7 @@ mark.user-highlight:hover {
 }
 
 .q-option-radio {
-  margin-top: 3px;
+  margin-top: 4px;
   width: 15px;
   height: 15px;
   accent-color: var(--cf-ink-primary);
@@ -1288,15 +1262,15 @@ mark.user-highlight:hover {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--cf-ink-primary);
   min-width: 22px;
 }
 
 .q-option-text {
   font-family: var(--font-serif);
-  font-size: 15.5px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.58;
   color: var(--cf-ink-primary);
 }
 
@@ -1305,9 +1279,9 @@ mark.user-highlight:hover {
   color: var(--cf-ink-secondary);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 2px;
-  padding: 3px 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  padding: 3px 9px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
@@ -1343,7 +1317,7 @@ mark.user-highlight:hover {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
   padding: 7px 14px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -1377,9 +1351,9 @@ mark.user-highlight:hover {
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-accent-primary);
-  padding: 7px 14px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  padding: 7px 16px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1399,9 +1373,9 @@ mark.user-highlight:hover {
   border: 1px solid var(--cf-accent-primary);
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
-  padding: 7px 12px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  padding: 7px 13px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1417,27 +1391,31 @@ mark.user-highlight:hover {
 }
 
 /* ==========================================================================
-   6. SOCRATIC CODE-PATH EXAMINER PANEL (HIGH-CONTRAST EDITORIAL TERMINAL)
+   6. COLLAPSIBLE STUDY COACH & HINTS (3 STEP-BY-STEP CLUES)
    ========================================================================== */
 .socratic-tutor-panel {
   background: var(--cf-bg-stone);
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 0px;
-  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-.socratic-header {
+.socratic-collapse-trigger {
+  width: 100%;
+  background: var(--cf-bg-stone);
+  border: none;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  border-bottom: 1px solid var(--cf-rule-mid);
-  padding-bottom: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.socratic-collapse-trigger:hover {
+  background: #E2DFD5;
 }
 
 .socratic-title-group {
@@ -1451,24 +1429,32 @@ mark.user-highlight:hover {
   font-size: 10px;
   font-weight: 600;
   padding: 2px 7px;
-  border-radius: 0px;
+  border-radius: 2px;
   background: var(--cf-ink-primary);
   color: var(--cf-ink-on-dark);
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .socratic-title {
-  font-family: var(--font-display);
-  font-size: 21px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   color: var(--cf-ink-primary);
 }
 
-.socratic-subtitle {
+.socratic-toggle-indicator {
   font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--cf-ink-muted);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+}
+
+.socratic-tutor-body {
+  padding: 12px 14px 14px 14px;
+  border-top: 1px solid var(--cf-rule-mid);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .socratic-hints-grid {
@@ -1503,22 +1489,21 @@ mark.user-highlight:hover {
 .socratic-level-tag {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
   color: var(--cf-accent-primary);
 }
 
 .socratic-level-name {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: var(--cf-ink-secondary);
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .socratic-hint-text {
   font-family: var(--font-serif);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--cf-ink-primary);
 }
@@ -1528,9 +1513,9 @@ mark.user-highlight:hover {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 6px 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  padding: 5px 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -1552,8 +1537,8 @@ mark.user-highlight:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   color: var(--cf-forest-pass);
 }
 
@@ -1562,9 +1547,9 @@ mark.user-highlight:hover {
   color: var(--cf-ink-on-dark);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 3px 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  padding: 3px 9px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1584,11 +1569,10 @@ mark.user-highlight:hover {
 }
 
 .socratic-quick-prompts-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   color: var(--cf-ink-secondary);
   font-weight: 600;
-  letter-spacing: 0.05em;
 }
 
 .socratic-prompt-chips {
@@ -1635,7 +1619,7 @@ mark.user-highlight:hover {
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
   padding: 6px 12px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
@@ -1648,7 +1632,7 @@ mark.user-highlight:hover {
   border-radius: 0px;
   padding: 10px 12px;
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.55;
   color: var(--cf-ink-primary);
 }
@@ -1681,10 +1665,9 @@ mark.user-highlight:hover {
 }
 
 .exp-status-title {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
 }
 
 .exp-status-meta {
@@ -1718,7 +1701,7 @@ mark.user-highlight:hover {
   font-size: 10px;
   font-weight: 600;
   color: var(--cf-ink-muted);
-  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .exp-target-citation {
@@ -1736,8 +1719,8 @@ mark.user-highlight:hover {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-accent-primary);
   padding: 6px 12px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1764,14 +1747,14 @@ mark.user-highlight:hover {
   font-size: 10.5px;
   font-weight: 600;
   color: var(--cf-brass-warn);
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 
 .exp-golden-quote-text {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 16px;
+  font-size: 16.5px;
   line-height: 1.65;
   color: var(--cf-ink-primary);
   border-left: 3px solid var(--cf-brass-warn);
@@ -1784,17 +1767,18 @@ mark.user-highlight:hover {
 }
 
 .exp-sub-header {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
   color: var(--cf-ink-primary);
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
 
 .exp-reasoning-text {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 16.5px;
   line-height: 1.68;
   color: var(--cf-ink-primary);
 }
@@ -1816,7 +1800,7 @@ mark.user-highlight:hover {
   border-radius: 0px;
   padding: 10px 12px;
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.58;
 }
 
@@ -1835,10 +1819,10 @@ mark.user-highlight:hover {
 .ref-library-header {
   background: var(--cf-bg-stone);
   border-bottom: 1px solid var(--cf-rule-strong);
-  padding: 10px 14px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
@@ -1851,7 +1835,7 @@ mark.user-highlight:hover {
 .ref-title-left {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 }
 
 .ref-doc-icon {
@@ -1862,11 +1846,9 @@ mark.user-highlight:hover {
 }
 
 .ref-library-title {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--cf-ink-primary);
 }
 
@@ -1875,8 +1857,8 @@ mark.user-highlight:hover {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 3px 9px;
-  font-family: var(--font-mono);
+  padding: 2px 9px;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -1886,7 +1868,7 @@ mark.user-highlight:hover {
 .ref-corpus-tabs {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
@@ -1895,8 +1877,8 @@ mark.user-highlight:hover {
   color: var(--cf-ink-secondary);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
-  padding: 5px 11px;
-  font-family: var(--font-mono);
+  padding: 4px 10px;
+  font-family: var(--font-sans);
   font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
@@ -1920,7 +1902,7 @@ mark.user-highlight:hover {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: 10px;
-  padding: 1px 5px;
+  padding: 0 5px;
   border-radius: 0px;
   border: 1px solid currentColor;
 }
@@ -1929,7 +1911,7 @@ mark.user-highlight:hover {
 .ref-search-bar-wrap {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .ref-search-input-group {
@@ -1938,8 +1920,8 @@ mark.user-highlight:hover {
   background: var(--cf-bg-surface);
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
-  padding: 4px 10px;
-  gap: 8px;
+  padding: 3px 9px;
+  gap: 7px;
 }
 
 .ref-search-input-group:focus-within {
@@ -1956,7 +1938,7 @@ mark.user-highlight:hover {
   flex: 1;
   border: none;
   outline: none;
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--cf-ink-primary);
   background: transparent;
 }
@@ -1964,9 +1946,9 @@ mark.user-highlight:hover {
 .ref-search-match-badge {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 0px;
   background: var(--cf-bg-stone);
   color: var(--cf-ink-secondary);
@@ -1985,7 +1967,7 @@ mark.user-highlight:hover {
   border: none;
   color: var(--cf-ink-primary);
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   padding: 0 4px;
@@ -1999,12 +1981,11 @@ mark.user-highlight:hover {
 }
 
 .ref-chip-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
   font-weight: 600;
   color: var(--cf-ink-muted);
   margin-right: 2px;
-  letter-spacing: 0.05em;
 }
 
 .ref-search-chip {
@@ -2012,8 +1993,8 @@ mark.user-highlight:hover {
   color: var(--cf-ink-secondary);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 2px;
-  padding: 2px 8px;
-  font-family: var(--font-mono);
+  padding: 1px 7px;
+  font-family: var(--font-sans);
   font-size: 10.5px;
   font-weight: 500;
   cursor: pointer;
@@ -2033,7 +2014,7 @@ mark.user-highlight:hover {
 }
 
 .ref-tree-sidebar {
-  width: 250px;
+  width: 240px;
   background: var(--cf-bg-paper);
   border-right: 1px solid var(--cf-rule-mid);
   display: flex;
@@ -2043,11 +2024,10 @@ mark.user-highlight:hover {
 }
 
 .ref-tree-header {
-  padding: 7px 10px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--cf-ink-secondary);
   background: var(--cf-bg-stone);
   border-bottom: 1px solid var(--cf-rule-mid);
@@ -2060,7 +2040,7 @@ mark.user-highlight:hover {
 }
 
 .ref-part-group {
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .ref-part-toggle {
@@ -2070,10 +2050,10 @@ mark.user-highlight:hover {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-mid);
   border-radius: 0px;
-  padding: 6px 8px;
-  font-family: var(--font-mono);
+  padding: 5px 8px;
+  font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -2099,7 +2079,7 @@ mark.user-highlight:hover {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-subtle);
   border-radius: 0px;
-  padding: 6px 8px;
+  padding: 5px 8px;
   font-size: 11.5px;
   cursor: pointer;
   display: flex;
@@ -2145,7 +2125,7 @@ mark.user-highlight:hover {
 .ref-sec-freq {
   font-family: var(--font-mono);
   font-size: 9.5px;
-  padding: 1px 4px;
+  padding: 0 4px;
   border-radius: 0px;
   background: var(--cf-brass-tint);
   color: var(--cf-brass-warn);
@@ -2179,7 +2159,7 @@ mark.user-highlight:hover {
 }
 
 .ref-doc-topbar {
-  padding: 8px 16px;
+  padding: 6px 16px;
   background: var(--cf-bg-paper);
   border-bottom: 1px solid var(--cf-rule-mid);
   display: flex;
@@ -2198,18 +2178,17 @@ mark.user-highlight:hover {
 
 .ref-doc-freq-badge {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 2px 8px;
+  padding: 1px 7px;
   border-radius: 2px;
   background: var(--cf-brass-tint);
   color: var(--cf-brass-warn);
   border: 1px solid var(--cf-brass-warn);
-  text-transform: uppercase;
 }
 
 .ref-doc-action-bar {
-  padding: 8px 16px;
+  padding: 7px 16px;
   background: var(--cf-bg-stone);
   border-bottom: 1px solid var(--cf-rule-mid);
   display: flex;
@@ -2224,9 +2203,9 @@ mark.user-highlight:hover {
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
-  padding: 6px 12px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  padding: 5px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -2246,9 +2225,9 @@ mark.user-highlight:hover {
   border: 1px solid var(--cf-rule-strong);
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
-  padding: 6px 11px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  padding: 5px 11px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -2266,7 +2245,7 @@ mark.user-highlight:hover {
 .ref-doc-article {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 24px 40px 24px;
+  padding: 24px 28px 44px 28px;
 }
 
 .ref-doc-title-block {
@@ -2287,7 +2266,7 @@ mark.user-highlight:hover {
 
 .ref-doc-section-title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 400;
   line-height: 1.15;
   color: var(--cf-ink-primary);
@@ -2295,13 +2274,13 @@ mark.user-highlight:hover {
 
 .ref-doc-text-body {
   font-family: var(--font-serif);
-  font-size: 16.5px;
+  font-size: 17px;
   line-height: 1.68;
   color: var(--cf-ink-primary);
   max-width: 66ch;
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 12px;
 }
 
 .ecfr-para {
@@ -2343,10 +2322,9 @@ mark.ecfr-search-highlight {
 }
 
 .ref-crossrefs-title {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
   color: var(--cf-ink-secondary);
   margin-bottom: 8px;
 }
@@ -2384,9 +2362,9 @@ mark.ecfr-search-highlight {
 }
 
 .ref-keywords-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--cf-ink-muted);
 }
 
@@ -2413,7 +2391,7 @@ mark.ecfr-search-highlight {
 }
 
 /* ==========================================================================
-   9. MODE 3: READINESS ANALYTICS & B2C / B2B LICENSING PAYWALL
+   9. MODE 3: READINESS ANALYTICS & B2C / B2B LICENSING PLANS
    ========================================================================== */
 .analytics-page-scroll {
   flex: 1;
@@ -2466,7 +2444,7 @@ mark.ecfr-search-highlight {
 
 .an-hero-desc {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 16.5px;
   line-height: 1.62;
   color: var(--cf-ink-secondary);
   max-width: 68ch;
@@ -2487,7 +2465,8 @@ mark.ecfr-search-highlight {
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--cf-ink-secondary);
 }
 
@@ -2561,7 +2540,7 @@ mark.ecfr-search-highlight {
   font-weight: 600;
   color: var(--cf-ink-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .an-kpi-num {
@@ -2694,7 +2673,7 @@ mark.ecfr-search-highlight {
   font-weight: 600;
   color: var(--cf-ink-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .an-solved-log-list,
@@ -2731,8 +2710,8 @@ mark.ecfr-search-highlight {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
   padding: 4px 10px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -2774,7 +2753,7 @@ mark.ecfr-search-highlight {
 
 .pricing-main-desc {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 16.5px;
   color: var(--cf-ink-secondary);
   line-height: 1.58;
   max-width: 75ch;
@@ -2805,7 +2784,8 @@ mark.ecfr-search-highlight {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 10px;
 }
 
@@ -2853,6 +2833,7 @@ mark.ecfr-search-highlight {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 3px 10px;
   border-radius: 0px;
@@ -2863,7 +2844,8 @@ mark.ecfr-search-highlight {
   font-size: 10.5px;
   font-weight: 600;
   color: var(--cf-accent-primary);
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .pricing-tier-name {
@@ -2894,7 +2876,7 @@ mark.ecfr-search-highlight {
   border: 1px solid transparent;
   background: transparent;
   padding: 4px 10px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
   color: var(--cf-ink-secondary);
@@ -2957,9 +2939,9 @@ mark.ecfr-search-highlight {
   width: 100%;
   padding: 11px 16px;
   border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
   border: 1px solid var(--cf-rule-strong);
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
@@ -3011,6 +2993,7 @@ mark.ecfr-search-highlight {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--cf-highlight-mark);
 }
@@ -3033,9 +3016,9 @@ mark.ecfr-search-highlight {
   color: var(--cf-ink-primary);
   border: 1px solid var(--cf-rule-mid);
   text-decoration: none;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 10px 16px;
   border-radius: 2px;
   white-space: nowrap;
@@ -3094,7 +3077,7 @@ mark.ecfr-search-highlight {
 
 .pvue-modal-icon {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--cf-highlight-mark);
 }
 
@@ -3139,8 +3122,8 @@ mark.ecfr-search-highlight {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-accent-primary);
   padding: 7px 14px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -3152,8 +3135,8 @@ mark.ecfr-search-highlight {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
   padding: 7px 14px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -3167,8 +3150,8 @@ mark.ecfr-search-highlight {
   padding-bottom: 12px;
   margin-bottom: 14px;
   border-bottom: 1px solid var(--cf-rule-mid);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-family: var(--font-sans);
+  font-size: 12px;
 }
 
 .nav-legend-item {
@@ -3238,11 +3221,9 @@ mark.ecfr-search-highlight {
 }
 
 .scratch-subhead {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   color: var(--cf-ink-primary);
   margin-bottom: 10px;
 }
@@ -3325,8 +3306,8 @@ mark.ecfr-search-highlight {
   border: 1px solid var(--cf-accent-primary);
   border-radius: 2px;
   padding: 2px 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -3354,9 +3335,284 @@ mark.ecfr-search-highlight {
   text-align: right;
 }
 
-/* Checkout Modal */
+/* Checkout & Account Paywall Modal (3 Tabs + 3 Payment Methods) */
 .checkout-modal-window {
-  max-width: 540px;
+  max-width: 680px;
+}
+
+.cd-account-cluster {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cd-license-pill {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 7px;
+  border-radius: 0px;
+  background: #22211F;
+  color: var(--cf-highlight-mark);
+  border: 1px solid #5C5953;
+  white-space: nowrap;
+}
+
+.cd-license-pill.pro-active {
+  background: var(--cf-forest-pass);
+  color: var(--cf-ink-on-dark);
+  border-color: var(--cf-ink-on-dark);
+}
+
+.cd-user-email-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: #D2CEC4;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cd-btn-signin {
+  background: #22211F;
+  color: var(--cf-ink-on-dark);
+  border: 1px solid #5C5953;
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cd-btn-signin:hover {
+  border-color: var(--cf-ink-on-dark);
+  background: #2F2E2B;
+}
+
+.cd-btn-unlock-pro {
+  background: var(--cf-accent-primary);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-ink-on-dark);
+  border-radius: 2px;
+  padding: 3px 9px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cd-btn-unlock-pro:hover {
+  background: var(--cf-accent-hover);
+}
+
+.pro-lock-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: var(--cf-accent-tint);
+  color: var(--cf-accent-primary);
+  border: 1px solid var(--cf-accent-primary);
+  letter-spacing: 0.04em;
+}
+
+.nav-q-tile.locked-pro {
+  background: var(--cf-bg-stone);
+  border-style: dashed;
+  opacity: 0.82;
+}
+
+.paywall-trigger-banner {
+  background: var(--cf-accent-tint);
+  border: 1.5px solid var(--cf-accent-primary);
+  color: var(--cf-ink-primary);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.paywall-trigger-banner strong {
+  color: var(--cf-accent-primary);
+}
+
+.auth-modal-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--cf-rule-strong);
+  background: var(--cf-bg-stone);
+  margin-bottom: 16px;
+}
+
+.auth-tab-btn {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--cf-rule-mid);
+  padding: 9px 10px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cf-ink-secondary);
+  cursor: pointer;
+}
+
+.auth-tab-btn:last-child {
+  border-right: none;
+}
+
+.auth-tab-btn.active {
+  background: var(--cf-ink-primary);
+  color: var(--cf-ink-on-dark);
+}
+
+.auth-two-col-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.plan-picker-label {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cf-ink-secondary);
+  margin-top: 2px;
+}
+
+.plan-picker-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plan-radio-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-mid);
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.plan-radio-card.selected {
+  background: var(--cf-navy-tint);
+  border: 1.5px solid var(--cf-rule-strong);
+}
+
+.plan-radio-card input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--cf-ink-primary);
+}
+
+.plan-radio-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.plan-radio-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--cf-ink-primary);
+}
+
+.plan-radio-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--cf-ink-primary);
+}
+
+.plan-save-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 5px;
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+  border: 1px solid var(--cf-forest-pass);
+  margin-left: 6px;
+}
+
+.plan-radio-desc {
+  font-size: 11.5px;
+  color: var(--cf-ink-secondary);
+}
+
+.payment-method-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.pay-method-btn {
+  background: var(--cf-bg-paper);
+  color: var(--cf-ink-secondary);
+  border: 1px solid var(--cf-rule-mid);
+  border-radius: 2px;
+  padding: 7px 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pay-method-btn.active {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  border: 1.5px solid var(--cf-rule-strong);
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+}
+
+.corporate-invoice-box {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-strong);
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--cf-ink-primary);
+}
+
+.invoice-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.invoice-mailto-link {
+  text-decoration: none;
+  text-align: center;
+  flex: 1;
+}
+
+.license-key-input {
+  font-family: var(--font-mono);
+  font-size: 13.5px !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.license-key-hint {
+  font-size: 11px;
+  color: var(--cf-ink-muted);
 }
 
 .checkout-selected-plan-banner {
@@ -3374,6 +3630,7 @@ mark.ecfr-search-highlight {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 600;
+  text-transform: uppercase;
   color: var(--cf-accent-primary);
 }
 
@@ -3408,8 +3665,8 @@ mark.ecfr-search-highlight {
 }
 
 .checkout-field label {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--cf-ink-secondary);
 }
@@ -3431,8 +3688,8 @@ mark.ecfr-search-highlight {
 }
 
 .checkout-card-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: var(--cf-ink-muted);
   margin-bottom: 4px;
 }
@@ -3454,9 +3711,9 @@ mark.ecfr-search-highlight {
   border-radius: 2px;
   box-shadow: 2px 2px 0px var(--cf-rule-strong);
   padding: 12px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -3494,8 +3751,8 @@ mark.ecfr-search-highlight {
   border-left: 4px solid var(--cf-accent-primary);
   padding: 10px 14px;
   border-radius: 0px;
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
   font-weight: 500;
   box-shadow: 4px 4px 0px rgba(20, 20, 19, 0.25);
   animation: toastSlideIn 0.15s ease-out;
@@ -3507,7 +3764,7 @@ mark.ecfr-search-highlight {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1100px) {
+@media (max-width: 1180px) {
   .an-kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .an-two-col-grid,
   .pricing-cards-grid,
@@ -3516,9 +3773,10 @@ mark.ecfr-search-highlight {
     grid-template-columns: 1fr;
   }
   .ref-tree-sidebar { width: 195px; }
+  .cd-track-select { max-width: 170px; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   html, body { overflow: auto; }
   .codedrill-global-bar { height: auto; flex-wrap: wrap; padding: 8px; }
   .codedrill-main-container { height: auto; overflow: visible; }
