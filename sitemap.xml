@@ -95,6 +95,18 @@
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://caliberfoundry.com/insights/nosana-decentralized-gpu-inference-architecture.html</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
 
   <!-- CodeDrill CBT Statutory Knowledge Hub (9 Pages) -->
   <url>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Raenest Cross-Border Treasury &amp; Settlement Architecture: Eliminating the $4.8B Emerging-Market FX Tax | Caliber Foundry</title>
+  <meta name="description" content="Systems architecture and quantitative analysis of Raenest's multi-currency treasury, named USD/EUR/GBP virtual accounts, and hybrid fiat-stablecoin settlement rails for global contractors and borderless enterprises." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html" />
+  <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="Raenest Cross-Border Treasury &amp; Settlement Architecture — Technical Monograph" />
+  <meta property="og:description" content="How Raenest replaces 4-hop SWIFT correspondent chains with named virtual accounts, programmable multi-currency treasuries, and instant local + stablecoin settlement rails." />
+  <meta property="og:url" content="https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html" />
+  <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CaliberFoundry" />
+  <meta name="twitter:title" content="Raenest Cross-Border Treasury &amp; Settlement Architecture | Caliber Foundry" />
+  <meta name="twitter:description" content="Quantitative breakdown of SWIFT MT103 friction vs. Raenest multi-currency virtual accounts and hybrid stablecoin settlement rails." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html#article",
+        "headline": "Raenest Cross-Border Treasury & Settlement Architecture: Eliminating the Emerging-Market FX & Correspondent Banking Bottleneck",
+        "description": "Architectural analysis, interactive FX treasury calculator, SVG payment-rail schematic, and video storyboard examining how Raenest unifies USD/EUR/GBP virtual accounts, multi-currency corporate cards, and instant stablecoin/local settlement.",
+        "datePublished": "2026-11-22",
+        "dateModified": "2026-11-22",
+        "author": {
+          "@type": "Organization",
+          "name": "Caliber Foundry",
+          "url": "https://caliberfoundry.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Caliber Foundry",
+          "url": "https://caliberfoundry.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://caliberfoundry.com/og-image.png"
+          }
+        },
+        "mainEntityOfPage": "https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html"
+      }
+    ]
+  }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #4A4842;
+      --cf-ink-muted:      #78756D;
+      --cf-ink-on-dark:    #F6F4EF;
+      --cf-rule-strong:    #141413;
+      --cf-rule-mid:       #C9C4B8;
+      --cf-rule-subtle:    #DFDBD2;
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A63415;
+      --cf-accent-tint:    #FDF2EE;
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #EDF5F0;
+      --cf-brass-warn:     #9C5A08;
+      --cf-brass-tint:     #FBF4E9;
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .review-banner {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-bottom: 2px solid var(--cf-accent-primary);
+      padding: 10px 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .review-badge {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      padding: 2px 8px;
+      font-weight: 600;
+      border-radius: 2px;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--cf-rule-mid);
+      background-color: var(--cf-bg-paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
+    .brand-mark {
+      width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
+    .brand-name { font-family: var(--font-display); font-size: 23px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+      padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none;
+      background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong);
+      cursor: pointer;
+    }
+    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
+    .btn-primary:hover { background-color: var(--cf-accent-hover); }
+
+    .article-shell { max-width: 1020px; margin: 0 auto; padding: 48px 32px 88px; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+    .breadcrumb:hover { color: var(--cf-accent-primary); }
+    .meta-strip {
+      display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--cf-ink-muted); border-top: 1px solid var(--cf-rule-strong); border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 10px 0; margin-bottom: 28px; font-variant-numeric: tabular-nums;
+    }
+    .meta-strip span.tag-accent { color: var(--cf-accent-primary); font-weight: 600; }
+    h1.article-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 22px; }
+    .article-lede { font-family: var(--font-serif); font-size: 21px; line-height: 1.62; color: var(--cf-ink-secondary); margin-bottom: 36px; }
+
+    /* KPI Summary Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      border: 1px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+      margin-bottom: 44px;
+    }
+    .kpi-cell {
+      padding: 24px;
+      border-right: 1px solid var(--cf-rule-mid);
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+    .kpi-cell:last-child { border-right: none; }
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cf-ink-muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 38px;
+      line-height: 1.05;
+      color: var(--cf-ink-primary);
+      font-variant-numeric: tabular-nums;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .kpi-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cf-forest-pass);
+      font-weight: 600;
+    }
+
+    .prose { font-family: var(--font-serif); font-size: 18px; line-height: 1.72; color: var(--cf-ink-primary); }
+    .prose h2 { font-family: var(--font-display); font-size: 34px; font-weight: 400; line-height: 1.15; margin: 52px 0 18px; padding-top: 24px; border-top: 1px solid var(--cf-rule-mid); }
+    .prose h3 { font-family: var(--font-sans); font-size: 19px; font-weight: 700; margin: 32px 0 12px; }
+    .prose p { margin-bottom: 20px; }
+    .prose ul, .prose ol { margin: 0 0 24px 24px; }
+    .prose li { margin-bottom: 10px; }
+
+    /* SVG Blueprint Panel */
+    .blueprint-panel {
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 28px;
+      margin: 32px 0;
+    }
+    .blueprint-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cf-ink-muted);
+    }
+    .blueprint-header strong { color: var(--cf-accent-primary); }
+
+    /* Data Tables */
+    .data-table {
+      width: 100%; border-collapse: collapse; background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong);
+      margin: 28px 0; font-family: var(--font-sans); font-size: 14px;
+    }
+    .data-table th, .data-table td { padding: 13px 16px; border-bottom: 1px solid var(--cf-rule-subtle); text-align: left; vertical-align: top; }
+    .data-table th { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; background-color: var(--cf-bg-stone); border-bottom: 1px solid var(--cf-rule-strong); }
+    .data-table td.mono { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* Interactive Calculator Workbench */
+    .calc-workbench {
+      background-color: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      margin: 36px 0;
+    }
+    .calc-bar {
+      background-color: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      padding: 14px 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 820px) {
+      .calc-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .calc-inputs {
+      padding: 28px;
+      border-right: 1px solid var(--cf-rule-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .field-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cf-ink-secondary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .field-input, .field-select {
+      width: 100%;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      background-color: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-strong);
+      border-radius: 2px;
+      color: var(--cf-ink-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .calc-outputs {
+      padding: 28px;
+      background-color: var(--cf-bg-paper);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .out-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding-bottom: 10px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+    .out-highlight {
+      background-color: var(--cf-forest-tint);
+      border: 1px solid var(--cf-forest-pass);
+      padding: 18px 20px;
+      border-radius: 2px;
+    }
+    .out-highlight-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cf-forest-pass);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .out-highlight-val {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--cf-forest-pass);
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Storyboard Ledger */
+    .storyboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border: 1px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-surface);
+      margin: 28px 0;
+    }
+    .scene-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 22px 26px;
+      gap: 18px;
+    }
+    .scene-row:last-child { border-bottom: none; }
+    @media (min-width: 760px) {
+      .scene-row { grid-template-columns: 150px 1fr 1fr; }
+    }
+    .scene-time {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cf-accent-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .scene-visual {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--cf-ink-primary);
+    }
+    .scene-vo {
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      font-style: italic;
+      color: var(--cf-ink-secondary);
+      border-left: 2px solid var(--cf-rule-mid);
+      padding-left: 14px;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted);
+      max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .site-footer a { color: var(--cf-ink-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="review-banner">
+    <div>
+      <span class="review-badge">ADR-011 FOUNDER REVIEW GATE</span>
+      <span style="margin-left:10px;">PLAN-21 // RAENEST GLOBAL CONTENT BOUNTY ($13,000 USDC POOL) — STAGED PREVIEW</span>
+    </div>
+    <span>DO NOT SUBMIT EXTERNALLY UNTIL FOUNDER APPROVAL</span>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../" class="brand">
+        <span class="brand-mark">CF</span>
+        <span class="brand-name">Caliber Foundry</span>
+      </a>
+      <div style="display:flex; gap:12px;">
+        <a href="./" class="btn"><span>All Monographs</span></a>
+        <a href="#calculator" class="btn btn-primary"><span>FX Treasury Calculator</span><span>&darr;</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-shell">
+    <a href="./" class="breadcrumb">&larr; Back to Engineering &amp; Regulatory Insights</a>
+
+    <div class="meta-strip">
+      <span class="tag-accent">MONOGRAPH // 05 (PLAN-21)</span>
+      <span>SUBJECT: RAENEST MULTI-CURRENCY TREASURY ARCHITECTURE</span>
+      <span>RAILS: ACH / SEPA / FASTER PAYMENTS / USDC-USDT</span>
+      <span>UPDATED: NOV 2026</span>
+    </div>
+
+    <h1 class="article-title">Raenest Cross-Border Treasury &amp; Settlement Architecture: Eliminating the Emerging-Market FX &amp; Correspondent Banking Bottleneck</h1>
+
+    <p class="article-lede">
+      For global contractors, remote software engineers, and high-growth African and emerging-market enterprises, legacy cross-border banking imposes an invisible 4.5% to 7.2% structural tariff and a 72-to-120 hour liquidity freeze. By unifying named USD/EUR/GBP virtual accounts, automated invoice billing, and hybrid fiat-to-stablecoin settlement rails, Raenest compresses cross-border treasury settlement from five business days to under sixty minutes.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi-cell">
+        <span class="kpi-label">01 // LEGACY SWIFT MT103 LATENCY</span>
+        <span class="kpi-value">72–120 hrs</span>
+        <span class="kpi-sub" style="color:var(--cf-accent-primary);">3–4 Correspondent Nostro Hops</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">02 // RAENEST SETTLEMENT WINDOW</span>
+        <span class="kpi-value">&lt; 60 min</span>
+        <span class="kpi-sub">Direct Virtual Account + Stablecoin/Local Rail</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">03 // EFFECTIVE FX &amp; WIRE SAVINGS</span>
+        <span class="kpi-value">410–580 bps</span>
+        <span class="kpi-sub">4.1% to 5.8% Capital Retained per Payout</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-label">04 // SUPPORTED PAYOUT COVERAGE</span>
+        <span class="kpi-value">50+ Countries</span>
+        <span class="kpi-sub">USD, EUR, GBP, NGN, KES, GHS, USDC/USDT</span>
+      </div>
+    </div>
+
+    <article class="prose">
+      <h2>01 // The Anatomy of a Broken SWIFT MT103 Cross-Border Transfer</h2>
+      <p>
+        When a Delaware corporation or London SaaS company pays an engineering team in Lagos, Nairobi, Accra, or Cairo via traditional bank wire, the payment does not travel directly from Point A to Point B. Instead, it traverses a brittle chain of correspondent banks holding bilateral <em>Nostro</em> and <em>Vostro</em> accounts:
+      </p>
+      <ol>
+        <li><strong>Originating Bank Initiation ($25–$45 Outbound Wire Fee):</strong> The U.S. or European employer initiates a SWIFT MT103 payment instruction. Funds are debited immediately, but settlement awaits batch cut-off windows.</li>
+        <li><strong>Intermediary Correspondent Bank Hops ($15–$30 Lifting Fee per Hop):</strong> Because most Tier-1 U.S. banks do not maintain direct local-currency clearing relationships with emerging-market domestic banks, 1 to 2 intermediary correspondent institutions deduct undisclosed &ldquo;lifting fees&rdquo; directly from the principal amount in transit.</li>
+        <li><strong>Forced Beneficiary Bank FX Conversion (350–550 bps Spread):</strong> When the truncated USD or EUR wire arrives at the recipient&rsquo;s local commercial bank, either the funds are forcibly converted at an opaque retail desk rate 4% to 6% worse than mid-market, or they are locked inside a restricted domiciliary account requiring physical branch paperwork to access.</li>
+      </ol>
+
+      <div class="blueprint-panel">
+        <div class="blueprint-header">
+          <span><strong>[FIG. 01 // ARCHITECTURAL SCHEMATIC]</strong> &mdash; LEGACY 4-HOP SWIFT CHAIN VS. RAENEST UNIFIED TREASURY ENGINE</span>
+          <span>SCALE: 1:1 SYSTEM TOPOLOGY</span>
+        </div>
+        <svg viewBox="0 0 920 430" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram comparing Legacy SWIFT correspondent banking with Raenest Unified Multi-Currency Treasury">
+          <rect width="920" height="430" fill="#F6F4EF" stroke="#141413" stroke-width="1.5"/>
+          <line x1="0" y1="205" x2="920" y2="205" stroke="#141413" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+          <!-- Top Track: Legacy SWIFT -->
+          <text x="24" y="32" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#9C5A08">TRACK A // LEGACY CORRESPONDENT BANKING (SWIFT MT103 — T+3 TO T+5 DAYS · 4.8% TO 7.2% LOSS)</text>
+
+          <rect x="24" y="54" width="175" height="96" fill="#FFFFFF" stroke="#141413" stroke-width="1.2"/>
+          <text x="36" y="76" font-family="IBM Plex Mono, monospace" font-size="10" fill="#78756D">NODE 01 // ORIGIN</text>
+          <text x="36" y="98" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Global Employer / Client</text>
+          <text x="36" y="118" font-family="IBM Plex Mono, monospace" font-size="11" fill="#C8431F">-$35 Outbound Wire</text>
+          <text x="36" y="136" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4A4842">Batch Cutoff Delay: +24h</text>
+
+          <line x1="199" y1="102" x2="244" y2="102" stroke="#141413" stroke-width="1.5"/>
+          <polygon points="244,102 236,97 236,107" fill="#141413"/>
+
+          <rect x="244" y="54" width="190" height="96" fill="#FFFFFF" stroke="#141413" stroke-width="1.2"/>
+          <text x="256" y="76" font-family="IBM Plex Mono, monospace" font-size="10" fill="#78756D">NODE 02 // INTERMEDIARY 1</text>
+          <text x="256" y="98" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">NY / London Correspondent</text>
+          <text x="256" y="118" font-family="IBM Plex Mono, monospace" font-size="11" fill="#C8431F">-$25 Lifting Fee (SHA/BEN)</text>
+          <text x="256" y="136" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4A4842">AML Manual Queue: +36h</text>
+
+          <line x1="434" y1="102" x2="479" y2="102" stroke="#141413" stroke-width="1.5"/>
+          <polygon points="479,102 471,97 471,107" fill="#141413"/>
+
+          <rect x="479" y="54" width="190" height="96" fill="#FFFFFF" stroke="#141413" stroke-width="1.2"/>
+          <text x="491" y="76" font-family="IBM Plex Mono, monospace" font-size="10" fill="#78756D">NODE 03 // INTERMEDIARY 2</text>
+          <text x="491" y="98" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Regional Clearing Bank</text>
+          <text x="491" y="118" font-family="IBM Plex Mono, monospace" font-size="11" fill="#C8431F">-$20 Nostro Clearing Fee</text>
+          <text x="491" y="136" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4A4842">Settlement Hold: +24h</text>
+
+          <line x1="669" y1="102" x2="714" y2="102" stroke="#141413" stroke-width="1.5"/>
+          <polygon points="714,102 706,97 706,107" fill="#141413"/>
+
+          <rect x="714" y="54" width="182" height="96" fill="#FDF2EE" stroke="#C8431F" stroke-width="1.5"/>
+          <text x="726" y="76" font-family="IBM Plex Mono, monospace" font-size="10" fill="#C8431F">NODE 04 // RECEIVING BANK</text>
+          <text x="726" y="98" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Forced Retail FX Desk</text>
+          <text x="726" y="118" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#C8431F">-4.5% Opaque FX Spread</text>
+          <text x="726" y="136" font-family="IBM Plex Mono, monospace" font-size="10" fill="#141413">Net Received: ~93.1%</text>
+
+          <!-- Bottom Track: Raenest Architecture -->
+          <text x="24" y="236" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">TRACK B // RAENEST UNIFIED MULTI-CURRENCY &amp; STABLECOIN SETTLEMENT ENGINE (T+0 / &lt; 60 MIN · 99.1%+ RETAINED)</text>
+
+          <rect x="24" y="256" width="240" height="142" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
+          <rect x="24" y="256" width="240" height="24" fill="#141413"/>
+          <text x="34" y="272" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#F6F4EF">STAGE 01 // LOCAL INGESTION RAILS</text>
+          <text x="36" y="302" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Named USD / EUR / GBP Accounts</text>
+          <text x="36" y="324" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ US ACH &amp; Domestic Fedwire</text>
+          <text x="36" y="344" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ EU SEPA Instant &amp; UK FPS</text>
+          <text x="36" y="364" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Upwork / Deel / Stripe Direct</text>
+          <text x="36" y="384" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">$0 Domestic Clearing Friction</text>
+
+          <line x1="264" y1="327" x2="328" y2="327" stroke="#C8431F" stroke-width="2"/>
+          <polygon points="328,327 318,321 318,333" fill="#C8431F"/>
+
+          <rect x="328" y="256" width="264" height="142" fill="#FFFFFF" stroke="#C8431F" stroke-width="2"/>
+          <rect x="328" y="256" width="264" height="24" fill="#C8431F"/>
+          <text x="338" y="272" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#FFFFFF">STAGE 02 // RAENEST TREASURY CORE</text>
+          <text x="340" y="302" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Multi-Currency Ledger &amp; FX Engine</text>
+          <text x="340" y="324" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Hold USD/EUR/GBP Zero-Decay</text>
+          <text x="340" y="344" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Automated KYB/AML Rule Gate</text>
+          <text x="340" y="364" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Mid-Market Wholesale FX Pool</text>
+          <text x="340" y="384" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#C8431F">Instant Internal Ledger Finality</text>
+
+          <line x1="592" y1="327" x2="656" y2="327" stroke="#1A5638" stroke-width="2"/>
+          <polygon points="656,327 646,321 646,333" fill="#1A5638"/>
+
+          <rect x="656" y="256" width="240" height="142" fill="#EDF5F0" stroke="#1A5638" stroke-width="1.5"/>
+          <rect x="656" y="256" width="240" height="24" fill="#1A5638"/>
+          <text x="666" y="272" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#FFFFFF">STAGE 03 // PROGRAMMABLE EGRESS</text>
+          <text x="668" y="302" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700" fill="#141413">Multi-Rail Settlement &amp; Cards</text>
+          <text x="668" y="324" font-family="IBM Plex Mono, monospace" font-size="11" fill="#141413">+ Local Bank / Mobile Money (T+0)</text>
+          <text x="668" y="344" font-family="IBM Plex Mono, monospace" font-size="11" fill="#141413">+ On-Chain USDC / USDT Settlement</text>
+          <text x="668" y="364" font-family="IBM Plex Mono, monospace" font-size="11" fill="#141413">+ Virtual &amp; Physical USD Cards</text>
+          <text x="668" y="384" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">Net Received: ~99.1% to 99.5%</text>
+        </svg>
+      </div>
+
+      <h2>02 // Raenest&rsquo;s 3-Layer Financial Infrastructure Stack</h2>
+      <p>
+        Rather than acting as another thin remittance wrapper atop SWIFT, Raenest (evolving from Geegpay&rsquo;s creator/freelancer rails into a full B2B and individual multi-currency treasury platform serving 700,000+ users and global teams) re-architects cross-border flow across three decoupled layers:
+      </p>
+      <ul>
+        <li><strong>Layer 1 — Local-First Virtual Account Ingestion (Eliminating Outbound International Wires):</strong> Raenest provisions named USD (ACH &amp; Fedwire), EUR (SEPA), and GBP (UK Faster Payments) bank accounts in the contractor&rsquo;s or enterprise&rsquo;s own legal name. To a U.S. client, marketplace (Upwork, Deel, Toptal), or global customer, paying a Raenest user looks identical to a domestic local bank transfer—eliminating the $35–$50 international SWIFT initiation fee at the source.</li>
+        <li><strong>Layer 2 — Sovereign Multi-Currency Treasury &amp; Wholesale FX Matching:</strong> Incoming funds settle into an inflation-hedged USD, EUR, or GBP balance. Users and CFOs are never subjected to mandatory same-day local currency conversion. When conversion is triggered, Raenest matches orders against deep wholesale liquidity pools and stablecoin settlement corridors (USDC/USDT), compressing spreads from 450 bps down to sub-90 bps.</li>
+        <li><strong>Layer 3 — Programmable Multi-Rail Egress (Local Instant Rails, Stablecoins &amp; Corporate Cards):</strong> Capital can be deployed across three parallel egress channels without leaving the platform:
+          <ol>
+            <li><em>Instant Local Currency Settlement:</em> Direct payout to domestic bank accounts and mobile money wallets across Nigeria (NIP), Kenya (M-Pesa / Pesalink), Ghana, Egypt, and 50+ jurisdictions in minutes.</li>
+            <li><em>Stablecoin Liquidity Rail:</em> Direct settlement and treasury funding via regulated stablecoin rails (USDC / USDT across low-fee chains) for instant 24/7/365 treasury rebalancing.</li>
+            <li><em>USD Virtual &amp; Physical Cards:</em> Direct USD card spend for AWS, GitHub, Figma, OpenAI, and SaaS subscriptions without suffering double FX conversion (USD &rarr; Local Currency &rarr; USD).</li>
+          </ol>
+        </li>
+      </ul>
+
+      <h2>03 // Quantitative Benchmark: Legacy SWIFT vs. P2P Informal vs. Raenest</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Treasury Metric</th>
+            <th>Legacy Bank SWIFT MT103</th>
+            <th>Legacy Payoneer / Wise Borderless</th>
+            <th>Unregulated P2P / OTC Desks</th>
+            <th>Raenest Multi-Currency Treasury</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Named USD / EUR / GBP Accounts</strong></td>
+            <td>Rare / High Minimum Balance</td>
+            <td>Partial (Strict Jurisdictional Caps)</td>
+            <td>None (Third-Party Name Risk)</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">Full Named ACH, SEPA &amp; UK FPS</td>
+          </tr>
+          <tr>
+            <td><strong>Fixed Inbound + Outbound Wire Fee</strong></td>
+            <td class="mono" style="color:var(--cf-accent-primary);">$45.00 – $85.00 / transfer</td>
+            <td class="mono">$15.00 – $30.00 / transfer</td>
+            <td class="mono">$5.00 – $15.00</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">$0.00 – $1.50 (ACH / Local)</td>
+          </tr>
+          <tr>
+            <td><strong>Effective FX Spread vs. Mid-Market</strong></td>
+            <td class="mono" style="color:var(--cf-accent-primary);">3.80% – 6.20%</td>
+            <td class="mono">1.80% – 3.00%</td>
+            <td class="mono">1.50% – 2.50%</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">0.50% – 0.95% Transparent</td>
+          </tr>
+          <tr>
+            <td><strong>End-to-End Settlement Finality</strong></td>
+            <td class="mono">T+3 to T+5 Business Days</td>
+            <td class="mono">T+1 to T+3 Business Days</td>
+            <td class="mono">1–6 Hours (Manual Escrow)</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">Instant to &lt; 60 Minutes (24/7)</td>
+          </tr>
+          <tr>
+            <td><strong>Stablecoin (USDC/USDT) Interop</strong></td>
+            <td>Prohibited</td>
+            <td>Unsupported</td>
+            <td>High Counterparty Freeze Risk</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">Native KYB/KYC Compliant Rail</td>
+          </tr>
+          <tr>
+            <td><strong>Direct USD SaaS Card Spend</strong></td>
+            <td>Blocked / Strict Monthly Limits</td>
+            <td>1.5% – 3.0% Cross-Border Fee</td>
+            <td>None</td>
+            <td class="mono" style="color:var(--cf-forest-pass);">Native Virtual &amp; Physical USD Cards</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="calculator">04 // Interactive Treasury &amp; FX Capital Recovery Simulator</h2>
+      <p>
+        Adjust the parameters below to model the exact annual capital and settlement hours recovered when migrating a distributed contractor payroll or B2B export billing pipeline from legacy SWIFT correspondent wires to Raenest:
+      </p>
+
+      <div class="calc-workbench">
+        <div class="calc-bar">
+          <span>INTERACTIVE WORKBENCH // RAENEST CROSS-BORDER SAVINGS CALCULATOR</span>
+          <span>MODEL: DETERMINISTIC FX + LIFTING FEE DELTA</span>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <div class="field-group">
+              <label for="rn-volume">Monthly Cross-Border Payout / Invoice Volume ($ USD)</label>
+              <input type="number" id="rn-volume" class="field-input" value="45000" min="500" max="10000000" step="500" />
+            </div>
+            <div class="field-group">
+              <label for="rn-txcount">Monthly Number of Contractor Payouts / Invoices</label>
+              <input type="number" id="rn-txcount" class="field-input" value="18" min="1" max="5000" step="1" />
+            </div>
+            <div class="field-group">
+              <label for="rn-corridor">Settlement Corridor &amp; Treasury Rail</label>
+              <select id="rn-corridor" class="field-select">
+                <option value="0.052|55|0.0075|1.5">USD (ACH/Wire) &rarr; NGN / West Africa Multi-Rail (Legacy 5.2% FX + $55 wire)</option>
+                <option value="0.048|50|0.0070|1.5">USD / EUR &rarr; KES / East Africa M-Pesa &amp; Bank (Legacy 4.8% FX + $50 wire)</option>
+                <option value="0.045|45|0.0060|1.0">GBP / EUR &rarr; Emerging Market Contractor Hub (Legacy 4.5% FX + $45 wire)</option>
+                <option value="0.042|50|0.0045|0.5">USD Corporate Treasury &rarr; On-Chain USDC / Hybrid Rail (Legacy 4.2% + $50)</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-outputs">
+            <div>
+              <div class="out-row">
+                <span>Legacy Bank Monthly Cost (Wire + Lifting + FX Spread):</span>
+                <strong id="out-legacy-month" style="color:var(--cf-accent-primary);">$3,330.00</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Raenest Monthly Cost (Named Virtual Account + FX):</span>
+                <strong id="out-raenest-month" style="color:var(--cf-forest-pass);">$364.50</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Monthly Net Capital Retained:</span>
+                <strong id="out-save-month">$2,965.50 / mo</strong>
+              </div>
+              <div class="out-row" style="margin-top:10px;">
+                <span>Annual Settlement Lockup Time Eliminated:</span>
+                <strong id="out-hours-saved">18,144 settlement-hrs / yr</strong>
+              </div>
+            </div>
+            <div class="out-highlight">
+              <span class="out-highlight-label">ANNUAL RECOVERED TREASURY CAPITAL (12 MONTHS)</span>
+              <span class="out-highlight-val" id="out-save-year">$35,586.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>05 // 1080p Programmatic Motion Video &amp; 60-Second Remotion Storyboard</h2>
+      <p>
+        For the multimedia &amp; video bounty track, below is the rendered <code>1920x1080</code> Swiss Editorial motion architecture video (<code>.webm</code> &amp; <code>.mp4</code>) alongside the deterministic 6-scene storyboard specification:
+      </p>
+
+      <div class="blueprint-panel">
+        <div class="blueprint-header">
+          <span><strong>[VIDEO. 01 // PROGRAMMATIC MOTION EXPLAINER]</strong> &mdash; RAENEST CROSS-BORDER TREASURY ARCHITECTURE (1920x1080 30FPS)</span>
+          <span><a href="../assets/videos/raenest-architecture-explainer.mp4" download style="color:var(--cf-accent-primary); text-decoration:none;">DOWNLOAD MP4 &darr;</a> &nbsp;|&nbsp; <a href="../assets/videos/raenest-architecture-explainer.webm" download style="color:var(--cf-ink-primary); text-decoration:none;">WEBM &darr;</a></span>
+        </div>
+        <video controls preload="metadata" width="100%" style="display:block; border:1px solid var(--cf-rule-strong); background:#141413;">
+          <source src="../assets/videos/raenest-architecture-explainer.webm" type="video/webm" />
+          <source src="../assets/videos/raenest-architecture-explainer.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="storyboard-grid">
+        <div class="scene-row">
+          <div class="scene-time">SCENE 01<br/>00:00 &ndash; 00:09<br/>(Frames 0–540)</div>
+          <div class="scene-visual"><strong>The $10,000 Invoice Decay:</strong> Split-screen counter shows a $10,000 USD invoice leaving San Francisco. As it passes through 3 correspondent bank gates, mechanical red counters deduct -$35 wire fee, -$25 lifting fee, and -$480 forced FX spread, landing at $9,460 after 96 hours.</div>
+          <div class="scene-vo">&ldquo;When global talent or an emerging-market enterprise earns ten thousand dollars, why does the banking system confiscate five hundred and forty dollars—and freeze the rest for four days?&rdquo;</div>
+        </div>
+        <div class="scene-row">
+          <div class="scene-time">SCENE 02<br/>00:09 &ndash; 00:20<br/>(Frames 541–1200)</div>
+          <div class="scene-visual"><strong>Architectural Cutover to Raenest:</strong> The 4-hop SWIFT chain collapses into a crisp Swiss blueprint grid. A named Raenest USD/EUR/GBP Virtual Account badge locks into place with routing/IBAN coordinates.</div>
+          <div class="scene-vo">&ldquo;The bottleneck is correspondent banking. Raenest replaces four-hop SWIFT chains with local named USD, Euro, and Pound accounts wired directly into ACH, SEPA, and UK Faster Payments.&rdquo;</div>
+        </div>
+        <div class="scene-row">
+          <div class="scene-time">SCENE 03<br/>00:20 &ndash; 00:32<br/>(Frames 1201–1920)</div>
+          <div class="scene-visual"><strong>Multi-Currency Treasury Hold &amp; Wholesale FX:</strong> Real-time ledger view showing funds held in inflation-proof USD/EUR/GBP alongside instant conversion sliders into local currency or USDC/USDT at sub-1% wholesale spread.</div>
+          <div class="scene-vo">&ldquo;Your capital settles into a sovereign multi-currency treasury. Hold dollars to hedge currency volatility, or convert on demand through deep wholesale FX and stablecoin liquidity pools.&rdquo;</div>
+        </div>
+        <div class="scene-row">
+          <div class="scene-time">SCENE 04<br/>00:32 &ndash; 00:44<br/>(Frames 1921–2640)</div>
+          <div class="scene-visual"><strong>Multi-Rail Egress (Local Instant + USDC + USD Cards):</strong> Three synchronized output streams fire simultaneously: T+0 local bank payout (&lt;60 min), on-chain USDC settlement, and virtual USD corporate card paying AWS/Figma with zero double-FX loss.</div>
+          <div class="scene-vo">&ldquo;Deploy capital across three instant rails: settle to local bank accounts in under sixty minutes, move liquidity via USDC and USDT, or spend directly in dollars with virtual and physical cards.&rdquo;</div>
+        </div>
+        <div class="scene-row">
+          <div class="scene-time">SCENE 05<br/>00:44 &ndash; 00:53<br/>(Frames 2641–3180)</div>
+          <div class="scene-visual"><strong>Enterprise Payroll &amp; Contractor Scale:</strong> Batch payout ledger executing 50 international contractor payouts across 12 countries in a single click, highlighting $35,586 annual recovered capital.</div>
+          <div class="scene-vo">&ldquo;From independent engineers to distributed enterprises scaling across fifty countries, Raenest turns five-day cross-border friction into instant treasury finality.&rdquo;</div>
+        </div>
+        <div class="scene-row">
+          <div class="scene-time">SCENE 06<br/>00:53 &ndash; 01:00<br/>(Frames 3181–3600)</div>
+          <div class="scene-visual"><strong>Closing Specification Card:</strong> High-contrast Obsidian card displaying Raenest architecture metrics (`&lt; 60 MIN SETTLEMENT`, `NAMED USD/EUR/GBP ACCOUNTS`, `FIAT + STABLECOIN RAILS`).</div>
+          <div class="scene-vo">&ldquo;Borderless work deserves borderless settlement. Explore the Raenest multi-currency architecture today.&rdquo;</div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Caliber Foundry &mdash; Technical Research &amp; Systems Architecture</span>
+    <div style="display:flex; flex-wrap:wrap; gap: 20px;">
+      <a href="../">Home</a>
+      <a href="./">All Insights</a>
+      <a href="./nosana-decentralized-gpu-inference-architecture.html">Nosana GPU Monograph &rarr;</a>
+      <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var volEl = document.getElementById('rn-volume');
+      var txEl  = document.getElementById('rn-txcount');
+      var corEl = document.getElementById('rn-corridor');
+
+      var outLegacy  = document.getElementById('out-legacy-month');
+      var outRaenest = document.getElementById('out-raenest-month');
+      var outSaveMo  = document.getElementById('out-save-month');
+      var outSaveYr  = document.getElementById('out-save-year');
+      var outHours   = document.getElementById('out-hours-saved');
+
+      function fmtUSD(n) {
+        return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+
+      function recalc() {
+        var vol = Math.max(0, parseFloat(volEl.value) || 0);
+        var tx  = Math.max(1, parseInt(txEl.value, 10) || 1);
+        var parts = (corEl.value || '0.052|55|0.0075|1.5').split('|');
+        var legFx   = parseFloat(parts[0]);
+        var legWire = parseFloat(parts[1]);
+        var raeFx   = parseFloat(parts[2]);
+        var raeFee  = parseFloat(parts[3]);
+
+        var legacyCost  = (vol * legFx) + (tx * legWire);
+        var raenestCost = (vol * raeFx) + (tx * raeFee);
+        var saveMo = Math.max(0, legacyCost - raenestCost);
+        var saveYr = saveMo * 12;
+        var hoursSaved = tx * 12 * 84; // 84 hours saved per transfer (96h SWIFT vs <1h Raenest)
+
+        outLegacy.textContent  = fmtUSD(legacyCost);
+        outRaenest.textContent = fmtUSD(raenestCost);
+        outSaveMo.textContent  = fmtUSD(saveMo) + ' / mo';
+        outSaveYr.textContent  = fmtUSD(saveYr);
+        outHours.textContent   = hoursSaved.toLocaleString('en-US') + ' settlement-hrs / yr';
+      }
+
+      volEl.addEventListener('input', recalc);
+      txEl.addEventListener('input', recalc);
+      corEl.addEventListener('change', recalc);
+      recalc();
+    })();
+  </script>
+</body>
+</html>
