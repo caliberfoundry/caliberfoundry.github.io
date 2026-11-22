@@ -5,7 +5,7 @@
     "secondaryTracks": [
       "IRS Enrolled Agent (SEE / 31 CFR Part 10 Circular 230)"
     ],
-    "version": "2026.11-eCFR",
+    "version": "2026.11-v2.1-eCFR",
     "examDurationSeconds": 16200,
     "passingScorePercent": 75,
     "avgPassRateNational": 15.2
@@ -1238,6 +1238,58 @@
     {
       "id": "CBLE-Q05",
       "number": 5,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "Keystone Customs Brokers Inc. (a national permit holder) is conducting a quarterly internal compliance audit covering three regulatory deadlines under 19 CFR Part 111:\n(1) On May 10, Keystone receives a wire transfer of $18,400 from an importer client to pay customs duties on an entry whose payment due date to CBP has already passed;\n(2) On May 12, Keystone receives a $4,200 overpayment from a client in excess of the governmental and brokerage charges properly payable on the client's customs business (and Keystone does not refund or apply the excess funds immediately);\n(3) On April 1, Keystone hired a new full-time entry specialist who completed 30 consecutive days of employment on May 1.\n\nUnder 19 CFR § 111.29(a) and § 111.28(c), what are the exact regulatory deadlines for Keystone to (1) transmit the belatedly received $18,400 duty payment to CBP, (2) provide a written accounting statement to the client for the $4,200 overpayment (if not paid out earlier), and (3) report the new employee's required information to CBP?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "(1) Transmit the belated duty payment within 10 working days of receipt; (2) provide a written accounting statement within 30 calendar days of receipt; and (3) report the new employee within 10 calendar days of the hire date."
+        },
+        {
+          "letter": "B",
+          "text": "(1) Transmit the belated duty payment to the Government within 5 working days from receipt by the broker; (2) provide a written statement accounting for the excess funds within 60 calendar days of receipt (unless actual payment is made within that 60-calendar-day period); and (3) report the new employee to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days."
+        },
+        {
+          "letter": "C",
+          "text": "(1) Transmit the belated duty payment within 24 hours of receipt; (2) provide a written accounting statement within 90 calendar days; and (3) report the new employee only on the next Triennial Status Report."
+        },
+        {
+          "letter": "D",
+          "text": "(1) Transmit the belated duty payment within 5 calendar days of receipt; (2) provide a written accounting statement within 30 working days of receipt; and (3) report the new employee within 60 calendar days of the hire date."
+        },
+        {
+          "letter": "E",
+          "text": "(1) Transmit the belated duty payment within 15 calendar days of receipt; (2) provide a written accounting statement once every 12 months; and (3) report only licensed employees within 30 working days."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-111-29",
+      "targetCitation": "19 CFR § 111.29(a) & § 111.28(c)",
+      "goldenQuote": "Payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client where no payment to the Government has been made, or received from a client in excess of the Governmental or other charges properly payable as part of the client's customs business, within 60 calendar days of receipt.",
+      "shortestPathHint": "19 CFR -> Part 111 -> § 111.29 (Diligence in correspondence and paying monies)",
+      "socraticHints": [
+        "Hint 1 (Concept): Distinguish the three financial and employee reporting clocks in 19 CFR Part 111: belated duty payments received after the due date, client overpayment accounting statements, and new employee list reporting.",
+        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.29(a) for financial settlement deadlines and cross-reference § 111.28(c) for employee list reporting.",
+        "Hint 3 (Trap Check): In § 111.29(a), belatedly received duty funds must be transmitted to CBP within 5 WORKING days from receipt, while a written accounting for excess/refunded funds is due within 60 CALENDAR days of receipt. In § 111.28(c), a new employee must be reported within 30 CALENDAR days after completing 30 consecutive days of employment."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 111.29(a), payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Furthermore, under § 111.29(a), each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client in excess of the Governmental or other charges properly payable, within 60 calendar days of receipt (unless actual payment of the funds is made within that 60-calendar-day period). Finally, under 19 CFR § 111.28(c), a national permit holder must report any new employees to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days (and within 30 calendar days of termination for terminated employees).",
+        "distractors": {
+          "A": "Confuses the 5-working-day belated payment rule with the 10-working-day Entry Summary deadline and reverses the 60-day and 30-day windows.",
+          "B": "CORRECT: 5 working days for belatedly received duty payments (§ 111.29(a)); 60 calendar days for written accounting of overpayments/refunds (§ 111.29(a)); and 30 calendar days after 30 consecutive days of employment for reporting new employees (§ 111.28(c)).",
+          "C": "Incorrect because 24 hours, 90 calendar days, and waiting for the Triennial Status Report violate § 111.29(a) and § 111.28(c).",
+          "D": "Mixes up working days and calendar days across § 111.29(a) (which specifies 5 working days and 60 calendar days).",
+          "E": "Confuses the 12-month active client payment notice requirement in § 111.29(b)(2)(ii) with the 60-calendar-day overpayment accounting statement in § 111.29(a)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q06",
+      "number": 6,
       "suite": "CBLE_141_142",
       "track": "CBLE",
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
@@ -1288,8 +1340,8 @@
       }
     },
     {
-      "id": "CBLE-Q06",
-      "number": 6,
+      "id": "CBLE-Q07",
+      "number": 7,
       "suite": "CBLE_141_142",
       "track": "CBLE",
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
@@ -1340,8 +1392,8 @@
       }
     },
     {
-      "id": "CBLE-Q07",
-      "number": 7,
+      "id": "CBLE-Q08",
+      "number": 8,
       "suite": "CBLE_141_142",
       "track": "CBLE",
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
@@ -1392,8 +1444,8 @@
       }
     },
     {
-      "id": "CBLE-Q08",
-      "number": 8,
+      "id": "CBLE-Q09",
+      "number": 9,
       "suite": "CBLE_141_142",
       "track": "CBLE",
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
@@ -1444,8 +1496,60 @@
       }
     },
     {
-      "id": "CBLE-Q09",
-      "number": 9,
+      "id": "CBLE-Q10",
+      "number": 10,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "A presidential proclamation modifies the HTSUS to increase the Column 1 duty rate on certain alloy steel valves from 2.5% to 6.0% effective at 12:01 a.m. on Thursday, October 15. A container vessel carrying three separate shipments of these alloy steel valves arrives within the port limits of Los Angeles-Long Beach and lands its cargo on Tuesday, October 13:\n• Shipment 1 (Standard Entry Without Entry Summary — No Filing-Time Election): On Wednesday, October 14, the broker transmits CBP Form 3461 entry documentation without an entry summary and without requesting time of entry at filing; CBP authorizes release on Thursday, October 15.\n• Shipment 2 ('Live Entry' — Entry Summary Serving as Entry and Entry Summary): On Wednesday, October 14 (after the vessel has arrived within the port limits), the broker files the Entry Summary (CBP Form 7501) in proper form serving as both entry and entry summary with estimated duties attached; CBP authorizes physical release on Thursday, October 15.\n• Shipment 3 (Immediate Delivery Procedure): Released on Wednesday, October 14 under a special permit for Immediate Delivery (CBP Form 3461), and the Entry Summary (CBP Form 7501) with estimated duties attached is filed on Wednesday, October 21.\n\nUnder 19 CFR § 141.68(a), (b), (c), and (e) (§ 141.69), what is the legal 'time of entry' and applicable duty rate (2.5% vs. 6.0%) for Shipment 1, Shipment 2, and Shipment 3?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All three shipments have a time of entry of Tuesday, October 13 (the date the vessel arrived within port limits) and are subject to the 2.5% duty rate."
+        },
+        {
+          "letter": "B",
+          "text": "Shipment 1's time of entry is Thursday, October 15 (when CBP authorizes release, resulting in the 6.0% rate); Shipment 2's time of entry is Wednesday, October 14 (when the live Entry Summary is filed in proper form with estimated duties attached after arrival within port limits, locking in the 2.5% rate); and Shipment 3's time of entry is Wednesday, October 21 (when the Entry Summary is filed in proper form with estimated duties attached after Immediate Delivery release, resulting in the 6.0% rate)."
+        },
+        {
+          "letter": "C",
+          "text": "Shipment 1 and Shipment 3 lock in the 2.5% duty rate on Wednesday, October 14, whereas Shipment 2 is subject to the 6.0% duty rate because physical release occurred on Thursday, October 15."
+        },
+        {
+          "letter": "D",
+          "text": "All three shipments are subject to the 6.0% duty rate because CBP authorized physical cargo release for Shipments 1 and 2 on October 15 and Entry Summary for Shipment 3 was filed on October 21."
+        },
+        {
+          "letter": "E",
+          "text": "Shipment 1's time of entry is Wednesday, October 14 (2.5% rate); Shipment 2's time of entry is Thursday, October 15 (6.0% rate); and Shipment 3's time of entry is Wednesday, October 14 (2.5% rate)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-141-68",
+      "targetCitation": "19 CFR § 141.68(a)(1), (b), (c) & (e)",
+      "goldenQuote": "(b) When entry summary serves as entry and entry summary. When an entry summary serves as both the entry documentation and entry summary (\"live entry\"), in accordance with § 142.3(b) of this chapter, the time of entry will be the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits.",
+      "shortestPathHint": "19 CFR -> Part 141 -> § 141.68 (Time of entry)",
+      "socraticHints": [
+        "Hint 1 (Concept): Under 19 CFR § 141.68(e) (§ 141.69), merchandise is subject to the rate of duty in effect at the legal 'time of entry', which differs depending on whether entry is made via standard CBP Form 3461, Live Entry Summary (CBP Form 7501), or Immediate Delivery.",
+        "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.68 and compare paragraphs (a)(1), (b), and (c).",
+        "Hint 3 (Trap Check): For Shipment 1 (standard 3461 with no election), time of entry is when CBP authorizes release (Oct 15 -> 6.0%). For Shipment 2 (Live Entry Summary 7501 with estimated duties attached after arrival), time of entry is the time of filing (Oct 14 -> 2.5%) even though release happens the next day! For Shipment 3 (Immediate Delivery), time of entry is when the Entry Summary 7501 is filed with duties attached (Oct 21 -> 6.0%)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 141.68(e) (§ 141.69), imported merchandise is subject to the rate of duty in effect at the 'time of entry' determined under § 141.68: (1) For Shipment 1, under § 141.68(a)(1), when entry documentation (CBP Form 3461) is filed without an entry summary and without an importer request on the entry documentation for time of entry at filing, the time of entry is the time CBP authorizes release (Thursday, October 15 -> 6.0% duty rate); (2) For Shipment 2, under § 141.68(b), when an entry summary (CBP Form 7501) serves as both entry and entry summary ('live entry'), the time of entry is the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits (Wednesday, October 14 -> 2.5% duty rate); and (3) For Shipment 3, under § 141.68(c), when merchandise is released under the immediate delivery procedure, the time of entry is the time the entry summary is filed in proper form with estimated duties attached (Wednesday, October 21 -> 6.0% duty rate).",
+        "distractors": {
+          "A": "Vessel arrival date is not the time of entry unless the importer submits entry documentation prior to arrival AND explicitly requests arrival time on the entry documentation under § 141.68(a)(3).",
+          "B": "CORRECT: Shipment 1 = Oct 15 (6.0% under § 141.68(a)(1)); Shipment 2 = Oct 14 (2.5% under § 141.68(b) live entry summary); Shipment 3 = Oct 21 (6.0% under § 141.68(c) immediate delivery).",
+          "C": "Reverses the outcomes of all three procedures under § 141.68.",
+          "D": "Fails to recognize that a Live Entry Summary under § 141.68(b) establishes time of entry upon filing in proper form with estimated duties attached (Oct 14), prior to CBP release authorization.",
+          "E": "Incorrectly treats Immediate Delivery release on Oct 14 as the time of entry; under § 141.68(c), Immediate Delivery time of entry occurs only when the Entry Summary is filed with estimated duties attached."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q11",
+      "number": 11,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1496,8 +1600,8 @@
       }
     },
     {
-      "id": "CBLE-Q10",
-      "number": 10,
+      "id": "CBLE-Q12",
+      "number": 12,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1548,8 +1652,8 @@
       }
     },
     {
-      "id": "CBLE-Q11",
-      "number": 11,
+      "id": "CBLE-Q13",
+      "number": 13,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1600,8 +1704,8 @@
       }
     },
     {
-      "id": "CBLE-Q12",
-      "number": 12,
+      "id": "CBLE-Q14",
+      "number": 14,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1652,8 +1756,8 @@
       }
     },
     {
-      "id": "CBLE-Q13",
-      "number": 13,
+      "id": "CBLE-Q15",
+      "number": 15,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1704,8 +1808,8 @@
       }
     },
     {
-      "id": "CBLE-Q14",
-      "number": 14,
+      "id": "CBLE-Q16",
+      "number": 16,
       "suite": "CBLE_152_177_190",
       "track": "CBLE",
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
@@ -1756,8 +1860,112 @@
       }
     },
     {
-      "id": "CBLE-Q15",
-      "number": 15,
+      "id": "CBLE-Q17",
+      "number": 17,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Titan Printing Systems Inc. (an unrelated U.S. importer in Chicago, IL) purchases an industrial offset printing press from a manufacturer in Germany. The commercial invoice states a single turnkey delivered price of $450,000, which includes the following three post-importation items that are separately identified by name and dollar amount on the invoice:\n• $28,000 for post-importation erection, assembly, calibration, and technical assistance performed at Titan's Chicago facility after the press is imported into the United States;\n• $9,000 for post-importation U.S. domestic inland lowboy trucking from the Port of Newark, NJ to Chicago, IL; and\n• $13,000 for U.S. customs duties and federal taxes currently payable on the imported press by reason of its importation.\n\nIn addition, outside the $450,000 invoice total, Titan incurred two separate payments:\n• $6,500 paid by Titan to an export crating contractor in Hamburg for vacuum-sealed moisture-barrier wooden crates and packing labor required to pack the press for export; and\n• $16,000 in patent license royalties that the sales contract requires Titan to pay to a Swiss patent holder as a condition of the sale of the printing press for exportation to the United States.\n\nUnder 19 CFR § 152.103(b) and (i), what is the correct transaction value (appraised value) of the imported printing press?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$400,000"
+        },
+        {
+          "letter": "B",
+          "text": "$416,000"
+        },
+        {
+          "letter": "C",
+          "text": "$422,500"
+        },
+        {
+          "letter": "D",
+          "text": "$450,500"
+        },
+        {
+          "letter": "E",
+          "text": "$472,500"
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "19-cfr-152-103",
+      "targetCitation": "19 CFR § 152.103(b)(1)(i), (b)(1)(iv) & (i)(2)–(3)",
+      "goldenQuote": "(2) Any reasonable cost or charge that is incurred for:\n(i) The construction, erection, assembly, or maintenance of, or the technical assistance provided with respect to, the merchandise AFTER its importation into the United States; or",
+      "shortestPathHint": "19 CFR -> Part 152 -> § 152.103 (Transaction value: PAPP, Statutory Additions & Exclusions)",
+      "socraticHints": [
+        "Hint 1 (Concept): Deduct all separately identified post-importation exclusions from the $450,000 turnkey price under 19 CFR § 152.103(i), then add the mandatory statutory additions under § 152.103(b)(1).",
+        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.103 and inspect paragraph (i)(2)–(3) ('Exclusions from transaction value') and paragraph (b)(1)(i) & (iv) ('Additions to price actually paid or payable').",
+        "Hint 3 (Trap Check): Deduct $28,000 (post-importation assembly/technical assistance), $9,000 (post-importation U.S. inland freight), and $13,000 (U.S. customs duties/taxes) from $450,000 to get $400,000 net PAPP. Then add $6,500 (buyer-incurred export packing costs) and $16,000 (condition-of-sale patent royalty) = $422,500."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 152.103(i)(2) and (3), transaction value does NOT include any of the following when separately identified from the price actually paid or payable: (1) reasonable costs incurred for construction, erection, assembly, maintenance, or technical assistance provided with respect to the merchandise AFTER its importation into the United States ($28,000); (2) transportation of the merchandise AFTER its importation into the United States ($9,000 U.S. domestic trucking); and (3) U.S. customs duties and federal taxes payable by reason of importation ($13,000). Subtracting these three excluded amounts ($28,000 + $9,000 + $13,000 = $50,000) from the $450,000 turnkey invoice yields a net Price Actually Paid or Payable (PAPP) of $400,000. Next, under § 152.103(b)(1)(i) and (iv), we add the packing costs incurred by the buyer ($6,500) and the patent royalty that the buyer is required to pay as a condition of the sale for exportation to the United States ($16,000). Calculation: $400,000 + $6,500 + $16,000 = $422,500.",
+        "distractors": {
+          "A": "$400,000 correctly deducts the $50,000 in post-importation exclusions ($450,000 - $28,000 - $9,000 - $13,000) but omits the mandatory statutory additions for export packing ($6,500) and the condition-of-sale royalty ($16,000).",
+          "B": "$416,000 adds the $16,000 condition-of-sale royalty to $400,000 but forgets to add the $6,500 export packing costs incurred by the buyer under § 152.103(b)(1)(i).",
+          "C": "CORRECT ($422,500): $450,000 - $28,000 (post-importation assembly) - $9,000 (U.S. inland freight) - $13,000 (U.S. duties) + $6,500 (buyer packing costs) + $16,000 (condition-of-sale royalty).",
+          "D": "$450,500 fails to deduct the $28,000 post-importation erection/assembly charge ($422,500 + $28,000).",
+          "E": "$472,500 fails to deduct any of the $50,000 in separately itemized post-importation charges and duties ($450,000 + $6,500 + $16,000)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q18",
+      "number": 18,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "On June 1, 2024, Solstice Solar Corp. imported 10,000 kg of high-purity silicon wafers classified under 8-digit HTSUS subheading 3818.00.00 on a single entry summary line item, paying $50,000.00 in regular customs duties and $1,000.00 in Merchandise Processing Fee (MPF). In January 2026, Solstice manufactures solar power modules at its Ohio plant using 10,000 kg of domestically produced silicon wafers that are also classified under 8-digit HTSUS subheading 3818.00.00, while keeping all 10,000 kg of the imported silicon wafers in domestic inventory for U.S. sales. Solstice exports the newly manufactured solar power modules to Chile in March 2026 without their having been used in the United States. Under 19 CFR § 190.22 and § 190.2 (Manufacturing Substitution Drawback under 19 U.S.C. 1313(b)), what prerequisite ruling and timeframe conditions must Solstice satisfy, and what is the maximum drawback refund allowable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$0.00, because manufacturing drawback under 19 CFR Part 190 is allowed only when the exact imported duty-paid wafers are physically traced into the exported solar modules via direct identification."
+        },
+        {
+          "letter": "B",
+          "text": "Solstice must operate under either an acknowledged General Manufacturing Drawback Ruling or an approved Specific Manufacturing Drawback Ruling, complete manufacture, exportation, and drawback claim filing within 5 years from the date of importation of the designated wafers, and is eligible for a 99% refund of the duties and MPF paid on the designated imported wafers ($51,000.00 x 99% = $50,490.00), even though none of the designated imported wafers were actually used to manufacture the exported modules."
+        },
+        {
+          "letter": "C",
+          "text": "Solstice needs no manufacturing drawback ruling prior to claiming 19 U.S.C. 1313(b) drawback, has 7 years from exportation to file, and recovers 100% of duties ($50,000.00) but 0% of MPF."
+        },
+        {
+          "letter": "D",
+          "text": "Solstice may claim manufacturing substitution drawback only if the exported solar modules are classified under the same 8-digit HTSUS subheading (3818.00.00) as the imported silicon wafers."
+        },
+        {
+          "letter": "E",
+          "text": "Solstice must obtain a ruling from the U.S. Court of International Trade and may recover only 50% of the duties ($25,000.00) when domestic merchandise is substituted for imported merchandise."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-190-22",
+      "targetCitation": "19 CFR § 190.22(a)–(c) & § 190.2",
+      "goldenQuote": "(a) General (19 U.S.C. 1313(b)). If imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading and are used in the manufacture or production of articles within the United States, then upon the exportation or destruction under CBP supervision of any such manufactured or produced articles, without their having been used in the United States prior to such exportation or destruction, drawback of 99 percent of the duties, taxes, and fees paid on the designated imported merchandise is allowable, even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.",
+      "shortestPathHint": "19 CFR -> Part 190 -> § 190.22 (Manufacturing substitution drawback)",
+      "socraticHints": [
+        "Hint 1 (Concept): Under 19 U.S.C. 1313(b) Manufacturing Substitution Drawback, check what two inputs must share the same 8-digit HTSUS subheading, whether a manufacturing ruling is required, and whether MPF is refundable.",
+        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.22 and read paragraphs (a), (b), and (c), and check the definition of 'Drawback' in § 190.2.",
+        "Hint 3 (Trap Check): Under § 190.22(a), the imported designated input and the substituted domestic input must share the same 8-digit HTSUS subheading (3818.00.00)—none of the imported wafers need to be physically used in the exported modules! Under § 190.22(b)–(c), the claimant requires a General or Specific Manufacturing Drawback Ruling and must complete all steps within 5 years of importation, recovering 99% of duties + MPF ($51,000 x 0.99 = $50,490.00)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 190.22(a) (19 U.S.C. 1313(b)), if imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading (here, 3818.00.00) and are used in the manufacture or production of articles in the United States, then upon the exportation (or destruction under CBP supervision) of the manufactured articles without prior U.S. use, drawback of 99% of the duties, taxes, and fees (including MPF per § 190.2) paid on the designated imported merchandise is allowable—even if none of the designated imported merchandise was actually used to produce the exported articles. Under § 190.22(b), the manufacturer must operate under either a General Manufacturing Drawback Ruling or a Specific Manufacturing Drawback Ruling, and under § 190.22(c), all operations and claim filing must occur within 5 years from the date of importation of the designated imported merchandise. Calculation: ($50,000.00 duty + $1,000.00 MPF) x 99% = $50,490.00.",
+        "distractors": {
+          "A": "Incorrect because § 190.22(a) expressly allows 19 U.S.C. 1313(b) manufacturing substitution drawback 'even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.'",
+          "B": "CORRECT: Requires a General or Specific Manufacturing Drawback Ruling (§ 190.22(b)), a 5-year post-importation window (§ 190.22(c)), and refunds 99% of duties and MPF ($51,000 x 99% = $50,490.00).",
+          "C": "Incorrect because a manufacturing drawback ruling is mandatory under § 190.22(b), the statutory timeframe is 5 years from importation, and MPF is 99% refundable under TFTEA (§ 190.2).",
+          "D": "Misstates the 8-digit substitution rule: under § 190.22(a), the substituted input wafers must share the same 8-digit subheading as the imported designated input wafers—the finished exported article (solar modules) will naturally have a different HTSUS heading reflecting the manufacturing transformation.",
+          "E": "Incorrect because CBP Headquarters (or a General Ruling acknowledgment), not the Court of International Trade, approves manufacturing rulings, and the drawback rate is 99%."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q19",
+      "number": 19,
       "suite": "CBLE_HTSUS",
       "track": "CBLE",
       "category": "HTSUS Classification & GRI 1–6",
@@ -1808,8 +2016,8 @@
       }
     },
     {
-      "id": "CBLE-Q16",
-      "number": 16,
+      "id": "CBLE-Q20",
+      "number": 20,
       "suite": "CBLE_HTSUS",
       "track": "CBLE",
       "category": "HTSUS Classification & GRI 1–6",
@@ -1860,8 +2068,8 @@
       }
     },
     {
-      "id": "CBLE-Q17",
-      "number": 17,
+      "id": "CBLE-Q21",
+      "number": 21,
       "suite": "CBLE_HTSUS",
       "track": "CBLE",
       "category": "HTSUS Classification & GRI 1–6",
@@ -1912,8 +2120,8 @@
       }
     },
     {
-      "id": "CBLE-Q18",
-      "number": 18,
+      "id": "CBLE-Q22",
+      "number": 22,
       "suite": "CBLE_HTSUS",
       "track": "CBLE",
       "category": "HTSUS Classification & GRI 1–6",
@@ -1964,8 +2172,112 @@
       }
     },
     {
-      "id": "CBLE-Q19",
-      "number": 19,
+      "id": "CBLE-Q23",
+      "number": 23,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "An entry specialist is classifying a specialized industrial liquid pump that has already been properly placed into 4-digit Heading 8413 pursuant to GRI 1. Inside Heading 8413, the tariff schedule contains several one-dash ('-') subheadings, each subdivided into multiple two-dash ('--') and three-dash ('---') subheadings. The entry specialist notices a two-dash ('--') subheading nested under a lower one-dash ('-') residual branch that appears to mention the pump's operating pressure, and wants to jump directly to that two-dash subheading without first comparing the competing one-dash ('-') subheadings at the top level. Under HTSUS General Rule of Interpretation 6 (GRI 6), what is the binding legal rule governing subheading comparisons within a 4-digit heading?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A classifier may jump directly to any 8-digit or 10-digit subheading anywhere within a 4-digit heading regardless of indent/dash level whenever the lower subheading has a lower duty rate."
+        },
+        {
+          "letter": "B",
+          "text": "For legal purposes, classification in the subheadings of a heading is determined according to the terms of those subheadings and any related subheading notes (and, mutatis mutandis, GRIs 1 through 5), on the strict understanding that ONLY subheadings at the same level (same dash/indent level) are comparable—meaning the classifier must first compare and select the proper one-dash ('-') subheading before comparing the two-dash ('--') subheadings nested underneath it."
+        },
+        {
+          "letter": "C",
+          "text": "Section and Chapter Notes cease to apply once a classifier moves from the 4-digit heading level to the 6-digit or 8-digit subheading level under GRI 6."
+        },
+        {
+          "letter": "D",
+          "text": "Under GRI 6, all subheading disputes within a 4-digit heading are automatically resolved by choosing the subheading that appears first in numerical order."
+        },
+        {
+          "letter": "E",
+          "text": "GRI 6 applies only when comparing two different 4-digit headings across two different chapters of the HTSUS."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-gri-6",
+      "targetCitation": "HTSUS GRI 6",
+      "goldenQuote": "6. For legal purposes, the classification of goods in the subheadings of a heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to the above rules, on the understanding that only subheadings at the same level are comparable.",
+      "shortestPathHint": "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 6 (Rule 6 — Subheading Comparison at the Same Dash Level)",
+      "socraticHints": [
+        "Hint 1 (Concept): Once the 4-digit heading is fixed under GRIs 1–4, how do you navigate the indented 6-digit and 8-digit subheadings underneath that heading?",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 6 and read the statutory rule and the CBP Legal Interpretation Note on GRI 6.",
+        "Hint 3 (Trap Check): Under GRI 6, ONLY subheadings at the same dash/indent level are comparable! You must compare one-dash ('-') against one-dash ('-') first, lock in the winning one-dash branch, and only then compare the two-dash ('--') subheadings nested beneath that branch."
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS General Rule of Interpretation 6 (GRI 6), for legal purposes, the classification of goods in the subheadings of a 4-digit heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to GRIs 1 through 5, on the strict understanding that ONLY subheadings at the same level (i.e., the same indentation/dash level) are comparable. For the purposes of GRI 6, the relative Section, Chapter, and Subchapter Notes also apply unless the context otherwise requires. Therefore, a classifier must first compare only the one-dash ('-') subheadings within the 4-digit heading and select the governing one-dash subheading before proceeding to compare the two-dash ('--') subheadings nested underneath it.",
+        "distractors": {
+          "A": "Violates GRI 6's core mandate that only subheadings at the same indentation/dash level are comparable.",
+          "B": "CORRECT: Accurately states the GRI 6 rule that subheadings are compared strictly at the same dash/indent level (one-dash vs. one-dash, then two-dash vs. two-dash) using the terms of the subheadings, Subheading Notes, and Section/Chapter Notes.",
+          "C": "Directly contradicts the second sentence of GRI 6, which states that 'the relative section, chapter and subchapter notes also apply, unless the context otherwise requires.'",
+          "D": "Incorrect because GRIs 1 through 5 apply mutatis mutandis at each dash level, and ifGRI 3(c) is reached, it selects the subheading occurring LAST (not first) in numerical order at that same dash level.",
+          "E": "GRI 6 governs 6-digit/8-digit subheading classification WITHIN a single 4-digit heading; 4-digit headings are determined using GRIs 1 through 4."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q24",
+      "number": 24,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Wonderland Kids Retail Inc. imports four distinct children's products into the United States:\n• Item 1 ('Junior Chef Real Oven Bakeware Kit'): A boxed set of child-sized food-grade stainless-steel muffin tins and mixing bowls engineered to bake real food inside a conventional domestic kitchen oven;\n• Item 2 ('Royal Court Woven Velvet Costume'): A durable, well-made woven textile Halloween dress with finished seams, metal zipper closure, and washing instructions suitable for repeated wear as clothing;\n• Item 3 ('Unfitted Nylon Sports & Toy Tote Bag'): A standard zippered nylon duffel bag (not specially shaped or fitted) printed with cartoon graphics and used by children to carry sports gear or toys; and\n• Item 4 ('Little Baker Pretend Play Plastic Oven'): A miniature battery-operated molded plastic toy oven with LED lights and sound effects that cannot heat or bake real food and is designed solely for children's imaginative amusement.\n\nUnder HTSUS GRI 1, Chapter 95 Note 1 (Notes 1(d), 1(e), and 1(v)), and Heading 9503.00.00, how are Items 1, 2, 3, and 4 classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All four items are classified as toys or festive articles in Chapter 95 (Heading 9503 or 9505) because they are marketed and sold exclusively for children's play and amusement."
+        },
+        {
+          "letter": "B",
+          "text": "Under GRI 1 and Chapter 95 Note 1: Item 1 is excluded from Chapter 95 by Note 1(v) as utilitarian kitchenware and classified by constituent material in Heading 7323 (stainless steel kitchen articles); Item 2 is excluded from Chapter 95 by Note 1(e) ('Fancy dress of textiles, of chapter 61 or 62') and classified as woven wearing apparel in Chapter 62; Item 3 is excluded from Chapter 95 by Note 1(d) and classified in Heading 4202; and ONLY Item 4 is classified as a toy in Heading 9503.00.00."
+        },
+        {
+          "letter": "C",
+          "text": "Items 1 and 4 are classified in Heading 9503.00.00 as toys, while Item 2 is classified in Heading 9505 as a festive carnival article and Item 3 is classified in Heading 4202."
+        },
+        {
+          "letter": "D",
+          "text": "Item 1 is classified in Heading 7323, but Items 2, 3, and 4 are all classified in Heading 9503.00.00 pursuant to GRI 3(b)."
+        },
+        {
+          "letter": "E",
+          "text": "All four items are classified in Chapter 62 as children's textile accessories under GRI 3(c)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-ch95-9503",
+      "targetCitation": "HTSUS Chapter 95 Note 1(d), 1(e), 1(v) & Heading 9503.00.00",
+      "goldenQuote": "(v) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table linen, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material).",
+      "shortestPathHint": "HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Chapter 95 Note 1 & Heading 9503",
+      "socraticHints": [
+        "Hint 1 (Concept): Under GRI 1, you must check Chapter 95 Note 1 exclusions FIRST before classifying any children's product as a toy in Heading 9503.",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Chapter 95 Note 1 & Heading 9503.",
+        "Hint 3 (Trap Check): Check the three Chapter 95 Note 1 exclusions: Note 1(v) excludes kitchenware/tableware having a real utilitarian function (Item 1 -> Heading 7323 stainless steel kitchenware); Note 1(e) excludes durable textile fancy dress costumes (Item 2 -> Chapter 62 woven apparel); Note 1(d) excludes sports/toy bags of Heading 4202 (Item 3 -> Heading 4202). Only Item 4 (pretend plastic oven designed solely for amusement) classifies in Heading 9503.00.00!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS GRI 1, classification is determined legally according to the terms of the headings and any relative Section or Chapter Notes. Chapter 95 Note 1 sets forth mandatory legal exclusions from Chapter 95: (1) Under Chapter 95 Note 1(v), tableware, kitchenware, and similar articles having a utilitarian function are excluded from Chapter 95 and classified according to their constituent material—because Item 1 consists of real stainless-steel bakeware used to bake real food in an oven, it is utilitarian kitchenware of Heading 7323 even though sized and marketed for children; (2) Under Chapter 95 Note 1(e), 'Fancy dress of textiles, of chapter 61 or 62' is excluded from Chapter 95, placing Item 2 (a durable woven textile costume) in Chapter 62; (3) Under Chapter 95 Note 1(d), sports bags and other containers of Heading 4202 are excluded from Chapter 95, placing Item 3 in Heading 4202; and (4) Item 4 (a miniature non-heating plastic pretend play oven) satisfies the 'principal use for amusement' test and is classified as a toy in Heading 9503.00.00.",
+        "distractors": {
+          "A": "Ignores the binding legal exclusions in Chapter 95 Note 1(d), 1(e), and 1(v); marketing to children does not override Chapter 95 Legal Notes under GRI 1.",
+          "B": "CORRECT: Applies Chapter 95 Note 1(v) (Item 1 -> 7323), Note 1(e) (Item 2 -> Ch. 62), Note 1(d) (Item 3 -> 4202), and Heading 9503.00.00 (Item 4).",
+          "C": "Fails to apply Note 1(v) to the functional stainless-steel bakeware (Item 1) and Note 1(e) to the durable woven textile costume (Item 2).",
+          "D": "Fails to apply Note 1(e) to the textile costume and Note 1(d) to the Heading 4202 bag.",
+          "E": "Incorrect because stainless-steel cookware, nylon bags, and plastic toys are not articles of Chapter 62."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q25",
+      "number": 25,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",
@@ -2016,8 +2328,8 @@
       }
     },
     {
-      "id": "CBLE-Q20",
-      "number": 20,
+      "id": "CBLE-Q26",
+      "number": 26,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",
@@ -2068,8 +2380,8 @@
       }
     },
     {
-      "id": "CBLE-Q21",
-      "number": 21,
+      "id": "CBLE-Q27",
+      "number": 27,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",
@@ -2120,8 +2432,8 @@
       }
     },
     {
-      "id": "CBLE-Q22",
-      "number": 22,
+      "id": "CBLE-Q28",
+      "number": 28,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",
@@ -2172,8 +2484,8 @@
       }
     },
     {
-      "id": "CBLE-Q23",
-      "number": 23,
+      "id": "CBLE-Q29",
+      "number": 29,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",
@@ -2224,8 +2536,8 @@
       }
     },
     {
-      "id": "CBLE-Q24",
-      "number": 24,
+      "id": "CBLE-Q30",
+      "number": 30,
       "suite": "EA",
       "track": "IRS-EA",
       "category": "IRS Circular 230 (31 CFR Part 10)",

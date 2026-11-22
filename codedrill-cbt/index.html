@@ -46,13 +46,13 @@
       <div class="cd-track-selector-wrap">
         <label for="examTrackSelect" class="cd-track-label">Suite:</label>
         <select id="examTrackSelect" class="cd-track-select" aria-label="Select Exam Test Suite">
-          <option value="CBLE">Full CBLE Mock Exam (18 Questions — All 19 CFR &amp; HTSUS)</option>
-          <option value="CBLE_111_113">Topic Test 1: Broker Compliance &amp; Bonds (Parts 111 &amp; 113 — 4 Qs)</option>
-          <option value="CBLE_141_142">Topic Test 2: Entry, Invoices &amp; Release Deadlines (Parts 141 &amp; 142 — 4 Qs) · PRO</option>
-          <option value="CBLE_152_177_190">Topic Test 3: Valuation, Rulings &amp; Drawback (Parts 152, 177 &amp; 190 — 6 Qs) · PRO</option>
-          <option value="CBLE_HTSUS">Topic Test 4: Tariff Classification &amp; GRI 1–6 (HTSUS — 4 Qs) · PRO</option>
+          <option value="CBLE">Full CBLE Mock Exam (24 Questions — All 19 CFR &amp; HTSUS)</option>
+          <option value="CBLE_111_113">Topic Test 1: Broker Compliance &amp; Bonds (19 CFR Parts 111 &amp; 113 — 5 Qs)</option>
+          <option value="CBLE_141_142">Topic Test 2: Entry, Invoices &amp; Release Deadlines (Parts 141 &amp; 142 — 5 Qs) · PRO</option>
+          <option value="CBLE_152_177_190">Topic Test 3: Valuation, Rulings &amp; Drawback (Parts 152, 177 &amp; 190 — 8 Qs) · PRO</option>
+          <option value="CBLE_HTSUS">Topic Test 4: Tariff Classification &amp; GRI 1–6 (HTSUS — 6 Qs) · PRO</option>
           <option value="EA">Topic Test 5: IRS Enrolled Agent — Circular 230 Ethics (31 CFR Part 10 — 6 Qs) · PRO</option>
-          <option value="ALL">Complete Combined Bank (All 24 Questions) · PRO</option>
+          <option value="ALL">Complete Combined Bank (All 30 Questions) · PRO</option>
         </select>
       </div>
 
@@ -63,7 +63,7 @@
 
       <!-- Account & License Status Bar -->
       <div class="cd-account-cluster" id="headerAccountCluster">
-        <span class="cd-license-pill" id="headerLicenseStatusBadge">Free Trial (3/24 Qs)</span>
+        <span class="cd-license-pill" id="headerLicenseStatusBadge">Free Trial (3/30 Qs)</span>
         <span class="cd-user-email-pill hidden" id="headerUserEmailBadge"></span>
         <button type="button" class="cd-btn-signin" id="btnHeaderSignIn">Sign In</button>
         <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Unlock Full Access ($79)</button>
@@ -101,7 +101,7 @@
           </div>
 
           <div class="pvue-question-counter-box">
-            <span class="pvue-q-pos" id="pvueQuestionPosition">Question 1 of 18</span>
+            <span class="pvue-q-pos" id="pvueQuestionPosition">Question 1 of 24</span>
             <span class="pvue-q-status-pill" id="pvueCitationVerifyPill">No Proof Cited</span>
           </div>
 
@@ -151,7 +151,7 @@
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
               </span>
               <span>Navigator</span>
-              <span class="pvue-nav-progress-badge" id="navAnsweredCountBadge">0/18</span>
+              <span class="pvue-nav-progress-badge" id="navAnsweredCountBadge">0/24</span>
             </button>
 
             <button type="button" class="pvue-tool-btn" id="btnOpenScratchpad" title="Open Customs Valuation Calculator &amp; Candidate Notes">
@@ -636,13 +636,18 @@
       <div class="analytics-page-scroll">
 
         <!-- Hero Readiness Banner -->
-        <div class="an-hero-banner">
+        <div class="an-hero-banner" id="modeViewAnalytics">
           <div class="an-hero-left">
             <span class="an-kicker">Candidate Telemetry &amp; Pass Probability</span>
             <h1 class="an-hero-title">CBLE &amp; EA Exam Readiness Dashboard</h1>
             <p class="an-hero-desc">
               The U.S. Customs Broker License Exam has a <strong>15.2% national pass rate</strong>—not because candidates fail to study, but because static PDF binders do not train <strong>sub-45-second eCFR split-screen lookup speed</strong>. Track your real-time citation velocity against the <strong>75% CBP passing threshold</strong>.
             </p>
+            <div class="an-hero-actions">
+              <button type="button" class="an-btn-export-b2b" id="btnExportB2BTeamReport">
+                Export Printable B2B Team Readiness Report (PDF) →
+              </button>
+            </div>
           </div>
           <div class="an-hero-right">
             <div class="an-gauge-card">
@@ -670,7 +675,7 @@
 
           <div class="an-kpi-card">
             <div class="an-kpi-label">Questions Graded in Session</div>
-            <div class="an-kpi-num" id="anKpiAnsweredCount">0 / 18 Graded</div>
+            <div class="an-kpi-num" id="anKpiAnsweredCount">0 / 24 Graded</div>
             <div class="an-kpi-sub" id="anKpiAccuracySub">Current Accuracy: <strong>--%</strong></div>
           </div>
 
@@ -786,7 +791,7 @@
               </div>
 
               <ul class="pricing-feature-list">
-                <li><strong>Full 1:1 Pearson VUE Split-Screen Simulator</strong> (All 24 Exam Cases &amp; 7 Topic Suites)</li>
+                <li><strong>Full 1:1 Pearson VUE Split-Screen Simulator</strong> (All 30 Exam Cases &amp; 7 Topic Suites)</li>
                 <li><strong>Unlimited 90s Citation-Speed Drill</strong> (0.1s lookup telemetry &amp; topic test suites)</li>
                 <li><strong>3-Step Study Coach</strong> with progressive regulatory hints &amp; shortest code paths</li>
                 <li><strong>2018–2026 Official CBP Past Exam Bank</strong> updated for Modernized Part 111 &amp; TFTEA Part 190 Drawback</li>
@@ -819,12 +824,17 @@
                 <li><strong>Team Manager Readiness Dashboard:</strong> Monitor each employee’s lookup speed &amp; 75% pass probability before exam day</li>
                 <li><strong>Multi-Track Regulatory License:</strong> Includes <strong>US Customs Broker (19 CFR / HTSUS)</strong> + <strong>IRS Enrolled Agent (31 CFR Part 10)</strong> tracks</li>
                 <li><strong>Custom Corporate Drills:</strong> Assign Part 152 Valuation, Part 190 Drawback, or HTSUS GRI sprints to entry writers</li>
-                <li><strong>Corporate Invoice / ACH / Wire / PO Billing</strong> &amp; Dedicated Compliance Onboarding</li>
+                <li><strong>Corporate Invoice / ACH / Wire / PO Billing</strong> &amp; Printable B2B Readiness Dossier</li>
               </ul>
 
-              <button type="button" class="pricing-cta-btn pricing-cta-b2b" id="btnCheckoutB2B" data-plan-code="TEAM_MONTHLY" data-plan="Brokerage &amp; Freight Forwarder Team — $399 / month">
-                Deploy Brokerage Team Plan ($399/mo) →
-              </button>
+              <div class="pricing-b2b-btn-stack">
+                <button type="button" class="pricing-cta-btn pricing-cta-b2b" id="btnCheckoutB2B" data-plan-code="TEAM_MONTHLY" data-plan="Brokerage &amp; Freight Forwarder Team — $399 / month">
+                  Deploy Brokerage Team Plan ($399/mo) →
+                </button>
+                <button type="button" class="pricing-b2b-report-link" id="btnB2BCardPreviewReport">
+                  Export Printable B2B Team Readiness Report (PDF)
+                </button>
+              </div>
             </div>
 
           </div>
@@ -1012,7 +1022,7 @@
         <!-- Paywall Trigger Banner (Shown when hitting Free Trial 3-Question / Pro Suite limit) -->
         <div class="paywall-trigger-banner hidden" id="paywallTriggerBanner">
           <strong>Free Trial Limit Reached (3/3 Diagnostic Questions).</strong>
-          <span id="paywallTriggerText">Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.</span>
+          <span id="paywallTriggerText">Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.</span>
         </div>
 
         <!-- 3-Tab Navigation Bar -->
@@ -1069,7 +1079,7 @@
                     <strong>Candidate Pro Monthly</strong>
                     <span class="plan-radio-price">$79 / month</span>
                   </div>
-                  <div class="plan-radio-desc">Full access to all 24 exam cases, 7 topic suites, unlimited 90s Speed Drills &amp; calculator.</div>
+                  <div class="plan-radio-desc">Full access to all 30 exam cases, 7 topic suites, unlimited 90s Speed Drills &amp; calculator.</div>
                 </div>
               </label>
 
@@ -1242,14 +1252,120 @@
 
           <!-- Activation Confirmation Box -->
           <div class="checkout-success-box hidden" id="checkoutSuccessBox">
-            <div class="checkout-success-icon">Pro License Active — All 24 Exam Cases &amp; 7 Suites Unlocked</div>
+            <div class="checkout-success-icon">Pro License Active — All 30 Exam Cases &amp; 7 Suites Unlocked</div>
             <h3 id="checkoutSuccessKeyDisplay">Key: CF-PRO-2026-8841-992B</h3>
             <p id="checkoutSuccessMessage">
-              Your CodeDrill™ CBT license is now active. All 24 exam questions, 7 topic test suites, and 90-second Citation-Speed drills are unlocked.
+              Your CodeDrill™ CBT license is now active. All 30 exam questions, 7 topic test suites, and 90-second Citation-Speed drills are unlocked.
             </p>
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 5: PRINTABLE B2B TEAM READINESS & CITATION LATENCY PDF REPORT
+       ===================================================================== -->
+  <div class="pvue-modal-backdrop hidden" id="modalTeamReadinessReport" role="dialog" aria-modal="true" aria-labelledby="b2bReportModalTitle">
+    <div class="pvue-modal-window b2b-readiness-modal-window">
+      <div class="pvue-modal-header no-print">
+        <div class="pvue-modal-title-group">
+          <span class="pvue-modal-icon">§</span>
+          <h2 id="b2bReportModalTitle">Printable B2B Team Exam Readiness &amp; Citation Latency Report (PDF)</h2>
+        </div>
+        <button type="button" class="pvue-modal-close" id="btnCloseB2BTeamReportModal" aria-label="Close B2B Readiness Report">×</button>
+      </div>
+
+      <div class="pvue-modal-body b2b-report-printable-sheet" id="b2bReportPrintableSheet">
+        <!-- Official Swiss Editorial Dossier Header -->
+        <header class="b2b-dossier-header">
+          <div class="b2b-dossier-top-row">
+            <span class="b2b-dossier-kicker">CALIBER FOUNDRY — CODEDRILL™ CBT ENTERPRISE COMPLIANCE DOSSIER</span>
+            <span class="b2b-dossier-mode-pill" id="b2bReportActiveViewLabel">Sample 12-Seat Brokerage Cohort Benchmark</span>
+          </div>
+          <h3 class="b2b-dossier-title">Customs Brokerage &amp; Trade Compliance — B2B Team Exam Readiness &amp; Citation Latency Report</h3>
+          <div class="b2b-dossier-meta-grid">
+            <div><span>Report ID:</span> <strong id="b2bReportIdVal">B2B-CD-2026-8410</strong></div>
+            <div><span>Regulatory Corpus:</span> <strong>19 CFR (Parts 111–190) · HTSUS GRI 1–6 · 31 CFR Part 10</strong></div>
+            <div><span>CBP Passing Threshold:</span> <strong>75.0% (vs. 15.2% National Pass Rate)</strong></div>
+            <div><span>Target Citation Lookup Latency:</span> <strong>&lt;= 40.0s</strong></div>
+          </div>
+        </header>
+
+        <!-- Block 1: Summary Readiness KPI Grid -->
+        <section class="b2b-report-section" aria-label="Department Summary KPIs">
+          <div class="b2b-section-head">
+            <span class="b2b-section-num">SECTION 01</span>
+            <h4 class="b2b-section-title">Executive Readiness &amp; Citation Latency Telemetry</h4>
+          </div>
+          <div class="b2b-kpi-grid" id="b2bReportKpiGrid">
+            <!-- Populated dynamically in app.js -->
+          </div>
+        </section>
+
+        <!-- Block 2: 6 Regulatory Domains Mastery & Latency Table -->
+        <section class="b2b-report-section" aria-label="Regulatory Domain Mastery Matrix">
+          <div class="b2b-section-head">
+            <span class="b2b-section-num">SECTION 02</span>
+            <h4 class="b2b-section-title">Mastery &amp; Citation Lookup Speed Across All 6 Regulatory Domains (30-Question Bank)</h4>
+          </div>
+          <div class="b2b-table-wrap">
+            <table class="b2b-report-table" id="b2bReportDomainTable">
+              <thead>
+                <tr>
+                  <th>Regulatory Domain</th>
+                  <th>Questions Covered</th>
+                  <th>Accuracy %</th>
+                  <th>Mean Lookup Latency</th>
+                  <th>High-Risk Exam Trap &amp; Priority Drill</th>
+                </tr>
+              </thead>
+              <tbody id="b2bReportDomainTableBody">
+                <!-- Populated dynamically in app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Block 3: Brokerage Department Candidate Readiness Matrix (Cohort Seat Readiness Ledger) -->
+        <section class="b2b-report-section" aria-label="Cohort Seat Readiness Ledger">
+          <div class="b2b-section-head">
+            <span class="b2b-section-num">SECTION 03</span>
+            <h4 class="b2b-section-title">Cohort Seat Readiness Ledger (Customs Brokerage &amp; Trade Compliance Department)</h4>
+          </div>
+          <div class="b2b-table-wrap">
+            <table class="b2b-report-table" id="b2bReportCohortTable">
+              <thead>
+                <tr>
+                  <th>Seat / Candidate Role</th>
+                  <th>Assigned Track &amp; Focus Suite</th>
+                  <th>Graded Mastery %</th>
+                  <th>Avg Citation Lookup</th>
+                  <th>Verified Proofs</th>
+                  <th>CBP Exam Readiness Status</th>
+                </tr>
+              </thead>
+              <tbody id="b2bReportCohortTableBody">
+                <!-- Populated dynamically in app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="pvue-modal-footer b2b-report-footer no-print">
+        <button type="button" class="pvue-btn-secondary" id="btnToggleB2BCohortMode">
+          Toggle Session vs. 12-Seat Brokerage Cohort View
+        </button>
+        <div class="b2b-footer-right-actions">
+          <button type="button" class="pvue-btn-secondary" id="btnPrintB2BTeamReport">
+            Print / Save Official B2B Readiness PDF
+          </button>
+          <button type="button" class="pvue-btn-primary" id="btnUpgradeFromB2BReport">
+            Provision 15-Seat Brokerage Team License ($399/mo) →
+          </button>
+        </div>
       </div>
     </div>
   </div>

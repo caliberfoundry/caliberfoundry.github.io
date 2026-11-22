@@ -1208,10 +1208,10 @@
     });
 
     const suiteTargets = {
-      CBLE_111_113: 4,
-      CBLE_141_142: 4,
-      CBLE_152_177_190: 6,
-      CBLE_HTSUS: 4,
+      CBLE_111_113: 5,
+      CBLE_141_142: 5,
+      CBLE_152_177_190: 8,
+      CBLE_HTSUS: 6,
       EA: 6
     };
 
@@ -1768,14 +1768,15 @@
 
     if (paywallBanner) paywallBanner.classList.add('hidden');
     if (keyDisplay) keyDisplay.textContent = `Active License Key: ${clean}`;
+    const totalQCount = DATASET.questions.length || 30;
     if (msgEl) {
       const emailLabel = (STATE.accountUser && STATE.accountUser.email) ? ` for ${STATE.accountUser.email}` : '';
-      msgEl.textContent = `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All 24 exam questions and all 7 topic suites are now unlocked.`;
+      msgEl.textContent = `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions and all 7 topic suites are now unlocked.`;
     }
     if (successBox) successBox.classList.remove('hidden');
 
     refreshAllViews();
-    showToast(`Activated ${activatedTier} License (${clean}) — All 24 Questions Unlocked`);
+    showToast(`Activated ${activatedTier} License (${clean}) — All ${totalQCount} Questions Unlocked`);
     return true;
   }
 
@@ -1877,11 +1878,12 @@
     const btnUnlockPro = document.getElementById('btnHeaderUnlockPro');
     const btnAccountBilling = document.getElementById('btnHeaderAccountBilling');
 
+    const totalQCount = DATASET.questions.length || 30;
     if (isProOrTeamActive()) {
       if (statusBadge) {
         statusBadge.textContent = STATE.licenseTier === 'TEAM'
-          ? 'Team License Active (24/24 Qs)'
-          : 'Pro License Active (24/24 Qs)';
+          ? `Team License Active (${totalQCount}/${totalQCount} Qs)`
+          : `Pro License Active (${totalQCount}/${totalQCount} Qs)`;
         statusBadge.classList.add('pro-active');
       }
       if (emailBadge) {
@@ -1897,7 +1899,7 @@
       if (btnAccountBilling) btnAccountBilling.classList.remove('hidden');
     } else {
       if (statusBadge) {
-        statusBadge.textContent = `Free Trial (${STATE.freeQuestionLimit || 3}/24 Qs)`;
+        statusBadge.textContent = `Free Trial (${STATE.freeQuestionLimit || 3}/${totalQCount} Qs)`;
         statusBadge.classList.remove('pro-active');
       }
       if (emailBadge) {
@@ -3188,7 +3190,7 @@
       item.addEventListener('click', () => {
         if (isLocked) {
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
           });
           return;
         }
@@ -3275,7 +3277,7 @@
         if (isLocked) {
           backdrop.classList.add('hidden');
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
           });
           return;
         }
@@ -3328,6 +3330,293 @@
     };
   }
 
+  /* ==========================================================================
+     16B. PRINTABLE B2B TEAM READINESS & CITATION LATENCY DOSSIER ENGINE
+     ========================================================================== */
+  let b2bReportViewMode = 'cohort'; // 'session' | 'cohort'
+
+  function generateB2BTeamReadinessData(modeOverride) {
+    const stats = getSessionStats();
+    const resolvedMode = modeOverride
+      ? modeOverride
+      : (stats.gradedCount > 0 ? b2bReportViewMode : b2bReportViewMode);
+
+    const domainDefinitions = [
+      {
+        id: 'DOM_111_113',
+        label: '19 CFR Parts 111 & 113 — Broker Compliance & Bonds',
+        filterFn: (q) => q.suite === 'CBLE_111_113',
+        cohortAcc: 86,
+        cohortLookup: 29.4,
+        trapNote: '19 CFR § 111.32 mandatory fraud-separation reporting & § 113.62(b) 30-day redelivery liquidated damages'
+      },
+      {
+        id: 'DOM_141_142',
+        label: '19 CFR Parts 141 & 142 — Entry & Release Deadlines',
+        filterFn: (q) => q.suite === 'CBLE_141_142',
+        cohortAcc: 84,
+        cohortLookup: 26.8,
+        trapNote: '19 CFR § 142.12(b) 10 working days (Form 7501) vs. 15 calendar days (§ 142.12(a)) & § 141.19 nominal consignee liability'
+      },
+      {
+        id: 'DOM_152',
+        label: '19 CFR Part 152 — Customs Valuation & Assists',
+        filterFn: (q) => q.suite === 'CBLE_152_177_190' && /152|valuation|assist/i.test(`${q.category} ${q.targetCitation} ${q.targetSectionId}`),
+        cohortAcc: 78,
+        cohortLookup: 35.6,
+        trapNote: '19 CFR § 152.102(a)(1)(iv) U.S.-domiciled engineering exclusion vs. foreign tooling assists & § 152.103(i) post-importation assembly'
+      },
+      {
+        id: 'DOM_177_190',
+        label: '19 CFR Parts 177 & 190 — Rulings & TFTEA Drawback',
+        filterFn: (q) => q.suite === 'CBLE_152_177_190' && !/152|valuation|assist/i.test(`${q.category} ${q.targetCitation} ${q.targetSectionId}`),
+        cohortAcc: 81,
+        cohortLookup: 34.2,
+        trapNote: '19 CFR § 190.32 8-digit HTSUS substitution (10-digit when starting with "Other") & 5-year importation window'
+      },
+      {
+        id: 'DOM_HTSUS',
+        label: 'HTSUS & GRI 1–6 — Tariff Classification',
+        filterFn: (q) => q.suite === 'CBLE_HTSUS',
+        cohortAcc: 83,
+        cohortLookup: 33.1,
+        trapNote: 'GRI 3(b) retail set essential character vs. GRI 3(c) last in numerical order & GRI 5(a)/(b) fitted cases'
+      },
+      {
+        id: 'DOM_EA_230',
+        label: '31 CFR Part 10 — IRS Circular 230 Ethics',
+        filterFn: (q) => q.suite === 'EA',
+        cohortAcc: 88,
+        cohortLookup: 28.5,
+        trapNote: '31 CFR § 10.21 client omission advisory duty, § 10.22(b) reliance due diligence & § 10.29 36-month conflict consent retention'
+      }
+    ];
+
+    const domains = domainDefinitions.map(def => {
+      const qs = DATASET.questions.filter(def.filterFn);
+      const qCount = qs.length;
+      let graded = 0;
+      let correct = 0;
+      const lookups = [];
+
+      qs.forEach(q => {
+        const w = STATE.questionWork[q.id];
+        if (!w) return;
+        if (typeof w.lookupSeconds === 'number' && w.lookupSeconds > 0) {
+          lookups.push(w.lookupSeconds);
+        }
+        if (w.checked) {
+          graded++;
+          if (w.selectedOption === q.correctOption) correct++;
+        }
+      });
+
+      const useSession = (resolvedMode === 'session');
+      const accuracyPct = useSession
+        ? (graded > 0 ? Math.round((correct / graded) * 100) : null)
+        : def.cohortAcc;
+      const meanLookupSec = useSession
+        ? (lookups.length > 0 ? Number((lookups.reduce((a, b) => a + b, 0) / lookups.length).toFixed(1)) : null)
+        : def.cohortLookup;
+
+      return {
+        id: def.id,
+        domain: def.label,
+        questionsCovered: qCount,
+        gradedCount: useSession ? graded : qCount,
+        accuracyPct,
+        meanLookupSec,
+        trapAndPriorityDrill: def.trapNote
+      };
+    });
+
+    const isSessionMode = (resolvedMode === 'session');
+    const overallReadinessPct = isSessionMode
+      ? (stats.accuracyPercent !== null ? stats.accuracyPercent : 0)
+      : 83;
+    const meanLookupSeconds = isSessionMode
+      ? (stats.avgLookupSeconds !== null ? stats.avgLookupSeconds : null)
+      : 31.3;
+    const totalQuestions = DATASET.questions.length || 30;
+    const verifiedProofRatePct = isSessionMode
+      ? (stats.gradedCount > 0 ? Math.round((stats.verifiedProofCount / Math.max(1, stats.gradedCount)) * 100) : 0)
+      : 92;
+
+    const isExamReady = overallReadinessPct >= 75 && (meanLookupSeconds === null || meanLookupSeconds <= 45.0);
+    const verdict = isExamReady
+      ? 'EXAM READY — ABOVE 75% CBP THRESHOLD'
+      : 'DIAGNOSTIC BASELINE — REQUIRES CITATION DRILL';
+
+    const cohortSeats = [
+      {
+        seatLabel: isSessionMode ? 'Seat 01 — Active Candidate Session' : 'Seat 01 — Lead Customs Entry Writer (LAX)',
+        trackFocus: 'Full CBLE (19 CFR Parts 111–190 & HTSUS)',
+        masteryPct: isSessionMode ? (stats.accuracyPercent !== null ? `${stats.accuracyPercent}% (${stats.correctCount}/${stats.gradedCount})` : '--% (0 Graded)') : '88% (21/24)',
+        avgLookup: isSessionMode ? (stats.avgLookupSeconds !== null ? `${stats.avgLookupSeconds.toFixed(1)}s` : '--s') : '27.8s',
+        verifiedProofs: isSessionMode ? `${stats.verifiedProofCount} / ${totalQuestions}` : '22 / 24',
+        ready: isSessionMode ? (stats.accuracyPercent !== null && stats.accuracyPercent >= 75) : true
+      },
+      {
+        seatLabel: 'Seat 02 — Senior Import Compliance Specialist (ORD)',
+        trackFocus: '19 CFR Part 152 Valuation & Part 190 Drawback',
+        masteryPct: '84% (25/30)',
+        avgLookup: '30.4s',
+        verifiedProofs: '27 / 30',
+        ready: true
+      },
+      {
+        seatLabel: 'Seat 03 — Tariff Classification Analyst (JFK)',
+        trackFocus: 'HTSUS & GRI 1–6 Classification Suite',
+        masteryPct: '83% (20/24)',
+        avgLookup: '32.1s',
+        verifiedProofs: '21 / 24',
+        ready: true
+      },
+      {
+        seatLabel: 'Seat 04 — Brokerage Bond & Entry Coordinator (HOU)',
+        trackFocus: '19 CFR Parts 111, 113, 141 & 142',
+        masteryPct: '79% (19/24)',
+        avgLookup: '34.6s',
+        verifiedProofs: '20 / 24',
+        ready: true
+      },
+      {
+        seatLabel: 'Seat 05 — Trade Tax & Transfer Pricing Specialist (NYC)',
+        trackFocus: '31 CFR Part 10 (Circular 230) & 19 CFR Part 152',
+        masteryPct: '90% (27/30)',
+        avgLookup: '28.9s',
+        verifiedProofs: '28 / 30',
+        ready: true
+      },
+      {
+        seatLabel: 'Seat 06 — Associate Customs Entry Writer (SAV)',
+        trackFocus: '19 CFR Part 152 Assists & GRI 3(b) Sets',
+        masteryPct: '71% (17/24)',
+        avgLookup: '42.5s',
+        verifiedProofs: '18 / 24',
+        ready: false
+      }
+    ];
+
+    return {
+      reportId: 'B2B-CD-2026-8410',
+      viewMode: resolvedMode,
+      viewModeTitle: isSessionMode
+        ? 'Current Session Telemetry'
+        : 'Sample 12-Seat Brokerage Cohort Benchmark',
+      totalQuestions,
+      overallReadinessPct,
+      meanLookupSeconds,
+      verifiedProofRatePct,
+      verdict,
+      isExamReady,
+      domains,
+      cohortSeats
+    };
+  }
+
+  function renderB2BTeamReadinessReportModal(modeOverride) {
+    if (modeOverride) {
+      b2bReportViewMode = modeOverride;
+    }
+    const data = generateB2BTeamReadinessData(b2bReportViewMode);
+
+    const viewLabelEl = document.getElementById('b2bReportActiveViewLabel');
+    if (viewLabelEl) viewLabelEl.textContent = data.viewModeTitle;
+
+    const repIdEl = document.getElementById('b2bReportIdVal');
+    if (repIdEl) repIdEl.textContent = data.reportId;
+
+    const kpiGrid = document.getElementById('b2bReportKpiGrid');
+    if (kpiGrid) {
+      const readinessStr = (data.viewMode === 'session' && getSessionStats().gradedCount === 0)
+        ? '--%'
+        : `${data.overallReadinessPct}%`;
+      const lookupStr = data.meanLookupSeconds !== null
+        ? `${data.meanLookupSeconds.toFixed(1)}s`
+        : '--s';
+      const proofStr = (data.viewMode === 'session' && getSessionStats().gradedCount === 0)
+        ? '0%'
+        : `${data.verifiedProofRatePct}%`;
+
+      kpiGrid.innerHTML = `
+        <div class="b2b-kpi-box">
+          <span class="b2b-kpi-label">Overall Domain Mastery &amp; Pass Readiness %</span>
+          <strong class="b2b-kpi-val" id="b2bKpiReadinessVal">${escapeHtml(readinessStr)}</strong>
+          <span class="b2b-kpi-sub">CBP Official Passing Threshold: &gt;= 75.0%</span>
+        </div>
+        <div class="b2b-kpi-box">
+          <span class="b2b-kpi-label">Mean Citation Lookup Latency (s)</span>
+          <strong class="b2b-kpi-val" id="b2bKpiLatencyVal">${escapeHtml(lookupStr)}</strong>
+          <span class="b2b-kpi-sub">Target Benchmark: &lt;= 40.0s (Legacy PDF: 145s)</span>
+        </div>
+        <div class="b2b-kpi-box">
+          <span class="b2b-kpi-label">Verified 19 CFR / HTSUS Citation Proof Rate %</span>
+          <strong class="b2b-kpi-val" id="b2bKpiProofRateVal">${escapeHtml(proofStr)}</strong>
+          <span class="b2b-kpi-sub">Exact statutory section locked as evidence</span>
+        </div>
+        <div class="b2b-kpi-box">
+          <span class="b2b-kpi-label">Compliance Director Verdict</span>
+          <strong class="b2b-kpi-val ${data.isExamReady ? 'b2b-verdict-pass' : 'b2b-verdict-warn'}" id="b2bKpiVerdictVal" style="font-size:13px;line-height:1.3;">${escapeHtml(data.verdict)}</strong>
+          <span class="b2b-kpi-sub">${escapeHtml(data.viewModeTitle)}</span>
+        </div>
+      `;
+    }
+
+    const domainTbody = document.getElementById('b2bReportDomainTableBody');
+    if (domainTbody) {
+      domainTbody.innerHTML = data.domains.map(d => {
+        const accCell = d.accuracyPct !== null ? `${d.accuracyPct}%` : '--% (Untested)';
+        const latCell = d.meanLookupSec !== null ? `${d.meanLookupSec.toFixed(1)}s` : '--s';
+        return `
+          <tr>
+            <td><strong>${escapeHtml(d.domain)}</strong></td>
+            <td class="b2b-mono-cell">${d.questionsCovered} Qs</td>
+            <td class="b2b-mono-cell">${escapeHtml(accCell)}</td>
+            <td class="b2b-mono-cell">${escapeHtml(latCell)}</td>
+            <td>${escapeHtml(d.trapAndPriorityDrill)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    const cohortTbody = document.getElementById('b2bReportCohortTableBody');
+    if (cohortTbody) {
+      cohortTbody.innerHTML = data.cohortSeats.map(seat => `
+        <tr>
+          <td><strong>${escapeHtml(seat.seatLabel)}</strong></td>
+          <td>${escapeHtml(seat.trackFocus)}</td>
+          <td class="b2b-mono-cell">${escapeHtml(seat.masteryPct)}</td>
+          <td class="b2b-mono-cell">${escapeHtml(seat.avgLookup)}</td>
+          <td class="b2b-mono-cell">${escapeHtml(seat.verifiedProofs)}</td>
+          <td>
+            <span class="b2b-status-chip ${seat.ready ? 'chip-pass' : 'chip-warn'}">
+              ${seat.ready ? 'EXAM READY (>= 75%)' : 'PRIORITY DRILL (< 75%)'}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    return data;
+  }
+
+  function openB2BTeamReadinessReport(modeOverride) {
+    const modal = document.getElementById('modalTeamReadinessReport');
+    if (!modal) return null;
+
+    if (modeOverride) {
+      b2bReportViewMode = modeOverride;
+    } else {
+      const stats = getSessionStats();
+      b2bReportViewMode = stats.gradedCount > 0 ? 'session' : 'cohort';
+    }
+
+    const reportData = renderB2BTeamReadinessReportModal(b2bReportViewMode);
+    modal.classList.remove('hidden');
+    return reportData;
+  }
+
   function openScratchpadModal() {
     const backdrop = document.getElementById('scratchpadModalBackdrop');
     const textarea = document.getElementById('candidateScratchpadTextarea');
@@ -3342,7 +3631,7 @@
     // Enforce Freemium Paywall on full Submit & Score Exam when on FREE tier
     if (!isProOrTeamActive()) {
       openAccountPaywallModal({
-        paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and full Official Exam Scoring.'
+        paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and full Official Exam Scoring.'
       });
       return;
     }
@@ -3462,7 +3751,7 @@
         if (isSuiteLockedForCurrentTier(requestedSuite)) {
           trackSelect.value = STATE.selectedTrack;
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
           });
           return;
         }
@@ -3519,7 +3808,7 @@
         saveUserState();
         switchMode('cbt');
         refreshAllViews();
-        showToast('Session reset to fresh Free Trial (0/24 Answered)');
+        showToast('Session reset to fresh Free Trial (0/30 Answered)');
       });
     }
 
@@ -3692,7 +3981,7 @@
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.'
+          paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
         });
         return;
       }
@@ -3744,7 +4033,7 @@
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock all 24 exam cases and 7 topic suites.'
+          paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
         });
         return;
       }
@@ -4084,6 +4373,56 @@
         validateAndActivateLicenseKey(rawKey);
       });
     }
+
+    // Printable B2B Team Readiness PDF Report Modal Events
+    const btnExportB2B = document.getElementById('btnExportB2BTeamReport');
+    if (btnExportB2B) {
+      btnExportB2B.addEventListener('click', () => {
+        openB2BTeamReadinessReport();
+      });
+    }
+
+    const btnB2BCardReport = document.getElementById('btnB2BCardPreviewReport');
+    if (btnB2BCardReport) {
+      btnB2BCardReport.addEventListener('click', () => {
+        openB2BTeamReadinessReport('cohort');
+      });
+    }
+
+    const btnCloseB2BModal = document.getElementById('btnCloseB2BTeamReportModal');
+    if (btnCloseB2BModal) {
+      btnCloseB2BModal.addEventListener('click', () => {
+        document.getElementById('modalTeamReadinessReport').classList.add('hidden');
+      });
+    }
+
+    const btnToggleCohort = document.getElementById('btnToggleB2BCohortMode');
+    if (btnToggleCohort) {
+      btnToggleCohort.addEventListener('click', () => {
+        b2bReportViewMode = (b2bReportViewMode === 'cohort') ? 'session' : 'cohort';
+        renderB2BTeamReadinessReportModal(b2bReportViewMode);
+        showToast(`Switched B2B Dossier to: ${b2bReportViewMode === 'cohort' ? 'Sample 12-Seat Brokerage Cohort Benchmark' : 'Current Session Telemetry'}`);
+      });
+    }
+
+    const btnPrintB2B = document.getElementById('btnPrintB2BTeamReport');
+    if (btnPrintB2B) {
+      btnPrintB2B.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    const btnUpgradeB2BReport = document.getElementById('btnUpgradeFromB2BReport');
+    if (btnUpgradeB2BReport) {
+      btnUpgradeB2BReport.addEventListener('click', () => {
+        document.getElementById('modalTeamReadinessReport').classList.add('hidden');
+        openAccountPaywallModal({
+          tab: 'payment',
+          planCode: 'TEAM_MONTHLY'
+        });
+        switchPaymentMethodSubTab('invoice');
+      });
+    }
   }
 
   /* ==========================================================================
@@ -4139,6 +4478,8 @@
       refreshAllViews,
       validateAndActivateLicenseKey,
       openAccountPaywallModal,
+      openB2BTeamReadinessReport,
+      generateB2BTeamReadinessData,
       switchMode
     };
   }

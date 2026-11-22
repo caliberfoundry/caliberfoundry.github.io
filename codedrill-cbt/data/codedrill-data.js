@@ -2,2250 +2,2601 @@
  * CodeDrill CBT Simulator — Regulatory Corpus & Authentic Exam Question Bank
  * Primary Track: US Customs Broker License Exam (CBLE — 19 CFR & HTSUS/GRI)
  * Secondary Track: IRS Enrolled Agent (SEE — 31 CFR Part 10 Circular 230)
- * Version: 2026.11-eCFR (24 Authoritative Questions across 7 Test Suites)
+ * Version: 2026.11-v2.1-eCFR (30 Authoritative Questions across 7 Test Suites)
  */
 
 (function (root) {
   const CODEDRILL_DATA = {
-    meta: {
-      productName: "CodeDrill CBT Simulator",
-      examTrack: "US Customs Broker License Exam (CBLE)",
-      secondaryTracks: ["IRS Enrolled Agent (SEE / 31 CFR Part 10 Circular 230)"],
-      version: "2026.11-eCFR",
-      examDurationSeconds: 16200, // 4.5 hours (270 minutes)
-      passingScorePercent: 75,
-      avgPassRateNational: 15.2
-    },
-
-    corpora: [
-      // =========================================================================
-      // CORPUS 1: TITLE 19 CFR — CUSTOMS DUTIES (CBP REGULATIONS)
-      // =========================================================================
-      {
-        id: "19-cfr",
-        code: "19 CFR",
-        title: "Title 19 CFR — Customs Duties (CBP Regulations)",
-        parts: [
-          // ---------------------------------------------------------------------
-          // PART 111 — CUSTOMS BROKERS
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-111",
-            code: "Part 111",
-            title: "Part 111 — Customs Brokers",
-            sections: [
-              {
-                id: "19-cfr-111-1",
-                citation: "19 CFR § 111.1",
-                title: "Definitions",
-                breadcrumb: "19 CFR > Part 111 > Subpart A > § 111.1",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "customs broker",
-                  "customs business",
-                  "corporate compliance activity",
-                  "responsible supervision and control",
-                  "freight forwarder",
-                  "records"
-                ],
-                crossRefs: ["19-cfr-111-28", "19-cfr-111-36", "19-cfr-141-19"],
-                text: `§ 111.1 Definitions.
-When used in this part, the following terms have the meanings indicated:
-
-"Customs broker" means a person who is licensed under this part to transact customs business on behalf of others.
-
-"Customs business" means those activities involving transactions with U.S. Customs and Border Protection (CBP) concerning the entry and admissibility of merchandise, its classification and valuation, the payment of duties, taxes, or other charges assessed or collected by CBP on merchandise by reason of its importation, and the refund, rebate, or drawback of those duties, taxes, or other charges. "Customs business" also includes the preparation, and activities relating to the preparation, of documents in any format and the electronic transmission of documents and parts of documents intended to be filed with CBP in furtherance of any other customs business activity, whether or not signed or filed by the preparer. However, "customs business" does not include the mere electronic transmission of data received for transmission to CBP and does not include a corporate compliance activity.
-
-"Corporate compliance activity" means activity performed by a business entity to ensure that documents for a related business entity or entities are prepared and filed with CBP using "reasonable care", but such activity does not extend to the actual preparation or filing of the documents or their electronic transmission.
-
-"Freight forwarder" means a person engaged in the business of dispatching shipments in foreign commerce between the United States, its territories or possessions, and foreign countries, and handling the formalities incident to such shipments, on behalf of other persons.
-
-"Records" means documents, data and information referred to in, and required to be made or maintained under, this part and any other records, as defined in § 163.1(a) of this chapter, that are required to be maintained by a broker under part 163 of this chapter.
-
-"Responsible supervision and control" means that degree of supervision and control necessary to ensure the proper transaction of the customs business of a broker, including actions necessary to ensure that an employee of a broker provides substantially the same quality of service in handling customs transactions that the broker is required to provide. See § 111.28 for a list of factors which CBP may consider when determining whether a broker is exercising responsible supervision and control.`
-              },
-              {
-                id: "19-cfr-111-23",
-                citation: "19 CFR § 111.23",
-                title: "Retention of records",
-                breadcrumb: "19 CFR > Part 111 > Subpart C > § 111.23",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "retention of records",
-                  "5 years",
-                  "five calendar years",
-                  "customs territory",
-                  "30 calendar days",
-                  "recordkeeping point of contact",
-                  "Broker Management Branch"
-                ],
-                crossRefs: ["19-cfr-111-1", "19-cfr-111-28", "19-cfr-190-51"],
-                text: `§ 111.23 Retention of records.
-(a) Place of retention. A licensed customs broker must maintain originals of the records referred to in this part, including any document executed in connection with the broker's customs business, and all other records required to be maintained under part 163 of this chapter, within the customs territory of the United States and in accordance with the provisions of this part and part 163 of this chapter.
-
-(b) Period of retention. The records described in paragraph (a) of this section, other than powers of attorney, must be retained for at least 5 years after the date of entry. Powers of attorney must be retained until revoked, and revoked powers of attorney and letters of revocation must be retained for 5 years after the date of their revocation or for 5 years after the date the client ceases to be an "active client" as defined in § 111.29(b)(2)(ii), whichever period is later. When merchandise is withdrawn from a bonded warehouse, records relating to the withdrawal must be retained for 5 years from the date of withdrawal of the last merchandise withdrawn under the entry.
-
-(c) Notification of change of record storage location or point of contact. Within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact (including name, telephone number, or email address), the broker must electronically notify the Broker Management Branch (or submit written notification if electronic transmission is unavailable) of the new location or updated contact information.
-
-(d) Examination of records. All records required to be kept under this section must be made available for inspection, copying, reproduction, or other official use by designated CBP officials within a reasonable period of time after demand.`
-              },
-              {
-                id: "19-cfr-111-28",
-                citation: "19 CFR § 111.28",
-                title: "Responsible supervision and control",
-                breadcrumb: "19 CFR > Part 111 > Subpart C > § 111.28",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "responsible supervision and control",
-                  "supervision factors",
-                  "employee list",
-                  "30 calendar days",
-                  "new employees",
-                  "terminated employees"
-                ],
-                crossRefs: ["19-cfr-111-1", "19-cfr-111-23", "19-cfr-111-53"],
-                text: `§ 111.28 Responsible supervision and control.
-(a) General. Every individual broker operating as a sole proprietor, every licensed member of a partnership that is a broker, and every licensed officer of an association or corporation that is a broker must exercise responsible supervision and control (see § 111.1) over the transaction of the customs business of that sole proprietorship, partnership, association, or corporation. A sole proprietorship, partnership, association, or corporation must employ a sufficient number of licensed brokers relative to the job complexity, similarity of subordinate tasks, physical proximity of subordinates, abilities and skills of employees, and abilities and skills of the managers.
-
-(b) Factors CBP considers. While the determination of what is necessary to perform and maintain responsible supervision and control will vary depending upon the circumstances in each instance, factors which CBP will consider in its discretion and to the extent any is relevant include, but are not limited to:
-(1) The training required of employees of the broker and the frequency of training updates;
-(2) The issuance of written instructions and guidelines to employees of the broker and their accessibility to electronic or paper copies of the Harmonized Tariff Schedule of the United States (HTSUS), Title 19 of the Code of Federal Regulations, and CBP rulings;
-(3) The volume and type of business of the broker;
-(4) The reject rate for the various customs transactions relative to overall volume;
-(5) The maintenance of current editions of CBP regulations, the HTSUS, and administrative directives;
-(6) The availability of an individually licensed broker to employees for consultation;
-(7) The frequency of supervisory review and internal audits of the work of employees;
-(8) The timeliness of processing entries and payment of duty, tax, or other debt or obligation owing to the Government; and
-(9) Communications between CBP Officials and the broker, including the broker's responsiveness and timeliness in addressing CBP inquiries or deficiencies.
-
-(c) Employee list reporting. A national permit holder must submit a list of all current employees (including name, social security number, date and place of birth, date of hire, and current home address) upon issuance of a national permit and must report any new employees within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days. For terminated employees, the broker must notify CBP within 30 calendar days of the termination.`
-              },
-              {
-                id: "19-cfr-111-29",
-                citation: "19 CFR § 111.29",
-                title: "Diligence in correspondence and paying monies",
-                breadcrumb: "19 CFR > Part 111 > Subpart C > § 111.29",
-                examFrequency: "HIGH (70% of CBLE exams)",
-                keywords: [
-                  "due diligence",
-                  "payment of duties",
-                  "60 calendar days",
-                  "5 working days",
-                  "active client",
-                  "annual notification"
-                ],
-                crossRefs: ["19-cfr-111-28", "19-cfr-111-36", "19-cfr-142-12"],
-                text: `§ 111.29 Diligence in correspondence and paying monies.
-(a) Due diligence by broker. Each broker must exercise due diligence in making financial settlements, in answering correspondence, and in preparing or assisting in the preparation and filing of records relating to any customs business matter handled by him as a broker. Payment of duty, tax, or other debt or obligation owing to the Government for which the broker is responsible, or for which the broker has received payment from a client, must be made to the Government on or before the date that payment is due. Payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client where no payment to the Government has been made, or received from a client in excess of the Governmental or other charges properly payable as part of the client's customs business, within 60 calendar days of receipt. No written statement is required if there is actual payment of the funds by a broker within that 60-calendar-day period.
-
-(b) Notice to client of method of payment.
-(1) All brokers must provide their clients with the following written notification:
-"If you are the importer of record, payment to the broker will not relieve you of liability for customs charges (duties, taxes, or other debts owed CBP) in the event the charges are not paid by the broker. Therefore, if you pay by check, customs charges may be paid with a separate check payable to the 'U.S. Customs and Border Protection' which will be delivered to CBP by the broker."
-(2) Brokers must provide the information statement in paragraph (b)(1) of this section as follows:
-(i) On, or attached to, any power of attorney executed on or after the effective date of this regulation; and
-(ii) To each active client at least once every 12 months. An "active client" means a client from whom a broker has obtained a power of attorney and for whom the broker has transacted customs business on at least two occasions within the 12-month period preceding notification.`
-              },
-              {
-                id: "19-cfr-111-32",
-                citation: "19 CFR § 111.32",
-                title: "False information",
-                breadcrumb: "19 CFR > Part 111 > Subpart C > § 111.32",
-                examFrequency: "CRITICAL (90% of CBLE exams)",
-                keywords: [
-                  "false information",
-                  "fraudulent document",
-                  "client noncompliance",
-                  "error or omission",
-                  "corrective action",
-                  "written advice",
-                  "termination of representation"
-                ],
-                crossRefs: ["19-cfr-111-23", "19-cfr-111-28", "19-cfr-111-53", "31-cfr-10-21"],
-                text: `§ 111.32 False information.
-(a) Prohibition against filing false documents. A broker must not file or procure or assist in the filing of any claim, or of any document, affidavit, or other paper, known by such broker to be false. In addition, a broker must not knowingly give, or solicit or procure the giving of, any false or misleading information or testimony in any matter pending before the Department of Homeland Security or to any official representative of the Department of Homeland Security.
-
-(b) Duty upon discovering client noncompliance, error, or omission. A broker must not knowingly suggest to a client or prospective client any illegal plan for evading payment of any duty, tax, or other debt or obligation owing to the U.S. Government. If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.
-
-(c) Refusal to file and separation from ongoing noncompliance. If a client refuses to correct a known error or omission prior to filing, or attempts to induce the broker to continue a transaction that the broker knows to be false, fraudulent, or noncompliant with U.S. law, the broker must refuse to file the entry or document, must not participate in the continuation of the noncompliant conduct, and must document the termination or refusal in the broker's records.`
-              },
-              {
-                id: "19-cfr-111-36",
-                citation: "19 CFR § 111.36",
-                title: "Relations with unlicensed persons",
-                breadcrumb: "19 CFR > Part 111 > Subpart C > § 111.36",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "unlicensed persons",
-                  "freight forwarder",
-                  "compensation",
-                  "fee splitting",
-                  "direct billing",
-                  "advance written notice"
-                ],
-                crossRefs: ["19-cfr-111-1", "19-cfr-111-29", "19-cfr-111-53"],
-                text: `§ 111.36 Relations with unlicensed persons.
-(a) Employment by unlicensed person other than importer. When a broker is employed for the transaction of customs business by an unlicensed person who is not the actual importer, the broker must transmit to the actual importer either a copy of his bill for services rendered or a copy of the entry, unless the merchandise was purchased on a delivered duty-paid (DDP) basis or the importer has in writing waived transmittal of the copy of the entry or bill for services rendered.
-
-(b) Service to others not to benefit unlicensed person. Except as otherwise provided in paragraph (c) of this section, a broker must not enter into any agreement with an unlicensed person to transact customs business for others in such manner that the fees or other benefits resulting from the services rendered for others inure to the benefit of the unlicensed person.
-
-(c) Compensation of freight forwarder. A broker may compensate a freight forwarder for referring brokerage business, subject to the following conditions:
-(1) The importer is notified in advance in writing by the broker of the name of the freight forwarder who is being compensated by the broker for the referral;
-(2) The broker transmits directly to the importer:
-(i) A true copy of his brokerage charges if the fees and charges are to be collected by or through the forwarder, unless this requirement is waived in writing by the importer; or
-(ii) A statement of his charges when they are to be collected directly from the importer;
-(3) The freight forwarder does not control or prescribe the fees or charges to be assessed by the broker, nor the conditions under which the brokerage service is to be rendered;
-(4) The freight forwarder does not forbid or prevent direct communication between the importer and the broker; and
-(5) No part of the compensation paid by the broker to the freight forwarder is shared with or refunded to the importer or any officer or employee of the importer.`
-              },
-              {
-                id: "19-cfr-111-53",
-                citation: "19 CFR § 111.53",
-                title: "Grounds for suspension or revocation of license or permit",
-                breadcrumb: "19 CFR > Part 111 > Subpart D > § 111.53",
-                examFrequency: "HIGH (70% of CBLE exams)",
-                keywords: [
-                  "suspension",
-                  "revocation",
-                  "license",
-                  "permit",
-                  "felony",
-                  "monetary penalty",
-                  "$30,000"
-                ],
-                crossRefs: ["19-cfr-111-28", "19-cfr-111-32", "19-cfr-111-36"],
-                text: `§ 111.53 Grounds for suspension or revocation of license or permit.
-The appropriate CBP official may initiate proceedings for the suspension, for a specific period of time, or revocation of the license or permit of any broker for any of the following reasons:
-(a) The broker has made or caused to be made in any application for any license or permit under this part, or report filed with CBP, any statement which was, at the time and in light of the circumstances under which it was made, false or misleading with respect to any material fact, or has omitted to state in any application or report any material fact which was required;
-(b) The broker has been convicted, at any time after the filing of an application for a license under § 111.12, of any felony or misdemeanor which:
-(1) Involved the importation or exportation of merchandise;
-(2) Arose out of the conduct of customs business; or
-(3) Involved larceny, theft, robbery, extortion, forgery, counterfeiting, fraudulent concealment, embezzlement, fraudulent conversion, or misappropriation of funds;
-(c) The broker has violated any provision of any law enforced by CBP or the rules or regulations issued under any provision of any law enforced by CBP;
-(d) The broker has counseled, commanded, induced, procured, or knowingly aided or abetted the violations by any other person of any provision of any law enforced by CBP or the rules or regulations issued under any provision of any law enforced by CBP;
-(e) The broker has knowingly employed, or continues to employ, any individual who has been convicted of a felony, without written approval of that employment from the appropriate Executive Director, Office of Trade;
-(f) The broker has, in the course of his customs business, with intent to defraud, in any manner willfully and knowingly deceived, misled or threatened any client or prospective client; or
-(g) The broker has failed to exercise responsible supervision and control over the customs business that it conducts.
-Note on Monetary Penalties (§ 111.91): CBP may assess a monetary penalty or penalties not to exceed an aggregate of $30,000 in lieu of suspension or revocation of a license or permit for one or more of the reasons set forth in § 111.53.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 113 — CBP BONDS
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-113",
-            code: "Part 113",
-            title: "Part 113 — CBP Bonds",
-            sections: [
-              {
-                id: "19-cfr-113-62",
-                citation: "19 CFR § 113.62",
-                title: "Basic importation and entry bond conditions",
-                breadcrumb: "19 CFR > Part 113 > Subpart G > § 113.62",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "CBP Form 301",
-                  "basic importation and entry bond",
-                  "joint and several liability",
-                  "CBP Form 4647",
-                  "30 calendar days redelivery",
-                  "liquidated damages",
-                  "three times the value",
-                  "restricted or prohibited merchandise"
-                ],
-                crossRefs: ["19-cfr-141-19", "19-cfr-142-3", "19-cfr-142-12"],
-                text: `§ 113.62 Basic importation and entry bond conditions.
-A bond for basic importation and entry (executed on CBP Form 301 as either a single transaction bond or a continuous bond) shall contain the following conditions, under which the principal (Importer of Record) and surety, jointly and severally, agree:
-
-(a) Agreement to Pay Duties, Taxes, and Charges. If merchandise is imported and released from CBP custody or withdrawn from a bonded warehouse into the commerce of, or for consumption in, the United States, the obligors (principal and surety, jointly and severally) agree to pay, as demanded by CBP, all additional duties, taxes, and charges subsequently found legally due on any entry secured by this bond.
-
-(b) Agreement to Make or Complete Entry. The principal agrees to file timely the entry summary (CBP Form 7501) and pay estimated duties within 10 working days after the time of entry (§ 142.12).
-
-(d) Agreement to Redeliver Merchandise (CBP Form 4647 — 30-Day Redelivery Period). The principal agrees to redeliver timely to CBP custody any merchandise released from CBP custody if:
-(1) The merchandise fails to comply with the laws or regulations governing its admission into the United States (such as FDA, CPSC, USDA, or EPA admissibility requirements, or Country of Origin marking requirements under 19 CFR Part 134); and
-(2) Demand for redelivery is made on CBP Form 4647 (Notice to Mark and/or Notice to Redeliver) no later than 30 calendar days after the date the merchandise was released, or 30 calendar days after the end of the conditional release period (whichever is later). The importer must return the merchandise to CBP custody (or bring it into marking/admissibility compliance) within 30 calendar days after the date of the CBP Form 4647 Notice to Redeliver.
-
-(n) Consequences of Default — Liquidated Damages Calculation:
-(1) Restricted, Prohibited, Alcoholic, or Quota-Class Merchandise (3x Value): If the principal defaults on the obligation to redeliver, mark, export, or destroy restricted or prohibited merchandise (including FDA/CPSC refused goods), alcoholic beverages, or quota-class merchandise, the obligors (principal and surety, jointly and severally) agree to pay liquidated damages equal to three times the total value of the merchandise (3x value) involved in the default.
-(2) Non-Restricted General Merchandise (1x Value + Duties): If the principal defaults on the obligation to redeliver or mark merchandise that is NOT restricted, prohibited, alcoholic, or quota-class merchandise, the obligors agree to pay liquidated damages equal to the value of the merchandise involved in the default PLUS the estimated duties, taxes, and fees determined to be due on that merchandise.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 141 — ENTRY OF MERCHANDISE
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-141",
-            code: "Part 141",
-            title: "Part 141 — Entry of Merchandise",
-            sections: [
-              {
-                id: "19-cfr-141-4",
-                citation: "19 CFR § 141.4",
-                title: "Entry required and exemptions",
-                breadcrumb: "19 CFR > Part 141 > Subpart A > § 141.4",
-                examFrequency: "HIGH (65% of CBLE exams)",
-                keywords: [
-                  "entry required",
-                  "exemptions",
-                  "Section 321",
-                  "$800 de minimis",
-                  "informal entry",
-                  "formal entry",
-                  "$2,500"
-                ],
-                crossRefs: ["19-cfr-141-19", "19-cfr-142-2"],
-                text: `§ 141.4 Entry required.
-(a) General. All merchandise imported into the United States is required to be entered, unless specifically excepted.
-
-(b) Exceptions. The following merchandise is excepted from the requirement of entry:
-(1) The exemptions listed in General Note 3(e), Harmonized Tariff Schedule of the United States (HTSUS) (e.g., corpses, telecommunications transmissions, vessels/aircraft arriving in international traffic);
-(2) Vessels (not including vessels classified in headings 8903 and 8907 and yachts or pleasure boats classified in heading 8903);
-(3) Instruments of international traffic described in § 10.41a and § 10.41b of this chapter; and
-(4) Administrative Exemption under 19 U.S.C. 1321(a)(2)(C) (§ 10.151): Merchandise imported by one person on one day having an aggregate fair retail value in the country of shipment of not more than $800 may be admitted free of duty and tax without formal or informal entry summary, EXCEPT where such importation is for the purpose of avoiding duty, or involves merchandise subject to Antidumping or Countervailing Duties (AD/CVD), absolute or tariff-rate quota (TRQ), or Partner Government Agency (PGA) restrictions prohibiting Section 321 clearance, or internal revenue tax on alcoholic beverages, cigars, cigarettes, or perfumes containing alcohol.
-
-(c) Formal vs. Informal Entry Threshold (§ 143.21): Generally, formal consumption entry (Entry Type 01) supported by a customs bond is required for commercial shipments valued over $2,500, or over $250 for certain textiles, leather goods, and footwear classes enumerated in § 143.21.`
-              },
-              {
-                id: "19-cfr-141-19",
-                citation: "19 CFR § 141.19",
-                title: "Declaration of entry and Power of Attorney rules",
-                breadcrumb: "19 CFR > Part 141 > Subpart B > § 141.19",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "declaration of entry",
-                  "importer of record",
-                  "owner",
-                  "purchaser",
-                  "consignee",
-                  "power of attorney",
-                  "partnership 2 years"
-                ],
-                crossRefs: ["19-cfr-111-1", "19-cfr-113-62", "19-cfr-141-4", "19-cfr-142-3"],
-                text: `§ 141.19 Declaration of entry.
-(a) Declaration by consignee. The consignee in whose name an entry is made under the provisions of section 484, Tariff Act of 1930, as amended (19 U.S.C. 1484), shall execute the declaration specified in section 485(a), Tariff Act of 1930 (19 U.S.C. 1485(a)) on the entry summary (CBP Form 7501). Only the owner or purchaser of the merchandise, or, when appropriately designated by the owner, purchaser, or consignee, a licensed customs broker, may make entry as the Importer of Record (IOR).
-
-(b) Declaration by agent. When an entry is made in a consignee's name by an agent who has knowledge of the facts and who is authorized under a proper power of attorney by that consignee to make declarations where required, the declaration on the entry or entry summary may be executed by the agent without need for a further declaration by the principal.
-
-(c) Power of Attorney Validity Rules (§§ 141.31–141.34):
-(1) General duration (§ 141.34): Except for partnerships, a power of attorney executed in favor of a licensed customs broker or other agent may be granted for an unlimited period of time and remains valid until revoked in writing.
-(2) Partnership limitation (§ 141.34): A power of attorney granted by a partnership shall be limited to a period not to exceed 2 years from the date of execution, and shall state the names of all members of the partnership. Any change in the membership of the partnership automatically revokes the power of attorney.`
-              },
-              {
-                id: "19-cfr-141-68",
-                citation: "19 CFR § 141.68",
-                title: "Time of entry",
-                breadcrumb: "19 CFR > Part 141 > Subpart E > § 141.68",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "time of entry",
-                  "release authorized",
-                  "entry documentation",
-                  "entry summary",
-                  "arrival within port limits",
-                  "quota-class merchandise"
-                ],
-                crossRefs: ["19-cfr-142-2", "19-cfr-142-3", "19-cfr-142-12"],
-                text: `§ 141.68 Time of entry.
-(a) When entry documentation is filed without entry summary. When the entry documentation required by § 142.3(a) is filed in proper form without an entry summary, the "time of entry" will be:
-(1) The time the appropriate CBP officer authorizes the release of the merchandise or any part of the merchandise covered by the entry documentation, or
-(2) The time the entry documentation is filed, if requested by the importer on the entry documentation at the time of filing, and the merchandise already has arrived within the port limits; or
-(3) The time the merchandise arrives within the port limits, if the entry documentation is submitted before arrival, and if requested by the importer on the entry documentation at the time of submission.
-
-(b) When entry summary serves as entry and entry summary. When an entry summary serves as both the entry documentation and entry summary ("live entry"), in accordance with § 142.3(b) of this chapter, the time of entry will be the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits.
-
-(c) When merchandise is released under the immediate delivery procedure. The time of entry of merchandise released under the immediate delivery procedure will be the time the entry summary is filed in proper form, with estimated duties attached.
-
-(d) Quota-class merchandise. The time of entry for quota-class merchandise will be the time of presentation of the entry summary or withdrawal for consumption in proper form, with estimated duties attached, or if the entry/entry summary information and a valid scheduled statement date (pursuant to § 24.25 of this chapter) have been successfully received by CBP via the Automated Broker Interface (ABI), without the estimated duties attached, as provided in § 132.11a of this chapter, provided the merchandise has arrived within the port limits.
-
-(e) Rate of duty (§ 141.69). Merchandise is subject to the rate of duty in effect at the "time of entry" as determined under this section.`
-              },
-              {
-                id: "19-cfr-141-86",
-                citation: "19 CFR § 141.86",
-                title: "Contents of invoice",
-                breadcrumb: "19 CFR > Part 141 > Subpart F > § 141.86",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "commercial invoice",
-                  "contents of invoice",
-                  "port of entry",
-                  "purchase price",
-                  "currency of purchase",
-                  "itemized charges",
-                  "country of origin",
-                  "assists disclosure",
-                  "English language"
-                ],
-                crossRefs: ["19-cfr-141-89", "19-cfr-142-3", "19-cfr-152-102"],
-                text: `§ 141.86 Contents of invoice.
-(a) General requirements. Every invoice of merchandise to be imported into the United States shall set forth the following information:
-(1) The port of entry to which the merchandise is destined;
-(2) The time when, the place where, and the person by whom and the person to whom the merchandise is sold or agreed to be sold, or if to be imported otherwise than in pursuance of a purchase, the place from which shipped, the time when and the person to whom and the person by whom it is shipped;
-(3) A detailed description of the merchandise, including the name by which each item is known, the grade or quality, and the marks, numbers, and symbols under which sold by the seller or manufacturer to the trade in the country of exportation, together with the marks and numbers of the packages in which the merchandise is packed;
-(4) The quantities in the weights and measures of the country or place from which the merchandise is shipped, or in the weights and measures of the United States;
-(5) The purchase price of each item in the currency of the purchase, if the merchandise is shipped in pursuance of a purchase or an agreement to purchase;
-(6) If the merchandise is shipped otherwise than in pursuance of a purchase or an agreement to purchase, the value for each item, in the currency in which the transactions are usually made, or, in the absence of such value, the price in such currency that the manufacturer, seller, shipper, or owner would have received, or was willing to receive, for such merchandise if sold in the ordinary course of trade and in the usual wholesale quantities in the country of exportation;
-(7) The kind of currency, whether gold, silver, or paper;
-(8) All charges upon the merchandise itemized by name and amount, including freight, insurance, commission, cases, containers, coverings, and cost of packing; and if not included above, all charges, costs, and expenses incurred in bringing the merchandise from alongside the carrier at the port of exportation in the country of exportation and placing it alongside the carrier at the first United States port of entry. The cost of packing, cases, containers, and inland freight to the port of exportation need not be itemized by amount if included in the invoice price, and so identified;
-(9) All rebates, drawbacks, and bounties, separately itemized, allowed upon the exportation of the merchandise;
-(10) The country of origin of the merchandise; and
-(11) All goods or services furnished for the production of the merchandise (e.g., "assists" such as dies, molds, tools, engineering work) not included in the invoice price. However, goods or services furnished in the United States are excluded.
-
-(d) English language requirement. The invoice and all attachments must be in the English language, or shall have attached thereto an accurate translation into the English language.`
-              },
-              {
-                id: "19-cfr-141-89",
-                citation: "19 CFR § 141.89",
-                title: "Additional information for certain classes of merchandise",
-                breadcrumb: "19 CFR > Part 141 > Subpart F > § 141.89",
-                examFrequency: "MEDIUM (50% of CBLE exams)",
-                keywords: [
-                  "additional invoice information",
-                  "footwear",
-                  "wearing apparel",
-                  "iron and steel",
-                  "machinery",
-                  "watches"
-                ],
-                crossRefs: ["19-cfr-141-86", "htsus-gri-1"],
-                text: `§ 141.89 Additional information for certain classes of merchandise.
-(a) Invoices for the following classes of merchandise, classifiable under the Harmonized Tariff Schedule of the United States (HTSUS), shall set forth the additional information specified:
-(1) Footwear (Chapter 64): Percentage of the external surface area of the upper (ESAU) and outer sole by material (leather, composition leather, rubber, plastics, or textile materials), whether the footwear is "protective" against water, oil, grease, or cold, and whether it features a foxing or foxing-like band.
-(2) Wearing apparel and textiles (Chapters 61 and 62): Chief weight and percentage breakdown by fiber weight (e.g., 60% cotton, 40% polyester), whether knit or woven, gender/age sizing designation (men's, boys', women's, girls', or infants'), and yarn size or thread count where required by subheading notes.
-(3) Iron and steel products (Chapters 72 and 73): Mill test certificates or chemical composition percentages by weight of carbon and alloying elements (chromium, nickel, molybdenum, manganese), tensile strength, dimensions (thickness, width, diameter), and country of melt and pour.
-(4) Watches and clocks (Chapter 91): Number of jewels in the movement, whether the movement is mechanical or battery/quartz-powered, and separate values and materials for the movement, case, and strap, band, or bracelet.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 142 — ENTRY PROCESS
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-142",
-            code: "Part 142",
-            title: "Part 142 — Entry Process",
-            sections: [
-              {
-                id: "19-cfr-142-2",
-                citation: "19 CFR § 142.2",
-                title: "Time for filing entry",
-                breadcrumb: "19 CFR > Part 142 > Subpart A > § 142.2",
-                examFrequency: "CRITICAL (80% of CBLE exams)",
-                keywords: [
-                  "15 calendar days",
-                  "time for filing entry",
-                  "general order warehouse",
-                  "G.O. merchandise",
-                  "landing",
-                  "in-bond arrival"
-                ],
-                crossRefs: ["19-cfr-141-68", "19-cfr-142-3", "19-cfr-142-12"],
-                text: `§ 142.2 Time for filing entry.
-(a) General rule: 15 calendar days. Entry documentation required by § 142.3 must be filed within 15 calendar days after landing from a vessel, aircraft or vehicle, or after arrival at the port of destination in the case of merchandise transported in bond.
-
-(b) Presentation prior to arrival. Entry documentation may be submitted before the merchandise arrives within the limits of the port where entry is to be made, in which case the merchandise will not be authorized for release until it has arrived within the port limits.
-
-(c) Consequence of failure to make entry within 15 calendar days (General Order — Part 127). Any merchandise for which entry documentation is not filed within 15 calendar days after landing or in-bond arrival at the port of destination shall be treated as unclaimed and sent to a General Order (G.O.) warehouse or public store to be held at the risk and expense of the consignee. Carrier notification to CBP and a G.O. warehouse must occur within 20 calendar days after landing/arrival. Merchandise remaining in General Order for 6 months from the date of importation without entry may be sold at public auction or destroyed by CBP.`
-              },
-              {
-                id: "19-cfr-142-3",
-                citation: "19 CFR § 142.3",
-                title: "Entry documentation required",
-                breadcrumb: "19 CFR > Part 142 > Subpart A > § 142.3",
-                examFrequency: "HIGH (70% of CBLE exams)",
-                keywords: [
-                  "CBP Form 3461",
-                  "entry documentation",
-                  "evidence of right to make entry",
-                  "commercial invoice",
-                  "pro forma invoice",
-                  "packing list",
-                  "customs bond",
-                  "CBP Form 301"
-                ],
-                crossRefs: ["19-cfr-113-62", "19-cfr-141-19", "19-cfr-141-86", "19-cfr-142-2", "19-cfr-142-12"],
-                text: `§ 142.3 Entry documentation required.
-(a) Contents. Except as provided in paragraph (b) of this section, the entry documentation required to secure the release of merchandise must consist of the following:
-(1) Entry/Immediate Delivery, CBP Form 3461, or its electronic equivalent in ACE, or alternative form authorized by the port director;
-(2) Evidence of the right to make entry (such as a bill of lading, air waybill, carrier's certificate, or electronic release notification under part 141, subpart B);
-(3) A commercial invoice (meeting the requirements of § 141.86) or a pro forma invoice when the commercial invoice cannot be produced at the time of entry;
-(4) A packing list, where appropriate;
-(5) Other documents or Partner Government Agency (PGA) message set data which may be required by CBP or other federal agencies for a particular shipment of merchandise; and
-(6) Identification of a valid basic importation and entry bond (CBP Form 301, continuous or single transaction bond) on file with CBP.
-
-(b) Entry summary filed as entry ("Live Entry"). The entry summary (CBP Form 7501, or its electronic equivalent) with estimated duties attached may be filed at the time of entry in place of the entry documentation listed in paragraph (a)(1) of this section, and will be required by the port director prior to release if the importer is delinquent or subject to live entry sanction under § 142.13.`
-              },
-              {
-                id: "19-cfr-142-12",
-                citation: "19 CFR § 142.12",
-                title: "Time for filing entry summary",
-                breadcrumb: "19 CFR > Part 142 > Subpart B > § 142.12",
-                examFrequency: "CRITICAL (90% of CBLE exams)",
-                keywords: [
-                  "10 working days",
-                  "entry summary",
-                  "CBP Form 7501",
-                  "estimated duties",
-                  "time of entry",
-                  "liquidated damages",
-                  "federal holidays"
-                ],
-                crossRefs: ["19-cfr-111-29", "19-cfr-113-62", "19-cfr-141-68", "19-cfr-142-2", "19-cfr-142-19"],
-                text: `§ 142.12 Time for filing entry summary.
-(a) When entry summary must be filed at time of entry. The port director may require that the entry summary (CBP Form 7501, or its electronic equivalent) with estimated duties attached be filed at the time of entry before the merchandise is released if the importer:
-(1) Has failed repeatedly to file timely entry summaries without justification;
-(2) Has not taken prompt action to settle a claim for liquidated damages issued under § 142.15 for failure to file an entry summary timely; or
-(3) Is substantially or habitually delinquent in the payment of Customs bills.
-
-(b) When entry summary is not filed at time of entry: 10 working days. When the entry documentation is filed before the entry summary, the importer or broker must file the entry summary (CBP Form 7501 or ACE electronic equivalent), with estimated duties attached (or scheduled via Automated Clearinghouse / Periodic Monthly Statement), within 10 working days after the time of entry (as determined under § 141.68).
-
-(c) Computation of 10 working days. In computing the 10-working-day period:
-(1) Day 1 is the first working day FOLLOWING the day on which the time of entry occurs; and
-(2) Saturdays, Sundays, and federal holidays are excluded from the count of working days.
-
-(d) Liquidated damages for failure to file timely (§ 142.15 & § 113.62). If the entry summary and estimated duties are not filed within the 10-working-day period prescribed by paragraph (b) of this section, an immediate demand for liquidated damages under the basic importation and entry bond (generally equal to the value of the merchandise involved in the default) shall be made against the importer of record.`
-              },
-              {
-                id: "19-cfr-142-19",
-                citation: "19 CFR § 142.19",
-                title: "Release of merchandise under immediate delivery",
-                breadcrumb: "19 CFR > Part 142 > Subpart C > § 142.19",
-                examFrequency: "MEDIUM (60% of CBLE exams)",
-                keywords: [
-                  "immediate delivery",
-                  "special permit",
-                  "Canada or Mexico",
-                  "fresh fruits and vegetables",
-                  "quota-class merchandise",
-                  "10 working days after release"
-                ],
-                crossRefs: ["19-cfr-141-68", "19-cfr-142-3", "19-cfr-142-12"],
-                text: `§ 142.19 Release of merchandise under the immediate delivery procedure.
-(a) Eligible merchandise (§ 142.21). Merchandise may be released under a special permit for immediate delivery (using CBP Form 3461 marked as Immediate Delivery) only in the following circumstances:
-(1) Merchandise arriving from Canada or Mexico at a land border port, when approved by the port director and covered by a continuous bond;
-(2) Fresh fruits and vegetables for human consumption arriving from Canada or Mexico and removed from the area of arrival to the importer's premises prior to examination;
-(3) Articles of a trade fair, or shipments consigned to or for the account of any agency or office of the United States Government;
-(4) Quota-class merchandise subject to a tariff-rate quota (TRQ) (note: absolute quota merchandise is NEVER eligible for immediate delivery and requires live entry summary); and
-(5) Merchandise authorized by CBP Headquarters under special emergency or year-end tariff schedule transition directives.
-
-(b) Time for filing entry summary after immediate delivery release (§ 142.23). Within 10 working days after the release of merchandise under a special permit for immediate delivery, the importer must file the entry summary (CBP Form 7501) in proper form with estimated duties attached. Under § 141.68(c), the time of entry for merchandise released under immediate delivery is the time the entry summary is filed in proper form with estimated duties attached (not the time of release).`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 152 — CLASSIFICATION AND APPRAISEMENT OF MERCHANDISE
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-152",
-            code: "Part 152",
-            title: "Part 152 — Classification and Appraisement of Merchandise",
-            sections: [
-              {
-                id: "19-cfr-152-101",
-                citation: "19 CFR § 152.101",
-                title: "Basis of appraisement",
-                breadcrumb: "19 CFR > Part 152 > Subpart E > § 152.101",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "basis of appraisement",
-                  "hierarchy of valuation",
-                  "transaction value",
-                  "identical merchandise",
-                  "similar merchandise",
-                  "deductive value",
-                  "computed value",
-                  "reverse order election"
-                ],
-                crossRefs: ["19-cfr-152-102", "19-cfr-152-103"],
-                text: `§ 152.101 Basis of appraisement.
-(a) General. Imported merchandise will be appraised on the basis, and in the sequential order, of the following:
-(1) The transaction value of imported merchandise (§ 152.103);
-(2) The transaction value of identical merchandise (§ 152.104), if the transaction value cannot be determined, or cannot be used;
-(3) The transaction value of similar merchandise (§ 152.104), if the transaction value of identical merchandise cannot be determined;
-(4) The deductive value (§ 152.105), if the transaction value of similar merchandise cannot be determined;
-(5) The computed value (§ 152.106), if the deductive value cannot be determined; or
-(6) The value if other values cannot be determined (§ 152.107, "fallback method" using reasonable adjustments to previous methods), if the computed value cannot be determined.
-
-(b) Importer's option to reverse Deductive and Computed value. Upon written request made by the importer at the time of filing the entry summary, the order of application of deductive value (paragraph (a)(4)) and computed value (paragraph (a)(5)) will be reversed so that computed value is applied before deductive value.
-
-(c) Prohibited bases of appraisement (§ 152.108). Imported merchandise may NEVER be appraised on the basis of:
-(1) The selling price in the United States of merchandise produced in the United States;
-(2) A system that provides for the appraisement of imported merchandise at the higher of two alternative values;
-(3) The price of merchandise in the domestic market of the country of exportation;
-(4) A cost of production, other than a value determined under § 152.106 for merchandise that is identical or similar to the imported merchandise;
-(5) The price of merchandise for export to a country other than the United States;
-(6) Minimum values for appraisement; or
-(7) Arbitrary or fictitious values.`
-              },
-              {
-                id: "19-cfr-152-102",
-                citation: "19 CFR § 152.102",
-                title: "Definitions: Assist, Related persons, Identical/Similar merchandise",
-                breadcrumb: "19 CFR > Part 152 > Subpart E > § 152.102",
-                examFrequency: "CRITICAL (90% of CBLE exams)",
-                keywords: [
-                  "assist",
-                  "dies molds tools",
-                  "materials components parts",
-                  "engineering design work",
-                  "undertaken outside the United States",
-                  "U.S. engineering exclusion",
-                  "related persons",
-                  "5 percent voting stock"
-                ],
-                crossRefs: ["19-cfr-141-86", "19-cfr-152-101", "19-cfr-152-103"],
-                text: `§ 152.102 Definitions.
-As used in this subpart, the following terms will have the meanings indicated:
-
-(a) Assist.
-(1) "Assist" means any of the following if supplied directly or indirectly, and free of charge or at reduced cost, by the buyer of imported merchandise for use in connection with the production or the sale for export to the United States of the merchandise:
-(i) Materials, components, parts, and similar items incorporated in the imported merchandise;
-(ii) Tools, dies, molds, and similar items used in the production of the imported merchandise;
-(iii) Merchandise consumed in the production of the imported merchandise; and
-(iv) Engineering, development, artwork, design work, and plans and sketches that are undertaken elsewhere than in the United States (i.e., OUTSIDE the United States) and are necessary for the production of the imported merchandise.
-(2) Exclusion for U.S.-based engineering and design work. No service or work to which paragraph (a)(1)(iv) of this section applies will be treated as an assist if the service or work:
-(i) Is performed by an individual who is domiciled within the United States;
-(ii) Is performed by that individual while he is acting as an employee or agent of the buyer of the imported merchandise; and
-(iii) Is incidental to other engineering, development, artwork, design work, or plans or sketches that are undertaken within the United States.
-(3) Valuation of assists (§ 152.103(d)): The value of an assist is either the cost of acquisition (if acquired by the buyer from an unrelated seller) or the cost of production (if produced by the buyer or a person related to the buyer), PLUS the cost of transporting the assist to the foreign place of production.
-
-(c) Identical merchandise. "Identical merchandise" means merchandise that is identical in all respects to, and was produced in the same country and by the same person as, the merchandise being appraised; or if unavailable, produced in the same country by a different person.
-
-(g) Related persons. "Related persons" means:
-(1) Members of the same family (brothers, sisters, spouse, ancestors, and lineal descendants);
-(2) Any officer or director of an organization, and that organization;
-(3) An officer or director of an organization and an officer or director of another organization, if each individual also is an officer or director in the other organization;
-(4) Partners;
-(5) Employer and employee;
-(6) Any person directly or indirectly owning, controlling, or holding with power to vote, 5 percent or more of the outstanding voting stock or shares of any organization, and that organization; and
-(7) Two or more persons directly or indirectly controlling, controlled by, or under common control with, any person.`
-              },
-              {
-                id: "19-cfr-152-103",
-                citation: "19 CFR § 152.103",
-                title: "Transaction value: PAPP, Statutory Additions & Exclusions",
-                breadcrumb: "19 CFR > Part 152 > Subpart E > § 152.103",
-                examFrequency: "CRITICAL (95% of CBLE exams)",
-                keywords: [
-                  "transaction value",
-                  "price actually paid or payable",
-                  "PAPP",
-                  "statutory additions",
-                  "packing costs",
-                  "selling commission",
-                  "buying commission",
-                  "royalties",
-                  "condition of sale",
-                  "international freight exclusion"
-                ],
-                crossRefs: ["19-cfr-141-86", "19-cfr-152-101", "19-cfr-152-102"],
-                text: `§ 152.103 Transaction value.
-(a) Price actually paid or payable (PAPP).
-(1) General. The transaction value of imported merchandise is the price actually paid or payable for the merchandise when sold for exportation to the United States, plus amounts equal to the five statutory additions enumerated in paragraph (b) of this section. "Price actually paid or payable" means the total payment (whether direct or indirect, and exclusive of any costs, charges, or expenses incurred for transportation, insurance, and related services incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States) made, or to be made, for imported merchandise by the buyer to, or for the benefit of, the seller.
-(2) Indirect payments. An example of an indirect payment which is part of the price actually paid or payable is the settlement by the buyer, in whole or in part, of a debt owed by the seller.
-(3) Foreign inland freight. In a sale on an ex-factory (EXW) basis, foreign inland freight and insurance from the factory to the port of exportation paid by the buyer to a third-party carrier are NOT added to the price actually paid or payable. In an FOB or CIF sale where foreign inland freight is included in the seller's invoice price, it remains part of PAPP unless a through bill of lading applies under paragraph (a)(5)(iii).
-
-(b) Additions to price actually paid or payable.
-(1) The transaction value of imported merchandise is the price actually paid or payable for the merchandise when sold for exportation to the United States, plus amounts equal to:
-(i) The packing costs incurred by the buyer with respect to the imported merchandise (including labor and materials for containers/coverings);
-(ii) Any selling commission incurred by the buyer with respect to the imported merchandise (Note: Bona fide BUYING commissions paid by the buyer to the buyer's own purchasing agent for representing the buyer abroad are NEVER added to transaction value);
-(iii) The value, apportioned as appropriate, of any assist (as defined in § 152.102(a), including transportation of the assist to the foreign plant);
-(iv) Any royalty or license fee related to the imported merchandise that the buyer is required to pay, directly or indirectly, as a condition of the sale of the imported merchandise for exportation to the United States; and
-(v) The proceeds of any subsequent resale, disposal, or use of the imported merchandise that accrue, directly or indirectly, to the seller.
-(2) No other additions permitted. The transaction value of imported merchandise will be supplemented by the items listed in paragraph (b)(1) of this section ONLY to the extent that each such item is not already included in the price actually paid or payable and is based on objective and quantifiable data. No other additions to the price actually paid or payable may be made.
-
-(i) Exclusions from transaction value. The transaction value of imported merchandise does NOT include any of the following, if identified separately from the price actually paid or payable and from any cost or other item referred to in paragraph (b) of this section:
-(1) International freight, marine/air cargo insurance, and other costs incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States (per paragraph (a)(1));
-(2) Any reasonable cost or charge that is incurred for:
-(i) The construction, erection, assembly, or maintenance of, or the technical assistance provided with respect to, the merchandise AFTER its importation into the United States; or
-(ii) The transportation of the merchandise AFTER its importation into the United States (U.S. domestic inland freight); and
-(3) The customs duties and other Federal taxes currently payable on the imported merchandise by reason of its importation, and any Federal excise tax on, or measured by the value of, the merchandise for which vendors in the United States are ordinarily liable.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 177 — ADMINISTRATIVE RULINGS
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-177",
-            code: "Part 177",
-            title: "Part 177 — Administrative Rulings",
-            sections: [
-              {
-                id: "19-cfr-177-1",
-                citation: "19 CFR § 177.1",
-                title: "General ruling practice and definitions",
-                breadcrumb: "19 CFR > Part 177 > Subpart A > § 177.1",
-                examFrequency: "MEDIUM (60% of CBLE exams)",
-                keywords: [
-                  "administrative rulings",
-                  "prospective transaction",
-                  "current transaction",
-                  "completed transaction",
-                  "internal advice",
-                  "ruling letter"
-                ],
-                crossRefs: ["19-cfr-177-2", "19-cfr-177-9"],
-                text: `§ 177.1 General ruling practice and definitions.
-(a) The issuance of rulings generally.
-(1) Prospective transactions. It is in the interest of the sound administration of the Customs and related laws that persons engaging in any transaction affected by those laws fully understand the consequences of that transaction prior to its consummation. For this reason, U.S. Customs and Border Protection will give full and careful consideration to written requests from importers and other interested parties for rulings or information setting forth, with respect to a specifically described prospective transaction, a definitive interpretation of applicable law, or other appropriate information.
-(2) Current or completed transactions. Generally, a ruling may be requested under the provisions of this part only with respect to prospective transactions—that is, transactions which are not already pending before a Customs office by reason of arrival, entry, or otherwise. For current transactions already pending before a CBP port or Center of Excellence and Expertise (CEE), the importer may request "Internal Advice" through the field office under § 177.11. For completed and liquidated transactions, the appropriate remedy is a protest under 19 U.S.C. 1514 and part 174 of this chapter.
-
-(d) Definitions.
-(1) A "ruling" is a written statement issued by the Headquarters Office or the appropriate office of Customs as provided in this part that interprets and applies the provisions of the Customs and related laws to a specific set of facts.
-(2) A "ruling letter" is a ruling issued in response to a written request therefor and set forth in a letter addressed to the person making the request or his designee.`
-              },
-              {
-                id: "19-cfr-177-2",
-                citation: "19 CFR § 177.2",
-                title: "Submission of ruling requests",
-                breadcrumb: "19 CFR > Part 177 > Subpart A > § 177.2",
-                examFrequency: "MEDIUM (55% of CBLE exams)",
-                keywords: [
-                  "ruling request",
-                  "eRulings",
-                  "National Commodity Specialist Division",
-                  "NCSD",
-                  "30 calendar days",
-                  "5 items maximum"
-                ],
-                crossRefs: ["19-cfr-177-1", "19-cfr-177-9"],
-                text: `§ 177.2 Submission of ruling requests.
-(a) Form and address. A request for a ruling should be in the form of a signed letter or submitted electronically via the CBP eRulings Template. Requests for tariff classification (HTSUS), country of origin, and marking rulings are submitted to the Director, National Commodity Specialist Division (NCSD), Regulations and Rulings, Office of Trade, in New York. Requests for valuation, drawback, brokers, carriers, or entry procedure rulings are submitted to the Headquarters Office of Regulations and Rulings (OR&R) in Washington, DC.
-
-(b) Content of request. Each request for a ruling must contain a complete statement of all relevant facts relating to the transaction, including:
-(1) The names, addresses, and other identifying information of all interested parties (if known) and the manufacturer ID code (if known);
-(2) The name of the port or place at which any article involved in the transaction will arrive or be entered;
-(3) A description of the transaction itself and a full description of the article (including samples, photographs, drawings, or chemical analysis where appropriate);
-(4) A maximum of 5 merchandise items of the same class or kind may be included in a single classification ruling request; and
-(5) A statement as to whether, to the knowledge of the person submitting the request, the same transaction, or one identical to it, has ever been considered, or is currently being considered by any CBP office or pending before the U.S. Court of International Trade (CIT) or the U.S. Court of Appeals for the Federal Circuit (CAFC).
-
-(c) Issuance timeline (§ 177.8). The National Commodity Specialist Division normally issues tariff classification rulings within 30 calendar days of receipt of a complete request, unless the matter presents a novel issue requiring referral to CBP Headquarters.`
-              },
-              {
-                id: "19-cfr-177-9",
-                citation: "19 CFR § 177.9",
-                title: "Effect of ruling letters; modification or revocation with 60-day notice",
-                breadcrumb: "19 CFR > Part 177 > Subpart A > § 177.9",
-                examFrequency: "CRITICAL (80% of CBLE exams)",
-                keywords: [
-                  "effect of ruling letters",
-                  "modification or revocation",
-                  "60 calendar days",
-                  "30 calendar days comment",
-                  "Customs Bulletin",
-                  "binding effect",
-                  "19 U.S.C. 1625(c)"
-                ],
-                crossRefs: ["19-cfr-177-1", "19-cfr-177-2"],
-                text: `§ 177.9 Effect of ruling letters; modification or revocation.
-(a) Effect of ruling letters generally. A ruling letter issued by U.S. Customs and Border Protection under the provisions of this part represents the official position of CBP with respect to the particular transaction or issue described therein and is binding on all CBP personnel in accordance with the provisions of this section until modified or revoked. In the absence of a change of practice or other modification or revocation which affects the principle of the ruling set forth in the ruling letter, that principle may be cited as authority in the disposition of transactions involving the same circumstances.
-
-(b) Application of rulings to transactions. Each ruling letter is issued on the assumption that all of the information furnished in connection with the ruling request and incorporated in the ruling letter, either directly, by reference, or by implication, is accurate and complete in every material respect. If the facts of an actual importation vary materially from the facts stated in the ruling letter, the ruling letter will not be applicable.
-
-(d) Modification or revocation of ruling letters (19 U.S.C. 1625(c)).
-(1) Publication of proposed modification or revocation. Any proposed interpretive ruling or decision which would modify (other than to correct a clerical error) or revoke a prior interpretive ruling or decision which has been in effect for at least 60 calendar days must be published in the Customs Bulletin. The notice in the Customs Bulletin will give interested parties a period of at least 30 calendar days from the date of publication within which to submit written comments on the proposed modification or revocation.
-(2) Publication of final ruling or decision. After consideration of any comments received during the 30-day public comment period, CBP will publish the final ruling or decision in the Customs Bulletin within 30 calendar days after the close of the comment period.
-(3) Effective date — 60 calendar days after publication. The final ruling or decision modifying or revoking a prior interpretive ruling or decision will become effective 60 calendar days after the date of publication of the final notice in the Customs Bulletin.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART 190 — MODERNIZED DRAWBACK (TFTEA)
-          // ---------------------------------------------------------------------
-          {
-            id: "19-cfr-part-190",
-            code: "Part 190",
-            title: "Part 190 — Modernized Drawback (TFTEA)",
-            sections: [
-              {
-                id: "19-cfr-190-2",
-                citation: "19 CFR § 190.2",
-                title: "Definitions: Direct identification vs Substitution at 8-digit HTSUS level",
-                breadcrumb: "19 CFR > Part 190 > Subpart A > § 190.2",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "modernized drawback",
-                  "TFTEA",
-                  "direct identification",
-                  "substitution",
-                  "8-digit HTSUS subheading",
-                  "99 percent refund",
-                  "per unit averaging"
-                ],
-                crossRefs: ["19-cfr-190-22", "19-cfr-190-32", "19-cfr-190-51"],
-                text: `§ 190.2 Definitions.
-For the purposes of this part (Modernized Drawback under the Trade Facilitation and Trade Enforcement Act of 2015 — TFTEA):
-
-"Direct identification drawback" means drawback authorized pursuant to 19 U.S.C. 1313(a) (manufacturing direct identification) or 19 U.S.C. 1313(j)(1) (unused merchandise direct identification), in which the exact imported duty-paid merchandise (or a specific lot identified via an approved accounting methodology under § 190.14 such as FIFO or low-to-high) is traced directly into the exported or destroyed article.
-
-"Drawback" means the refund or remission, in whole or in part (generally 99 percent), of a customs duty, fee (including Merchandise Processing Fee — MPF), or internal revenue tax which was imposed on imported merchandise under Federal law because of its importation. Note: Harbor Maintenance Fee (HMF) and Antidumping/Countervailing Duties (AD/CVD) are NOT eligible for drawback refund.
-
-"Substitution" means the replacement of imported duty-paid merchandise with other merchandise (whether imported or domestic) that is classified under the same 8-digit HTSUS subheading (subject to the "Other" limitation in § 190.32(b) for unused merchandise substitution under 19 U.S.C. 1313(j)(2)).
-
-"Per unit averaging" means the mandatory TFTEA calculation methodology for substitution drawback claims whereby the amount of duties, taxes, and fees eligible for drawback per unit of designated imported merchandise is determined by dividing the total duties, taxes, and fees paid on the line item of the designated entry summary by the total quantity of units on that entry summary line item.`
-              },
-              {
-                id: "19-cfr-190-22",
-                citation: "19 CFR § 190.22",
-                title: "Manufacturing substitution drawback",
-                breadcrumb: "19 CFR > Part 190 > Subpart B > § 190.22",
-                examFrequency: "HIGH (70% of CBLE exams)",
-                keywords: [
-                  "manufacturing substitution",
-                  "19 U.S.C. 1313(b)",
-                  "8-digit HTSUS subheading",
-                  "5 years",
-                  "general manufacturing drawback ruling",
-                  "specific manufacturing drawback ruling"
-                ],
-                crossRefs: ["19-cfr-190-2", "19-cfr-190-32", "19-cfr-190-51"],
-                text: `§ 190.22 Manufacturing substitution drawback.
-(a) General (19 U.S.C. 1313(b)). If imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading and are used in the manufacture or production of articles within the United States, then upon the exportation or destruction under CBP supervision of any such manufactured or produced articles, without their having been used in the United States prior to such exportation or destruction, drawback of 99 percent of the duties, taxes, and fees paid on the designated imported merchandise is allowable, even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.
-
-(b) Manufacturing drawback ruling required. To claim manufacturing drawback (whether direct identification under § 190.21 or substitution under § 190.22), the manufacturer or producer must operate under either:
-(1) A General Manufacturing Drawback Ruling (Appendix A to Part 190), acknowledged by a CBP letter; or
-(2) A Specific Manufacturing Drawback Ruling approved by CBP Headquarters Office of Regulations and Rulings (OR&R) under § 190.8.
-
-(c) Time period for manufacture and exportation. All operations—importation of the designated merchandise, receipt and use of the designated or substituted merchandise in manufacture, exportation or destruction of the completed articles, and filing of the complete drawback claim—must occur within 5 years from the date of importation of the designated imported merchandise.`
-              },
-              {
-                id: "19-cfr-190-32",
-                citation: "19 CFR § 190.32",
-                title: "Unused merchandise substitution drawback & 'lesser of' rule",
-                breadcrumb: "19 CFR > Part 190 > Subpart C > § 190.32",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "unused merchandise substitution",
-                  "19 U.S.C. 1313(j)(2)",
-                  "lesser of rule",
-                  "8-digit HTSUS subheading",
-                  "begins with Other",
-                  "10-digit statistical reporting number",
-                  "99 percent refund"
-                ],
-                crossRefs: ["19-cfr-190-2", "19-cfr-190-22", "19-cfr-190-51"],
-                text: `§ 190.32 Unused merchandise substitution drawback.
-(a) General rule (19 U.S.C. 1313(j)(2)). If there is imported merchandise on which was paid any duty, tax, or fee imposed under Federal law because of its importation, and there is any other merchandise (whether imported or domestic) that is:
-(1) Classified under the same 8-digit HTSUS subheading as the imported merchandise (subject to the "Other" rule in paragraph (b) of this section);
-(2) Exported, or destroyed under CBP supervision, before the close of the 5-year period beginning on the date of importation of the imported merchandise and before the drawback claim is filed;
-(3) Not used within the United States before such exportation or destruction; and
-(4) In the possession of the party claiming drawback (including legal possession via bill of lading or title prior to exportation or destruction), then drawback may be allowed in accordance with paragraph (c) of this section.
-
-(b) Special rule when 8-digit HTSUS subheading begins with "Other".
-(1) If the article description for the 8-digit HTSUS subheading under which the imported merchandise is classified does NOT begin with the term "Other", substitution is permitted for any merchandise classified under that same 8-digit HTSUS subheading.
-(2) If the article description for the 8-digit HTSUS subheading DOES begin with the term "Other", then substitution is permitted ONLY if the imported merchandise and the substituted merchandise are classified under the same 10-digit HTSUS statistical reporting number and the article description for that 10-digit statistical reporting number does NOT begin with the term "Other" (unless the claimant uses a Schedule B number for export correlation where no 10-digit non-"Other" breakouts exist).
-
-(c) Amount of drawback — The "Lesser Of" Rule. For unused merchandise substitution drawback claims under 19 U.S.C. 1313(j)(2), the total amount of drawback allowable will not exceed 99 percent of the LESSER of:
-(1) The amount of duties, taxes, and fees paid with respect to the designated imported merchandise (calculated via per-unit averaging); OR
-(2) The amount of duties, taxes, and fees that would apply to the substituted exported (or destroyed) merchandise if the substituted merchandise were imported at the same duty rate and fee percentage applicable to the designated imported entry (i.e., when the unit value of the substituted exported merchandise is lower than the per-unit average value of the designated imported merchandise, the drawback refund is reduced proportionally to the lower value of the substituted merchandise).`
-              },
-              {
-                id: "19-cfr-190-51",
-                citation: "19 CFR § 190.51",
-                title: "Completion of drawback claims & 5-year timeframe",
-                breadcrumb: "19 CFR > Part 190 > Subpart E > § 190.51",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "completion of drawback claims",
-                  "5-year timeframe",
-                  "five years from date of importation",
-                  "abandoned claim",
-                  "3 years from liquidation",
-                  "record retention",
-                  "ACE electronic filing"
-                ],
-                crossRefs: ["19-cfr-111-23", "19-cfr-190-2", "19-cfr-190-32"],
-                text: `§ 190.51 Completion of drawback claims.
-(a) General. Unless otherwise specified, a complete drawback claim under this part must be filed electronically through the Automated Commercial Environment (ACE) and must consist of:
-(1) Successful electronic transmission of all required data elements on the ACE drawback claim record (including the designated import entry number, 10-digit HTSUS number, line item value, quantity, duties/taxes/fees claimed, and export/destruction date);
-(2) Any applicable certificate(s) or manufacturing ruling number(s); and
-(3) Coding of the underlying import entry summary line items in ACE.
-
-(e) Time of filing — 5-year statutory limitation (19 U.S.C. 1313(r)(1)). A complete drawback claim, with all required documents and data elements, must be filed within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim. For example, if the earliest designated imported merchandise on a claim was imported on November 15, 2021, the complete drawback claim must be filed with CBP no later than November 15, 2026. Claims not completed within the 5-year period will be considered abandoned, and no extension of the 5-year period is permitted unless prevented by a declared CBP system outage or statutory suspension.
-
-(f) Drawback recordkeeping period (§ 190.15 & § 190.38). Unlike standard entry records which must be retained for 5 years from the date of entry under § 111.23, all records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim.`
-              }
-            ]
-          }
-        ]
-      },
-
-      // =========================================================================
-      // CORPUS 2: HTSUS & GENERAL RULES OF INTERPRETATION (GRI 1–6)
-      // =========================================================================
-      {
-        id: "htsus-gri",
-        code: "HTSUS & GRI",
-        title: "Harmonized Tariff Schedule of the U.S. & General Rules of Interpretation",
-        parts: [
-          // ---------------------------------------------------------------------
-          // PART GRI — GENERAL RULES OF INTERPRETATION (GRI 1-6)
-          // ---------------------------------------------------------------------
-          {
-            id: "htsus-part-gri",
-            code: "GRI 1–6",
-            title: "General Rules of Interpretation (GRI 1 through 6)",
-            sections: [
-              {
-                id: "htsus-gri-1",
-                citation: "HTSUS GRI 1",
-                title: "Rule 1 — Terms of Headings and Section or Chapter Notes",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 1",
-                examFrequency: "CRITICAL (95% of CBLE exams)",
-                keywords: [
-                  "GRI 1",
-                  "terms of headings",
-                  "Section Notes",
-                  "Chapter Notes",
-                  "titles of sections",
-                  "legal classification",
-                  "eo nomine"
-                ],
-                crossRefs: ["htsus-gri-2", "htsus-gri-6", "htsus-sec16-notes", "htsus-ch95-9503"],
-                text: `General Rule of Interpretation 1 (GRI 1).
-Classification of goods in the tariff schedule shall be governed by the following principles:
-
-1. The table of contents, alphabetical index, and titles of sections, chapters and sub-chapters are provided for ease of reference only; for legal purposes, classification shall be determined according to the terms of the headings and any relative section or chapter notes and, provided such headings or notes do not otherwise require, according to the following provisions (GRIs 2 through 5).
-
-CBP Legal Interpretation Note on GRI 1:
-- Over 90% of all imported merchandise is classified solely by application of GRI 1 (and GRI 6 at the subheading level).
-- Section and Chapter Notes have the exact same binding legal force as the 4-digit heading text itself. If a Chapter Note explicitly excludes an article from a chapter (e.g., Chapter 95 Note 1(e) excluding textile fancy dress costumes from Chapter 95 and directing them to Chapters 61 or 62), the inquiry stops at GRI 1 and you NEVER proceed to GRI 3.`
-              },
-              {
-                id: "htsus-gri-2",
-                citation: "HTSUS GRI 2",
-                title: "Rule 2(a) Incomplete/Unfinished/Unassembled Articles & Rule 2(b) Mixtures",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 2",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "GRI 2(a)",
-                  "GRI 2(b)",
-                  "incomplete or unfinished",
-                  "essential character",
-                  "unassembled or disassembled",
-                  "knocked-down",
-                  "blanks",
-                  "mixtures and combinations"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3", "htsus-gri-6"],
-                text: `General Rule of Interpretation 2 (GRI 2).
-2. (a) Any reference in a heading to an article shall be taken to include a reference to that article incomplete or unfinished, provided that, as entered, the incomplete or unfinished article has the essential character of the complete or finished article. It shall also include a reference to that article complete or finished (or falling to be classified as complete or finished by virtue of this rule), entered unassembled or disassembled.
-
-(b) Any reference in a heading to a material or substance shall be taken to include a reference to mixtures or combinations of that material or substance with other materials or substances. Any reference to goods of a given material or substance shall be taken to include a reference to goods consisting wholly or partly of such material or substance. The classification of goods consisting of more than one material or substance shall be according to the principles of Rule 3.
-
-CBP Legal Interpretation Notes on GRI 2(a):
-- "Blanks": Rule 2(a) extends to articles not ready for direct use, having the approximate shape or outline of the finished article or part, and which can only be used, other than in exceptional cases, for completion into the finished article or part (e.g., rough key blanks or pre-molded plastic bottle preforms).
-- "Unassembled or Disassembled": Goods imported in knocked-down (CKD/SKD) condition in the same shipment for convenience of packing, handling, or transport are classified as the finished article under GRI 2(a) provided only simple assembly operations (screws, bolts, nuts, rivets, or welding) are required. Excess components beyond the exact count needed to assemble the complete articles are classified separately on their own merits.`
-              },
-              {
-                id: "htsus-gri-3",
-                citation: "HTSUS GRI 3",
-                title: "Rule 3 — Specificity (3a), Essential Character of Retail Sets (3b) & Last in Numerical Order (3c)",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 3",
-                examFrequency: "CRITICAL (95% of CBLE exams)",
-                keywords: [
-                  "GRI 3(a)",
-                  "GRI 3(b)",
-                  "GRI 3(c)",
-                  "most specific description",
-                  "relative specificity",
-                  "essential character",
-                  "goods put up in sets for retail sale",
-                  "composite goods",
-                  "last in numerical order"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-2", "htsus-gri-6", "htsus-ch95-9503"],
-                text: `General Rule of Interpretation 3 (GRI 3).
-3. When, by application of Rule 2(b) or for any other reason, goods are, prima facie, classifiable under two or more headings, classification shall be effected as follows:
-
-(a) Relative Specificity: The heading which provides the most specific description shall be preferred to headings providing a more general description. However, when two or more headings each refer to part only of the materials or substances contained in mixed or composite goods or to part only of the items in a set put up for retail sale, those headings are to be regarded as equally specific in relation to those goods, even if one of them gives a more complete or precise description of the goods.
-
-(b) Essential Character (Mixtures, Composite Goods & Retail Sets): Mixtures, composite goods consisting of different materials or made up of different components, and goods put up in sets for retail sale, which cannot be classified by reference to 3(a), shall be classified as if they consisted of the material or component which gives them their essential character, insofar as this criterion is applicable.
-
-(c) Last in Numerical Order: When goods cannot be classified by reference to 3(a) or 3(b), they shall be classified under the heading which occurs last in numerical order among those which equally merit consideration.
-
-Mandatory 3-Prong Test for "Goods Put Up in Sets for Retail Sale" under GRI 3(b) (Explanatory Note X to GRI 3(b)):
-To qualify as a "set put up for retail sale" under GRI 3(b), the imported package MUST simultaneously satisfy ALL THREE of the following criteria:
-(1) Consist of at least two different articles which are, prima facie, classifiable in different 4-digit headings (e.g., six stainless steel dinner forks packaged together do not constitute a GRI 3(b) set);
-(2) Consist of products or articles put up together to meet a particular need or carry out a specific activity (Note: If a retail package contains disparate items that do NOT work together toward a single specific activity—for example, a promotional gift basket containing a ceramic coffee mug, a pair of cotton socks, and a ballpoint pen—it FAILS prong 2, is NOT a GRI 3(b) set, and EVERY item must be classified separately under its own HTSUS heading!); and
-(3) Are put up in a manner suitable for sale directly to end users without repacking (e.g., in boxes, blister packs, or display cases).`
-              },
-              {
-                id: "htsus-gri-4",
-                citation: "HTSUS GRI 4",
-                title: "Rule 4 — Goods Most Akin",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 4",
-                examFrequency: "LOW (20% of CBLE exams)",
-                keywords: [
-                  "GRI 4",
-                  "most akin",
-                  "kinship",
-                  "novel merchandise"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3"],
-                text: `General Rule of Interpretation 4 (GRI 4).
-4. Goods which cannot be classified in accordance with the above rules (GRIs 1, 2, and 3) shall be classified under the heading appropriate to the goods to which they are most akin.
-
-CBP Legal Interpretation Note on GRI 4:
-- Kinship under GRI 4 can depend on many factors, such as description, character, purpose, or intended use. Because the HTSUS contains comprehensive basket ("Other") headings in nearly every chapter, GRI 4 is invoked only in extremely rare circumstances where an entirely novel article cannot fall within any heading by virtue of GRIs 1 through 3.`
-              },
-              {
-                id: "htsus-gri-5",
-                citation: "HTSUS GRI 5",
-                title: "Rule 5(a) Fitted Camera/Instrument Cases & Rule 5(b) Packing Containers",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 5",
-                examFrequency: "CRITICAL (85% of CBLE exams)",
-                keywords: [
-                  "GRI 5(a)",
-                  "GRI 5(b)",
-                  "camera cases",
-                  "musical instrument cases",
-                  "specially shaped or fitted",
-                  "long-term use",
-                  "entered with the articles",
-                  "packing containers",
-                  "clearly suitable for repetitive use"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3", "htsus-ch95-9503"],
-                text: `General Rule of Interpretation 5 (GRI 5).
-In addition to the foregoing provisions, the following rules shall apply in respect of the goods referred to therein:
-
-(a) Specially Shaped or Fitted Long-Term Cases: Camera cases, musical instrument cases, gun cases, drawing instrument cases, necklace cases and similar containers, specially shaped or fitted to contain a specific article or set of articles, suitable for long-term use and entered with the articles for which they are intended, shall be classified with such articles when of a kind normally sold therewith. This rule does not, however, apply to containers which give the whole its essential character.
-- Crucial Exam Trap 1 (Imported Separately or in Excess): If fitted cases are imported alone without the instruments, OR if a shipment contains 100 electric guitars and 120 fitted guitar cases, only the 100 cases matched 1-to-1 with the guitars classify with the guitars under Heading 9207 via GRI 5(a); the 20 excess cases MUST be classified separately under Heading 4202!
-- Crucial Exam Trap 2 (Container Gives Essential Character): If a high-value sterling silver tea caddy or carved crystal bowl contains inexpensive tea leaves or candies, GRI 5(a) does not classify the silver/crystal container as tea or candy because the container gives the whole its essential character.
-
-(b) Packing Materials and Packing Containers: Subject to the provisions of Rule 5(a) above, packing materials and packing containers entered with the goods therein shall be classified with the goods if they are of a kind normally used for packing such goods. However, this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.
-- Crucial Exam Trap 3 (Repetitive Use Exception): Standard cardboard cartons, disposable plastic drums, and single-trip wooden pallets classify with the imported goods under GRI 5(b). However, heavy-duty high-pressure steel cylinders or tanks imported filled with compressed industrial gas that are designed for continuous refilling and repetitive commercial circulation DO NOT classify with the gas under GRI 5(b) and must be classified separately (e.g., under Heading 7311).`
-              },
-              {
-                id: "htsus-gri-6",
-                citation: "HTSUS GRI 6",
-                title: "Rule 6 — Subheading Comparison at the Same Dash Level",
-                breadcrumb: "HTSUS > General Rules of Interpretation > GRI 6",
-                examFrequency: "HIGH (80% of CBLE exams)",
-                keywords: [
-                  "GRI 6",
-                  "subheading level",
-                  "same level",
-                  "indent dash level",
-                  "mutatis mutandis",
-                  "subheading notes"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3"],
-                text: `General Rule of Interpretation 6 (GRI 6).
-6. For legal purposes, the classification of goods in the subheadings of a heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to the above rules, on the understanding that only subheadings at the same level are comparable. For the purposes of this rule, the relative section, chapter and subchapter notes also apply, unless the context otherwise requires.
-
-CBP Legal Interpretation Note on GRI 6:
-- You must ALWAYS determine the 4-digit heading first using GRIs 1 through 4 before looking at any 6-digit or 8-digit subheading.
-- Once inside the correct 4-digit heading, compare ONLY one-dash ("-") subheadings against other one-dash ("-") subheadings within that heading. Only after selecting the proper one-dash subheading may you proceed to compare the two-dash ("--") subheadings nested underneath it.`
-              }
-            ]
-          },
-
-          // ---------------------------------------------------------------------
-          // PART HTSUS CHAPTER EXCERPTS — SECTION XVI & CHAPTER 95
-          // ---------------------------------------------------------------------
-          {
-            id: "htsus-part-chapters",
-            code: "Chapters 84, 85 & 95",
-            title: "HTSUS Chapter Excerpts (Section XVI Electronics & Chapter 95 Festive/Toys)",
-            sections: [
-              {
-                id: "htsus-sec16-notes",
-                citation: "HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528",
-                title: "Section XVI Notes (Parts & Composite Machines) and ADP vs Telecom Classification",
-                breadcrumb: "HTSUS > Section XVI > Chapters 84 & 85 > Notes & Headings",
-                examFrequency: "HIGH (75% of CBLE exams)",
-                keywords: [
-                  "Section XVI Note 2",
-                  "Section XVI Note 3",
-                  "Chapter 84 Note 6",
-                  "Heading 8471",
-                  "Heading 8517",
-                  "Heading 8528",
-                  "automatic data processing",
-                  "principal function",
-                  "parts classification"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3", "htsus-gri-6"],
-                text: `HTSUS Section XVI (Chapters 84 and 85) Legal Notes & Core Headings.
-
-1. Section XVI Note 2 — Classification of Parts of Machines:
-Subject to Note 1 to this Section (which excludes articles such as transmission/conveyor belts of plastics or vulcanized rubber, hand tools of Ch. 82, and general-use parts of base metal of Section XV such as screws/bolts/springs), parts of machines are to be classified according to the following sequential rules:
-(a) Parts which are goods included in any of the headings of Chapter 84 or 85 (other than headings 8409, 8431, 8448, 8466, 8473, 8487, 8503, 8522, 8529, 8538 and 8548) are in all cases to be classified in their respective headings (e.g., an electric motor designed solely for a washing machine is still classified in Heading 8501 as an electric motor under Note 2(a), NOT in Heading 8450 as a washing machine part!);
-(b) Other parts, if suitable for use solely or principally with a particular kind of machine, or with a number of machines of the same heading, are to be classified with the machines of that kind or in headings 8409, 8431, 8448, 8466, 8473, 8503, 8522, 8529 or 8538 as appropriate;
-(c) All other parts are to be classified in heading 8409, 8431, 8448, 8466, 8473, 8503, 8522, 8529 or 8538 as appropriate or, failing that, in heading 8487 or 8548.
-
-2. Section XVI Note 3 — Composite Machines & Multi-Function Apparatus:
-Unless the context otherwise requires, composite machines consisting of two or more machines fitted together to form a whole and other machines designed for the purpose of performing two or more complementary or alternative functions are to be classified as if consisting only of that component or as being that machine which performs the PRINCIPAL FUNCTION.
-
-3. Chapter 84 Note 6 & Headings 8471, 8517, and 8528:
-- Heading 8471: Automatic data processing (ADP) machines and units thereof (e.g., laptops, tablets without cellular telephone functionality, desktop CPUs, storage drives). Under Chapter 84 Note 6(A), an ADP machine must be capable of: (1) storing the processing program or programs and at least the data immediately necessary for the execution of the program; (2) being freely programmed in accordance with the requirements of the user; (3) performing arithmetical computations specified by the user; and (4) executing, without human intervention, a processing program which requires them to modify their execution, by logical decision during the processing run.
-- Chapter 84 Note 6(D) & (E) Exclusions: Heading 8471 does NOT cover:
-  * Smartphones, cellular telephones, network switches, routers, modems, or Bluetooth/RF wearables whose principal function is transmission or reception of voice, images, or other data -> Classified in Heading 8517 (8517.13.00 for smartphones; 8517.62.00 for routers/switches/smartwatches).
-  * Monitors and projectors, not incorporating television reception apparatus -> Classified in Heading 8528 (8528.52.00 if capable of directly connecting to and designed for use with an ADP machine of Heading 8471; 8528.59 for other monitors).`
-              },
-              {
-                id: "htsus-ch95-9503",
-                citation: "HTSUS Chapter 95 Note 1 & Heading 9503",
-                title: "Toys, Games, and Retail Activity Sets vs Chapters 42 & 61",
-                breadcrumb: "HTSUS > Section XX > Chapter 95 > Note 1 & Heading 9503",
-                examFrequency: "HIGH (70% of CBLE exams)",
-                keywords: [
-                  "Chapter 95 Note 1",
-                  "Heading 9503",
-                  "toys",
-                  "reduced-scale models",
-                  "puzzles",
-                  "fancy dress textiles exclusion",
-                  "Heading 4202 bags exclusion"
-                ],
-                crossRefs: ["htsus-gri-1", "htsus-gri-3", "htsus-gri-5"],
-                text: `HTSUS Chapter 95 (Toys, Games and Sports Requisites) Legal Notes & Heading 9503.
-
-1. Chapter 95 Note 1 — Mandatory Legal Exclusions (Applied at GRI 1):
-This chapter does NOT cover:
-(a) Candles (heading 3406);
-(d) Sports bags or other containers of heading 4202, 4303 or 4304 (e.g., nylon backpacks, duffel bags, or carrying totes imported with toys or sports gear that are NOT specially shaped or fitted under GRI 5(a));
-(e) Fancy dress of textiles, of chapter 61 or 62; sports clothing and special articles of apparel of textiles, of chapter 61 or 62, whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas (e.g., well-made textile Halloween or theatrical costumes classify as wearing apparel in Chapter 61 [knit] or Chapter 62 [woven], whereas flimsy non-durable costumes classify in Heading 9505);
-(m) Pumps for liquids (heading 8413), filtering or purifying machinery (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), or radio remote control apparatus (heading 8526);
-(v) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table linen, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material).
-
-2. Heading 9503.00.00 — Toys, Dolls, Reduced-Scale Models & Puzzles:
-"Tricycles, scooters, pedal cars and similar wheeled toys; dolls' carriages; dolls, other toys; reduced-scale ('scale') models and similar recreational models, working or not; puzzles of all kinds; parts and accessories thereof." (Duty Rate: Free under Column 1 General).
-- CBP "Principal Use for Amusement" Test (Additional U.S. Rule of Interpretation 1(a)): To be classified as a toy in Heading 9503, an article must be principally designed for the amusement of children or adults rather than for practical utilitarian use. For example, a miniature child's plastic pretend oven that cannot actually bake food is a toy of Heading 9503.00.00, whereas a real stainless-steel baking pan kit marketed to children for baking real cupcakes in a kitchen oven is utilitarian kitchenware of Heading 7323 (excluded from Chapter 95 by Note 1(v)!).`
-              }
-            ]
-          }
-        ]
-      },
-
-      // =========================================================================
-      // CORPUS 3: 31 CFR PART 10 — IRS CIRCULAR 230 (ENROLLED AGENT TRACK)
-      // =========================================================================
-      {
-        id: "31-cfr-ea",
-        code: "31 CFR Part 10",
-        title: "IRS Circular 230 — Enrolled Agent (EA) Practice Standards",
-        parts: [
-          // ---------------------------------------------------------------------
-          // SUBPART B — DUTIES AND RESTRICTIONS RELATING TO PRACTICE BEFORE IRS
-          // ---------------------------------------------------------------------
-          {
-            id: "31-cfr-part-10-b",
-            code: "Subpart B",
-            title: "Subpart B — Duties and Restrictions Relating to Practice Before the IRS",
-            sections: [
-              {
-                id: "31-cfr-10-20",
-                citation: "31 CFR § 10.20",
-                title: "Information to be furnished",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.20",
-                examFrequency: "HIGH (80% of SEE Part 3 exams)",
-                keywords: [
-                  "information to be furnished",
-                  "IRS request",
-                  "privileged records",
-                  "good faith belief",
-                  "possession of records",
-                  "reasonable inquiry of client"
-                ],
-                crossRefs: ["31-cfr-10-21", "31-cfr-10-22"],
-                text: `§ 10.20 Information to be furnished.
-(a) To the Internal Revenue Service.
-(1) A practitioner must, on a proper and lawful request by a duly authorized officer or employee of the Internal Revenue Service, promptly submit records or information in any matter before the Internal Revenue Service unless the practitioner believes in good faith and on reasonable grounds that the records or information are privileged.
-(2) Where the requested records or information are not in the possession of, or subject to the control of, the practitioner or the practitioner's client, the practitioner must promptly notify the requesting Internal Revenue Service officer or employee and the practitioner must provide any information that the practitioner has regarding the identity of any person who the practitioner believes may have possession or control of the requested records or information. The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.
-
-(b) Interference with a proper and lawful request. A practitioner may not interfere, or attempt to interfere, with any proper and lawful effort by the Internal Revenue Service, its officers or employees, to obtain any record or information unless the practitioner believes in good faith and on reasonable grounds that the record or information is privileged.`
-              },
-              {
-                id: "31-cfr-10-21",
-                citation: "31 CFR § 10.21",
-                title: "Knowledge of client's omission",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.21",
-                examFrequency: "CRITICAL (95% of SEE Part 3 exams)",
-                keywords: [
-                  "knowledge of client's omission",
-                  "noncompliance",
-                  "error or omission",
-                  "advise the client promptly",
-                  "consequences under Internal Revenue Code",
-                  "no duty to notify IRS"
-                ],
-                crossRefs: ["19-cfr-111-32", "31-cfr-10-20", "31-cfr-10-22", "31-cfr-10-34"],
-                text: `§ 10.21 Knowledge of client's omission.
-A practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.
-
-IRS SEE Exam Doctrinal Notes on § 10.21:
-1. Two Mandatory Affirmative Duties: The practitioner must promptly advise the client of BOTH (a) the fact of the noncompliance, error, or omission, AND (b) the statutory/regulatory consequences under the Internal Revenue Code (e.g., accuracy-related penalties under IRC § 6662, civil fraud penalties under IRC § 6663, failure-to-pay interest under IRC § 6601, and extended statutes of limitations under IRC § 6501(e)).
-2. What § 10.21 Does NOT Require or Permit:
-   - The practitioner is NEVER permitted to unilaterally notify the IRS of the client's prior-year error or omission without the client's consent (doing so violates client confidentiality under IRC § 7216 / § 7525).
-   - The practitioner cannot force the client to file an amended return (Form 1040-X or 1120-X), nor does Circular 230 § 10.21 require the practitioner to advise the client in writing (though practitioners are strongly encouraged to document the advice), nor does § 10.21 mandate automatic withdrawal unless the prior-year omission carries forward and renders the current year's tax return false or fraudulent under § 10.22 and § 10.34.`
-              },
-              {
-                id: "31-cfr-10-22",
-                citation: "31 CFR § 10.22",
-                title: "Diligence as to accuracy",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.22",
-                examFrequency: "HIGH (85% of SEE Part 3 exams)",
-                keywords: [
-                  "diligence as to accuracy",
-                  "due diligence",
-                  "preparing tax returns",
-                  "oral or written representations",
-                  "reliance on work product of others",
-                  "reasonable care"
-                ],
-                crossRefs: ["31-cfr-10-20", "31-cfr-10-21", "31-cfr-10-34", "31-cfr-10-35"],
-                text: `§ 10.22 Diligence as to accuracy.
-(a) In general. A practitioner must exercise due diligence—
-(1) In preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to Internal Revenue Service matters;
-(2) In determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and
-(3) In determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the Internal Revenue Service.
-
-(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person.`
-              },
-              {
-                id: "31-cfr-10-27",
-                citation: "31 CFR § 10.27",
-                title: "Fees",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.27",
-                examFrequency: "CRITICAL (90% of SEE Part 3 exams)",
-                keywords: [
-                  "unconscionable fee",
-                  "contingent fee",
-                  "original tax return",
-                  "IRS examination",
-                  "statutory interest or penalties",
-                  "judicial proceeding"
-                ],
-                crossRefs: ["31-cfr-10-22", "31-cfr-10-29", "31-cfr-10-34"],
-                text: `§ 10.27 Fees.
-(a) In general. A practitioner may not charge an unconscionable fee in connection with any matter before the Internal Revenue Service.
-
-(b) Contingent fees.
-(1) Except as provided in paragraphs (b)(2), (3), and (4) of this section, a practitioner may not charge a contingent fee for services rendered in connection with any matter before the Internal Revenue Service, including the preparation or filing of an original tax return or an amended tax return or claim for refund (other than as specified below).
-(2) Exception 1 — IRS Examination or Challenge: A practitioner may charge a contingent fee for services rendered in connection with the Service's examination of, or challenge to:
-(i) An original tax return; or
-(ii) An amended return or claim for refund or credit where the amended return or claim for refund or credit was filed within 120 days of the taxpayer receiving a written notice of the examination of, or a written challenge to, the original tax return.
-(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.
-(4) Exception 3 — Judicial Proceedings: A practitioner may charge a contingent fee for services rendered in connection with any judicial proceeding arising under the Internal Revenue Code.
-
-(c) Definitions. For purposes of this section, a "contingent fee" is any fee that is based, in whole or in part, on whether or not a position taken on a tax return or other filing avoids challenge by the Internal Revenue Service or is sustained either by the Internal Revenue Service or in litigation. A contingent fee includes a fee that is based on a percentage of the refund reported on a return, that is based on a percentage of the taxes saved, or that otherwise depends on the specific result attained.`
-              },
-              {
-                id: "31-cfr-10-29",
-                citation: "31 CFR § 10.29",
-                title: "Conflicting interests",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.29",
-                examFrequency: "CRITICAL (92% of SEE Part 3 exams)",
-                keywords: [
-                  "conflicting interests",
-                  "conflict of interest",
-                  "informed consent",
-                  "confirmed in writing",
-                  "30 days",
-                  "36 months retention",
-                  "direct adversity"
-                ],
-                crossRefs: ["31-cfr-10-22", "31-cfr-10-27", "31-cfr-10-35"],
-                text: `§ 10.29 Conflicting interests.
-(a) Except as provided by paragraph (b) of this section, a practitioner shall not represent a client before the Internal Revenue Service if the representation involves a conflict of interest. A conflict of interest exists if—
-(1) The representation of one client will be directly adverse to another client; or
-(2) There is a significant risk that the representation of one or more clients will be materially limited by the practitioner's responsibilities to another client, a former client or a third person, or by a personal interest of the practitioner.
-
-(b) Notwithstanding the existence of a conflict of interest under paragraph (a) of this section, the practitioner may represent a client if—
-(1) The practitioner reasonably believes that the practitioner will be able to provide competent and diligent representation to each affected client;
-(2) The representation is not prohibited by law; and
-(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.
-
-(c) Copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients, and the written consents must be provided to any officer or employee of the Internal Revenue Service on request.`
-              },
-              {
-                id: "31-cfr-10-34",
-                citation: "31 CFR § 10.34",
-                title: "Standards with respect to tax returns and documents, affidavits and other papers",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.34",
-                examFrequency: "CRITICAL (90% of SEE Part 3 exams)",
-                keywords: [
-                  "tax return standards",
-                  "substantial authority",
-                  "reasonable basis",
-                  "adequate disclosure",
-                  "Form 8275",
-                  "more likely than not",
-                  "tax shelter",
-                  "relying on client information",
-                  "IRC 6694"
-                ],
-                crossRefs: ["31-cfr-10-21", "31-cfr-10-22", "31-cfr-10-35"],
-                text: `§ 10.34 Standards with respect to tax returns and documents, affidavits and other papers.
-(a) Tax returns.
-(1) A practitioner may not willfully, recklessly, or through gross incompetence—
-(i) Sign a tax return or claim for refund that the practitioner knows or reasonably should know contains a position that—
-(A) Lacks a reasonable basis;
-(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code (including the related regulations and other published guidance); or
-(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code (including the related regulations and other published guidance).
-(ii) Advise a client to take a position on a tax return or claim for refund, or prepare a portion of a tax return or claim for refund containing a position, that—
-(A) Lacks a reasonable basis;
-(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code; or
-(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code.
-
-(2) Summary of IRC § 6694(a)(2) Confidence Thresholds Referenced in § 10.34(a):
-- Undisclosed Tax Return Position (Non-Tax Shelter): Must be supported by "Substantial Authority" (approximately a 40% or greater likelihood of being sustained on its merits).
-- Adequately Disclosed Tax Return Position (Non-Tax Shelter, disclosed on Form 8275 or Form 8275-R): Must be supported by at least a "Reasonable Basis" (approximately a 20% or greater likelihood of being sustained on its merits; significantly higher than "not frivolous").
-- Tax Shelters and Reportable Transactions (IRC § 6662A): Must meet the "More Likely Than Not" standard (a greater than 50% likelihood of being sustained on its merits), regardless of whether disclosed.
-
-(c) Advising clients on potential penalties. A practitioner must inform a client of any penalties that are reasonably likely to apply to the client with respect to a position taken on a tax return if the practitioner advised the client with respect to the position, or prepared or signed the tax return, and must inform the client of any opportunity to avoid any such penalties by disclosure.
-
-(d) Relying on information furnished by clients. A practitioner advising a client to take a position on a tax return, document, affidavit or other paper submitted to the Internal Revenue Service, or preparing or signing a tax return as a preparer, generally may rely in good faith without verification upon information furnished by the client. The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete.`
-              },
-              {
-                id: "31-cfr-10-35",
-                citation: "31 CFR § 10.35",
-                title: "Competence",
-                breadcrumb: "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.35",
-                examFrequency: "HIGH (80% of SEE Part 3 exams)",
-                keywords: [
-                  "competence",
-                  "competent practice",
-                  "knowledge and skill",
-                  "thoroughness and preparation",
-                  "consulting with experts",
-                  "studying the relevant law"
-                ],
-                crossRefs: ["31-cfr-10-22", "31-cfr-10-29", "31-cfr-10-34"],
-                text: `§ 10.35 Competence.
-(a) A practitioner must possess the necessary competence to engage in practice before the Internal Revenue Service. Competent practice requires the appropriate level of knowledge, skill, thoroughness, and preparation necessary for the matter for which the practitioner is engaged.
-
-(b) A practitioner may become competent for the matter for which the practitioner has been engaged through various methods, such as consulting with experts in the relevant area or studying the relevant law.`
-              }
-            ]
-          }
-        ]
-      }
+  "meta": {
+    "productName": "CodeDrill CBT Simulator",
+    "examTrack": "US Customs Broker License Exam (CBLE)",
+    "secondaryTracks": [
+      "IRS Enrolled Agent (SEE / 31 CFR Part 10 Circular 230)"
     ],
-    // =========================================================================
-    // AUTHENTIC EXAM QUESTION BANK (24 QUESTIONS ACROSS 7 TEST SUITES)
-    // =========================================================================
-    questions: [
-      // =======================================================================
-      // SUITE 1: CBLE_111_113 — BROKER COMPLIANCE & BONDS (4 QUESTIONS: Q01-Q04)
-      // =======================================================================
-      {
-        id: "CBLE-Q01",
-        number: 1,
-        suite: "CBLE_111_113",
-        track: "CBLE",
-        category: "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Pacific Rim Forwarding LLC, an unlicensed ocean freight forwarder, refers a new U.S. importer, Cascade Home Furnishings Inc., to licensed customs broker Maria Vance. Pacific Rim asks Vance to pay a referral commission of $35 per customs entry filed on behalf of Cascade Home Furnishings and requests that Vance send her brokerage invoices to Pacific Rim so that Pacific Rim can bundle all logistics and customs charges onto a single consolidated invoice to Cascade. Under 19 CFR § 111.36, under what exact conditions may Broker Vance legally compensate Pacific Rim Forwarding for the referral?",
-        options: [
-          { letter: "A", text: "A licensed customs broker is strictly prohibited under all circumstances from sharing fees or paying referral compensation to an unlicensed person or freight forwarder." },
-          { letter: "B", text: "Vance may compensate the freight forwarder provided she obtains prior written approval from the Center of Excellence and Expertise (CEE) Director and caps the referral fee at 10% of the brokerage charge." },
-          { letter: "C", text: "Vance may compensate the freight forwarder only if Cascade purchases the goods on a Delivered Duty Paid (DDP) basis and the forwarder acts as the Importer of Record." },
-          { letter: "D", text: "Vance may compensate the freight forwarder provided she notifies the importer in advance in writing of the name of the forwarder being compensated, transmits a true copy of her brokerage charges directly to the importer (unless waived in writing by the importer), and the forwarder neither controls the brokerage fees nor forbids direct communication between the broker and the importer." },
-          { letter: "E", text: "Vance may compensate the freight forwarder provided the forwarder rebates at least 50% of the referral commission back to the importer as a volume discount." }
-        ],
-        correctOption: "D",
-        targetSectionId: "19-cfr-111-36",
-        targetCitation: "19 CFR § 111.36(c)(1)–(5)",
-        goldenQuote: "(1) The importer is notified in advance in writing by the broker of the name of the freight forwarder who is being compensated by the broker for the referral;",
-        shortestPathHint: "19 CFR -> Part 111 -> § 111.36 (Relations with unlicensed persons)",
-        socraticHints: [
-          "Hint 1 (Concept): Look for the specific regulatory exception to the general rule against fee-splitting with unlicensed persons when the unlicensed party is a freight forwarder.",
-          "Hint 2 (Navigation): Navigate to 19 CFR Part 111 -> § 111.36 and read paragraph (c) ('Compensation of freight forwarder').",
-          "Hint 3 (Trap Check): Check all 5 cumulative conditions in § 111.36(c)(1)-(5): advance written notice to the importer, direct transmittal of the brokerage bill (unless waived in writing), no control of fees by the forwarder, no ban on direct communication, and NO sharing of the referral fee with the importer."
-        ],
-        explanation: {
-          correctReasoning: "While 19 CFR § 111.36(b) generally prohibits a broker from entering into fee-splitting agreements where brokerage benefits inure to an unlicensed person, § 111.36(c) carves out an explicit exception allowing a broker to compensate a freight forwarder for referring brokerage business if five strict conditions are met: (1) advance written notice to the importer identifying the forwarder being compensated; (2) direct transmission to the importer of a true copy of the brokerage charges when collected through the forwarder (unless waived in writing by the importer); (3) the forwarder does not control or prescribe brokerage fees or conditions; (4) the forwarder does not forbid direct communication between importer and broker; and (5) no part of the compensation is shared with or refunded to the importer.",
-          distractors: {
-            A: "Incorrect because 19 CFR § 111.36(c) expressly authorizes compensating a freight forwarder for referrals when the five conditions in paragraph (c) are satisfied.",
-            B: "Incorrect because CBP regulations do not require CEE Director approval or impose a 10% percentage cap on freight forwarder referral fees.",
-            C: "Incorrect because DDP terms apply to the exception in § 111.36(a) regarding employment by an unlicensed intermediary, not the referral compensation requirements in § 111.36(c).",
-            D: "CORRECT: Accurately states the cumulative requirements of 19 CFR § 111.36(c)(1)–(4).",
-            E: "Incorrect because 19 CFR § 111.36(c)(5) explicitly prohibits sharing or refunding any part of the forwarder's referral compensation to the importer or any officer/employee of the importer."
-          }
+    "version": "2026.11-v2.1-eCFR",
+    "examDurationSeconds": 16200,
+    "passingScorePercent": 75,
+    "avgPassRateNational": 15.2
+  },
+  "corpora": [
+    {
+      "id": "19-cfr",
+      "code": "19 CFR",
+      "title": "Title 19 CFR — Customs Duties (CBP Regulations)",
+      "parts": [
+        {
+          "id": "19-cfr-part-111",
+          "code": "Part 111",
+          "title": "Part 111 — Customs Brokers",
+          "sections": [
+            {
+              "id": "19-cfr-111-1",
+              "citation": "19 CFR § 111.1",
+              "title": "Definitions",
+              "breadcrumb": "19 CFR > Part 111 > Subpart A > § 111.1",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "customs broker",
+                "customs business",
+                "corporate compliance activity",
+                "responsible supervision and control",
+                "freight forwarder",
+                "records"
+              ],
+              "crossRefs": [
+                "19-cfr-111-28",
+                "19-cfr-111-36",
+                "19-cfr-141-19"
+              ],
+              "text": "§ 111.1 Definitions.\nWhen used in this part, the following terms have the meanings indicated:\n\n\"Customs broker\" means a person who is licensed under this part to transact customs business on behalf of others.\n\n\"Customs business\" means those activities involving transactions with U.S. Customs and Border Protection (CBP) concerning the entry and admissibility of merchandise, its classification and valuation, the payment of duties, taxes, or other charges assessed or collected by CBP on merchandise by reason of its importation, and the refund, rebate, or drawback of those duties, taxes, or other charges. \"Customs business\" also includes the preparation, and activities relating to the preparation, of documents in any format and the electronic transmission of documents and parts of documents intended to be filed with CBP in furtherance of any other customs business activity, whether or not signed or filed by the preparer. However, \"customs business\" does not include the mere electronic transmission of data received for transmission to CBP and does not include a corporate compliance activity.\n\n\"Corporate compliance activity\" means activity performed by a business entity to ensure that documents for a related business entity or entities are prepared and filed with CBP using \"reasonable care\", but such activity does not extend to the actual preparation or filing of the documents or their electronic transmission.\n\n\"Freight forwarder\" means a person engaged in the business of dispatching shipments in foreign commerce between the United States, its territories or possessions, and foreign countries, and handling the formalities incident to such shipments, on behalf of other persons.\n\n\"Records\" means documents, data and information referred to in, and required to be made or maintained under, this part and any other records, as defined in § 163.1(a) of this chapter, that are required to be maintained by a broker under part 163 of this chapter.\n\n\"Responsible supervision and control\" means that degree of supervision and control necessary to ensure the proper transaction of the customs business of a broker, including actions necessary to ensure that an employee of a broker provides substantially the same quality of service in handling customs transactions that the broker is required to provide. See § 111.28 for a list of factors which CBP may consider when determining whether a broker is exercising responsible supervision and control."
+            },
+            {
+              "id": "19-cfr-111-23",
+              "citation": "19 CFR § 111.23",
+              "title": "Retention of records",
+              "breadcrumb": "19 CFR > Part 111 > Subpart C > § 111.23",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "retention of records",
+                "5 years",
+                "five calendar years",
+                "customs territory",
+                "30 calendar days",
+                "recordkeeping point of contact",
+                "Broker Management Branch"
+              ],
+              "crossRefs": [
+                "19-cfr-111-1",
+                "19-cfr-111-28",
+                "19-cfr-190-51"
+              ],
+              "text": "§ 111.23 Retention of records.\n(a) Place of retention. A licensed customs broker must maintain originals of the records referred to in this part, including any document executed in connection with the broker's customs business, and all other records required to be maintained under part 163 of this chapter, within the customs territory of the United States and in accordance with the provisions of this part and part 163 of this chapter.\n\n(b) Period of retention. The records described in paragraph (a) of this section, other than powers of attorney, must be retained for at least 5 years after the date of entry. Powers of attorney must be retained until revoked, and revoked powers of attorney and letters of revocation must be retained for 5 years after the date of their revocation or for 5 years after the date the client ceases to be an \"active client\" as defined in § 111.29(b)(2)(ii), whichever period is later. When merchandise is withdrawn from a bonded warehouse, records relating to the withdrawal must be retained for 5 years from the date of withdrawal of the last merchandise withdrawn under the entry.\n\n(c) Notification of change of record storage location or point of contact. Within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact (including name, telephone number, or email address), the broker must electronically notify the Broker Management Branch (or submit written notification if electronic transmission is unavailable) of the new location or updated contact information.\n\n(d) Examination of records. All records required to be kept under this section must be made available for inspection, copying, reproduction, or other official use by designated CBP officials within a reasonable period of time after demand."
+            },
+            {
+              "id": "19-cfr-111-28",
+              "citation": "19 CFR § 111.28",
+              "title": "Responsible supervision and control",
+              "breadcrumb": "19 CFR > Part 111 > Subpart C > § 111.28",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "responsible supervision and control",
+                "supervision factors",
+                "employee list",
+                "30 calendar days",
+                "new employees",
+                "terminated employees"
+              ],
+              "crossRefs": [
+                "19-cfr-111-1",
+                "19-cfr-111-23",
+                "19-cfr-111-53"
+              ],
+              "text": "§ 111.28 Responsible supervision and control.\n(a) General. Every individual broker operating as a sole proprietor, every licensed member of a partnership that is a broker, and every licensed officer of an association or corporation that is a broker must exercise responsible supervision and control (see § 111.1) over the transaction of the customs business of that sole proprietorship, partnership, association, or corporation. A sole proprietorship, partnership, association, or corporation must employ a sufficient number of licensed brokers relative to the job complexity, similarity of subordinate tasks, physical proximity of subordinates, abilities and skills of employees, and abilities and skills of the managers.\n\n(b) Factors CBP considers. While the determination of what is necessary to perform and maintain responsible supervision and control will vary depending upon the circumstances in each instance, factors which CBP will consider in its discretion and to the extent any is relevant include, but are not limited to:\n(1) The training required of employees of the broker and the frequency of training updates;\n(2) The issuance of written instructions and guidelines to employees of the broker and their accessibility to electronic or paper copies of the Harmonized Tariff Schedule of the United States (HTSUS), Title 19 of the Code of Federal Regulations, and CBP rulings;\n(3) The volume and type of business of the broker;\n(4) The reject rate for the various customs transactions relative to overall volume;\n(5) The maintenance of current editions of CBP regulations, the HTSUS, and administrative directives;\n(6) The availability of an individually licensed broker to employees for consultation;\n(7) The frequency of supervisory review and internal audits of the work of employees;\n(8) The timeliness of processing entries and payment of duty, tax, or other debt or obligation owing to the Government; and\n(9) Communications between CBP Officials and the broker, including the broker's responsiveness and timeliness in addressing CBP inquiries or deficiencies.\n\n(c) Employee list reporting. A national permit holder must submit a list of all current employees (including name, social security number, date and place of birth, date of hire, and current home address) upon issuance of a national permit and must report any new employees within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days. For terminated employees, the broker must notify CBP within 30 calendar days of the termination."
+            },
+            {
+              "id": "19-cfr-111-29",
+              "citation": "19 CFR § 111.29",
+              "title": "Diligence in correspondence and paying monies",
+              "breadcrumb": "19 CFR > Part 111 > Subpart C > § 111.29",
+              "examFrequency": "HIGH (70% of CBLE exams)",
+              "keywords": [
+                "due diligence",
+                "payment of duties",
+                "60 calendar days",
+                "5 working days",
+                "active client",
+                "annual notification"
+              ],
+              "crossRefs": [
+                "19-cfr-111-28",
+                "19-cfr-111-36",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 111.29 Diligence in correspondence and paying monies.\n(a) Due diligence by broker. Each broker must exercise due diligence in making financial settlements, in answering correspondence, and in preparing or assisting in the preparation and filing of records relating to any customs business matter handled by him as a broker. Payment of duty, tax, or other debt or obligation owing to the Government for which the broker is responsible, or for which the broker has received payment from a client, must be made to the Government on or before the date that payment is due. Payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client where no payment to the Government has been made, or received from a client in excess of the Governmental or other charges properly payable as part of the client's customs business, within 60 calendar days of receipt. No written statement is required if there is actual payment of the funds by a broker within that 60-calendar-day period.\n\n(b) Notice to client of method of payment.\n(1) All brokers must provide their clients with the following written notification:\n\"If you are the importer of record, payment to the broker will not relieve you of liability for customs charges (duties, taxes, or other debts owed CBP) in the event the charges are not paid by the broker. Therefore, if you pay by check, customs charges may be paid with a separate check payable to the 'U.S. Customs and Border Protection' which will be delivered to CBP by the broker.\"\n(2) Brokers must provide the information statement in paragraph (b)(1) of this section as follows:\n(i) On, or attached to, any power of attorney executed on or after the effective date of this regulation; and\n(ii) To each active client at least once every 12 months. An \"active client\" means a client from whom a broker has obtained a power of attorney and for whom the broker has transacted customs business on at least two occasions within the 12-month period preceding notification."
+            },
+            {
+              "id": "19-cfr-111-32",
+              "citation": "19 CFR § 111.32",
+              "title": "False information",
+              "breadcrumb": "19 CFR > Part 111 > Subpart C > § 111.32",
+              "examFrequency": "CRITICAL (90% of CBLE exams)",
+              "keywords": [
+                "false information",
+                "fraudulent document",
+                "client noncompliance",
+                "error or omission",
+                "corrective action",
+                "written advice",
+                "termination of representation"
+              ],
+              "crossRefs": [
+                "19-cfr-111-23",
+                "19-cfr-111-28",
+                "19-cfr-111-53",
+                "31-cfr-10-21"
+              ],
+              "text": "§ 111.32 False information.\n(a) Prohibition against filing false documents. A broker must not file or procure or assist in the filing of any claim, or of any document, affidavit, or other paper, known by such broker to be false. In addition, a broker must not knowingly give, or solicit or procure the giving of, any false or misleading information or testimony in any matter pending before the Department of Homeland Security or to any official representative of the Department of Homeland Security.\n\n(b) Duty upon discovering client noncompliance, error, or omission. A broker must not knowingly suggest to a client or prospective client any illegal plan for evading payment of any duty, tax, or other debt or obligation owing to the U.S. Government. If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.\n\n(c) Refusal to file and separation from ongoing noncompliance. If a client refuses to correct a known error or omission prior to filing, or attempts to induce the broker to continue a transaction that the broker knows to be false, fraudulent, or noncompliant with U.S. law, the broker must refuse to file the entry or document, must not participate in the continuation of the noncompliant conduct, and must document the termination or refusal in the broker's records."
+            },
+            {
+              "id": "19-cfr-111-36",
+              "citation": "19 CFR § 111.36",
+              "title": "Relations with unlicensed persons",
+              "breadcrumb": "19 CFR > Part 111 > Subpart C > § 111.36",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "unlicensed persons",
+                "freight forwarder",
+                "compensation",
+                "fee splitting",
+                "direct billing",
+                "advance written notice"
+              ],
+              "crossRefs": [
+                "19-cfr-111-1",
+                "19-cfr-111-29",
+                "19-cfr-111-53"
+              ],
+              "text": "§ 111.36 Relations with unlicensed persons.\n(a) Employment by unlicensed person other than importer. When a broker is employed for the transaction of customs business by an unlicensed person who is not the actual importer, the broker must transmit to the actual importer either a copy of his bill for services rendered or a copy of the entry, unless the merchandise was purchased on a delivered duty-paid (DDP) basis or the importer has in writing waived transmittal of the copy of the entry or bill for services rendered.\n\n(b) Service to others not to benefit unlicensed person. Except as otherwise provided in paragraph (c) of this section, a broker must not enter into any agreement with an unlicensed person to transact customs business for others in such manner that the fees or other benefits resulting from the services rendered for others inure to the benefit of the unlicensed person.\n\n(c) Compensation of freight forwarder. A broker may compensate a freight forwarder for referring brokerage business, subject to the following conditions:\n(1) The importer is notified in advance in writing by the broker of the name of the freight forwarder who is being compensated by the broker for the referral;\n(2) The broker transmits directly to the importer:\n(i) A true copy of his brokerage charges if the fees and charges are to be collected by or through the forwarder, unless this requirement is waived in writing by the importer; or\n(ii) A statement of his charges when they are to be collected directly from the importer;\n(3) The freight forwarder does not control or prescribe the fees or charges to be assessed by the broker, nor the conditions under which the brokerage service is to be rendered;\n(4) The freight forwarder does not forbid or prevent direct communication between the importer and the broker; and\n(5) No part of the compensation paid by the broker to the freight forwarder is shared with or refunded to the importer or any officer or employee of the importer."
+            },
+            {
+              "id": "19-cfr-111-53",
+              "citation": "19 CFR § 111.53",
+              "title": "Grounds for suspension or revocation of license or permit",
+              "breadcrumb": "19 CFR > Part 111 > Subpart D > § 111.53",
+              "examFrequency": "HIGH (70% of CBLE exams)",
+              "keywords": [
+                "suspension",
+                "revocation",
+                "license",
+                "permit",
+                "felony",
+                "monetary penalty",
+                "$30,000"
+              ],
+              "crossRefs": [
+                "19-cfr-111-28",
+                "19-cfr-111-32",
+                "19-cfr-111-36"
+              ],
+              "text": "§ 111.53 Grounds for suspension or revocation of license or permit.\nThe appropriate CBP official may initiate proceedings for the suspension, for a specific period of time, or revocation of the license or permit of any broker for any of the following reasons:\n(a) The broker has made or caused to be made in any application for any license or permit under this part, or report filed with CBP, any statement which was, at the time and in light of the circumstances under which it was made, false or misleading with respect to any material fact, or has omitted to state in any application or report any material fact which was required;\n(b) The broker has been convicted, at any time after the filing of an application for a license under § 111.12, of any felony or misdemeanor which:\n(1) Involved the importation or exportation of merchandise;\n(2) Arose out of the conduct of customs business; or\n(3) Involved larceny, theft, robbery, extortion, forgery, counterfeiting, fraudulent concealment, embezzlement, fraudulent conversion, or misappropriation of funds;\n(c) The broker has violated any provision of any law enforced by CBP or the rules or regulations issued under any provision of any law enforced by CBP;\n(d) The broker has counseled, commanded, induced, procured, or knowingly aided or abetted the violations by any other person of any provision of any law enforced by CBP or the rules or regulations issued under any provision of any law enforced by CBP;\n(e) The broker has knowingly employed, or continues to employ, any individual who has been convicted of a felony, without written approval of that employment from the appropriate Executive Director, Office of Trade;\n(f) The broker has, in the course of his customs business, with intent to defraud, in any manner willfully and knowingly deceived, misled or threatened any client or prospective client; or\n(g) The broker has failed to exercise responsible supervision and control over the customs business that it conducts.\nNote on Monetary Penalties (§ 111.91): CBP may assess a monetary penalty or penalties not to exceed an aggregate of $30,000 in lieu of suspension or revocation of a license or permit for one or more of the reasons set forth in § 111.53."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-113",
+          "code": "Part 113",
+          "title": "Part 113 — CBP Bonds",
+          "sections": [
+            {
+              "id": "19-cfr-113-62",
+              "citation": "19 CFR § 113.62",
+              "title": "Basic importation and entry bond conditions",
+              "breadcrumb": "19 CFR > Part 113 > Subpart G > § 113.62",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "CBP Form 301",
+                "basic importation and entry bond",
+                "joint and several liability",
+                "CBP Form 4647",
+                "30 calendar days redelivery",
+                "liquidated damages",
+                "three times the value",
+                "restricted or prohibited merchandise"
+              ],
+              "crossRefs": [
+                "19-cfr-141-19",
+                "19-cfr-142-3",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 113.62 Basic importation and entry bond conditions.\nA bond for basic importation and entry (executed on CBP Form 301 as either a single transaction bond or a continuous bond) shall contain the following conditions, under which the principal (Importer of Record) and surety, jointly and severally, agree:\n\n(a) Agreement to Pay Duties, Taxes, and Charges. If merchandise is imported and released from CBP custody or withdrawn from a bonded warehouse into the commerce of, or for consumption in, the United States, the obligors (principal and surety, jointly and severally) agree to pay, as demanded by CBP, all additional duties, taxes, and charges subsequently found legally due on any entry secured by this bond.\n\n(b) Agreement to Make or Complete Entry. The principal agrees to file timely the entry summary (CBP Form 7501) and pay estimated duties within 10 working days after the time of entry (§ 142.12).\n\n(d) Agreement to Redeliver Merchandise (CBP Form 4647 — 30-Day Redelivery Period). The principal agrees to redeliver timely to CBP custody any merchandise released from CBP custody if:\n(1) The merchandise fails to comply with the laws or regulations governing its admission into the United States (such as FDA, CPSC, USDA, or EPA admissibility requirements, or Country of Origin marking requirements under 19 CFR Part 134); and\n(2) Demand for redelivery is made on CBP Form 4647 (Notice to Mark and/or Notice to Redeliver) no later than 30 calendar days after the date the merchandise was released, or 30 calendar days after the end of the conditional release period (whichever is later). The importer must return the merchandise to CBP custody (or bring it into marking/admissibility compliance) within 30 calendar days after the date of the CBP Form 4647 Notice to Redeliver.\n\n(n) Consequences of Default — Liquidated Damages Calculation:\n(1) Restricted, Prohibited, Alcoholic, or Quota-Class Merchandise (3x Value): If the principal defaults on the obligation to redeliver, mark, export, or destroy restricted or prohibited merchandise (including FDA/CPSC refused goods), alcoholic beverages, or quota-class merchandise, the obligors (principal and surety, jointly and severally) agree to pay liquidated damages equal to three times the total value of the merchandise (3x value) involved in the default.\n(2) Non-Restricted General Merchandise (1x Value + Duties): If the principal defaults on the obligation to redeliver or mark merchandise that is NOT restricted, prohibited, alcoholic, or quota-class merchandise, the obligors agree to pay liquidated damages equal to the value of the merchandise involved in the default PLUS the estimated duties, taxes, and fees determined to be due on that merchandise."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-141",
+          "code": "Part 141",
+          "title": "Part 141 — Entry of Merchandise",
+          "sections": [
+            {
+              "id": "19-cfr-141-4",
+              "citation": "19 CFR § 141.4",
+              "title": "Entry required and exemptions",
+              "breadcrumb": "19 CFR > Part 141 > Subpart A > § 141.4",
+              "examFrequency": "HIGH (65% of CBLE exams)",
+              "keywords": [
+                "entry required",
+                "exemptions",
+                "Section 321",
+                "$800 de minimis",
+                "informal entry",
+                "formal entry",
+                "$2,500"
+              ],
+              "crossRefs": [
+                "19-cfr-141-19",
+                "19-cfr-142-2"
+              ],
+              "text": "§ 141.4 Entry required.\n(a) General. All merchandise imported into the United States is required to be entered, unless specifically excepted.\n\n(b) Exceptions. The following merchandise is excepted from the requirement of entry:\n(1) The exemptions listed in General Note 3(e), Harmonized Tariff Schedule of the United States (HTSUS) (e.g., corpses, telecommunications transmissions, vessels/aircraft arriving in international traffic);\n(2) Vessels (not including vessels classified in headings 8903 and 8907 and yachts or pleasure boats classified in heading 8903);\n(3) Instruments of international traffic described in § 10.41a and § 10.41b of this chapter; and\n(4) Administrative Exemption under 19 U.S.C. 1321(a)(2)(C) (§ 10.151): Merchandise imported by one person on one day having an aggregate fair retail value in the country of shipment of not more than $800 may be admitted free of duty and tax without formal or informal entry summary, EXCEPT where such importation is for the purpose of avoiding duty, or involves merchandise subject to Antidumping or Countervailing Duties (AD/CVD), absolute or tariff-rate quota (TRQ), or Partner Government Agency (PGA) restrictions prohibiting Section 321 clearance, or internal revenue tax on alcoholic beverages, cigars, cigarettes, or perfumes containing alcohol.\n\n(c) Formal vs. Informal Entry Threshold (§ 143.21): Generally, formal consumption entry (Entry Type 01) supported by a customs bond is required for commercial shipments valued over $2,500, or over $250 for certain textiles, leather goods, and footwear classes enumerated in § 143.21."
+            },
+            {
+              "id": "19-cfr-141-19",
+              "citation": "19 CFR § 141.19",
+              "title": "Declaration of entry and Power of Attorney rules",
+              "breadcrumb": "19 CFR > Part 141 > Subpart B > § 141.19",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "declaration of entry",
+                "importer of record",
+                "owner",
+                "purchaser",
+                "consignee",
+                "power of attorney",
+                "partnership 2 years"
+              ],
+              "crossRefs": [
+                "19-cfr-111-1",
+                "19-cfr-113-62",
+                "19-cfr-141-4",
+                "19-cfr-142-3"
+              ],
+              "text": "§ 141.19 Declaration of entry.\n(a) Declaration by consignee. The consignee in whose name an entry is made under the provisions of section 484, Tariff Act of 1930, as amended (19 U.S.C. 1484), shall execute the declaration specified in section 485(a), Tariff Act of 1930 (19 U.S.C. 1485(a)) on the entry summary (CBP Form 7501). Only the owner or purchaser of the merchandise, or, when appropriately designated by the owner, purchaser, or consignee, a licensed customs broker, may make entry as the Importer of Record (IOR).\n\n(b) Declaration by agent. When an entry is made in a consignee's name by an agent who has knowledge of the facts and who is authorized under a proper power of attorney by that consignee to make declarations where required, the declaration on the entry or entry summary may be executed by the agent without need for a further declaration by the principal.\n\n(c) Power of Attorney Validity Rules (§§ 141.31–141.34):\n(1) General duration (§ 141.34): Except for partnerships, a power of attorney executed in favor of a licensed customs broker or other agent may be granted for an unlimited period of time and remains valid until revoked in writing.\n(2) Partnership limitation (§ 141.34): A power of attorney granted by a partnership shall be limited to a period not to exceed 2 years from the date of execution, and shall state the names of all members of the partnership. Any change in the membership of the partnership automatically revokes the power of attorney."
+            },
+            {
+              "id": "19-cfr-141-68",
+              "citation": "19 CFR § 141.68",
+              "title": "Time of entry",
+              "breadcrumb": "19 CFR > Part 141 > Subpart E > § 141.68",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "time of entry",
+                "release authorized",
+                "entry documentation",
+                "entry summary",
+                "arrival within port limits",
+                "quota-class merchandise"
+              ],
+              "crossRefs": [
+                "19-cfr-142-2",
+                "19-cfr-142-3",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 141.68 Time of entry.\n(a) When entry documentation is filed without entry summary. When the entry documentation required by § 142.3(a) is filed in proper form without an entry summary, the \"time of entry\" will be:\n(1) The time the appropriate CBP officer authorizes the release of the merchandise or any part of the merchandise covered by the entry documentation, or\n(2) The time the entry documentation is filed, if requested by the importer on the entry documentation at the time of filing, and the merchandise already has arrived within the port limits; or\n(3) The time the merchandise arrives within the port limits, if the entry documentation is submitted before arrival, and if requested by the importer on the entry documentation at the time of submission.\n\n(b) When entry summary serves as entry and entry summary. When an entry summary serves as both the entry documentation and entry summary (\"live entry\"), in accordance with § 142.3(b) of this chapter, the time of entry will be the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits.\n\n(c) When merchandise is released under the immediate delivery procedure. The time of entry of merchandise released under the immediate delivery procedure will be the time the entry summary is filed in proper form, with estimated duties attached.\n\n(d) Quota-class merchandise. The time of entry for quota-class merchandise will be the time of presentation of the entry summary or withdrawal for consumption in proper form, with estimated duties attached, or if the entry/entry summary information and a valid scheduled statement date (pursuant to § 24.25 of this chapter) have been successfully received by CBP via the Automated Broker Interface (ABI), without the estimated duties attached, as provided in § 132.11a of this chapter, provided the merchandise has arrived within the port limits.\n\n(e) Rate of duty (§ 141.69). Merchandise is subject to the rate of duty in effect at the \"time of entry\" as determined under this section."
+            },
+            {
+              "id": "19-cfr-141-86",
+              "citation": "19 CFR § 141.86",
+              "title": "Contents of invoice",
+              "breadcrumb": "19 CFR > Part 141 > Subpart F > § 141.86",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "commercial invoice",
+                "contents of invoice",
+                "port of entry",
+                "purchase price",
+                "currency of purchase",
+                "itemized charges",
+                "country of origin",
+                "assists disclosure",
+                "English language"
+              ],
+              "crossRefs": [
+                "19-cfr-141-89",
+                "19-cfr-142-3",
+                "19-cfr-152-102"
+              ],
+              "text": "§ 141.86 Contents of invoice.\n(a) General requirements. Every invoice of merchandise to be imported into the United States shall set forth the following information:\n(1) The port of entry to which the merchandise is destined;\n(2) The time when, the place where, and the person by whom and the person to whom the merchandise is sold or agreed to be sold, or if to be imported otherwise than in pursuance of a purchase, the place from which shipped, the time when and the person to whom and the person by whom it is shipped;\n(3) A detailed description of the merchandise, including the name by which each item is known, the grade or quality, and the marks, numbers, and symbols under which sold by the seller or manufacturer to the trade in the country of exportation, together with the marks and numbers of the packages in which the merchandise is packed;\n(4) The quantities in the weights and measures of the country or place from which the merchandise is shipped, or in the weights and measures of the United States;\n(5) The purchase price of each item in the currency of the purchase, if the merchandise is shipped in pursuance of a purchase or an agreement to purchase;\n(6) If the merchandise is shipped otherwise than in pursuance of a purchase or an agreement to purchase, the value for each item, in the currency in which the transactions are usually made, or, in the absence of such value, the price in such currency that the manufacturer, seller, shipper, or owner would have received, or was willing to receive, for such merchandise if sold in the ordinary course of trade and in the usual wholesale quantities in the country of exportation;\n(7) The kind of currency, whether gold, silver, or paper;\n(8) All charges upon the merchandise itemized by name and amount, including freight, insurance, commission, cases, containers, coverings, and cost of packing; and if not included above, all charges, costs, and expenses incurred in bringing the merchandise from alongside the carrier at the port of exportation in the country of exportation and placing it alongside the carrier at the first United States port of entry. The cost of packing, cases, containers, and inland freight to the port of exportation need not be itemized by amount if included in the invoice price, and so identified;\n(9) All rebates, drawbacks, and bounties, separately itemized, allowed upon the exportation of the merchandise;\n(10) The country of origin of the merchandise; and\n(11) All goods or services furnished for the production of the merchandise (e.g., \"assists\" such as dies, molds, tools, engineering work) not included in the invoice price. However, goods or services furnished in the United States are excluded.\n\n(d) English language requirement. The invoice and all attachments must be in the English language, or shall have attached thereto an accurate translation into the English language."
+            },
+            {
+              "id": "19-cfr-141-89",
+              "citation": "19 CFR § 141.89",
+              "title": "Additional information for certain classes of merchandise",
+              "breadcrumb": "19 CFR > Part 141 > Subpart F > § 141.89",
+              "examFrequency": "MEDIUM (50% of CBLE exams)",
+              "keywords": [
+                "additional invoice information",
+                "footwear",
+                "wearing apparel",
+                "iron and steel",
+                "machinery",
+                "watches"
+              ],
+              "crossRefs": [
+                "19-cfr-141-86",
+                "htsus-gri-1"
+              ],
+              "text": "§ 141.89 Additional information for certain classes of merchandise.\n(a) Invoices for the following classes of merchandise, classifiable under the Harmonized Tariff Schedule of the United States (HTSUS), shall set forth the additional information specified:\n(1) Footwear (Chapter 64): Percentage of the external surface area of the upper (ESAU) and outer sole by material (leather, composition leather, rubber, plastics, or textile materials), whether the footwear is \"protective\" against water, oil, grease, or cold, and whether it features a foxing or foxing-like band.\n(2) Wearing apparel and textiles (Chapters 61 and 62): Chief weight and percentage breakdown by fiber weight (e.g., 60% cotton, 40% polyester), whether knit or woven, gender/age sizing designation (men's, boys', women's, girls', or infants'), and yarn size or thread count where required by subheading notes.\n(3) Iron and steel products (Chapters 72 and 73): Mill test certificates or chemical composition percentages by weight of carbon and alloying elements (chromium, nickel, molybdenum, manganese), tensile strength, dimensions (thickness, width, diameter), and country of melt and pour.\n(4) Watches and clocks (Chapter 91): Number of jewels in the movement, whether the movement is mechanical or battery/quartz-powered, and separate values and materials for the movement, case, and strap, band, or bracelet."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-142",
+          "code": "Part 142",
+          "title": "Part 142 — Entry Process",
+          "sections": [
+            {
+              "id": "19-cfr-142-2",
+              "citation": "19 CFR § 142.2",
+              "title": "Time for filing entry",
+              "breadcrumb": "19 CFR > Part 142 > Subpart A > § 142.2",
+              "examFrequency": "CRITICAL (80% of CBLE exams)",
+              "keywords": [
+                "15 calendar days",
+                "time for filing entry",
+                "general order warehouse",
+                "G.O. merchandise",
+                "landing",
+                "in-bond arrival"
+              ],
+              "crossRefs": [
+                "19-cfr-141-68",
+                "19-cfr-142-3",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 142.2 Time for filing entry.\n(a) General rule: 15 calendar days. Entry documentation required by § 142.3 must be filed within 15 calendar days after landing from a vessel, aircraft or vehicle, or after arrival at the port of destination in the case of merchandise transported in bond.\n\n(b) Presentation prior to arrival. Entry documentation may be submitted before the merchandise arrives within the limits of the port where entry is to be made, in which case the merchandise will not be authorized for release until it has arrived within the port limits.\n\n(c) Consequence of failure to make entry within 15 calendar days (General Order — Part 127). Any merchandise for which entry documentation is not filed within 15 calendar days after landing or in-bond arrival at the port of destination shall be treated as unclaimed and sent to a General Order (G.O.) warehouse or public store to be held at the risk and expense of the consignee. Carrier notification to CBP and a G.O. warehouse must occur within 20 calendar days after landing/arrival. Merchandise remaining in General Order for 6 months from the date of importation without entry may be sold at public auction or destroyed by CBP."
+            },
+            {
+              "id": "19-cfr-142-3",
+              "citation": "19 CFR § 142.3",
+              "title": "Entry documentation required",
+              "breadcrumb": "19 CFR > Part 142 > Subpart A > § 142.3",
+              "examFrequency": "HIGH (70% of CBLE exams)",
+              "keywords": [
+                "CBP Form 3461",
+                "entry documentation",
+                "evidence of right to make entry",
+                "commercial invoice",
+                "pro forma invoice",
+                "packing list",
+                "customs bond",
+                "CBP Form 301"
+              ],
+              "crossRefs": [
+                "19-cfr-113-62",
+                "19-cfr-141-19",
+                "19-cfr-141-86",
+                "19-cfr-142-2",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 142.3 Entry documentation required.\n(a) Contents. Except as provided in paragraph (b) of this section, the entry documentation required to secure the release of merchandise must consist of the following:\n(1) Entry/Immediate Delivery, CBP Form 3461, or its electronic equivalent in ACE, or alternative form authorized by the port director;\n(2) Evidence of the right to make entry (such as a bill of lading, air waybill, carrier's certificate, or electronic release notification under part 141, subpart B);\n(3) A commercial invoice (meeting the requirements of § 141.86) or a pro forma invoice when the commercial invoice cannot be produced at the time of entry;\n(4) A packing list, where appropriate;\n(5) Other documents or Partner Government Agency (PGA) message set data which may be required by CBP or other federal agencies for a particular shipment of merchandise; and\n(6) Identification of a valid basic importation and entry bond (CBP Form 301, continuous or single transaction bond) on file with CBP.\n\n(b) Entry summary filed as entry (\"Live Entry\"). The entry summary (CBP Form 7501, or its electronic equivalent) with estimated duties attached may be filed at the time of entry in place of the entry documentation listed in paragraph (a)(1) of this section, and will be required by the port director prior to release if the importer is delinquent or subject to live entry sanction under § 142.13."
+            },
+            {
+              "id": "19-cfr-142-12",
+              "citation": "19 CFR § 142.12",
+              "title": "Time for filing entry summary",
+              "breadcrumb": "19 CFR > Part 142 > Subpart B > § 142.12",
+              "examFrequency": "CRITICAL (90% of CBLE exams)",
+              "keywords": [
+                "10 working days",
+                "entry summary",
+                "CBP Form 7501",
+                "estimated duties",
+                "time of entry",
+                "liquidated damages",
+                "federal holidays"
+              ],
+              "crossRefs": [
+                "19-cfr-111-29",
+                "19-cfr-113-62",
+                "19-cfr-141-68",
+                "19-cfr-142-2",
+                "19-cfr-142-19"
+              ],
+              "text": "§ 142.12 Time for filing entry summary.\n(a) When entry summary must be filed at time of entry. The port director may require that the entry summary (CBP Form 7501, or its electronic equivalent) with estimated duties attached be filed at the time of entry before the merchandise is released if the importer:\n(1) Has failed repeatedly to file timely entry summaries without justification;\n(2) Has not taken prompt action to settle a claim for liquidated damages issued under § 142.15 for failure to file an entry summary timely; or\n(3) Is substantially or habitually delinquent in the payment of Customs bills.\n\n(b) When entry summary is not filed at time of entry: 10 working days. When the entry documentation is filed before the entry summary, the importer or broker must file the entry summary (CBP Form 7501 or ACE electronic equivalent), with estimated duties attached (or scheduled via Automated Clearinghouse / Periodic Monthly Statement), within 10 working days after the time of entry (as determined under § 141.68).\n\n(c) Computation of 10 working days. In computing the 10-working-day period:\n(1) Day 1 is the first working day FOLLOWING the day on which the time of entry occurs; and\n(2) Saturdays, Sundays, and federal holidays are excluded from the count of working days.\n\n(d) Liquidated damages for failure to file timely (§ 142.15 & § 113.62). If the entry summary and estimated duties are not filed within the 10-working-day period prescribed by paragraph (b) of this section, an immediate demand for liquidated damages under the basic importation and entry bond (generally equal to the value of the merchandise involved in the default) shall be made against the importer of record."
+            },
+            {
+              "id": "19-cfr-142-19",
+              "citation": "19 CFR § 142.19",
+              "title": "Release of merchandise under immediate delivery",
+              "breadcrumb": "19 CFR > Part 142 > Subpart C > § 142.19",
+              "examFrequency": "MEDIUM (60% of CBLE exams)",
+              "keywords": [
+                "immediate delivery",
+                "special permit",
+                "Canada or Mexico",
+                "fresh fruits and vegetables",
+                "quota-class merchandise",
+                "10 working days after release"
+              ],
+              "crossRefs": [
+                "19-cfr-141-68",
+                "19-cfr-142-3",
+                "19-cfr-142-12"
+              ],
+              "text": "§ 142.19 Release of merchandise under the immediate delivery procedure.\n(a) Eligible merchandise (§ 142.21). Merchandise may be released under a special permit for immediate delivery (using CBP Form 3461 marked as Immediate Delivery) only in the following circumstances:\n(1) Merchandise arriving from Canada or Mexico at a land border port, when approved by the port director and covered by a continuous bond;\n(2) Fresh fruits and vegetables for human consumption arriving from Canada or Mexico and removed from the area of arrival to the importer's premises prior to examination;\n(3) Articles of a trade fair, or shipments consigned to or for the account of any agency or office of the United States Government;\n(4) Quota-class merchandise subject to a tariff-rate quota (TRQ) (note: absolute quota merchandise is NEVER eligible for immediate delivery and requires live entry summary); and\n(5) Merchandise authorized by CBP Headquarters under special emergency or year-end tariff schedule transition directives.\n\n(b) Time for filing entry summary after immediate delivery release (§ 142.23). Within 10 working days after the release of merchandise under a special permit for immediate delivery, the importer must file the entry summary (CBP Form 7501) in proper form with estimated duties attached. Under § 141.68(c), the time of entry for merchandise released under immediate delivery is the time the entry summary is filed in proper form with estimated duties attached (not the time of release)."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-152",
+          "code": "Part 152",
+          "title": "Part 152 — Classification and Appraisement of Merchandise",
+          "sections": [
+            {
+              "id": "19-cfr-152-101",
+              "citation": "19 CFR § 152.101",
+              "title": "Basis of appraisement",
+              "breadcrumb": "19 CFR > Part 152 > Subpart E > § 152.101",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "basis of appraisement",
+                "hierarchy of valuation",
+                "transaction value",
+                "identical merchandise",
+                "similar merchandise",
+                "deductive value",
+                "computed value",
+                "reverse order election"
+              ],
+              "crossRefs": [
+                "19-cfr-152-102",
+                "19-cfr-152-103"
+              ],
+              "text": "§ 152.101 Basis of appraisement.\n(a) General. Imported merchandise will be appraised on the basis, and in the sequential order, of the following:\n(1) The transaction value of imported merchandise (§ 152.103);\n(2) The transaction value of identical merchandise (§ 152.104), if the transaction value cannot be determined, or cannot be used;\n(3) The transaction value of similar merchandise (§ 152.104), if the transaction value of identical merchandise cannot be determined;\n(4) The deductive value (§ 152.105), if the transaction value of similar merchandise cannot be determined;\n(5) The computed value (§ 152.106), if the deductive value cannot be determined; or\n(6) The value if other values cannot be determined (§ 152.107, \"fallback method\" using reasonable adjustments to previous methods), if the computed value cannot be determined.\n\n(b) Importer's option to reverse Deductive and Computed value. Upon written request made by the importer at the time of filing the entry summary, the order of application of deductive value (paragraph (a)(4)) and computed value (paragraph (a)(5)) will be reversed so that computed value is applied before deductive value.\n\n(c) Prohibited bases of appraisement (§ 152.108). Imported merchandise may NEVER be appraised on the basis of:\n(1) The selling price in the United States of merchandise produced in the United States;\n(2) A system that provides for the appraisement of imported merchandise at the higher of two alternative values;\n(3) The price of merchandise in the domestic market of the country of exportation;\n(4) A cost of production, other than a value determined under § 152.106 for merchandise that is identical or similar to the imported merchandise;\n(5) The price of merchandise for export to a country other than the United States;\n(6) Minimum values for appraisement; or\n(7) Arbitrary or fictitious values."
+            },
+            {
+              "id": "19-cfr-152-102",
+              "citation": "19 CFR § 152.102",
+              "title": "Definitions: Assist, Related persons, Identical/Similar merchandise",
+              "breadcrumb": "19 CFR > Part 152 > Subpart E > § 152.102",
+              "examFrequency": "CRITICAL (90% of CBLE exams)",
+              "keywords": [
+                "assist",
+                "dies molds tools",
+                "materials components parts",
+                "engineering design work",
+                "undertaken outside the United States",
+                "U.S. engineering exclusion",
+                "related persons",
+                "5 percent voting stock"
+              ],
+              "crossRefs": [
+                "19-cfr-141-86",
+                "19-cfr-152-101",
+                "19-cfr-152-103"
+              ],
+              "text": "§ 152.102 Definitions.\nAs used in this subpart, the following terms will have the meanings indicated:\n\n(a) Assist.\n(1) \"Assist\" means any of the following if supplied directly or indirectly, and free of charge or at reduced cost, by the buyer of imported merchandise for use in connection with the production or the sale for export to the United States of the merchandise:\n(i) Materials, components, parts, and similar items incorporated in the imported merchandise;\n(ii) Tools, dies, molds, and similar items used in the production of the imported merchandise;\n(iii) Merchandise consumed in the production of the imported merchandise; and\n(iv) Engineering, development, artwork, design work, and plans and sketches that are undertaken elsewhere than in the United States (i.e., OUTSIDE the United States) and are necessary for the production of the imported merchandise.\n(2) Exclusion for U.S.-based engineering and design work. No service or work to which paragraph (a)(1)(iv) of this section applies will be treated as an assist if the service or work:\n(i) Is performed by an individual who is domiciled within the United States;\n(ii) Is performed by that individual while he is acting as an employee or agent of the buyer of the imported merchandise; and\n(iii) Is incidental to other engineering, development, artwork, design work, or plans or sketches that are undertaken within the United States.\n(3) Valuation of assists (§ 152.103(d)): The value of an assist is either the cost of acquisition (if acquired by the buyer from an unrelated seller) or the cost of production (if produced by the buyer or a person related to the buyer), PLUS the cost of transporting the assist to the foreign place of production.\n\n(c) Identical merchandise. \"Identical merchandise\" means merchandise that is identical in all respects to, and was produced in the same country and by the same person as, the merchandise being appraised; or if unavailable, produced in the same country by a different person.\n\n(g) Related persons. \"Related persons\" means:\n(1) Members of the same family (brothers, sisters, spouse, ancestors, and lineal descendants);\n(2) Any officer or director of an organization, and that organization;\n(3) An officer or director of an organization and an officer or director of another organization, if each individual also is an officer or director in the other organization;\n(4) Partners;\n(5) Employer and employee;\n(6) Any person directly or indirectly owning, controlling, or holding with power to vote, 5 percent or more of the outstanding voting stock or shares of any organization, and that organization; and\n(7) Two or more persons directly or indirectly controlling, controlled by, or under common control with, any person."
+            },
+            {
+              "id": "19-cfr-152-103",
+              "citation": "19 CFR § 152.103",
+              "title": "Transaction value: PAPP, Statutory Additions & Exclusions",
+              "breadcrumb": "19 CFR > Part 152 > Subpart E > § 152.103",
+              "examFrequency": "CRITICAL (95% of CBLE exams)",
+              "keywords": [
+                "transaction value",
+                "price actually paid or payable",
+                "PAPP",
+                "statutory additions",
+                "packing costs",
+                "selling commission",
+                "buying commission",
+                "royalties",
+                "condition of sale",
+                "international freight exclusion"
+              ],
+              "crossRefs": [
+                "19-cfr-141-86",
+                "19-cfr-152-101",
+                "19-cfr-152-102"
+              ],
+              "text": "§ 152.103 Transaction value.\n(a) Price actually paid or payable (PAPP).\n(1) General. The transaction value of imported merchandise is the price actually paid or payable for the merchandise when sold for exportation to the United States, plus amounts equal to the five statutory additions enumerated in paragraph (b) of this section. \"Price actually paid or payable\" means the total payment (whether direct or indirect, and exclusive of any costs, charges, or expenses incurred for transportation, insurance, and related services incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States) made, or to be made, for imported merchandise by the buyer to, or for the benefit of, the seller.\n(2) Indirect payments. An example of an indirect payment which is part of the price actually paid or payable is the settlement by the buyer, in whole or in part, of a debt owed by the seller.\n(3) Foreign inland freight. In a sale on an ex-factory (EXW) basis, foreign inland freight and insurance from the factory to the port of exportation paid by the buyer to a third-party carrier are NOT added to the price actually paid or payable. In an FOB or CIF sale where foreign inland freight is included in the seller's invoice price, it remains part of PAPP unless a through bill of lading applies under paragraph (a)(5)(iii).\n\n(b) Additions to price actually paid or payable.\n(1) The transaction value of imported merchandise is the price actually paid or payable for the merchandise when sold for exportation to the United States, plus amounts equal to:\n(i) The packing costs incurred by the buyer with respect to the imported merchandise (including labor and materials for containers/coverings);\n(ii) Any selling commission incurred by the buyer with respect to the imported merchandise (Note: Bona fide BUYING commissions paid by the buyer to the buyer's own purchasing agent for representing the buyer abroad are NEVER added to transaction value);\n(iii) The value, apportioned as appropriate, of any assist (as defined in § 152.102(a), including transportation of the assist to the foreign plant);\n(iv) Any royalty or license fee related to the imported merchandise that the buyer is required to pay, directly or indirectly, as a condition of the sale of the imported merchandise for exportation to the United States; and\n(v) The proceeds of any subsequent resale, disposal, or use of the imported merchandise that accrue, directly or indirectly, to the seller.\n(2) No other additions permitted. The transaction value of imported merchandise will be supplemented by the items listed in paragraph (b)(1) of this section ONLY to the extent that each such item is not already included in the price actually paid or payable and is based on objective and quantifiable data. No other additions to the price actually paid or payable may be made.\n\n(i) Exclusions from transaction value. The transaction value of imported merchandise does NOT include any of the following, if identified separately from the price actually paid or payable and from any cost or other item referred to in paragraph (b) of this section:\n(1) International freight, marine/air cargo insurance, and other costs incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States (per paragraph (a)(1));\n(2) Any reasonable cost or charge that is incurred for:\n(i) The construction, erection, assembly, or maintenance of, or the technical assistance provided with respect to, the merchandise AFTER its importation into the United States; or\n(ii) The transportation of the merchandise AFTER its importation into the United States (U.S. domestic inland freight); and\n(3) The customs duties and other Federal taxes currently payable on the imported merchandise by reason of its importation, and any Federal excise tax on, or measured by the value of, the merchandise for which vendors in the United States are ordinarily liable."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-177",
+          "code": "Part 177",
+          "title": "Part 177 — Administrative Rulings",
+          "sections": [
+            {
+              "id": "19-cfr-177-1",
+              "citation": "19 CFR § 177.1",
+              "title": "General ruling practice and definitions",
+              "breadcrumb": "19 CFR > Part 177 > Subpart A > § 177.1",
+              "examFrequency": "MEDIUM (60% of CBLE exams)",
+              "keywords": [
+                "administrative rulings",
+                "prospective transaction",
+                "current transaction",
+                "completed transaction",
+                "internal advice",
+                "ruling letter"
+              ],
+              "crossRefs": [
+                "19-cfr-177-2",
+                "19-cfr-177-9"
+              ],
+              "text": "§ 177.1 General ruling practice and definitions.\n(a) The issuance of rulings generally.\n(1) Prospective transactions. It is in the interest of the sound administration of the Customs and related laws that persons engaging in any transaction affected by those laws fully understand the consequences of that transaction prior to its consummation. For this reason, U.S. Customs and Border Protection will give full and careful consideration to written requests from importers and other interested parties for rulings or information setting forth, with respect to a specifically described prospective transaction, a definitive interpretation of applicable law, or other appropriate information.\n(2) Current or completed transactions. Generally, a ruling may be requested under the provisions of this part only with respect to prospective transactions—that is, transactions which are not already pending before a Customs office by reason of arrival, entry, or otherwise. For current transactions already pending before a CBP port or Center of Excellence and Expertise (CEE), the importer may request \"Internal Advice\" through the field office under § 177.11. For completed and liquidated transactions, the appropriate remedy is a protest under 19 U.S.C. 1514 and part 174 of this chapter.\n\n(d) Definitions.\n(1) A \"ruling\" is a written statement issued by the Headquarters Office or the appropriate office of Customs as provided in this part that interprets and applies the provisions of the Customs and related laws to a specific set of facts.\n(2) A \"ruling letter\" is a ruling issued in response to a written request therefor and set forth in a letter addressed to the person making the request or his designee."
+            },
+            {
+              "id": "19-cfr-177-2",
+              "citation": "19 CFR § 177.2",
+              "title": "Submission of ruling requests",
+              "breadcrumb": "19 CFR > Part 177 > Subpart A > § 177.2",
+              "examFrequency": "MEDIUM (55% of CBLE exams)",
+              "keywords": [
+                "ruling request",
+                "eRulings",
+                "National Commodity Specialist Division",
+                "NCSD",
+                "30 calendar days",
+                "5 items maximum"
+              ],
+              "crossRefs": [
+                "19-cfr-177-1",
+                "19-cfr-177-9"
+              ],
+              "text": "§ 177.2 Submission of ruling requests.\n(a) Form and address. A request for a ruling should be in the form of a signed letter or submitted electronically via the CBP eRulings Template. Requests for tariff classification (HTSUS), country of origin, and marking rulings are submitted to the Director, National Commodity Specialist Division (NCSD), Regulations and Rulings, Office of Trade, in New York. Requests for valuation, drawback, brokers, carriers, or entry procedure rulings are submitted to the Headquarters Office of Regulations and Rulings (OR&R) in Washington, DC.\n\n(b) Content of request. Each request for a ruling must contain a complete statement of all relevant facts relating to the transaction, including:\n(1) The names, addresses, and other identifying information of all interested parties (if known) and the manufacturer ID code (if known);\n(2) The name of the port or place at which any article involved in the transaction will arrive or be entered;\n(3) A description of the transaction itself and a full description of the article (including samples, photographs, drawings, or chemical analysis where appropriate);\n(4) A maximum of 5 merchandise items of the same class or kind may be included in a single classification ruling request; and\n(5) A statement as to whether, to the knowledge of the person submitting the request, the same transaction, or one identical to it, has ever been considered, or is currently being considered by any CBP office or pending before the U.S. Court of International Trade (CIT) or the U.S. Court of Appeals for the Federal Circuit (CAFC).\n\n(c) Issuance timeline (§ 177.8). The National Commodity Specialist Division normally issues tariff classification rulings within 30 calendar days of receipt of a complete request, unless the matter presents a novel issue requiring referral to CBP Headquarters."
+            },
+            {
+              "id": "19-cfr-177-9",
+              "citation": "19 CFR § 177.9",
+              "title": "Effect of ruling letters; modification or revocation with 60-day notice",
+              "breadcrumb": "19 CFR > Part 177 > Subpart A > § 177.9",
+              "examFrequency": "CRITICAL (80% of CBLE exams)",
+              "keywords": [
+                "effect of ruling letters",
+                "modification or revocation",
+                "60 calendar days",
+                "30 calendar days comment",
+                "Customs Bulletin",
+                "binding effect",
+                "19 U.S.C. 1625(c)"
+              ],
+              "crossRefs": [
+                "19-cfr-177-1",
+                "19-cfr-177-2"
+              ],
+              "text": "§ 177.9 Effect of ruling letters; modification or revocation.\n(a) Effect of ruling letters generally. A ruling letter issued by U.S. Customs and Border Protection under the provisions of this part represents the official position of CBP with respect to the particular transaction or issue described therein and is binding on all CBP personnel in accordance with the provisions of this section until modified or revoked. In the absence of a change of practice or other modification or revocation which affects the principle of the ruling set forth in the ruling letter, that principle may be cited as authority in the disposition of transactions involving the same circumstances.\n\n(b) Application of rulings to transactions. Each ruling letter is issued on the assumption that all of the information furnished in connection with the ruling request and incorporated in the ruling letter, either directly, by reference, or by implication, is accurate and complete in every material respect. If the facts of an actual importation vary materially from the facts stated in the ruling letter, the ruling letter will not be applicable.\n\n(d) Modification or revocation of ruling letters (19 U.S.C. 1625(c)).\n(1) Publication of proposed modification or revocation. Any proposed interpretive ruling or decision which would modify (other than to correct a clerical error) or revoke a prior interpretive ruling or decision which has been in effect for at least 60 calendar days must be published in the Customs Bulletin. The notice in the Customs Bulletin will give interested parties a period of at least 30 calendar days from the date of publication within which to submit written comments on the proposed modification or revocation.\n(2) Publication of final ruling or decision. After consideration of any comments received during the 30-day public comment period, CBP will publish the final ruling or decision in the Customs Bulletin within 30 calendar days after the close of the comment period.\n(3) Effective date — 60 calendar days after publication. The final ruling or decision modifying or revoking a prior interpretive ruling or decision will become effective 60 calendar days after the date of publication of the final notice in the Customs Bulletin."
+            }
+          ]
+        },
+        {
+          "id": "19-cfr-part-190",
+          "code": "Part 190",
+          "title": "Part 190 — Modernized Drawback (TFTEA)",
+          "sections": [
+            {
+              "id": "19-cfr-190-2",
+              "citation": "19 CFR § 190.2",
+              "title": "Definitions: Direct identification vs Substitution at 8-digit HTSUS level",
+              "breadcrumb": "19 CFR > Part 190 > Subpart A > § 190.2",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "modernized drawback",
+                "TFTEA",
+                "direct identification",
+                "substitution",
+                "8-digit HTSUS subheading",
+                "99 percent refund",
+                "per unit averaging"
+              ],
+              "crossRefs": [
+                "19-cfr-190-22",
+                "19-cfr-190-32",
+                "19-cfr-190-51"
+              ],
+              "text": "§ 190.2 Definitions.\nFor the purposes of this part (Modernized Drawback under the Trade Facilitation and Trade Enforcement Act of 2015 — TFTEA):\n\n\"Direct identification drawback\" means drawback authorized pursuant to 19 U.S.C. 1313(a) (manufacturing direct identification) or 19 U.S.C. 1313(j)(1) (unused merchandise direct identification), in which the exact imported duty-paid merchandise (or a specific lot identified via an approved accounting methodology under § 190.14 such as FIFO or low-to-high) is traced directly into the exported or destroyed article.\n\n\"Drawback\" means the refund or remission, in whole or in part (generally 99 percent), of a customs duty, fee (including Merchandise Processing Fee — MPF), or internal revenue tax which was imposed on imported merchandise under Federal law because of its importation. Note: Harbor Maintenance Fee (HMF) and Antidumping/Countervailing Duties (AD/CVD) are NOT eligible for drawback refund.\n\n\"Substitution\" means the replacement of imported duty-paid merchandise with other merchandise (whether imported or domestic) that is classified under the same 8-digit HTSUS subheading (subject to the \"Other\" limitation in § 190.32(b) for unused merchandise substitution under 19 U.S.C. 1313(j)(2)).\n\n\"Per unit averaging\" means the mandatory TFTEA calculation methodology for substitution drawback claims whereby the amount of duties, taxes, and fees eligible for drawback per unit of designated imported merchandise is determined by dividing the total duties, taxes, and fees paid on the line item of the designated entry summary by the total quantity of units on that entry summary line item."
+            },
+            {
+              "id": "19-cfr-190-22",
+              "citation": "19 CFR § 190.22",
+              "title": "Manufacturing substitution drawback",
+              "breadcrumb": "19 CFR > Part 190 > Subpart B > § 190.22",
+              "examFrequency": "HIGH (70% of CBLE exams)",
+              "keywords": [
+                "manufacturing substitution",
+                "19 U.S.C. 1313(b)",
+                "8-digit HTSUS subheading",
+                "5 years",
+                "general manufacturing drawback ruling",
+                "specific manufacturing drawback ruling"
+              ],
+              "crossRefs": [
+                "19-cfr-190-2",
+                "19-cfr-190-32",
+                "19-cfr-190-51"
+              ],
+              "text": "§ 190.22 Manufacturing substitution drawback.\n(a) General (19 U.S.C. 1313(b)). If imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading and are used in the manufacture or production of articles within the United States, then upon the exportation or destruction under CBP supervision of any such manufactured or produced articles, without their having been used in the United States prior to such exportation or destruction, drawback of 99 percent of the duties, taxes, and fees paid on the designated imported merchandise is allowable, even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.\n\n(b) Manufacturing drawback ruling required. To claim manufacturing drawback (whether direct identification under § 190.21 or substitution under § 190.22), the manufacturer or producer must operate under either:\n(1) A General Manufacturing Drawback Ruling (Appendix A to Part 190), acknowledged by a CBP letter; or\n(2) A Specific Manufacturing Drawback Ruling approved by CBP Headquarters Office of Regulations and Rulings (OR&R) under § 190.8.\n\n(c) Time period for manufacture and exportation. All operations—importation of the designated merchandise, receipt and use of the designated or substituted merchandise in manufacture, exportation or destruction of the completed articles, and filing of the complete drawback claim—must occur within 5 years from the date of importation of the designated imported merchandise."
+            },
+            {
+              "id": "19-cfr-190-32",
+              "citation": "19 CFR § 190.32",
+              "title": "Unused merchandise substitution drawback & 'lesser of' rule",
+              "breadcrumb": "19 CFR > Part 190 > Subpart C > § 190.32",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "unused merchandise substitution",
+                "19 U.S.C. 1313(j)(2)",
+                "lesser of rule",
+                "8-digit HTSUS subheading",
+                "begins with Other",
+                "10-digit statistical reporting number",
+                "99 percent refund"
+              ],
+              "crossRefs": [
+                "19-cfr-190-2",
+                "19-cfr-190-22",
+                "19-cfr-190-51"
+              ],
+              "text": "§ 190.32 Unused merchandise substitution drawback.\n(a) General rule (19 U.S.C. 1313(j)(2)). If there is imported merchandise on which was paid any duty, tax, or fee imposed under Federal law because of its importation, and there is any other merchandise (whether imported or domestic) that is:\n(1) Classified under the same 8-digit HTSUS subheading as the imported merchandise (subject to the \"Other\" rule in paragraph (b) of this section);\n(2) Exported, or destroyed under CBP supervision, before the close of the 5-year period beginning on the date of importation of the imported merchandise and before the drawback claim is filed;\n(3) Not used within the United States before such exportation or destruction; and\n(4) In the possession of the party claiming drawback (including legal possession via bill of lading or title prior to exportation or destruction), then drawback may be allowed in accordance with paragraph (c) of this section.\n\n(b) Special rule when 8-digit HTSUS subheading begins with \"Other\".\n(1) If the article description for the 8-digit HTSUS subheading under which the imported merchandise is classified does NOT begin with the term \"Other\", substitution is permitted for any merchandise classified under that same 8-digit HTSUS subheading.\n(2) If the article description for the 8-digit HTSUS subheading DOES begin with the term \"Other\", then substitution is permitted ONLY if the imported merchandise and the substituted merchandise are classified under the same 10-digit HTSUS statistical reporting number and the article description for that 10-digit statistical reporting number does NOT begin with the term \"Other\" (unless the claimant uses a Schedule B number for export correlation where no 10-digit non-\"Other\" breakouts exist).\n\n(c) Amount of drawback — The \"Lesser Of\" Rule. For unused merchandise substitution drawback claims under 19 U.S.C. 1313(j)(2), the total amount of drawback allowable will not exceed 99 percent of the LESSER of:\n(1) The amount of duties, taxes, and fees paid with respect to the designated imported merchandise (calculated via per-unit averaging); OR\n(2) The amount of duties, taxes, and fees that would apply to the substituted exported (or destroyed) merchandise if the substituted merchandise were imported at the same duty rate and fee percentage applicable to the designated imported entry (i.e., when the unit value of the substituted exported merchandise is lower than the per-unit average value of the designated imported merchandise, the drawback refund is reduced proportionally to the lower value of the substituted merchandise)."
+            },
+            {
+              "id": "19-cfr-190-51",
+              "citation": "19 CFR § 190.51",
+              "title": "Completion of drawback claims & 5-year timeframe",
+              "breadcrumb": "19 CFR > Part 190 > Subpart E > § 190.51",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "completion of drawback claims",
+                "5-year timeframe",
+                "five years from date of importation",
+                "abandoned claim",
+                "3 years from liquidation",
+                "record retention",
+                "ACE electronic filing"
+              ],
+              "crossRefs": [
+                "19-cfr-111-23",
+                "19-cfr-190-2",
+                "19-cfr-190-32"
+              ],
+              "text": "§ 190.51 Completion of drawback claims.\n(a) General. Unless otherwise specified, a complete drawback claim under this part must be filed electronically through the Automated Commercial Environment (ACE) and must consist of:\n(1) Successful electronic transmission of all required data elements on the ACE drawback claim record (including the designated import entry number, 10-digit HTSUS number, line item value, quantity, duties/taxes/fees claimed, and export/destruction date);\n(2) Any applicable certificate(s) or manufacturing ruling number(s); and\n(3) Coding of the underlying import entry summary line items in ACE.\n\n(e) Time of filing — 5-year statutory limitation (19 U.S.C. 1313(r)(1)). A complete drawback claim, with all required documents and data elements, must be filed within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim. For example, if the earliest designated imported merchandise on a claim was imported on November 15, 2021, the complete drawback claim must be filed with CBP no later than November 15, 2026. Claims not completed within the 5-year period will be considered abandoned, and no extension of the 5-year period is permitted unless prevented by a declared CBP system outage or statutory suspension.\n\n(f) Drawback recordkeeping period (§ 190.15 & § 190.38). Unlike standard entry records which must be retained for 5 years from the date of entry under § 111.23, all records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim."
+            }
+          ]
         }
-      },
-      {
-        id: "CBLE-Q02",
-        number: 2,
-        suite: "CBLE_111_113",
-        track: "CBLE",
-        category: "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "While reviewing shipping documents prior to filing a consumption entry for client Global Auto Parts Inc., licensed customs broker David Chen discovers an email attachment showing that the foreign seller issued two separate invoices for the same shipment: a 'Customs Invoice' for $45,000 and a secret 'Supplemental Tooling & Price Adjustment Invoice' for $30,000 that Global Auto Parts wired separately to the seller's bank account. When Chen contacts Global Auto Parts' import manager, the manager instructs Chen to file the entry declaring only the $45,000 invoice and delete the supplemental invoice email. Under 19 CFR § 111.32, what is Broker Chen legally required to do?",
-        options: [
-          { letter: "A", text: "File the entry at $45,000 as instructed by the principal under the Power of Attorney, because the Importer of Record bears sole legal liability for valuation accuracy under 19 U.S.C. 1484." },
-          { letter: "B", text: "File the entry at $45,000 to avoid General Order storage fees, and then file a Post Summary Correction (PSC) within 180 days without informing the client." },
-          { letter: "C", text: "Promptly advise the client in writing of the noncompliance/omission and the required corrective action (declaring the full $75,000 transaction value), retain a copy of the written communication in his records, and refuse to file the false entry or participate in the transaction when the client refuses to correct it." },
-          { letter: "D", text: "Immediately confiscate the importer's merchandise, arrest the import manager, and assess a $30,000 civil penalty on behalf of CBP." },
-          { letter: "E", text: "Provide oral advice only over the telephone so that no discoverable paper trail exists, and continue filing entries for the client using the lower invoice values." }
-        ],
-        correctOption: "C",
-        targetSectionId: "19-cfr-111-32",
-        targetCitation: "19 CFR § 111.32(a)–(c)",
-        goldenQuote: "If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.",
-        shortestPathHint: "19 CFR -> Part 111 -> § 111.32 (False information)",
-        socraticHints: [
-          "Hint 1 (Concept): A licensed customs broker is strictly prohibited from filing any document known to be false and has an affirmative regulatory duty when discovering client noncompliance or omission.",
-          "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.32 ('False information') and examine paragraphs (a), (b), and (c).",
-          "Hint 3 (Trap Check): Notice that under 19 CFR § 111.32(b) and (c), the broker's advice to the client regarding noncompliance and corrective action MUST be in writing and retained as a record under § 111.23, and the broker must refuse to file when the client refuses to correct a known false declaration."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 111.32(a), a broker must never file or assist in filing any claim or document known by the broker to be false. Under § 111.32(b), when a broker knows that a client has not complied with the law or has made an error in or omission from any required document, the broker must promptly advise the client in writing of the noncompliance, error, or omission, instruct the client on the proper corrective action, and retain a copy of that written communication for 5 years under § 111.23. Furthermore, under § 111.32(c), if the client refuses to correct the known false valuation and attempts to induce the broker to file the fraudulent $45,000 invoice, the broker must refuse to file the entry, separate from the noncompliant conduct, and document the refusal/termination.",
-          distractors: {
-            A: "Filing a document known by the broker to be false violates 19 CFR § 111.32(a) and subjects the broker to license revocation and a $30,000 monetary penalty under § 111.53 and § 111.91.",
-            B: "Knowingly filing a false entry with the intent to amend it later still violates the absolute prohibition in 19 CFR § 111.32(a) against filing a known false document.",
-            C: "CORRECT: Follows the exact mandatory steps of 19 CFR § 111.32(a), (b), and (c).",
-            D: "A customs broker is a private licensee, not a federal law enforcement officer, and has no authority to confiscate cargo, make arrests, or assess CBP penalties.",
-            E: "Oral-only advice and continued participation in double-invoicing directly violate 19 CFR § 111.32(a)–(c)."
-          }
+      ]
+    },
+    {
+      "id": "htsus-gri",
+      "code": "HTSUS & GRI",
+      "title": "Harmonized Tariff Schedule of the U.S. & General Rules of Interpretation",
+      "parts": [
+        {
+          "id": "htsus-part-gri",
+          "code": "GRI 1–6",
+          "title": "General Rules of Interpretation (GRI 1 through 6)",
+          "sections": [
+            {
+              "id": "htsus-gri-1",
+              "citation": "HTSUS GRI 1",
+              "title": "Rule 1 — Terms of Headings and Section or Chapter Notes",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 1",
+              "examFrequency": "CRITICAL (95% of CBLE exams)",
+              "keywords": [
+                "GRI 1",
+                "terms of headings",
+                "Section Notes",
+                "Chapter Notes",
+                "titles of sections",
+                "legal classification",
+                "eo nomine"
+              ],
+              "crossRefs": [
+                "htsus-gri-2",
+                "htsus-gri-6",
+                "htsus-sec16-notes",
+                "htsus-ch95-9503"
+              ],
+              "text": "General Rule of Interpretation 1 (GRI 1).\nClassification of goods in the tariff schedule shall be governed by the following principles:\n\n1. The table of contents, alphabetical index, and titles of sections, chapters and sub-chapters are provided for ease of reference only; for legal purposes, classification shall be determined according to the terms of the headings and any relative section or chapter notes and, provided such headings or notes do not otherwise require, according to the following provisions (GRIs 2 through 5).\n\nCBP Legal Interpretation Note on GRI 1:\n- Over 90% of all imported merchandise is classified solely by application of GRI 1 (and GRI 6 at the subheading level).\n- Section and Chapter Notes have the exact same binding legal force as the 4-digit heading text itself. If a Chapter Note explicitly excludes an article from a chapter (e.g., Chapter 95 Note 1(e) excluding textile fancy dress costumes from Chapter 95 and directing them to Chapters 61 or 62), the inquiry stops at GRI 1 and you NEVER proceed to GRI 3."
+            },
+            {
+              "id": "htsus-gri-2",
+              "citation": "HTSUS GRI 2",
+              "title": "Rule 2(a) Incomplete/Unfinished/Unassembled Articles & Rule 2(b) Mixtures",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 2",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "GRI 2(a)",
+                "GRI 2(b)",
+                "incomplete or unfinished",
+                "essential character",
+                "unassembled or disassembled",
+                "knocked-down",
+                "blanks",
+                "mixtures and combinations"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3",
+                "htsus-gri-6"
+              ],
+              "text": "General Rule of Interpretation 2 (GRI 2).\n2. (a) Any reference in a heading to an article shall be taken to include a reference to that article incomplete or unfinished, provided that, as entered, the incomplete or unfinished article has the essential character of the complete or finished article. It shall also include a reference to that article complete or finished (or falling to be classified as complete or finished by virtue of this rule), entered unassembled or disassembled.\n\n(b) Any reference in a heading to a material or substance shall be taken to include a reference to mixtures or combinations of that material or substance with other materials or substances. Any reference to goods of a given material or substance shall be taken to include a reference to goods consisting wholly or partly of such material or substance. The classification of goods consisting of more than one material or substance shall be according to the principles of Rule 3.\n\nCBP Legal Interpretation Notes on GRI 2(a):\n- \"Blanks\": Rule 2(a) extends to articles not ready for direct use, having the approximate shape or outline of the finished article or part, and which can only be used, other than in exceptional cases, for completion into the finished article or part (e.g., rough key blanks or pre-molded plastic bottle preforms).\n- \"Unassembled or Disassembled\": Goods imported in knocked-down (CKD/SKD) condition in the same shipment for convenience of packing, handling, or transport are classified as the finished article under GRI 2(a) provided only simple assembly operations (screws, bolts, nuts, rivets, or welding) are required. Excess components beyond the exact count needed to assemble the complete articles are classified separately on their own merits."
+            },
+            {
+              "id": "htsus-gri-3",
+              "citation": "HTSUS GRI 3",
+              "title": "Rule 3 — Specificity (3a), Essential Character of Retail Sets (3b) & Last in Numerical Order (3c)",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 3",
+              "examFrequency": "CRITICAL (95% of CBLE exams)",
+              "keywords": [
+                "GRI 3(a)",
+                "GRI 3(b)",
+                "GRI 3(c)",
+                "most specific description",
+                "relative specificity",
+                "essential character",
+                "goods put up in sets for retail sale",
+                "composite goods",
+                "last in numerical order"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-2",
+                "htsus-gri-6",
+                "htsus-ch95-9503"
+              ],
+              "text": "General Rule of Interpretation 3 (GRI 3).\n3. When, by application of Rule 2(b) or for any other reason, goods are, prima facie, classifiable under two or more headings, classification shall be effected as follows:\n\n(a) Relative Specificity: The heading which provides the most specific description shall be preferred to headings providing a more general description. However, when two or more headings each refer to part only of the materials or substances contained in mixed or composite goods or to part only of the items in a set put up for retail sale, those headings are to be regarded as equally specific in relation to those goods, even if one of them gives a more complete or precise description of the goods.\n\n(b) Essential Character (Mixtures, Composite Goods & Retail Sets): Mixtures, composite goods consisting of different materials or made up of different components, and goods put up in sets for retail sale, which cannot be classified by reference to 3(a), shall be classified as if they consisted of the material or component which gives them their essential character, insofar as this criterion is applicable.\n\n(c) Last in Numerical Order: When goods cannot be classified by reference to 3(a) or 3(b), they shall be classified under the heading which occurs last in numerical order among those which equally merit consideration.\n\nMandatory 3-Prong Test for \"Goods Put Up in Sets for Retail Sale\" under GRI 3(b) (Explanatory Note X to GRI 3(b)):\nTo qualify as a \"set put up for retail sale\" under GRI 3(b), the imported package MUST simultaneously satisfy ALL THREE of the following criteria:\n(1) Consist of at least two different articles which are, prima facie, classifiable in different 4-digit headings (e.g., six stainless steel dinner forks packaged together do not constitute a GRI 3(b) set);\n(2) Consist of products or articles put up together to meet a particular need or carry out a specific activity (Note: If a retail package contains disparate items that do NOT work together toward a single specific activity—for example, a promotional gift basket containing a ceramic coffee mug, a pair of cotton socks, and a ballpoint pen—it FAILS prong 2, is NOT a GRI 3(b) set, and EVERY item must be classified separately under its own HTSUS heading!); and\n(3) Are put up in a manner suitable for sale directly to end users without repacking (e.g., in boxes, blister packs, or display cases)."
+            },
+            {
+              "id": "htsus-gri-4",
+              "citation": "HTSUS GRI 4",
+              "title": "Rule 4 — Goods Most Akin",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 4",
+              "examFrequency": "LOW (20% of CBLE exams)",
+              "keywords": [
+                "GRI 4",
+                "most akin",
+                "kinship",
+                "novel merchandise"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3"
+              ],
+              "text": "General Rule of Interpretation 4 (GRI 4).\n4. Goods which cannot be classified in accordance with the above rules (GRIs 1, 2, and 3) shall be classified under the heading appropriate to the goods to which they are most akin.\n\nCBP Legal Interpretation Note on GRI 4:\n- Kinship under GRI 4 can depend on many factors, such as description, character, purpose, or intended use. Because the HTSUS contains comprehensive basket (\"Other\") headings in nearly every chapter, GRI 4 is invoked only in extremely rare circumstances where an entirely novel article cannot fall within any heading by virtue of GRIs 1 through 3."
+            },
+            {
+              "id": "htsus-gri-5",
+              "citation": "HTSUS GRI 5",
+              "title": "Rule 5(a) Fitted Camera/Instrument Cases & Rule 5(b) Packing Containers",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 5",
+              "examFrequency": "CRITICAL (85% of CBLE exams)",
+              "keywords": [
+                "GRI 5(a)",
+                "GRI 5(b)",
+                "camera cases",
+                "musical instrument cases",
+                "specially shaped or fitted",
+                "long-term use",
+                "entered with the articles",
+                "packing containers",
+                "clearly suitable for repetitive use"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3",
+                "htsus-ch95-9503"
+              ],
+              "text": "General Rule of Interpretation 5 (GRI 5).\nIn addition to the foregoing provisions, the following rules shall apply in respect of the goods referred to therein:\n\n(a) Specially Shaped or Fitted Long-Term Cases: Camera cases, musical instrument cases, gun cases, drawing instrument cases, necklace cases and similar containers, specially shaped or fitted to contain a specific article or set of articles, suitable for long-term use and entered with the articles for which they are intended, shall be classified with such articles when of a kind normally sold therewith. This rule does not, however, apply to containers which give the whole its essential character.\n- Crucial Exam Trap 1 (Imported Separately or in Excess): If fitted cases are imported alone without the instruments, OR if a shipment contains 100 electric guitars and 120 fitted guitar cases, only the 100 cases matched 1-to-1 with the guitars classify with the guitars under Heading 9207 via GRI 5(a); the 20 excess cases MUST be classified separately under Heading 4202!\n- Crucial Exam Trap 2 (Container Gives Essential Character): If a high-value sterling silver tea caddy or carved crystal bowl contains inexpensive tea leaves or candies, GRI 5(a) does not classify the silver/crystal container as tea or candy because the container gives the whole its essential character.\n\n(b) Packing Materials and Packing Containers: Subject to the provisions of Rule 5(a) above, packing materials and packing containers entered with the goods therein shall be classified with the goods if they are of a kind normally used for packing such goods. However, this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.\n- Crucial Exam Trap 3 (Repetitive Use Exception): Standard cardboard cartons, disposable plastic drums, and single-trip wooden pallets classify with the imported goods under GRI 5(b). However, heavy-duty high-pressure steel cylinders or tanks imported filled with compressed industrial gas that are designed for continuous refilling and repetitive commercial circulation DO NOT classify with the gas under GRI 5(b) and must be classified separately (e.g., under Heading 7311)."
+            },
+            {
+              "id": "htsus-gri-6",
+              "citation": "HTSUS GRI 6",
+              "title": "Rule 6 — Subheading Comparison at the Same Dash Level",
+              "breadcrumb": "HTSUS > General Rules of Interpretation > GRI 6",
+              "examFrequency": "HIGH (80% of CBLE exams)",
+              "keywords": [
+                "GRI 6",
+                "subheading level",
+                "same level",
+                "indent dash level",
+                "mutatis mutandis",
+                "subheading notes"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3"
+              ],
+              "text": "General Rule of Interpretation 6 (GRI 6).\n6. For legal purposes, the classification of goods in the subheadings of a heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to the above rules, on the understanding that only subheadings at the same level are comparable. For the purposes of this rule, the relative section, chapter and subchapter notes also apply, unless the context otherwise requires.\n\nCBP Legal Interpretation Note on GRI 6:\n- You must ALWAYS determine the 4-digit heading first using GRIs 1 through 4 before looking at any 6-digit or 8-digit subheading.\n- Once inside the correct 4-digit heading, compare ONLY one-dash (\"-\") subheadings against other one-dash (\"-\") subheadings within that heading. Only after selecting the proper one-dash subheading may you proceed to compare the two-dash (\"--\") subheadings nested underneath it."
+            }
+          ]
+        },
+        {
+          "id": "htsus-part-chapters",
+          "code": "Chapters 84, 85 & 95",
+          "title": "HTSUS Chapter Excerpts (Section XVI Electronics & Chapter 95 Festive/Toys)",
+          "sections": [
+            {
+              "id": "htsus-sec16-notes",
+              "citation": "HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528",
+              "title": "Section XVI Notes (Parts & Composite Machines) and ADP vs Telecom Classification",
+              "breadcrumb": "HTSUS > Section XVI > Chapters 84 & 85 > Notes & Headings",
+              "examFrequency": "HIGH (75% of CBLE exams)",
+              "keywords": [
+                "Section XVI Note 2",
+                "Section XVI Note 3",
+                "Chapter 84 Note 6",
+                "Heading 8471",
+                "Heading 8517",
+                "Heading 8528",
+                "automatic data processing",
+                "principal function",
+                "parts classification"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3",
+                "htsus-gri-6"
+              ],
+              "text": "HTSUS Section XVI (Chapters 84 and 85) Legal Notes & Core Headings.\n\n1. Section XVI Note 2 — Classification of Parts of Machines:\nSubject to Note 1 to this Section (which excludes articles such as transmission/conveyor belts of plastics or vulcanized rubber, hand tools of Ch. 82, and general-use parts of base metal of Section XV such as screws/bolts/springs), parts of machines are to be classified according to the following sequential rules:\n(a) Parts which are goods included in any of the headings of Chapter 84 or 85 (other than headings 8409, 8431, 8448, 8466, 8473, 8487, 8503, 8522, 8529, 8538 and 8548) are in all cases to be classified in their respective headings (e.g., an electric motor designed solely for a washing machine is still classified in Heading 8501 as an electric motor under Note 2(a), NOT in Heading 8450 as a washing machine part!);\n(b) Other parts, if suitable for use solely or principally with a particular kind of machine, or with a number of machines of the same heading, are to be classified with the machines of that kind or in headings 8409, 8431, 8448, 8466, 8473, 8503, 8522, 8529 or 8538 as appropriate;\n(c) All other parts are to be classified in heading 8409, 8431, 8448, 8466, 8473, 8503, 8522, 8529 or 8538 as appropriate or, failing that, in heading 8487 or 8548.\n\n2. Section XVI Note 3 — Composite Machines & Multi-Function Apparatus:\nUnless the context otherwise requires, composite machines consisting of two or more machines fitted together to form a whole and other machines designed for the purpose of performing two or more complementary or alternative functions are to be classified as if consisting only of that component or as being that machine which performs the PRINCIPAL FUNCTION.\n\n3. Chapter 84 Note 6 & Headings 8471, 8517, and 8528:\n- Heading 8471: Automatic data processing (ADP) machines and units thereof (e.g., laptops, tablets without cellular telephone functionality, desktop CPUs, storage drives). Under Chapter 84 Note 6(A), an ADP machine must be capable of: (1) storing the processing program or programs and at least the data immediately necessary for the execution of the program; (2) being freely programmed in accordance with the requirements of the user; (3) performing arithmetical computations specified by the user; and (4) executing, without human intervention, a processing program which requires them to modify their execution, by logical decision during the processing run.\n- Chapter 84 Note 6(D) & (E) Exclusions: Heading 8471 does NOT cover:\n  * Smartphones, cellular telephones, network switches, routers, modems, or Bluetooth/RF wearables whose principal function is transmission or reception of voice, images, or other data -> Classified in Heading 8517 (8517.13.00 for smartphones; 8517.62.00 for routers/switches/smartwatches).\n  * Monitors and projectors, not incorporating television reception apparatus -> Classified in Heading 8528 (8528.52.00 if capable of directly connecting to and designed for use with an ADP machine of Heading 8471; 8528.59 for other monitors)."
+            },
+            {
+              "id": "htsus-ch95-9503",
+              "citation": "HTSUS Chapter 95 Note 1 & Heading 9503",
+              "title": "Toys, Games, and Retail Activity Sets vs Chapters 42 & 61",
+              "breadcrumb": "HTSUS > Section XX > Chapter 95 > Note 1 & Heading 9503",
+              "examFrequency": "HIGH (70% of CBLE exams)",
+              "keywords": [
+                "Chapter 95 Note 1",
+                "Heading 9503",
+                "toys",
+                "reduced-scale models",
+                "puzzles",
+                "fancy dress textiles exclusion",
+                "Heading 4202 bags exclusion"
+              ],
+              "crossRefs": [
+                "htsus-gri-1",
+                "htsus-gri-3",
+                "htsus-gri-5"
+              ],
+              "text": "HTSUS Chapter 95 (Toys, Games and Sports Requisites) Legal Notes & Heading 9503.\n\n1. Chapter 95 Note 1 — Mandatory Legal Exclusions (Applied at GRI 1):\nThis chapter does NOT cover:\n(a) Candles (heading 3406);\n(d) Sports bags or other containers of heading 4202, 4303 or 4304 (e.g., nylon backpacks, duffel bags, or carrying totes imported with toys or sports gear that are NOT specially shaped or fitted under GRI 5(a));\n(e) Fancy dress of textiles, of chapter 61 or 62; sports clothing and special articles of apparel of textiles, of chapter 61 or 62, whether or not incorporating incidentally protective components such as pads or padding in the elbow, knee or groin areas (e.g., well-made textile Halloween or theatrical costumes classify as wearing apparel in Chapter 61 [knit] or Chapter 62 [woven], whereas flimsy non-durable costumes classify in Heading 9505);\n(m) Pumps for liquids (heading 8413), filtering or purifying machinery (heading 8421), electric motors (heading 8501), electric transformers (heading 8504), or radio remote control apparatus (heading 8526);\n(v) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table linen, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material).\n\n2. Heading 9503.00.00 — Toys, Dolls, Reduced-Scale Models & Puzzles:\n\"Tricycles, scooters, pedal cars and similar wheeled toys; dolls' carriages; dolls, other toys; reduced-scale ('scale') models and similar recreational models, working or not; puzzles of all kinds; parts and accessories thereof.\" (Duty Rate: Free under Column 1 General).\n- CBP \"Principal Use for Amusement\" Test (Additional U.S. Rule of Interpretation 1(a)): To be classified as a toy in Heading 9503, an article must be principally designed for the amusement of children or adults rather than for practical utilitarian use. For example, a miniature child's plastic pretend oven that cannot actually bake food is a toy of Heading 9503.00.00, whereas a real stainless-steel baking pan kit marketed to children for baking real cupcakes in a kitchen oven is utilitarian kitchenware of Heading 7323 (excluded from Chapter 95 by Note 1(v)!)."
+            }
+          ]
         }
-      },
-      {
-        id: "CBLE-Q03",
-        number: 3,
-        suite: "CBLE_111_113",
-        track: "CBLE",
-        category: "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Atlantic Trade Brokerage Inc., a licensed corporate customs broker headquartered in Newark, NJ, relocates its customs entry record archive to a new facility and designates a new Recordkeeping Point of Contact on October 1. In addition, Atlantic Trade Brokerage is auditing its retention schedule for three categories of documents:\n(1) Standard consumption entry files (CBP Form 7501, commercial invoices, packing lists);\n(2) A corporate Power of Attorney (POA) that was revoked by an active client on June 15, 2024; and\n(3) Records supporting a Modernized Drawback claim that was liquidated and paid on August 10, 2025.\n\nUnder 19 CFR § 111.23 (and § 190.51(f)), where must the broker's original records be maintained, within how many days must the broker notify CBP of the change in record storage location/point of contact, and what are the mandatory retention periods for these three categories of records?",
-        options: [
-          { letter: "A", text: "Records may be stored anywhere in North America (U.S., Canada, or Mexico); notify CBP within 60 calendar days; retain entry files for 3 years from entry, revoked POAs for 2 years from revocation, and drawback records for 5 years from entry." },
-          { letter: "B", text: "Records must be maintained within the customs territory of the United States; notify the Broker Management Branch within 30 calendar days of the change; retain standard entry files for 5 years from the date of entry, revoked POAs for 5 years after the date of revocation (or 5 years after the client ceases to be an active client, whichever is later), and drawback claim records for 3 years after liquidation of the drawback claim." },
-          { letter: "C", text: "Records must be maintained within the customs territory of the United States; notify CBP within 10 working days of the change; retain all entry files, revoked POAs, and drawback records for 7 years from the end of the calendar year." },
-          { letter: "D", text: "Records must be maintained at the port of entry where each shipment arrived; notify CBP on the Triennial Status Report only; retain entry files for 5 years from liquidation and revoked POAs permanently." },
-          { letter: "E", text: "Records may be stored on foreign cloud servers outside the U.S. customs territory without domestic access; notify CBP within 30 working days; retain entry files and drawback records for 3 years from date of importation." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-111-23",
-        targetCitation: "19 CFR § 111.23(a)–(c) & § 190.51(f)",
-        goldenQuote: "(c) Notification of change of record storage location or point of contact. Within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact (including name, telephone number, or email address), the broker must electronically notify the Broker Management Branch (or submit written notification if electronic transmission is unavailable) of the new location or updated contact information.",
-        shortestPathHint: "19 CFR -> Part 111 -> § 111.23 (Retention of records)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the three pillars of broker recordkeeping: geographic location requirement, notification deadline for changing storage location/contact, and specific retention timelines.",
-          "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.23(a), (b), and (c), and cross-reference § 190.51(f) for drawback record retention.",
-          "Hint 3 (Trap Check): Original records must be kept within the U.S. customs territory; notification to the Broker Management Branch is due within 30 calendar days; entry records = 5 years from date of entry; revoked POA = 5 years from revocation or last active client date (whichever is later); drawback records = 3 years from liquidation of the drawback claim."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 111.23(a), a licensed customs broker must maintain originals of all required customs records within the customs territory of the United States. Under § 111.23(c), within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact, the broker must notify the Broker Management Branch. Under § 111.23(b), standard entry records must be retained for at least 5 years after the date of entry, while revoked powers of attorney must be retained for 5 years after the date of revocation or 5 years after the date the client ceases to be an 'active client' (whichever period is later). Finally, under 19 CFR § 190.51(f) (and § 163.4(b)(1)), records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim.",
-          distractors: {
-            A: "Incorrect on all counts: records cannot be stored outside the U.S. customs territory, notification is 30 calendar days (not 60), and entry/POA retention is 5 years.",
-            B: "CORRECT: Accurately states the U.S. customs territory requirement, the 30-calendar-day notification window, the 5-year entry and revoked POA rules under § 111.23, and the 3-year post-liquidation drawback retention rule under § 190.51(f).",
-            C: "Incorrect because notification is 30 calendar days (not 10 working days) and CBP does not use a 7-year tax-style retention period.",
-            D: "Incorrect because national permit holders maintain records centrally within the U.S. customs territory (not at every arrival port), must notify CBP within 30 calendar days (not wait for the Triennial Status Report), and count the 5-year entry retention period from the date of entry (not liquidation).",
-            E: "Incorrect because records must be maintained within the U.S. customs territory and entry retention is 5 years from the date of entry."
-          }
+      ]
+    },
+    {
+      "id": "31-cfr-ea",
+      "code": "31 CFR Part 10",
+      "title": "IRS Circular 230 — Enrolled Agent (EA) Practice Standards",
+      "parts": [
+        {
+          "id": "31-cfr-part-10-b",
+          "code": "Subpart B",
+          "title": "Subpart B — Duties and Restrictions Relating to Practice Before the IRS",
+          "sections": [
+            {
+              "id": "31-cfr-10-20",
+              "citation": "31 CFR § 10.20",
+              "title": "Information to be furnished",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.20",
+              "examFrequency": "HIGH (80% of SEE Part 3 exams)",
+              "keywords": [
+                "information to be furnished",
+                "IRS request",
+                "privileged records",
+                "good faith belief",
+                "possession of records",
+                "reasonable inquiry of client"
+              ],
+              "crossRefs": [
+                "31-cfr-10-21",
+                "31-cfr-10-22"
+              ],
+              "text": "§ 10.20 Information to be furnished.\n(a) To the Internal Revenue Service.\n(1) A practitioner must, on a proper and lawful request by a duly authorized officer or employee of the Internal Revenue Service, promptly submit records or information in any matter before the Internal Revenue Service unless the practitioner believes in good faith and on reasonable grounds that the records or information are privileged.\n(2) Where the requested records or information are not in the possession of, or subject to the control of, the practitioner or the practitioner's client, the practitioner must promptly notify the requesting Internal Revenue Service officer or employee and the practitioner must provide any information that the practitioner has regarding the identity of any person who the practitioner believes may have possession or control of the requested records or information. The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.\n\n(b) Interference with a proper and lawful request. A practitioner may not interfere, or attempt to interfere, with any proper and lawful effort by the Internal Revenue Service, its officers or employees, to obtain any record or information unless the practitioner believes in good faith and on reasonable grounds that the record or information is privileged."
+            },
+            {
+              "id": "31-cfr-10-21",
+              "citation": "31 CFR § 10.21",
+              "title": "Knowledge of client's omission",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.21",
+              "examFrequency": "CRITICAL (95% of SEE Part 3 exams)",
+              "keywords": [
+                "knowledge of client's omission",
+                "noncompliance",
+                "error or omission",
+                "advise the client promptly",
+                "consequences under Internal Revenue Code",
+                "no duty to notify IRS"
+              ],
+              "crossRefs": [
+                "19-cfr-111-32",
+                "31-cfr-10-20",
+                "31-cfr-10-22",
+                "31-cfr-10-34"
+              ],
+              "text": "§ 10.21 Knowledge of client's omission.\nA practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.\n\nIRS SEE Exam Doctrinal Notes on § 10.21:\n1. Two Mandatory Affirmative Duties: The practitioner must promptly advise the client of BOTH (a) the fact of the noncompliance, error, or omission, AND (b) the statutory/regulatory consequences under the Internal Revenue Code (e.g., accuracy-related penalties under IRC § 6662, civil fraud penalties under IRC § 6663, failure-to-pay interest under IRC § 6601, and extended statutes of limitations under IRC § 6501(e)).\n2. What § 10.21 Does NOT Require or Permit:\n   - The practitioner is NEVER permitted to unilaterally notify the IRS of the client's prior-year error or omission without the client's consent (doing so violates client confidentiality under IRC § 7216 / § 7525).\n   - The practitioner cannot force the client to file an amended return (Form 1040-X or 1120-X), nor does Circular 230 § 10.21 require the practitioner to advise the client in writing (though practitioners are strongly encouraged to document the advice), nor does § 10.21 mandate automatic withdrawal unless the prior-year omission carries forward and renders the current year's tax return false or fraudulent under § 10.22 and § 10.34."
+            },
+            {
+              "id": "31-cfr-10-22",
+              "citation": "31 CFR § 10.22",
+              "title": "Diligence as to accuracy",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.22",
+              "examFrequency": "HIGH (85% of SEE Part 3 exams)",
+              "keywords": [
+                "diligence as to accuracy",
+                "due diligence",
+                "preparing tax returns",
+                "oral or written representations",
+                "reliance on work product of others",
+                "reasonable care"
+              ],
+              "crossRefs": [
+                "31-cfr-10-20",
+                "31-cfr-10-21",
+                "31-cfr-10-34",
+                "31-cfr-10-35"
+              ],
+              "text": "§ 10.22 Diligence as to accuracy.\n(a) In general. A practitioner must exercise due diligence—\n(1) In preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to Internal Revenue Service matters;\n(2) In determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and\n(3) In determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the Internal Revenue Service.\n\n(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person."
+            },
+            {
+              "id": "31-cfr-10-27",
+              "citation": "31 CFR § 10.27",
+              "title": "Fees",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.27",
+              "examFrequency": "CRITICAL (90% of SEE Part 3 exams)",
+              "keywords": [
+                "unconscionable fee",
+                "contingent fee",
+                "original tax return",
+                "IRS examination",
+                "statutory interest or penalties",
+                "judicial proceeding"
+              ],
+              "crossRefs": [
+                "31-cfr-10-22",
+                "31-cfr-10-29",
+                "31-cfr-10-34"
+              ],
+              "text": "§ 10.27 Fees.\n(a) In general. A practitioner may not charge an unconscionable fee in connection with any matter before the Internal Revenue Service.\n\n(b) Contingent fees.\n(1) Except as provided in paragraphs (b)(2), (3), and (4) of this section, a practitioner may not charge a contingent fee for services rendered in connection with any matter before the Internal Revenue Service, including the preparation or filing of an original tax return or an amended tax return or claim for refund (other than as specified below).\n(2) Exception 1 — IRS Examination or Challenge: A practitioner may charge a contingent fee for services rendered in connection with the Service's examination of, or challenge to:\n(i) An original tax return; or\n(ii) An amended return or claim for refund or credit where the amended return or claim for refund or credit was filed within 120 days of the taxpayer receiving a written notice of the examination of, or a written challenge to, the original tax return.\n(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.\n(4) Exception 3 — Judicial Proceedings: A practitioner may charge a contingent fee for services rendered in connection with any judicial proceeding arising under the Internal Revenue Code.\n\n(c) Definitions. For purposes of this section, a \"contingent fee\" is any fee that is based, in whole or in part, on whether or not a position taken on a tax return or other filing avoids challenge by the Internal Revenue Service or is sustained either by the Internal Revenue Service or in litigation. A contingent fee includes a fee that is based on a percentage of the refund reported on a return, that is based on a percentage of the taxes saved, or that otherwise depends on the specific result attained."
+            },
+            {
+              "id": "31-cfr-10-29",
+              "citation": "31 CFR § 10.29",
+              "title": "Conflicting interests",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.29",
+              "examFrequency": "CRITICAL (92% of SEE Part 3 exams)",
+              "keywords": [
+                "conflicting interests",
+                "conflict of interest",
+                "informed consent",
+                "confirmed in writing",
+                "30 days",
+                "36 months retention",
+                "direct adversity"
+              ],
+              "crossRefs": [
+                "31-cfr-10-22",
+                "31-cfr-10-27",
+                "31-cfr-10-35"
+              ],
+              "text": "§ 10.29 Conflicting interests.\n(a) Except as provided by paragraph (b) of this section, a practitioner shall not represent a client before the Internal Revenue Service if the representation involves a conflict of interest. A conflict of interest exists if—\n(1) The representation of one client will be directly adverse to another client; or\n(2) There is a significant risk that the representation of one or more clients will be materially limited by the practitioner's responsibilities to another client, a former client or a third person, or by a personal interest of the practitioner.\n\n(b) Notwithstanding the existence of a conflict of interest under paragraph (a) of this section, the practitioner may represent a client if—\n(1) The practitioner reasonably believes that the practitioner will be able to provide competent and diligent representation to each affected client;\n(2) The representation is not prohibited by law; and\n(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.\n\n(c) Copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients, and the written consents must be provided to any officer or employee of the Internal Revenue Service on request."
+            },
+            {
+              "id": "31-cfr-10-34",
+              "citation": "31 CFR § 10.34",
+              "title": "Standards with respect to tax returns and documents, affidavits and other papers",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.34",
+              "examFrequency": "CRITICAL (90% of SEE Part 3 exams)",
+              "keywords": [
+                "tax return standards",
+                "substantial authority",
+                "reasonable basis",
+                "adequate disclosure",
+                "Form 8275",
+                "more likely than not",
+                "tax shelter",
+                "relying on client information",
+                "IRC 6694"
+              ],
+              "crossRefs": [
+                "31-cfr-10-21",
+                "31-cfr-10-22",
+                "31-cfr-10-35"
+              ],
+              "text": "§ 10.34 Standards with respect to tax returns and documents, affidavits and other papers.\n(a) Tax returns.\n(1) A practitioner may not willfully, recklessly, or through gross incompetence—\n(i) Sign a tax return or claim for refund that the practitioner knows or reasonably should know contains a position that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code (including the related regulations and other published guidance); or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code (including the related regulations and other published guidance).\n(ii) Advise a client to take a position on a tax return or claim for refund, or prepare a portion of a tax return or claim for refund containing a position, that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code; or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code.\n\n(2) Summary of IRC § 6694(a)(2) Confidence Thresholds Referenced in § 10.34(a):\n- Undisclosed Tax Return Position (Non-Tax Shelter): Must be supported by \"Substantial Authority\" (approximately a 40% or greater likelihood of being sustained on its merits).\n- Adequately Disclosed Tax Return Position (Non-Tax Shelter, disclosed on Form 8275 or Form 8275-R): Must be supported by at least a \"Reasonable Basis\" (approximately a 20% or greater likelihood of being sustained on its merits; significantly higher than \"not frivolous\").\n- Tax Shelters and Reportable Transactions (IRC § 6662A): Must meet the \"More Likely Than Not\" standard (a greater than 50% likelihood of being sustained on its merits), regardless of whether disclosed.\n\n(c) Advising clients on potential penalties. A practitioner must inform a client of any penalties that are reasonably likely to apply to the client with respect to a position taken on a tax return if the practitioner advised the client with respect to the position, or prepared or signed the tax return, and must inform the client of any opportunity to avoid any such penalties by disclosure.\n\n(d) Relying on information furnished by clients. A practitioner advising a client to take a position on a tax return, document, affidavit or other paper submitted to the Internal Revenue Service, or preparing or signing a tax return as a preparer, generally may rely in good faith without verification upon information furnished by the client. The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete."
+            },
+            {
+              "id": "31-cfr-10-35",
+              "citation": "31 CFR § 10.35",
+              "title": "Competence",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart B > § 10.35",
+              "examFrequency": "HIGH (80% of SEE Part 3 exams)",
+              "keywords": [
+                "competence",
+                "competent practice",
+                "knowledge and skill",
+                "thoroughness and preparation",
+                "consulting with experts",
+                "studying the relevant law"
+              ],
+              "crossRefs": [
+                "31-cfr-10-22",
+                "31-cfr-10-29",
+                "31-cfr-10-34"
+              ],
+              "text": "§ 10.35 Competence.\n(a) A practitioner must possess the necessary competence to engage in practice before the Internal Revenue Service. Competent practice requires the appropriate level of knowledge, skill, thoroughness, and preparation necessary for the matter for which the practitioner is engaged.\n\n(b) A practitioner may become competent for the matter for which the practitioner has been engaged through various methods, such as consulting with experts in the relevant area or studying the relevant law."
+            }
+          ]
         }
-      },
-      {
-        id: "CBLE-Q04",
-        number: 4,
-        suite: "CBLE_111_113",
-        track: "CBLE",
-        category: "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "BioCare Imports Inc. enters two separate shipments under its continuous Basic Importation and Entry Bond (CBP Form 301):\n• Shipment 1: Restricted medical laser devices with an entered value of $60,000 (and $2,400 in estimated duties/fees) that are refused admission by the FDA for failing federal radiation safety standards.\n• Shipment 2: Non-restricted general ceramic tableware with an entered value of $40,000 (and $3,600 in estimated duties/fees) that is found to lack proper Country of Origin marking.\n\nCBP timely issues a CBP Form 4647 (Notice to Mark and/or Notice to Redeliver) for both shipments, but BioCare has already sold both shipments into domestic commerce and fails to redeliver either shipment to CBP custody. Under 19 CFR § 113.62(d) and (n), within how many days after the CBP Form 4647 demand was BioCare required to redeliver the merchandise, and what are the exact Liquidated Damages assessments for Shipment 1 and Shipment 2?",
-        options: [
-          { letter: "A", text: "10 working days to redeliver; Liquidated Damages are $60,000 for Shipment 1 (1x value) and $40,000 for Shipment 2 (1x value)." },
-          { letter: "B", text: "30 calendar days to redeliver; Liquidated Damages are $180,000 for Shipment 1 (three times the total value of the restricted merchandise: 3 x $60,000) and $43,600 for Shipment 2 (one time the value of the non-restricted merchandise plus estimated duties, taxes, and fees: $40,000 + $3,600)." },
-          { letter: "C", text: "30 calendar days to redeliver; Liquidated Damages are $187,200 for Shipment 1 (3x value plus 3x duties) and $120,000 for Shipment 2 (3x value)." },
-          { letter: "D", text: "15 calendar days to redeliver; Liquidated Damages are capped at a flat $30,000 statutory penalty per shipment for both Shipment 1 and Shipment 2." },
-          { letter: "E", text: "60 calendar days to redeliver; Liquidated Damages are $62,400 for Shipment 1 (1x value + duties) and $120,000 for Shipment 2 (3x value)." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-113-62",
-        targetCitation: "19 CFR § 113.62(d) & (n)(1)–(2)",
-        goldenQuote: "(1) Restricted, Prohibited, Alcoholic, or Quota-Class Merchandise (3x Value): If the principal defaults on the obligation to redeliver, mark, export, or destroy restricted or prohibited merchandise (including FDA/CPSC refused goods), alcoholic beverages, or quota-class merchandise, the obligors (principal and surety, jointly and severally) agree to pay liquidated damages equal to three times the total value of the merchandise (3x value) involved in the default.",
-        shortestPathHint: "19 CFR -> Part 113 -> § 113.62 (Basic importation and entry bond conditions)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the Basic Importation and Entry Bond conditions in 19 CFR Part 113 for the redelivery timeframe after CBP Form 4647 and the two-tier liquidated damages formula.",
-          "Hint 2 (Navigation): Open 19 CFR Part 113 -> § 113.62 and read paragraphs (d) and (n)(1)–(2).",
-          "Hint 3 (Trap Check): Redelivery is due within 30 calendar days of CBP Form 4647. For restricted/prohibited/alcoholic/quota-class goods (Shipment 1), liquidated damages equal 3x value (3 x $60,000 = $180,000). For non-restricted general goods (Shipment 2), liquidated damages equal 1x value PLUS estimated duties, taxes, and fees ($40,000 + $3,600 = $43,600)."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 113.62(d), when CBP issues a timely demand for redelivery on CBP Form 4647, the principal (Importer of Record) must return the merchandise to CBP custody within 30 calendar days after the date of the demand. When the principal defaults on redelivery, § 113.62(n) prescribes two distinct liquidated damages formulas for which the principal and surety are jointly and severally liable: (1) Under § 113.62(n)(1), for restricted or prohibited merchandise (such as FDA-refused medical lasers), alcoholic beverages, or quota-class merchandise, liquidated damages equal three times the total value of the merchandise (3 x $60,000 = $180,000); (2) Under § 113.62(n)(2), for non-restricted general merchandise (such as unmarked ceramic tableware), liquidated damages equal the value of the merchandise PLUS the estimated duties, taxes, and fees determined to be due ($40,000 + $3,600 = $43,600).",
-          distractors: {
-            A: "Confuses the 30-calendar-day redelivery period with the 10-working-day Entry Summary period and fails to apply the 3x multiplier for restricted goods and the duty addition for non-restricted goods.",
-            B: "CORRECT: 30 calendar days for redelivery after CBP Form 4647; $180,000 (3x value) for restricted Shipment 1; $43,600 (1x value + $3,600 duties/fees) for non-restricted Shipment 2.",
-            C: "Erroneously adds 3x duties to Shipment 1 and applies the 3x restricted multiplier to non-restricted Shipment 2.",
-            D: "Confuses the 15-calendar-day entry filing period (§ 142.2) and the $30,000 broker penalty cap (§ 111.91) with CBP Form 301 bond liquidated damages.",
-            E: "Reverses the 3x and 1x+duties formulas between restricted and non-restricted merchandise and uses an incorrect 60-day redelivery window."
-          }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "CBLE-Q01",
+      "number": 1,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Pacific Rim Forwarding LLC, an unlicensed ocean freight forwarder, refers a new U.S. importer, Cascade Home Furnishings Inc., to licensed customs broker Maria Vance. Pacific Rim asks Vance to pay a referral commission of $35 per customs entry filed on behalf of Cascade Home Furnishings and requests that Vance send her brokerage invoices to Pacific Rim so that Pacific Rim can bundle all logistics and customs charges onto a single consolidated invoice to Cascade. Under 19 CFR § 111.36, under what exact conditions may Broker Vance legally compensate Pacific Rim Forwarding for the referral?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A licensed customs broker is strictly prohibited under all circumstances from sharing fees or paying referral compensation to an unlicensed person or freight forwarder."
+        },
+        {
+          "letter": "B",
+          "text": "Vance may compensate the freight forwarder provided she obtains prior written approval from the Center of Excellence and Expertise (CEE) Director and caps the referral fee at 10% of the brokerage charge."
+        },
+        {
+          "letter": "C",
+          "text": "Vance may compensate the freight forwarder only if Cascade purchases the goods on a Delivered Duty Paid (DDP) basis and the forwarder acts as the Importer of Record."
+        },
+        {
+          "letter": "D",
+          "text": "Vance may compensate the freight forwarder provided she notifies the importer in advance in writing of the name of the forwarder being compensated, transmits a true copy of her brokerage charges directly to the importer (unless waived in writing by the importer), and the forwarder neither controls the brokerage fees nor forbids direct communication between the broker and the importer."
+        },
+        {
+          "letter": "E",
+          "text": "Vance may compensate the freight forwarder provided the forwarder rebates at least 50% of the referral commission back to the importer as a volume discount."
         }
-      },
-
-      // =======================================================================
-      // SUITE 2: CBLE_141_142 — ENTRY, INVOICES & RELEASE DEADLINES (Q05-Q08)
-      // =======================================================================
-      {
-        id: "CBLE-Q05",
-        number: 5,
-        suite: "CBLE_141_142",
-        track: "CBLE",
-        category: "Entry Process & Invoices (19 CFR Parts 141 & 142)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "A container vessel carrying non-quota commercial machinery arrives within the port limits of Savannah, GA and lands its cargo on Monday, November 2. On Tuesday, November 3, the licensed customs broker transmits the entry documentation (CBP Form 3461 electronic equivalent) without an entry summary and without requesting an immediate time-of-entry election upon filing. On Wednesday, November 4, CBP authorizes the release of the merchandise. Wednesday, November 11 is Veterans Day (a federal holiday). Under 19 CFR § 141.68 and § 142.12, what is the 'time of entry' for this shipment, and what is the final deadline for the broker to file the Entry Summary (CBP Form 7501) with estimated duties attached without incurring liquidated damages?",
-        options: [
-          { letter: "A", text: "Time of entry is Monday, November 2; the Entry Summary is due no later than Tuesday, November 17 (15 calendar days after landing)." },
-          { letter: "B", text: "Time of entry is Tuesday, November 3; the Entry Summary is due no later than Tuesday, November 17 (10 working days after filing CBP Form 3461)." },
-          { letter: "C", text: "Time of entry is Wednesday, November 4; the Entry Summary is due no later than Wednesday, November 18 (10 working days after time of entry, including Veterans Day)." },
-          { letter: "D", text: "Time of entry is Wednesday, November 4; the Entry Summary is due no later than Thursday, November 19 (10 working days after time of entry, excluding Saturdays, Sundays, and the Veterans Day federal holiday)." },
-          { letter: "E", text: "Time of entry is Thursday, November 19 (when the Entry Summary is filed); the Entry Summary is due within 30 calendar days after release." }
-        ],
-        correctOption: "D",
-        targetSectionId: "19-cfr-142-12",
-        targetCitation: "19 CFR § 142.12(b)–(c) & § 141.68(a)(1)",
-        goldenQuote: "When the entry documentation is filed before the entry summary, the importer or broker must file the entry summary (CBP Form 7501 or ACE electronic equivalent), with estimated duties attached (or scheduled via Automated Clearinghouse / Periodic Monthly Statement), within 10 working days after the time of entry (as determined under § 141.68).",
-        shortestPathHint: "19 CFR -> Part 142 -> § 142.12 (Time for filing entry summary)",
-        socraticHints: [
-          "Hint 1 (Concept): First determine the 'time of entry' under 19 CFR § 141.68(a)(1) when CBP Form 3461 is filed without an entry summary and without a special filing-time request.",
-          "Hint 2 (Navigation): Open 19 CFR Part 142 -> § 142.12(b) and (c) to see the exact deadline for filing Entry Summary (CBP Form 7501) after the time of entry.",
-          "Hint 3 (Trap Check): Count 10 WORKING days starting on the day AFTER CBP authorizes release (Release = Wed, Nov 4 -> Day 1 = Thu, Nov 5). Exclude Sat/Sun (Nov 7–8), Wed Nov 11 (Veterans Day federal holiday), and Sat/Sun (Nov 14–15)."
-        ],
-        explanation: {
-          correctReasoning: "First, under 19 CFR § 141.68(a)(1), when entry documentation (CBP Form 3461) is filed without an entry summary and the importer has not requested time of entry at filing, the 'time of entry' is the time CBP authorizes the release of the merchandise—here, Wednesday, November 4. Second, under 19 CFR § 142.12(b) and (c), the Entry Summary (CBP Form 7501) with estimated duties attached must be filed within 10 working days after the time of entry, excluding Saturdays, Sundays, and federal holidays. Counting working days starting the day after November 4: Day 1 = Thu Nov 5; Day 2 = Fri Nov 6; [Sat Nov 7 & Sun Nov 8 excluded]; Day 3 = Mon Nov 9; Day 4 = Tue Nov 10; [Wed Nov 11 excluded for Veterans Day federal holiday]; Day 5 = Thu Nov 12; Day 6 = Fri Nov 13; [Sat Nov 14 & Sun Nov 15 excluded]; Day 7 = Mon Nov 16; Day 8 = Tue Nov 17; Day 9 = Wed Nov 18; Day 10 = Thursday, November 19.",
-          distractors: {
-            A: "Confuses the 10-working-day Entry Summary deadline (§ 142.12(b)) with the 15-calendar-day initial entry filing window after landing before merchandise goes to General Order (§ 142.2(a)).",
-            B: "Erroneously uses the date CBP Form 3461 was submitted (Nov 3) as the time of entry without an importer election under § 141.68(a)(2) and fails to exclude Veterans Day.",
-            C: "Correctly identifies Wednesday, November 4 as the time of entry, but fails to exclude Wednesday, November 11 (Veterans Day federal holiday) when counting 10 working days.",
-            D: "CORRECT: Time of entry is Wednesday, November 4 (release authorization), and Day 10 of working days (excluding weekends and Veterans Day) is Thursday, November 19.",
-            E: "Confuses standard consumption entry release (§ 141.68(a)) with Immediate Delivery release (§ 141.68(c)), where time of entry is when the entry summary is filed, and states a non-existent 30-day deadline."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q06",
-        number: 6,
-        suite: "CBLE_141_142",
-        track: "CBLE",
-        category: "Entry Process & Invoices (19 CFR Parts 141 & 142)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Sonora Industrial Supply Co. imports precision ball bearings from a manufacturer in Monterrey, Mexico, destined for the Port of Laredo, TX. The Mexican seller issues a commercial invoice written entirely in Spanish that states a single lump-sum CIF Laredo price in Mexican Pesos (MXN), without separately itemizing ocean/rail freight or insurance, and omits the $9,500 value of specialized hardening dies that Sonora purchased in Germany and furnished free of charge to the Mexican plant. Under 19 CFR § 141.86, which of the following statements accurately describes the legal sufficiency of this commercial invoice for CBP entry purposes?",
-        options: [
-          { letter: "A", text: "The invoice is fully compliant because invoices from USMCA countries (Mexico and Canada) may be submitted in Spanish or French without translation, and foreign assists never need to be disclosed on a commercial invoice." },
-          { letter: "B", text: "The invoice is deficient because § 141.86 requires every commercial invoice to be in the English language (or have attached an accurate English translation), to itemize all charges upon the merchandise by name and amount (including freight, insurance, commission, and packing), and to disclose all goods or services furnished for production not included in the invoice price (such as foreign-sourced dies/assists), while stating the purchase price in the currency of purchase." },
-          { letter: "C", text: "The invoice is deficient solely because all commercial invoices presented to CBP must state the purchase price exclusively in U.S. Dollars (USD) converted by the foreign seller prior to shipment." },
-          { letter: "D", text: "The invoice is compliant with respect to omitting the German dies, because only goods or services furnished inside the United States must be disclosed under § 141.86(a)(11)." },
-          { letter: "E", text: "The invoice does not need to state the port of entry, country of origin, or quantities in weights and measures if the shipment is valued under $250,000." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-141-86",
-        targetCitation: "19 CFR § 141.86(a)(1)–(11) & (d)",
-        goldenQuote: "(11) All goods or services furnished for the production of the merchandise (e.g., \"assists\" such as dies, molds, tools, engineering work) not included in the invoice price. However, goods or services furnished in the United States are excluded.",
-        shortestPathHint: "19 CFR -> Part 141 -> § 141.86 (Contents of invoice)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the mandatory data elements required on every commercial invoice presented for U.S. customs entry, including currency, itemized charges, assist disclosures, and language requirements.",
-          "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.86 and inspect paragraphs (a)(5), (a)(8), (a)(11), and (d).",
-          "Hint 3 (Trap Check): Under § 141.86(a)(5), stating the purchase price in the currency of purchase (MXN) is actually required! However, the invoice violates § 141.86(a)(8) (unitemized freight/insurance), § 141.86(a)(11) (omission of the German dies assist), and § 141.86(d) (must be in English or have an accurate English translation attached)."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 141.86(a) and (d), a commercial invoice must satisfy eleven general content requirements plus the English language rule: (1) Under § 141.86(d), the invoice and all attachments must be in the English language or have attached thereto an accurate translation into English; (2) Under § 141.86(a)(8), all charges upon the merchandise (including freight, insurance, commissions, and containers/packing) must be itemized by name and amount; (3) Under § 141.86(a)(11), all goods or services furnished for the production of the merchandise not included in the invoice price (such as the German hardening dies assist) must be set forth on the invoice (only goods/services furnished in the U.S. are excluded); and (4) Under § 141.86(a)(5), the purchase price is properly stated in the currency of purchase (here, MXN).",
-          distractors: {
-            A: "Incorrect because there is no USMCA exemption from the English translation requirement in § 141.86(d) or the assist disclosure rule in § 141.86(a)(11).",
-            B: "CORRECT: Accurately identifies the English translation requirement (§ 141.86(d)), itemized charges rule (§ 141.86(a)(8)), foreign assist disclosure rule (§ 141.86(a)(11)), and currency-of-purchase rule (§ 141.86(a)(5)).",
-            C: "Incorrect because § 141.86(a)(5) explicitly requires the invoice to set forth the purchase price in the currency of the purchase (CBP converts foreign currency using quarterly/daily Federal Reserve rates under 19 CFR Part 159).",
-            D: "Reverses the rule in § 141.86(a)(11): foreign assists (like the German dies) MUST be disclosed, whereas goods or services furnished in the United States are excluded.",
-            E: "Incorrect because port of entry (§ 141.86(a)(1)), quantities in weights and measures (§ 141.86(a)(4)), and country of origin (§ 141.86(a)(10)) are mandatory on all commercial invoices."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q07",
-        number: 7,
-        suite: "CBLE_141_142",
-        track: "CBLE",
-        category: "Entry Process & Invoices (19 CFR Parts 141 & 142)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "A cargo aircraft lands at Chicago O'Hare International Airport on May 1 carrying a commercial shipment of Swiss mechanical chronographs consigned to Horology Imports LLC. Due to a dispute between Horology Imports and its overseas lender, no customs broker is instructed to file entry documentation upon arrival. Under 19 CFR § 142.2 and § 142.3, what is the maximum period allowed after landing to file the required entry documentation (CBP Form 3461 package), what happens to the merchandise if entry is not filed within that period, and how long may the merchandise remain unclaimed before CBP is authorized to sell it at public auction?",
-        options: [
-          { letter: "A", text: "Entry documentation must be filed within 10 working days after landing; if unentered, the merchandise is immediately forfeited to the U.S. Treasury and auctioned after 30 calendar days." },
-          { letter: "B", text: "Entry documentation must be filed within 15 calendar days after landing; if unentered within 15 calendar days, the merchandise is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the consignee's risk and expense, and if it remains unentered in General Order for 6 months from the date of importation, it may be sold at public auction or destroyed by CBP." },
-          { letter: "C", text: "Entry documentation must be filed within 30 calendar days after landing; if unentered, the air carrier must return the cargo to Switzerland at the carrier's own expense within 45 days." },
-          { letter: "D", text: "Entry documentation must be filed within 5 working days after landing; if unentered, the goods are placed in a Foreign Trade Zone (FTZ) where they may remain indefinitely without storage charges." },
-          { letter: "E", text: "Entry documentation must be filed within 20 working days after landing; if unentered, the consignee is assessed a $30,000 broker penalty and the goods are auctioned after 1 year." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-142-2",
-        targetCitation: "19 CFR § 142.2(a) & (c)",
-        goldenQuote: "(c) Consequence of failure to make entry within 15 calendar days (General Order — Part 127). Any merchandise for which entry documentation is not filed within 15 calendar days after landing or in-bond arrival at the port of destination shall be treated as unclaimed and sent to a General Order (G.O.) warehouse or public store to be held at the risk and expense of the consignee.",
-        shortestPathHint: "19 CFR -> Part 142 -> § 142.2 (Time for filing entry)",
-        socraticHints: [
-          "Hint 1 (Concept): Distinguish the deadline for initial Entry filing after landing (§ 142.2) from the deadline for Entry Summary filing after release (§ 142.12).",
-          "Hint 2 (Navigation): Open 19 CFR Part 142 -> § 142.2 and read paragraphs (a) and (c).",
-          "Hint 3 (Trap Check): Initial entry documentation (§ 142.3) must be filed within 15 CALENDAR days after landing. Failure to make entry within 15 calendar days sends the cargo to a General Order (G.O.) warehouse at the consignee's risk and expense, and after 6 months in G.O. from the date of importation it becomes subject to CBP public auction."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 142.2(a), the entry documentation required by § 142.3 (CBP Form 3461, evidence of right to make entry, commercial/pro forma invoice, packing list, and bond identification) must be filed within 15 calendar days after landing from a vessel, aircraft, or vehicle (or after arrival at the port of destination for in-bond shipments). Under § 142.2(c) and Part 127, any merchandise for which entry is not filed within 15 calendar days after landing is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the risk and expense of the consignee. Merchandise remaining in General Order for 6 months from the date of importation without entry may be sold at public auction or destroyed by CBP.",
-          distractors: {
-            A: "Confuses the 15-calendar-day initial entry window (§ 142.2(a)) with the 10-working-day Entry Summary window (§ 142.12(b)).",
-            B: "CORRECT: 15 calendar days after landing to file entry; transfer to General Order warehouse at consignee's risk and expense if unentered; subject to CBP public auction after 6 months in G.O.",
-            C: "Incorrect because the statutory pre-G.O. period is 15 calendar days (not 30), and unclaimed goods go to a G.O. warehouse at the consignee's expense.",
-            D: "Incorrect because 5 working days and automatic placement in a Foreign Trade Zone are not part of 19 CFR Part 142.",
-            E: "Confuses the carrier's 20-calendar-day G.O. notification deadline with the importer's 15-calendar-day entry filing deadline."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q08",
-        number: 8,
-        suite: "CBLE_141_142",
-        track: "CBLE",
-        category: "Entry Process & Invoices (19 CFR Parts 141 & 142)",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "Licensed customs broker Elena Rostova is onboarding two new commercial clients and reviewing a low-value shipment for each:\n• Client 1 (Redwood Trading Corp., a Delaware corporation) executes a customs Power of Attorney (POA) authorizing Rostova to sign entry declarations on its behalf, and imports a single daily shipment of non-restricted sample plastic phone cases with an aggregate fair retail value in the country of shipment of $650.\n• Client 2 (Sierra Artisan Partners, a California general partnership with three partners) executes a customs Power of Attorney in favor of Rostova, and imports a single daily shipment of Chinese-origin steel threaded rods valued at $700 that are subject to an active Antidumping Duty (AD/CVD) order.\n\nUnder 19 CFR § 141.19 (incorporating § 141.34) and § 141.4(b)(4), what are the maximum legal validity periods for the Powers of Attorney executed by Client 1 and Client 2, and which of the two shipments qualifies for duty-free entry exemption under Section 321 ($800 de minimis)?",
-        options: [
-          { letter: "A", text: "Both POAs are valid for a maximum of 2 years; both the $650 phone case shipment and the $700 AD/CVD steel rod shipment qualify for Section 321 duty-free administrative exemption because both are valued under $800." },
-          { letter: "B", text: "Client 1's corporate POA may be granted for an unlimited period of time, whereas Client 2's partnership POA is limited to a period not to exceed 2 years from the date of execution (and is automatically revoked by any change in partnership membership); furthermore, ONLY Client 1's $650 phone case shipment qualifies for the Section 321 ($800 de minimis) exemption because merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is ineligible for Section 321 clearance." },
-          { letter: "C", text: "Client 1's corporate POA is limited to 5 years and Client 2's partnership POA is valid indefinitely; neither shipment qualifies for Section 321 because commercial samples over $250 always require formal entry." },
-          { letter: "D", text: "Client 1's corporate POA is valid indefinitely and Client 2's partnership POA is limited to 2 years, but BOTH shipments qualify for Section 321 clearance because the $800 de minimis threshold overrides all Antidumping Duty orders." },
-          { letter: "E", text: "Client 1's corporate POA is limited to 3 years (until the next Triennial Status Report) and Client 2's partnership POA is limited to 1 year; only Client 2's shipment qualifies for Section 321." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-141-19",
-        targetCitation: "19 CFR § 141.19(c)(1)–(2) (§ 141.34) & § 141.4(b)(4)",
-        goldenQuote: "(2) Partnership limitation (§ 141.34): A power of attorney granted by a partnership shall be limited to a period not to exceed 2 years from the date of execution, and shall state the names of all members of the partnership. Any change in the membership of the partnership automatically revokes the power of attorney.",
-        shortestPathHint: "19 CFR -> Part 141 -> § 141.19 (Declaration of entry and Power of Attorney rules)",
-        socraticHints: [
-          "Hint 1 (Concept): Compare the Power of Attorney validity duration for a corporation versus a general partnership, and check the statutory exclusions from the Section 321 ($800 de minimis) administrative exemption.",
-          "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.19(c) for Power of Attorney duration rules, and check § 141.4(b)(4) for Section 321 ($800 de minimis) exclusions.",
-          "Hint 3 (Trap Check): Under § 141.19(c) (§ 141.34), a corporate POA may be granted for an unlimited period, whereas a partnership POA cannot exceed 2 years. Under § 141.4(b)(4), merchandise subject to Antidumping/Countervailing Duties (AD/CVD), quota, or alcohol/tobacco internal revenue taxes is strictly excluded from Section 321 clearance even if valued at $800 or less!"
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 141.19(c)(1)–(2) (incorporating § 141.34), a Power of Attorney executed by a corporation or sole proprietor may be granted for an unlimited period of time and remains valid until revoked, whereas a Power of Attorney granted by a partnership is strictly limited to a period not to exceed 2 years from the date of execution (and must list all partners, with any change in partnership membership automatically revoking the POA). Furthermore, under 19 CFR § 141.4(b)(4) (19 U.S.C. 1321(a)(2)(C)), while shipments imported by one person on one day with an aggregate fair retail value of $800 or less generally qualify for the Section 321 de minimis exemption (as with Client 1's $650 phone cases), merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is explicitly excluded from Section 321 clearance and requires formal entry.",
-          distractors: {
-            A: "Incorrect because corporate POAs are not capped at 2 years, and AD/CVD merchandise is strictly ineligible for Section 321 de minimis clearance.",
-            B: "CORRECT: Corporate POA is valid for an unlimited period; partnership POA is capped at 2 years; $650 non-restricted shipment qualifies for Section 321, while $700 AD/CVD shipment is excluded from Section 321.",
-            C: "Incorrect because corporate POAs are not limited to 5 years, partnership POAs are not unlimited, and non-restricted plastic cases under $800 qualify for Section 321.",
-            D: "Correctly states the POA rules, but erroneously claims that Section 321 applies to merchandise subject to an Antidumping Duty order.",
-            E: "Incorrect on both POA durations and Section 321 eligibility."
-          }
-        }
-      },
-
-      // =======================================================================
-      // SUITE 3: CBLE_152_177_190 — VALUATION, RULINGS & DRAWBACK (Q09-Q14)
-      // =======================================================================
-      {
-        id: "CBLE-Q09",
-        number: 9,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "Apex Outdoor Gear Inc. (an unrelated U.S. importer in Seattle, WA) imports 5,000 carbon-fiber trekking poles from a manufacturer in Taiwan on a CIF Seattle basis. The commercial invoice states a total CIF price of $115,000, which separately itemizes $11,000 for international ocean freight from Kaohsiung to Seattle and $1,500 for marine cargo insurance. In addition to the invoice amount, Apex incurred the following costs not included in the seller's invoice price:\n• $4,000 paid to Apex's bona fide buying agent in Taipei for locating the factory and inspecting the goods;\n• $8,000 for a specialized aluminum injection mold purchased by Apex from an unrelated U.S. toolmaker and shipped free of charge to the Taiwanese manufacturer for use exclusively on this 5,000-unit order (plus $500 air freight to deliver the mold to the Taiwanese factory);\n• $6,000 for industrial design sketches created in Seattle by Apex's full-time U.S.-domiciled staff engineers and emailed free of charge to the Taiwanese factory; and\n• $3,500 in patent license royalties that the sales contract requires Apex to pay to a German patent holder as a condition of the sale of the trekking poles for exportation to the United States.\n\nWhat is the correct transaction value (appraised value) of the imported trekking poles under 19 CFR § 152.103?",
-        options: [
-          { letter: "A", text: "$102,500" },
-          { letter: "B", text: "$114,500" },
-          { letter: "C", text: "$118,500" },
-          { letter: "D", text: "$120,500" },
-          { letter: "E", text: "$127,000" }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-152-103",
-        targetCitation: "19 CFR § 152.103(a)(1), (b)(1) & (i)(1)",
-        goldenQuote: "(iv) Any royalty or license fee related to the imported merchandise that the buyer is required to pay, directly or indirectly, as a condition of the sale of the imported merchandise for exportation to the United States;",
-        shortestPathHint: "19 CFR -> Part 152 -> § 152.103 (Transaction value: PAPP, Statutory Additions & Exclusions)",
-        socraticHints: [
-          "Hint 1 (Concept): Start with the CIF invoice total ($115,000) and determine which international shipment charges must be deducted to arrive at the base Price Actually Paid or Payable (PAPP).",
-          "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.103(b)(1) to check the five statutory additions to PAPP, and cross-reference § 152.102(a) to see which buyer-supplied items qualify as dutiable assists.",
-          "Hint 3 (Trap Check): Buying commissions ($4,000) and U.S.-undertaken engineering/design sketches ($6,000) are NEVER added! Add only the mold assist including its freight to the foreign factory ($8,000 + $500) and the condition-of-sale patent royalty ($3,500)."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 152.103(a)(1) and (i)(1), international ocean freight ($11,000) and marine cargo insurance ($1,500) are excluded from the CIF price ($115,000) because they are separately itemized, yielding a base Price Actually Paid or Payable (PAPP) of $102,500 ($115,000 - $12,500). Next, under § 152.103(b)(1), we add: (1) the mold assist value of $8,500 ($8,000 acquisition cost + $500 freight to transport the mold to the foreign factory per § 152.102(a)(3)); and (2) the $3,500 patent royalty because the buyer is required to pay it as a condition of the sale for exportation to the U.S. under § 152.103(b)(1)(iv). The $4,000 buying commission is excluded (only selling commissions are added under § 152.103(b)(1)(ii)), and the $6,000 design work undertaken in the United States is excluded from the definition of an assist under § 152.102(a)(1)(iv) & (a)(2). Calculation: $102,500 + $8,500 + $3,500 = $114,500.",
-          distractors: {
-            A: "$102,500 is the net FOB Price Actually Paid or Payable ($115,000 - $11,000 freight - $1,500 insurance), but it omits the mandatory statutory additions for the mold assist ($8,500) and the condition-of-sale royalty ($3,500).",
-            B: "CORRECT ($114,500): Net PAPP of $102,500 + $8,500 mold assist (including transport to the factory) + $3,500 condition-of-sale royalty.",
-            C: "$118,500 erroneously includes the $4,000 bona fide buying commission. Under 19 CFR § 152.103(b)(1)(ii), only selling commissions incurred by the buyer are added to PAPP.",
-            D: "$120,500 erroneously includes the $6,000 design sketches created in Seattle. Under 19 CFR § 152.102(a)(1)(iv), engineering and design work is an assist only when undertaken OUTSIDE the United States.",
-            E: "$127,000 fails to deduct the separately itemized $11,000 international ocean freight and $1,500 marine cargo insurance from the CIF invoice price ($114,500 + $12,500)."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q10",
-        number: 10,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "Vanguard Medical Devices Inc. (a U.S. importer in Minneapolis, MN) contracts with an unrelated manufacturer in Costa Rica to produce sterile surgical catheters for exportation to the United States. Vanguard provides the following five items free of charge to the Costa Rican factory for use in producing the imported catheters:\n1. Specialized biocompatible silicone tubing purchased by Vanguard in Germany for $22,000 and shipped directly to the Costa Rican plant (incorporating into the finished catheters);\n2. $15,000 in CAD/CAM engineering blueprints developed in Milan, Italy by an independent Italian engineering firm hired by Vanguard;\n3. $18,000 in quality-control testing software architecture written in Minneapolis by Vanguard's own U.S.-domiciled staff engineers;\n4. General-purpose air conditioning equipment ($12,000) installed in the Costa Rican factory's administrative accounting office; and\n5. $1,200 in international air courier charges paid by Vanguard to transport the German silicone tubing (Item 1) to the Costa Rican factory.\n\nUnder 19 CFR § 152.102(a), what is the total dutiable value of the 'assists' that must be added to the price actually paid or payable?",
-        options: [
-          { letter: "A", text: "$22,000" },
-          { letter: "B", text: "$37,000" },
-          { letter: "C", text: "$38,200" },
-          { letter: "D", text: "$56,200" },
-          { letter: "E", text: "$68,200" }
-        ],
-        correctOption: "C",
-        targetSectionId: "19-cfr-152-102",
-        targetCitation: "19 CFR § 152.102(a)(1)–(3)",
-        goldenQuote: "(iv) Engineering, development, artwork, design work, and plans and sketches that are undertaken elsewhere than in the United States (i.e., OUTSIDE the United States) and are necessary for the production of the imported merchandise.",
-        shortestPathHint: "19 CFR -> Part 152 -> § 152.102 (Definitions: Assist, Related persons, Identical/Similar merchandise)",
-        socraticHints: [
-          "Hint 1 (Concept): Evaluate each of the 5 items against the four exclusive categories of an 'assist' in 19 CFR § 152.102(a)(1) and the assist valuation rule in § 152.102(a)(3).",
-          "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.102(a) and check how foreign-undertaken engineering (Milan, Italy) differs from U.S.-undertaken engineering (Minneapolis, MN).",
-          "Hint 3 (Trap Check): Include Item 1 ($22,000 incorporated silicone tubing), Item 2 ($15,000 Italian engineering undertaken outside the U.S.), and Item 5 ($1,200 freight to transport the tubing assist to the factory). Exclude Item 3 (U.S.-domiciled engineering) and Item 4 (office A/C not used in production of the merchandise)."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 152.102(a)(1)–(3), we evaluate each item: (1) The $22,000 biocompatible silicone tubing is an assist under § 152.102(a)(1)(i) because it is a material/component incorporated in the imported merchandise; (2) The $15,000 CAD/CAM engineering blueprints developed in Milan, Italy are an assist under § 152.102(a)(1)(iv) because they constitute engineering/design work undertaken OUTSIDE the United States and necessary for production; (3) The $18,000 engineering work performed in Minneapolis by U.S.-domiciled employees is explicitly EXCLUDED from being an assist under § 152.102(a)(1)(iv) and (a)(2); (4) The $12,000 administrative office air conditioner is NOT an assist because it is not a tool/die/mold used in production of the catheters nor consumed in production; and (5) The $1,200 air courier cost to transport the silicone tubing assist to the Costa Rican factory is added to the value of the assist under § 152.102(a)(3). Total dutiable assist value = $22,000 + $15,000 + $1,200 = $38,200.",
-          distractors: {
-            A: "$22,000 includes only the silicone tubing and omits both the foreign engineering blueprints ($15,000) and the freight to transport the tubing to the foreign plant ($1,200).",
-            B: "$37,000 includes the silicone tubing ($22,000) and the Italian engineering ($15,000) but forgets to add the $1,200 transportation cost of delivering the assist to the foreign place of production under § 152.102(a)(3).",
-            C: "CORRECT ($38,200): $22,000 incorporated tubing + $15,000 foreign engineering (Italy) + $1,200 assist transport cost to the factory.",
-            D: "$56,200 erroneously includes the $18,000 U.S.-based engineering work performed in Minneapolis, which is excluded under 19 CFR § 152.102(a)(1)(iv) and (a)(2).",
-            E: "$68,200 erroneously includes every single item, including U.S. engineering ($18,000) and non-production office air conditioning ($12,000)."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q11",
-        number: 11,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Nordic Robotics USA Inc. imports custom-engineered autonomous warehouse shuttles from its wholly owned parent company in Sweden on a consignment basis where no sale for exportation occurs (eliminating Transaction Value of the imported merchandise), and because the shuttles are custom-built prototypes, there are no sales of identical or similar merchandise exported to the United States at or about the same time. Nordic Robotics possesses complete, audited Swedish factory cost-of-production records and prefers to have CBP appraise the shuttles using Computed Value rather than Deductive Value. Under 19 CFR § 152.101, what is the default statutory sequence of the six appraisement methods, and how may Nordic Robotics legally elect to have Computed Value applied before Deductive Value?",
-        options: [
-          { letter: "A", text: "The default sequence places Computed Value ahead of Deductive Value automatically, so no election by the importer is required." },
-          { letter: "B", text: "The default sequential order is: (1) Transaction value, (2) Transaction value of identical merchandise, (3) Transaction value of similar merchandise, (4) Deductive value, (5) Computed value, and (6) Value if other values cannot be determined (fallback); however, upon written request made by the importer at the time of filing the entry summary, the order of Deductive value and Computed value will be reversed so that Computed value is applied before Deductive value." },
-          { letter: "C", text: "The importer may choose any of the six valuation methods in any order at any time up to 180 days after liquidation, or CBP may appraise the goods at the selling price in the United States of merchandise produced in the United States." },
-          { letter: "D", text: "The order of Deductive value and Computed value can never be reversed under any circumstances unless the importer obtains a formal Headquarters ruling letter 90 days prior to arrival." },
-          { letter: "E", text: "When Transaction Value cannot be determined, CBP must immediately appraise the merchandise using the higher of two alternative values or the domestic market price in Sweden." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-152-101",
-        targetCitation: "19 CFR § 152.101(a)–(c)",
-        goldenQuote: "(b) Importer's option to reverse Deductive and Computed value. Upon written request made by the importer at the time of filing the entry summary, the order of application of deductive value (paragraph (a)(4)) and computed value (paragraph (a)(5)) will be reversed so that computed value is applied before deductive value.",
-        shortestPathHint: "19 CFR -> Part 152 -> § 152.101 (Basis of appraisement)",
-        socraticHints: [
-          "Hint 1 (Concept): CBP must follow a strict 6-step statutory hierarchy when appraising imported merchandise, with one specific statutory election allowed to the importer.",
-          "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.101 and read paragraphs (a), (b), and (c).",
-          "Hint 3 (Trap Check): Check the exact timing required in § 152.101(b) to reverse Deductive Value (Method 4) and Computed Value (Method 5): the importer must make a written request AT THE TIME OF FILING THE ENTRY SUMMARY!"
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 152.101(a), imported merchandise must be appraised in the strict sequential order of: (1) Transaction value (§ 152.103); (2) Transaction value of identical merchandise (§ 152.104); (3) Transaction value of similar merchandise (§ 152.104); (4) Deductive value (§ 152.105); (5) Computed value (§ 152.106); and (6) Fallback value if other values cannot be determined (§ 152.107). Under § 152.101(b), upon a written request made by the importer at the time of filing the entry summary, the order of application of Deductive value (Method 4) and Computed value (Method 5) will be reversed so that Computed value is applied before Deductive value.",
-          distractors: {
-            A: "Incorrect because Deductive value (Method 4) precedes Computed value (Method 5) by default unless the importer timely elects to reverse them.",
-            B: "CORRECT: States the exact 6-step statutory hierarchy of § 152.101(a) and the written election at the time of filing the entry summary under § 152.101(b).",
-            C: "Incorrect because the hierarchy is mandatory (not free-choice), and appraising goods based on the U.S. selling price of U.S.-produced goods is explicitly prohibited under § 152.101(c)(1) (§ 152.108).",
-            D: "Incorrect because § 152.101(b) expressly grants the importer the right to reverse Deductive and Computed value at the time of filing the entry summary without a prior HQ ruling.",
-            E: "Incorrect because appraising merchandise at the higher of two alternative values or at the domestic price in the country of exportation is strictly prohibited under § 152.101(c)(2) and (c)(3)."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q12",
-        number: 12,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Three years ago, U.S. Customs and Border Protection issued a binding tariff classification ruling letter (NY N310455) to Lumina Lighting Inc. classifying its smart LED ceiling panels under an HTSUS subheading with a Free rate of duty. Following a recent Court of International Trade decision on multi-function electronics, CBP Headquarters determines that ruling NY N310455 is legally incorrect and decides to revoke it in favor of a subheading carrying a 3.9% duty rate. Under 19 CFR § 177.9(d) (and 19 U.S.C. 1625(c)), what notice-and-comment procedure and effective-date timeline must CBP follow to revoke a ruling letter that has been in effect for at least 60 days?",
-        options: [
-          { letter: "A", text: "CBP may revoke the ruling immediately via an internal port directive, and the 3.9% duty rate applies retroactively to all unliquidated and liquidated entries filed during the past 5 years." },
-          { letter: "B", text: "CBP must publish a proposed revocation notice in the Customs Bulletin with at least a 30-calendar-day public comment period, publish the final revocation decision in the Customs Bulletin within 30 calendar days after the close of the comment period, and the final revocation becomes effective 60 calendar days after the date of publication of the final notice." },
-          { letter: "C", text: "CBP must send a certified letter to the ruling holder giving 10 working days' notice, after which the revocation becomes effective immediately." },
-          { letter: "D", text: "Once a binding classification ruling letter has been in effect for more than 1 year, CBP is permanently barred from modifying or revoking it unless Congress amends the HTSUS statute." },
-          { letter: "E", text: "CBP must publish a final revocation notice in the Federal Register that takes effect 180 calendar days after publication, with no prior public comment period required." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-177-9",
-        targetCitation: "19 CFR § 177.9(d)(1)–(3)",
-        goldenQuote: "(3) Effective date — 60 calendar days after publication. The final ruling or decision modifying or revoking a prior interpretive ruling or decision will become effective 60 calendar days after the date of publication of the final notice in the Customs Bulletin.",
-        shortestPathHint: "19 CFR -> Part 177 -> § 177.9 (Effect of ruling letters; modification or revocation with 60-day notice)",
-        socraticHints: [
-          "Hint 1 (Concept): Binding ruling letters in effect for 60 days or more cannot be revoked overnight; federal law mandates publication in a specific CBP periodical with public comment and a delayed effective date.",
-          "Hint 2 (Navigation): Open 19 CFR Part 177 -> § 177.9 and read paragraph (d)(1), (d)(2), and (d)(3).",
-          "Hint 3 (Trap Check): Check the three exact timeframes in § 177.9(d): publication in the Customs Bulletin -> 30 calendar days for public comment -> publication of final decision within 30 calendar days after comment period closes -> effective 60 calendar days after final publication."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 177.9(d)(1)–(3) and 19 U.S.C. 1625(c), when CBP seeks to modify or revoke a prior interpretive ruling or decision that has been in effect for at least 60 calendar days, CBP must: (1) publish a notice of proposed modification or revocation in the Customs Bulletin providing at least 30 calendar days for public comment; (2) publish the final ruling or decision in the Customs Bulletin within 30 calendar days after the close of the public comment period; and (3) delay the effective date of the final modification or revocation until 60 calendar days after the date of publication of the final notice in the Customs Bulletin.",
-          distractors: {
-            A: "Incorrect because immediate revocation without notice and retroactive application to entries covered by an existing ruling letter are barred by 19 CFR § 177.9(d).",
-            B: "CORRECT: Matches the exact statutory and regulatory timeline in 19 CFR § 177.9(d)(1)–(3).",
-            C: "Incorrect because a 10-working-day private letter bypasses the mandatory Customs Bulletin public notice-and-comment process and 60-day effective date delay.",
-            D: "Incorrect because CBP always retains legal authority to modify or revoke erroneous rulings prospectively by following the § 177.9(d) procedure.",
-            E: "Incorrect because proposed revocations are published in the Customs Bulletin with a mandatory 30-day public comment period and a 60-calendar-day (not 180-day) effective date delay."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q13",
-        number: 13,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Extreme",
-        targetLookupSeconds: 55,
-        stem: "On March 10, 2024, Precision Optics Corp. imported 1,000 laser rangefinders classified under HTSUS subheading 9015.10.4000 ('Rangefinders: Electrical', duty rate 5% ad valorem; note that the 8-digit subheading 9015.10.40 description does NOT begin with the word 'Other'). The entered value was $200.00 per unit ($200,000 total), and Precision Optics paid $10,000.00 in customs duties ($10.00 duty per unit). On August 15, 2026, Precision Optics exported 1,000 unused domestic rangefinders to Germany that were never used in the United States and are also classified under HTSUS 9015.10.4000, but have a lower commercial export invoice value of $150.00 per unit ($150,000 total). Precision Optics timely files a TFTEA Unused Merchandise Substitution Drawback claim (19 U.S.C. 1313(j)(2)) in ACE designating the 1,000 imported units (ignoring MPF for this calculation). Under 19 CFR § 190.32, what is the maximum drawback duty refund allowable on this claim?",
-        options: [
-          { letter: "A", text: "$0.00, because the exported rangefinders were domestically produced and have a different unit value than the imported rangefinders." },
-          { letter: "B", text: "$7,425.00" },
-          { letter: "C", text: "$7,500.00" },
-          { letter: "D", text: "$9,900.00" },
-          { letter: "E", text: "$10,000.00" }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-190-32",
-        targetCitation: "19 CFR § 190.32(a), (b)(1) & (c) ('Lesser Of' Rule)",
-        goldenQuote: "(c) Amount of drawback — The \"Lesser Of\" Rule. For unused merchandise substitution drawback claims under 19 U.S.C. 1313(j)(2), the total amount of drawback allowable will not exceed 99 percent of the LESSER of:",
-        shortestPathHint: "19 CFR -> Part 190 -> § 190.32 (Unused merchandise substitution drawback & 'lesser of' rule)",
-        socraticHints: [
-          "Hint 1 (Concept): Under TFTEA Modernized Drawback, unused substitution (19 U.S.C. 1313(j)(2)) is based on matching 8-digit HTSUS classification, but the refund amount is subject to a statutory value comparison cap.",
-          "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.32 and read paragraph (c) ('Amount of drawback — The \"Lesser Of\" Rule').",
-          "Hint 3 (Trap Check): Compare the duty paid on the imported units ($200,000 x 5% = $10,000) against the duty that would apply to the lower-valued substituted exported units ($150,000 x 5% = $7,500). Take the LESSER amount ($7,500) and multiply by the 99% drawback rate ($7,500 x 0.99)!"
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 190.32(a) and (b)(1), unused merchandise substitution drawback under 19 U.S.C. 1313(j)(2) is valid because both the designated imported merchandise and the substituted exported domestic merchandise are classified under the same 8-digit HTSUS subheading (9015.10.40, which does not begin with 'Other') and exportation occurred within 5 years of importation. However, under § 190.32(c) (the TFTEA 'Lesser Of' Rule), the drawback refund is capped at 99% of the LESSER of: (1) the duties paid on the designated imported merchandise ($200/unit x 1,000 units x 5% = $10,000.00), OR (2) the duties that would have applied to the substituted exported merchandise had it been imported at that rate ($150/unit x 1,000 units x 5% = $7,500.00). Since $7,500.00 is less than $10,000.00, we apply the 99% refund limit to $7,500.00: $7,500.00 x 0.99 = $7,425.00.",
-          distractors: {
-            A: "Incorrect because 19 CFR § 190.32(a) explicitly permits substituting domestic or imported merchandise classified under the same 8-digit HTSUS subheading regardless of price differences.",
-            B: "CORRECT ($7,425.00): 99% of the lesser duty amount ($150,000 substituted export value x 5% duty rate = $7,500.00 x 99% = $7,425.00).",
-            C: "$7,500.00 applies the 'lesser of' cap correctly ($150,000 x 5%) but forgets to reduce the refund by the mandatory 1% CBP retention (99% drawback limit).",
-            D: "$9,900.00 is 99% of the $10,000.00 duty paid on the imported merchandise, ignoring the mandatory 'lesser of' rule in 19 CFR § 190.32(c) when the substituted exported goods have a lower value.",
-            E: "$10,000.00 is 100% of the imported duty paid, ignoring both the 99% drawback limit and the § 190.32(c) 'lesser of' rule."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q14",
-        number: 14,
-        suite: "CBLE_152_177_190",
-        track: "CBLE",
-        category: "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "Continental Chemicals Inc. imported a shipment of duty-paid specialty polymers on November 15, 2021 (with the underlying import entry summary liquidating on October 1, 2022). Continental uses the polymers in U.S. manufacturing and exports the finished articles on June 20, 2025. Continental is preparing its Modernized Drawback claim in ACE and also wants to know which import charges are legally eligible for a 99% drawback refund and how long drawback records must be kept. Under 19 CFR § 190.51 and § 190.2, what is the final statutory deadline for Continental to file the complete drawback claim, how long must Continental retain the supporting drawback records, and which fees/duties are eligible vs. ineligible for drawback?",
-        options: [
-          { letter: "A", text: "The drawback claim must be filed by October 1, 2027 (5 years from liquidation of the import entry); records must be retained for 5 years from exportation; both Antidumping Duties (AD/CVD) and Harbor Maintenance Fees (HMF) are 99% refundable." },
-          { letter: "B", text: "The complete drawback claim must be filed in ACE no later than November 15, 2026 (within 5 years after the date of importation of the designated imported merchandise); supporting drawback records must be retained for at least 3 years after liquidation of the drawback claim; customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are NOT eligible." },
-          { letter: "C", text: "The complete drawback claim must be filed by June 20, 2028 (within 3 years after the date of exportation); records must be retained for 3 years from the date of filing the claim; MPF is not refundable under TFTEA." },
-          { letter: "D", text: "The complete drawback claim must be filed by November 15, 2026 (5 years from importation), or the claimant may obtain a routine 1-year extension from the Port Director; drawback records must be retained for 5 years after payment of the drawback claim." },
-          { letter: "E", text: "The complete drawback claim must be filed within 180 days of exportation; records must be kept for 7 years; 100% of duties, MPF, and HMF are refunded." }
-        ],
-        correctOption: "B",
-        targetSectionId: "19-cfr-190-51",
-        targetCitation: "19 CFR § 190.51(e)–(f) & § 190.2",
-        goldenQuote: "(e) Time of filing — 5-year statutory limitation (19 U.S.C. 1313(r)(1)). A complete drawback claim, with all required documents and data elements, must be filed within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim.",
-        shortestPathHint: "19 CFR -> Part 190 -> § 190.51 (Completion of drawback claims & 5-year timeframe)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the starting date of the 5-year TFTEA drawback filing window, the post-liquidation recordkeeping period for drawback claims, and the eligibility of MPF vs. HMF/AD-CVD.",
-          "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.51(e) and (f), and cross-reference § 190.2 ('Drawback' definition).",
-          "Hint 3 (Trap Check): Under § 190.51(e), the 5-year clock runs from the DATE OF IMPORTATION of the designated merchandise (Nov 15, 2021 -> Nov 15, 2026) with no extension allowed. Under § 190.51(f), drawback records must be kept for 3 years after LIQUIDATION of the drawback claim. Under § 190.2, MPF is eligible for drawback, while HMF and AD/CVD are excluded."
-        ],
-        explanation: {
-          correctReasoning: "Under 19 CFR § 190.51(e) (19 U.S.C. 1313(r)(1)), a complete drawback claim must be filed electronically in ACE within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim (here, 5 years from November 15, 2021 = November 15, 2026), and uncompleted claims are considered abandoned with no discretionary port extension permitted. Under § 190.51(f) (and § 190.38), all records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim. Finally, under § 190.2, regular customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are statutorily ineligible.",
-          distractors: {
-            A: "Erroneously starts the 5-year filing clock from liquidation of the import entry rather than the date of importation, and falsely states that AD/CVD and HMF are refundable.",
-            B: "CORRECT: 5 years from date of importation (Nov 15, 2026); 3 years record retention after liquidation of the drawback claim; duties and MPF eligible (99%), HMF and AD/CVD ineligible.",
-            C: "Confuses the pre-TFTEA 3-year post-exportation filing rule with the modernized TFTEA 5-year post-importation rule under Part 190.",
-            D: "Incorrect because § 190.51(e) prohibits extensions of the 5-year statutory period (absent a declared CBP system outage), and drawback record retention is 3 years (not 5 years) from liquidation of the drawback claim.",
-            E: "Incorrect on the filing deadline, recordkeeping period, and HMF refundability."
-          }
-        }
-      },
-
-      // =======================================================================
-      // SUITE 4: CBLE_HTSUS — TARIFF CLASSIFICATION & GRI 1–6 (Q15-Q18)
-      // =======================================================================
-      {
-        id: "CBLE-Q15",
-        number: 15,
-        suite: "CBLE_HTSUS",
-        track: "CBLE",
-        category: "HTSUS Classification & GRI 1–6",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "Meridian Retail Group imports two different packaged products in shrink-wrapped retail display boxes ready for direct sale to consumers without repacking:\n• Product 1 ('Executive Commuter Gift Box'): Contains one ceramic insulated travel coffee mug (Heading 6912, value $8.00), one pair of knitted merino wool dress socks (Heading 6115, value $9.00), and one stainless-steel ballpoint pen (Heading 9608, value $7.50).\n• Product 2 ('At-Home Pasta Dinner Kit'): Contains one box of uncooked dry durum wheat spaghetti (Heading 1902, value $3.20), one sealed pouch of tomato basil pasta sauce (Heading 2103, value $1.80), and one small packet of grated Parmesan cheese (Heading 0406, value $0.90).\n\nUnder the General Rules of Interpretation (GRI), how must Product 1 and Product 2 be classified?",
-        options: [
-          { letter: "A", text: "Both Product 1 and Product 2 qualify as retail sets under GRI 3(b); Product 1 is classified entirely in Heading 6115 (highest value component), and Product 2 is classified entirely in Heading 1902." },
-          { letter: "B", text: "Both Product 1 and Product 2 qualify as retail sets under GRI 3(b), but because no single component imparts essential character to Product 1, Product 1 is classified in Heading 9608 under GRI 3(c) (last in numerical order), while Product 2 is classified in Heading 1902." },
-          { letter: "C", text: "Product 1 FAILS the GRI 3(b) retail set test because its articles are not put up together to meet a particular need or carry out a specific activity, so the mug (6912), socks (6115), and pen (9608) must each be classified separately; Product 2 QUALIFIES as a GRI 3(b) retail set and is classified as a single unit under Heading 1902 (the pasta component imparting essential character)." },
-          { letter: "D", text: "Neither Product 1 nor Product 2 qualifies as a retail set under GRI 3(b) because food items and consumer gift items must always be classified separately under GRI 1." },
-          { letter: "E", text: "Product 1 is classified as a retail set under GRI 3(c) in Heading 9608, whereas each food item in Product 2 must be classified separately under Headings 1902, 2103, and 0406." }
-        ],
-        correctOption: "C",
-        targetSectionId: "htsus-gri-3",
-        targetCitation: "HTSUS GRI 3(b) & Explanatory Note X (3-Prong Retail Set Test)",
-        goldenQuote: "(2) Consist of products or articles put up together to meet a particular need or carry out a specific activity (Note: If a retail package contains disparate items that do NOT work together toward a single specific activity—for example, a promotional gift basket containing a ceramic coffee mug, a pair of cotton socks, and a ballpoint pen—it FAILS prong 2, is NOT a GRI 3(b) set, and EVERY item must be classified separately under its own HTSUS heading!); and",
-        shortestPathHint: "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 3 (Rule 3(b) Retail Sets 3-Prong Test)",
-        socraticHints: [
-          "Hint 1 (Concept): Before applying 'essential character' under GRI 3(b) or 'last in numerical order' under GRI 3(c), verify whether each retail package legally qualifies as 'goods put up in sets for retail sale'.",
-          "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 3 and examine the Mandatory 3-Prong Test for retail sets under GRI 3(b).",
-          "Hint 3 (Trap Check): Check Prong 2 ('put up together to meet a particular need or carry out a specific activity'). Do a coffee mug, socks, and a pen work together to perform a single activity? No! Therefore Product 1 fails Prong 2 and each item classifies separately, whereas Product 2 (spaghetti, sauce, Parmesan) combines to prepare a pasta meal."
-        ],
-        explanation: {
-          correctReasoning: "Under HTSUS GRI 3(b) and Explanatory Note X, a package qualifies as 'goods put up in sets for retail sale' ONLY if it satisfies all three prongs: (1) at least two articles prima facie classifiable in different headings; (2) put up together to meet a particular need or carry out a specific activity; and (3) packaged for direct retail sale without repacking. Product 1 (a ceramic mug, wool socks, and a ballpoint pen) consists of disparate items that do not interact to carry out a specific activity (drinking coffee, dressing one's feet, and writing are unrelated activities). Because Product 1 fails Prong 2, it is NOT a GRI 3(b) set, and each item must be classified separately under GRI 1 (Headings 6912, 6115, and 9608). Conversely, Product 2 (spaghetti, pasta sauce, and grated Parmesan) satisfies all three prongs because the ingredients are used together to prepare a spaghetti meal, and the spaghetti (Heading 1902) imparts the essential character of the set under GRI 3(b).",
-          distractors: {
-            A: "Incorrect because Product 1 fails Prong 2 of the GRI 3(b) retail set definition; disparate gift items cannot be grouped under the highest-value item.",
-            B: "Incorrect because GRI 3(c) ('last in numerical order') applies to sets only AFTER a package first qualifies as a valid retail set under GRI 3(b). Since Product 1 fails the retail set test, GRI 3(c) cannot be invoked.",
-            C: "CORRECT: Product 1 fails Prong 2 (no unified specific activity) and is classified item-by-item, while Product 2 satisfies all three prongs of GRI 3(b) and is classified by its essential character (Heading 1902).",
-            D: "Incorrect because multi-ingredient meal kits whose components are prepared together into a single dish (like a pasta dinner kit) are classic examples of valid GRI 3(b) retail sets.",
-            E: "Incorrect because it reverses the legal outcome for both products."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q16",
-        number: 16,
-        suite: "CBLE_HTSUS",
-        track: "CBLE",
-        category: "HTSUS Classification & GRI 1–6",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "Symphony Imports LLC enters a single ocean container from Japan containing two commercial product lines:\n• Line 1: 200 professional acoustic guitars (Heading 9202) and 250 hard-shell molded guitar cases specially shaped and fitted to hold the guitars and suitable for long-term use (200 of the cases contain the imported guitars, while the remaining 50 identical empty cases are packed in a separate carton as spare replacement cases for Symphony's retail store).\n• Line 2: 80 heavy-duty seamless high-pressure steel gas cylinders (Heading 7311) imported filled with compressed argon gas (Heading 2804); the steel cylinders are equipped with refill valves and are designed to be returned, refilled, and circulated repeatedly for 15 years.\n\nUnder HTSUS General Rule of Interpretation 5 (GRI 5(a) and GRI 5(b)), how must the guitar cases and the steel gas cylinders be classified?",
-        options: [
-          { letter: "A", text: "All 250 guitar cases are classified with the guitars under Heading 9202 pursuant to GRI 5(a), and all 80 steel cylinders are classified with the argon gas under Heading 2804 pursuant to GRI 5(b)." },
-          { letter: "B", text: "Only the 200 guitar cases entered with the 200 guitars are classified with the guitars under Heading 9202 pursuant to GRI 5(a), while the 50 excess spare guitar cases must be classified separately under Heading 4202; furthermore, the 80 heavy-duty reusable steel gas cylinders must be classified separately under Heading 7311 because GRI 5(b) is not binding on packing containers clearly suitable for repetitive use." },
-          { letter: "C", text: "All 250 guitar cases must be classified separately under Heading 4202 because hard-shell cases are durable goods, while the 80 steel cylinders are classified with the argon gas under Heading 2804 pursuant to GRI 5(b)." },
-          { letter: "D", text: "Only the 200 guitar cases entered with the guitars are classified under Heading 9202 (with the 50 spare cases in Heading 4202), while the 80 steel cylinders are classified as argon gas under Heading 2804 because all containers entered with goods classify with their contents under GRI 5(b)." },
-          { letter: "E", text: "Both the guitars with cases and the cylinders with argon gas are classified under Heading 9202 and Heading 7311 respectively by application of GRI 3(c) (last in numerical order)." }
-        ],
-        correctOption: "B",
-        targetSectionId: "htsus-gri-5",
-        targetCitation: "HTSUS GRI 5(a) & GRI 5(b)",
-        goldenQuote: "(b) Packing Materials and Packing Containers: Subject to the provisions of Rule 5(a) above, packing materials and packing containers entered with the goods therein shall be classified with the goods if they are of a kind normally used for packing such goods. However, this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.",
-        shortestPathHint: "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 5 (Rule 5(a) Fitted Camera/Instrument Cases & Rule 5(b) Packing Containers)",
-        socraticHints: [
-          "Hint 1 (Concept): GRI 5 governs special containers and packing materials, but both Rule 5(a) and Rule 5(b) contain critical exceptions tested heavily on the CBLE.",
-          "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 5 and inspect the 'Crucial Exam Traps' under both Rule 5(a) and Rule 5(b).",
-          "Hint 3 (Trap Check): Under GRI 5(a), fitted musical instrument cases classify with the instruments ONLY to the extent they are matched 1-to-1 with the entered instruments (200 cases in 9202; 50 excess cases in 4202). Under GRI 5(b), packing containers 'clearly suitable for repetitive use' (like heavy-duty refillable steel gas cylinders) are excluded from classifying with their contents and classify separately in Heading 7311!"
-        ],
-        explanation: {
-          correctReasoning: "Under HTSUS GRI 5(a), musical instrument cases that are specially shaped or fitted, suitable for long-term use, and entered with the articles for which they are intended are classified with those articles (Heading 9202). However, the 50 extra guitar cases imported in excess of the 200 guitars are not 'entered with the articles for which they are intended' on a 1-to-1 basis and must be classified separately on their own merits under Heading 4202. Under HTSUS GRI 5(b), ordinary packing containers entered with goods are classified with the goods, EXCEPT that 'this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.' Heavy-duty seamless steel compressed-gas cylinders designed for 15 years of continuous refilling and return circulation are the classic example of repetitive-use containers and must be classified separately under Heading 7311 rather than with the argon gas (Heading 2804).",
-          distractors: {
-            A: "Erroneously classifies the 50 excess spare guitar cases under GRI 5(a) and ignores the repetitive-use exception in GRI 5(b) for the refillable steel cylinders.",
-            B: "CORRECT: Applies both the 1-to-1 matching requirement of GRI 5(a) (200 cases in 9202; 50 excess cases in 4202) and the repetitive-use exception of GRI 5(b) (80 refillable steel cylinders in 7311).",
-            C: "Erroneously rejects GRI 5(a) for the 200 fitted cases entered with the guitars and ignores the GRI 5(b) repetitive-use exception for the steel cylinders.",
-            D: "Correctly splits the 200 vs. 50 guitar cases under GRI 5(a), but fails to apply the GRI 5(b) exception for packing containers clearly suitable for repetitive use.",
-            E: "GRI 3(c) does not apply to containers and packing materials governed specifically by GRI 5(a) and GRI 5(b)."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q17",
-        number: 17,
-        suite: "CBLE_HTSUS",
-        track: "CBLE",
-        category: "HTSUS Classification & GRI 1–6",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "Velocity Cycling Inc. imports a single container shipment from Taiwan containing knocked-down bicycle assembly kits. Specifically, the shipment consists of 500 aluminum bicycle frames, 500 front forks, 500 handlebars, 500 cranksets/drivetrains, and 1,100 complete bicycle wheels (each bicycle requires 1 frame, 1 fork, 1 handlebar, 1 drivetrain, and 2 wheels; bicycle saddles/seats are omitted and will be sourced domestically in the United States after importation). Under HTSUS General Rule of Interpretation 2(a) (GRI 2(a)), how must this shipment be classified?",
-        options: [
-          { letter: "A", text: "Every component must be classified separately as bicycle parts under Heading 8714 because the articles are imported unassembled and lack bicycle saddles." },
-          { letter: "B", text: "The entire shipment—including all 1,100 wheels—is classified as 500 complete bicycles under Heading 8712 pursuant to GRI 2(a)." },
-          { letter: "C", text: "Under GRI 2(a), the 500 matched sets of frames, forks, handlebars, drivetrains, and 1,000 wheels (2 wheels per bicycle) are classified as 500 complete bicycles under Heading 8712 because, as entered in unassembled condition, they have the essential character of complete bicycles despite lacking saddles; however, the 100 excess wheels beyond the exact count needed to assemble the 500 bicycles must be classified separately as bicycle parts under Heading 8714." },
-          { letter: "D", text: "The shipment is classified under Heading 8714 pursuant to GRI 3(c) (last in numerical order between Heading 8712 and Heading 8714)." },
-          { letter: "E", text: "The shipment is classified as raw aluminum articles of Chapter 76 under GRI 1 until assembled in a U.S. bonded warehouse." }
-        ],
-        correctOption: "C",
-        targetSectionId: "htsus-gri-2",
-        targetCitation: "HTSUS GRI 2(a)",
-        goldenQuote: "2. (a) Any reference in a heading to an article shall be taken to include a reference to that article incomplete or unfinished, provided that, as entered, the incomplete or unfinished article has the essential character of the complete or finished article. It shall also include a reference to that article complete or finished (or falling to be classified as complete or finished by virtue of this rule), entered unassembled or disassembled.",
-        shortestPathHint: "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 2 (Rule 2(a) Incomplete/Unfinished/Unassembled Articles)",
-        socraticHints: [
-          "Hint 1 (Concept): GRI 2(a) has two prongs: (1) incomplete or unfinished articles having the essential character of the complete article, and (2) articles entered unassembled or disassembled.",
-          "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 2 and read Rule 2(a) together with the CBP Legal Interpretation Notes on 'Unassembled or Disassembled' goods.",
-          "Hint 3 (Trap Check): Check how many wheels are needed for 500 bicycles (500 x 2 = 1,000 wheels). The 500 unassembled kits (with 1,000 wheels) have the essential character of complete bicycles (Heading 8712) under GRI 2(a) even without seats, while the 100 excess wheels must be classified separately as bicycle parts (Heading 8714)!"
-        ],
-        explanation: {
-          correctReasoning: "Under HTSUS GRI 2(a), any reference in a heading to an article includes that article incomplete or unfinished, provided that as entered it has the essential character of the complete or finished article, and also includes complete or finished articles (or articles falling to be classified as complete or finished by virtue of GRI 2(a)) entered unassembled or disassembled. A bicycle consisting of a frame, fork, handlebars, drivetrain, and two wheels clearly possesses the essential character of a complete bicycle of Heading 8712 even without a saddle. However, under GRI 2(a) and its Explanatory Notes, excess components beyond the exact number required to assemble the 500 bicycles—here, the 100 extra wheels (1,100 imported minus 1,000 required for 500 bicycles)—cannot be included with the complete bicycles and must be classified separately on their own merits as bicycle parts under Heading 8714.",
-          distractors: {
-            A: "Incorrect because GRI 2(a) expressly classifies unassembled and incomplete articles having the essential character of the finished good under the heading for the complete article (Heading 8712).",
-            B: "Incorrect because excess parts imported beyond the exact count needed to assemble the complete units (the 100 extra wheels) must be classified separately in Heading 8714.",
-            C: "CORRECT: Applies both prongs of GRI 2(a) to classify the 500 unassembled kits (using 1,000 wheels) as bicycles in Heading 8712 and separates the 100 surplus wheels into Heading 8714.",
-            D: "Incorrect because a heading for a complete article (8712) and its parts heading (8714) are resolved via GRI 1 and GRI 2(a), never GRI 3(c).",
-            E: "Incorrect because manufactured bicycle components are articles of Chapter 87, not raw aluminum of Chapter 76."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q18",
-        number: 18,
-        suite: "CBLE_HTSUS",
-        track: "CBLE",
-        category: "HTSUS Classification & GRI 1–6",
-        difficulty: "Hard",
-        targetLookupSeconds: 45,
-        stem: "TechSource Global Inc. imports four distinct electronic items in separate cartons:\n• Item 1: Portable laptop computers capable of freely programmable data processing without human intervention;\n• Item 2: Cellular smartphones and enterprise Wi-Fi network routers whose principal function is the transmission and reception of voice, images, or other data;\n• Item 3: 27-inch LCD computer monitors (not incorporating television reception apparatus) designed to connect directly to laptops and desktop CPUs; and\n• Item 4: Standalone AC electric motors (of an output of 500 W) that are custom-mounted with brackets making them suitable for use solely inside industrial conveyor machines of Heading 8428.\n\nUnder HTSUS GRI 1, Section XVI Note 2(a), and Chapter 84 Note 6, under which 4-digit HTSUS headings are Items 1, 2, 3, and 4 properly classified?",
-        options: [
-          { letter: "A", text: "Items 1, 2, and 3 are all classified in Heading 8471 as automatic data processing machines and units thereof, and Item 4 is classified in Heading 8431 as a part of a conveyor machine." },
-          { letter: "B", text: "Item 1 is classified in Heading 8471 (ADP machines); Item 2 is classified in Heading 8517 (telecommunications apparatus, excluded from 8471 by Chapter 84 Note 6(D)/(E)); Item 3 is classified in Heading 8528 (monitors, excluded from 8471 by Chapter 84 Note 6(D)/(E)); and Item 4 is classified in Heading 8501 (electric motors) because under Section XVI Note 2(a), parts which are goods included in any of the headings of Chapter 84 or 85 are in all cases classified in their respective headings." },
-          { letter: "C", text: "Item 1 is classified in Heading 8471; Item 2 is classified in Heading 8517; Item 3 is classified in Heading 8528; and Item 4 is classified in Heading 8428 (with the conveyor machine) under Section XVI Note 2(b)." },
-          { letter: "D", text: "Item 1 and Item 3 are classified in Heading 8471; Item 2 is classified in Heading 8517; and Item 4 is classified in Heading 8503 (parts of electric motors)." },
-          { letter: "E", text: "All four items are classified in Heading 8543 as electrical machines and apparatus having individual functions not specified elsewhere." }
-        ],
-        correctOption: "B",
-        targetSectionId: "htsus-sec16-notes",
-        targetCitation: "HTSUS Section XVI Note 2(a) & Chapter 84 Note 6 (Headings 8471, 8517, 8528, 8501)",
-        goldenQuote: "(a) Parts which are goods included in any of the headings of Chapter 84 or 85 (other than headings 8409, 8431, 8448, 8466, 8473, 8487, 8503, 8522, 8529, 8538 and 8548) are in all cases to be classified in their respective headings (e.g., an electric motor designed solely for a washing machine is still classified in Heading 8501 as an electric motor under Note 2(a), NOT in Heading 8450 as a washing machine part!);",
-        shortestPathHint: "HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528",
-        socraticHints: [
-          "Hint 1 (Concept): Under GRI 1, Section XVI Note 2 governs machine parts across Chapters 84 and 85, while Chapter 84 Note 6 defines the boundary between ADP machines (8471), telecom apparatus (8517), and monitors (8528).",
-          "Hint 2 (Navigation): Open HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528.",
-          "Hint 3 (Trap Check): Check Section XVI Note 2(a) first before Note 2(b)! Because an electric motor is itself a named good of Heading 8501, Note 2(a) forces it into Heading 8501 even if custom-bracketed solely for another machine. And under Chapter 84 Note 6(D)/(E), smartphones/routers classify in 8517 and monitors classify in 8528."
-        ],
-        explanation: {
-          correctReasoning: "Applying GRI 1 together with the Section XVI and Chapter 84 Legal Notes: (1) Item 1 (laptops) satisfies Chapter 84 Note 6(A) as an automatic data processing (ADP) machine under Heading 8471; (2) Item 2 (smartphones and Wi-Fi routers) is excluded from Heading 8471 by Chapter 84 Note 6(D)/(E) because its principal function is data/voice transmission and reception, placing it in Heading 8517; (3) Item 3 (27-inch LCD computer monitors) is excluded from Heading 8471 by Chapter 84 Note 6(D)/(E) and classified in Heading 8528 (specifically 8528.52.00); and (4) Item 4 (an electric motor designed solely for a conveyor machine) is governed by Section XVI Note 2(a), which mandates that parts which are themselves goods included in any heading of Chapter 84 or 85 (other than general parts headings) must IN ALL CASES be classified in their respective headings (Heading 8501 for electric motors)—you never reach Note 2(b)!",
-          distractors: {
-            A: "Fails to apply Chapter 84 Note 6(D)/(E) exclusions for telecom apparatus (8517) and monitors (8528) and skips Section XVI Note 2(a) for the electric motor.",
-            B: "CORRECT: 8471 for laptops, 8517 for smartphones/routers, 8528 for monitors, and 8501 for the electric motor pursuant to Section XVI Note 2(a).",
-            C: "Correctly classifies Items 1, 2, and 3, but falls into the classic CBLE trap of applying Section XVI Note 2(b) ('solely or principally used with a machine') before checking Note 2(a) ('goods included in any heading of Chapter 84 or 85').",
-            D: "Erroneously places computer monitors in Heading 8471 (contrary to Chapter 84 Note 6) and classifies a complete electric motor as a motor part in Heading 8503.",
-            E: "Heading 8543 is a residual basket heading that applies only when machines are not specified or included elsewhere in Chapter 84 or 85."
-          }
-        }
-      },
-
-      // =======================================================================
-      // SUITE 5: EA — IRS ENROLLED AGENT: 31 CFR PART 10 CIRCULAR 230 (Q19-Q24)
-      // =======================================================================
-      {
-        id: "CBLE-Q19",
-        number: 19,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] During an IRS examination of client Horizon Logistics Inc., an IRS Revenue Agent makes a proper and lawful written request to Enrolled Agent Thomas Greene for Horizon's warehouse inventory ledgers from two years ago. Greene does not have the inventory ledgers in his possession, and Horizon's current president informs Greene that the ledgers were retained by Horizon's former outside bookkeeper, Carla Moss, after her contract ended. None of the records are legally privileged. Under Treasury Department Circular 230 (31 CFR § 10.20), what are Enrolled Agent Greene's exact obligations regarding the Revenue Agent's request?",
-        options: [
-          { letter: "A", text: "Greene must hire a private investigator to independently verify whether Carla Moss actually possesses the ledgers and subpoena Carla Moss before responding to the IRS." },
-          { letter: "B", text: "Greene must promptly notify the requesting IRS officer that neither he nor his client possesses the records, provide any information Greene has regarding the identity of the person (Carla Moss) whom he believes may have possession or control of the requested records, and make reasonable inquiry of his client regarding the identity of any person who may have possession or control, without being required to make inquiry of any other person or independently verify the client's information." },
-          { letter: "C", text: "Greene may refuse to respond to the IRS request entirely because the Enrollee-Client privilege under Circular 230 permanently shields all accounting ledgers from IRS examination." },
-          { letter: "D", text: "Greene must reconstruct the missing inventory ledgers from memory and submit estimated figures to the IRS without disclosing that the original ledgers are held by Carla Moss." },
-          { letter: "E", text: "Greene must immediately withdraw from representing Horizon Logistics Inc. whenever a requested document is not in the practitioner's physical office." }
-        ],
-        correctOption: "B",
-        targetSectionId: "31-cfr-10-20",
-        targetCitation: "31 CFR § 10.20(a)(1)–(2) (Circular 230 — Information to be furnished)",
-        goldenQuote: "The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.20 (Information to be furnished)",
-        socraticHints: [
-          "Hint 1 (Concept): Check what Circular 230 requires when the IRS makes a proper and lawful request for non-privileged records that are not in the possession or control of the practitioner or client.",
-          "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.20 and read paragraph (a)(2).",
-          "Hint 3 (Trap Check): Under § 10.20(a)(2), the practitioner must promptly notify the IRS officer, provide any information regarding who may have possession/control, and make reasonable inquiry OF THE CLIENT—but is explicitly NOT required to make inquiry of any other person or independently verify the client's statement!"
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.20(a)(1), a practitioner must promptly submit records or information upon a proper and lawful request by an IRS officer unless the practitioner believes in good faith and on reasonable grounds that the records are privileged. Under § 10.20(a)(2), where the requested records are not in the possession or control of the practitioner or the client, the practitioner must: (1) promptly notify the requesting IRS officer; (2) provide any information the practitioner has regarding the identity of any person believed to have possession or control of the records; and (3) make reasonable inquiry of the client regarding the identity of any person who may have possession or control. However, § 10.20(a)(2) expressly states that the practitioner is NOT required to make inquiry of any other person or independently verify the information provided by the client regarding the identity of such persons.",
-          distractors: {
-            A: "Directly contradicts 31 CFR § 10.20(a)(2), which states that the practitioner is not required to make inquiry of any third person or independently verify the client's information.",
-            B: "CORRECT: Tracks the exact statutory and regulatory text of 31 CFR § 10.20(a)(1)–(2).",
-            C: "Ordinary accounting and inventory ledgers are not privileged, and withholding non-privileged information without a good-faith reasonable belief of privilege violates § 10.20(a)(1).",
-            D: "Submitting fabricated or undisclosed reconstructions violates due diligence under § 10.22 and § 10.20.",
-            E: "Lack of possession of a third-party record does not require or justify withdrawal from representation."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q20",
-        number: 20,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Sarah Jenkins is retained by a new business client, Oakridge Landscaping LLC, to prepare its current-year federal income tax return. While reviewing the prior year's tax return (which was prepared by a different accountant) alongside Oakridge's general ledger, Jenkins discovers that the client omitted $140,000 of taxable cash landscaping receipts from the prior year's Schedule C. Under Treasury Department Circular 230 (31 CFR § 10.21), what are Jenkins' exact legal obligations upon discovering the client's prior-year omission?",
-        options: [
-          { letter: "A", text: "Promptly notify the IRS Criminal Investigation Division in writing of the $140,000 omission and transmit copies of the client's general ledger to the IRS." },
-          { letter: "B", text: "Prepare and electronically file an amended Form 1040-X for the prior year on the client's behalf immediately, even if the client refuses to sign or authorize the amended return." },
-          { letter: "C", text: "Promptly advise the client of the fact of the noncompliance, error, or omission, AND advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission (without unilaterally notifying the IRS)." },
-          { letter: "D", text: "Ignore the prior-year omission completely because Jenkins did not sign or prepare the prior year's tax return." },
-          { letter: "E", text: "Automatically report the prior tax preparer to the Office of Professional Responsibility (OPR) within 15 calendar days and impound the client's accounting records." }
-        ],
-        correctOption: "C",
-        targetSectionId: "31-cfr-10-21",
-        targetCitation: "31 CFR § 10.21 (Circular 230 — Knowledge of client's omission)",
-        goldenQuote: "A practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.21 (Knowledge of client's omission)",
-        socraticHints: [
-          "Hint 1 (Concept): Compare how IRS Circular 230 handles a client's tax omission with how 19 CFR § 111.32 handles a customs client's error.",
-          "Hint 2 (Navigation): Switch to the '31 CFR Part 10' corpus tab -> Subpart B -> § 10.21 ('Knowledge of client's omission').",
-          "Hint 3 (Trap Check): Under 31 CFR § 10.21, the practitioner must promptly advise the client of (1) the fact of the error/omission AND (2) the consequences under the Internal Revenue Code and regulations. The practitioner is NEVER allowed to report the client's omission to the IRS unilaterally or file an amended return without client consent!"
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.21 (Circular 230), a practitioner who knows that a client has not complied with the U.S. revenue laws or has made an error in or omission from any return or document submitted under the revenue laws (regardless of who prepared the prior return) has two mandatory duties: (1) promptly advise the client of the fact of such noncompliance, error, or omission; and (2) advise the client of the consequences under the Internal Revenue Code and regulations (such as accuracy-related penalties, interest, and statute of limitations implications). Circular 230 does NOT authorize the practitioner to inform the IRS without client consent, nor can a practitioner file an amended return without the taxpayer's authorization.",
-          distractors: {
-            A: "Unilaterally disclosing confidential client tax information to the IRS without a lawful summons or client consent violates IRC § 7216 and is not permitted by Circular 230 § 10.21.",
-            B: "A practitioner cannot file an amended tax return (Form 1040-X) without the client's signature and authorization.",
-            C: "CORRECT: Accurately states the two mandatory practitioner obligations under 31 CFR § 10.21.",
-            D: "31 CFR § 10.21 applies whenever a retained practitioner discovers a client's error or omission on any submitted return, even if another preparer signed the prior-year return.",
-            E: "Circular 230 § 10.21 does not mandate reporting the prior preparer within 15 days or impounding client records (in fact, § 10.28 requires returning client records promptly upon request)."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q21",
-        number: 21,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Medium",
-        targetLookupSeconds: 35,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Elena Brooks manages a busy tax practice and delegates the depreciation schedule calculations for a commercial real estate client's Form 1065 partnership return to a junior staff accountant in her firm, resulting in an inadvertent computational misstatement on the return submitted to the IRS. Under 31 CFR § 10.22(a) and (b), in what three areas must a practitioner exercise due diligence, and under what exact circumstances will Brooks be presumed to have exercised due diligence when relying on the work product of another person?",
-        options: [
-          { letter: "A", text: "A practitioner is strictly and unconditionally liable under Circular 230 for every arithmetic error made by an employee or specialist, and reliance on another person's work product is never permitted." },
-          { letter: "B", text: "A practitioner must exercise due diligence in (1) preparing/assisting in preparing, approving, and filing tax returns and IRS documents, (2) determining the correctness of oral or written representations made to the Department of the Treasury, and (3) determining the correctness of oral or written representations made to clients regarding IRS matters; furthermore, the practitioner will be presumed to have exercised due diligence when relying on the work product of another person if the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship." },
-          { letter: "C", text: "A practitioner is only required to exercise due diligence on written representations made under oath to an IRS Appeals Officer, and has no due diligence obligation regarding oral advice given to clients." },
-          { letter: "D", text: "A practitioner is automatically presumed to have exercised due diligence whenever work is delegated to another person, even if the practitioner provided zero training, supervision, or evaluation." },
-          { letter: "E", text: "A practitioner may rely on the work product of another person only if that other person is a licensed attorney or Certified Public Accountant who co-signs Form 2848." }
-        ],
-        correctOption: "B",
-        targetSectionId: "31-cfr-10-22",
-        targetCitation: "31 CFR § 10.22(a)–(b) (Circular 230 — Diligence as to accuracy)",
-        goldenQuote: "(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.22 (Diligence as to accuracy)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the general rule of due diligence in Circular 230 and the specific safe-harbor presumption for relying on the work product of others.",
-          "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.22 and read paragraphs (a)(1)–(3) and (b).",
-          "Hint 3 (Trap Check): Notice that § 10.22(a) covers BOTH oral and written representations to the Treasury AND to clients, and § 10.22(b) creates a presumption of due diligence if the practitioner used reasonable care in engaging, supervising, training, and evaluating the other person."
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.22(a), a practitioner must exercise due diligence in three domains: (1) preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to IRS matters; (2) determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and (3) determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the IRS. Under § 10.22(b), a practitioner will be presumed to have exercised due diligence when relying on the work product of another person provided the practitioner used reasonable care in engaging, supervising, training, and evaluating that person, taking proper account of the nature of the relationship between the practitioner and the person.",
-          distractors: {
-            A: "Incorrect because 31 CFR § 10.22(b) explicitly provides a due diligence presumption when a practitioner reasonably engages, supervises, trains, and evaluates the person whose work product is relied upon.",
-            B: "CORRECT: Accurately sets forth the three due diligence domains of § 10.22(a) and the four-factor reasonable-care standard for relying on others under § 10.22(b).",
-            C: "Incorrect because § 10.22(a)(2) and (3) explicitly apply to both oral AND written representations made to the Treasury and to clients.",
-            D: "Incorrect because blind delegation without reasonable care in engaging, supervising, training, and evaluating the person forfeits the § 10.22(b) safe harbor.",
-            E: "Incorrect because § 10.22(b) applies to reliance on the work product of 'another person' (including staff accountants or appraisers) when reasonable care is used, not solely co-signing attorneys or CPAs."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q22",
-        number: 22,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Victor Alvarez proposes three fee arrangements to three different prospective clients:\n• Client A: A fee equal to 20% of the federal income tax refund shown on Client A's original Form 1040 individual income tax return that Alvarez will prepare and file;\n• Client B: A fee equal to 25% of any tax deficiency reduction achieved by Alvarez in representing Client B during an active IRS audit (examination) of Client B's prior-year original Form 1120 corporate return;\n• Client C: A fee equal to 30% of any abatement obtained on a claim for refund filed solely in connection with the determination of statutory interest and penalties assessed by the IRS.\n\nUnder Treasury Department Circular 230 (31 CFR § 10.27), which of these contingent fee arrangements are legally permissible and which are prohibited?",
-        options: [
-          { letter: "A", text: "All three contingent fee arrangements (Client A, Client B, and Client C) are strictly prohibited because Circular 230 bans all percentage-based contingent fees in any matter before the IRS." },
-          { letter: "B", text: "All three contingent fee arrangements are permissible provided each client signs a written fee agreement in advance." },
-          { letter: "C", text: "The contingent fee for Client A is strictly PROHIBITED because a practitioner may never charge a contingent fee for preparing or filing an original tax return; however, the contingent fees for Client B (services rendered in connection with an IRS examination of, or challenge to, an original tax return) and Client C (a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties) are explicitly PERMITTED under § 10.27(b)(2) and (b)(3)." },
-          { letter: "D", text: "Only the contingent fee for Client A (original tax return) is permitted, whereas contingent fees during IRS examinations (Client B) and penalty/interest claims (Client C) are prohibited." },
-          { letter: "E", text: "Client A and Client B are prohibited, and contingent fees are allowed exclusively in U.S. Supreme Court litigation." }
-        ],
-        correctOption: "C",
-        targetSectionId: "31-cfr-10-27",
-        targetCitation: "31 CFR § 10.27(b)(1)–(4) (Circular 230 — Fees)",
-        goldenQuote: "(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.27 (Fees)",
-        socraticHints: [
-          "Hint 1 (Concept): Circular 230 § 10.27 establishes a general prohibition against contingent fees (such as a percentage of a refund or taxes saved), followed by three specific exceptions.",
-          "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.27 and examine paragraphs (b)(1), (b)(2), (b)(3), and (b)(4).",
-          "Hint 3 (Trap Check): Charging a percentage of a refund on an ORIGINAL tax return (Client A) is strictly prohibited under § 10.27(b)(1). However, contingent fees ARE permitted for an IRS examination/challenge to an original return (§ 10.27(b)(2) — Client B), a claim solely regarding statutory interest or penalties (§ 10.27(b)(3) — Client C), and judicial proceedings (§ 10.27(b)(4))."
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.27(b)(1) and (c), a practitioner is strictly prohibited from charging a contingent fee (including a percentage of a tax refund or taxes saved) for preparing or filing an original tax return (Client A). However, § 10.27(b)(2)–(4) carves out three specific exceptions where contingent fees ARE permitted: (1) under § 10.27(b)(2), services rendered in connection with an IRS examination of, or challenge to, an original tax return (or an amended return/claim filed within 120 days of the taxpayer receiving written notice of the examination/challenge) (Client B); (2) under § 10.27(b)(3), a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the IRS (Client C); and (3) under § 10.27(b)(4), any judicial proceeding arising under the Internal Revenue Code.",
-          distractors: {
-            A: "Incorrect because § 10.27(b)(2)–(4) expressly permits contingent fees in IRS examinations/challenges, statutory interest/penalty refund claims, and judicial proceedings.",
-            B: "Incorrect because a client's written agreement cannot waive the absolute prohibition in § 10.27(b)(1) against charging a contingent fee for preparing an original tax return.",
-            C: "CORRECT: Client A (original Form 1040 return) is prohibited under § 10.27(b)(1), while Client B (IRS examination under § 10.27(b)(2)) and Client C (statutory interest/penalties under § 10.27(b)(3)) are permitted.",
-            D: "Reverses the rule and exceptions of 31 CFR § 10.27(b).",
-            E: "Incorrect because § 10.27(b)(2), (3), and (4) permit contingent fees in IRS examinations, penalty/interest claims, and any judicial proceeding under the IRC."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q23",
-        number: 23,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Diana Cho is asked to represent two former business partners, Alex and Jordan, in an IRS audit concerning the allocation of partnership losses between them—a matter in which Alex's tax position is directly adverse to Jordan's tax position. Cho reasonably believes that she can provide competent and diligent representation to both Alex and Jordan, and the dual representation is not prohibited by law. Both Alex and Jordan orally agree to waive the conflict of interest during a meeting on June 1. Under Treasury Department Circular 230 (31 CFR § 10.29), what written confirmation deadline and record-retention period must Cho satisfy to represent both clients legally?",
-        options: [
-          { letter: "A", text: "Oral informed consent witnessed by a notary public is sufficient under Circular 230, and no written confirmation or retention period is required." },
-          { letter: "B", text: "Each affected client must waive the conflict of interest and give informed consent, confirmed in writing by each affected client within a reasonable period after the informed consent, but in no event later than 30 days; furthermore, copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients." },
-          { letter: "C", text: "Written confirmation of informed consent must be signed by the IRS Revenue Agent within 60 days, and the practitioner must retain the consent for 12 months from the date the conflict was discovered." },
-          { letter: "D", text: "A conflict of interest involving direct adversity between two taxpayers before the IRS can never be waived under any circumstances, even with written consent." },
-          { letter: "E", text: "Each affected client must confirm informed consent in writing within 90 days, and the practitioner must retain the written consents for 5 years from the filing of the partnership return." }
-        ],
-        correctOption: "B",
-        targetSectionId: "31-cfr-10-29",
-        targetCitation: "31 CFR § 10.29(a)–(c) (Circular 230 — Conflicting interests)",
-        goldenQuote: "(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.29 (Conflicting interests)",
-        socraticHints: [
-          "Hint 1 (Concept): Check the exact conditions under which a practitioner may represent clients despite a conflict of interest, focusing on the two numeric timeframes in § 10.29.",
-          "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.29 and read paragraphs (b)(3) and (c).",
-          "Hint 3 (Trap Check): Memorize the 30-day / 36-month pair in § 10.29: informed consent must be confirmed in writing by EACH affected client within at most 30 days, and the practitioner must retain copies of the written consents for at least 36 months from the date of the CONCLUSION of the representation!"
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.29(a) and (b), when a conflict of interest exists, a practitioner may represent the affected clients ONLY if three cumulative conditions are met: (1) the practitioner reasonably believes they can provide competent and diligent representation to each affected client; (2) the representation is not prohibited by law; and (3) each affected client waives the conflict and gives informed consent, confirmed in writing by each affected client at the time the conflict is known (with the written confirmation made within a reasonable period after the informed consent, but in no event later than 30 days). Furthermore, under § 10.29(c), copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients and provided to any IRS officer or employee upon request.",
-          distractors: {
-            A: "Incorrect because § 10.29(b)(3) strictly requires informed consent to be confirmed in writing by each affected client within 30 days.",
-            B: "CORRECT: States the exact 30-day maximum window for written confirmation by each affected client (§ 10.29(b)(3)) and the 36-month retention period after conclusion of the representation (§ 10.29(c)).",
-            C: "Incorrect because the written consent is signed by each affected client (not the IRS Revenue Agent) within 30 days (not 60 days) and retained for 36 months after conclusion of the representation (not 12 months).",
-            D: "Incorrect because § 10.29(b) explicitly permits waiving a conflict of interest when all three conditions in (b)(1)–(3) are satisfied.",
-            E: "Incorrect because the written confirmation deadline is 30 days (not 90 days) and the retention period is 36 months (3 years) from the conclusion of the representation."
-          }
-        }
-      },
-      {
-        id: "CBLE-Q24",
-        number: 24,
-        suite: "EA",
-        track: "IRS-EA",
-        category: "IRS Circular 230 (31 CFR Part 10)",
-        difficulty: "Hard",
-        targetLookupSeconds: 40,
-        stem: "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Marcus Vance is preparing an individual federal income tax return for a client who wants to claim an aggressive business deduction that is NOT a tax shelter or reportable transaction. After researching the Internal Revenue Code, Treasury regulations, and Tax Court precedent, Vance concludes that the deduction has approximately a 25% likelihood of being sustained on its merits—meaning it satisfies the 'Reasonable Basis' standard (~20% or higher) but falls short of 'Substantial Authority' (~40% or higher). In addition, the client hands Vance a handwritten summary of travel expenses that directly contradicts the client's bank statements. Under 31 CFR § 10.34(a), (c), and (d), under what conditions may Vance sign the return containing the deduction, and how must Vance handle the contradictory travel expense summary?",
-        options: [
-          { letter: "A", text: "Vance may sign the return without disclosing the deduction because any non-frivolous position (>5% likelihood) is permissible without disclosure, and Vance may accept the client's handwritten travel summary without inquiry because preparers never verify client data." },
-          { letter: "B", text: "Vance may sign the return containing the deduction ONLY if the position is adequately disclosed to the IRS (e.g., on Form 8275) because it has a Reasonable Basis (~25%) rather than Substantial Authority (~40%), must inform the client of potential penalties and the opportunity to avoid them through disclosure, and MUST make reasonable inquiries regarding the travel expenses because a practitioner may not ignore client-furnished information that appears incorrect, inconsistent, or incomplete." },
-          { letter: "C", text: "Vance is strictly prohibited from signing the return even with Form 8275 disclosure because every position on a tax return must meet the 'More Likely Than Not' (>50%) standard." },
-          { letter: "D", text: "Vance may sign the return without disclosure if the client signs a hold-harmless waiver, but Vance must independently audit every single canceled check and receipt for all categories on the tax return." },
-          { letter: "E", text: "Vance must require a 75% certainty level before signing any tax return and must report the contradictory travel summary to the IRS Office of Professional Responsibility." }
-        ],
-        correctOption: "B",
-        targetSectionId: "31-cfr-10-34",
-        targetCitation: "31 CFR § 10.34(a), (c) & (d) (Circular 230 — Tax Return Standards)",
-        goldenQuote: "The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete.",
-        shortestPathHint: "31 CFR Part 10 -> Subpart B -> § 10.34 (Standards with respect to tax returns and documents)",
-        socraticHints: [
-          "Hint 1 (Concept): Distinguish the confidence threshold required for an UNDISCLOSED tax position ('Substantial Authority') versus an ADEQUATELY DISCLOSED non-tax-shelter position ('Reasonable Basis'), and check the rule on client-furnished information.",
-          "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.34 and read paragraphs (a)(1)-(2), (c), and (d).",
-          "Hint 3 (Trap Check): A non-tax-shelter position with a Reasonable Basis (~25%) can be signed ONLY if adequately disclosed (Form 8275). And under § 10.34(d), while a practitioner generally relies in good faith on client information without audit, the practitioner MUST make reasonable inquiries when the information appears incorrect, inconsistent, or incomplete."
-        ],
-        explanation: {
-          correctReasoning: "Under 31 CFR § 10.34(a) (incorporating IRC § 6694(a)(2)), a practitioner may not sign a tax return containing a non-tax-shelter position unless it either (1) has 'Substantial Authority' (~40% or greater likelihood of being sustained) if undisclosed, OR (2) has at least a 'Reasonable Basis' (~20% or greater likelihood) AND is adequately disclosed to the IRS on Form 8275 (or Form 8275-R). Since the position has a ~25% likelihood, it satisfies Reasonable Basis and may be signed only if adequately disclosed. Under § 10.34(c), Vance must also inform the client of potential penalties and the opportunity to avoid them through disclosure. Finally, under § 10.34(d), although a practitioner may generally rely in good faith without verification on client-furnished information, the practitioner may NOT ignore the implications of information known to the practitioner and MUST make reasonable inquiries when the furnished information appears incorrect, inconsistent with other facts, or incomplete.",
-          distractors: {
-            A: "Incorrect because an undisclosed position requires Substantial Authority (~40%), a mere 'non-frivolous' standard was replaced by 'Reasonable Basis' for disclosed positions, and § 10.34(d) prohibits ignoring contradictory client data.",
-            B: "CORRECT: Accurately applies the Reasonable Basis + Adequate Disclosure (Form 8275) standard under § 10.34(a), the penalty disclosure rule under § 10.34(c), and the duty of reasonable inquiry for inconsistent client data under § 10.34(d).",
-            C: "Incorrect because the 'More Likely Than Not' (>50%) standard applies only to tax shelters and reportable transactions, not ordinary business deductions.",
-            D: "Incorrect because a client waiver cannot override Circular 230 § 10.34 standards, and § 10.34(d) does not require auditing unimpeached client figures that appear consistent and complete.",
-            E: "Incorrect because neither a 75% certainty threshold nor reporting a client to OPR exists under Circular 230 § 10.34."
-          }
+      ],
+      "correctOption": "D",
+      "targetSectionId": "19-cfr-111-36",
+      "targetCitation": "19 CFR § 111.36(c)(1)–(5)",
+      "goldenQuote": "(1) The importer is notified in advance in writing by the broker of the name of the freight forwarder who is being compensated by the broker for the referral;",
+      "shortestPathHint": "19 CFR -> Part 111 -> § 111.36 (Relations with unlicensed persons)",
+      "socraticHints": [
+        "Hint 1 (Concept): Look for the specific regulatory exception to the general rule against fee-splitting with unlicensed persons when the unlicensed party is a freight forwarder.",
+        "Hint 2 (Navigation): Navigate to 19 CFR Part 111 -> § 111.36 and read paragraph (c) ('Compensation of freight forwarder').",
+        "Hint 3 (Trap Check): Check all 5 cumulative conditions in § 111.36(c)(1)-(5): advance written notice to the importer, direct transmittal of the brokerage bill (unless waived in writing), no control of fees by the forwarder, no ban on direct communication, and NO sharing of the referral fee with the importer."
+      ],
+      "explanation": {
+        "correctReasoning": "While 19 CFR § 111.36(b) generally prohibits a broker from entering into fee-splitting agreements where brokerage benefits inure to an unlicensed person, § 111.36(c) carves out an explicit exception allowing a broker to compensate a freight forwarder for referring brokerage business if five strict conditions are met: (1) advance written notice to the importer identifying the forwarder being compensated; (2) direct transmission to the importer of a true copy of the brokerage charges when collected through the forwarder (unless waived in writing by the importer); (3) the forwarder does not control or prescribe brokerage fees or conditions; (4) the forwarder does not forbid direct communication between importer and broker; and (5) no part of the compensation is shared with or refunded to the importer.",
+        "distractors": {
+          "A": "Incorrect because 19 CFR § 111.36(c) expressly authorizes compensating a freight forwarder for referrals when the five conditions in paragraph (c) are satisfied.",
+          "B": "Incorrect because CBP regulations do not require CEE Director approval or impose a 10% percentage cap on freight forwarder referral fees.",
+          "C": "Incorrect because DDP terms apply to the exception in § 111.36(a) regarding employment by an unlicensed intermediary, not the referral compensation requirements in § 111.36(c).",
+          "D": "CORRECT: Accurately states the cumulative requirements of 19 CFR § 111.36(c)(1)–(4).",
+          "E": "Incorrect because 19 CFR § 111.36(c)(5) explicitly prohibits sharing or refunding any part of the forwarder's referral compensation to the importer or any officer/employee of the importer."
         }
       }
-    ]
-  };
+    },
+    {
+      "id": "CBLE-Q02",
+      "number": 2,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "While reviewing shipping documents prior to filing a consumption entry for client Global Auto Parts Inc., licensed customs broker David Chen discovers an email attachment showing that the foreign seller issued two separate invoices for the same shipment: a 'Customs Invoice' for $45,000 and a secret 'Supplemental Tooling & Price Adjustment Invoice' for $30,000 that Global Auto Parts wired separately to the seller's bank account. When Chen contacts Global Auto Parts' import manager, the manager instructs Chen to file the entry declaring only the $45,000 invoice and delete the supplemental invoice email. Under 19 CFR § 111.32, what is Broker Chen legally required to do?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "File the entry at $45,000 as instructed by the principal under the Power of Attorney, because the Importer of Record bears sole legal liability for valuation accuracy under 19 U.S.C. 1484."
+        },
+        {
+          "letter": "B",
+          "text": "File the entry at $45,000 to avoid General Order storage fees, and then file a Post Summary Correction (PSC) within 180 days without informing the client."
+        },
+        {
+          "letter": "C",
+          "text": "Promptly advise the client in writing of the noncompliance/omission and the required corrective action (declaring the full $75,000 transaction value), retain a copy of the written communication in his records, and refuse to file the false entry or participate in the transaction when the client refuses to correct it."
+        },
+        {
+          "letter": "D",
+          "text": "Immediately confiscate the importer's merchandise, arrest the import manager, and assess a $30,000 civil penalty on behalf of CBP."
+        },
+        {
+          "letter": "E",
+          "text": "Provide oral advice only over the telephone so that no discoverable paper trail exists, and continue filing entries for the client using the lower invoice values."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "19-cfr-111-32",
+      "targetCitation": "19 CFR § 111.32(a)–(c)",
+      "goldenQuote": "If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.",
+      "shortestPathHint": "19 CFR -> Part 111 -> § 111.32 (False information)",
+      "socraticHints": [
+        "Hint 1 (Concept): A licensed customs broker is strictly prohibited from filing any document known to be false and has an affirmative regulatory duty when discovering client noncompliance or omission.",
+        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.32 ('False information') and examine paragraphs (a), (b), and (c).",
+        "Hint 3 (Trap Check): Notice that under 19 CFR § 111.32(b) and (c), the broker's advice to the client regarding noncompliance and corrective action MUST be in writing and retained as a record under § 111.23, and the broker must refuse to file when the client refuses to correct a known false declaration."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 111.32(a), a broker must never file or assist in filing any claim or document known by the broker to be false. Under § 111.32(b), when a broker knows that a client has not complied with the law or has made an error in or omission from any required document, the broker must promptly advise the client in writing of the noncompliance, error, or omission, instruct the client on the proper corrective action, and retain a copy of that written communication for 5 years under § 111.23. Furthermore, under § 111.32(c), if the client refuses to correct the known false valuation and attempts to induce the broker to file the fraudulent $45,000 invoice, the broker must refuse to file the entry, separate from the noncompliant conduct, and document the refusal/termination.",
+        "distractors": {
+          "A": "Filing a document known by the broker to be false violates 19 CFR § 111.32(a) and subjects the broker to license revocation and a $30,000 monetary penalty under § 111.53 and § 111.91.",
+          "B": "Knowingly filing a false entry with the intent to amend it later still violates the absolute prohibition in 19 CFR § 111.32(a) against filing a known false document.",
+          "C": "CORRECT: Follows the exact mandatory steps of 19 CFR § 111.32(a), (b), and (c).",
+          "D": "A customs broker is a private licensee, not a federal law enforcement officer, and has no authority to confiscate cargo, make arrests, or assess CBP penalties.",
+          "E": "Oral-only advice and continued participation in double-invoicing directly violate 19 CFR § 111.32(a)–(c)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q03",
+      "number": 3,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Atlantic Trade Brokerage Inc., a licensed corporate customs broker headquartered in Newark, NJ, relocates its customs entry record archive to a new facility and designates a new Recordkeeping Point of Contact on October 1. In addition, Atlantic Trade Brokerage is auditing its retention schedule for three categories of documents:\n(1) Standard consumption entry files (CBP Form 7501, commercial invoices, packing lists);\n(2) A corporate Power of Attorney (POA) that was revoked by an active client on June 15, 2024; and\n(3) Records supporting a Modernized Drawback claim that was liquidated and paid on August 10, 2025.\n\nUnder 19 CFR § 111.23 (and § 190.51(f)), where must the broker's original records be maintained, within how many days must the broker notify CBP of the change in record storage location/point of contact, and what are the mandatory retention periods for these three categories of records?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Records may be stored anywhere in North America (U.S., Canada, or Mexico); notify CBP within 60 calendar days; retain entry files for 3 years from entry, revoked POAs for 2 years from revocation, and drawback records for 5 years from entry."
+        },
+        {
+          "letter": "B",
+          "text": "Records must be maintained within the customs territory of the United States; notify the Broker Management Branch within 30 calendar days of the change; retain standard entry files for 5 years from the date of entry, revoked POAs for 5 years after the date of revocation (or 5 years after the client ceases to be an active client, whichever is later), and drawback claim records for 3 years after liquidation of the drawback claim."
+        },
+        {
+          "letter": "C",
+          "text": "Records must be maintained within the customs territory of the United States; notify CBP within 10 working days of the change; retain all entry files, revoked POAs, and drawback records for 7 years from the end of the calendar year."
+        },
+        {
+          "letter": "D",
+          "text": "Records must be maintained at the port of entry where each shipment arrived; notify CBP on the Triennial Status Report only; retain entry files for 5 years from liquidation and revoked POAs permanently."
+        },
+        {
+          "letter": "E",
+          "text": "Records may be stored on foreign cloud servers outside the U.S. customs territory without domestic access; notify CBP within 30 working days; retain entry files and drawback records for 3 years from date of importation."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-111-23",
+      "targetCitation": "19 CFR § 111.23(a)–(c) & § 190.51(f)",
+      "goldenQuote": "(c) Notification of change of record storage location or point of contact. Within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact (including name, telephone number, or email address), the broker must electronically notify the Broker Management Branch (or submit written notification if electronic transmission is unavailable) of the new location or updated contact information.",
+      "shortestPathHint": "19 CFR -> Part 111 -> § 111.23 (Retention of records)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the three pillars of broker recordkeeping: geographic location requirement, notification deadline for changing storage location/contact, and specific retention timelines.",
+        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.23(a), (b), and (c), and cross-reference § 190.51(f) for drawback record retention.",
+        "Hint 3 (Trap Check): Original records must be kept within the U.S. customs territory; notification to the Broker Management Branch is due within 30 calendar days; entry records = 5 years from date of entry; revoked POA = 5 years from revocation or last active client date (whichever is later); drawback records = 3 years from liquidation of the drawback claim."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 111.23(a), a licensed customs broker must maintain originals of all required customs records within the customs territory of the United States. Under § 111.23(c), within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact, the broker must notify the Broker Management Branch. Under § 111.23(b), standard entry records must be retained for at least 5 years after the date of entry, while revoked powers of attorney must be retained for 5 years after the date of revocation or 5 years after the date the client ceases to be an 'active client' (whichever period is later). Finally, under 19 CFR § 190.51(f) (and § 163.4(b)(1)), records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim.",
+        "distractors": {
+          "A": "Incorrect on all counts: records cannot be stored outside the U.S. customs territory, notification is 30 calendar days (not 60), and entry/POA retention is 5 years.",
+          "B": "CORRECT: Accurately states the U.S. customs territory requirement, the 30-calendar-day notification window, the 5-year entry and revoked POA rules under § 111.23, and the 3-year post-liquidation drawback retention rule under § 190.51(f).",
+          "C": "Incorrect because notification is 30 calendar days (not 10 working days) and CBP does not use a 7-year tax-style retention period.",
+          "D": "Incorrect because national permit holders maintain records centrally within the U.S. customs territory (not at every arrival port), must notify CBP within 30 calendar days (not wait for the Triennial Status Report), and count the 5-year entry retention period from the date of entry (not liquidation).",
+          "E": "Incorrect because records must be maintained within the U.S. customs territory and entry retention is 5 years from the date of entry."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q04",
+      "number": 4,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "BioCare Imports Inc. enters two separate shipments under its continuous Basic Importation and Entry Bond (CBP Form 301):\n• Shipment 1: Restricted medical laser devices with an entered value of $60,000 (and $2,400 in estimated duties/fees) that are refused admission by the FDA for failing federal radiation safety standards.\n• Shipment 2: Non-restricted general ceramic tableware with an entered value of $40,000 (and $3,600 in estimated duties/fees) that is found to lack proper Country of Origin marking.\n\nCBP timely issues a CBP Form 4647 (Notice to Mark and/or Notice to Redeliver) for both shipments, but BioCare has already sold both shipments into domestic commerce and fails to redeliver either shipment to CBP custody. Under 19 CFR § 113.62(d) and (n), within how many days after the CBP Form 4647 demand was BioCare required to redeliver the merchandise, and what are the exact Liquidated Damages assessments for Shipment 1 and Shipment 2?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "10 working days to redeliver; Liquidated Damages are $60,000 for Shipment 1 (1x value) and $40,000 for Shipment 2 (1x value)."
+        },
+        {
+          "letter": "B",
+          "text": "30 calendar days to redeliver; Liquidated Damages are $180,000 for Shipment 1 (three times the total value of the restricted merchandise: 3 x $60,000) and $43,600 for Shipment 2 (one time the value of the non-restricted merchandise plus estimated duties, taxes, and fees: $40,000 + $3,600)."
+        },
+        {
+          "letter": "C",
+          "text": "30 calendar days to redeliver; Liquidated Damages are $187,200 for Shipment 1 (3x value plus 3x duties) and $120,000 for Shipment 2 (3x value)."
+        },
+        {
+          "letter": "D",
+          "text": "15 calendar days to redeliver; Liquidated Damages are capped at a flat $30,000 statutory penalty per shipment for both Shipment 1 and Shipment 2."
+        },
+        {
+          "letter": "E",
+          "text": "60 calendar days to redeliver; Liquidated Damages are $62,400 for Shipment 1 (1x value + duties) and $120,000 for Shipment 2 (3x value)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-113-62",
+      "targetCitation": "19 CFR § 113.62(d) & (n)(1)–(2)",
+      "goldenQuote": "(1) Restricted, Prohibited, Alcoholic, or Quota-Class Merchandise (3x Value): If the principal defaults on the obligation to redeliver, mark, export, or destroy restricted or prohibited merchandise (including FDA/CPSC refused goods), alcoholic beverages, or quota-class merchandise, the obligors (principal and surety, jointly and severally) agree to pay liquidated damages equal to three times the total value of the merchandise (3x value) involved in the default.",
+      "shortestPathHint": "19 CFR -> Part 113 -> § 113.62 (Basic importation and entry bond conditions)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the Basic Importation and Entry Bond conditions in 19 CFR Part 113 for the redelivery timeframe after CBP Form 4647 and the two-tier liquidated damages formula.",
+        "Hint 2 (Navigation): Open 19 CFR Part 113 -> § 113.62 and read paragraphs (d) and (n)(1)–(2).",
+        "Hint 3 (Trap Check): Redelivery is due within 30 calendar days of CBP Form 4647. For restricted/prohibited/alcoholic/quota-class goods (Shipment 1), liquidated damages equal 3x value (3 x $60,000 = $180,000). For non-restricted general goods (Shipment 2), liquidated damages equal 1x value PLUS estimated duties, taxes, and fees ($40,000 + $3,600 = $43,600)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 113.62(d), when CBP issues a timely demand for redelivery on CBP Form 4647, the principal (Importer of Record) must return the merchandise to CBP custody within 30 calendar days after the date of the demand. When the principal defaults on redelivery, § 113.62(n) prescribes two distinct liquidated damages formulas for which the principal and surety are jointly and severally liable: (1) Under § 113.62(n)(1), for restricted or prohibited merchandise (such as FDA-refused medical lasers), alcoholic beverages, or quota-class merchandise, liquidated damages equal three times the total value of the merchandise (3 x $60,000 = $180,000); (2) Under § 113.62(n)(2), for non-restricted general merchandise (such as unmarked ceramic tableware), liquidated damages equal the value of the merchandise PLUS the estimated duties, taxes, and fees determined to be due ($40,000 + $3,600 = $43,600).",
+        "distractors": {
+          "A": "Confuses the 30-calendar-day redelivery period with the 10-working-day Entry Summary period and fails to apply the 3x multiplier for restricted goods and the duty addition for non-restricted goods.",
+          "B": "CORRECT: 30 calendar days for redelivery after CBP Form 4647; $180,000 (3x value) for restricted Shipment 1; $43,600 (1x value + $3,600 duties/fees) for non-restricted Shipment 2.",
+          "C": "Erroneously adds 3x duties to Shipment 1 and applies the 3x restricted multiplier to non-restricted Shipment 2.",
+          "D": "Confuses the 15-calendar-day entry filing period (§ 142.2) and the $30,000 broker penalty cap (§ 111.91) with CBP Form 301 bond liquidated damages.",
+          "E": "Reverses the 3x and 1x+duties formulas between restricted and non-restricted merchandise and uses an incorrect 60-day redelivery window."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q05",
+      "number": 5,
+      "suite": "CBLE_111_113",
+      "track": "CBLE",
+      "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "Keystone Customs Brokers Inc. (a national permit holder) is conducting a quarterly internal compliance audit covering three regulatory deadlines under 19 CFR Part 111:\n(1) On May 10, Keystone receives a wire transfer of $18,400 from an importer client to pay customs duties on an entry whose payment due date to CBP has already passed;\n(2) On May 12, Keystone receives a $4,200 overpayment from a client in excess of the governmental and brokerage charges properly payable on the client's customs business (and Keystone does not refund or apply the excess funds immediately);\n(3) On April 1, Keystone hired a new full-time entry specialist who completed 30 consecutive days of employment on May 1.\n\nUnder 19 CFR § 111.29(a) and § 111.28(c), what are the exact regulatory deadlines for Keystone to (1) transmit the belatedly received $18,400 duty payment to CBP, (2) provide a written accounting statement to the client for the $4,200 overpayment (if not paid out earlier), and (3) report the new employee's required information to CBP?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "(1) Transmit the belated duty payment within 10 working days of receipt; (2) provide a written accounting statement within 30 calendar days of receipt; and (3) report the new employee within 10 calendar days of the hire date."
+        },
+        {
+          "letter": "B",
+          "text": "(1) Transmit the belated duty payment to the Government within 5 working days from receipt by the broker; (2) provide a written statement accounting for the excess funds within 60 calendar days of receipt (unless actual payment is made within that 60-calendar-day period); and (3) report the new employee to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days."
+        },
+        {
+          "letter": "C",
+          "text": "(1) Transmit the belated duty payment within 24 hours of receipt; (2) provide a written accounting statement within 90 calendar days; and (3) report the new employee only on the next Triennial Status Report."
+        },
+        {
+          "letter": "D",
+          "text": "(1) Transmit the belated duty payment within 5 calendar days of receipt; (2) provide a written accounting statement within 30 working days of receipt; and (3) report the new employee within 60 calendar days of the hire date."
+        },
+        {
+          "letter": "E",
+          "text": "(1) Transmit the belated duty payment within 15 calendar days of receipt; (2) provide a written accounting statement once every 12 months; and (3) report only licensed employees within 30 working days."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-111-29",
+      "targetCitation": "19 CFR § 111.29(a) & § 111.28(c)",
+      "goldenQuote": "Payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client where no payment to the Government has been made, or received from a client in excess of the Governmental or other charges properly payable as part of the client's customs business, within 60 calendar days of receipt.",
+      "shortestPathHint": "19 CFR -> Part 111 -> § 111.29 (Diligence in correspondence and paying monies)",
+      "socraticHints": [
+        "Hint 1 (Concept): Distinguish the three financial and employee reporting clocks in 19 CFR Part 111: belated duty payments received after the due date, client overpayment accounting statements, and new employee list reporting.",
+        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.29(a) for financial settlement deadlines and cross-reference § 111.28(c) for employee list reporting.",
+        "Hint 3 (Trap Check): In § 111.29(a), belatedly received duty funds must be transmitted to CBP within 5 WORKING days from receipt, while a written accounting for excess/refunded funds is due within 60 CALENDAR days of receipt. In § 111.28(c), a new employee must be reported within 30 CALENDAR days after completing 30 consecutive days of employment."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 111.29(a), payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Furthermore, under § 111.29(a), each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client in excess of the Governmental or other charges properly payable, within 60 calendar days of receipt (unless actual payment of the funds is made within that 60-calendar-day period). Finally, under 19 CFR § 111.28(c), a national permit holder must report any new employees to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days (and within 30 calendar days of termination for terminated employees).",
+        "distractors": {
+          "A": "Confuses the 5-working-day belated payment rule with the 10-working-day Entry Summary deadline and reverses the 60-day and 30-day windows.",
+          "B": "CORRECT: 5 working days for belatedly received duty payments (§ 111.29(a)); 60 calendar days for written accounting of overpayments/refunds (§ 111.29(a)); and 30 calendar days after 30 consecutive days of employment for reporting new employees (§ 111.28(c)).",
+          "C": "Incorrect because 24 hours, 90 calendar days, and waiting for the Triennial Status Report violate § 111.29(a) and § 111.28(c).",
+          "D": "Mixes up working days and calendar days across § 111.29(a) (which specifies 5 working days and 60 calendar days).",
+          "E": "Confuses the 12-month active client payment notice requirement in § 111.29(b)(2)(ii) with the 60-calendar-day overpayment accounting statement in § 111.29(a)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q06",
+      "number": 6,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "A container vessel carrying non-quota commercial machinery arrives within the port limits of Savannah, GA and lands its cargo on Monday, November 2. On Tuesday, November 3, the licensed customs broker transmits the entry documentation (CBP Form 3461 electronic equivalent) without an entry summary and without requesting an immediate time-of-entry election upon filing. On Wednesday, November 4, CBP authorizes the release of the merchandise. Wednesday, November 11 is Veterans Day (a federal holiday). Under 19 CFR § 141.68 and § 142.12, what is the 'time of entry' for this shipment, and what is the final deadline for the broker to file the Entry Summary (CBP Form 7501) with estimated duties attached without incurring liquidated damages?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Time of entry is Monday, November 2; the Entry Summary is due no later than Tuesday, November 17 (15 calendar days after landing)."
+        },
+        {
+          "letter": "B",
+          "text": "Time of entry is Tuesday, November 3; the Entry Summary is due no later than Tuesday, November 17 (10 working days after filing CBP Form 3461)."
+        },
+        {
+          "letter": "C",
+          "text": "Time of entry is Wednesday, November 4; the Entry Summary is due no later than Wednesday, November 18 (10 working days after time of entry, including Veterans Day)."
+        },
+        {
+          "letter": "D",
+          "text": "Time of entry is Wednesday, November 4; the Entry Summary is due no later than Thursday, November 19 (10 working days after time of entry, excluding Saturdays, Sundays, and the Veterans Day federal holiday)."
+        },
+        {
+          "letter": "E",
+          "text": "Time of entry is Thursday, November 19 (when the Entry Summary is filed); the Entry Summary is due within 30 calendar days after release."
+        }
+      ],
+      "correctOption": "D",
+      "targetSectionId": "19-cfr-142-12",
+      "targetCitation": "19 CFR § 142.12(b)–(c) & § 141.68(a)(1)",
+      "goldenQuote": "When the entry documentation is filed before the entry summary, the importer or broker must file the entry summary (CBP Form 7501 or ACE electronic equivalent), with estimated duties attached (or scheduled via Automated Clearinghouse / Periodic Monthly Statement), within 10 working days after the time of entry (as determined under § 141.68).",
+      "shortestPathHint": "19 CFR -> Part 142 -> § 142.12 (Time for filing entry summary)",
+      "socraticHints": [
+        "Hint 1 (Concept): First determine the 'time of entry' under 19 CFR § 141.68(a)(1) when CBP Form 3461 is filed without an entry summary and without a special filing-time request.",
+        "Hint 2 (Navigation): Open 19 CFR Part 142 -> § 142.12(b) and (c) to see the exact deadline for filing Entry Summary (CBP Form 7501) after the time of entry.",
+        "Hint 3 (Trap Check): Count 10 WORKING days starting on the day AFTER CBP authorizes release (Release = Wed, Nov 4 -> Day 1 = Thu, Nov 5). Exclude Sat/Sun (Nov 7–8), Wed Nov 11 (Veterans Day federal holiday), and Sat/Sun (Nov 14–15)."
+      ],
+      "explanation": {
+        "correctReasoning": "First, under 19 CFR § 141.68(a)(1), when entry documentation (CBP Form 3461) is filed without an entry summary and the importer has not requested time of entry at filing, the 'time of entry' is the time CBP authorizes the release of the merchandise—here, Wednesday, November 4. Second, under 19 CFR § 142.12(b) and (c), the Entry Summary (CBP Form 7501) with estimated duties attached must be filed within 10 working days after the time of entry, excluding Saturdays, Sundays, and federal holidays. Counting working days starting the day after November 4: Day 1 = Thu Nov 5; Day 2 = Fri Nov 6; [Sat Nov 7 & Sun Nov 8 excluded]; Day 3 = Mon Nov 9; Day 4 = Tue Nov 10; [Wed Nov 11 excluded for Veterans Day federal holiday]; Day 5 = Thu Nov 12; Day 6 = Fri Nov 13; [Sat Nov 14 & Sun Nov 15 excluded]; Day 7 = Mon Nov 16; Day 8 = Tue Nov 17; Day 9 = Wed Nov 18; Day 10 = Thursday, November 19.",
+        "distractors": {
+          "A": "Confuses the 10-working-day Entry Summary deadline (§ 142.12(b)) with the 15-calendar-day initial entry filing window after landing before merchandise goes to General Order (§ 142.2(a)).",
+          "B": "Erroneously uses the date CBP Form 3461 was submitted (Nov 3) as the time of entry without an importer election under § 141.68(a)(2) and fails to exclude Veterans Day.",
+          "C": "Correctly identifies Wednesday, November 4 as the time of entry, but fails to exclude Wednesday, November 11 (Veterans Day federal holiday) when counting 10 working days.",
+          "D": "CORRECT: Time of entry is Wednesday, November 4 (release authorization), and Day 10 of working days (excluding weekends and Veterans Day) is Thursday, November 19.",
+          "E": "Confuses standard consumption entry release (§ 141.68(a)) with Immediate Delivery release (§ 141.68(c)), where time of entry is when the entry summary is filed, and states a non-existent 30-day deadline."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q07",
+      "number": 7,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Sonora Industrial Supply Co. imports precision ball bearings from a manufacturer in Monterrey, Mexico, destined for the Port of Laredo, TX. The Mexican seller issues a commercial invoice written entirely in Spanish that states a single lump-sum CIF Laredo price in Mexican Pesos (MXN), without separately itemizing ocean/rail freight or insurance, and omits the $9,500 value of specialized hardening dies that Sonora purchased in Germany and furnished free of charge to the Mexican plant. Under 19 CFR § 141.86, which of the following statements accurately describes the legal sufficiency of this commercial invoice for CBP entry purposes?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The invoice is fully compliant because invoices from USMCA countries (Mexico and Canada) may be submitted in Spanish or French without translation, and foreign assists never need to be disclosed on a commercial invoice."
+        },
+        {
+          "letter": "B",
+          "text": "The invoice is deficient because § 141.86 requires every commercial invoice to be in the English language (or have attached an accurate English translation), to itemize all charges upon the merchandise by name and amount (including freight, insurance, commission, and packing), and to disclose all goods or services furnished for production not included in the invoice price (such as foreign-sourced dies/assists), while stating the purchase price in the currency of purchase."
+        },
+        {
+          "letter": "C",
+          "text": "The invoice is deficient solely because all commercial invoices presented to CBP must state the purchase price exclusively in U.S. Dollars (USD) converted by the foreign seller prior to shipment."
+        },
+        {
+          "letter": "D",
+          "text": "The invoice is compliant with respect to omitting the German dies, because only goods or services furnished inside the United States must be disclosed under § 141.86(a)(11)."
+        },
+        {
+          "letter": "E",
+          "text": "The invoice does not need to state the port of entry, country of origin, or quantities in weights and measures if the shipment is valued under $250,000."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-141-86",
+      "targetCitation": "19 CFR § 141.86(a)(1)–(11) & (d)",
+      "goldenQuote": "(11) All goods or services furnished for the production of the merchandise (e.g., \"assists\" such as dies, molds, tools, engineering work) not included in the invoice price. However, goods or services furnished in the United States are excluded.",
+      "shortestPathHint": "19 CFR -> Part 141 -> § 141.86 (Contents of invoice)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the mandatory data elements required on every commercial invoice presented for U.S. customs entry, including currency, itemized charges, assist disclosures, and language requirements.",
+        "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.86 and inspect paragraphs (a)(5), (a)(8), (a)(11), and (d).",
+        "Hint 3 (Trap Check): Under § 141.86(a)(5), stating the purchase price in the currency of purchase (MXN) is actually required! However, the invoice violates § 141.86(a)(8) (unitemized freight/insurance), § 141.86(a)(11) (omission of the German dies assist), and § 141.86(d) (must be in English or have an accurate English translation attached)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 141.86(a) and (d), a commercial invoice must satisfy eleven general content requirements plus the English language rule: (1) Under § 141.86(d), the invoice and all attachments must be in the English language or have attached thereto an accurate translation into English; (2) Under § 141.86(a)(8), all charges upon the merchandise (including freight, insurance, commissions, and containers/packing) must be itemized by name and amount; (3) Under § 141.86(a)(11), all goods or services furnished for the production of the merchandise not included in the invoice price (such as the German hardening dies assist) must be set forth on the invoice (only goods/services furnished in the U.S. are excluded); and (4) Under § 141.86(a)(5), the purchase price is properly stated in the currency of purchase (here, MXN).",
+        "distractors": {
+          "A": "Incorrect because there is no USMCA exemption from the English translation requirement in § 141.86(d) or the assist disclosure rule in § 141.86(a)(11).",
+          "B": "CORRECT: Accurately identifies the English translation requirement (§ 141.86(d)), itemized charges rule (§ 141.86(a)(8)), foreign assist disclosure rule (§ 141.86(a)(11)), and currency-of-purchase rule (§ 141.86(a)(5)).",
+          "C": "Incorrect because § 141.86(a)(5) explicitly requires the invoice to set forth the purchase price in the currency of the purchase (CBP converts foreign currency using quarterly/daily Federal Reserve rates under 19 CFR Part 159).",
+          "D": "Reverses the rule in § 141.86(a)(11): foreign assists (like the German dies) MUST be disclosed, whereas goods or services furnished in the United States are excluded.",
+          "E": "Incorrect because port of entry (§ 141.86(a)(1)), quantities in weights and measures (§ 141.86(a)(4)), and country of origin (§ 141.86(a)(10)) are mandatory on all commercial invoices."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q08",
+      "number": 8,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "A cargo aircraft lands at Chicago O'Hare International Airport on May 1 carrying a commercial shipment of Swiss mechanical chronographs consigned to Horology Imports LLC. Due to a dispute between Horology Imports and its overseas lender, no customs broker is instructed to file entry documentation upon arrival. Under 19 CFR § 142.2 and § 142.3, what is the maximum period allowed after landing to file the required entry documentation (CBP Form 3461 package), what happens to the merchandise if entry is not filed within that period, and how long may the merchandise remain unclaimed before CBP is authorized to sell it at public auction?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Entry documentation must be filed within 10 working days after landing; if unentered, the merchandise is immediately forfeited to the U.S. Treasury and auctioned after 30 calendar days."
+        },
+        {
+          "letter": "B",
+          "text": "Entry documentation must be filed within 15 calendar days after landing; if unentered within 15 calendar days, the merchandise is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the consignee's risk and expense, and if it remains unentered in General Order for 6 months from the date of importation, it may be sold at public auction or destroyed by CBP."
+        },
+        {
+          "letter": "C",
+          "text": "Entry documentation must be filed within 30 calendar days after landing; if unentered, the air carrier must return the cargo to Switzerland at the carrier's own expense within 45 days."
+        },
+        {
+          "letter": "D",
+          "text": "Entry documentation must be filed within 5 working days after landing; if unentered, the goods are placed in a Foreign Trade Zone (FTZ) where they may remain indefinitely without storage charges."
+        },
+        {
+          "letter": "E",
+          "text": "Entry documentation must be filed within 20 working days after landing; if unentered, the consignee is assessed a $30,000 broker penalty and the goods are auctioned after 1 year."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-142-2",
+      "targetCitation": "19 CFR § 142.2(a) & (c)",
+      "goldenQuote": "(c) Consequence of failure to make entry within 15 calendar days (General Order — Part 127). Any merchandise for which entry documentation is not filed within 15 calendar days after landing or in-bond arrival at the port of destination shall be treated as unclaimed and sent to a General Order (G.O.) warehouse or public store to be held at the risk and expense of the consignee.",
+      "shortestPathHint": "19 CFR -> Part 142 -> § 142.2 (Time for filing entry)",
+      "socraticHints": [
+        "Hint 1 (Concept): Distinguish the deadline for initial Entry filing after landing (§ 142.2) from the deadline for Entry Summary filing after release (§ 142.12).",
+        "Hint 2 (Navigation): Open 19 CFR Part 142 -> § 142.2 and read paragraphs (a) and (c).",
+        "Hint 3 (Trap Check): Initial entry documentation (§ 142.3) must be filed within 15 CALENDAR days after landing. Failure to make entry within 15 calendar days sends the cargo to a General Order (G.O.) warehouse at the consignee's risk and expense, and after 6 months in G.O. from the date of importation it becomes subject to CBP public auction."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 142.2(a), the entry documentation required by § 142.3 (CBP Form 3461, evidence of right to make entry, commercial/pro forma invoice, packing list, and bond identification) must be filed within 15 calendar days after landing from a vessel, aircraft, or vehicle (or after arrival at the port of destination for in-bond shipments). Under § 142.2(c) and Part 127, any merchandise for which entry is not filed within 15 calendar days after landing is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the risk and expense of the consignee. Merchandise remaining in General Order for 6 months from the date of importation without entry may be sold at public auction or destroyed by CBP.",
+        "distractors": {
+          "A": "Confuses the 15-calendar-day initial entry window (§ 142.2(a)) with the 10-working-day Entry Summary window (§ 142.12(b)).",
+          "B": "CORRECT: 15 calendar days after landing to file entry; transfer to General Order warehouse at consignee's risk and expense if unentered; subject to CBP public auction after 6 months in G.O.",
+          "C": "Incorrect because the statutory pre-G.O. period is 15 calendar days (not 30), and unclaimed goods go to a G.O. warehouse at the consignee's expense.",
+          "D": "Incorrect because 5 working days and automatic placement in a Foreign Trade Zone are not part of 19 CFR Part 142.",
+          "E": "Confuses the carrier's 20-calendar-day G.O. notification deadline with the importer's 15-calendar-day entry filing deadline."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q09",
+      "number": 9,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "Licensed customs broker Elena Rostova is onboarding two new commercial clients and reviewing a low-value shipment for each:\n• Client 1 (Redwood Trading Corp., a Delaware corporation) executes a customs Power of Attorney (POA) authorizing Rostova to sign entry declarations on its behalf, and imports a single daily shipment of non-restricted sample plastic phone cases with an aggregate fair retail value in the country of shipment of $650.\n• Client 2 (Sierra Artisan Partners, a California general partnership with three partners) executes a customs Power of Attorney in favor of Rostova, and imports a single daily shipment of Chinese-origin steel threaded rods valued at $700 that are subject to an active Antidumping Duty (AD/CVD) order.\n\nUnder 19 CFR § 141.19 (incorporating § 141.34) and § 141.4(b)(4), what are the maximum legal validity periods for the Powers of Attorney executed by Client 1 and Client 2, and which of the two shipments qualifies for duty-free entry exemption under Section 321 ($800 de minimis)?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Both POAs are valid for a maximum of 2 years; both the $650 phone case shipment and the $700 AD/CVD steel rod shipment qualify for Section 321 duty-free administrative exemption because both are valued under $800."
+        },
+        {
+          "letter": "B",
+          "text": "Client 1's corporate POA may be granted for an unlimited period of time, whereas Client 2's partnership POA is limited to a period not to exceed 2 years from the date of execution (and is automatically revoked by any change in partnership membership); furthermore, ONLY Client 1's $650 phone case shipment qualifies for the Section 321 ($800 de minimis) exemption because merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is ineligible for Section 321 clearance."
+        },
+        {
+          "letter": "C",
+          "text": "Client 1's corporate POA is limited to 5 years and Client 2's partnership POA is valid indefinitely; neither shipment qualifies for Section 321 because commercial samples over $250 always require formal entry."
+        },
+        {
+          "letter": "D",
+          "text": "Client 1's corporate POA is valid indefinitely and Client 2's partnership POA is limited to 2 years, but BOTH shipments qualify for Section 321 clearance because the $800 de minimis threshold overrides all Antidumping Duty orders."
+        },
+        {
+          "letter": "E",
+          "text": "Client 1's corporate POA is limited to 3 years (until the next Triennial Status Report) and Client 2's partnership POA is limited to 1 year; only Client 2's shipment qualifies for Section 321."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-141-19",
+      "targetCitation": "19 CFR § 141.19(c)(1)–(2) (§ 141.34) & § 141.4(b)(4)",
+      "goldenQuote": "(2) Partnership limitation (§ 141.34): A power of attorney granted by a partnership shall be limited to a period not to exceed 2 years from the date of execution, and shall state the names of all members of the partnership. Any change in the membership of the partnership automatically revokes the power of attorney.",
+      "shortestPathHint": "19 CFR -> Part 141 -> § 141.19 (Declaration of entry and Power of Attorney rules)",
+      "socraticHints": [
+        "Hint 1 (Concept): Compare the Power of Attorney validity duration for a corporation versus a general partnership, and check the statutory exclusions from the Section 321 ($800 de minimis) administrative exemption.",
+        "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.19(c) for Power of Attorney duration rules, and check § 141.4(b)(4) for Section 321 ($800 de minimis) exclusions.",
+        "Hint 3 (Trap Check): Under § 141.19(c) (§ 141.34), a corporate POA may be granted for an unlimited period, whereas a partnership POA cannot exceed 2 years. Under § 141.4(b)(4), merchandise subject to Antidumping/Countervailing Duties (AD/CVD), quota, or alcohol/tobacco internal revenue taxes is strictly excluded from Section 321 clearance even if valued at $800 or less!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 141.19(c)(1)–(2) (incorporating § 141.34), a Power of Attorney executed by a corporation or sole proprietor may be granted for an unlimited period of time and remains valid until revoked, whereas a Power of Attorney granted by a partnership is strictly limited to a period not to exceed 2 years from the date of execution (and must list all partners, with any change in partnership membership automatically revoking the POA). Furthermore, under 19 CFR § 141.4(b)(4) (19 U.S.C. 1321(a)(2)(C)), while shipments imported by one person on one day with an aggregate fair retail value of $800 or less generally qualify for the Section 321 de minimis exemption (as with Client 1's $650 phone cases), merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is explicitly excluded from Section 321 clearance and requires formal entry.",
+        "distractors": {
+          "A": "Incorrect because corporate POAs are not capped at 2 years, and AD/CVD merchandise is strictly ineligible for Section 321 de minimis clearance.",
+          "B": "CORRECT: Corporate POA is valid for an unlimited period; partnership POA is capped at 2 years; $650 non-restricted shipment qualifies for Section 321, while $700 AD/CVD shipment is excluded from Section 321.",
+          "C": "Incorrect because corporate POAs are not limited to 5 years, partnership POAs are not unlimited, and non-restricted plastic cases under $800 qualify for Section 321.",
+          "D": "Correctly states the POA rules, but erroneously claims that Section 321 applies to merchandise subject to an Antidumping Duty order.",
+          "E": "Incorrect on both POA durations and Section 321 eligibility."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q10",
+      "number": 10,
+      "suite": "CBLE_141_142",
+      "track": "CBLE",
+      "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "A presidential proclamation modifies the HTSUS to increase the Column 1 duty rate on certain alloy steel valves from 2.5% to 6.0% effective at 12:01 a.m. on Thursday, October 15. A container vessel carrying three separate shipments of these alloy steel valves arrives within the port limits of Los Angeles-Long Beach and lands its cargo on Tuesday, October 13:\n• Shipment 1 (Standard Entry Without Entry Summary — No Filing-Time Election): On Wednesday, October 14, the broker transmits CBP Form 3461 entry documentation without an entry summary and without requesting time of entry at filing; CBP authorizes release on Thursday, October 15.\n• Shipment 2 ('Live Entry' — Entry Summary Serving as Entry and Entry Summary): On Wednesday, October 14 (after the vessel has arrived within the port limits), the broker files the Entry Summary (CBP Form 7501) in proper form serving as both entry and entry summary with estimated duties attached; CBP authorizes physical release on Thursday, October 15.\n• Shipment 3 (Immediate Delivery Procedure): Released on Wednesday, October 14 under a special permit for Immediate Delivery (CBP Form 3461), and the Entry Summary (CBP Form 7501) with estimated duties attached is filed on Wednesday, October 21.\n\nUnder 19 CFR § 141.68(a), (b), (c), and (e) (§ 141.69), what is the legal 'time of entry' and applicable duty rate (2.5% vs. 6.0%) for Shipment 1, Shipment 2, and Shipment 3?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All three shipments have a time of entry of Tuesday, October 13 (the date the vessel arrived within port limits) and are subject to the 2.5% duty rate."
+        },
+        {
+          "letter": "B",
+          "text": "Shipment 1's time of entry is Thursday, October 15 (when CBP authorizes release, resulting in the 6.0% rate); Shipment 2's time of entry is Wednesday, October 14 (when the live Entry Summary is filed in proper form with estimated duties attached after arrival within port limits, locking in the 2.5% rate); and Shipment 3's time of entry is Wednesday, October 21 (when the Entry Summary is filed in proper form with estimated duties attached after Immediate Delivery release, resulting in the 6.0% rate)."
+        },
+        {
+          "letter": "C",
+          "text": "Shipment 1 and Shipment 3 lock in the 2.5% duty rate on Wednesday, October 14, whereas Shipment 2 is subject to the 6.0% duty rate because physical release occurred on Thursday, October 15."
+        },
+        {
+          "letter": "D",
+          "text": "All three shipments are subject to the 6.0% duty rate because CBP authorized physical cargo release for Shipments 1 and 2 on October 15 and Entry Summary for Shipment 3 was filed on October 21."
+        },
+        {
+          "letter": "E",
+          "text": "Shipment 1's time of entry is Wednesday, October 14 (2.5% rate); Shipment 2's time of entry is Thursday, October 15 (6.0% rate); and Shipment 3's time of entry is Wednesday, October 14 (2.5% rate)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-141-68",
+      "targetCitation": "19 CFR § 141.68(a)(1), (b), (c) & (e)",
+      "goldenQuote": "(b) When entry summary serves as entry and entry summary. When an entry summary serves as both the entry documentation and entry summary (\"live entry\"), in accordance with § 142.3(b) of this chapter, the time of entry will be the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits.",
+      "shortestPathHint": "19 CFR -> Part 141 -> § 141.68 (Time of entry)",
+      "socraticHints": [
+        "Hint 1 (Concept): Under 19 CFR § 141.68(e) (§ 141.69), merchandise is subject to the rate of duty in effect at the legal 'time of entry', which differs depending on whether entry is made via standard CBP Form 3461, Live Entry Summary (CBP Form 7501), or Immediate Delivery.",
+        "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.68 and compare paragraphs (a)(1), (b), and (c).",
+        "Hint 3 (Trap Check): For Shipment 1 (standard 3461 with no election), time of entry is when CBP authorizes release (Oct 15 -> 6.0%). For Shipment 2 (Live Entry Summary 7501 with estimated duties attached after arrival), time of entry is the time of filing (Oct 14 -> 2.5%) even though release happens the next day! For Shipment 3 (Immediate Delivery), time of entry is when the Entry Summary 7501 is filed with duties attached (Oct 21 -> 6.0%)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 141.68(e) (§ 141.69), imported merchandise is subject to the rate of duty in effect at the 'time of entry' determined under § 141.68: (1) For Shipment 1, under § 141.68(a)(1), when entry documentation (CBP Form 3461) is filed without an entry summary and without an importer request on the entry documentation for time of entry at filing, the time of entry is the time CBP authorizes release (Thursday, October 15 -> 6.0% duty rate); (2) For Shipment 2, under § 141.68(b), when an entry summary (CBP Form 7501) serves as both entry and entry summary ('live entry'), the time of entry is the time the entry summary is filed in proper form with estimated duties attached, provided the merchandise has arrived within the port limits (Wednesday, October 14 -> 2.5% duty rate); and (3) For Shipment 3, under § 141.68(c), when merchandise is released under the immediate delivery procedure, the time of entry is the time the entry summary is filed in proper form with estimated duties attached (Wednesday, October 21 -> 6.0% duty rate).",
+        "distractors": {
+          "A": "Vessel arrival date is not the time of entry unless the importer submits entry documentation prior to arrival AND explicitly requests arrival time on the entry documentation under § 141.68(a)(3).",
+          "B": "CORRECT: Shipment 1 = Oct 15 (6.0% under § 141.68(a)(1)); Shipment 2 = Oct 14 (2.5% under § 141.68(b) live entry summary); Shipment 3 = Oct 21 (6.0% under § 141.68(c) immediate delivery).",
+          "C": "Reverses the outcomes of all three procedures under § 141.68.",
+          "D": "Fails to recognize that a Live Entry Summary under § 141.68(b) establishes time of entry upon filing in proper form with estimated duties attached (Oct 14), prior to CBP release authorization.",
+          "E": "Incorrectly treats Immediate Delivery release on Oct 14 as the time of entry; under § 141.68(c), Immediate Delivery time of entry occurs only when the Entry Summary is filed with estimated duties attached."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q11",
+      "number": 11,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Apex Outdoor Gear Inc. (an unrelated U.S. importer in Seattle, WA) imports 5,000 carbon-fiber trekking poles from a manufacturer in Taiwan on a CIF Seattle basis. The commercial invoice states a total CIF price of $115,000, which separately itemizes $11,000 for international ocean freight from Kaohsiung to Seattle and $1,500 for marine cargo insurance. In addition to the invoice amount, Apex incurred the following costs not included in the seller's invoice price:\n• $4,000 paid to Apex's bona fide buying agent in Taipei for locating the factory and inspecting the goods;\n• $8,000 for a specialized aluminum injection mold purchased by Apex from an unrelated U.S. toolmaker and shipped free of charge to the Taiwanese manufacturer for use exclusively on this 5,000-unit order (plus $500 air freight to deliver the mold to the Taiwanese factory);\n• $6,000 for industrial design sketches created in Seattle by Apex's full-time U.S.-domiciled staff engineers and emailed free of charge to the Taiwanese factory; and\n• $3,500 in patent license royalties that the sales contract requires Apex to pay to a German patent holder as a condition of the sale of the trekking poles for exportation to the United States.\n\nWhat is the correct transaction value (appraised value) of the imported trekking poles under 19 CFR § 152.103?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$102,500"
+        },
+        {
+          "letter": "B",
+          "text": "$114,500"
+        },
+        {
+          "letter": "C",
+          "text": "$118,500"
+        },
+        {
+          "letter": "D",
+          "text": "$120,500"
+        },
+        {
+          "letter": "E",
+          "text": "$127,000"
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-152-103",
+      "targetCitation": "19 CFR § 152.103(a)(1), (b)(1) & (i)(1)",
+      "goldenQuote": "(iv) Any royalty or license fee related to the imported merchandise that the buyer is required to pay, directly or indirectly, as a condition of the sale of the imported merchandise for exportation to the United States;",
+      "shortestPathHint": "19 CFR -> Part 152 -> § 152.103 (Transaction value: PAPP, Statutory Additions & Exclusions)",
+      "socraticHints": [
+        "Hint 1 (Concept): Start with the CIF invoice total ($115,000) and determine which international shipment charges must be deducted to arrive at the base Price Actually Paid or Payable (PAPP).",
+        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.103(b)(1) to check the five statutory additions to PAPP, and cross-reference § 152.102(a) to see which buyer-supplied items qualify as dutiable assists.",
+        "Hint 3 (Trap Check): Buying commissions ($4,000) and U.S.-undertaken engineering/design sketches ($6,000) are NEVER added! Add only the mold assist including its freight to the foreign factory ($8,000 + $500) and the condition-of-sale patent royalty ($3,500)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 152.103(a)(1) and (i)(1), international ocean freight ($11,000) and marine cargo insurance ($1,500) are excluded from the CIF price ($115,000) because they are separately itemized, yielding a base Price Actually Paid or Payable (PAPP) of $102,500 ($115,000 - $12,500). Next, under § 152.103(b)(1), we add: (1) the mold assist value of $8,500 ($8,000 acquisition cost + $500 freight to transport the mold to the foreign factory per § 152.102(a)(3)); and (2) the $3,500 patent royalty because the buyer is required to pay it as a condition of the sale for exportation to the U.S. under § 152.103(b)(1)(iv). The $4,000 buying commission is excluded (only selling commissions are added under § 152.103(b)(1)(ii)), and the $6,000 design work undertaken in the United States is excluded from the definition of an assist under § 152.102(a)(1)(iv) & (a)(2). Calculation: $102,500 + $8,500 + $3,500 = $114,500.",
+        "distractors": {
+          "A": "$102,500 is the net FOB Price Actually Paid or Payable ($115,000 - $11,000 freight - $1,500 insurance), but it omits the mandatory statutory additions for the mold assist ($8,500) and the condition-of-sale royalty ($3,500).",
+          "B": "CORRECT ($114,500): Net PAPP of $102,500 + $8,500 mold assist (including transport to the factory) + $3,500 condition-of-sale royalty.",
+          "C": "$118,500 erroneously includes the $4,000 bona fide buying commission. Under 19 CFR § 152.103(b)(1)(ii), only selling commissions incurred by the buyer are added to PAPP.",
+          "D": "$120,500 erroneously includes the $6,000 design sketches created in Seattle. Under 19 CFR § 152.102(a)(1)(iv), engineering and design work is an assist only when undertaken OUTSIDE the United States.",
+          "E": "$127,000 fails to deduct the separately itemized $11,000 international ocean freight and $1,500 marine cargo insurance from the CIF invoice price ($114,500 + $12,500)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q12",
+      "number": 12,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Vanguard Medical Devices Inc. (a U.S. importer in Minneapolis, MN) contracts with an unrelated manufacturer in Costa Rica to produce sterile surgical catheters for exportation to the United States. Vanguard provides the following five items free of charge to the Costa Rican factory for use in producing the imported catheters:\n1. Specialized biocompatible silicone tubing purchased by Vanguard in Germany for $22,000 and shipped directly to the Costa Rican plant (incorporating into the finished catheters);\n2. $15,000 in CAD/CAM engineering blueprints developed in Milan, Italy by an independent Italian engineering firm hired by Vanguard;\n3. $18,000 in quality-control testing software architecture written in Minneapolis by Vanguard's own U.S.-domiciled staff engineers;\n4. General-purpose air conditioning equipment ($12,000) installed in the Costa Rican factory's administrative accounting office; and\n5. $1,200 in international air courier charges paid by Vanguard to transport the German silicone tubing (Item 1) to the Costa Rican factory.\n\nUnder 19 CFR § 152.102(a), what is the total dutiable value of the 'assists' that must be added to the price actually paid or payable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$22,000"
+        },
+        {
+          "letter": "B",
+          "text": "$37,000"
+        },
+        {
+          "letter": "C",
+          "text": "$38,200"
+        },
+        {
+          "letter": "D",
+          "text": "$56,200"
+        },
+        {
+          "letter": "E",
+          "text": "$68,200"
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "19-cfr-152-102",
+      "targetCitation": "19 CFR § 152.102(a)(1)–(3)",
+      "goldenQuote": "(iv) Engineering, development, artwork, design work, and plans and sketches that are undertaken elsewhere than in the United States (i.e., OUTSIDE the United States) and are necessary for the production of the imported merchandise.",
+      "shortestPathHint": "19 CFR -> Part 152 -> § 152.102 (Definitions: Assist, Related persons, Identical/Similar merchandise)",
+      "socraticHints": [
+        "Hint 1 (Concept): Evaluate each of the 5 items against the four exclusive categories of an 'assist' in 19 CFR § 152.102(a)(1) and the assist valuation rule in § 152.102(a)(3).",
+        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.102(a) and check how foreign-undertaken engineering (Milan, Italy) differs from U.S.-undertaken engineering (Minneapolis, MN).",
+        "Hint 3 (Trap Check): Include Item 1 ($22,000 incorporated silicone tubing), Item 2 ($15,000 Italian engineering undertaken outside the U.S.), and Item 5 ($1,200 freight to transport the tubing assist to the factory). Exclude Item 3 (U.S.-domiciled engineering) and Item 4 (office A/C not used in production of the merchandise)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 152.102(a)(1)–(3), we evaluate each item: (1) The $22,000 biocompatible silicone tubing is an assist under § 152.102(a)(1)(i) because it is a material/component incorporated in the imported merchandise; (2) The $15,000 CAD/CAM engineering blueprints developed in Milan, Italy are an assist under § 152.102(a)(1)(iv) because they constitute engineering/design work undertaken OUTSIDE the United States and necessary for production; (3) The $18,000 engineering work performed in Minneapolis by U.S.-domiciled employees is explicitly EXCLUDED from being an assist under § 152.102(a)(1)(iv) and (a)(2); (4) The $12,000 administrative office air conditioner is NOT an assist because it is not a tool/die/mold used in production of the catheters nor consumed in production; and (5) The $1,200 air courier cost to transport the silicone tubing assist to the Costa Rican factory is added to the value of the assist under § 152.102(a)(3). Total dutiable assist value = $22,000 + $15,000 + $1,200 = $38,200.",
+        "distractors": {
+          "A": "$22,000 includes only the silicone tubing and omits both the foreign engineering blueprints ($15,000) and the freight to transport the tubing to the foreign plant ($1,200).",
+          "B": "$37,000 includes the silicone tubing ($22,000) and the Italian engineering ($15,000) but forgets to add the $1,200 transportation cost of delivering the assist to the foreign place of production under § 152.102(a)(3).",
+          "C": "CORRECT ($38,200): $22,000 incorporated tubing + $15,000 foreign engineering (Italy) + $1,200 assist transport cost to the factory.",
+          "D": "$56,200 erroneously includes the $18,000 U.S.-based engineering work performed in Minneapolis, which is excluded under 19 CFR § 152.102(a)(1)(iv) and (a)(2).",
+          "E": "$68,200 erroneously includes every single item, including U.S. engineering ($18,000) and non-production office air conditioning ($12,000)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q13",
+      "number": 13,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Nordic Robotics USA Inc. imports custom-engineered autonomous warehouse shuttles from its wholly owned parent company in Sweden on a consignment basis where no sale for exportation occurs (eliminating Transaction Value of the imported merchandise), and because the shuttles are custom-built prototypes, there are no sales of identical or similar merchandise exported to the United States at or about the same time. Nordic Robotics possesses complete, audited Swedish factory cost-of-production records and prefers to have CBP appraise the shuttles using Computed Value rather than Deductive Value. Under 19 CFR § 152.101, what is the default statutory sequence of the six appraisement methods, and how may Nordic Robotics legally elect to have Computed Value applied before Deductive Value?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The default sequence places Computed Value ahead of Deductive Value automatically, so no election by the importer is required."
+        },
+        {
+          "letter": "B",
+          "text": "The default sequential order is: (1) Transaction value, (2) Transaction value of identical merchandise, (3) Transaction value of similar merchandise, (4) Deductive value, (5) Computed value, and (6) Value if other values cannot be determined (fallback); however, upon written request made by the importer at the time of filing the entry summary, the order of Deductive value and Computed value will be reversed so that Computed value is applied before Deductive value."
+        },
+        {
+          "letter": "C",
+          "text": "The importer may choose any of the six valuation methods in any order at any time up to 180 days after liquidation, or CBP may appraise the goods at the selling price in the United States of merchandise produced in the United States."
+        },
+        {
+          "letter": "D",
+          "text": "The order of Deductive value and Computed value can never be reversed under any circumstances unless the importer obtains a formal Headquarters ruling letter 90 days prior to arrival."
+        },
+        {
+          "letter": "E",
+          "text": "When Transaction Value cannot be determined, CBP must immediately appraise the merchandise using the higher of two alternative values or the domestic market price in Sweden."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-152-101",
+      "targetCitation": "19 CFR § 152.101(a)–(c)",
+      "goldenQuote": "(b) Importer's option to reverse Deductive and Computed value. Upon written request made by the importer at the time of filing the entry summary, the order of application of deductive value (paragraph (a)(4)) and computed value (paragraph (a)(5)) will be reversed so that computed value is applied before deductive value.",
+      "shortestPathHint": "19 CFR -> Part 152 -> § 152.101 (Basis of appraisement)",
+      "socraticHints": [
+        "Hint 1 (Concept): CBP must follow a strict 6-step statutory hierarchy when appraising imported merchandise, with one specific statutory election allowed to the importer.",
+        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.101 and read paragraphs (a), (b), and (c).",
+        "Hint 3 (Trap Check): Check the exact timing required in § 152.101(b) to reverse Deductive Value (Method 4) and Computed Value (Method 5): the importer must make a written request AT THE TIME OF FILING THE ENTRY SUMMARY!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 152.101(a), imported merchandise must be appraised in the strict sequential order of: (1) Transaction value (§ 152.103); (2) Transaction value of identical merchandise (§ 152.104); (3) Transaction value of similar merchandise (§ 152.104); (4) Deductive value (§ 152.105); (5) Computed value (§ 152.106); and (6) Fallback value if other values cannot be determined (§ 152.107). Under § 152.101(b), upon a written request made by the importer at the time of filing the entry summary, the order of application of Deductive value (Method 4) and Computed value (Method 5) will be reversed so that Computed value is applied before Deductive value.",
+        "distractors": {
+          "A": "Incorrect because Deductive value (Method 4) precedes Computed value (Method 5) by default unless the importer timely elects to reverse them.",
+          "B": "CORRECT: States the exact 6-step statutory hierarchy of § 152.101(a) and the written election at the time of filing the entry summary under § 152.101(b).",
+          "C": "Incorrect because the hierarchy is mandatory (not free-choice), and appraising goods based on the U.S. selling price of U.S.-produced goods is explicitly prohibited under § 152.101(c)(1) (§ 152.108).",
+          "D": "Incorrect because § 152.101(b) expressly grants the importer the right to reverse Deductive and Computed value at the time of filing the entry summary without a prior HQ ruling.",
+          "E": "Incorrect because appraising merchandise at the higher of two alternative values or at the domestic price in the country of exportation is strictly prohibited under § 152.101(c)(2) and (c)(3)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q14",
+      "number": 14,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Three years ago, U.S. Customs and Border Protection issued a binding tariff classification ruling letter (NY N310455) to Lumina Lighting Inc. classifying its smart LED ceiling panels under an HTSUS subheading with a Free rate of duty. Following a recent Court of International Trade decision on multi-function electronics, CBP Headquarters determines that ruling NY N310455 is legally incorrect and decides to revoke it in favor of a subheading carrying a 3.9% duty rate. Under 19 CFR § 177.9(d) (and 19 U.S.C. 1625(c)), what notice-and-comment procedure and effective-date timeline must CBP follow to revoke a ruling letter that has been in effect for at least 60 days?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "CBP may revoke the ruling immediately via an internal port directive, and the 3.9% duty rate applies retroactively to all unliquidated and liquidated entries filed during the past 5 years."
+        },
+        {
+          "letter": "B",
+          "text": "CBP must publish a proposed revocation notice in the Customs Bulletin with at least a 30-calendar-day public comment period, publish the final revocation decision in the Customs Bulletin within 30 calendar days after the close of the comment period, and the final revocation becomes effective 60 calendar days after the date of publication of the final notice."
+        },
+        {
+          "letter": "C",
+          "text": "CBP must send a certified letter to the ruling holder giving 10 working days' notice, after which the revocation becomes effective immediately."
+        },
+        {
+          "letter": "D",
+          "text": "Once a binding classification ruling letter has been in effect for more than 1 year, CBP is permanently barred from modifying or revoking it unless Congress amends the HTSUS statute."
+        },
+        {
+          "letter": "E",
+          "text": "CBP must publish a final revocation notice in the Federal Register that takes effect 180 calendar days after publication, with no prior public comment period required."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-177-9",
+      "targetCitation": "19 CFR § 177.9(d)(1)–(3)",
+      "goldenQuote": "(3) Effective date — 60 calendar days after publication. The final ruling or decision modifying or revoking a prior interpretive ruling or decision will become effective 60 calendar days after the date of publication of the final notice in the Customs Bulletin.",
+      "shortestPathHint": "19 CFR -> Part 177 -> § 177.9 (Effect of ruling letters; modification or revocation with 60-day notice)",
+      "socraticHints": [
+        "Hint 1 (Concept): Binding ruling letters in effect for 60 days or more cannot be revoked overnight; federal law mandates publication in a specific CBP periodical with public comment and a delayed effective date.",
+        "Hint 2 (Navigation): Open 19 CFR Part 177 -> § 177.9 and read paragraph (d)(1), (d)(2), and (d)(3).",
+        "Hint 3 (Trap Check): Check the three exact timeframes in § 177.9(d): publication in the Customs Bulletin -> 30 calendar days for public comment -> publication of final decision within 30 calendar days after comment period closes -> effective 60 calendar days after final publication."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 177.9(d)(1)–(3) and 19 U.S.C. 1625(c), when CBP seeks to modify or revoke a prior interpretive ruling or decision that has been in effect for at least 60 calendar days, CBP must: (1) publish a notice of proposed modification or revocation in the Customs Bulletin providing at least 30 calendar days for public comment; (2) publish the final ruling or decision in the Customs Bulletin within 30 calendar days after the close of the public comment period; and (3) delay the effective date of the final modification or revocation until 60 calendar days after the date of publication of the final notice in the Customs Bulletin.",
+        "distractors": {
+          "A": "Incorrect because immediate revocation without notice and retroactive application to entries covered by an existing ruling letter are barred by 19 CFR § 177.9(d).",
+          "B": "CORRECT: Matches the exact statutory and regulatory timeline in 19 CFR § 177.9(d)(1)–(3).",
+          "C": "Incorrect because a 10-working-day private letter bypasses the mandatory Customs Bulletin public notice-and-comment process and 60-day effective date delay.",
+          "D": "Incorrect because CBP always retains legal authority to modify or revoke erroneous rulings prospectively by following the § 177.9(d) procedure.",
+          "E": "Incorrect because proposed revocations are published in the Customs Bulletin with a mandatory 30-day public comment period and a 60-calendar-day (not 180-day) effective date delay."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q15",
+      "number": 15,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Extreme",
+      "targetLookupSeconds": 55,
+      "stem": "On March 10, 2024, Precision Optics Corp. imported 1,000 laser rangefinders classified under HTSUS subheading 9015.10.4000 ('Rangefinders: Electrical', duty rate 5% ad valorem; note that the 8-digit subheading 9015.10.40 description does NOT begin with the word 'Other'). The entered value was $200.00 per unit ($200,000 total), and Precision Optics paid $10,000.00 in customs duties ($10.00 duty per unit). On August 15, 2026, Precision Optics exported 1,000 unused domestic rangefinders to Germany that were never used in the United States and are also classified under HTSUS 9015.10.4000, but have a lower commercial export invoice value of $150.00 per unit ($150,000 total). Precision Optics timely files a TFTEA Unused Merchandise Substitution Drawback claim (19 U.S.C. 1313(j)(2)) in ACE designating the 1,000 imported units (ignoring MPF for this calculation). Under 19 CFR § 190.32, what is the maximum drawback duty refund allowable on this claim?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$0.00, because the exported rangefinders were domestically produced and have a different unit value than the imported rangefinders."
+        },
+        {
+          "letter": "B",
+          "text": "$7,425.00"
+        },
+        {
+          "letter": "C",
+          "text": "$7,500.00"
+        },
+        {
+          "letter": "D",
+          "text": "$9,900.00"
+        },
+        {
+          "letter": "E",
+          "text": "$10,000.00"
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-190-32",
+      "targetCitation": "19 CFR § 190.32(a), (b)(1) & (c) ('Lesser Of' Rule)",
+      "goldenQuote": "(c) Amount of drawback — The \"Lesser Of\" Rule. For unused merchandise substitution drawback claims under 19 U.S.C. 1313(j)(2), the total amount of drawback allowable will not exceed 99 percent of the LESSER of:",
+      "shortestPathHint": "19 CFR -> Part 190 -> § 190.32 (Unused merchandise substitution drawback & 'lesser of' rule)",
+      "socraticHints": [
+        "Hint 1 (Concept): Under TFTEA Modernized Drawback, unused substitution (19 U.S.C. 1313(j)(2)) is based on matching 8-digit HTSUS classification, but the refund amount is subject to a statutory value comparison cap.",
+        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.32 and read paragraph (c) ('Amount of drawback — The \"Lesser Of\" Rule').",
+        "Hint 3 (Trap Check): Compare the duty paid on the imported units ($200,000 x 5% = $10,000) against the duty that would apply to the lower-valued substituted exported units ($150,000 x 5% = $7,500). Take the LESSER amount ($7,500) and multiply by the 99% drawback rate ($7,500 x 0.99)!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 190.32(a) and (b)(1), unused merchandise substitution drawback under 19 U.S.C. 1313(j)(2) is valid because both the designated imported merchandise and the substituted exported domestic merchandise are classified under the same 8-digit HTSUS subheading (9015.10.40, which does not begin with 'Other') and exportation occurred within 5 years of importation. However, under § 190.32(c) (the TFTEA 'Lesser Of' Rule), the drawback refund is capped at 99% of the LESSER of: (1) the duties paid on the designated imported merchandise ($200/unit x 1,000 units x 5% = $10,000.00), OR (2) the duties that would have applied to the substituted exported merchandise had it been imported at that rate ($150/unit x 1,000 units x 5% = $7,500.00). Since $7,500.00 is less than $10,000.00, we apply the 99% refund limit to $7,500.00: $7,500.00 x 0.99 = $7,425.00.",
+        "distractors": {
+          "A": "Incorrect because 19 CFR § 190.32(a) explicitly permits substituting domestic or imported merchandise classified under the same 8-digit HTSUS subheading regardless of price differences.",
+          "B": "CORRECT ($7,425.00): 99% of the lesser duty amount ($150,000 substituted export value x 5% duty rate = $7,500.00 x 99% = $7,425.00).",
+          "C": "$7,500.00 applies the 'lesser of' cap correctly ($150,000 x 5%) but forgets to reduce the refund by the mandatory 1% CBP retention (99% drawback limit).",
+          "D": "$9,900.00 is 99% of the $10,000.00 duty paid on the imported merchandise, ignoring the mandatory 'lesser of' rule in 19 CFR § 190.32(c) when the substituted exported goods have a lower value.",
+          "E": "$10,000.00 is 100% of the imported duty paid, ignoring both the 99% drawback limit and the § 190.32(c) 'lesser of' rule."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q16",
+      "number": 16,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Continental Chemicals Inc. imported a shipment of duty-paid specialty polymers on November 15, 2021 (with the underlying import entry summary liquidating on October 1, 2022). Continental uses the polymers in U.S. manufacturing and exports the finished articles on June 20, 2025. Continental is preparing its Modernized Drawback claim in ACE and also wants to know which import charges are legally eligible for a 99% drawback refund and how long drawback records must be kept. Under 19 CFR § 190.51 and § 190.2, what is the final statutory deadline for Continental to file the complete drawback claim, how long must Continental retain the supporting drawback records, and which fees/duties are eligible vs. ineligible for drawback?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The drawback claim must be filed by October 1, 2027 (5 years from liquidation of the import entry); records must be retained for 5 years from exportation; both Antidumping Duties (AD/CVD) and Harbor Maintenance Fees (HMF) are 99% refundable."
+        },
+        {
+          "letter": "B",
+          "text": "The complete drawback claim must be filed in ACE no later than November 15, 2026 (within 5 years after the date of importation of the designated imported merchandise); supporting drawback records must be retained for at least 3 years after liquidation of the drawback claim; customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are NOT eligible."
+        },
+        {
+          "letter": "C",
+          "text": "The complete drawback claim must be filed by June 20, 2028 (within 3 years after the date of exportation); records must be retained for 3 years from the date of filing the claim; MPF is not refundable under TFTEA."
+        },
+        {
+          "letter": "D",
+          "text": "The complete drawback claim must be filed by November 15, 2026 (5 years from importation), or the claimant may obtain a routine 1-year extension from the Port Director; drawback records must be retained for 5 years after payment of the drawback claim."
+        },
+        {
+          "letter": "E",
+          "text": "The complete drawback claim must be filed within 180 days of exportation; records must be kept for 7 years; 100% of duties, MPF, and HMF are refunded."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-190-51",
+      "targetCitation": "19 CFR § 190.51(e)–(f) & § 190.2",
+      "goldenQuote": "(e) Time of filing — 5-year statutory limitation (19 U.S.C. 1313(r)(1)). A complete drawback claim, with all required documents and data elements, must be filed within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim.",
+      "shortestPathHint": "19 CFR -> Part 190 -> § 190.51 (Completion of drawback claims & 5-year timeframe)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the starting date of the 5-year TFTEA drawback filing window, the post-liquidation recordkeeping period for drawback claims, and the eligibility of MPF vs. HMF/AD-CVD.",
+        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.51(e) and (f), and cross-reference § 190.2 ('Drawback' definition).",
+        "Hint 3 (Trap Check): Under § 190.51(e), the 5-year clock runs from the DATE OF IMPORTATION of the designated merchandise (Nov 15, 2021 -> Nov 15, 2026) with no extension allowed. Under § 190.51(f), drawback records must be kept for 3 years after LIQUIDATION of the drawback claim. Under § 190.2, MPF is eligible for drawback, while HMF and AD/CVD are excluded."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 190.51(e) (19 U.S.C. 1313(r)(1)), a complete drawback claim must be filed electronically in ACE within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim (here, 5 years from November 15, 2021 = November 15, 2026), and uncompleted claims are considered abandoned with no discretionary port extension permitted. Under § 190.51(f) (and § 190.38), all records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim. Finally, under § 190.2, regular customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are statutorily ineligible.",
+        "distractors": {
+          "A": "Erroneously starts the 5-year filing clock from liquidation of the import entry rather than the date of importation, and falsely states that AD/CVD and HMF are refundable.",
+          "B": "CORRECT: 5 years from date of importation (Nov 15, 2026); 3 years record retention after liquidation of the drawback claim; duties and MPF eligible (99%), HMF and AD/CVD ineligible.",
+          "C": "Confuses the pre-TFTEA 3-year post-exportation filing rule with the modernized TFTEA 5-year post-importation rule under Part 190.",
+          "D": "Incorrect because § 190.51(e) prohibits extensions of the 5-year statutory period (absent a declared CBP system outage), and drawback record retention is 3 years (not 5 years) from liquidation of the drawback claim.",
+          "E": "Incorrect on the filing deadline, recordkeeping period, and HMF refundability."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q17",
+      "number": 17,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Titan Printing Systems Inc. (an unrelated U.S. importer in Chicago, IL) purchases an industrial offset printing press from a manufacturer in Germany. The commercial invoice states a single turnkey delivered price of $450,000, which includes the following three post-importation items that are separately identified by name and dollar amount on the invoice:\n• $28,000 for post-importation erection, assembly, calibration, and technical assistance performed at Titan's Chicago facility after the press is imported into the United States;\n• $9,000 for post-importation U.S. domestic inland lowboy trucking from the Port of Newark, NJ to Chicago, IL; and\n• $13,000 for U.S. customs duties and federal taxes currently payable on the imported press by reason of its importation.\n\nIn addition, outside the $450,000 invoice total, Titan incurred two separate payments:\n• $6,500 paid by Titan to an export crating contractor in Hamburg for vacuum-sealed moisture-barrier wooden crates and packing labor required to pack the press for export; and\n• $16,000 in patent license royalties that the sales contract requires Titan to pay to a Swiss patent holder as a condition of the sale of the printing press for exportation to the United States.\n\nUnder 19 CFR § 152.103(b) and (i), what is the correct transaction value (appraised value) of the imported printing press?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$400,000"
+        },
+        {
+          "letter": "B",
+          "text": "$416,000"
+        },
+        {
+          "letter": "C",
+          "text": "$422,500"
+        },
+        {
+          "letter": "D",
+          "text": "$450,500"
+        },
+        {
+          "letter": "E",
+          "text": "$472,500"
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "19-cfr-152-103",
+      "targetCitation": "19 CFR § 152.103(b)(1)(i), (b)(1)(iv) & (i)(2)–(3)",
+      "goldenQuote": "(2) Any reasonable cost or charge that is incurred for:\n(i) The construction, erection, assembly, or maintenance of, or the technical assistance provided with respect to, the merchandise AFTER its importation into the United States; or",
+      "shortestPathHint": "19 CFR -> Part 152 -> § 152.103 (Transaction value: PAPP, Statutory Additions & Exclusions)",
+      "socraticHints": [
+        "Hint 1 (Concept): Deduct all separately identified post-importation exclusions from the $450,000 turnkey price under 19 CFR § 152.103(i), then add the mandatory statutory additions under § 152.103(b)(1).",
+        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.103 and inspect paragraph (i)(2)–(3) ('Exclusions from transaction value') and paragraph (b)(1)(i) & (iv) ('Additions to price actually paid or payable').",
+        "Hint 3 (Trap Check): Deduct $28,000 (post-importation assembly/technical assistance), $9,000 (post-importation U.S. inland freight), and $13,000 (U.S. customs duties/taxes) from $450,000 to get $400,000 net PAPP. Then add $6,500 (buyer-incurred export packing costs) and $16,000 (condition-of-sale patent royalty) = $422,500."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 152.103(i)(2) and (3), transaction value does NOT include any of the following when separately identified from the price actually paid or payable: (1) reasonable costs incurred for construction, erection, assembly, maintenance, or technical assistance provided with respect to the merchandise AFTER its importation into the United States ($28,000); (2) transportation of the merchandise AFTER its importation into the United States ($9,000 U.S. domestic trucking); and (3) U.S. customs duties and federal taxes payable by reason of importation ($13,000). Subtracting these three excluded amounts ($28,000 + $9,000 + $13,000 = $50,000) from the $450,000 turnkey invoice yields a net Price Actually Paid or Payable (PAPP) of $400,000. Next, under § 152.103(b)(1)(i) and (iv), we add the packing costs incurred by the buyer ($6,500) and the patent royalty that the buyer is required to pay as a condition of the sale for exportation to the United States ($16,000). Calculation: $400,000 + $6,500 + $16,000 = $422,500.",
+        "distractors": {
+          "A": "$400,000 correctly deducts the $50,000 in post-importation exclusions ($450,000 - $28,000 - $9,000 - $13,000) but omits the mandatory statutory additions for export packing ($6,500) and the condition-of-sale royalty ($16,000).",
+          "B": "$416,000 adds the $16,000 condition-of-sale royalty to $400,000 but forgets to add the $6,500 export packing costs incurred by the buyer under § 152.103(b)(1)(i).",
+          "C": "CORRECT ($422,500): $450,000 - $28,000 (post-importation assembly) - $9,000 (U.S. inland freight) - $13,000 (U.S. duties) + $6,500 (buyer packing costs) + $16,000 (condition-of-sale royalty).",
+          "D": "$450,500 fails to deduct the $28,000 post-importation erection/assembly charge ($422,500 + $28,000).",
+          "E": "$472,500 fails to deduct any of the $50,000 in separately itemized post-importation charges and duties ($450,000 + $6,500 + $16,000)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q18",
+      "number": 18,
+      "suite": "CBLE_152_177_190",
+      "track": "CBLE",
+      "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "On June 1, 2024, Solstice Solar Corp. imported 10,000 kg of high-purity silicon wafers classified under 8-digit HTSUS subheading 3818.00.00 on a single entry summary line item, paying $50,000.00 in regular customs duties and $1,000.00 in Merchandise Processing Fee (MPF). In January 2026, Solstice manufactures solar power modules at its Ohio plant using 10,000 kg of domestically produced silicon wafers that are also classified under 8-digit HTSUS subheading 3818.00.00, while keeping all 10,000 kg of the imported silicon wafers in domestic inventory for U.S. sales. Solstice exports the newly manufactured solar power modules to Chile in March 2026 without their having been used in the United States. Under 19 CFR § 190.22 and § 190.2 (Manufacturing Substitution Drawback under 19 U.S.C. 1313(b)), what prerequisite ruling and timeframe conditions must Solstice satisfy, and what is the maximum drawback refund allowable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$0.00, because manufacturing drawback under 19 CFR Part 190 is allowed only when the exact imported duty-paid wafers are physically traced into the exported solar modules via direct identification."
+        },
+        {
+          "letter": "B",
+          "text": "Solstice must operate under either an acknowledged General Manufacturing Drawback Ruling or an approved Specific Manufacturing Drawback Ruling, complete manufacture, exportation, and drawback claim filing within 5 years from the date of importation of the designated wafers, and is eligible for a 99% refund of the duties and MPF paid on the designated imported wafers ($51,000.00 x 99% = $50,490.00), even though none of the designated imported wafers were actually used to manufacture the exported modules."
+        },
+        {
+          "letter": "C",
+          "text": "Solstice needs no manufacturing drawback ruling prior to claiming 19 U.S.C. 1313(b) drawback, has 7 years from exportation to file, and recovers 100% of duties ($50,000.00) but 0% of MPF."
+        },
+        {
+          "letter": "D",
+          "text": "Solstice may claim manufacturing substitution drawback only if the exported solar modules are classified under the same 8-digit HTSUS subheading (3818.00.00) as the imported silicon wafers."
+        },
+        {
+          "letter": "E",
+          "text": "Solstice must obtain a ruling from the U.S. Court of International Trade and may recover only 50% of the duties ($25,000.00) when domestic merchandise is substituted for imported merchandise."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "19-cfr-190-22",
+      "targetCitation": "19 CFR § 190.22(a)–(c) & § 190.2",
+      "goldenQuote": "(a) General (19 U.S.C. 1313(b)). If imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading and are used in the manufacture or production of articles within the United States, then upon the exportation or destruction under CBP supervision of any such manufactured or produced articles, without their having been used in the United States prior to such exportation or destruction, drawback of 99 percent of the duties, taxes, and fees paid on the designated imported merchandise is allowable, even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.",
+      "shortestPathHint": "19 CFR -> Part 190 -> § 190.22 (Manufacturing substitution drawback)",
+      "socraticHints": [
+        "Hint 1 (Concept): Under 19 U.S.C. 1313(b) Manufacturing Substitution Drawback, check what two inputs must share the same 8-digit HTSUS subheading, whether a manufacturing ruling is required, and whether MPF is refundable.",
+        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.22 and read paragraphs (a), (b), and (c), and check the definition of 'Drawback' in § 190.2.",
+        "Hint 3 (Trap Check): Under § 190.22(a), the imported designated input and the substituted domestic input must share the same 8-digit HTSUS subheading (3818.00.00)—none of the imported wafers need to be physically used in the exported modules! Under § 190.22(b)–(c), the claimant requires a General or Specific Manufacturing Drawback Ruling and must complete all steps within 5 years of importation, recovering 99% of duties + MPF ($51,000 x 0.99 = $50,490.00)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 19 CFR § 190.22(a) (19 U.S.C. 1313(b)), if imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading (here, 3818.00.00) and are used in the manufacture or production of articles in the United States, then upon the exportation (or destruction under CBP supervision) of the manufactured articles without prior U.S. use, drawback of 99% of the duties, taxes, and fees (including MPF per § 190.2) paid on the designated imported merchandise is allowable—even if none of the designated imported merchandise was actually used to produce the exported articles. Under § 190.22(b), the manufacturer must operate under either a General Manufacturing Drawback Ruling or a Specific Manufacturing Drawback Ruling, and under § 190.22(c), all operations and claim filing must occur within 5 years from the date of importation of the designated imported merchandise. Calculation: ($50,000.00 duty + $1,000.00 MPF) x 99% = $50,490.00.",
+        "distractors": {
+          "A": "Incorrect because § 190.22(a) expressly allows 19 U.S.C. 1313(b) manufacturing substitution drawback 'even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.'",
+          "B": "CORRECT: Requires a General or Specific Manufacturing Drawback Ruling (§ 190.22(b)), a 5-year post-importation window (§ 190.22(c)), and refunds 99% of duties and MPF ($51,000 x 99% = $50,490.00).",
+          "C": "Incorrect because a manufacturing drawback ruling is mandatory under § 190.22(b), the statutory timeframe is 5 years from importation, and MPF is 99% refundable under TFTEA (§ 190.2).",
+          "D": "Misstates the 8-digit substitution rule: under § 190.22(a), the substituted input wafers must share the same 8-digit subheading as the imported designated input wafers—the finished exported article (solar modules) will naturally have a different HTSUS heading reflecting the manufacturing transformation.",
+          "E": "Incorrect because CBP Headquarters (or a General Ruling acknowledgment), not the Court of International Trade, approves manufacturing rulings, and the drawback rate is 99%."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q19",
+      "number": 19,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Meridian Retail Group imports two different packaged products in shrink-wrapped retail display boxes ready for direct sale to consumers without repacking:\n• Product 1 ('Executive Commuter Gift Box'): Contains one ceramic insulated travel coffee mug (Heading 6912, value $8.00), one pair of knitted merino wool dress socks (Heading 6115, value $9.00), and one stainless-steel ballpoint pen (Heading 9608, value $7.50).\n• Product 2 ('At-Home Pasta Dinner Kit'): Contains one box of uncooked dry durum wheat spaghetti (Heading 1902, value $3.20), one sealed pouch of tomato basil pasta sauce (Heading 2103, value $1.80), and one small packet of grated Parmesan cheese (Heading 0406, value $0.90).\n\nUnder the General Rules of Interpretation (GRI), how must Product 1 and Product 2 be classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Both Product 1 and Product 2 qualify as retail sets under GRI 3(b); Product 1 is classified entirely in Heading 6115 (highest value component), and Product 2 is classified entirely in Heading 1902."
+        },
+        {
+          "letter": "B",
+          "text": "Both Product 1 and Product 2 qualify as retail sets under GRI 3(b), but because no single component imparts essential character to Product 1, Product 1 is classified in Heading 9608 under GRI 3(c) (last in numerical order), while Product 2 is classified in Heading 1902."
+        },
+        {
+          "letter": "C",
+          "text": "Product 1 FAILS the GRI 3(b) retail set test because its articles are not put up together to meet a particular need or carry out a specific activity, so the mug (6912), socks (6115), and pen (9608) must each be classified separately; Product 2 QUALIFIES as a GRI 3(b) retail set and is classified as a single unit under Heading 1902 (the pasta component imparting essential character)."
+        },
+        {
+          "letter": "D",
+          "text": "Neither Product 1 nor Product 2 qualifies as a retail set under GRI 3(b) because food items and consumer gift items must always be classified separately under GRI 1."
+        },
+        {
+          "letter": "E",
+          "text": "Product 1 is classified as a retail set under GRI 3(c) in Heading 9608, whereas each food item in Product 2 must be classified separately under Headings 1902, 2103, and 0406."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "htsus-gri-3",
+      "targetCitation": "HTSUS GRI 3(b) & Explanatory Note X (3-Prong Retail Set Test)",
+      "goldenQuote": "(2) Consist of products or articles put up together to meet a particular need or carry out a specific activity (Note: If a retail package contains disparate items that do NOT work together toward a single specific activity—for example, a promotional gift basket containing a ceramic coffee mug, a pair of cotton socks, and a ballpoint pen—it FAILS prong 2, is NOT a GRI 3(b) set, and EVERY item must be classified separately under its own HTSUS heading!); and",
+      "shortestPathHint": "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 3 (Rule 3(b) Retail Sets 3-Prong Test)",
+      "socraticHints": [
+        "Hint 1 (Concept): Before applying 'essential character' under GRI 3(b) or 'last in numerical order' under GRI 3(c), verify whether each retail package legally qualifies as 'goods put up in sets for retail sale'.",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 3 and examine the Mandatory 3-Prong Test for retail sets under GRI 3(b).",
+        "Hint 3 (Trap Check): Check Prong 2 ('put up together to meet a particular need or carry out a specific activity'). Do a coffee mug, socks, and a pen work together to perform a single activity? No! Therefore Product 1 fails Prong 2 and each item classifies separately, whereas Product 2 (spaghetti, sauce, Parmesan) combines to prepare a pasta meal."
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS GRI 3(b) and Explanatory Note X, a package qualifies as 'goods put up in sets for retail sale' ONLY if it satisfies all three prongs: (1) at least two articles prima facie classifiable in different headings; (2) put up together to meet a particular need or carry out a specific activity; and (3) packaged for direct retail sale without repacking. Product 1 (a ceramic mug, wool socks, and a ballpoint pen) consists of disparate items that do not interact to carry out a specific activity (drinking coffee, dressing one's feet, and writing are unrelated activities). Because Product 1 fails Prong 2, it is NOT a GRI 3(b) set, and each item must be classified separately under GRI 1 (Headings 6912, 6115, and 9608). Conversely, Product 2 (spaghetti, pasta sauce, and grated Parmesan) satisfies all three prongs because the ingredients are used together to prepare a spaghetti meal, and the spaghetti (Heading 1902) imparts the essential character of the set under GRI 3(b).",
+        "distractors": {
+          "A": "Incorrect because Product 1 fails Prong 2 of the GRI 3(b) retail set definition; disparate gift items cannot be grouped under the highest-value item.",
+          "B": "Incorrect because GRI 3(c) ('last in numerical order') applies to sets only AFTER a package first qualifies as a valid retail set under GRI 3(b). Since Product 1 fails the retail set test, GRI 3(c) cannot be invoked.",
+          "C": "CORRECT: Product 1 fails Prong 2 (no unified specific activity) and is classified item-by-item, while Product 2 satisfies all three prongs of GRI 3(b) and is classified by its essential character (Heading 1902).",
+          "D": "Incorrect because multi-ingredient meal kits whose components are prepared together into a single dish (like a pasta dinner kit) are classic examples of valid GRI 3(b) retail sets.",
+          "E": "Incorrect because it reverses the legal outcome for both products."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q20",
+      "number": 20,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Symphony Imports LLC enters a single ocean container from Japan containing two commercial product lines:\n• Line 1: 200 professional acoustic guitars (Heading 9202) and 250 hard-shell molded guitar cases specially shaped and fitted to hold the guitars and suitable for long-term use (200 of the cases contain the imported guitars, while the remaining 50 identical empty cases are packed in a separate carton as spare replacement cases for Symphony's retail store).\n• Line 2: 80 heavy-duty seamless high-pressure steel gas cylinders (Heading 7311) imported filled with compressed argon gas (Heading 2804); the steel cylinders are equipped with refill valves and are designed to be returned, refilled, and circulated repeatedly for 15 years.\n\nUnder HTSUS General Rule of Interpretation 5 (GRI 5(a) and GRI 5(b)), how must the guitar cases and the steel gas cylinders be classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All 250 guitar cases are classified with the guitars under Heading 9202 pursuant to GRI 5(a), and all 80 steel cylinders are classified with the argon gas under Heading 2804 pursuant to GRI 5(b)."
+        },
+        {
+          "letter": "B",
+          "text": "Only the 200 guitar cases entered with the 200 guitars are classified with the guitars under Heading 9202 pursuant to GRI 5(a), while the 50 excess spare guitar cases must be classified separately under Heading 4202; furthermore, the 80 heavy-duty reusable steel gas cylinders must be classified separately under Heading 7311 because GRI 5(b) is not binding on packing containers clearly suitable for repetitive use."
+        },
+        {
+          "letter": "C",
+          "text": "All 250 guitar cases must be classified separately under Heading 4202 because hard-shell cases are durable goods, while the 80 steel cylinders are classified with the argon gas under Heading 2804 pursuant to GRI 5(b)."
+        },
+        {
+          "letter": "D",
+          "text": "Only the 200 guitar cases entered with the guitars are classified under Heading 9202 (with the 50 spare cases in Heading 4202), while the 80 steel cylinders are classified as argon gas under Heading 2804 because all containers entered with goods classify with their contents under GRI 5(b)."
+        },
+        {
+          "letter": "E",
+          "text": "Both the guitars with cases and the cylinders with argon gas are classified under Heading 9202 and Heading 7311 respectively by application of GRI 3(c) (last in numerical order)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-gri-5",
+      "targetCitation": "HTSUS GRI 5(a) & GRI 5(b)",
+      "goldenQuote": "(b) Packing Materials and Packing Containers: Subject to the provisions of Rule 5(a) above, packing materials and packing containers entered with the goods therein shall be classified with the goods if they are of a kind normally used for packing such goods. However, this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.",
+      "shortestPathHint": "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 5 (Rule 5(a) Fitted Camera/Instrument Cases & Rule 5(b) Packing Containers)",
+      "socraticHints": [
+        "Hint 1 (Concept): GRI 5 governs special containers and packing materials, but both Rule 5(a) and Rule 5(b) contain critical exceptions tested heavily on the CBLE.",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 5 and inspect the 'Crucial Exam Traps' under both Rule 5(a) and Rule 5(b).",
+        "Hint 3 (Trap Check): Under GRI 5(a), fitted musical instrument cases classify with the instruments ONLY to the extent they are matched 1-to-1 with the entered instruments (200 cases in 9202; 50 excess cases in 4202). Under GRI 5(b), packing containers 'clearly suitable for repetitive use' (like heavy-duty refillable steel gas cylinders) are excluded from classifying with their contents and classify separately in Heading 7311!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS GRI 5(a), musical instrument cases that are specially shaped or fitted, suitable for long-term use, and entered with the articles for which they are intended are classified with those articles (Heading 9202). However, the 50 extra guitar cases imported in excess of the 200 guitars are not 'entered with the articles for which they are intended' on a 1-to-1 basis and must be classified separately on their own merits under Heading 4202. Under HTSUS GRI 5(b), ordinary packing containers entered with goods are classified with the goods, EXCEPT that 'this provision is not binding when such packing materials or packing containers are clearly suitable for repetitive use.' Heavy-duty seamless steel compressed-gas cylinders designed for 15 years of continuous refilling and return circulation are the classic example of repetitive-use containers and must be classified separately under Heading 7311 rather than with the argon gas (Heading 2804).",
+        "distractors": {
+          "A": "Erroneously classifies the 50 excess spare guitar cases under GRI 5(a) and ignores the repetitive-use exception in GRI 5(b) for the refillable steel cylinders.",
+          "B": "CORRECT: Applies both the 1-to-1 matching requirement of GRI 5(a) (200 cases in 9202; 50 excess cases in 4202) and the repetitive-use exception of GRI 5(b) (80 refillable steel cylinders in 7311).",
+          "C": "Erroneously rejects GRI 5(a) for the 200 fitted cases entered with the guitars and ignores the GRI 5(b) repetitive-use exception for the steel cylinders.",
+          "D": "Correctly splits the 200 vs. 50 guitar cases under GRI 5(a), but fails to apply the GRI 5(b) exception for packing containers clearly suitable for repetitive use.",
+          "E": "GRI 3(c) does not apply to containers and packing materials governed specifically by GRI 5(a) and GRI 5(b)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q21",
+      "number": 21,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "Velocity Cycling Inc. imports a single container shipment from Taiwan containing knocked-down bicycle assembly kits. Specifically, the shipment consists of 500 aluminum bicycle frames, 500 front forks, 500 handlebars, 500 cranksets/drivetrains, and 1,100 complete bicycle wheels (each bicycle requires 1 frame, 1 fork, 1 handlebar, 1 drivetrain, and 2 wheels; bicycle saddles/seats are omitted and will be sourced domestically in the United States after importation). Under HTSUS General Rule of Interpretation 2(a) (GRI 2(a)), how must this shipment be classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Every component must be classified separately as bicycle parts under Heading 8714 because the articles are imported unassembled and lack bicycle saddles."
+        },
+        {
+          "letter": "B",
+          "text": "The entire shipment—including all 1,100 wheels—is classified as 500 complete bicycles under Heading 8712 pursuant to GRI 2(a)."
+        },
+        {
+          "letter": "C",
+          "text": "Under GRI 2(a), the 500 matched sets of frames, forks, handlebars, drivetrains, and 1,000 wheels (2 wheels per bicycle) are classified as 500 complete bicycles under Heading 8712 because, as entered in unassembled condition, they have the essential character of complete bicycles despite lacking saddles; however, the 100 excess wheels beyond the exact count needed to assemble the 500 bicycles must be classified separately as bicycle parts under Heading 8714."
+        },
+        {
+          "letter": "D",
+          "text": "The shipment is classified under Heading 8714 pursuant to GRI 3(c) (last in numerical order between Heading 8712 and Heading 8714)."
+        },
+        {
+          "letter": "E",
+          "text": "The shipment is classified as raw aluminum articles of Chapter 76 under GRI 1 until assembled in a U.S. bonded warehouse."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "htsus-gri-2",
+      "targetCitation": "HTSUS GRI 2(a)",
+      "goldenQuote": "2. (a) Any reference in a heading to an article shall be taken to include a reference to that article incomplete or unfinished, provided that, as entered, the incomplete or unfinished article has the essential character of the complete or finished article. It shall also include a reference to that article complete or finished (or falling to be classified as complete or finished by virtue of this rule), entered unassembled or disassembled.",
+      "shortestPathHint": "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 2 (Rule 2(a) Incomplete/Unfinished/Unassembled Articles)",
+      "socraticHints": [
+        "Hint 1 (Concept): GRI 2(a) has two prongs: (1) incomplete or unfinished articles having the essential character of the complete article, and (2) articles entered unassembled or disassembled.",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 2 and read Rule 2(a) together with the CBP Legal Interpretation Notes on 'Unassembled or Disassembled' goods.",
+        "Hint 3 (Trap Check): Check how many wheels are needed for 500 bicycles (500 x 2 = 1,000 wheels). The 500 unassembled kits (with 1,000 wheels) have the essential character of complete bicycles (Heading 8712) under GRI 2(a) even without seats, while the 100 excess wheels must be classified separately as bicycle parts (Heading 8714)!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS GRI 2(a), any reference in a heading to an article includes that article incomplete or unfinished, provided that as entered it has the essential character of the complete or finished article, and also includes complete or finished articles (or articles falling to be classified as complete or finished by virtue of GRI 2(a)) entered unassembled or disassembled. A bicycle consisting of a frame, fork, handlebars, drivetrain, and two wheels clearly possesses the essential character of a complete bicycle of Heading 8712 even without a saddle. However, under GRI 2(a) and its Explanatory Notes, excess components beyond the exact number required to assemble the 500 bicycles—here, the 100 extra wheels (1,100 imported minus 1,000 required for 500 bicycles)—cannot be included with the complete bicycles and must be classified separately on their own merits as bicycle parts under Heading 8714.",
+        "distractors": {
+          "A": "Incorrect because GRI 2(a) expressly classifies unassembled and incomplete articles having the essential character of the finished good under the heading for the complete article (Heading 8712).",
+          "B": "Incorrect because excess parts imported beyond the exact count needed to assemble the complete units (the 100 extra wheels) must be classified separately in Heading 8714.",
+          "C": "CORRECT: Applies both prongs of GRI 2(a) to classify the 500 unassembled kits (using 1,000 wheels) as bicycles in Heading 8712 and separates the 100 surplus wheels into Heading 8714.",
+          "D": "Incorrect because a heading for a complete article (8712) and its parts heading (8714) are resolved via GRI 1 and GRI 2(a), never GRI 3(c).",
+          "E": "Incorrect because manufactured bicycle components are articles of Chapter 87, not raw aluminum of Chapter 76."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q22",
+      "number": 22,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "TechSource Global Inc. imports four distinct electronic items in separate cartons:\n• Item 1: Portable laptop computers capable of freely programmable data processing without human intervention;\n• Item 2: Cellular smartphones and enterprise Wi-Fi network routers whose principal function is the transmission and reception of voice, images, or other data;\n• Item 3: 27-inch LCD computer monitors (not incorporating television reception apparatus) designed to connect directly to laptops and desktop CPUs; and\n• Item 4: Standalone AC electric motors (of an output of 500 W) that are custom-mounted with brackets making them suitable for use solely inside industrial conveyor machines of Heading 8428.\n\nUnder HTSUS GRI 1, Section XVI Note 2(a), and Chapter 84 Note 6, under which 4-digit HTSUS headings are Items 1, 2, 3, and 4 properly classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Items 1, 2, and 3 are all classified in Heading 8471 as automatic data processing machines and units thereof, and Item 4 is classified in Heading 8431 as a part of a conveyor machine."
+        },
+        {
+          "letter": "B",
+          "text": "Item 1 is classified in Heading 8471 (ADP machines); Item 2 is classified in Heading 8517 (telecommunications apparatus, excluded from 8471 by Chapter 84 Note 6(D)/(E)); Item 3 is classified in Heading 8528 (monitors, excluded from 8471 by Chapter 84 Note 6(D)/(E)); and Item 4 is classified in Heading 8501 (electric motors) because under Section XVI Note 2(a), parts which are goods included in any of the headings of Chapter 84 or 85 are in all cases classified in their respective headings."
+        },
+        {
+          "letter": "C",
+          "text": "Item 1 is classified in Heading 8471; Item 2 is classified in Heading 8517; Item 3 is classified in Heading 8528; and Item 4 is classified in Heading 8428 (with the conveyor machine) under Section XVI Note 2(b)."
+        },
+        {
+          "letter": "D",
+          "text": "Item 1 and Item 3 are classified in Heading 8471; Item 2 is classified in Heading 8517; and Item 4 is classified in Heading 8503 (parts of electric motors)."
+        },
+        {
+          "letter": "E",
+          "text": "All four items are classified in Heading 8543 as electrical machines and apparatus having individual functions not specified elsewhere."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-sec16-notes",
+      "targetCitation": "HTSUS Section XVI Note 2(a) & Chapter 84 Note 6 (Headings 8471, 8517, 8528, 8501)",
+      "goldenQuote": "(a) Parts which are goods included in any of the headings of Chapter 84 or 85 (other than headings 8409, 8431, 8448, 8466, 8473, 8487, 8503, 8522, 8529, 8538 and 8548) are in all cases to be classified in their respective headings (e.g., an electric motor designed solely for a washing machine is still classified in Heading 8501 as an electric motor under Note 2(a), NOT in Heading 8450 as a washing machine part!);",
+      "shortestPathHint": "HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528",
+      "socraticHints": [
+        "Hint 1 (Concept): Under GRI 1, Section XVI Note 2 governs machine parts across Chapters 84 and 85, while Chapter 84 Note 6 defines the boundary between ADP machines (8471), telecom apparatus (8517), and monitors (8528).",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Section XVI Notes & Headings 8471 / 8517 / 8528.",
+        "Hint 3 (Trap Check): Check Section XVI Note 2(a) first before Note 2(b)! Because an electric motor is itself a named good of Heading 8501, Note 2(a) forces it into Heading 8501 even if custom-bracketed solely for another machine. And under Chapter 84 Note 6(D)/(E), smartphones/routers classify in 8517 and monitors classify in 8528."
+      ],
+      "explanation": {
+        "correctReasoning": "Applying GRI 1 together with the Section XVI and Chapter 84 Legal Notes: (1) Item 1 (laptops) satisfies Chapter 84 Note 6(A) as an automatic data processing (ADP) machine under Heading 8471; (2) Item 2 (smartphones and Wi-Fi routers) is excluded from Heading 8471 by Chapter 84 Note 6(D)/(E) because its principal function is data/voice transmission and reception, placing it in Heading 8517; (3) Item 3 (27-inch LCD computer monitors) is excluded from Heading 8471 by Chapter 84 Note 6(D)/(E) and classified in Heading 8528 (specifically 8528.52.00); and (4) Item 4 (an electric motor designed solely for a conveyor machine) is governed by Section XVI Note 2(a), which mandates that parts which are themselves goods included in any heading of Chapter 84 or 85 (other than general parts headings) must IN ALL CASES be classified in their respective headings (Heading 8501 for electric motors)—you never reach Note 2(b)!",
+        "distractors": {
+          "A": "Fails to apply Chapter 84 Note 6(D)/(E) exclusions for telecom apparatus (8517) and monitors (8528) and skips Section XVI Note 2(a) for the electric motor.",
+          "B": "CORRECT: 8471 for laptops, 8517 for smartphones/routers, 8528 for monitors, and 8501 for the electric motor pursuant to Section XVI Note 2(a).",
+          "C": "Correctly classifies Items 1, 2, and 3, but falls into the classic CBLE trap of applying Section XVI Note 2(b) ('solely or principally used with a machine') before checking Note 2(a) ('goods included in any heading of Chapter 84 or 85').",
+          "D": "Erroneously places computer monitors in Heading 8471 (contrary to Chapter 84 Note 6) and classifies a complete electric motor as a motor part in Heading 8503.",
+          "E": "Heading 8543 is a residual basket heading that applies only when machines are not specified or included elsewhere in Chapter 84 or 85."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q23",
+      "number": 23,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "An entry specialist is classifying a specialized industrial liquid pump that has already been properly placed into 4-digit Heading 8413 pursuant to GRI 1. Inside Heading 8413, the tariff schedule contains several one-dash ('-') subheadings, each subdivided into multiple two-dash ('--') and three-dash ('---') subheadings. The entry specialist notices a two-dash ('--') subheading nested under a lower one-dash ('-') residual branch that appears to mention the pump's operating pressure, and wants to jump directly to that two-dash subheading without first comparing the competing one-dash ('-') subheadings at the top level. Under HTSUS General Rule of Interpretation 6 (GRI 6), what is the binding legal rule governing subheading comparisons within a 4-digit heading?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A classifier may jump directly to any 8-digit or 10-digit subheading anywhere within a 4-digit heading regardless of indent/dash level whenever the lower subheading has a lower duty rate."
+        },
+        {
+          "letter": "B",
+          "text": "For legal purposes, classification in the subheadings of a heading is determined according to the terms of those subheadings and any related subheading notes (and, mutatis mutandis, GRIs 1 through 5), on the strict understanding that ONLY subheadings at the same level (same dash/indent level) are comparable—meaning the classifier must first compare and select the proper one-dash ('-') subheading before comparing the two-dash ('--') subheadings nested underneath it."
+        },
+        {
+          "letter": "C",
+          "text": "Section and Chapter Notes cease to apply once a classifier moves from the 4-digit heading level to the 6-digit or 8-digit subheading level under GRI 6."
+        },
+        {
+          "letter": "D",
+          "text": "Under GRI 6, all subheading disputes within a 4-digit heading are automatically resolved by choosing the subheading that appears first in numerical order."
+        },
+        {
+          "letter": "E",
+          "text": "GRI 6 applies only when comparing two different 4-digit headings across two different chapters of the HTSUS."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-gri-6",
+      "targetCitation": "HTSUS GRI 6",
+      "goldenQuote": "6. For legal purposes, the classification of goods in the subheadings of a heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to the above rules, on the understanding that only subheadings at the same level are comparable.",
+      "shortestPathHint": "HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 6 (Rule 6 — Subheading Comparison at the Same Dash Level)",
+      "socraticHints": [
+        "Hint 1 (Concept): Once the 4-digit heading is fixed under GRIs 1–4, how do you navigate the indented 6-digit and 8-digit subheadings underneath that heading?",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> GRI 1–6 -> HTSUS GRI 6 and read the statutory rule and the CBP Legal Interpretation Note on GRI 6.",
+        "Hint 3 (Trap Check): Under GRI 6, ONLY subheadings at the same dash/indent level are comparable! You must compare one-dash ('-') against one-dash ('-') first, lock in the winning one-dash branch, and only then compare the two-dash ('--') subheadings nested beneath that branch."
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS General Rule of Interpretation 6 (GRI 6), for legal purposes, the classification of goods in the subheadings of a 4-digit heading shall be determined according to the terms of those subheadings and any related subheading notes and, mutatis mutandis, to GRIs 1 through 5, on the strict understanding that ONLY subheadings at the same level (i.e., the same indentation/dash level) are comparable. For the purposes of GRI 6, the relative Section, Chapter, and Subchapter Notes also apply unless the context otherwise requires. Therefore, a classifier must first compare only the one-dash ('-') subheadings within the 4-digit heading and select the governing one-dash subheading before proceeding to compare the two-dash ('--') subheadings nested underneath it.",
+        "distractors": {
+          "A": "Violates GRI 6's core mandate that only subheadings at the same indentation/dash level are comparable.",
+          "B": "CORRECT: Accurately states the GRI 6 rule that subheadings are compared strictly at the same dash/indent level (one-dash vs. one-dash, then two-dash vs. two-dash) using the terms of the subheadings, Subheading Notes, and Section/Chapter Notes.",
+          "C": "Directly contradicts the second sentence of GRI 6, which states that 'the relative section, chapter and subchapter notes also apply, unless the context otherwise requires.'",
+          "D": "Incorrect because GRIs 1 through 5 apply mutatis mutandis at each dash level, and ifGRI 3(c) is reached, it selects the subheading occurring LAST (not first) in numerical order at that same dash level.",
+          "E": "GRI 6 governs 6-digit/8-digit subheading classification WITHIN a single 4-digit heading; 4-digit headings are determined using GRIs 1 through 4."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q24",
+      "number": 24,
+      "suite": "CBLE_HTSUS",
+      "track": "CBLE",
+      "category": "HTSUS Classification & GRI 1–6",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Wonderland Kids Retail Inc. imports four distinct children's products into the United States:\n• Item 1 ('Junior Chef Real Oven Bakeware Kit'): A boxed set of child-sized food-grade stainless-steel muffin tins and mixing bowls engineered to bake real food inside a conventional domestic kitchen oven;\n• Item 2 ('Royal Court Woven Velvet Costume'): A durable, well-made woven textile Halloween dress with finished seams, metal zipper closure, and washing instructions suitable for repeated wear as clothing;\n• Item 3 ('Unfitted Nylon Sports & Toy Tote Bag'): A standard zippered nylon duffel bag (not specially shaped or fitted) printed with cartoon graphics and used by children to carry sports gear or toys; and\n• Item 4 ('Little Baker Pretend Play Plastic Oven'): A miniature battery-operated molded plastic toy oven with LED lights and sound effects that cannot heat or bake real food and is designed solely for children's imaginative amusement.\n\nUnder HTSUS GRI 1, Chapter 95 Note 1 (Notes 1(d), 1(e), and 1(v)), and Heading 9503.00.00, how are Items 1, 2, 3, and 4 classified?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All four items are classified as toys or festive articles in Chapter 95 (Heading 9503 or 9505) because they are marketed and sold exclusively for children's play and amusement."
+        },
+        {
+          "letter": "B",
+          "text": "Under GRI 1 and Chapter 95 Note 1: Item 1 is excluded from Chapter 95 by Note 1(v) as utilitarian kitchenware and classified by constituent material in Heading 7323 (stainless steel kitchen articles); Item 2 is excluded from Chapter 95 by Note 1(e) ('Fancy dress of textiles, of chapter 61 or 62') and classified as woven wearing apparel in Chapter 62; Item 3 is excluded from Chapter 95 by Note 1(d) and classified in Heading 4202; and ONLY Item 4 is classified as a toy in Heading 9503.00.00."
+        },
+        {
+          "letter": "C",
+          "text": "Items 1 and 4 are classified in Heading 9503.00.00 as toys, while Item 2 is classified in Heading 9505 as a festive carnival article and Item 3 is classified in Heading 4202."
+        },
+        {
+          "letter": "D",
+          "text": "Item 1 is classified in Heading 7323, but Items 2, 3, and 4 are all classified in Heading 9503.00.00 pursuant to GRI 3(b)."
+        },
+        {
+          "letter": "E",
+          "text": "All four items are classified in Chapter 62 as children's textile accessories under GRI 3(c)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "htsus-ch95-9503",
+      "targetCitation": "HTSUS Chapter 95 Note 1(d), 1(e), 1(v) & Heading 9503.00.00",
+      "goldenQuote": "(v) Tableware, kitchenware, toilet articles, carpets and other textile floor coverings, apparel, bed linen, table linen, toilet linen, kitchen linen and similar articles having a utilitarian function (classified according to their constituent material).",
+      "shortestPathHint": "HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Chapter 95 Note 1 & Heading 9503",
+      "socraticHints": [
+        "Hint 1 (Concept): Under GRI 1, you must check Chapter 95 Note 1 exclusions FIRST before classifying any children's product as a toy in Heading 9503.",
+        "Hint 2 (Navigation): Open HTSUS & GRI -> Chapters 84, 85 & 95 -> HTSUS Chapter 95 Note 1 & Heading 9503.",
+        "Hint 3 (Trap Check): Check the three Chapter 95 Note 1 exclusions: Note 1(v) excludes kitchenware/tableware having a real utilitarian function (Item 1 -> Heading 7323 stainless steel kitchenware); Note 1(e) excludes durable textile fancy dress costumes (Item 2 -> Chapter 62 woven apparel); Note 1(d) excludes sports/toy bags of Heading 4202 (Item 3 -> Heading 4202). Only Item 4 (pretend plastic oven designed solely for amusement) classifies in Heading 9503.00.00!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under HTSUS GRI 1, classification is determined legally according to the terms of the headings and any relative Section or Chapter Notes. Chapter 95 Note 1 sets forth mandatory legal exclusions from Chapter 95: (1) Under Chapter 95 Note 1(v), tableware, kitchenware, and similar articles having a utilitarian function are excluded from Chapter 95 and classified according to their constituent material—because Item 1 consists of real stainless-steel bakeware used to bake real food in an oven, it is utilitarian kitchenware of Heading 7323 even though sized and marketed for children; (2) Under Chapter 95 Note 1(e), 'Fancy dress of textiles, of chapter 61 or 62' is excluded from Chapter 95, placing Item 2 (a durable woven textile costume) in Chapter 62; (3) Under Chapter 95 Note 1(d), sports bags and other containers of Heading 4202 are excluded from Chapter 95, placing Item 3 in Heading 4202; and (4) Item 4 (a miniature non-heating plastic pretend play oven) satisfies the 'principal use for amusement' test and is classified as a toy in Heading 9503.00.00.",
+        "distractors": {
+          "A": "Ignores the binding legal exclusions in Chapter 95 Note 1(d), 1(e), and 1(v); marketing to children does not override Chapter 95 Legal Notes under GRI 1.",
+          "B": "CORRECT: Applies Chapter 95 Note 1(v) (Item 1 -> 7323), Note 1(e) (Item 2 -> Ch. 62), Note 1(d) (Item 3 -> 4202), and Heading 9503.00.00 (Item 4).",
+          "C": "Fails to apply Note 1(v) to the functional stainless-steel bakeware (Item 1) and Note 1(e) to the durable woven textile costume (Item 2).",
+          "D": "Fails to apply Note 1(e) to the textile costume and Note 1(d) to the Heading 4202 bag.",
+          "E": "Incorrect because stainless-steel cookware, nylon bags, and plastic toys are not articles of Chapter 62."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q25",
+      "number": 25,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] During an IRS examination of client Horizon Logistics Inc., an IRS Revenue Agent makes a proper and lawful written request to Enrolled Agent Thomas Greene for Horizon's warehouse inventory ledgers from two years ago. Greene does not have the inventory ledgers in his possession, and Horizon's current president informs Greene that the ledgers were retained by Horizon's former outside bookkeeper, Carla Moss, after her contract ended. None of the records are legally privileged. Under Treasury Department Circular 230 (31 CFR § 10.20), what are Enrolled Agent Greene's exact obligations regarding the Revenue Agent's request?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Greene must hire a private investigator to independently verify whether Carla Moss actually possesses the ledgers and subpoena Carla Moss before responding to the IRS."
+        },
+        {
+          "letter": "B",
+          "text": "Greene must promptly notify the requesting IRS officer that neither he nor his client possesses the records, provide any information Greene has regarding the identity of the person (Carla Moss) whom he believes may have possession or control of the requested records, and make reasonable inquiry of his client regarding the identity of any person who may have possession or control, without being required to make inquiry of any other person or independently verify the client's information."
+        },
+        {
+          "letter": "C",
+          "text": "Greene may refuse to respond to the IRS request entirely because the Enrollee-Client privilege under Circular 230 permanently shields all accounting ledgers from IRS examination."
+        },
+        {
+          "letter": "D",
+          "text": "Greene must reconstruct the missing inventory ledgers from memory and submit estimated figures to the IRS without disclosing that the original ledgers are held by Carla Moss."
+        },
+        {
+          "letter": "E",
+          "text": "Greene must immediately withdraw from representing Horizon Logistics Inc. whenever a requested document is not in the practitioner's physical office."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "31-cfr-10-20",
+      "targetCitation": "31 CFR § 10.20(a)(1)–(2) (Circular 230 — Information to be furnished)",
+      "goldenQuote": "The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.20 (Information to be furnished)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check what Circular 230 requires when the IRS makes a proper and lawful request for non-privileged records that are not in the possession or control of the practitioner or client.",
+        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.20 and read paragraph (a)(2).",
+        "Hint 3 (Trap Check): Under § 10.20(a)(2), the practitioner must promptly notify the IRS officer, provide any information regarding who may have possession/control, and make reasonable inquiry OF THE CLIENT—but is explicitly NOT required to make inquiry of any other person or independently verify the client's statement!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.20(a)(1), a practitioner must promptly submit records or information upon a proper and lawful request by an IRS officer unless the practitioner believes in good faith and on reasonable grounds that the records are privileged. Under § 10.20(a)(2), where the requested records are not in the possession or control of the practitioner or the client, the practitioner must: (1) promptly notify the requesting IRS officer; (2) provide any information the practitioner has regarding the identity of any person believed to have possession or control of the records; and (3) make reasonable inquiry of the client regarding the identity of any person who may have possession or control. However, § 10.20(a)(2) expressly states that the practitioner is NOT required to make inquiry of any other person or independently verify the information provided by the client regarding the identity of such persons.",
+        "distractors": {
+          "A": "Directly contradicts 31 CFR § 10.20(a)(2), which states that the practitioner is not required to make inquiry of any third person or independently verify the client's information.",
+          "B": "CORRECT: Tracks the exact statutory and regulatory text of 31 CFR § 10.20(a)(1)–(2).",
+          "C": "Ordinary accounting and inventory ledgers are not privileged, and withholding non-privileged information without a good-faith reasonable belief of privilege violates § 10.20(a)(1).",
+          "D": "Submitting fabricated or undisclosed reconstructions violates due diligence under § 10.22 and § 10.20.",
+          "E": "Lack of possession of a third-party record does not require or justify withdrawal from representation."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q26",
+      "number": 26,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Sarah Jenkins is retained by a new business client, Oakridge Landscaping LLC, to prepare its current-year federal income tax return. While reviewing the prior year's tax return (which was prepared by a different accountant) alongside Oakridge's general ledger, Jenkins discovers that the client omitted $140,000 of taxable cash landscaping receipts from the prior year's Schedule C. Under Treasury Department Circular 230 (31 CFR § 10.21), what are Jenkins' exact legal obligations upon discovering the client's prior-year omission?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Promptly notify the IRS Criminal Investigation Division in writing of the $140,000 omission and transmit copies of the client's general ledger to the IRS."
+        },
+        {
+          "letter": "B",
+          "text": "Prepare and electronically file an amended Form 1040-X for the prior year on the client's behalf immediately, even if the client refuses to sign or authorize the amended return."
+        },
+        {
+          "letter": "C",
+          "text": "Promptly advise the client of the fact of the noncompliance, error, or omission, AND advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission (without unilaterally notifying the IRS)."
+        },
+        {
+          "letter": "D",
+          "text": "Ignore the prior-year omission completely because Jenkins did not sign or prepare the prior year's tax return."
+        },
+        {
+          "letter": "E",
+          "text": "Automatically report the prior tax preparer to the Office of Professional Responsibility (OPR) within 15 calendar days and impound the client's accounting records."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "31-cfr-10-21",
+      "targetCitation": "31 CFR § 10.21 (Circular 230 — Knowledge of client's omission)",
+      "goldenQuote": "A practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.21 (Knowledge of client's omission)",
+      "socraticHints": [
+        "Hint 1 (Concept): Compare how IRS Circular 230 handles a client's tax omission with how 19 CFR § 111.32 handles a customs client's error.",
+        "Hint 2 (Navigation): Switch to the '31 CFR Part 10' corpus tab -> Subpart B -> § 10.21 ('Knowledge of client's omission').",
+        "Hint 3 (Trap Check): Under 31 CFR § 10.21, the practitioner must promptly advise the client of (1) the fact of the error/omission AND (2) the consequences under the Internal Revenue Code and regulations. The practitioner is NEVER allowed to report the client's omission to the IRS unilaterally or file an amended return without client consent!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.21 (Circular 230), a practitioner who knows that a client has not complied with the U.S. revenue laws or has made an error in or omission from any return or document submitted under the revenue laws (regardless of who prepared the prior return) has two mandatory duties: (1) promptly advise the client of the fact of such noncompliance, error, or omission; and (2) advise the client of the consequences under the Internal Revenue Code and regulations (such as accuracy-related penalties, interest, and statute of limitations implications). Circular 230 does NOT authorize the practitioner to inform the IRS without client consent, nor can a practitioner file an amended return without the taxpayer's authorization.",
+        "distractors": {
+          "A": "Unilaterally disclosing confidential client tax information to the IRS without a lawful summons or client consent violates IRC § 7216 and is not permitted by Circular 230 § 10.21.",
+          "B": "A practitioner cannot file an amended tax return (Form 1040-X) without the client's signature and authorization.",
+          "C": "CORRECT: Accurately states the two mandatory practitioner obligations under 31 CFR § 10.21.",
+          "D": "31 CFR § 10.21 applies whenever a retained practitioner discovers a client's error or omission on any submitted return, even if another preparer signed the prior-year return.",
+          "E": "Circular 230 § 10.21 does not mandate reporting the prior preparer within 15 days or impounding client records (in fact, § 10.28 requires returning client records promptly upon request)."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q27",
+      "number": 27,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Elena Brooks manages a busy tax practice and delegates the depreciation schedule calculations for a commercial real estate client's Form 1065 partnership return to a junior staff accountant in her firm, resulting in an inadvertent computational misstatement on the return submitted to the IRS. Under 31 CFR § 10.22(a) and (b), in what three areas must a practitioner exercise due diligence, and under what exact circumstances will Brooks be presumed to have exercised due diligence when relying on the work product of another person?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A practitioner is strictly and unconditionally liable under Circular 230 for every arithmetic error made by an employee or specialist, and reliance on another person's work product is never permitted."
+        },
+        {
+          "letter": "B",
+          "text": "A practitioner must exercise due diligence in (1) preparing/assisting in preparing, approving, and filing tax returns and IRS documents, (2) determining the correctness of oral or written representations made to the Department of the Treasury, and (3) determining the correctness of oral or written representations made to clients regarding IRS matters; furthermore, the practitioner will be presumed to have exercised due diligence when relying on the work product of another person if the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship."
+        },
+        {
+          "letter": "C",
+          "text": "A practitioner is only required to exercise due diligence on written representations made under oath to an IRS Appeals Officer, and has no due diligence obligation regarding oral advice given to clients."
+        },
+        {
+          "letter": "D",
+          "text": "A practitioner is automatically presumed to have exercised due diligence whenever work is delegated to another person, even if the practitioner provided zero training, supervision, or evaluation."
+        },
+        {
+          "letter": "E",
+          "text": "A practitioner may rely on the work product of another person only if that other person is a licensed attorney or Certified Public Accountant who co-signs Form 2848."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "31-cfr-10-22",
+      "targetCitation": "31 CFR § 10.22(a)–(b) (Circular 230 — Diligence as to accuracy)",
+      "goldenQuote": "(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.22 (Diligence as to accuracy)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the general rule of due diligence in Circular 230 and the specific safe-harbor presumption for relying on the work product of others.",
+        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.22 and read paragraphs (a)(1)–(3) and (b).",
+        "Hint 3 (Trap Check): Notice that § 10.22(a) covers BOTH oral and written representations to the Treasury AND to clients, and § 10.22(b) creates a presumption of due diligence if the practitioner used reasonable care in engaging, supervising, training, and evaluating the other person."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.22(a), a practitioner must exercise due diligence in three domains: (1) preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to IRS matters; (2) determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and (3) determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the IRS. Under § 10.22(b), a practitioner will be presumed to have exercised due diligence when relying on the work product of another person provided the practitioner used reasonable care in engaging, supervising, training, and evaluating that person, taking proper account of the nature of the relationship between the practitioner and the person.",
+        "distractors": {
+          "A": "Incorrect because 31 CFR § 10.22(b) explicitly provides a due diligence presumption when a practitioner reasonably engages, supervises, trains, and evaluates the person whose work product is relied upon.",
+          "B": "CORRECT: Accurately sets forth the three due diligence domains of § 10.22(a) and the four-factor reasonable-care standard for relying on others under § 10.22(b).",
+          "C": "Incorrect because § 10.22(a)(2) and (3) explicitly apply to both oral AND written representations made to the Treasury and to clients.",
+          "D": "Incorrect because blind delegation without reasonable care in engaging, supervising, training, and evaluating the person forfeits the § 10.22(b) safe harbor.",
+          "E": "Incorrect because § 10.22(b) applies to reliance on the work product of 'another person' (including staff accountants or appraisers) when reasonable care is used, not solely co-signing attorneys or CPAs."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q28",
+      "number": 28,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Victor Alvarez proposes three fee arrangements to three different prospective clients:\n• Client A: A fee equal to 20% of the federal income tax refund shown on Client A's original Form 1040 individual income tax return that Alvarez will prepare and file;\n• Client B: A fee equal to 25% of any tax deficiency reduction achieved by Alvarez in representing Client B during an active IRS audit (examination) of Client B's prior-year original Form 1120 corporate return;\n• Client C: A fee equal to 30% of any abatement obtained on a claim for refund filed solely in connection with the determination of statutory interest and penalties assessed by the IRS.\n\nUnder Treasury Department Circular 230 (31 CFR § 10.27), which of these contingent fee arrangements are legally permissible and which are prohibited?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All three contingent fee arrangements (Client A, Client B, and Client C) are strictly prohibited because Circular 230 bans all percentage-based contingent fees in any matter before the IRS."
+        },
+        {
+          "letter": "B",
+          "text": "All three contingent fee arrangements are permissible provided each client signs a written fee agreement in advance."
+        },
+        {
+          "letter": "C",
+          "text": "The contingent fee for Client A is strictly PROHIBITED because a practitioner may never charge a contingent fee for preparing or filing an original tax return; however, the contingent fees for Client B (services rendered in connection with an IRS examination of, or challenge to, an original tax return) and Client C (a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties) are explicitly PERMITTED under § 10.27(b)(2) and (b)(3)."
+        },
+        {
+          "letter": "D",
+          "text": "Only the contingent fee for Client A (original tax return) is permitted, whereas contingent fees during IRS examinations (Client B) and penalty/interest claims (Client C) are prohibited."
+        },
+        {
+          "letter": "E",
+          "text": "Client A and Client B are prohibited, and contingent fees are allowed exclusively in U.S. Supreme Court litigation."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "31-cfr-10-27",
+      "targetCitation": "31 CFR § 10.27(b)(1)–(4) (Circular 230 — Fees)",
+      "goldenQuote": "(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.27 (Fees)",
+      "socraticHints": [
+        "Hint 1 (Concept): Circular 230 § 10.27 establishes a general prohibition against contingent fees (such as a percentage of a refund or taxes saved), followed by three specific exceptions.",
+        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.27 and examine paragraphs (b)(1), (b)(2), (b)(3), and (b)(4).",
+        "Hint 3 (Trap Check): Charging a percentage of a refund on an ORIGINAL tax return (Client A) is strictly prohibited under § 10.27(b)(1). However, contingent fees ARE permitted for an IRS examination/challenge to an original return (§ 10.27(b)(2) — Client B), a claim solely regarding statutory interest or penalties (§ 10.27(b)(3) — Client C), and judicial proceedings (§ 10.27(b)(4))."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.27(b)(1) and (c), a practitioner is strictly prohibited from charging a contingent fee (including a percentage of a tax refund or taxes saved) for preparing or filing an original tax return (Client A). However, § 10.27(b)(2)–(4) carves out three specific exceptions where contingent fees ARE permitted: (1) under § 10.27(b)(2), services rendered in connection with an IRS examination of, or challenge to, an original tax return (or an amended return/claim filed within 120 days of the taxpayer receiving written notice of the examination/challenge) (Client B); (2) under § 10.27(b)(3), a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the IRS (Client C); and (3) under § 10.27(b)(4), any judicial proceeding arising under the Internal Revenue Code.",
+        "distractors": {
+          "A": "Incorrect because § 10.27(b)(2)–(4) expressly permits contingent fees in IRS examinations/challenges, statutory interest/penalty refund claims, and judicial proceedings.",
+          "B": "Incorrect because a client's written agreement cannot waive the absolute prohibition in § 10.27(b)(1) against charging a contingent fee for preparing an original tax return.",
+          "C": "CORRECT: Client A (original Form 1040 return) is prohibited under § 10.27(b)(1), while Client B (IRS examination under § 10.27(b)(2)) and Client C (statutory interest/penalties under § 10.27(b)(3)) are permitted.",
+          "D": "Reverses the rule and exceptions of 31 CFR § 10.27(b).",
+          "E": "Incorrect because § 10.27(b)(2), (3), and (4) permit contingent fees in IRS examinations, penalty/interest claims, and any judicial proceeding under the IRC."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q29",
+      "number": 29,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Diana Cho is asked to represent two former business partners, Alex and Jordan, in an IRS audit concerning the allocation of partnership losses between them—a matter in which Alex's tax position is directly adverse to Jordan's tax position. Cho reasonably believes that she can provide competent and diligent representation to both Alex and Jordan, and the dual representation is not prohibited by law. Both Alex and Jordan orally agree to waive the conflict of interest during a meeting on June 1. Under Treasury Department Circular 230 (31 CFR § 10.29), what written confirmation deadline and record-retention period must Cho satisfy to represent both clients legally?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Oral informed consent witnessed by a notary public is sufficient under Circular 230, and no written confirmation or retention period is required."
+        },
+        {
+          "letter": "B",
+          "text": "Each affected client must waive the conflict of interest and give informed consent, confirmed in writing by each affected client within a reasonable period after the informed consent, but in no event later than 30 days; furthermore, copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients."
+        },
+        {
+          "letter": "C",
+          "text": "Written confirmation of informed consent must be signed by the IRS Revenue Agent within 60 days, and the practitioner must retain the consent for 12 months from the date the conflict was discovered."
+        },
+        {
+          "letter": "D",
+          "text": "A conflict of interest involving direct adversity between two taxpayers before the IRS can never be waived under any circumstances, even with written consent."
+        },
+        {
+          "letter": "E",
+          "text": "Each affected client must confirm informed consent in writing within 90 days, and the practitioner must retain the written consents for 5 years from the filing of the partnership return."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "31-cfr-10-29",
+      "targetCitation": "31 CFR § 10.29(a)–(c) (Circular 230 — Conflicting interests)",
+      "goldenQuote": "(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.29 (Conflicting interests)",
+      "socraticHints": [
+        "Hint 1 (Concept): Check the exact conditions under which a practitioner may represent clients despite a conflict of interest, focusing on the two numeric timeframes in § 10.29.",
+        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.29 and read paragraphs (b)(3) and (c).",
+        "Hint 3 (Trap Check): Memorize the 30-day / 36-month pair in § 10.29: informed consent must be confirmed in writing by EACH affected client within at most 30 days, and the practitioner must retain copies of the written consents for at least 36 months from the date of the CONCLUSION of the representation!"
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.29(a) and (b), when a conflict of interest exists, a practitioner may represent the affected clients ONLY if three cumulative conditions are met: (1) the practitioner reasonably believes they can provide competent and diligent representation to each affected client; (2) the representation is not prohibited by law; and (3) each affected client waives the conflict and gives informed consent, confirmed in writing by each affected client at the time the conflict is known (with the written confirmation made within a reasonable period after the informed consent, but in no event later than 30 days). Furthermore, under § 10.29(c), copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients and provided to any IRS officer or employee upon request.",
+        "distractors": {
+          "A": "Incorrect because § 10.29(b)(3) strictly requires informed consent to be confirmed in writing by each affected client within 30 days.",
+          "B": "CORRECT: States the exact 30-day maximum window for written confirmation by each affected client (§ 10.29(b)(3)) and the 36-month retention period after conclusion of the representation (§ 10.29(c)).",
+          "C": "Incorrect because the written consent is signed by each affected client (not the IRS Revenue Agent) within 30 days (not 60 days) and retained for 36 months after conclusion of the representation (not 12 months).",
+          "D": "Incorrect because § 10.29(b) explicitly permits waiving a conflict of interest when all three conditions in (b)(1)–(3) are satisfied.",
+          "E": "Incorrect because the written confirmation deadline is 30 days (not 90 days) and the retention period is 36 months (3 years) from the conclusion of the representation."
+        }
+      }
+    },
+    {
+      "id": "CBLE-Q30",
+      "number": 30,
+      "suite": "EA",
+      "track": "IRS-EA",
+      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 40,
+      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Marcus Vance is preparing an individual federal income tax return for a client who wants to claim an aggressive business deduction that is NOT a tax shelter or reportable transaction. After researching the Internal Revenue Code, Treasury regulations, and Tax Court precedent, Vance concludes that the deduction has approximately a 25% likelihood of being sustained on its merits—meaning it satisfies the 'Reasonable Basis' standard (~20% or higher) but falls short of 'Substantial Authority' (~40% or higher). In addition, the client hands Vance a handwritten summary of travel expenses that directly contradicts the client's bank statements. Under 31 CFR § 10.34(a), (c), and (d), under what conditions may Vance sign the return containing the deduction, and how must Vance handle the contradictory travel expense summary?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Vance may sign the return without disclosing the deduction because any non-frivolous position (>5% likelihood) is permissible without disclosure, and Vance may accept the client's handwritten travel summary without inquiry because preparers never verify client data."
+        },
+        {
+          "letter": "B",
+          "text": "Vance may sign the return containing the deduction ONLY if the position is adequately disclosed to the IRS (e.g., on Form 8275) because it has a Reasonable Basis (~25%) rather than Substantial Authority (~40%), must inform the client of potential penalties and the opportunity to avoid them through disclosure, and MUST make reasonable inquiries regarding the travel expenses because a practitioner may not ignore client-furnished information that appears incorrect, inconsistent, or incomplete."
+        },
+        {
+          "letter": "C",
+          "text": "Vance is strictly prohibited from signing the return even with Form 8275 disclosure because every position on a tax return must meet the 'More Likely Than Not' (>50%) standard."
+        },
+        {
+          "letter": "D",
+          "text": "Vance may sign the return without disclosure if the client signs a hold-harmless waiver, but Vance must independently audit every single canceled check and receipt for all categories on the tax return."
+        },
+        {
+          "letter": "E",
+          "text": "Vance must require a 75% certainty level before signing any tax return and must report the contradictory travel summary to the IRS Office of Professional Responsibility."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "31-cfr-10-34",
+      "targetCitation": "31 CFR § 10.34(a), (c) & (d) (Circular 230 — Tax Return Standards)",
+      "goldenQuote": "The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete.",
+      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.34 (Standards with respect to tax returns and documents)",
+      "socraticHints": [
+        "Hint 1 (Concept): Distinguish the confidence threshold required for an UNDISCLOSED tax position ('Substantial Authority') versus an ADEQUATELY DISCLOSED non-tax-shelter position ('Reasonable Basis'), and check the rule on client-furnished information.",
+        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.34 and read paragraphs (a)(1)-(2), (c), and (d).",
+        "Hint 3 (Trap Check): A non-tax-shelter position with a Reasonable Basis (~25%) can be signed ONLY if adequately disclosed (Form 8275). And under § 10.34(d), while a practitioner generally relies in good faith on client information without audit, the practitioner MUST make reasonable inquiries when the information appears incorrect, inconsistent, or incomplete."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.34(a) (incorporating IRC § 6694(a)(2)), a practitioner may not sign a tax return containing a non-tax-shelter position unless it either (1) has 'Substantial Authority' (~40% or greater likelihood of being sustained) if undisclosed, OR (2) has at least a 'Reasonable Basis' (~20% or greater likelihood) AND is adequately disclosed to the IRS on Form 8275 (or Form 8275-R). Since the position has a ~25% likelihood, it satisfies Reasonable Basis and may be signed only if adequately disclosed. Under § 10.34(c), Vance must also inform the client of potential penalties and the opportunity to avoid them through disclosure. Finally, under § 10.34(d), although a practitioner may generally rely in good faith without verification on client-furnished information, the practitioner may NOT ignore the implications of information known to the practitioner and MUST make reasonable inquiries when the furnished information appears incorrect, inconsistent with other facts, or incomplete.",
+        "distractors": {
+          "A": "Incorrect because an undisclosed position requires Substantial Authority (~40%), a mere 'non-frivolous' standard was replaced by 'Reasonable Basis' for disclosed positions, and § 10.34(d) prohibits ignoring contradictory client data.",
+          "B": "CORRECT: Accurately applies the Reasonable Basis + Adequate Disclosure (Form 8275) standard under § 10.34(a), the penalty disclosure rule under § 10.34(c), and the duty of reasonable inquiry for inconsistent client data under § 10.34(d).",
+          "C": "Incorrect because the 'More Likely Than Not' (>50%) standard applies only to tax shelters and reportable transactions, not ordinary business deductions.",
+          "D": "Incorrect because a client waiver cannot override Circular 230 § 10.34 standards, and § 10.34(d) does not require auditing unimpeached client figures that appear consistent and complete.",
+          "E": "Incorrect because neither a 75% certainty threshold nor reporting a client to OPR exists under Circular 230 § 10.34."
+        }
+      }
+    }
+  ]
+};
 
   if (typeof window !== "undefined") {
     window.CODEDRILL_DATA = CODEDRILL_DATA;

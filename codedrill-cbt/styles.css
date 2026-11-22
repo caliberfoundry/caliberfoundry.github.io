@@ -3804,6 +3804,326 @@ mark.ecfr-search-highlight {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* ==========================================================================
+   PRINTABLE B2B TEAM READINESS & CITATION LATENCY DOSSIER MODAL + @media print
+   ========================================================================== */
+.an-hero-actions {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.an-btn-export-b2b {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cf-navy-authority);
+  color: var(--cf-ink-on-dark);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px var(--cf-rule-strong);
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.08s ease;
+}
+
+.an-btn-export-b2b:hover {
+  background: #142847;
+}
+
+.an-btn-export-b2b:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--cf-rule-strong);
+}
+
+.pricing-b2b-btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pricing-b2b-report-link {
+  background: var(--cf-bg-paper);
+  color: var(--cf-ink-primary);
+  border: 1px solid var(--cf-rule-strong);
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.pricing-b2b-report-link:hover {
+  background: var(--cf-bg-stone);
+}
+
+.b2b-readiness-modal-window {
+  width: min(1040px, 95vw);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.b2b-report-printable-sheet {
+  background: var(--cf-bg-surface);
+  color: var(--cf-ink-primary);
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.b2b-dossier-header {
+  background: var(--cf-bg-paper);
+  border: 1.5px solid var(--cf-rule-strong);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.b2b-dossier-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.b2b-dossier-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--cf-accent-primary);
+  text-transform: uppercase;
+}
+
+.b2b-dossier-mode-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--cf-navy-tint);
+  color: var(--cf-navy-authority);
+  border: 1px solid var(--cf-navy-authority);
+}
+
+.b2b-dossier-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--cf-ink-primary);
+}
+
+.b2b-dossier-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--cf-rule-mid);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--cf-ink-secondary);
+}
+
+.b2b-dossier-meta-grid strong {
+  color: var(--cf-ink-primary);
+}
+
+.b2b-report-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.b2b-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border-bottom: 1.5px solid var(--cf-rule-strong);
+  padding-bottom: 4px;
+}
+
+.b2b-section-num {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--cf-accent-primary);
+  letter-spacing: 0.05em;
+}
+
+.b2b-section-title {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cf-ink-primary);
+}
+
+.b2b-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.b2b-kpi-box {
+  background: var(--cf-bg-paper);
+  border: 1px solid var(--cf-rule-strong);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.b2b-kpi-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cf-ink-muted);
+}
+
+.b2b-kpi-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cf-ink-primary);
+}
+
+.b2b-kpi-sub {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--cf-ink-secondary);
+}
+
+.b2b-verdict-pass {
+  color: var(--cf-forest-pass);
+}
+
+.b2b-verdict-warn {
+  color: var(--cf-accent-primary);
+}
+
+.b2b-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--cf-rule-strong);
+}
+
+.b2b-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+  background: var(--cf-bg-surface);
+}
+
+.b2b-report-table th,
+.b2b-report-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--cf-rule-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+
+.b2b-report-table th {
+  background: var(--cf-bg-stone);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--cf-ink-primary);
+  border-bottom: 1px solid var(--cf-rule-strong);
+}
+
+.b2b-report-table td {
+  font-family: var(--font-sans);
+  color: var(--cf-ink-primary);
+}
+
+.b2b-mono-cell {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.b2b-status-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+}
+
+.b2b-status-chip.chip-pass {
+  background: var(--cf-forest-tint);
+  color: var(--cf-forest-pass);
+}
+
+.b2b-status-chip.chip-warn {
+  background: var(--cf-accent-tint);
+  color: var(--cf-accent-primary);
+}
+
+.b2b-report-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.b2b-footer-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #modalTeamReadinessReport,
+  #modalTeamReadinessReport * {
+    visibility: visible;
+  }
+  #modalTeamReadinessReport {
+    position: absolute;
+    inset: 0;
+    background: #FFFFFF !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  .b2b-readiness-modal-window {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .b2b-report-printable-sheet {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1550px) {
   .cd-telemetry-pill,
