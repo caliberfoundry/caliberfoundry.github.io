@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Assessment &amp; SCORM Studio — Case Study &amp; Architecture | Caliber Foundry</title>
+  <link rel="canonical" href="https://caliberfoundry.com/work/edtech-studio.html" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    :root {
+      --cf-bg-paper: #F6F4EF; --cf-bg-stone: #ECE9E1; --cf-bg-surface: #FFFFFF; --cf-bg-ink-panel: #141413;
+      --cf-ink-primary: #141413; --cf-ink-secondary: #4A4842; --cf-ink-muted: #78756D; --cf-ink-on-dark: #F6F4EF;
+      --cf-rule-strong: #141413; --cf-rule-mid: #D6D1C7; --cf-rule-subtle: #E4E0D7;
+      --cf-accent-primary: #C8431F; --cf-accent-hover: #A63415; --cf-forest-pass: #1A5638;
+      --font-display: 'Instrument Serif', Georgia, serif; --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
+    .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
+    .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
+    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
+    .brand-name { font-family: var(--font-display); font-size: 22px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none; background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong); }
+    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 56px 32px 80px; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); margin-bottom: 24px; display: block; text-decoration: none; }
+    .breadcrumb:hover { color: var(--cf-accent-primary); }
+    .title { font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); font-weight: 400; line-height: 1.06; margin-bottom: 18px; }
+    .lede { font-family: var(--font-serif); font-size: 20px; color: var(--cf-ink-secondary); max-width: 62ch; margin-bottom: 32px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
+    @media (min-width: 820px) { .grid-2 { grid-template-columns: 3fr 2fr; } }
+    .panel { background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 32px; }
+    .panel-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; margin-bottom: 16px; }
+    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--cf-ink-secondary); }
+    .spec-list strong { color: var(--cf-ink-primary); }
+    .spec-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
+    .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--cf-rule-subtle); }
+    .spec-table td:first-child { color: var(--cf-ink-muted); }
+    .spec-table td:last-child { text-align: right; font-weight: 600; }
+    .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
+      <div style="display:flex; gap:12px;">
+        <a href="../edtech-studio/" class="btn btn-primary"><span>Launch Live Studio</span><span>&rarr;</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
+    <h1 class="title">Clinical Assessment &amp; Certification SCORM Studio</h1>
+    <p class="lede">
+      Dual-mode educational and clinical reasoning platform combining transparent multi-source decision trees with in-browser student privacy protection and one-click LMS packaging.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:14px;">
+      <a href="../edtech-studio/" class="btn btn-primary"><span>Open Interactive Assessment Studio</span><span>&rarr;</span></a>
+      <a href="mailto:engineering@caliberfoundry.com?subject=EdTech%20Platform%20Inquiry" class="btn"><span>Discuss Your Training Project</span><span>&nearr;</span></a>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <h2 class="panel-title">Business &amp; Technical Capabilities</h2>
+        <ul class="spec-list">
+          <li><strong>01. Transparent Multi-Source Decision Matrix:</strong> Evaluates 4 structured evidence streams through explicit rule gates, producing an auditable reasoning trace.</li>
+          <li><strong>02. Privacy-by-Design (FERPA Zero-PII):</strong> Encrypts and tokenizes student identifiers locally in the browser using native WebCrypto AES-256-GCM before any export.</li>
+          <li><strong>03. One-Click LMS &amp; SCORM 1.2 Export:</strong> Packages interactive lessons, distractor-aware quizzes, and grading telemetry directly into standard LMS manifests for Moodle, Canvas, and Open edX.</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Technical Specifications</h2>
+        <table class="spec-table">
+          <tr><td>PRIVACY ENGINE</td><td>WebCrypto AES-256-GCM + SHA-256</td></tr>
+          <tr><td>LMS COMPATIBILITY</td><td>ADL SCORM 1.2 / xAPI / Moodle</td></tr>
+          <tr><td>DECISION LOGIC</td><td>4-Gate Deterministic Rule Matrix</td></tr>
+          <tr><td>CLIENT ENGINE</td><td><a href="../edtech-studio/scorm_and_ttl_engine.js" rel="noopener noreferrer" target="_blank">scorm_and_ttl_engine.js &nearr;</a></td></tr>
+          <tr><td>MANIFEST PACKAGER</td><td><a href="../edtech-studio/imsmanifest_generator.py" rel="noopener noreferrer" target="_blank">imsmanifest_generator.py &nearr;</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Caliber Foundry</span>
+    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary); text-decoration:none;">engineering@caliberfoundry.com</a>
+  </footer>
+</body>
+</html>
