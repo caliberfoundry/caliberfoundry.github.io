@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>ContentForge™ — Multi-Format B2B, EdTech &amp; Technical Content Generation Studio | Caliber Foundry</title>
+  <meta name="description" content="Citation-locked B2B technical content generation, Ground-Truth Document Extraction Evaluation Harness (0.0% Hallucination Gate), n8n/Make.com JSON Webhook automation, and EdTech SCORM 1.2 quiz studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       BAR 1 (40px): PRIMARY APPLICATION HEADER BAR
+       ===================================================================== -->
+  <header class="cf-global-header" role="banner">
+    <div class="cf-brand-cluster">
+      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
+      <span class="cf-brand-sep" aria-hidden="true">/</span>
+      <div class="cf-logo-mark" aria-hidden="true">CF</div>
+      <div class="cf-brand-titles">
+        <span class="cf-brand-name">ContentForge<span class="cf-tm">™</span></span>
+        <span class="cf-brand-sub">Citation-Locked Content &amp; Evaluation Studio</span>
+      </div>
+    </div>
+
+    <!-- 4 Industry & Engineering Pipeline Presets Selector -->
+    <div class="cf-preset-selector-wrap">
+      <label for="presetSelect" class="cf-preset-label">Pipeline Preset:</label>
+      <select id="presetSelect" class="cf-preset-select" aria-label="Select Content and Evaluation Pipeline Preset">
+        <option value="n8n-pipeline">Preset 1: n8n / Make.com Multi-Format Content &amp; Webhook Pipeline (FREE)</option>
+        <option value="eval-harness">Preset 2: Multi-Document Extraction &amp; 0.0% Hallucination Evaluation Harness (FREE)</option>
+        <option value="edtech-courseware">Preset 3: EdTech SCORM 1.2, Psychometric Case Study &amp; Curriculum Engine · PRO</option>
+        <option value="fintech-monograph">Preset 4: B2B FinTech &amp; Systems Architecture Monograph &amp; Video Storyboard · PRO</option>
+      </select>
+    </div>
+
+    <!-- Right Status, Account & Licensing Cluster -->
+    <div class="cf-account-cluster" id="headerAccountCluster">
+      <span class="cf-gate-pill" id="headerGateBadge">0.0% Hallucination Gate</span>
+      <span class="cf-license-pill" id="headerLicenseBadge">Free Studio (2/4 Presets)</span>
+      <span class="cf-user-email-pill hidden" id="headerUserEmailBadge"></span>
+      <button type="button" class="cf-header-btn" id="btnHeaderSignIn">Sign In</button>
+      <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Unlock Custom Pipeline ($2,500)</button>
+      <button type="button" class="cf-header-btn cf-btn-reset" id="btnResetStudio" title="Reset studio session to clean default state">Reset</button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       BAR 2 (38px): WORKSPACE TELEMETRY & ACTION BAR
+       ===================================================================== -->
+  <section class="cf-action-toolbar" aria-label="Pipeline Telemetry and Execution Controls">
+    <div class="cf-toolbar-left">
+      <span class="cf-preset-code-badge" id="activePresetCodeBadge">PIPE-N8N-01</span>
+      <span class="cf-active-pipeline-name" id="activePresetTitleBar">n8n / Make.com Multi-Format Content &amp; Webhook Automation</span>
+
+      <div class="cf-telemetry-strip" aria-label="Real-Time Verification Metrics">
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Hallucination:</span>
+          <strong class="cf-metric-val val-pass" id="metricHallucination">0.0%</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Span F1:</span>
+          <strong class="cf-metric-val" id="metricPrecision">99.4%</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Latency:</span>
+          <strong class="cf-metric-val" id="metricLatency">1.38s</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Unit Cost:</span>
+          <strong class="cf-metric-val" id="metricCost">$0.014/run</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="cf-toolbar-right">
+      <!-- Quiet Tier-3 Utility Buttons -->
+      <button type="button" class="cf-tool-btn" id="btnLoadSampleSource" title="Restore canonical source excerpt and schema for active preset">
+        Restore Preset Source
+      </button>
+      <button type="button" class="cf-tool-btn" id="btnExportJsonPayload" title="Copy structured n8n / Make.com JSON payload to clipboard">
+        Copy JSON Payload
+      </button>
+      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable Ground-Truth Evaluation &amp; Content Dossier (PDF)">
+        Printable Evaluation Dossier (PDF)
+      </button>
+
+      <!-- Sole Tier-1 Primary CTA -->
+      <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">
+        Run Content &amp; Verification Pipeline →
+      </button>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       MAIN SPLIT-SCREEN WORKBENCH (0.92fr LEFT | 1.08fr RIGHT)
+       ===================================================================== -->
+  <main class="cf-split-workbench" id="cfMainWorkbench">
+
+    <!-- ===================================================================
+         LEFT PANEL: 5-STAGE PIPELINE GRAPH, SOURCE CORPUS, SCHEMA & WEBHOOK
+         =================================================================== -->
+    <section class="cf-left-pane" aria-label="Source Corpus, Pipeline Graph and Webhook Controls">
+      <div class="cf-left-scroll">
+
+        <!-- 1. 5-Stage Deterministic Pipeline Execution Graph -->
+        <div class="cf-card-block">
+          <div class="cf-block-header">
+            <div>
+              <span class="cf-block-kicker">STAGE EXECUTION TOPOLOGY</span>
+              <h2 class="cf-block-title">5-Stage Citation-Locked Synthesis &amp; Verification DAG</h2>
+            </div>
+            <span class="cf-block-tag" id="pipelineRunStatusBadge">5/5 STAGES VERIFIED</span>
+          </div>
+          <div class="cf-pipeline-stages-grid" id="pipelineStagesList">
+            <!-- Populated dynamically in app.js -->
+          </div>
+        </div>
+
+        <!-- 2. Editable Source Document & Technical Corpus Excerpt -->
+        <div class="cf-card-block">
+          <div class="cf-block-header">
+            <div>
+              <span class="cf-block-kicker">INGESTION INPUT · GROUND-TRUTH CORPUS</span>
+              <h2 class="cf-block-title">Source Document &amp; Technical Corpus Excerpt</h2>
+            </div>
+            <span class="cf-block-tag" id="sourceCharCountBadge">0 chars · 0 anchors</span>
+          </div>
+
+          <div class="cf-field-group">
+            <label for="sourceTitleInput" class="cf-field-label">Document / Specification Title &amp; Corpus ID</label>
+            <input
+              type="text"
+              id="sourceTitleInput"
+              class="cf-text-input"
+              value=""
+              placeholder="Enter source specification title or regulatory packet..."
+            />
+          </div>
+
+          <div class="cf-field-group">
+            <label for="sourceTextInput" class="cf-field-label">
+              Raw Source Excerpt (Include <code>[Clause X.Y]</code> or <code>[Doc-N, p. M]</code> anchors for deterministic extraction)
+            </label>
+            <textarea
+              id="sourceTextInput"
+              class="cf-textarea cf-source-textarea"
+              rows="6"
+              placeholder="Paste technical specification, regulatory statute, or financial audit excerpt..."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 3. Editable Structured Output Schema & Prompt Contract -->
+        <div class="cf-card-block">
+          <div class="cf-block-header">
+            <div>
+              <span class="cf-block-kicker">DETERMINISTIC EXTRACTION CONTRACT</span>
+              <h2 class="cf-block-title">Structured JSON Schema &amp; Citation Guardrails</h2>
+            </div>
+            <span class="cf-block-tag">STRICT JSON SCHEMA</span>
+          </div>
+          <div class="cf-field-group">
+            <label for="schemaTemplateInput" class="cf-field-label">JSON Output Contract &amp; Verification Rules</label>
+            <textarea
+              id="schemaTemplateInput"
+              class="cf-textarea cf-schema-textarea"
+              rows="5"
+              aria-label="Structured Output Schema and Prompt Contract"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 4. Interactive n8n / Make.com Webhook Dispatcher -->
+        <div class="cf-card-block">
+          <div class="cf-block-header">
+            <div>
+              <span class="cf-block-kicker">AUTOMATION BUS · N8N / MAKE.COM / REST API</span>
+              <h2 class="cf-block-title">Live Webhook Dispatcher &amp; Cryptographic Receipt</h2>
+            </div>
+            <span class="cf-block-tag" id="webhookHeaderPill">HMAC-SHA256 SIGNED</span>
+          </div>
+
+          <div class="cf-webhook-bar">
+            <input
+              type="text"
+              id="webhookUrlInput"
+              class="cf-text-input cf-webhook-input"
+              value="https://hooks.n8n.cloud/webhook/caliberfoundry-contentforge-v2"
+              aria-label="Webhook Target Endpoint URL"
+            />
+            <button type="button" class="cf-btn-dispatch" id="btnFireWebhook">
+              Dispatch Webhook POST →
+            </button>
+          </div>
+
+          <div class="cf-webhook-status-box" id="webhookStatusBox">
+            Ready to dispatch structured multi-format payload. Click “Dispatch Webhook POST” to verify endpoint delivery and SHA-256 signature.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         RIGHT PANEL: MULTI-FORMAT OUTPUT & EVALUATION HARNESS (4 TABS)
+         =================================================================== -->
+    <section class="cf-right-pane" aria-label="Multi-Format Output and Evaluation Harness Inspector">
+
+      <!-- 4 Concise Inspector Tabs (Law 3) -->
+      <nav class="cf-output-tabs" role="tablist" aria-label="Output Format and Verification Views">
+        <button type="button" class="cf-out-tab active" data-tab="monograph" id="tabRightMonograph">
+          1. Monograph &amp; SVG Brief
+        </button>
+        <button type="button" class="cf-out-tab" data-tab="eval" id="tabRightEval">
+          2. Evaluation Harness (0.0% Hallucination)
+        </button>
+        <button type="button" class="cf-out-tab" data-tab="webhook" id="tabRightWebhook">
+          3. n8n JSON &amp; EdTech Quiz/SCORM
+        </button>
+        <button type="button" class="cf-out-tab" data-tab="storyboard" id="tabRightStoryboard">
+          4. Social Thread &amp; Video Storyboard
+        </button>
+      </nav>
+
+      <div class="cf-right-scroll">
+
+        <!-- ===============================================================
+             TAB 1: EDITORIAL MONOGRAPH & VECTOR SVG ARCHITECTURE BRIEF
+             =============================================================== -->
+        <div class="cf-tab-panel" id="panelRightMonograph">
+          <article class="cf-monograph-sheet">
+            <header class="cf-monograph-header">
+              <div class="cf-monograph-top-row">
+                <span class="cf-monograph-kicker" id="monographKicker">TECHNICAL ARCHITECTURE MONOGRAPH</span>
+                <button type="button" class="cf-btn-mini" id="btnCopyMonographMarkdown">Copy Markdown Article</button>
+              </div>
+              <h1 class="cf-monograph-title" id="monographTitle">Multi-Format Technical Monograph</h1>
+              <div class="cf-monograph-meta" id="monographMetaStrip">
+                <!-- Populated dynamically -->
+              </div>
+            </header>
+
+            <!-- Embedded Vector SVG Pipeline Architecture Blueprint -->
+            <div class="cf-svg-blueprint-card">
+              <div class="cf-svg-blueprint-bar">
+                <span>VECTOR ARCHITECTURE DIAGRAM · DETERMINISTIC CITATION &amp; CONTENT PIPELINE</span>
+                <span id="svgBlueprintCodeLabel">FIG. CF-2026-01</span>
+              </div>
+              <div class="cf-svg-canvas" id="svgArchitectureContainer">
+                <!-- Populated dynamically with pure inline vector SVG -->
+              </div>
+            </div>
+
+            <!-- Editorial Monograph Body (Newsreader 16.5px with Citation Badges) -->
+            <div class="cf-monograph-body" id="monographBodyContainer">
+              <!-- Populated dynamically -->
+            </div>
+
+            <!-- Executive Takeaways Box -->
+            <div class="cf-takeaways-box">
+              <div class="cf-takeaways-title">KEY ARCHITECTURAL &amp; COMPLIANCE TAKEAWAYS (CITATION-LOCKED)</div>
+              <ul class="cf-takeaways-list" id="monographTakeawaysList">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- ===============================================================
+             TAB 2: EVALUATION HARNESS (GROUND-TRUTH SPAN VS. EXTRACTED CLAIM)
+             =============================================================== -->
+        <div class="cf-tab-panel hidden" id="panelRightEval">
+          <div class="cf-eval-header-card">
+            <div class="cf-eval-header-top">
+              <div>
+                <span class="cf-block-kicker">GROUND-TRUTH EXTRACTION EVALUATION HARNESS (PLAN-26 BENCHMARK)</span>
+                <h2 class="cf-eval-heading">Ground-Truth Document Span vs. Extracted Claim Evaluation Matrix</h2>
+              </div>
+              <div class="cf-eval-controls">
+                <select id="evalFilterSelect" class="cf-filter-select" aria-label="Filter Evaluation Cases">
+                  <option value="ALL">All Evaluation Claims</option>
+                  <option value="EXACT">Exact Span Match (F1 &gt;= 0.98)</option>
+                  <option value="NUMERIC">Numeric &amp; Regulatory Threshold Claims</option>
+                </select>
+                <button type="button" class="cf-btn-mini cf-btn-mini-navy" id="btnPrintEvalDossier">
+                  Print / Save Evaluation Dossier (PDF)
+                </button>
+              </div>
+            </div>
+            <div class="cf-eval-summary-strip" id="evalSummaryStrip">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div class="cf-table-container">
+            <table class="cf-data-table" id="evalMatrixTable">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Source Anchor</th>
+                  <th>Ground-Truth Span</th>
+                  <th>Generated Claim</th>
+                  <th>Match / F1</th>
+                  <th>Latency / Cost</th>
+                  <th>Verdict</th>
+                </tr>
+              </thead>
+              <tbody id="evalMatrixTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 3: N8N / MAKE.COM JSON PAYLOAD & EDTECH QUIZ / SCORM ITEM
+             =============================================================== -->
+        <div class="cf-tab-panel hidden" id="panelRightWebhook">
+          <!-- Top: Structured n8n / Make.com JSON Payload -->
+          <div class="cf-json-inspector-card">
+            <div class="cf-json-header">
+              <div>
+                <span class="cf-block-kicker">N8N / MAKE.COM AUTOMATION PAYLOAD (PLAN-25 CONTRACT)</span>
+                <h2 class="cf-block-title">Structured Multi-Channel Webhook JSON Envelope</h2>
+              </div>
+              <div class="cf-json-actions">
+                <button type="button" class="cf-btn-mini" id="btnCopyWebhookJson">Copy n8n JSON</button>
+                <button type="button" class="cf-btn-mini cf-btn-mini-pine" id="btnDispatchFromTab">Dispatch Webhook POST →</button>
+              </div>
+            </div>
+            <pre class="cf-json-pre" id="webhookJsonPre"></pre>
+          </div>
+
+          <!-- Bottom: Interactive 5-Option (A-E) EdTech Psychometric Assessment & SCORM 1.2 Item -->
+          <div class="cf-quiz-card" id="edtechQuizContainer">
+            <!-- Populated dynamically with interactive A-E options, Check Answer button, Golden Quote & Distractor Rationale -->
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 4: SOCIAL THREAD (6 CARDS) & 60FPS VIDEO STORYBOARD
+             =============================================================== -->
+        <div class="cf-tab-panel hidden" id="panelRightStoryboard">
+          <div class="cf-thread-section">
+            <div class="cf-section-bar">
+              <div>
+                <span class="cf-block-kicker">MULTI-CHANNEL DISTRIBUTION · X / LINKEDIN TECHNICAL THREAD</span>
+                <h2 class="cf-block-title">6-Post Citation-Verified Social Distribution Thread</h2>
+              </div>
+              <button type="button" class="cf-btn-mini" id="btnCopySocialThread">Copy Full Social Thread</button>
+            </div>
+            <div class="cf-social-thread-grid" id="socialThreadGrid">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div class="cf-storyboard-section">
+            <div class="cf-section-bar">
+              <div>
+                <span class="cf-block-kicker">60FPS REMOTION WALKTHROUGH &amp; TECHNICAL VIDEO SCRIPT</span>
+                <h2 class="cf-block-title">Scene-by-Scene Video Storyboard &amp; Citation Overlay Timing</h2>
+              </div>
+              <span class="cf-block-tag">1920×1080 · 60 FPS</span>
+            </div>
+            <div class="cf-table-container">
+              <table class="cf-data-table" id="videoStoryboardTable">
+                <thead>
+                  <tr>
+                    <th>Scene / Timecode</th>
+                    <th>Visual Frame &amp; Vector Layer</th>
+                    <th>Narration &amp; Data Callout</th>
+                    <th>Citation Anchor</th>
+                  </tr>
+                </thead>
+                <tbody id="videoStoryboardTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODAL 1: PRINTABLE GROUND-TRUTH EVALUATION & CONTENT DOSSIER (#modalEvalDossier)
+       ===================================================================== -->
+  <div class="cf-modal-backdrop hidden" id="modalEvalDossier" role="dialog" aria-modal="true" aria-labelledby="evalDossierModalTitle">
+    <div class="cf-modal-window cf-dossier-modal-window">
+      <div class="cf-modal-header no-print">
+        <div class="cf-modal-title-row">
+          <span class="cf-modal-mark">§</span>
+          <h2 id="evalDossierModalTitle">Printable Ground-Truth Extraction Evaluation &amp; Content Dossier (PDF)</h2>
+        </div>
+        <button type="button" class="cf-modal-close" id="btnCloseEvalDossierModal" aria-label="Close Evaluation Dossier">×</button>
+      </div>
+
+      <div class="cf-modal-body cf-printable-dossier-body" id="evalDossierPrintableBody">
+        <!-- Populated dynamically in app.js -->
+      </div>
+
+      <div class="cf-modal-footer no-print">
+        <button type="button" class="cf-btn-secondary" id="btnCloseEvalDossierFooter">Return to Workbench</button>
+        <div class="cf-modal-footer-right">
+          <button type="button" class="cf-btn-secondary" id="btnTriggerPrintDossier">
+            Print / Save Official Evaluation Dossier PDF
+          </button>
+          <button type="button" class="cf-btn-primary" id="btnUnlockFromDossier">
+            Deploy Custom Pipeline Sprint ($2,500 / $3,000) →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: COMMERCIAL PAYWALL, ACCOUNT & ENTERPRISE CHECKOUT (#modalPaywall)
+       ===================================================================== -->
+  <div class="cf-modal-backdrop hidden" id="modalPaywall" role="dialog" aria-modal="true" aria-labelledby="paywallModalTitle">
+    <div class="cf-modal-window cf-paywall-modal-window">
+      <div class="cf-modal-header">
+        <div class="cf-modal-title-row">
+          <span class="cf-modal-mark">§</span>
+          <h2 id="paywallModalTitle">ContentForge™ Production Pipeline &amp; Enterprise Licensing</h2>
+        </div>
+        <button type="button" class="cf-modal-close" id="btnClosePaywallModal" aria-label="Close Licensing Modal">×</button>
+      </div>
+
+      <div class="cf-modal-body">
+        <!-- Paywall Trigger Callout -->
+        <div class="cf-paywall-banner hidden" id="paywallReasonBanner">
+          <strong>Enterprise Preset or Custom Pipeline Gate Reached.</strong>
+          <span id="paywallReasonText">Activate a ContentForge™ Pro License or commission a turnkey n8n / Evaluation Harness sprint to unlock all 4 presets and unlimited webhook dispatches.</span>
+        </div>
+
+        <!-- 3-Tier Commercial Package Selector -->
+        <div class="cf-plan-grid" id="paywallPlanGrid">
+          <label class="cf-plan-card selected" data-plan-code="N8N_SPRINT">
+            <input type="radio" name="cfPlanChoice" value="N8N_SPRINT" checked />
+            <div class="cf-plan-card-body">
+              <div class="cf-plan-top">
+                <strong>n8n &amp; Content Automation Sprint</strong>
+                <span class="cf-plan-price">$3,000 Fixed</span>
+              </div>
+              <p class="cf-plan-desc">Turnkey n8n / Make.com multi-format content generation pipeline, custom JSON schema contracts, and webhook delivery.</p>
+            </div>
+          </label>
+
+          <label class="cf-plan-card" data-plan-code="EVAL_HARNESS">
+            <input type="radio" name="cfPlanChoice" value="EVAL_HARNESS" />
+            <div class="cf-plan-card-body">
+              <div class="cf-plan-top">
+                <strong>Document Extraction &amp; Evaluation Harness</strong>
+                <span class="cf-plan-price">$4,500 Sprint</span>
+              </div>
+              <p class="cf-plan-desc">Multi-document extraction pipeline with Ground-Truth Span vs. Claim Evaluation Matrix, F1 benchmark suite, and 0.0% hallucination gate.</p>
+            </div>
+          </label>
+
+          <label class="cf-plan-card" data-plan-code="ENTERPRISE_SUB">
+            <input type="radio" name="cfPlanChoice" value="ENTERPRISE_SUB" />
+            <div class="cf-plan-card-body">
+              <div class="cf-plan-top">
+                <strong>Enterprise Multi-Channel Content Engine</strong>
+                <span class="cf-plan-price">$799 / month</span>
+              </div>
+              <p class="cf-plan-desc">Unlimited access to all 4 presets, EdTech SCORM 1.2 quiz packager, Remotion storyboard generator, and dedicated SLA.</p>
+            </div>
+          </label>
+        </div>
+
+        <!-- 3 Payment & Activation Methods -->
+        <div class="cf-pay-tabs" role="tablist">
+          <button type="button" class="cf-pay-tab active" data-pay-tab="card" id="tabPayCard">
+            1. Instant Card &amp; Account Activation
+          </button>
+          <button type="button" class="cf-pay-tab" data-pay-tab="invoice" id="tabPayInvoice">
+            2. Corporate Invoice &amp; PO (INV-CF-CS-2026)
+          </button>
+          <button type="button" class="cf-pay-tab" data-pay-tab="key" id="tabPayKey">
+            3. Activate License Key
+          </button>
+        </div>
+
+        <!-- Method 1: Card & Account Registration -->
+        <div class="cf-pay-panel" id="payPanelCard">
+          <form id="cfCardCheckoutForm" class="cf-checkout-form">
+            <div class="cf-two-col">
+              <div class="cf-field-group">
+                <label for="checkoutNameInput" class="cf-field-label">Full Name / Engineering Lead</label>
+                <input type="text" id="checkoutNameInput" class="cf-text-input" required placeholder="Alex Mercer" value="Alex Mercer" />
+              </div>
+              <div class="cf-field-group">
+                <label for="checkoutEmailInput" class="cf-field-label">Corporate Email</label>
+                <input type="email" id="checkoutEmailInput" class="cf-text-input" required placeholder="a.mercer@enterprise-ops.io" value="a.mercer@enterprise-ops.io" />
+              </div>
+            </div>
+            <div class="cf-two-col">
+              <div class="cf-field-group">
+                <label for="checkoutOrgInput" class="cf-field-label">Company / Organization</label>
+                <input type="text" id="checkoutOrgInput" class="cf-text-input" required placeholder="Apex Automation Systems Inc." value="Apex Automation Systems Inc." />
+              </div>
+              <div class="cf-field-group">
+                <label for="checkoutCardInput" class="cf-field-label">Corporate Card Number</label>
+                <input type="text" id="checkoutCardInput" class="cf-text-input" required value="4242 •••• •••• 4242" />
+              </div>
+            </div>
+            <button type="submit" class="cf-btn-primary cf-btn-full" id="btnSubmitCardCheckout">
+              Complete Checkout &amp; Activate Enterprise License →
+            </button>
+          </form>
+        </div>
+
+        <!-- Method 2: Corporate Invoice Generator (INV-CF-CS-2026-XXXX) -->
+        <div class="cf-pay-panel hidden" id="payPanelInvoice">
+          <div class="cf-checkout-form">
+            <div class="cf-two-col">
+              <div class="cf-field-group">
+                <label for="invoiceOrgInput" class="cf-field-label">Legal Entity Name</label>
+                <input type="text" id="invoiceOrgInput" class="cf-text-input" value="Helmsted Enterprise Systems LLC" />
+              </div>
+              <div class="cf-field-group">
+                <label for="invoicePoInput" class="cf-field-label">Purchase Order Reference</label>
+                <input type="text" id="invoicePoInput" class="cf-text-input" value="PO-2026-8841" />
+              </div>
+            </div>
+            <div class="cf-invoice-actions-top">
+              <button type="button" class="cf-btn-secondary" id="btnGenerateCorporateInvoice">
+                Generate Official Invoice &amp; 14-Day Provisional PRO Unlock
+              </button>
+              <button type="button" class="cf-btn-secondary" id="btnPrintCorporateInvoice">
+                Print / Save PDF Invoice
+              </button>
+            </div>
+            <div class="cf-invoice-preview-box" id="corporateInvoicePreviewBox">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 3: License Key Activation -->
+        <div class="cf-pay-panel hidden" id="payPanelKey">
+          <div class="cf-checkout-form">
+            <div class="cf-field-group">
+              <label for="licenseKeyInput" class="cf-field-label">Enter ContentForge™ Enterprise License Key</label>
+              <input
+                type="text"
+                id="licenseKeyInput"
+                class="cf-text-input cf-key-input"
+                placeholder="CF-FORGE-2026-PRO or CF-CONTENT-ENT"
+              />
+              <span class="cf-key-hint">Accepted Enterprise Keys: <code>CF-FORGE-2026-PRO</code> · <code>CF-CONTENT-ENT</code> · <code>CF-PRO-2026-XXXX</code></span>
+            </div>
+            <button type="button" class="cf-btn-primary cf-btn-full" id="btnActivateLicenseKey">
+              Validate &amp; Activate License Key →
+            </button>
+          </div>
+        </div>
+
+        <!-- Activation Confirmation Banner -->
+        <div class="cf-activation-success hidden" id="paywallSuccessBanner">
+          <strong id="paywallSuccessTitle">Enterprise License Active — All 4 Pipeline Presets Unlocked</strong>
+          <p id="paywallSuccessDesc">Your ContentForge™ license is active. All 4 industry presets, evaluation dossiers, and n8n webhook contracts are unlocked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="cf-toast-container" aria-live="polite"></div>
+
+  <!-- External Data Payload + Core Application Logic -->
+  <script src="presets-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
