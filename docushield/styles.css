@@ -54,13 +54,14 @@
 }
 
 html, body {
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-sans);
   color: var(--cf-ink-primary);
   background-color: var(--cf-bg-paper);
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -486,11 +487,11 @@ button, input, select, textarea {
    ========================================================================== */
 .ds-split-workbench {
   flex: 1;
-  min-height: 640px;
-  height: calc(100vh - 150px);
+  min-height: 0;
   width: 100%;
   display: grid;
   grid-template-columns: 1.22fr 0.78fr;
+  overflow: hidden;
   background: var(--cf-bg-paper);
 }
 

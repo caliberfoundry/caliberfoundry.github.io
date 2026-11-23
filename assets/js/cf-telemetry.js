@@ -929,7 +929,7 @@
               if (cbtTab) cbtTab.click();
               var citeBtn = document.getElementById("btnCiteCurrentSection");
               if (citeBtn) citeBtn.click();
-              var optEl = document.querySelector('#qOptionsList [data-option="B"], #qOptionsList [data-letter="B"], #qOptionsList > *:nth-child(2)');
+              var optEl = document.querySelector('#qOptionsList [data-option="D"], #qOptionsList [data-letter="D"], #qOptionsList > *:nth-child(4)');
               if (optEl) optEl.click();
               var checkBtn = document.getElementById("btnCheckCurrentAnswer") || document.getElementById("btnVerifyAnswerMain");
               if (checkBtn) checkBtn.click();
@@ -1171,8 +1171,8 @@
       "  --cf-brass-tint: #FFFBEB !important;",
       "  --cf-highlight-mark: #FEF08A !important;",
       "}",
-      "html, body { overflow-y: auto !important; overflow-x: hidden !important; height: auto !important; min-height: 100vh !important; background-color: #F1F5F9 !important; }",
-      ".masthead, .ds-global-header, .codedrill-global-bar, .cf-global-header { position: sticky !important; top: 0 !important; z-index: 450 !important; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; color: #F8FAFC !important; border-bottom: 2px solid #2563EB !important; box-shadow: 0 4px 14px rgba(15,23,42,0.14) !important; }",
+      "html, body { background-color: #F1F5F9 !important; }",
+      ".masthead, .ds-global-header, .codedrill-global-bar, .cf-global-header { flex-shrink: 0 !important; z-index: 450 !important; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; color: #F8FAFC !important; border-bottom: 2px solid #2563EB !important; box-shadow: 0 4px 14px rgba(15,23,42,0.14) !important; }",
       ".masthead .app-title { color: #F8FAFC !important; }",
       ".masthead .spec-label, .masthead .status-tag { background: rgba(37,99,235,0.28) !important; border: 1px solid #60A5FA !important; color: #F8FAFC !important; }",
       ".masthead div[style*='color:var(--cf-ink-secondary)'] { color: #CBD5E1 !important; }",
@@ -1180,15 +1180,15 @@
       ".how-it-works-strip, .cf-journey-bar, .dsh-journey-bar { display: none !important; }",
       "@keyframes cfVCardPulse { 0% { box-shadow: 0 0 0 4px rgba(37,99,235,0.35); } 100% { box-shadow: 0 4px 12px rgba(15,23,42,0.06); } }",
       ".cf-v-pulse { animation: cfVCardPulse 0.9s ease; }",
-      "#cfVisualValueShowcase { background: linear-gradient(180deg, #E2E8F0 0%, #F1F5F9 100%); border-bottom: 2px solid #CBD5E1; padding: 10px 16px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
+      "#cfVisualValueShowcase { flex-shrink: 0 !important; background: linear-gradient(180deg, #E2E8F0 0%, #F1F5F9 100%); border-bottom: 2px solid #CBD5E1; padding: 10px 16px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
       ".cf-vvs-inner { max-width: 1540px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }",
       ".cf-vvs-grid { display: grid; grid-template-columns: 0.95fr 1.05fr 1.35fr; gap: 10px; align-items: stretch; }",
       "@media (max-width: 780px) { .cf-vvs-grid { grid-template-columns: 1fr; } }",
-      ".cf-vvs-card { background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 11px 13px; box-shadow: 0 4px 12px rgba(15,23,42,0.06); display: flex; flex-direction: column; justify-content: space-between; gap: 6px; position: relative; overflow: hidden; }",
+      ".cf-vvs-card { background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px; box-shadow: 0 4px 12px rgba(15,23,42,0.06); display: flex; flex-direction: column; justify-content: space-between; gap: 6px; position: relative; overflow: hidden; }",
       ".cf-vvs-card-problem { border-top: 4px solid #E11D48; }",
       ".cf-vvs-card-why { border-top: 4px solid #2563EB; }",
       ".cf-vvs-card-prove { border-top: 4px solid #059669; background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%); }",
-      ".cf-vvs-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }",
+      ".cf-vvs-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }",
       ".cf-vvs-icon-group { display: flex; align-items: center; gap: 10px; }",
       ".cf-vvs-icon-box { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }",
       ".cf-vvs-icon-problem { background: #FFE4E6; color: #E11D48; border: 1px solid #FECDD3; }",
