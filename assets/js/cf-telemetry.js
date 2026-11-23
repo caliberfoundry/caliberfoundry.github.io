@@ -862,9 +862,10 @@
 
   function getProductShowcaseConfig(pathname) {
     var p = String(pathname || "/").toLowerCase();
-    if (p.indexOf("/docushield") !== -1) {
+    if (p.indexOf("docushield") !== -1) {
       return {
         key: "docushield",
+        appUrl: "../docushield/index.html",
         problemMetric: "€50,000+ Fines & $25/Page Cost",
         problemTitle: "Untagged PDFs Violate EU EAA & US ADA Title II",
         problemDesc: "Manual PDF accessibility tagging in Adobe Acrobat takes 40+ hours per manual ($15–$25/page), and untagged public PDFs face strict EU EAA & Section 508 enforcement.",
@@ -907,9 +908,10 @@
       };
     }
 
-    if (p.indexOf("/codedrill-cbt") !== -1 && p.indexOf("/seo-pages") === -1) {
+    if (p.indexOf("codedrill") !== -1 && p.indexOf("/seo-pages") === -1) {
       return {
         key: "codedrill",
+        appUrl: "../codedrill-cbt/index.html",
         problemMetric: "84.8% National Exam Fail Rate",
         problemTitle: "Candidates Fail Because PDF Lookups Take 3+ Mins",
         problemDesc: "The U.S. Customs Broker Exam (CBLE) is open-book across 1,200 pages of 19 CFR & HTSUS laws. Flipping through static PDFs takes 180s/question, so time runs out.",
@@ -959,9 +961,10 @@
       };
     }
 
-    if (p.indexOf("/stealthflow") !== -1) {
+    if (p.indexOf("stealthflow") !== -1) {
       return {
         key: "stealthflow",
+        appUrl: "../stealthflow/index.html",
         problemMetric: "HTTP 403 Blocks & Dirty HTML",
         problemTitle: "Standard Scrapers Get Blocked & Break on UI Changes",
         problemDesc: "Cloudflare Turnstile and DataDome block regular Python scrapers (HTTP 403), while raw HTML scraping produces dirty tracking URLs, unparsed prices, and GDPR PII risk.",
@@ -995,9 +998,10 @@
       };
     }
 
-    if (p.indexOf("/omnirag") !== -1) {
+    if (p.indexOf("omnirag") !== -1) {
       return {
         key: "omnirag",
+        appUrl: "../omnirag/index.html",
         problemMetric: "$42k–$500k+ Hidden Mismatches",
         problemTitle: "Costly Number Conflicts Hide Across PDFs & Excel",
         problemDesc: "Finance, Legal, and Engineering teams miss expensive discrepancies when an Excel invoice or BOM has a different number than a 90-page PDF contract or permit.",
@@ -1031,9 +1035,10 @@
       };
     }
 
-    if (p.indexOf("/edtech-studio") !== -1) {
+    if (p.indexOf("edtech-studio") !== -1) {
       return {
         key: "edtech",
+        appUrl: "../edtech-studio/index.html",
         problemMetric: "$5,000+ & 3 Weeks per Module",
         problemTitle: "Manual Quiz & SCORM Authoring Is Slow & Costly",
         problemDesc: "Course publishers and training teams spend weeks manually writing certification questions, wrong-answer explanations, and packaging SCORM 1.2 for Canvas or Moodle.",
@@ -1067,9 +1072,10 @@
       };
     }
 
-    if (p.indexOf("/dealshield") !== -1) {
+    if (p.indexOf("dealshield") !== -1) {
       return {
         key: "dealshield",
+        appUrl: "../dealshield/index.html",
         problemMetric: "30+ Hours per 250-Row Buyer DDQ",
         problemTitle: "Security Questionnaires Stall Enterprise Deals",
         problemDesc: "Enterprise B2B deals stall for 3–6 weeks while engineering and security leads manually copy-paste SOC 2 clauses into 250-row Excel questionnaires (CAIQ, HECVAT, VPAT).",
@@ -1106,9 +1112,10 @@
       };
     }
 
-    if (p.indexOf("/content-studio") !== -1) {
+    if (p.indexOf("content-studio") !== -1) {
       return {
         key: "contentstudio",
+        appUrl: "../content-studio/index.html",
         problemMetric: "40+ Hours & LLM Hallucination Risk",
         problemTitle: "Naive AI Scripts Hallucinate Specs & Break JSON",
         problemDesc: "Engineering & EdTech teams waste 40+ hours turning technical specs into verified documentation, n8n workflows, and SCORM modules because standard prompts hallucinate.",
@@ -1235,140 +1242,207 @@
       ".how-it-works-strip, .cf-journey-bar, .dsh-journey-bar { display: none !important; }",
       "@keyframes cfVCardPulse { 0% { box-shadow: 0 0 0 3px rgba(79,70,229,0.28); } 100% { box-shadow: 0 1px 3px rgba(17,17,19,0.04); } }",
       ".cf-v-pulse { animation: cfVCardPulse 0.8s ease; }",
-      "/* 3. Sleek 42px Single-Row Value & 3-Click Proof Ribbon (#cfVisualValueShowcase) */",
+      "/* 3. Always-Visible 3-Card Design System v2.0 Value & 3-Click Proof Showcase (#cfVisualValueShowcase) */",
+      "/* Openly visible at the top of every Product Workbench AND every /work/*.html Product Description Page (0 hidden menus!) */",
       "#cfVisualValueShowcase {",
       "  position: relative;",
       "  flex-shrink: 0 !important;",
-      "  background: #FFFFFF;",
+      "  background: #F3F2EE;",
       "  border-bottom: 1px solid #E4E2DD;",
-      "  padding: 5px 14px;",
+      "  padding: 12px 16px;",
       "  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;",
-      "  z-index: 420;",
+      "  z-index: 90;",
       "}",
-      ".cf-ribbon-bar {",
-      "  max-width: 1600px;",
+      "#cfVisualValueShowcase.cf-vvs-in-work-page {",
+      "  background: transparent;",
+      "  border-bottom: none;",
+      "  padding: 0;",
+      "  margin: 28px 0 32px 0;",
+      "}",
+      ".cf-vvs-inner {",
+      "  max-width: 1580px;",
       "  margin: 0 auto;",
-      "  min-height: 30px;",
+      "}",
+      "#cfVisualValueShowcase.cf-vvs-in-work-page .cf-vvs-inner {",
+      "  max-width: 100%;",
+      "}",
+      ".cf-vvs-grid {",
+      "  display: grid;",
+      "  grid-template-columns: 0.95fr 1.08fr 1.25fr;",
+      "  gap: 12px;",
+      "  align-items: stretch;",
+      "}",
+      "@media (max-width: 960px) {",
+      "  .cf-vvs-grid { grid-template-columns: 1fr; }",
+      "}",
+      ".cf-vvs-card {",
+      "  background: #FFFFFF;",
+      "  border: 1px solid #E4E2DD;",
+      "  border-radius: 8px;",
+      "  padding: 13px 15px;",
+      "  box-shadow: 0 1px 3px rgba(17,17,19,0.05), 0 1px 2px rgba(17,17,19,0.03);",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  justify-content: space-between;",
+      "  gap: 8px;",
+      "}",
+      ".cf-vvs-card-prove {",
+      "  border-color: #C7D2FE;",
+      "  background: linear-gradient(180deg, #FFFFFF 0%, #FAF9FF 100%);",
+      "}",
+      ".cf-vvs-top {",
       "  display: flex;",
       "  align-items: center;",
       "  justify-content: space-between;",
       "  gap: 8px;",
-      "  flex-wrap: nowrap;",
+      "  flex-wrap: wrap;",
       "}",
-      "@media (max-width: 940px) { .cf-ribbon-bar { flex-wrap: wrap; } }",
-      ".cf-ribbon-left {",
+      ".cf-vvs-icon-group {",
       "  display: flex;",
       "  align-items: center;",
-      "  gap: 6px;",
-      "  flex-shrink: 0;",
+      "  gap: 8px;",
       "}",
-      ".cf-ribbon-icon-pill {",
-      "  width: 24px;",
-      "  height: 24px;",
-      "  border-radius: 5px;",
-      "  background: #EEF2FF;",
-      "  color: #4F46E5;",
-      "  border: 1px solid #C7D2FE;",
-      "  display: inline-flex;",
+      ".cf-vvs-icon-box {",
+      "  width: 28px;",
+      "  height: 28px;",
+      "  border-radius: 6px;",
+      "  display: flex;",
       "  align-items: center;",
       "  justify-content: center;",
       "  flex-shrink: 0;",
-      "}",
-      ".cf-ribbon-value-summary {",
-      "  font-size: 11.5px;",
-      "  color: #111113;",
-      "  font-weight: 600;",
-      "  white-space: nowrap;",
-      "  overflow: hidden;",
-      "  text-overflow: ellipsis;",
-      "  max-width: 210px;",
-      "}",
-      "@media (max-width: 1460px) { .cf-ribbon-value-summary { display: none; } }",
-      ".cf-ribbon-roi-tag {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 600;",
-      "  padding: 2px 7px;",
-      "  border-radius: 4px;",
-      "  background: #F3F2EE;",
-      "  color: #52514E;",
-      "  border: 1px solid #E4E2DD;",
-      "  white-space: nowrap;",
-      "}",
-      ".cf-ribbon-popover-btn {",
-      "  display: inline-flex;",
-      "  align-items: center;",
-      "  gap: 4px;",
-      "  padding: 3px 8px;",
-      "  border-radius: 4px;",
-      "  border: 1px solid #D4D1C8;",
-      "  background: #FAF9F6;",
-      "  color: #111113;",
-      "  font-size: 11px;",
-      "  font-weight: 600;",
-      "  cursor: pointer;",
-      "  white-space: nowrap;",
-      "  flex-shrink: 0;",
-      "  transition: all 0.12s ease;",
-      "}",
-      ".cf-ribbon-popover-btn:hover, .cf-ribbon-popover-btn.active {",
       "  background: #EEF2FF;",
-      "  border-color: #4F46E5;",
+      "  color: #4F46E5;",
+      "  border: 1px solid #C7D2FE;",
+      "}",
+      ".cf-vvs-kicker {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10.5px;",
+      "  font-weight: 700;",
+      "  letter-spacing: 0.05em;",
+      "  text-transform: uppercase;",
       "  color: #4F46E5;",
       "}",
-      ".cf-ribbon-center {",
+      ".cf-vvs-pill {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10.5px;",
+      "  font-weight: 600;",
+      "  padding: 2px 8px;",
+      "  border-radius: 5px;",
+      "  background: #FAF9F6;",
+      "  color: #111113;",
+      "  border: 1px solid #D4D1C8;",
+      "  white-space: nowrap;",
+      "}",
+      ".cf-vvs-pill-prove {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10.5px;",
+      "  font-weight: 600;",
+      "  padding: 2px 9px;",
+      "  border-radius: 999px;",
+      "  background: #EEF2FF;",
+      "  color: #4F46E5;",
+      "  border: 1px solid #C7D2FE;",
+      "  white-space: nowrap;",
+      "}",
+      ".cf-vvs-title {",
+      "  font-size: 15px;",
+      "  font-weight: 700;",
+      "  color: #111113;",
+      "  line-height: 1.28;",
+      "  margin: 2px 0;",
+      "}",
+      ".cf-vvs-desc {",
+      "  font-size: 12.5px;",
+      "  color: #52514E;",
+      "  line-height: 1.46;",
+      "  margin: 0;",
+      "}",
+      ".cf-vvs-flow {",
       "  display: flex;",
       "  align-items: center;",
-      "  gap: 5px;",
-      "  flex-wrap: nowrap;",
-      "  flex-shrink: 0;",
+      "  gap: 6px;",
+      "  flex-wrap: wrap;",
+      "  margin-top: 2px;",
+      "  padding-top: 8px;",
+      "  border-top: 1px solid #E4E2DD;",
       "}",
-      "@media (max-width: 940px) { .cf-ribbon-center { flex-wrap: wrap; } }",
-      ".cf-ribbon-step-label {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 600;",
-      "  color: #8A8884;",
-      "  text-transform: uppercase;",
-      "  letter-spacing: 0.04em;",
-      "  margin-right: 2px;",
-      "}",
-      "@media (max-width: 1200px) { .cf-ribbon-step-label { display: none; } }",
-      ".cf-vvs-proof-btn {",
+      ".cf-vvs-node {",
       "  display: inline-flex;",
       "  align-items: center;",
       "  gap: 5px;",
-      "  height: 27px;",
-      "  padding: 0 8px;",
-      "  border-radius: 5px;",
+      "  background: #FAF9F6;",
       "  border: 1px solid #D4D1C8;",
+      "  color: #111113;",
+      "  padding: 3px 8px;",
+      "  border-radius: 5px;",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10.5px;",
+      "  font-weight: 600;",
+      "}",
+      ".cf-vvs-node-mid {",
+      "  background: #EEF2FF;",
+      "  border-color: #C7D2FE;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-vvs-node-end {",
+      "  background: #F0FDF4;",
+      "  border-color: #BBF7D0;",
+      "  color: #15803D;",
+      "}",
+      ".cf-vvs-arrow {",
+      "  color: #8A8884;",
+      "  font-weight: 600;",
+      "  font-size: 11px;",
+      "}",
+      ".cf-vvs-btn-grid {",
+      "  display: grid;",
+      "  grid-template-columns: repeat(3, 1fr);",
+      "  gap: 7px;",
+      "  margin-top: 4px;",
+      "}",
+      "@media (max-width: 680px) {",
+      "  .cf-vvs-btn-grid { grid-template-columns: 1fr; }",
+      "}",
+      ".cf-vvs-proof-btn {",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  align-items: flex-start;",
+      "  justify-content: space-between;",
+      "  gap: 4px;",
+      "  padding: 7px 9px;",
+      "  border-radius: 6px;",
+      "  border: 1px solid #C7D2FE;",
       "  background: #FFFFFF;",
       "  color: #111113;",
-      "  font-size: 11px;",
-      "  font-weight: 600;",
       "  cursor: pointer;",
-      "  white-space: nowrap;",
-      "  box-shadow: 0 1px 2px rgba(17,17,19,0.04);",
-      "  transition: all 0.12s ease;",
+      "  text-align: left;",
+      "  box-shadow: 0 1px 2px rgba(79,70,229,0.08);",
+      "  transition: all 0.14s ease;",
       "}",
       ".cf-vvs-proof-btn:hover {",
       "  background: #EEF2FF;",
       "  border-color: #4F46E5;",
-      "  color: #4F46E5;",
+      "  transform: translateY(-1px);",
       "}",
       ".cf-vvs-proof-btn.cf-proof-done {",
       "  background: #F0FDF4;",
       "  border-color: #15803D;",
       "  color: #15803D;",
       "}",
-      ".cf-vvs-btn-badge {",
+      ".cf-vvs-btn-top {",
+      "  display: flex;",
+      "  align-items: center;",
+      "  justify-content: space-between;",
+      "  width: 100%;",
       "  font-family: 'IBM Plex Mono', monospace;",
       "  font-size: 10px;",
       "  font-weight: 600;",
-      "  padding: 1px 5px;",
-      "  border-radius: 3px;",
-      "  background: #EEF2FF;",
-      "  color: #4F46E5;",
+      "}",
+      ".cf-vvs-btn-badge {",
+      "  background: #4F46E5;",
+      "  color: #FFFFFF;",
+      "  padding: 1px 6px;",
+      "  border-radius: 4px;",
       "}",
       ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-badge {",
       "  background: #15803D;",
@@ -1382,38 +1456,22 @@
       ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-icon {",
       "  color: #15803D;",
       "}",
-      ".cf-vvs-pill-prove {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 600;",
-      "  padding: 2px 7px;",
-      "  border-radius: 999px;",
-      "  background: #EEF2FF;",
-      "  color: #4F46E5;",
-      "  border: 1px solid #C7D2FE;",
-      "  white-space: nowrap;",
-      "  flex-shrink: 0;",
+      ".cf-vvs-btn-label {",
+      "  font-size: 11.5px;",
+      "  font-weight: 700;",
+      "  line-height: 1.25;",
       "}",
       ".cf-vvs-outcome {",
-      "  flex: 1 1 0%;",
-      "  min-width: 0;",
       "  display: flex;",
       "  align-items: center;",
-      "  gap: 6px;",
-      "  font-size: 11px;",
+      "  gap: 8px;",
+      "  font-size: 11.5px;",
       "  color: #52514E;",
       "  background: #FAF9F6;",
       "  border: 1px solid #E4E2DD;",
-      "  border-radius: 5px;",
-      "  padding: 3px 8px;",
-      "  overflow: hidden;",
-      "}",
-      "#cfLiveProofOutcomeText {",
-      "  flex: 1 1 0%;",
-      "  min-width: 0;",
-      "  white-space: nowrap;",
-      "  overflow: hidden;",
-      "  text-overflow: ellipsis;",
+      "  border-radius: 6px;",
+      "  padding: 7px 10px;",
+      "  line-height: 1.38;",
       "}",
       ".cf-vvs-outcome.cf-outcome-active {",
       "  background: #F0FDF4;",
@@ -1422,58 +1480,178 @@
       "  font-weight: 600;",
       "}",
       ".cf-vvs-outcome-icon {",
-      "  color: #15803D;",
+      "  color: #4F46E5;",
       "  display: inline-flex;",
       "  flex-shrink: 0;",
       "}",
-      "/* 4. Floating Value & Architecture Popover Drawer (0px Permanent Vertical Height!) */",
-      "#cfValuePopoverDrawer {",
-      "  position: absolute;",
-      "  top: 100%;",
-      "  left: 14px;",
-      "  right: 14px;",
-      "  max-width: 1220px;",
-      "  margin: 4px auto 0;",
+      ".cf-vvs-outcome.cf-outcome-active .cf-vvs-outcome-icon {",
+      "  color: #15803D;",
+      "}",
+      "/* 4. Main Landing Page (index.html) Open 3-Pillar Product Card Breakdown */",
+      ".cf-home-card-pillars {",
+      "  margin-top: 16px;",
+      "  padding-top: 14px;",
+      "  border-top: 1px solid #E4E2DD;",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  gap: 10px;",
+      "}",
+      ".cf-home-pillar-box {",
+      "  background: #FAF9F6;",
+      "  border: 1px solid #E4E2DD;",
+      "  border-radius: 6px;",
+      "  padding: 10px 12px;",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  gap: 4px;",
+      "}",
+      ".cf-home-pillar-head {",
+      "  display: flex;",
+      "  align-items: center;",
+      "  justify-content: space-between;",
+      "  gap: 6px;",
+      "  flex-wrap: wrap;",
+      "}",
+      ".cf-home-pillar-kicker {",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  gap: 5px;",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 700;",
+      "  letter-spacing: 0.05em;",
+      "  text-transform: uppercase;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-home-pillar-metric {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 600;",
+      "  padding: 1px 6px;",
+      "  border-radius: 4px;",
       "  background: #FFFFFF;",
       "  border: 1px solid #D4D1C8;",
-      "  border-radius: 8px;",
-      "  box-shadow: 0 16px 36px -4px rgba(17,17,19,0.16), 0 4px 12px -2px rgba(17,17,19,0.08);",
-      "  padding: 14px 16px;",
-      "  z-index: 950;",
+      "  color: #111113;",
       "}",
-      "#cfValuePopoverDrawer.cf-popover-hidden { display: none !important; }",
-      ".cf-vvs-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; align-items: stretch; }",
-      "@media (max-width: 900px) {",
-      "  .cf-vvs-grid { grid-template-columns: 1fr; }",
-      "  .cf-vvs-outcome { max-width: 100%; white-space: normal; }",
+      ".cf-home-pillar-title {",
+      "  font-size: 13.5px;",
+      "  font-weight: 700;",
+      "  color: #111113;",
+      "  line-height: 1.3;",
       "}",
-      ".cf-vvs-card { background: #FAF9F6; border: 1px solid #E4E2DD; border-radius: 6px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }",
-      ".cf-vvs-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
-      ".cf-vvs-icon-group { display: flex; align-items: center; gap: 7px; }",
-      ".cf-vvs-icon-box { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; }",
-      ".cf-vvs-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #52514E; }",
-      ".cf-vvs-pill { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #FFFFFF; color: #111113; border: 1px solid #D4D1C8; }",
-      ".cf-vvs-title { font-size: 14px; font-weight: 700; color: #111113; line-height: 1.3; margin: 2px 0; }",
-      ".cf-vvs-desc { font-size: 12px; color: #52514E; line-height: 1.48; margin: 0; }",
-      ".cf-vvs-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 4px; padding-top: 8px; border-top: 1px solid #E4E2DD; }",
-      ".cf-vvs-node { display: inline-flex; align-items: center; gap: 5px; background: #FFFFFF; border: 1px solid #D4D1C8; color: #111113; padding: 3px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; }",
-      ".cf-vvs-node-mid { background: #EEF2FF; border-color: #C7D2FE; color: #4F46E5; }",
-      ".cf-vvs-node-end { background: #F0FDF4; border-color: #BBF7D0; color: #15803D; }",
-      ".cf-vvs-arrow { color: #8A8884; font-weight: 600; font-size: 11px; }"
+      ".cf-home-pillar-desc {",
+      "  font-size: 12px;",
+      "  color: #52514E;",
+      "  line-height: 1.45;",
+      "}",
+      ".cf-home-proof-btns {",
+      "  display: grid;",
+      "  grid-template-columns: repeat(3, 1fr);",
+      "  gap: 6px;",
+      "  margin-top: 4px;",
+      "}",
+      "@media (max-width: 640px) {",
+      "  .cf-home-proof-btns { grid-template-columns: 1fr; }",
+      "}",
+      ".cf-home-proof-link {",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  gap: 3px;",
+      "  padding: 7px 9px;",
+      "  border-radius: 5px;",
+      "  border: 1px solid #C7D2FE;",
+      "  background: #FFFFFF;",
+      "  color: #111113;",
+      "  text-decoration: none;",
+      "  font-size: 11px;",
+      "  font-weight: 600;",
+      "  transition: all 0.12s ease;",
+      "}",
+      ".cf-home-proof-link:hover {",
+      "  background: #EEF2FF;",
+      "  border-color: #4F46E5;",
+      "  color: #4F46E5;",
+      "}"
     ].join("\n");
       document.head.appendChild(themeStyle);
+    }
+
+    // Enhance all product cards on the Main Landing Page (index.html) with open 1. Problem, 2. Why It Wins, 3. 3-Click Proof
+    var homeCards = document.querySelectorAll(".work-card");
+    if (homeCards && homeCards.length > 0) {
+      Array.prototype.forEach.call(homeCards, function (card) {
+        if (card.querySelector(".cf-home-card-pillars")) return;
+        var launchLink = card.querySelector('a[href*="stealthflow"], a[href*="omnirag"], a[href*="edtech-studio"], a[href*="codedrill"], a[href*="docushield"], a[href*="content-studio"], a[href*="dealshield"]');
+        if (!launchLink) return;
+        var href = launchLink.getAttribute("href") || "";
+        var cardCfg = getProductShowcaseConfig(href);
+        if (!cardCfg) return;
+        var baseAppHref = href.split("?")[0];
+        var btnIconsHome = [SVG_ICONS.search, SVG_ICONS.magic, SVG_ICONS.cert];
+        var proofLinksHtml = cardCfg.clicks.map(function (c, idx) {
+          var cleanLbl = String(c.label || "").replace(/^[123]\.\s*/, "");
+          return (
+            '<a class="cf-home-proof-link" href="' +
+            escapeHtmlSafe(baseAppHref + "?autoProof=" + (idx + 1)) +
+            '">' +
+            '<span style="display:flex;align-items:center;justify-content:space-between;font-family:\'IBM Plex Mono\',monospace;font-size:9.5px;color:#4F46E5;font-weight:700;">' +
+            "<span>CLICK " + (idx + 1) + "</span>" +
+            "<span>" + btnIconsHome[idx] + "</span>" +
+            "</span>" +
+            "<span>" + escapeHtmlSafe(cleanLbl) + "</span>" +
+            "</a>"
+          );
+        }).join("");
+
+        var pillarsWrap = document.createElement("div");
+        pillarsWrap.className = "cf-home-card-pillars";
+        pillarsWrap.innerHTML =
+          '<div class="cf-home-pillar-box">' +
+          '<div class="cf-home-pillar-head">' +
+          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.alert + " 1. The Problem It Solves</span>" +
+          '<span class="cf-home-pillar-metric">' + escapeHtmlSafe(cardCfg.problemMetric) + "</span>" +
+          "</div>" +
+          '<div class="cf-home-pillar-title">' + escapeHtmlSafe(cardCfg.problemTitle) + "</div>" +
+          '<div class="cf-home-pillar-desc">' + escapeHtmlSafe(cardCfg.problemDesc) + "</div>" +
+          "</div>" +
+          '<div class="cf-home-pillar-box">' +
+          '<div class="cf-home-pillar-head">' +
+          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.shield + " 2. Why This Product Wins</span>" +
+          '<span class="cf-home-pillar-metric">' + escapeHtmlSafe(cardCfg.whyMetric) + "</span>" +
+          "</div>" +
+          '<div class="cf-home-pillar-title">' + escapeHtmlSafe(cardCfg.whyTitle) + "</div>" +
+          '<div class="cf-vvs-flow" style="margin-top:4px;padding-top:6px;">' +
+          '<span class="cf-vvs-node">' + SVG_ICONS.doc + " " + escapeHtmlSafe(cardCfg.flow[0]) + "</span>" +
+          '<span class="cf-vvs-arrow">&rarr;</span>' +
+          '<span class="cf-vvs-node cf-vvs-node-mid">' + SVG_ICONS.cpu + " " + escapeHtmlSafe(cardCfg.flow[1]) + "</span>" +
+          '<span class="cf-vvs-arrow">&rarr;</span>' +
+          '<span class="cf-vvs-node cf-vvs-node-end">' + SVG_ICONS.award + " " + escapeHtmlSafe(cardCfg.flow[2]) + "</span>" +
+          "</div>" +
+          "</div>" +
+          '<div class="cf-home-pillar-box" style="background:#FAF9FF;border-color:#C7D2FE;">' +
+          '<div class="cf-home-pillar-head">' +
+          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.bolt + " 3. Prove Value in 3 Clicks (Live Demo)</span>" +
+          "</div>" +
+          '<div class="cf-home-proof-btns">' + proofLinksHtml + "</div>" +
+          "</div>";
+
+        var topDiv = card.querySelector("div");
+        if (topDiv) {
+          topDiv.appendChild(pillarsWrap);
+        }
+      });
     }
 
     var cfg = getProductShowcaseConfig(window.location.pathname);
     if (!cfg || document.getElementById("cfVisualValueShowcase")) return;
 
-    var headerEl = document.querySelector(
-      "header.masthead, header.ds-global-header, header.codedrill-global-bar, header.cf-global-header, header"
-    );
-    if (!headerEl || !headerEl.parentNode) return;
+    var isWorkDescPage = String(window.location.pathname || "").toLowerCase().indexOf("/work/") !== -1;
 
     var showcase = document.createElement("section");
     showcase.id = "cfVisualValueShowcase";
+    if (isWorkDescPage) {
+      showcase.className = "cf-vvs-in-work-page";
+    }
     showcase.setAttribute("aria-label", "Product Value Proposition and 3-Click Interactive Proof");
 
     var btnIcons = [SVG_ICONS.search, SVG_ICONS.magic, SVG_ICONS.cert];
@@ -1488,60 +1666,28 @@
           '" title="' +
           escapeHtmlSafe(c.outcome) +
           '">' +
+          '<div class="cf-vvs-btn-top">' +
           '<span class="cf-vvs-btn-badge" id="cfProofBadge' +
           (idx + 1) +
-          '">' +
+          '">CLICK ' +
           (idx + 1) +
           "</span>" +
           '<span class="cf-vvs-btn-icon">' +
           btnIcons[idx] +
           "</span>" +
-          '<span class="cf-vvs-btn-label">' +
+          "</div>" +
+          '<div class="cf-vvs-btn-label">' +
           escapeHtmlSafe(cleanLabel) +
-          "</span>" +
+          "</div>" +
           "</button>"
         );
       })
       .join("");
 
     showcase.innerHTML =
-      '<div class="cf-ribbon-bar">' +
-      // Left: Compact Value Summary + On-Demand Popover Toggle
-      '<div class="cf-ribbon-left">' +
-      '<span class="cf-ribbon-icon-pill">' +
-      SVG_ICONS.shield +
-      "</span>" +
-      '<span class="cf-ribbon-value-summary" title="' +
-      escapeHtmlSafe(cfg.whyTitle + " — " + cfg.whyDesc) +
-      '">' +
-      escapeHtmlSafe(cfg.whyTitle) +
-      "</span>" +
-      '<span class="cf-ribbon-roi-tag">' +
-      escapeHtmlSafe(cfg.whyMetric) +
-      "</span>" +
-      '<button type="button" class="cf-ribbon-popover-btn" id="cfToggleValuePopoverBtn" aria-expanded="false">' +
-      SVG_ICONS.info +
-      "<span>Why &amp; Architecture</span>" +
-      SVG_ICONS.chevronDown +
-      "</button>" +
-      "</div>" +
-      // Center: 3-Click Interactive Proof Buttons + Progress Pill
-      '<div class="cf-ribbon-center">' +
-      '<span class="cf-ribbon-step-label">3-Click Proof:</span>' +
-      btnsHtml +
-      '<span class="cf-vvs-pill-prove" id="cfProofProgressBadge">0 / 3 Proven</span>' +
-      "</div>" +
-      // Right: Flex-shrinking Outcome Pill (0px overlap!)
-      '<div class="cf-vvs-outcome" id="cfLiveProofOutcome">' +
-      '<span class="cf-vvs-outcome-icon">' +
-      SVG_ICONS.check +
-      "</span>" +
-      '<span id="cfLiveProofOutcomeText">Click 1 &rarr; 2 &rarr; 3 to verify live</span>' +
-      "</div>" +
-      "</div>" +
-      // Floating Popover Drawer (0px vertical height unless toggled!)
-      '<div id="cfValuePopoverDrawer" class="cf-popover-hidden" role="region" aria-label="Product Architecture & Problem Breakdown">' +
+      '<div class="cf-vvs-inner">' +
       '<div class="cf-vvs-grid">' +
+      // Card 1: 1. THE PROBLEM IT SOLVES
       '<div class="cf-vvs-card">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
@@ -1563,6 +1709,7 @@
       "</p>" +
       "</div>" +
       "</div>" +
+      // Card 2: 2. WHY THIS PRODUCT WINS + VISUAL 3-ICON FLOW
       '<div class="cf-vvs-card">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
@@ -1603,44 +1750,50 @@
       "</span>" +
       "</div>" +
       "</div>" +
-      '<div class="cf-vvs-card">' +
+      // Card 3: 3. PROVE VALUE IN 3 CLICKS (LIVE DEMO)
+      '<div class="cf-vvs-card cf-vvs-card-prove">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
       '<div class="cf-vvs-icon-group">' +
       '<div class="cf-vvs-icon-box">' +
       SVG_ICONS.bolt +
       "</div>" +
-      '<span class="cf-vvs-kicker">3. Live Verification Outcome</span>' +
+      '<span class="cf-vvs-kicker">3. Prove Value in 3 Clicks</span>' +
       "</div>" +
-      '<span class="cf-vvs-pill">Zero Setup Required</span>' +
+      '<span class="cf-vvs-pill-prove" id="cfProofProgressBadge">0 / 3 Proven</span>' +
       "</div>" +
-      '<h2 class="cf-vvs-title" style="margin-top:6px;">Prove Value in 3 Clicks</h2>' +
-      '<p class="cf-vvs-desc" id="cfPopoverOutcomeDetail">Use the 3 segmented proof buttons in the ribbon above to execute the live workflow and inspect the generated output below.</p>' +
+      '<div class="cf-vvs-btn-grid">' +
+      btnsHtml +
+      "</div>" +
+      "</div>" +
+      '<div class="cf-vvs-outcome" id="cfLiveProofOutcome">' +
+      '<span class="cf-vvs-outcome-icon">' +
+      SVG_ICONS.check +
+      "</span>" +
+      '<span id="cfLiveProofOutcomeText">' +
+      (isWorkDescPage
+        ? "Click <strong>CLICK 1</strong>, <strong>CLICK 2</strong>, or <strong>CLICK 3</strong> above to launch the live product and verify that step immediately."
+        : "Click <strong>CLICK 1</strong> &rarr; <strong>CLICK 2</strong> &rarr; <strong>CLICK 3</strong> above to watch this product solve the problem live.") +
+      "</span>" +
       "</div>" +
       "</div>" +
       "</div>" +
       "</div>";
 
-    headerEl.parentNode.insertBefore(showcase, headerEl.nextSibling);
-
-    var popBtn = document.getElementById("cfToggleValuePopoverBtn");
-    var popDrawer = document.getElementById("cfValuePopoverDrawer");
-    if (popBtn && popDrawer) {
-      popBtn.addEventListener("click", function (ev) {
-        ev.stopPropagation();
-        var isHidden = popDrawer.classList.toggle("cf-popover-hidden");
-        popBtn.classList.toggle("active", !isHidden);
-        popBtn.setAttribute("aria-expanded", !isHidden ? "true" : "false");
-      });
-      document.addEventListener("click", function (ev) {
-        if (!popDrawer.classList.contains("cf-popover-hidden")) {
-          if (!popDrawer.contains(ev.target) && ev.target !== popBtn && !popBtn.contains(ev.target)) {
-            popDrawer.classList.add("cf-popover-hidden");
-            popBtn.classList.remove("active");
-            popBtn.setAttribute("aria-expanded", "false");
-          }
-        }
-      });
+    if (isWorkDescPage) {
+      var grid2 = document.querySelector("main .grid-2, main .panel, main section");
+      var mainEl = document.querySelector("main");
+      if (grid2 && grid2.parentNode) {
+        grid2.parentNode.insertBefore(showcase, grid2);
+      } else if (mainEl) {
+        mainEl.insertBefore(showcase, mainEl.firstChild);
+      }
+    } else {
+      var headerEl = document.querySelector(
+        "header.masthead, header.ds-global-header, header.codedrill-global-bar, header.cf-global-header, header"
+      );
+      if (!headerEl || !headerEl.parentNode) return;
+      headerEl.parentNode.insertBefore(showcase, headerEl.nextSibling);
     }
 
     var provenMap = {};
@@ -1648,23 +1801,22 @@
       var btn = document.getElementById("cfProofClick" + (idx + 1));
       if (!btn) return;
       btn.addEventListener("click", function () {
+        if (isWorkDescPage && cfg.appUrl) {
+          window.location.href = cfg.appUrl + "?autoProof=" + (idx + 1);
+          return;
+        }
         provenMap[idx] = true;
         btn.classList.add("cf-proof-done");
         var bdg = document.getElementById("cfProofBadge" + (idx + 1));
-        if (bdg) bdg.textContent = "✓";
+        if (bdg) bdg.textContent = "✓ PROVEN";
         var doneCount = Object.keys(provenMap).length;
         var prog = document.getElementById("cfProofProgressBadge");
         if (prog) prog.textContent = doneCount + " / 3 Proven";
 
         var outText = document.getElementById("cfLiveProofOutcomeText");
         var outBox = document.getElementById("cfLiveProofOutcome");
-        var popDetail = document.getElementById("cfPopoverOutcomeDetail");
         if (outText) {
           outText.textContent = cfg.clicks[idx].outcome;
-          outText.title = cfg.clicks[idx].outcome;
-        }
-        if (popDetail) {
-          popDetail.textContent = cfg.clicks[idx].outcome;
         }
         if (outBox) {
           outBox.classList.add("cf-outcome-active");
@@ -1678,6 +1830,20 @@
         } catch (_) {}
       });
     });
+
+    // If navigated from a /work/*.html description page with ?autoProof=1..3, auto-trigger that proof click!
+    if (!isWorkDescPage) {
+      try {
+        var qParams = new URLSearchParams(window.location.search || "");
+        var autoStep = parseInt(qParams.get("autoProof") || "0", 10);
+        if (autoStep >= 1 && autoStep <= 3) {
+          setTimeout(function () {
+            var targetBtn = document.getElementById("cfProofClick" + autoStep);
+            if (targetBtn) targetBtn.click();
+          }, 260);
+        }
+      } catch (_) {}
+    }
   }
 
   if (document.readyState === "loading") {
