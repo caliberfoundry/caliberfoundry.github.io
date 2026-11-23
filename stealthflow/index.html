@@ -712,8 +712,8 @@
         <div class="filter-toolbar">
           <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:240px; flex-wrap:wrap;">
             <input id="searchInput" type="text" oninput="renderLeadsTable()" placeholder="Search 50 companies by name, website, city, or industry..." class="input-mechanical" style="flex:1; min-width:200px;" />
-            <select id="categoryFilter" onchange="renderLeadsTable()" class="input-mechanical">
-              <option value="ALL">All Industries (12)</option>
+            <select id="categoryFilter" onchange="onCategoryFilterChange()" class="input-mechanical">
+              <option value="ALL">All Industries (50 Records)</option>
             </select>
           </div>
           <div class="mono" style="font-size:11px; color:var(--cf-accent-primary); font-weight:700;">
@@ -970,9 +970,10 @@
       const categories = [...new Set(LEADS_DATA.map(d => d.category))].sort();
       const catSelect = document.getElementById('categoryFilter');
       categories.forEach(c => {
+        const count = LEADS_DATA.filter(d => d.category === c).length;
         const opt = document.createElement('option');
         opt.value = c;
-        opt.textContent = c.toUpperCase();
+        opt.textContent = `${c.toUpperCase()} (${count})`;
         catSelect.appendChild(opt);
       });
 
@@ -1011,8 +1012,7 @@
       el.classList.add('cf-flash-active');
     }
 
-    function selectSource(sourceId) {
-      activeSourceId = (activeSourceId === sourceId && sourceId !== 'ALL') ? 'ALL' : sourceId;
+    function updateSourceButtonHighlights() {
       const resetBtn = document.getElementById('btnResetSources');
       if (resetBtn) {
         resetBtn.className = (activeSourceId === 'ALL') ? 'btn-tactile btn-tactile-ink' : 'btn-tactile';
@@ -1026,6 +1026,13 @@
           qf.className = (activeSourceId === id) ? 'btn-tactile btn-tactile-vermilion' : 'btn-tactile';
         }
       });
+    }
+
+    function selectSource(sourceId) {
+      activeSourceId = (activeSourceId === sourceId && sourceId !== 'ALL') ? 'ALL' : sourceId;
+      const catSelect = document.getElementById('categoryFilter');
+      if (catSelect) catSelect.value = 'ALL';
+      updateSourceButtonHighlights();
 
       renderSourcesGrid();
       renderLeadsTable();
@@ -1035,6 +1042,21 @@
         const statusText = document.getElementById('liveExtractionStatusText');
         if (statusText) {
           statusText.innerHTML = `&check; FILTERED TO <strong>${filtered.length} RECORDS</strong> &mdash; Showing Before vs. After cleaning for <strong>${escapeHtml(filtered[0].company_name)}</strong> on the right &rarr;`;
+        }
+      }
+    }
+
+    function onCategoryFilterChange() {
+      activeSourceId = 'ALL';
+      updateSourceButtonHighlights();
+      renderSourcesGrid();
+      renderLeadsTable();
+      const filtered = getFilteredLeads();
+      if (filtered.length > 0) {
+        inspectLead(filtered[0].lead_id);
+        const statusText = document.getElementById('liveExtractionStatusText');
+        if (statusText) {
+          statusText.innerHTML = `&check; INDUSTRY FILTER: <strong>${filtered.length} RECORDS</strong> &mdash; Inspecting <strong>${escapeHtml(filtered[0].company_name)}</strong> on the right &rarr;`;
         }
       }
     }
