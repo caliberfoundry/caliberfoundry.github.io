@@ -20,11 +20,9 @@
         "VPAT 2.5 INT (EN 301 549)"
       ],
       freePacketIds: ["EDTECH-01", "ECOM-02"],
-      validLicenseKeys: [
-        "DS-PRO-2026-CALIBER",
-        "CF-DOCUSHIELD-ENT",
-        "DS-PRO-2026-8841-992B",
-        "DS-ENT-2026-8841-773A"
+      validLicenseKeyDigests: [
+        "5c05bd2d1eefa08f19b1e300aee51240b6cd33480b25f34e7011693e7bbc2e67",
+        "5024e6a49ca7dcaba7f95addc2165f6439777dc972830f609cabbf97b8082eb2"
       ]
     },
 

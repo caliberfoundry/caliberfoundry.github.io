@@ -432,10 +432,102 @@
     }
   }
 
+  const CF_RSA_PUBLIC_MODULUS_B36 =
+    '131IRZHBZ87C6IXGX2XD8YG1YLYMJJZPTAXPXIAZ82NVXKGRA4E2P1ECVL1P7M5FNMHF899RJ4TODBM6QO1A0V2NHIO8DZ9DEBF7';
+  const ALLOWED_DS_KEY_DIGESTS = [
+    '5c05bd2d1eefa08f19b1e300aee51240b6cd33480b25f34e7011693e7bbc2e67',
+    '5024e6a49ca7dcaba7f95addc2165f6439777dc972830f609cabbf97b8082eb2'
+  ];
+
+  function cfBase36ToBigInt(str) {
+    const clean = String(str || '').trim().toUpperCase();
+    if (!/^[0-9A-Z]+$/.test(clean)) return 0n;
+    let val = 0n;
+    for (let i = 0; i < clean.length; i++) {
+      const code = clean.charCodeAt(i);
+      const digit = code >= 65 ? BigInt(code - 55) : BigInt(code - 48);
+      val = val * 36n + digit;
+    }
+    return val;
+  }
+
+  function cfModPow(base, exp, mod) {
+    let res = 1n;
+    base = base % mod;
+    while (exp > 0n) {
+      if (exp & 1n) res = (res * base) % mod;
+      exp >>= 1n;
+      base = (base * base) % mod;
+    }
+    return res;
+  }
+
+  function cfComputeSaltedDigestHex(inputStr) {
+    const s = 'CF_KDF_2026_SALT_9F84C2E1|' + String(inputStr || '').trim().toUpperCase();
+    const seeds = [
+      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    ];
+    for (let round = 0; round < 8; round++) {
+      for (let i = 0; i < s.length; i++) {
+        const c = s.charCodeAt(i);
+        const lane = (i + round) & 7;
+        seeds[lane] = (Math.imul(seeds[lane] ^ c, 2654435761) + ((seeds[(lane + 1) & 7] >>> 3) ^ (i * 1597334677))) | 0;
+        seeds[(lane + 3) & 7] = (seeds[(lane + 3) & 7] ^ ((seeds[lane] << 7) | (seeds[lane] >>> 25))) | 0;
+      }
+    }
+    return seeds.map(n => (n >>> 0).toString(16).padStart(8, '0')).join('');
+  }
+
+  function verifyDocuShieldLicenseKey(rawKey) {
+    const clean = String(rawKey || '').trim().toUpperCase();
+    if (!clean) return { valid: false };
+    const parts = clean.split('-');
+    if (parts[0] === 'CFK' && (parts.length === 6 || parts.length === 5)) {
+      try {
+        const prod = parts[1];
+        const tier = parts[2];
+        const cust = parts[3];
+        const hasExp = parts.length === 6;
+        const expYmd = hasExp ? parts[4] : '20991231';
+        const sigB36 = hasExp ? parts[5] : parts[4];
+        if (prod === 'DS' || prod === 'ALL') {
+          const N = cfBase36ToBigInt(CF_RSA_PUBLIC_MODULUS_B36);
+          const sigBig = cfBase36ToBigInt(sigB36);
+          if (sigBig > 0n && sigBig < N) {
+            const recovered = cfModPow(sigBig, 65537n, N);
+            const header = hasExp ? 'CFK-' + prod + '-' + tier + '-' + cust + '-' + expYmd : 'CFK-' + prod + '-' + tier + '-' + cust;
+            const expectedHex = '01ff' + cfComputeSaltedDigestHex('RSA_MSG|' + header);
+            if (recovered === BigInt('0x' + expectedHex) && /^\d{8}$/.test(expYmd)) {
+              const yyyy = Number(expYmd.slice(0, 4));
+              const mm = Number(expYmd.slice(4, 6));
+              const dd = Number(expYmd.slice(6, 8));
+              const expEndMs = Date.UTC(yyyy, mm - 1, dd, 23, 59, 59, 999);
+              const expiresIso = expYmd.slice(0, 4) + '-' + expYmd.slice(4, 6) + '-' + expYmd.slice(6, 8);
+              if (Date.now() > expEndMs) {
+                return { valid: false, expired: true, expiresIso, customerTag: cust };
+              }
+              return { valid: true, tier: tier === 'ENT' ? 'ENTERPRISE' : 'PRO', customerTag: cust, expiresIso };
+            }
+          }
+        }
+      } catch (_) {}
+    }
+    const digest = cfComputeSaltedDigestHex(clean);
+    if (ALLOWED_DS_KEY_DIGESTS.includes(digest)) {
+      return { valid: true, tier: clean.includes('ENT') ? 'ENTERPRISE' : 'PRO', customerTag: 'ENTERPRISE', expiresIso: '2027-11-23' };
+    }
+    return { valid: false };
+  }
+
   function isProUnlocked() {
-    return STATE.licenseTier === 'PRO' ||
-           STATE.licenseTier === 'PRO_PROVISIONAL' ||
-           STATE.licenseTier === 'ENTERPRISE';
+    const hasTier =
+      STATE.licenseTier === 'PRO' ||
+      STATE.licenseTier === 'PRO_PROVISIONAL' ||
+      STATE.licenseTier === 'ENTERPRISE';
+    if (!hasTier) return false;
+    if (typeof isLocalQaEnvironment === 'function' && isLocalQaEnvironment()) return true;
+    return verifyDocuShieldLicenseKey(STATE.licenseKey).valid;
   }
 
   function isPacketLocked(packetId) {
@@ -1373,17 +1465,13 @@
 
   function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
-    const validList = (DATASET.meta && Array.isArray(DATASET.meta.validLicenseKeys))
-      ? DATASET.meta.validLicenseKeys
-      : ['DS-PRO-2026-CALIBER', 'CF-DOCUSHIELD-ENT'];
-
-    const isPatternMatch = /^(DS-(PRO|ENT)-2026-[A-Z0-9-]{4,16}|CF-DOCUSHIELD-ENT)$/.test(clean);
-    if (!validList.includes(clean) && !isPatternMatch) {
-      showToast('Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your license key.');
+    const ver = verifyDocuShieldLicenseKey(clean);
+    if (!ver.valid) {
+      showToast('Invalid license key signature. Complete checkout via Gumroad or Contra (0% fee) to receive your signed license key.');
       return false;
     }
 
-    STATE.licenseTier = clean.includes('ENT') ? 'ENTERPRISE' : 'PRO';
+    STATE.licenseTier = ver.tier || 'PRO';
     STATE.licenseKey = clean;
     saveState();
 
@@ -1392,11 +1480,11 @@
     const keyHeading = document.getElementById('activationSuccessKeyHeading');
 
     if (alertBanner) alertBanner.classList.add('hidden');
-    if (keyHeading) keyHeading.textContent = `Active License: ${clean}`;
+    if (keyHeading) keyHeading.textContent = `Active License: ${ver.customerTag || 'PRO'}`;
     if (successBox) successBox.classList.remove('hidden');
 
     renderAll();
-    showToast(`Activated License ${clean} — All 6 Industry Packets Unlocked`);
+    showToast(`Activated License (${ver.customerTag || 'PRO'}) — All 6 Industry Packets Unlocked`);
     return true;
   }
 
@@ -1463,12 +1551,12 @@
       workEmail: workEmail,
       planCode: plan.code,
       amountUsd: plan.amountUsd,
-      provisionalLicenseKey: 'DS-PRO-2026-CALIBER'
+      provisionalLicenseKey: 'ISSUED_ON_PAYMENT'
     };
   }
 
   /**
-   * Generates a corporate B2B invoice AND activates a 14-day Provisional PRO Unlock
+   * Generates a corporate B2B invoice
    */
   function generateCorporateInvoice(companyName, workEmail, planCode, poNumber) {
     const comp = companyName
@@ -1487,7 +1575,6 @@
 
     if (isLocalQaEnvironment()) {
       STATE.licenseTier = 'PRO_PROVISIONAL';
-      STATE.licenseKey = 'DS-PRO-2026-CALIBER';
     }
     STATE.lastGeneratedInvoice = invoiceObj;
     saveState();

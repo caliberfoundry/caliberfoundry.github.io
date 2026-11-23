@@ -9,15 +9,100 @@
 
   const STORAGE_KEYS = {
     PRO_UNLOCKED: "cf_dealshield_pro_v1",
+    LICENSE_KEY: "cf_dealshield_key_v1",
     USER_SESSION: "cf_dealshield_user_v1",
     LAST_INVOICE: "cf_dealshield_invoice_v1"
   };
 
-  const VALID_LICENSE_KEYS = [
-    "DSH-PRO-2026-CALIBER",
-    "CF-PRO-2026-CALIBER",
-    "DEALSHIELD-ENTERPRISE-2026"
+  // Zero plaintext keys in client bundle: verified via Asymmetric RSA-512 public modulus or 8-round 256-bit salted KDF digest
+  const CF_RSA_PUBLIC_MODULUS_B36 =
+    "131IRZHBZ87C6IXGX2XD8YG1YLYMJJZPTAXPXIAZ82NVXKGRA4E2P1ECVL1P7M5FNMHF899RJ4TODBM6QO1A0V2NHIO8DZ9DEBF7";
+  const ALLOWED_KEY_DIGESTS = [
+    "c92ab1721a2e7783821cd2587536747280558f89cda25c4985f232dd857b5275",
+    "16d0b5e16289a82c655f8387a2a780732ea9f445ca99963af9ab7af59cf10e53",
+    "11f8459808384227510276123de07e69966010d4d296ccee11e34da871e43881"
   ];
+
+  function cfBase36ToBigInt(str) {
+    const clean = String(str || "").trim().toUpperCase();
+    if (!/^[0-9A-Z]+$/.test(clean)) return 0n;
+    let val = 0n;
+    for (let i = 0; i < clean.length; i++) {
+      const code = clean.charCodeAt(i);
+      const digit = code >= 65 ? BigInt(code - 55) : BigInt(code - 48);
+      val = val * 36n + digit;
+    }
+    return val;
+  }
+
+  function cfModPow(base, exp, mod) {
+    let res = 1n;
+    base = base % mod;
+    while (exp > 0n) {
+      if (exp & 1n) res = (res * base) % mod;
+      exp >>= 1n;
+      base = (base * base) % mod;
+    }
+    return res;
+  }
+
+  function cfComputeSaltedDigestHex(inputStr) {
+    const s = "CF_KDF_2026_SALT_9F84C2E1|" + String(inputStr || "").trim().toUpperCase();
+    const seeds = [
+      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    ];
+    for (let round = 0; round < 8; round++) {
+      for (let i = 0; i < s.length; i++) {
+        const c = s.charCodeAt(i);
+        const lane = (i + round) & 7;
+        seeds[lane] = (Math.imul(seeds[lane] ^ c, 2654435761) + ((seeds[(lane + 1) & 7] >>> 3) ^ (i * 1597334677))) | 0;
+        seeds[(lane + 3) & 7] = (seeds[(lane + 3) & 7] ^ ((seeds[lane] << 7) | (seeds[lane] >>> 25))) | 0;
+      }
+    }
+    return seeds.map((n) => (n >>> 0).toString(16).padStart(8, "0")).join("");
+  }
+
+  function verifyDealShieldLicenseKey(rawKey) {
+    const clean = String(rawKey || "").trim().toUpperCase();
+    if (!clean) return { valid: false };
+    const parts = clean.split("-");
+    if (parts[0] === "CFK" && (parts.length === 6 || parts.length === 5)) {
+      try {
+        const prod = parts[1];
+        const tier = parts[2];
+        const cust = parts[3];
+        const hasExp = parts.length === 6;
+        const expYmd = hasExp ? parts[4] : "20991231";
+        const sigB36 = hasExp ? parts[5] : parts[4];
+        if (prod === "DSH" || prod === "ALL") {
+          const N = cfBase36ToBigInt(CF_RSA_PUBLIC_MODULUS_B36);
+          const sigBig = cfBase36ToBigInt(sigB36);
+          if (sigBig > 0n && sigBig < N) {
+            const recovered = cfModPow(sigBig, 65537n, N);
+            const header = hasExp ? "CFK-" + prod + "-" + tier + "-" + cust + "-" + expYmd : "CFK-" + prod + "-" + tier + "-" + cust;
+            const expectedHex = "01ff" + cfComputeSaltedDigestHex("RSA_MSG|" + header);
+            if (recovered === BigInt("0x" + expectedHex) && /^\d{8}$/.test(expYmd)) {
+              const yyyy = Number(expYmd.slice(0, 4));
+              const mm = Number(expYmd.slice(4, 6));
+              const dd = Number(expYmd.slice(6, 8));
+              const expEndMs = Date.UTC(yyyy, mm - 1, dd, 23, 59, 59, 999);
+              const expiresIso = expYmd.slice(0, 4) + "-" + expYmd.slice(4, 6) + "-" + expYmd.slice(6, 8);
+              if (Date.now() > expEndMs) {
+                return { valid: false, expired: true, expiresIso: expiresIso, customerTag: cust };
+              }
+              return { valid: true, tier: tier, customerTag: cust, expiresIso: expiresIso };
+            }
+          }
+        }
+      } catch (_) {}
+    }
+    const digest = cfComputeSaltedDigestHex(clean);
+    if (ALLOWED_KEY_DIGESTS.includes(digest)) {
+      return { valid: true, tier: "PRO", customerTag: "ENTERPRISE", expiresIso: "2027-11-23" };
+    }
+    return { valid: false };
+  }
 
   function escapeHtml(value) {
     return String(value == null ? "" : value)
@@ -505,6 +590,7 @@
   const state = {
     activePresetId: "caiq-v4",
     isProUnlocked: false,
+    licenseKey: "",
     userSession: null,
     selectedPlanName: "DealShield Single Deal Pack ($199)",
     selectedPlanPrice: "$199.00",
@@ -515,7 +601,13 @@
 
   function loadPersistedState() {
     try {
-      state.isProUnlocked = localStorage.getItem(STORAGE_KEYS.PRO_UNLOCKED) === "true";
+      const savedKey = localStorage.getItem(STORAGE_KEYS.LICENSE_KEY) || "";
+      const ver = verifyDealShieldLicenseKey(savedKey);
+      state.isProUnlocked = ver.valid;
+      state.licenseKey = ver.valid ? savedKey : "";
+      if (!ver.valid) {
+        localStorage.removeItem(STORAGE_KEYS.PRO_UNLOCKED);
+      }
       const rawUser = localStorage.getItem(STORAGE_KEYS.USER_SESSION);
       if (rawUser) {
         state.userSession = JSON.parse(rawUser);
@@ -1095,10 +1187,13 @@
     if (modal) modal.classList.remove("hidden");
   }
 
-  function unlockProLicense(sourceLabel, invoiceObj) {
+  function unlockProLicense(sourceLabel, invoiceObj, verifiedKey) {
     state.isProUnlocked = true;
+    if (verifiedKey) state.licenseKey = verifiedKey;
     try {
-      localStorage.setItem(STORAGE_KEYS.PRO_UNLOCKED, "true");
+      if (verifiedKey) {
+        localStorage.setItem(STORAGE_KEYS.LICENSE_KEY, verifiedKey);
+      }
       if (invoiceObj) {
         localStorage.setItem(STORAGE_KEYS.LAST_INVOICE, JSON.stringify(invoiceObj));
       }
@@ -1507,19 +1602,24 @@
       activateKeyBtn.addEventListener("click", () => {
         const keyIn = document.getElementById("licenseKeyInput");
         const keyVal = keyIn ? keyIn.value.trim().toUpperCase() : "";
-        if (VALID_LICENSE_KEYS.includes(keyVal)) {
-          unlockProLicense("Key " + keyVal, {
-            invoiceId: "INV-DSH-2026-8841",
-            company: (state.userSession && state.userSession.org) || "Enterprise License Holder",
-            email: (state.userSession && state.userSession.email) || "security@enterprise.io",
-            plan: "DealShield Studio PRO License",
-            amount: "$399.00",
-            isPaid: true
-          });
+        const ver = verifyDealShieldLicenseKey(keyVal);
+        if (ver.valid) {
+          unlockProLicense(
+            "Verified License · " + (ver.customerTag || "PRO"),
+            {
+              invoiceId: "INV-DSH-2026-8841",
+              company: ver.customerTag || (state.userSession && state.userSession.org) || "Enterprise License Holder",
+              email: (state.userSession && state.userSession.email) || "security@enterprise.io",
+              plan: "DealShield Studio PRO License (" + ver.tier + ")",
+              amount: "$399.00",
+              isPaid: true
+            },
+            keyVal
+          );
         } else {
           const fb = document.getElementById("licenseFeedbackBox");
           if (fb) {
-            fb.textContent = "Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your activation key.";
+            fb.textContent = "Invalid license key signature. Complete checkout via Gumroad or Contra (0% fee) to receive your signed activation key.";
             fb.classList.remove("hidden");
           }
         }

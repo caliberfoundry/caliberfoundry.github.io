@@ -14,11 +14,12 @@
       architecture: "Citation-Gated AST Extraction + Multi-Model Structured JSON Output + n8n / FastAPI / SCORM 1.2 Dispatch",
       defaultPresetId: "n8n-pipeline",
       freePresetIds: ["n8n-pipeline", "eval-harness"],
-      validLicenseKeys: [
-        "CF-FORGE-2026-PRO",
-        "CF-FORGE-ENT-8841",
-        "CF-STUDIO-2026-CALIBER",
-        "DS-PRO-2026-CALIBER"
+      validLicenseKeyDigests: [
+        "2081216b02af5cc9a81d3bd81d5371e6287df9bd5f059b759706a5f203f67ccf",
+        "dfead5f6340733438ee01620308c1bd16661a131bfa488f5a333e321484dd321",
+        "4c121399b298f07cd2d61cf1dfe2736df5ab9ac24dd8f7df4253fd06962b7924",
+        "aa368e25aced9f219906f8cfb603966c65f4edfa2baf81d1ace7665f42e83f3b",
+        "0219f433cd945512924e9061d2d097efe7a79d80818f582d96282b3111b323c0"
       ]
     },
 
