@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173;" />
   <title>DocuShield™ — ISO 14289-1 (PDF/UA) &amp; European Accessibility Act (EAA / WCAG 2.2 AA) Remediation Studio</title>
   <meta name="description" content="Deterministic ISO 14289-1 (PDF/UA-1), Matterhorn Protocol 31-Checkpoint, WCAG 2.2 AA, Section 508, and EU European Accessibility Act (Directive 2019/882) Document &amp; Courseware Remediation Studio by Caliber Foundry." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -625,5 +625,6 @@
   <!-- External Corpus Payload + Core Application Architecture -->
   <script src="corpus-data.js"></script>
   <script src="app.js"></script>
+  <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>
