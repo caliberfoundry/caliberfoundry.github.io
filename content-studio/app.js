@@ -1399,6 +1399,34 @@
       });
     }
 
+    const btnCloseAccount = document.getElementById('btnCloseAccountModal');
+    if (btnCloseAccount) {
+      btnCloseAccount.addEventListener('click', () => {
+        const acctModal = document.getElementById('modalAccount');
+        if (acctModal) acctModal.classList.add('hidden');
+      });
+    }
+
+    const acctForm = document.getElementById('cfAccountForm');
+    if (acctForm) {
+      acctForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameEl = document.getElementById('acctNameInput');
+        const emailEl = document.getElementById('acctEmailInput');
+        const orgEl = document.getElementById('acctOrgInput');
+        STATE.accountUser = {
+          fullName: nameEl ? nameEl.value.trim() : 'Enterprise Operator',
+          email: emailEl ? emailEl.value.trim() : 'engineering@caliberfoundry.com',
+          organization: orgEl ? orgEl.value.trim() : 'Caliber Foundry'
+        };
+        saveState();
+        refreshAllViews();
+        const acctModal = document.getElementById('modalAccount');
+        if (acctModal) acctModal.classList.add('hidden');
+        showToast('Workspace Account & Enterprise Session Activated');
+      });
+    }
+
     document.querySelectorAll('#paywallPlanGrid .cf-plan-card').forEach(card => {
       card.addEventListener('click', () => {
         const code = card.getAttribute('data-plan-code');
