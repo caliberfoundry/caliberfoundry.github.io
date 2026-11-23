@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>StealthFlowв„ў вЂ” 12-Source Playwright Extraction & Make.com Webhook Hub | Caliber Foundry</title>
+  <title>StealthFlow™ — 12-Source Playwright Extraction & Make.com Webhook Hub | Caliber Foundry</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -1094,7 +1094,7 @@
       const found = LEADS_DATA.find(l => l.lead_id === leadId);
       if (!found) return;
       selectedLead = found;
-      document.getElementById('inspectedLeadId').textContent = `${found.lead_id} В· ${found.company_name}`;
+      document.getElementById('inspectedLeadId').textContent = `${found.lead_id} · ${found.company_name}`;
       document.getElementById('inspectedMatchScore').textContent = `MATCH: ${(found.entity_match_score * 100).toFixed(1)}%`;
 
       const dirtyUrl = found.canonical_url.replace('https://', 'http://www.') + '/?utm_source=directory_feed&fbclid=IwAR99x_' + found.lead_id;
@@ -1109,9 +1109,9 @@
 
       if (rawBlockEl) rawBlockEl.textContent = `HTTP 403 (${found.anti_bot_bypass.split('+')[0].trim()} Block)`;
       if (rawPriceEl) rawPriceEl.textContent = `"From $${Number(found.unit_price_avg).toLocaleString()}* USD across ~${found.sku_count} messy HTML tags"`;
-      if (cleanCompEl) cleanCompEl.textContent = `${found.company_name} (${found.location} В· ${found.annual_revenue_est})`;
-      if (cleanSkusEl) cleanSkusEl.textContent = `${Number(found.sku_count).toLocaleString()} SKUs В· $${Number(found.unit_price_avg).toLocaleString()} normalized float`;
-      if (cleanContactEl) cleanContactEl.textContent = `${found.decision_maker} В· ${found.email} В· ${found.phone}`;
+      if (cleanCompEl) cleanCompEl.textContent = `${found.company_name} (${found.location} · ${found.annual_revenue_est})`;
+      if (cleanSkusEl) cleanSkusEl.textContent = `${Number(found.sku_count).toLocaleString()} SKUs · $${Number(found.unit_price_avg).toLocaleString()} normalized float`;
+      if (cleanContactEl) cleanContactEl.textContent = `${found.decision_maker} · ${found.email} · ${found.phone}`;
 
       const urlInput = document.getElementById('liveScrapeUrlInput');
       if (urlInput) urlInput.value = found.canonical_url;
@@ -1192,7 +1192,7 @@
         if (statusText) {
           statusText.innerHTML = `&check; <strong>[STAGE 3/3 COMPLETE]</strong> Extracted <strong>${escapeHtml(matched.company_name)}</strong> (${matched.sku_count} SKUs, anonymized contact <code>${escapeHtml(matched.email)}</code>). Compare Before vs. After on the right &rarr;`;
         }
-        if (badge) badge.textContent = '1.1s В· 100% CLEAN';
+        if (badge) badge.textContent = '1.1s · 100% CLEAN';
         setTimeout(() => {
           if (btn) btn.innerHTML = `<span>&#9654; Run Live Extraction &amp; Clean Data (1.1s)</span>`;
         }, 2400);
@@ -1202,7 +1202,7 @@
     function copySelectedJson() {
       navigator.clipboard.writeText(JSON.stringify(selectedLead, null, 2));
       const btn = document.getElementById('btnCopyJson');
-      btn.textContent = 'вњ“ COPIED JSON';
+      btn.textContent = '✓ COPIED JSON';
       setTimeout(() => { btn.textContent = 'Copy Clean JSON'; }, 1400);
     }
 

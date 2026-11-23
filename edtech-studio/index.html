@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>ORFF Maestraв„ў TTL-MSM & Certification SCORM 1.2 Studio | Caliber Foundry</title>
+  <title>ORFF Maestra™ TTL-MSM & Certification SCORM 1.2 Studio | Caliber Foundry</title>
   <script src="./scorm_and_ttl_engine.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -775,7 +775,7 @@
             <button type="button" onclick="selectQuizOption('B')" id="quiz_opt_B" class="quiz-option">
               <span class="opt-letter">B</span>
               <div id="quiz_opt_B_content">
-                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Normal Bilingual Development (Keep in General Education вЂ” Correct Answer)</div>
+                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Normal Bilingual Development (Keep in General Education — Correct Answer)</div>
                 <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder.</div>
               </div>
             </button>
@@ -1034,11 +1034,11 @@
     const QUIZ_TOPICS = {
       bilingual: {
         title: "Evaluating a Bilingual Student: Difference vs. Disorder",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #1 В· EDUCATION &amp; CLINICAL]</div>
+        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #1 · EDUCATION &amp; CLINICAL]</div>
           <p>A 7-year-old Spanish-English bilingual student scores low on an <strong>English-only vocabulary test</strong>. However, the parents confirm strong Spanish storytelling at home, and during a 20-minute practice lesson, the student <strong>quickly learns and applies new grammar rules</strong>.</p>
           <p style="font-weight:600; margin-top:8px;">Question: What is the correct conclusion for this student?</p>`,
         optA: { title: "Label as a Language Disorder based on the English test score", sub: "Place the student in Special Education because the English-only test score was low." },
-        optB: { title: "Normal Bilingual Development (Keep in General Education вЂ” Correct Answer)", sub: "Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder." },
+        optB: { title: "Normal Bilingual Development (Keep in General Education — Correct Answer)", sub: "Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder." },
         optC: { title: "Wait 12 months and do nothing", sub: "Postpone recording parent feedback or practice lessons until next school year." },
         feedbackB: `<strong>&check; CORRECT ANSWER (SCORE: 95/100)</strong> &mdash; Strong home language skills combined with fast learning during a 20-minute practice lesson confirm <strong>Normal Bilingual Development</strong> (not a learning disorder).`,
         feedbackA: `<strong>! NOT QUITE (COMMON MISTAKE)</strong> &mdash; Relying only on an English-only test score for a bilingual student causes false positives. Look at how fast the student learned in the 20-minute practice lesson (Try Answer B).`,
@@ -1046,7 +1046,7 @@
       },
       devops: {
         title: "Kubernetes Production Troubleshooting: CrashLoopBackOff & OOMKilled",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #2 В· CLOUD &amp; LINUX DEVOPS]</div>
+        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #2 · CLOUD &amp; LINUX DEVOPS]</div>
           <p>A production payment microservice pod enters <code>CrashLoopBackOff</code> with exit code <strong>137 (OOMKilled)</strong> whenever traffic spikes above 400 req/s. The container memory limit is set to <code>256Mi</code>, while heap profiling shows a steady <code>340Mi</code> working set under peak load.</p>
           <p style="font-weight:600; margin-top:8px;">Question: Which remediation resolves the outage without disabling memory safety bounds?</p>`,
         optA: { title: "Remove all memory limits from the Kubernetes Deployment manifest", sub: "Allow the pod to consume unbounded host node RAM." },
@@ -1058,7 +1058,7 @@
       },
       fintech: {
         title: "SOC 2 & Production API Key Rotation Compliance",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #3 В· FINTECH &amp; SECURITY COMPLIANCE]</div>
+        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #3 · FINTECH &amp; SECURITY COMPLIANCE]</div>
           <p>During a SOC 2 Type II audit, the auditor inspects a service account key with <strong>production write access</strong> that has not been rotated in 145 days and authenticates via static bearer token without client certificates.</p>
           <p style="font-weight:600; margin-top:8px;">Question: How must this finding be classified and remediated?</p>`,
         optA: { title: "Pass the control because no external breach occurred", sub: "Leave the 145-day static key active until annual review." },
@@ -1126,7 +1126,7 @@
 
       QUIZ_TOPICS.custom = {
         title: "Auto-Generated SCORM 1.2 Question from Your Text",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:6px;">[GENERATED FROM YOUR SOURCE PARAGRAPH В· ADL SCORM 1.2]</div>
+        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:6px;">[GENERATED FROM YOUR SOURCE PARAGRAPH · ADL SCORM 1.2]</div>
           <p><strong>Source Rule:</strong> &ldquo;${escapeHtml(rawText)}&rdquo;</p>
           <p style="font-weight:600; margin-top:8px;">Question: Which action satisfies the requirement stated in your source rule above?</p>`,
         optA: { title: "Bypass the policy requirement to speed up deployment", sub: "Distractor A: Violates the mandatory rule threshold in the source text." },
@@ -1138,7 +1138,7 @@
       };
       loadQuizTopic('custom');
       const topBadge = document.getElementById('scormStatusTopBadge');
-      if (topBadge) topBadge.textContent = 'вњ“ CUSTOM QUIZ GENERATED!';
+      if (topBadge) topBadge.textContent = '✓ CUSTOM QUIZ GENERATED!';
     }
 
     function selectQuizOption(opt) {
@@ -1188,7 +1188,7 @@
       const box = document.getElementById('socraticChatBox');
       let reply = "A 20-minute practice lesson measures how fast a student learns when taught a new rule. If a child had a true language disorder, they would struggle to learn new grammar rules even with help.";
       if (question.includes('Norm-Referenced') || question.includes('English-only')) {
-        reply = "An English-only vocabulary test compares a bilingual student against children who spoke only English since birth. A low English score just shows they are still learning English вЂ” not that they have a disorder.";
+        reply = "An English-only vocabulary test compares a bilingual student against children who spoke only English since birth. A low English score just shows they are still learning English — not that they have a disorder.";
       }
       box.innerHTML += `
         <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">

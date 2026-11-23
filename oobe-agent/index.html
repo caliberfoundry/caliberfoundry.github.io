@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>OOBE Sentinel вЂ” Autonomous Solana Capital Agent & SAP MCP Telemetry Workbench | Caliber Foundry</title>
+  <title>OOBE Sentinel — Autonomous Solana Capital Agent & SAP MCP Telemetry Workbench | Caliber Foundry</title>
   <meta name="description" content="Deterministic risk-adjusted Solana capital allocation engine, break-even rebalance horizon optimizer, MultiHopper routing adapter, and verifiable SAP MCP execution receipt workbench for OOBE Protocol and Steve Capital." />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -813,13 +813,13 @@
   <!-- BAR 1: PRIMARY APP BAR -->
   <header class="app-bar">
     <div class="brand-cluster">
-      <a href="../index.html" class="back-btn">в†ђ Foundry</a>
+      <a href="../index.html" class="back-btn">← Foundry</a>
       <h1 class="brand-title">OOBE Sentinel</h1>
       <span class="brand-subtitle">Autonomous Solana Capital Agent &amp; SAP MCP Telemetry Workbench</span>
     </div>
     <div class="app-bar-right">
-      <span class="badge badge-navy">OOBE Protocol В· Steve Capital</span>
-      <span class="badge badge-pass" id="globalRuntimeBadge">SAP MCP В· MultiHopper Active</span>
+      <span class="badge badge-navy">OOBE Protocol · Steve Capital</span>
+      <span class="badge badge-pass" id="globalRuntimeBadge">SAP MCP · MultiHopper Active</span>
       <button type="button" class="btn-secondary" id="downloadAuditBtn">Export Audit JSON</button>
     </div>
   </header>
@@ -836,7 +836,7 @@
     <div class="action-cluster">
       <button type="button" class="btn-ghost" id="resetVaultBtn">Reset Vault</button>
       <button type="button" class="btn-secondary" id="runBacktestBtn">Run 5-Epoch Backtest</button>
-      <button type="button" class="btn-primary" id="executeTickBtn">Execute Single Tick в†’</button>
+      <button type="button" class="btn-primary" id="executeTickBtn">Execute Single Tick →</button>
     </div>
   </nav>
 
@@ -974,7 +974,7 @@
                   <th>Net APY</th>
                   <th>Sharpe / Sortino</th>
                   <th>Pyth Oracle</th>
-                  <th>Current в†’ Target</th>
+                  <th>Current → Target</th>
                   <th>Rebalance Leg</th>
                 </tr>
               </thead>
@@ -1052,7 +1052,7 @@
           </div>
           <div class="meta-cell">
             <span class="spec-label">Compute Units / Fee</span>
-            <div class="hash-value" id="receiptComputeUnits">292,300 CU В· 35k lamp.</div>
+            <div class="hash-value" id="receiptComputeUnits">292,300 CU · 35k lamp.</div>
           </div>
           <div class="meta-cell full-span">
             <span class="spec-label">Ace Data Cloud MCP Research Brief Hash</span>
@@ -1623,7 +1623,7 @@
           return {
             shouldExecute: false,
             rejectionCode: 'RISK_BLOCKED',
-            reason: 'Blocked by OOBE risk guardrails: ' + (v0 ? v0.code + ' вЂ” ' + v0.message : 'Policy violation'),
+            reason: 'Blocked by OOBE risk guardrails: ' + (v0 ? v0.code + ' — ' + v0.message : 'Policy violation'),
             currentWeightedApyBps: currentApyBps,
             proposedWeightedApyBps: proposedApyBps,
             netApyImprovementBps: netApyGain,
@@ -2099,7 +2099,7 @@
 
         var pbText = step.proposal.paybackHorizonHours > 0 && step.proposal.paybackHorizonHours < 99999
           ? step.proposal.paybackHorizonHours.toFixed(1) + 'h'
-          : 'вЂ”';
+          : '—';
         document.getElementById('kpiPaybackValue').textContent = pbText;
         document.getElementById('kpiCostSub').textContent = 'Exec Drag: $' + step.proposal.totalExecutionCostUsd.toFixed(2) + ' (Max ' + policy.maxPaybackHorizonHours + 'h)';
 
@@ -2120,7 +2120,7 @@
           var oracleStale = v.oracleAgeSeconds > policy.maxOracleStalenessSeconds || v.oracleConfidenceBps > policy.maxOracleConfidenceBps;
           var oracleBadge = oracleStale
             ? '<span class="badge badge-alert">' + v.oracleAgeSeconds + 's STALE</span>'
-            : '<span class="badge badge-pass">' + v.oracleAgeSeconds + 's В· В±' + v.oracleConfidenceBps + 'bps</span>';
+            : '<span class="badge badge-pass">' + v.oracleAgeSeconds + 's · В±' + v.oracleConfidenceBps + 'bps</span>';
 
           var legBadge = 'badge-navy';
           var legText = 'HOLD ($0)';
@@ -2138,7 +2138,7 @@
             '<tr>' +
               '<td>' +
                 '<div class="venue-name">' + escapeHtml(v.name) + '</div>' +
-                '<div class="venue-prog">' + escapeHtml(v.programId.slice(0, 16)) + '... В· ' + escapeHtml(v.strategyLabel) + '</div>' +
+                '<div class="venue-prog">' + escapeHtml(v.programId.slice(0, 16)) + '... · ' + escapeHtml(v.strategyLabel) + '</div>' +
               '</td>' +
               '<td class="mono">' +
                 '<strong>' + escapeHtml(netApyPct) + '</strong>' +
@@ -2150,7 +2150,7 @@
               '</td>' +
               '<td>' + oracleBadge + '</td>' +
               '<td class="mono">' +
-                escapeHtml((t.currentWeightBps / 100).toFixed(1)) + '% в†’ <strong>' + escapeHtml((t.targetWeightBps / 100).toFixed(1)) + '%</strong>' + capTag +
+                escapeHtml((t.currentWeightBps / 100).toFixed(1)) + '% → <strong>' + escapeHtml((t.targetWeightBps / 100).toFixed(1)) + '%</strong>' + capTag +
                 '<div class="weight-bar-track"><div class="weight-bar-fill" style="width:' + Math.min(100, t.targetWeightBps / 100) + '%;"></div></div>' +
               '</td>' +
               '<td><span class="badge ' + legBadge + '">' + escapeHtml(legText) + '</span></td>' +
@@ -2187,11 +2187,11 @@
           var stApy = ((st.receipt.executed ? st.proposal.proposedWeightedApyBps : st.proposal.currentWeightedApyBps) / 100).toFixed(2) + '%';
           var stPb = st.proposal.paybackHorizonHours > 0 && st.proposal.paybackHorizonHours < 99999
             ? st.proposal.paybackHorizonHours.toFixed(1) + 'h'
-            : 'вЂ”';
+            : '—';
 
           return (
             '<tr class="' + rowCls + '" data-step-row="' + idx + '">' +
-              '<td class="mono"><strong>0' + st.stepIndex + '</strong> В· ' + escapeHtml(st.regimeLabel.replace(/^0\d_/, '')) + '</td>' +
+              '<td class="mono"><strong>0' + st.stepIndex + '</strong> · ' + escapeHtml(st.regimeLabel.replace(/^0\d_/, '')) + '</td>' +
               '<td>' + actBadge + '</td>' +
               '<td class="mono">$' + st.poolAfter.totalEquityUsd.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</td>' +
               '<td class="mono">' + escapeHtml(stApy) + '</td>' +
@@ -2215,7 +2215,7 @@
         document.getElementById('receiptDecisionHash').textContent = step.receipt.decisionHashSha256;
         document.getElementById('receiptMultiHopperId').textContent = step.receipt.multiHopperRouteId || 'NONE (Direct Hold)';
         document.getElementById('receiptComputeUnits').textContent =
-          step.receipt.totalComputeUnits.toLocaleString() + ' CU В· ' + step.receipt.priorityFeeLamports.toLocaleString() + ' lamp.';
+          step.receipt.totalComputeUnits.toLocaleString() + ' CU · ' + step.receipt.priorityFeeLamports.toLocaleString() + ' lamp.';
         document.getElementById('receiptAceHash').textContent = step.receipt.aceResearchBriefHash;
         document.getElementById('ixCountBadge').textContent = step.receipt.instructions.length + ' Instructions';
 
@@ -2227,7 +2227,7 @@
             '</div>';
         } else {
           document.getElementById('instructionBundleList').innerHTML = step.receipt.instructions.map(function (ix, i) {
-            var venueSuffix = ix.venueId ? ' В· ' + ix.venueId.toUpperCase() : '';
+            var venueSuffix = ix.venueId ? ' · ' + ix.venueId.toUpperCase() : '';
             var amtSuffix = ix.amountUsd ? ' ($' + ix.amountUsd.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ')' : '';
             return (
               '<div class="ix-card">' +

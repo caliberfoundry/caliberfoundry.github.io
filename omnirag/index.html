@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>OmniRAGв„ў вЂ” Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
+  <title>OmniRAG™ — Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -812,7 +812,7 @@
           </span>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center;">
-          <input id="customDocAInput" type="text" value="Contract_Clause.pdf (В§4.1): Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
+          <input id="customDocAInput" type="text" value="Contract_Clause.pdf (§4.1): Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
           <input id="customDocBInput" type="text" value="Vendor_Invoice.xlsx (Row 8): Billed annual fee is $68,500 with 15-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document B row" />
           <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile btn-tactile-vermilion" style="padding:8px 14px; white-space:nowrap;">
             <span>&#9654; Cross-Check Now</span>
@@ -1006,8 +1006,8 @@
             name: "Master_Service_Agreement.docx",
             format: "Word",
             chunks: [
-              { id: "cit_docx_s42", coord: "Page 7, Section В§4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "В§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
-              { id: "cit_docx_s61", coord: "Page 11, Section В§6.1", title: "Customer Data Privacy & Zero Retention", text: "В§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
+              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
+              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Customer Data Privacy & Zero Retention", text: "§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
             ]
           },
           {
@@ -1031,7 +1031,7 @@
                 </div>
                 <div class="diff-compare-grid">
                   <div class="diff-col-a">
-                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-forest-pass);">WORD CONTRACT (В§4.2) &amp; EXCEL (ROW 14)</div>
+                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-forest-pass);">WORD CONTRACT (§4.2) &amp; EXCEL (ROW 14)</div>
                     <div>Max SLA Penalty Cap: <strong>$285,000 (12.0%)</strong></div>
                   </div>
                   <div class="diff-col-mismatch">
@@ -1041,7 +1041,7 @@
                 </div>
                 <div class="finding-proof-btns">
                   <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">&#9654; Highlight $285k Cap in Excel (Row 14) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">&#9654; Highlight В§4.2 in Word Contract (Page 7) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">&#9654; Highlight §4.2 in Word Contract (Page 7) &rarr;</button>
                 </div>
               </div>
               <div class="finding-card">
@@ -1066,7 +1066,7 @@
               </div>
               <div class="finding-card" style="margin-bottom:0;">
                 <div class="finding-header">
-                  <span class="finding-title">Finding 3: Data Privacy Clause (В§6.1)</span>
+                  <span class="finding-title">Finding 3: Data Privacy Clause (§6.1)</span>
                   <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; VERIFIED</span>
                 </div>
                 <div class="finding-desc">
@@ -1103,7 +1103,7 @@
             name: "RevOps_DealDesk_Matrix.xlsx",
             format: "Excel",
             chunks: [
-              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200kвЂ“$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
+              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
               { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (Add-On Rules)", title: "Free Integration Bundle Rule (Orders >= $200k)", text: "Row 15 | Integration Bundle SKU: Included free of charge ($0) for any contract >= $200,000/year." }
             ]
           },
@@ -1112,7 +1112,7 @@
             name: "Security_DPA_Addendum.docx",
             format: "Word",
             chunks: [
-              { id: "ap_cit_s31", coord: "Page 4, Clause В§3.1", title: "Pre-Approved Security Terms", text: "В§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
+              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "Pre-Approved Security Terms", text: "§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
             ]
           }
         ],
@@ -1181,7 +1181,7 @@
             name: "Solar_Land_Lease.pdf",
             format: "PDF",
             chunks: [
-              { id: "bq_cit_p4", coord: "Page 4, Section В§3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, В§3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
+              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, §3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
             ]
           }
         ],
@@ -1269,7 +1269,7 @@
 
       const firstDoc = preset.docs[0];
       const firstChunk = firstDoc.chunks[0];
-      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) вЂ” "${firstChunk.title}"`;
+      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) — "${firstChunk.title}"`;
     }
 
     function renderChatMessageHTML(msg) {
@@ -1312,7 +1312,7 @@
       const doc = preset.docs.find(d => d.id === docId);
       if (doc && doc.chunks[0]) {
         highlightedChunkId = doc.chunks[0].id;
-        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) вЂ” "${doc.chunks[0].title}"`;
+        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) — "${doc.chunks[0].title}"`;
       }
       renderDocumentTabs();
       renderDocumentViewport();
@@ -1335,7 +1335,7 @@
                 <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
               </div>
               <span class="mono" style="font-size:10.5px; font-weight:700; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? 'вњ“ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
+                ${isHighlighted ? '✓ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
               </span>
             </div>
             <p class="chunk-body-text">
@@ -1379,13 +1379,13 @@
       if (badge) {
         badge.textContent = hasMismatch
           ? `! CAUGHT NUMBER MISMATCH (${numsA.join(', ') || 'Text A'} vs. ${numsB.join(', ') || 'Text B'})`
-          : 'вњ“ NUMBERS MATCH ACROSS BOTH FILES';
+          : '✓ NUMBERS MATCH ACROSS BOTH FILES';
         badge.style.color = hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)';
       }
 
       PRESETS[currentPresetKey].docs[0].chunks.unshift({
         id: 'cit_custom_a',
-        coord: 'Custom File A (В§1.1)',
+        coord: 'Custom File A (§1.1)',
         title: 'Uploaded Contract / Source A',
         text: textA
       });
@@ -1410,11 +1410,11 @@
           </div>
           <div class="diff-compare-grid">
             <div class="diff-col-a">
-              <div class="mono" style="font-size:10px; font-weight:700;">FILE A EXTRACTED NUMBERS: ${escapeHtml(numsA.join(' В· ') || 'None')}</div>
+              <div class="mono" style="font-size:10px; font-weight:700;">FILE A EXTRACTED NUMBERS: ${escapeHtml(numsA.join(' · ') || 'None')}</div>
               <div>${escapeHtml(textA)}</div>
             </div>
             <div class="${hasMismatch ? 'diff-col-mismatch' : 'diff-col-b'}">
-              <div class="mono" style="font-size:10px; font-weight:700;">FILE B EXTRACTED NUMBERS: ${escapeHtml(numsB.join(' В· ') || 'None')}</div>
+              <div class="mono" style="font-size:10px; font-weight:700;">FILE B EXTRACTED NUMBERS: ${escapeHtml(numsB.join(' · ') || 'None')}</div>
               <div>${escapeHtml(textB)}</div>
             </div>
           </div>
@@ -1442,15 +1442,16 @@
       const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
 
       if (doc && chunk) {
-        document.getElementById('activeCitationText').textContent = `вњ“ JUMPED TO: ${doc.name} (${chunk.coord}) вЂ” "${chunk.title}"`;
+        document.getElementById('activeCitationText').textContent = `✓ JUMPED TO: ${doc.name} (${chunk.coord}) — "${chunk.title}"`;
       }
 
       flashOmniElement('activeCitationBanner');
       flashOmniElement('chunk_' + chunkId);
 
       const el = document.getElementById('chunk_' + chunkId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const vp = document.getElementById('documentViewport');
+      if (el && vp) {
+        vp.scrollTo({ top: Math.max(0, el.offsetTop - vp.offsetTop - 20), behavior: 'smooth' });
       }
     }
 

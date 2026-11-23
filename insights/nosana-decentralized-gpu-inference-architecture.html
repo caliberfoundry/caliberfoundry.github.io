@@ -7,7 +7,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>Nosana Decentralized GPU Inference Architecture: Solana-Coordinated Compute Economics vs. Hyperscaler Clouds | Caliber Foundry</title>
-  <meta name="description" content="Systems architecture and unit-economics monograph on the Nosana decentralized GPU inference grid. Analyze Solana on-chain job scheduling, OCI container execution, vLLM serving benchmarks, and 75вЂ“85% compute cost reductions versus AWS and GCP." />
+  <meta name="description" content="Systems architecture and unit-economics monograph on the Nosana decentralized GPU inference grid. Analyze Solana on-chain job scheduling, OCI container execution, vLLM serving benchmarks, and 75–85% compute cost reductions versus AWS and GCP." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="https://caliberfoundry.com/insights/nosana-decentralized-gpu-inference-architecture.html" />
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
@@ -302,14 +302,14 @@
     <h1 class="article-title">Nosana Decentralized GPU Inference Architecture</h1>
 
     <p class="article-lede">
-      85% of enterprise machine learning spend occurs during production inferenceвЂ”a parallel workload that does not require $98/hr NVLink islands. Nosana coordinates a global mesh of RTX 4090 and datacenter A100/H100 nodes via Solana smart contracts, cutting inference TCO by 72%вЂ“84%.
+      85% of enterprise machine learning spend occurs during production inference—a parallel workload that does not require $98/hr NVLink islands. Nosana coordinates a global mesh of RTX 4090 and datacenter A100/H100 nodes via Solana smart contracts, cutting inference TCO by 72%–84%.
     </p>
 
     <!-- 1. CONCISE EXECUTIVE KPI STRIP (ABOVE THE FOLD) -->
     <div class="kpi-grid">
       <div class="kpi-cell">
         <span class="kpi-label">01 // INFERENCE COST REDUCTION</span>
-        <span class="kpi-value">72%вЂ“84%</span>
+        <span class="kpi-value">72%–84%</span>
         <span class="kpi-sub">vs. AWS EC2 G5 / P4d / P5 On-Demand</span>
       </div>
       <div class="kpi-cell">
@@ -363,7 +363,7 @@
               <input type="number" id="ns-nodes" class="field-input" value="8" min="1" max="500" step="1" />
             </div>
             <div class="field-group">
-              <label for="ns-hours">Average Active Inference Hours Per Day (1вЂ“24h)</label>
+              <label for="ns-hours">Average Active Inference Hours Per Day (1–24h)</label>
               <input type="number" id="ns-hours" class="field-input" value="18" min="1" max="24" step="1" />
             </div>
           </div>
@@ -424,7 +424,7 @@
           <text x="346" y="102" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ JobAccount &lt;-&gt; MarketAccount</text>
           <text x="346" y="122" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Deterministic Queue Matching</text>
           <text x="346" y="142" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">+ Node NOS Collateral &amp; Slashing</text>
-          <text x="346" y="166" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#C8431F">400ms Slot Finality В· $0.0005 Tx</text>
+          <text x="346" y="166" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#C8431F">400ms Slot Finality · $0.0005 Tx</text>
 
           <line x1="586" y1="113" x2="646" y2="113" stroke="#141413" stroke-width="2"/>
           <polygon points="646,113 636,107 636,119" fill="#141413"/>
@@ -451,7 +451,7 @@
           <text x="40" y="292" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#141413">A. OpenAI-Compatible Inference Ingress</text>
           <text x="40" y="314" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">POST /v1/chat/completions (SSE Stream)</text>
           <text x="40" y="334" font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A4842">PagedAttention KV-Cache + Continuous Batching</text>
-          <text x="40" y="362" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">TTFT: 180вЂ“340ms В· Throughput: 65вЂ“140 tok/s</text>
+          <text x="40" y="362" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">TTFT: 180–340ms · Throughput: 65–140 tok/s</text>
 
           <line x1="460" y1="274" x2="460" y2="376" stroke="#1A5638" stroke-width="1" stroke-dasharray="3 3"/>
 
@@ -477,7 +477,7 @@
           </p>
           <ul>
             <li><strong>Zero Inter-Node Gradient Sync Required:</strong> A single 24GB NVIDIA RTX 4090 (82.6 TFLOPS FP16, 1,008 GB/s memory bandwidth) or dual-4090 / single-A100 80GB node can serve quantized 8B, 32B, and 70B models entirely inside local VRAM without cross-datacenter all-reduce traffic.</li>
-            <li><strong>Bursty Diurnal Traffic Curves:</strong> Production SaaS and agentic inference loads peak 4xвЂ“8x during business hours and trough overnight. Hyperscalers force teams to sign 1-to-3 year reserved capacity commitments or suffer quota exhaustion on on-demand instances.</li>
+            <li><strong>Bursty Diurnal Traffic Curves:</strong> Production SaaS and agentic inference loads peak 4x–8x during business hours and trough overnight. Hyperscalers force teams to sign 1-to-3 year reserved capacity commitments or suffer quota exhaustion on on-demand instances.</li>
             <li><strong>Massive Underutilized Global Silicon Supply:</strong> Millions of high-VRAM consumer GPUs (RTX 4090, RTX 3090) and independent Tier-2/3 datacenter racks sit idle or under-allocated outside the big three cloud providers.</li>
           </ul>
         </div>
@@ -493,7 +493,7 @@
         </summary>
         <div class="drilldown-body">
           <p>
-            Dynamic inference orchestration requires high-frequency state transitionsвЂ”posting jobs, claiming nodes, heartbeating health checks, extending job leases, and settling pro-rata per-second compute fees:
+            Dynamic inference orchestration requires high-frequency state transitions—posting jobs, claiming nodes, heartbeating health checks, extending job leases, and settling pro-rata per-second compute fees:
           </p>
           <ol>
             <li><strong>Segmented Hardware Markets (`MarketAccount`):</strong> Nosana categorizes GPU supply into deterministic hardware markets (`nvidia-4090`, `nvidia-3090`, `nvidia-a100-80gb`, `nvidia-h100`) verified via automated hardware benchmarks.</li>
@@ -544,25 +544,25 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>NVIDIA RTX 4090 (24GB GDDR6X)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">82.6 TFLOPS FP16 В· 1,008 GB/s BW</span></td>
+                  <td><strong>NVIDIA RTX 4090 (24GB GDDR6X)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">82.6 TFLOPS FP16 · 1,008 GB/s BW</span></td>
                   <td>Llama-3.1-8B/32B-AWQ, Qwen-2.5-Coder-32B, Whisper-Large-v3, Flux.1 / SDXL</td>
-                  <td class="mono" style="color:var(--cf-accent-primary);">$1.21 вЂ“ $1.65 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS g5.2xlarge L4/A10G)</span></td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">$0.25 вЂ“ $0.38 / hr</td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">~76% вЂ“ 81% Lower</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$1.21 – $1.65 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS g5.2xlarge L4/A10G)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.25 – $0.38 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~76% – 81% Lower</td>
                 </tr>
                 <tr>
-                  <td><strong>NVIDIA A100 (80GB HBM2e)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">312 TFLOPS BF16 В· 2,039 GB/s BW</span></td>
+                  <td><strong>NVIDIA A100 (80GB HBM2e)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">312 TFLOPS BF16 · 2,039 GB/s BW</span></td>
                   <td>Llama-3.3-70B-Instruct, DeepSeek-R1-Distill-70B, High-Batch Embeddings</td>
-                  <td class="mono" style="color:var(--cf-accent-primary);">$3.67 вЂ“ $4.10 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS p4de / GCP a2-ultragpu)</span></td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">$0.90 вЂ“ $1.25 / hr</td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">~70% вЂ“ 75% Lower</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$3.67 – $4.10 / hr<br/><span style="font-weight:400; font-size:11px;">(AWS p4de / GCP a2-ultragpu)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.90 – $1.25 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~70% – 75% Lower</td>
                 </tr>
                 <tr>
                   <td><strong>NVIDIA H100 (80GB HBM3)</strong><br/><span style="font-size:12px; color:var(--cf-ink-muted);">989 TFLOPS FP16 / 1,979 FP8</span></td>
                   <td>High-Concurrency FP8 Multi-Agent Reasoning, Real-Time Video Generation</td>
-                  <td class="mono" style="color:var(--cf-accent-primary);">$6.90 вЂ“ $8.50 / hr<br/><span style="font-weight:400; font-size:11px;">(Per-GPU p5.48xlarge slice)</span></td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">$1.95 вЂ“ $2.45 / hr</td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">~71% вЂ“ 74% Lower</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$6.90 – $8.50 / hr<br/><span style="font-weight:400; font-size:11px;">(Per-GPU p5.48xlarge slice)</span></td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$1.95 – $2.45 / hr</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">~71% – 74% Lower</td>
                 </tr>
               </tbody>
             </table>

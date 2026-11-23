@@ -7,19 +7,19 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation &amp; Signed Webhooks | Caliber Foundry</title>
-  <meta name="description" content="Systems engineering guide to resilient web data extraction and catalog ETL pipelines (StealthFlowв„ў). Learn how network-layer XHR/Fetch payload interception, Pydantic/JSON-Schema quarantine gates, and HMAC-SHA256 webhooks replace brittle CSS/XPath scrapers." />
+  <meta name="description" content="Systems engineering guide to resilient web data extraction and catalog ETL pipelines (StealthFlow™). Learn how network-layer XHR/Fetch payload interception, Pydantic/JSON-Schema quarantine gates, and HMAC-SHA256 webhooks replace brittle CSS/XPath scrapers." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html" />
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Caliber Foundry" />
   <meta property="og:title" content="Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines" />
-  <meta property="og:description" content="Why CSS selector scrapers silently corrupt downstream databasesвЂ”and how StealthFlowв„ў intercepts network-layer JSON payloads with strict schema gates." />
+  <meta property="og:description" content="Why CSS selector scrapers silently corrupt downstream databases—and how StealthFlow™ intercepts network-layer JSON payloads with strict schema gates." />
   <meta property="og:url" content="https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html" />
   <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CaliberFoundry" />
-  <meta name="twitter:title" content="Resilient Web Data Extraction Beyond DOM Scraping (StealthFlowв„ў) вЂ” Caliber Foundry" />
+  <meta name="twitter:title" content="Resilient Web Data Extraction Beyond DOM Scraping (StealthFlow™) — Caliber Foundry" />
   <meta name="twitter:description" content="Replacing brittle DOM scrapers with Playwright network-layer XHR interception, strict JSON Schema validation, and HMAC-signed webhooks." />
   <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
   <script type="application/ld+json">
@@ -211,7 +211,7 @@
       <ul>
         <li><strong>DOM Hydration Races:</strong> Dynamic portals render skeleton placeholders first and hydrate secondary pricing, inventory, or regulatory status fields asynchronously via background `fetch` calls. Scraping the initial HTML snapshot captures incomplete records.</li>
         <li><strong>Silent Column Shifting:</strong> When a vendor inserts a promotional badge into a product card, positional XPath selectors (`div[3]/span[1]`) extract the badge label into the price column without raising an HTTP error.</li>
-        <li><strong>Lost Canonical Identifiers:</strong> The visible DOM rarely displays the internal database UUID, GTIN/UPC, or exact stock countвЂ”even though those exact fields were transmitted over the wire in the JSON API payload milliseconds earlier.</li>
+        <li><strong>Lost Canonical Identifiers:</strong> The visible DOM rarely displays the internal database UUID, GTIN/UPC, or exact stock count—even though those exact fields were transmitted over the wire in the JSON API payload milliseconds earlier.</li>
       </ul>
 
       <h2>02 // Network-Layer XHR &amp; Hydration State Interception</h2>
@@ -220,7 +220,7 @@
       </p>
 
       <div class="code-panel">
-# StealthFlowв„ў Network-Layer JSON Interception &amp; Schema Gate Pattern
+# StealthFlow™ Network-Layer JSON Interception &amp; Schema Gate Pattern
 async def attach_xhr_interceptor(page, quarantine_queue, verified_sink):
     async def handle_response(response):
         if "application/json" not in response.headers.get("content-type", ""):
@@ -290,7 +290,7 @@ webhook_signature  = HMAC_SHA256(webhook_secret, timestamp + "." + json_payload_
     <div class="cta-inline" style="background-color:var(--cf-bg-ink-panel); color:var(--cf-ink-on-dark); margin-top:48px;">
       <div>
         <span class="cta-inline-label">24-HOUR WORKING PROOF // STEALTHFLOW&trade; ETL</span>
-        <h3 style="color:var(--cf-ink-on-dark);">Send us your target URLвЂ”receive a live structured dataset within 24 hours</h3>
+        <h3 style="color:var(--cf-ink-on-dark);">Send us your target URL—receive a live structured dataset within 24 hours</h3>
       </div>
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
         <a href="mailto:engineering@caliberfoundry.com?subject=Target%20URL%20for%20Free%20Data%20Sample" class="btn btn-primary"><span>Email engineering@caliberfoundry.com</span><span>&nearr;</span></a>
