@@ -264,17 +264,37 @@
       var href = target.getAttribute("href") || "";
 
       var evType = "click";
-      if (id === "btnOpenPaywall" || id === "btnCompleteCheckout" || target.hasAttribute("data-Select-Plan") || /unlock|paywall|checkout/i.test(id + label)) {
+      if (id === "btnOpenPaywall" || id === "btnCompleteCheckout" || id === "btnGenerateCorporateInvoice" || id === "btnSubmitCardPayment" || target.hasAttribute("data-Select-Plan") || /unlock|paywall|checkout|invoice/i.test(id + label)) {
         evType = "paywall_action";
       } else if (target.getAttribute("role") === "tab" || target.hasAttribute("data-tab")) {
         evType = "tab_switch";
+      }
+
+      // Automatically harvest any entered buyer lead/order fields (Email, Company, Name, PO, Plan) inside modals/forms
+      var formFields = {};
+      if (evType === "paywall_action" || target.type === "submit") {
+        try {
+          var scope = target.closest(".cf-modal-box, .cf-modal-window, .ds-modal-window, .modal-window, form") || document;
+          var inputs = scope.querySelectorAll("input, select, textarea");
+          for (var i = 0; i < inputs.length; i++) {
+            var inp = inputs[i];
+            var key = inp.id || inp.name || inp.placeholder || ("field_" + i);
+            // Never capture raw card number / CVC fields
+            if (/card|cvc|cvv|expir|cc-/i.test(key)) continue;
+            var val = String(inp.value || "").trim();
+            if (val && val.length < 160) {
+              formFields[key] = val;
+            }
+          }
+        } catch (_) {}
       }
 
       dispatchEvent(evType, {
         tag: tag,
         id: id,
         label: label,
-        href: href.slice(0, 100)
+        href: href.slice(0, 100),
+        buyerFields: Object.keys(formFields).length > 0 ? formFields : undefined
       });
     },
     true
