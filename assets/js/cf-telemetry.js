@@ -343,4 +343,216 @@
   window.addEventListener("pagehide", function () {
     dispatchEvent("page_exit", { reason: "pagehide" });
   });
+
+  // =========================================================================
+  // UNIVERSAL PRODUCT BUG REPORT & FEATURE REQUEST WIDGET (SWISS EDITORIAL)
+  // =========================================================================
+  function escapeHtmlSafe(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function mountFeedbackWidget() {
+    if (!document.body || document.getElementById("cfFeedbackDockRoot")) return;
+
+    var styleEl = document.createElement("style");
+    styleEl.id = "cfFeedbackWidgetStyles";
+    styleEl.textContent = [
+      "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop { display: none !important; } }",
+      "#cfFeedbackDockRoot { position: fixed; bottom: 14px; right: 14px; z-index: 9990; font-family: 'IBM Plex Mono', monospace; }",
+      ".cf-fb-trigger-btn { background: #141413; color: #F6F4EF; border: 1.5px solid #141413; border-left: 4px solid #C8431F; padding: 7px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; box-shadow: 2px 2px 0 rgba(20,20,19,0.18); transition: background 0.15s ease; }",
+      ".cf-fb-trigger-btn:hover { background: #C8431F; border-color: #141413; color: #FFFFFF; }",
+      "#cfFeedbackModalBackdrop { position: fixed; inset: 0; background: rgba(20,20,19,0.62); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
+      "#cfFeedbackModalBackdrop.cf-fb-hidden { display: none !important; }",
+      ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 2px solid #141413; box-shadow: 6px 6px 0 #141413; width: 100%; max-width: 520px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
+      ".cf-fb-header { background: #141413; color: #F6F4EF; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }",
+      ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #C8431F; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
+      ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #F6F4EF; }",
+      ".cf-fb-close { background: transparent; border: 1px solid #78756D; color: #F6F4EF; width: 26px; height: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; }",
+      ".cf-fb-body { padding: 18px; }",
+      ".cf-fb-context-bar { background: #ECE9E1; border: 1px solid #C9C4B8; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #4A4842; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
+      ".cf-fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }",
+      "@media (max-width: 520px) { .cf-fb-row { grid-template-columns: 1fr; } }",
+      ".cf-fb-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }",
+      ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #141413; }",
+      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1.5px solid #141413; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #141413; width: 100%; border-radius: 0; }",
+      ".cf-fb-textarea { min-height: 88px; resize: vertical; line-height: 1.45; }",
+      ".cf-fb-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }",
+      ".cf-fb-submit { background: #C8431F; color: #FFFFFF; border: 1.5px solid #141413; padding: 9px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
+      ".cf-fb-submit:hover { background: #A63415; }",
+      ".cf-fb-success { background: #EDF5F0; border: 1.5px solid #1A5638; color: #141413; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
+      ".cf-fb-success.cf-fb-hidden { display: none !important; }"
+    ].join("\n");
+    document.head.appendChild(styleEl);
+
+    var dock = document.createElement("div");
+    dock.id = "cfFeedbackDockRoot";
+    dock.innerHTML =
+      '<button type="button" class="cf-fb-trigger-btn" id="cfFeedbackDockBtn" title="Report a software bug or request a feature improvement (Alt+F)">' +
+      "Report Bug / Feature" +
+      "</button>";
+    document.body.appendChild(dock);
+
+    var prodName = detectProduct(window.location.pathname);
+    var modalBackdrop = document.createElement("div");
+    modalBackdrop.id = "cfFeedbackModalBackdrop";
+    modalBackdrop.className = "cf-fb-hidden";
+    modalBackdrop.setAttribute("role", "dialog");
+    modalBackdrop.setAttribute("aria-modal", "true");
+    modalBackdrop.setAttribute("aria-labelledby", "cfFbModalTitle");
+    modalBackdrop.innerHTML =
+      '<div class="cf-fb-modal">' +
+      '<div class="cf-fb-header">' +
+      "<div>" +
+      '<span class="cf-fb-kicker">PRODUCT ENGINEERING FEEDBACK &amp; DEFECT LEDGER</span>' +
+      '<h2 class="cf-fb-title" id="cfFbModalTitle">Report a Bug or Suggest an Improvement</h2>' +
+      "</div>" +
+      '<button type="button" class="cf-fb-close" id="cfFbCloseBtn" aria-label="Close Feedback Modal">X</button>' +
+      "</div>" +
+      '<div class="cf-fb-body">' +
+      '<div class="cf-fb-context-bar">' +
+      "<span>Product: <strong id=\"cfFbProductLabel\">" +
+      escapeHtmlSafe(prodName) +
+      "</strong></span>" +
+      "<span>Page: <code id=\"cfFbPagePathLabel\">" +
+      escapeHtmlSafe(window.location.pathname || "/") +
+      "</code></span>" +
+      "</div>" +
+      '<form id="cfFeedbackForm">' +
+      '<div class="cf-fb-row">' +
+      '<div class="cf-fb-field" style="margin-bottom:0;">' +
+      '<label class="cf-fb-label" for="cfFbCategorySelect">Report Type</label>' +
+      '<select class="cf-fb-select" id="cfFbCategorySelect">' +
+      '<option value="FEATURE_IMPROVEMENT">Feature Request / Product Improvement</option>' +
+      '<option value="BUG_REPORT">Bug Report (UI / Calculation / Export Defect)</option>' +
+      '<option value="CONTENT_CORPUS">Regulatory Corpus / Exam Question / Courseware Addition</option>' +
+      '<option value="ENTERPRISE_CUSTOM">Enterprise Integration / Custom Requirement</option>' +
+      "</select>" +
+      "</div>" +
+      '<div class="cf-fb-field" style="margin-bottom:0;">' +
+      '<label class="cf-fb-label" for="cfFbSeveritySelect">Priority / Impact</label>' +
+      '<select class="cf-fb-select" id="cfFbSeveritySelect">' +
+      '<option value="Normal">Normal — Usability or Enhancement</option>' +
+      '<option value="High">High — Blocking Workflow</option>' +
+      '<option value="Low">Low — Minor Visual / Copy</option>' +
+      "</select>" +
+      "</div>" +
+      "</div>" +
+      '<div class="cf-fb-field">' +
+      '<label class="cf-fb-label" for="cfFbMessageInput">What should we fix or improve?</label>' +
+      '<textarea class="cf-fb-textarea" id="cfFbMessageInput" required placeholder="Describe the bug (what happened vs. expected) or the feature/content improvement you want us to add..."></textarea>' +
+      "</div>" +
+      '<div class="cf-fb-field" style="margin-bottom:4px;">' +
+      '<label class="cf-fb-label" for="cfFbEmailInput">Your Email (Optional — for status updates when deployed)</label>' +
+      '<input type="email" class="cf-fb-input" id="cfFbEmailInput" placeholder="engineer@company.com" />' +
+      "</div>" +
+      '<div class="cf-fb-actions">' +
+      '<button type="submit" class="cf-fb-submit" id="cfFbSubmitBtn">Send to Caliber Foundry Engineering &rarr;</button>' +
+      "</div>" +
+      "</form>" +
+      '<div class="cf-fb-success cf-fb-hidden" id="cfFbSuccessBox" role="status"></div>' +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(modalBackdrop);
+
+    function openFbModal(defaultType) {
+      var catEl = document.getElementById("cfFbCategorySelect");
+      if (catEl && defaultType) catEl.value = defaultType;
+      var sucEl = document.getElementById("cfFbSuccessBox");
+      if (sucEl) sucEl.classList.add("cf-fb-hidden");
+      modalBackdrop.classList.remove("cf-fb-hidden");
+      var msgEl = document.getElementById("cfFbMessageInput");
+      if (msgEl) setTimeout(function () { msgEl.focus(); }, 40);
+    }
+
+    function closeFbModal() {
+      modalBackdrop.classList.add("cf-fb-hidden");
+    }
+
+    document.getElementById("cfFeedbackDockBtn").addEventListener("click", function () {
+      openFbModal();
+    });
+
+    document.getElementById("cfFbCloseBtn").addEventListener("click", closeFbModal);
+    modalBackdrop.addEventListener("click", function (ev) {
+      if (ev.target === modalBackdrop) closeFbModal();
+    });
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.altKey && (ev.key === "f" || ev.key === "F")) {
+        ev.preventDefault();
+        openFbModal();
+      } else if (ev.key === "Escape" && !modalBackdrop.classList.contains("cf-fb-hidden")) {
+        closeFbModal();
+      }
+    });
+
+    document.getElementById("cfFeedbackForm").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var cat = document.getElementById("cfFbCategorySelect").value;
+      var sev = document.getElementById("cfFbSeveritySelect").value;
+      var msg = document.getElementById("cfFbMessageInput").value.trim();
+      var email = document.getElementById("cfFbEmailInput").value.trim();
+      if (!msg) return;
+
+      var ticketId = "FB-2026-" + Math.floor(1000 + Math.random() * 9000);
+      var fbPayload = {
+        feedbackId: ticketId,
+        category: cat,
+        severity: sev,
+        message: msg.slice(0, 1200),
+        email: email.slice(0, 120),
+        product: prodName,
+        pageUrl: window.location.href.slice(0, 220)
+      };
+
+      dispatchEvent("product_feedback", fbPayload);
+
+      try {
+        var hist = JSON.parse(localStorage.getItem("cf_user_feedback_history_v1") || "[]");
+        hist.unshift(Object.assign({ submittedAt: new Date().toISOString() }, fbPayload));
+        localStorage.setItem("cf_user_feedback_history_v1", JSON.stringify(hist.slice(0, 20)));
+      } catch (_) {}
+
+      var mailSubj = encodeURIComponent("[" + ticketId + "] " + cat + " — " + prodName);
+      var mailBody = encodeURIComponent(
+        "Ticket ID: " + ticketId + "\n" +
+        "Product: " + prodName + " (" + window.location.href + ")\n" +
+        "Category: " + cat + " (" + sev + ")\n" +
+        "Reporter Email: " + (email || "Not provided") + "\n\n" +
+        "Report Details:\n" + msg + "\n"
+      );
+
+      var sucBox = document.getElementById("cfFbSuccessBox");
+      if (sucBox) {
+        sucBox.innerHTML =
+          "<strong>Logged in Engineering Queue · Reference <code>" +
+          escapeHtmlSafe(ticketId) +
+          "</code></strong><br/>" +
+          "Thank you! Your report has been streamed directly to our engineering dashboard. " +
+          '<a href="mailto:engineering@caliberfoundry.com?subject=' +
+          mailSubj +
+          "&body=" +
+          mailBody +
+          '" style="color:#1A5638;font-weight:700;text-decoration:underline;">Click here if you also want to email a screenshot or file attachment &rarr;</a>';
+        sucBox.classList.remove("cf-fb-hidden");
+      }
+      document.getElementById("cfFbMessageInput").value = "";
+    });
+
+    window.CaliberFeedback = {
+      open: openFbModal,
+      close: closeFbModal
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountFeedbackWidget);
+  } else {
+    mountFeedbackWidget();
+  }
 })();
