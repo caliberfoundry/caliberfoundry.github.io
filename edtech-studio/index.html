@@ -415,6 +415,38 @@
       font-family: var(--font-mono);
       font-size: 11px;
     }
+
+    .how-it-works-strip {
+      background-color: #141413;
+      color: #F6F4EF;
+      padding: 10px 24px;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      font-size: 12.5px;
+    }
+    @media (max-width: 860px) {
+      .how-it-works-strip {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+    .hiw-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hiw-num {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -426,30 +458,30 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">Clinical Assessment &amp; SCORM 1.2 Studio</h1>
+            <h1 class="app-title">EdTech Courseware, Quiz &amp; SCORM 1.2 Studio</h1>
             <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              FERPA AES-256-GCM + ADL SCORM 1.2
+              CANVAS / MOODLE SCORM 1.2 + FERPA PRIVACY
             </span>
           </div>
-          <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Deterministic Clinical Rule-Gate Assessment Engine (Zero Black-Box) &bull; Distractor-Aware Study Coach &bull; 1-Click LMS SCORM Packager
+          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
+            Interactive certification quizzes with wrong-answer explanations, guided study hints, student rubrics, and 1-click SCORM 1.2 export.
           </div>
         </div>
       </div>
 
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button onclick="switchStudioMode('mode_orff')" id="tab_mode_orff" class="btn-tactile btn-tactile-ink">
-          MODE 01 // ORFF MAESTRA TTL-MSM &amp; FERPA ENGINE
+        <button type="button" onclick="switchStudioMode('mode_scorm')" id="tab_mode_scorm" class="btn-tactile btn-tactile-ink">
+          1. Interactive Quiz &amp; Study Coach
         </button>
-        <button onclick="switchStudioMode('mode_scorm')" id="tab_mode_scorm" class="btn-tactile">
-          MODE 02 // CERTIFICATION &amp; SCORM 1.2 EXPORTER
+        <button type="button" onclick="switchStudioMode('mode_orff')" id="tab_mode_orff" class="btn-tactile">
+          2. Student Rubric &amp; FERPA Privacy
         </button>
-        <button onclick="downloadScormManifest()" class="btn-tactile btn-tactile-vermilion">
-          <span>1-CLICK EXPORT SCORM 1.2 (IMSMANIFEST.XML)</span>
+        <button type="button" onclick="downloadScormManifest()" class="btn-tactile btn-tactile-vermilion">
+          <span>Download SCORM 1.2 (.XML)</span>
           <span>&darr;</span>
         </button>
-        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
-          <span>engineering@caliberfoundry.com</span>
+        <a href="mailto:engineering@caliberfoundry.com?subject=EdTech%20Courseware%20%26%20SCORM%20Studio%20Inquiry" class="btn-tactile">
+          <span>Contact Engineering</span>
           <span>&nearr;</span>
         </a>
       </div>
@@ -458,31 +490,47 @@
 
   <main class="shell">
 
+    <!-- Plain-English 1 -> 2 -> 3 Guided Bar -->
+    <div class="how-it-works-strip" aria-label="How to use EdTech Studio in 3 steps">
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 1</span>
+        <span><strong>Choose a Mode</strong> above: <em>1. Interactive Quiz &amp; Study Coach</em> or <em>2. Student Rubric &amp; FERPA Privacy</em>.</span>
+      </div>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 2</span>
+        <span><strong>Click Answer A, B, or C</strong> below (or click the hint buttons on the right) to test instant grading.</span>
+      </div>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 3</span>
+        <span><strong>Click "Download SCORM 1.2"</strong> at the top to export an LMS package for Canvas, Moodle, or Docebo.</span>
+      </div>
+    </div>
+
     <!-- =================================================================== -->
-    <!-- MODE 01: ORFF Maestra TTL-MSM Clinical Assessment & FERPA Engine    -->
+    <!-- MODE 01: Student Assessment Rubric & FERPA Privacy Guard            -->
     <!-- =================================================================== -->
-    <div id="view_mode_orff" style="display:flex; flex-direction:column; flex:1;">
+    <div id="view_mode_orff" class="hidden" style="display:flex; flex-direction:column; flex:1;">
 
       <!-- Clinical Case Presets Strip -->
       <div class="subheader-strip">
         <div>
-          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-            U.S. DEPT OF EDUCATION SBIR / BAYLOR-ALIGNED TTL-MSM DECISION MATRIX //
+          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700;">
+            STUDENT EVALUATION RUBRIC &amp; AUTOMATIC RULE ENGINE (FERPA PRIVACY PROTECTED) //
           </div>
-          <div style="font-family:var(--font-serif); font-style:italic; font-size:14.5px; color:var(--cf-ink-secondary);">
-            &ldquo;Clinicians code each source of evidence, and a fixed rule combines them. Privacy designed in from the start (FERPA).&rdquo;
+          <div style="font-size:13px; color:var(--cf-ink-secondary);">
+            Score 4 areas of student performance on the left &rarr; see the automatic recommendation in the middle &rarr; export with encrypted student ID on the right.
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">LOAD CLINICAL CASE:</span>
-          <button onclick="loadClinicalPreset('difference')" class="btn-tactile">
-            CASE A // BILINGUAL SPANISH/ENGLISH (DIFFERENCE)
+          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700;">LOAD SAMPLE STUDENT:</span>
+          <button type="button" onclick="loadClinicalPreset('difference')" class="btn-tactile">
+            Student A: Bilingual Learner (No Disorder)
           </button>
-          <button onclick="loadClinicalPreset('disorder')" class="btn-tactile">
-            CASE B // CROSS-SETTING DEFICIT (TRUE DISORDER)
+          <button type="button" onclick="loadClinicalPreset('disorder')" class="btn-tactile">
+            Student B: Needs Special Support
           </button>
-          <button onclick="loadClinicalPreset('typical')" class="btn-tactile">
-            CASE C // TYPICAL COMMUNICATIVE PROFILE
+          <button type="button" onclick="loadClinicalPreset('typical')" class="btn-tactile">
+            Student C: On-Track Learner
           </button>
         </div>
       </div>
@@ -494,65 +542,65 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label">STEP 01 · CLINICIAN EVIDENCE</div>
-              <h2 class="col-title">Multi-Source Evidence Coding</h2>
+              <div class="spec-label">STEP 1 &middot; SCORE 4 STUDENT AREAS</div>
+              <h2 class="col-title">Student Evaluation Rubric</h2>
             </div>
-            <span class="mono" style="font-size:11px; padding:2px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">4 SOURCES</span>
+            <span class="mono" style="font-size:11px; padding:2px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">4 CRITERIA</span>
           </div>
 
           <!-- Source 1 -->
           <div class="source-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">01. Parent / Caregiver L1 Report</strong>
-              <span id="badge_s1" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 2/2</span>
+              <strong style="font-size:13px;">1. Home Language Skills (Parent Report)</strong>
+              <span id="badge_s1" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 2/2</span>
             </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Home language (L1) developmental milestones, family history &amp; comprehension.</div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How well the student communicates at home in their native language.</div>
             <div class="rating-group">
-              <button onclick="setEvidence('parentL1', 0)" id="btn_parentL1_0" class="btn-rating">0: Severe Delay</button>
-              <button onclick="setEvidence('parentL1', 1)" id="btn_parentL1_1" class="btn-rating">1: Mild Concern</button>
-              <button onclick="setEvidence('parentL1', 2)" id="btn_parentL1_2" class="btn-rating">2: Intact Home L1</button>
+              <button type="button" onclick="setEvidence('parentL1', 0)" id="btn_parentL1_0" class="btn-rating">0: High Difficulty</button>
+              <button type="button" onclick="setEvidence('parentL1', 1)" id="btn_parentL1_1" class="btn-rating">1: Mild Concern</button>
+              <button type="button" onclick="setEvidence('parentL1', 2)" id="btn_parentL1_2" class="btn-rating">2: Strong at Home</button>
             </div>
           </div>
 
           <!-- Source 2 -->
           <div class="source-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">02. Teacher Classroom Observation</strong>
-              <span id="badge_s2" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 1/2</span>
+              <strong style="font-size:13px;">2. Classroom Participation (Teacher Report)</strong>
+              <span id="badge_s2" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 1/2</span>
             </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Academic discourse, peer interaction &amp; functional classroom communication.</div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How the student participates in daily classroom lessons and peer work.</div>
             <div class="rating-group">
-              <button onclick="setEvidence('teacherObs', 0)" id="btn_teacherObs_0" class="btn-rating">0: High Struggle</button>
-              <button onclick="setEvidence('teacherObs', 1)" id="btn_teacherObs_1" class="btn-rating">1: L2 Emerging</button>
-              <button onclick="setEvidence('teacherObs', 2)" id="btn_teacherObs_2" class="btn-rating">2: Proficient</button>
+              <button type="button" onclick="setEvidence('teacherObs', 0)" id="btn_teacherObs_0" class="btn-rating">0: High Struggle</button>
+              <button type="button" onclick="setEvidence('teacherObs', 1)" id="btn_teacherObs_1" class="btn-rating">1: Developing</button>
+              <button type="button" onclick="setEvidence('teacherObs', 2)" id="btn_teacherObs_2" class="btn-rating">2: Proficient</button>
             </div>
           </div>
 
           <!-- Source 3 -->
           <div class="source-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">03. Direct Language Sample (LSA)</strong>
-              <span id="badge_s3" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 1/2</span>
+              <strong style="font-size:13px;">3. Direct Speaking &amp; Story Sample</strong>
+              <span id="badge_s3" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 1/2</span>
             </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Narrative microstructure, MLU, non-biased morphosyntax &amp; grammaticality.</div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Sentence structure and clarity when retelling a short story.</div>
             <div class="rating-group">
-              <button onclick="setEvidence('languageSample', 0)" id="btn_languageSample_0" class="btn-rating">0: Agrammatic</button>
-              <button onclick="setEvidence('languageSample', 1)" id="btn_languageSample_1" class="btn-rating">1: Dialect Feature</button>
-              <button onclick="setEvidence('languageSample', 2)" id="btn_languageSample_2" class="btn-rating">2: Age-Expected</button>
+              <button type="button" onclick="setEvidence('languageSample', 0)" id="btn_languageSample_0" class="btn-rating">0: Frequent Errors</button>
+              <button type="button" onclick="setEvidence('languageSample', 1)" id="btn_languageSample_1" class="btn-rating">1: Bilingual Accent/Dialect</button>
+              <button type="button" onclick="setEvidence('languageSample', 2)" id="btn_languageSample_2" class="btn-rating">2: Age-Expected</button>
             </div>
           </div>
 
           <!-- Source 4 -->
           <div class="source-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">04. Dynamic Assessment (MLE)</strong>
-              <span id="badge_s4" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">CODE: 2/2</span>
+              <strong style="font-size:13px;">4. Learning Speed After a 20-Min Lesson</strong>
+              <span id="badge_s4" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 2/2</span>
             </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Test-Teach-Retest modifiability, cognitive effort &amp; transfer of novel rules.</div>
+            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How quickly the student applies a new rule right after being taught (Test-Teach-Retest).</div>
             <div class="rating-group">
-              <button onclick="setEvidence('dynamicAssessment', 0)" id="btn_dynamicAssessment_0" class="btn-rating">0: Low Transfer</button>
-              <button onclick="setEvidence('dynamicAssessment', 1)" id="btn_dynamicAssessment_1" class="btn-rating">1: Mod. Prompt</button>
-              <button onclick="setEvidence('dynamicAssessment', 2)" id="btn_dynamicAssessment_2" class="btn-rating">2: Rapid Gain</button>
+              <button type="button" onclick="setEvidence('dynamicAssessment', 0)" id="btn_dynamicAssessment_0" class="btn-rating">0: Slow Uptake</button>
+              <button type="button" onclick="setEvidence('dynamicAssessment', 1)" id="btn_dynamicAssessment_1" class="btn-rating">1: Needs Prompts</button>
+              <button type="button" onclick="setEvidence('dynamicAssessment', 2)" id="btn_dynamicAssessment_2" class="btn-rating">2: Fast Learner</button>
             </div>
           </div>
         </div>
@@ -561,17 +609,17 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label">STEP 02 · DIAGNOSTIC MATRIX</div>
-              <h2 class="col-title">Rule-Gate Evaluation</h2>
+              <div class="spec-label">STEP 2 &middot; AUTOMATIC RECOMMENDATION</div>
+              <h2 class="col-title">Transparent Rule Result</h2>
             </div>
-            <span id="compositeScoreBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">COMPOSITE: 6/8</span>
+            <span id="compositeScoreBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">TOTAL: 6/8</span>
           </div>
 
           <!-- Dynamic Verdict Classification Box -->
           <div id="verdictCard" class="verdict-box">
             <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:11px; font-weight:600; margin-bottom:6px; text-transform:uppercase;">
-              <span>DIAGNOSTIC CLASSIFICATION</span>
-              <span id="verdictConfidence">CONCORDANCE: 95%</span>
+              <span>RECOMMENDED OUTCOME</span>
+              <span id="verdictConfidence">CONFIDENCE: 95%</span>
             </div>
             <h3 id="verdictTitle" style="font-family:var(--font-display); font-size:24px; font-weight:400; line-height:1.15; color:var(--cf-ink-primary); margin-bottom:8px;"></h3>
             <p id="verdictSummary" style="font-family:var(--font-serif); font-size:15px; line-height:1.6; color:var(--cf-ink-primary);"></p>
@@ -580,7 +628,7 @@
           <!-- 4 Rule Gates Audit Trace -->
           <div>
             <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:8px;">
-              STEP-BY-STEP RULE GATE EXECUTION TRACE (ZERO BLACK-BOX):
+              HOW THIS SCORE WAS CALCULATED (4 TRANSPARENT RULES):
             </div>
             <div id="ruleTraceContainer" style="display:flex; flex-direction:column; gap:8px;">
               <!-- Populated by JS -->
@@ -592,51 +640,51 @@
         <div class="clinical-col">
           <div class="col-header">
             <div>
-              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">STEP 03 · PRIVACY BY DESIGN</div>
-              <h2 class="col-title">FERPA Zero-PII WebCrypto Guard</h2>
+              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">STEP 3 &middot; STUDENT PRIVACY SHIELD</div>
+              <h2 class="col-title">FERPA Student Name Encryption</h2>
             </div>
             <label class="mono" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; cursor:pointer; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass);">
               <input type="checkbox" id="ferpaToggle" checked onchange="runFerpaEncryption()" />
-              <span>AES-GCM LOCK ON</span>
+              <span>PRIVACY LOCK ON</span>
             </label>
           </div>
 
           <p style="font-size:12.5px; color:var(--cf-ink-secondary);">
-            Student identifiers are hashed (<code>SHA-256</code>) and encrypted locally inside the clinician&rsquo;s browser via <code>window.crypto.subtle</code> (<code>AES-256-GCM</code>) prior to export.
+            To protect student privacy (FERPA), the student&rsquo;s real name and school ID are encrypted right inside your browser (<code>AES-256</code>) before any file is downloaded.
           </p>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
             <div>
-              <label class="spec-label" style="display:block; margin-bottom:4px;">STUDENT FULL NAME (LOCAL):</label>
+              <label class="spec-label" style="display:block; margin-bottom:4px;">STUDENT NAME (ENCRYPTED LOCALLY):</label>
               <input id="piiName" type="text" value="Mateo Alvarez-Gomez" oninput="runFerpaEncryption()" class="input-mechanical" />
             </div>
             <div>
-              <label class="spec-label" style="display:block; margin-bottom:4px;">DISTRICT STUDENT / IEP ID:</label>
+              <label class="spec-label" style="display:block; margin-bottom:4px;">SCHOOL / STUDENT ID:</label>
               <input id="piiDistrictId" type="text" value="TX-ISD-884920" oninput="runFerpaEncryption()" class="input-mechanical" />
             </div>
           </div>
 
           <div class="terminal-box" style="display:flex; flex-direction:column; gap:10px;">
             <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px;">
-              <span style="color:#A39E93;">CIPHER SUITE:</span>
-              <span style="color:#86EFAC; font-weight:600;">WEBCRYPTO AES-256-GCM + SHA-256</span>
+              <span style="color:#A39E93;">ENCRYPTION STATUS:</span>
+              <span style="color:#86EFAC; font-weight:600;">AES-256-GCM ACTIVE</span>
             </div>
             <div>
-              <div style="color:#A39E93; font-size:10px;">ANONYMIZED SUBJECT TOKEN:</div>
+              <div style="color:#A39E93; font-size:10px;">ANONYMOUS STUDENT ID:</div>
               <div id="cryptoSubjectToken" style="color:#FCE588; font-weight:600;"></div>
             </div>
             <div>
-              <div style="color:#A39E93; font-size:10px;">AES-GCM INITIALIZATION VECTOR (96-BIT IV):</div>
+              <div style="color:#A39E93; font-size:10px;">ENCRYPTION KEY IV:</div>
               <div id="cryptoIv" style="color:#93C5FD;"></div>
             </div>
             <div>
-              <div style="color:#A39E93; font-size:10px;">ENCRYPTED PII CIPHERTEXT PAYLOAD (ZERO PLAINTEXT):</div>
+              <div style="color:#A39E93; font-size:10px;">ENCRYPTED RECORD (NO REAL NAME EXPOSED):</div>
               <div id="cryptoCiphertext" style="color:#86EFAC; word-break:break-all; background:#1F1E1C; padding:8px; border:1px solid #33322F; margin-top:4px; max-height:110px; overflow-y:auto;"></div>
             </div>
           </div>
 
-          <button onclick="exportFerpaClinicalReport()" class="btn-tactile btn-tactile-forest" style="width:100%; padding:10px;">
-            <span>DOWNLOAD FERPA-ENCRYPTED TTL-MSM CLINICAL PACKET (.JSON)</span>
+          <button type="button" onclick="exportFerpaClinicalReport()" class="btn-tactile btn-tactile-forest" style="width:100%; padding:10px;">
+            <span>Download Privacy-Protected Student Report (.JSON)</span>
             <span>&darr;</span>
           </button>
         </div>
@@ -645,21 +693,21 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- MODE 02: Certification Study Module & 1-Click SCORM 1.2 Exporter    -->
+    <!-- MODE 02 (DEFAULT): Interactive Certification Quiz & SCORM Exporter  -->
     <!-- =================================================================== -->
-    <div id="view_mode_scorm" class="hidden" style="display:flex; flex-direction:column; flex:1;">
+    <div id="view_mode_scorm" style="display:flex; flex-direction:column; flex:1;">
 
       <div class="subheader-strip">
         <div>
-          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-            ADL SCORM 1.2 / 2004 INTERACTIVE CERTIFICATION MODULE //
+          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700;">
+            INTERACTIVE CERTIFICATION LESSON &amp; GRADED QUIZ (READY FOR CANVAS / MOODLE / BLACKBOARD) //
           </div>
           <div style="font-size:13px; color:var(--cf-ink-secondary);">
-            Distractor-Aware Cognitive Misconception Analysis &bull; Guardrailed Socratic Study Coach &bull; Live LMS Runtime Telemetry (<code>window.API</code>)
+            Click Answer A, B, or C below to see how wrong answers get targeted explanations and how the score automatically reports to your LMS.
           </div>
         </div>
         <span class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-          BLOOM&rsquo;S TAXONOMY: ANALYZE &amp; EVALUATE
+          SCORM 1.2 READY &bull; AUTO-GRADED
         </span>
       </div>
 
@@ -668,55 +716,55 @@
         <!-- Left 7 Cols: Interactive Vignette & Distractor-Aware Assessment -->
         <div style="padding:28px; background-color:var(--cf-bg-surface); border-right:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:18px;">
           <div style="border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
-            <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:600;">MODULE 1.4 // DIFFERENTIAL DIAGNOSIS &amp; MULTI-SOURCE CONCORDANCE</div>
-            <h2 style="font-family:var(--font-display); font-size:30px; font-weight:400;">Clinical Certification Case Vignette</h2>
+            <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 2 &mdash; PRACTICE SCENARIO QUESTION (CLICK A, B, OR C BELOW)</div>
+            <h2 style="font-family:var(--font-display); font-size:28px; font-weight:400;">Evaluating a Bilingual Student: Difference vs. Disorder</h2>
           </div>
 
           <div style="padding:18px; background-color:var(--cf-bg-paper); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:16px; line-height:1.65;">
-            <div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[CASE RECORD #704-B]</div>
-            <p>A 7-year-old Spanish-English bilingual student scores <strong>1.5 SD below the mean</strong> on an English-only standardized vocabulary subtest. However, the caregiver reports strong Spanish (L1) storytelling at home, and during a 20-minute <strong>Dynamic Assessment (Test-Teach-Retest)</strong> session, the student rapidly applies newly modeled narrative macrostructure rules with minimal prompting.</p>
-            <p style="font-weight:600; margin-top:10px;">Prompt: According to the TTL-MSM diagnostic framework, which classification and justification is most accurate?</p>
+            <div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #1]</div>
+            <p>A 7-year-old Spanish-English bilingual student scores low on an <strong>English-only vocabulary test</strong>. However, the parents confirm strong Spanish storytelling at home, and during a 20-minute practice lesson, the student <strong>quickly learns and applies new grammar rules</strong>.</p>
+            <p style="font-weight:600; margin-top:10px;">Question: What is the correct conclusion for this student?</p>
           </div>
 
           <!-- 3 Options -->
           <div style="display:flex; flex-direction:column; gap:10px;">
-            <button onclick="selectQuizOption('A')" id="quiz_opt_A" class="quiz-option">
+            <button type="button" onclick="selectQuizOption('A')" id="quiz_opt_A" class="quiz-option">
               <span class="opt-letter">A</span>
               <div>
-                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Qualify for Special Education under Developmental Language Disorder (DLD)</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Because the standardized English test score is more than 1.5 SD below the normative mean.</div>
+                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Label as a Language Disorder based on the English test score</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Place the student in Special Education because the English-only test score was low.</div>
               </div>
             </button>
 
-            <button onclick="selectQuizOption('B')" id="quiz_opt_B" class="quiz-option">
+            <button type="button" onclick="selectQuizOption('B')" id="quiz_opt_B" class="quiz-option">
               <span class="opt-letter">B</span>
               <div>
-                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Classify as Language Difference / Bilingual Variation (Tier 1 General Ed Support)</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Because intact L1 home evidence combined with high Dynamic Assessment modifiability rules out an intrinsic language learning disorder.</div>
+                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Normal Bilingual Development (Keep in General Education — Correct Answer)</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder.</div>
               </div>
             </button>
 
-            <button onclick="selectQuizOption('C')" id="quiz_opt_C" class="quiz-option">
+            <button type="button" onclick="selectQuizOption('C')" id="quiz_opt_C" class="quiz-option">
               <span class="opt-letter">C</span>
               <div>
-                <div style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">Defer Assessment for 12 Months Without Recording Evidence</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Wait until the student achieves 100% English proficiency before coding caregiver or dynamic assessment sources.</div>
+                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Wait 12 months and do nothing</div>
+                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Postpone recording parent feedback or practice lessons until next school year.</div>
               </div>
             </button>
           </div>
 
-          <div id="quizFeedbackBox" style="padding:14px 16px; border:1px solid var(--cf-rule-strong); background-color:var(--cf-bg-stone); font-size:13px;">
-            Select an option above to inspect Distractor-Aware Cognitive Feedback and live <code>SCORM 1.2 API</code> telemetry.
+          <div id="quizFeedbackBox" style="padding:14px 16px; border:1.5px solid var(--cf-rule-strong); background-color:var(--cf-bg-stone); font-size:13.5px; line-height:1.5;">
+            <strong>&uarr; Click Answer A, B, or C above</strong> to see instant feedback and watch the LMS gradebook log update below.
           </div>
 
           <div class="terminal-box">
             <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px; margin-bottom:8px;">
-              <span style="color:#A39E93;">ADL SCORM 1.2 RUNTIME API ADAPTER (window.API)</span>
-              <span style="color:#86EFAC; font-weight:600;">LMS SESSION ACTIVE</span>
+              <span style="color:#A39E93;">LIVE LMS GRADEBOOK LOG (SCORM 1.2 API)</span>
+              <span style="color:#86EFAC; font-weight:600;">CONNECTED TO LMS</span>
             </div>
             <div id="scormApiLog" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;">
-              <div><span style="color:#FCE588;">LMSInitialize("")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
-              <div><span style="color:#93C5FD;">LMSGetValue("cmi.core.lesson_status")</span> &rarr; <span style="color:#FCE588;">"incomplete"</span></div>
+              <div><span style="color:#FCE588;">LMSInitialize("")</span> &rarr; <span style="color:#86EFAC;">"Session Started"</span></div>
+              <div><span style="color:#93C5FD;">LMSGetValue("cmi.core.lesson_status")</span> &rarr; <span style="color:#FCE588;">"In Progress"</span></div>
             </div>
           </div>
         </div>
@@ -725,11 +773,11 @@
         <aside style="padding:28px; background-color:var(--cf-bg-paper); display:flex; flex-direction:column; gap:18px;">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
             <div>
-              <div class="spec-label">[GUARDRAILED PEDAGOGY ENGINE]</div>
-              <h3 style="font-family:var(--font-display); font-size:26px; font-weight:400;">Socratic Study Coach</h3>
+              <div class="spec-label">GUIDED STUDY ASSISTANT (NO SPOILERS)</div>
+              <h3 style="font-family:var(--font-display); font-size:26px; font-weight:400;">Interactive Study Coach &amp; Hints</h3>
             </div>
             <span id="rubricMasteryBadge" class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-              MASTERY: 88%
+              SCORE: 88%
             </span>
           </div>
 
@@ -737,7 +785,7 @@
           <div style="padding:14px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:12px;">
             <div>
               <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                <span>01. MULTI-SOURCE CONCORDANCE REASONING</span>
+                <span>1. COMBINING HOME &amp; CLASSROOM EVIDENCE</span>
                 <strong id="rubricBar1Text" style="color:var(--cf-forest-pass);">92%</strong>
               </div>
               <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
@@ -746,7 +794,7 @@
             </div>
             <div>
               <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                <span>02. DYNAMIC ASSESSMENT MODIFIABILITY GATE</span>
+                <span>2. IDENTIFYING FAST LEARNING GAIN</span>
                 <strong id="rubricBar2Text" style="color:var(--cf-navy-authority);">85%</strong>
               </div>
               <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
@@ -757,17 +805,17 @@
 
           <div id="socraticChatBox" style="display:flex; flex-direction:column; gap:12px; max-height:280px; overflow-y:auto;">
             <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
-              <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:4px;">[SOCRATIC INQUIRY PROMPT]</div>
-              &ldquo;Notice what happens when we compare the English-only standardized score against the student&rsquo;s rapid learning gain during Dynamic Assessment. Why does high modifiability during Test-Teach-Retest argue against an intrinsic disorder?&rdquo;
+              <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:4px;">[STUDY HINT]</div>
+              &ldquo;Compare the English-only test score against how quickly the student learned during the 20-minute practice lesson. If a student learns new grammar rules right away, does that point to a true disorder, or simply that they are still learning English?&rdquo;
             </div>
           </div>
 
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <button onclick="askSocraticTutor('Why is an English-only norm-referenced test biased here?')" class="btn-tactile">
-              &rarr; HINT: NORM-REFERENCED BIAS?
+            <button type="button" onclick="askSocraticTutor('Why is an English-only norm-referenced test biased here?')" class="btn-tactile">
+              &rarr; Ask Hint 1: Why is an English-only test misleading?
             </button>
-            <button onclick="askSocraticTutor('How does Dynamic Assessment separate Difference vs. Disorder?')" class="btn-tactile">
-              &rarr; HINT: DYNAMIC MODIFIABILITY GATE?
+            <button type="button" onclick="askSocraticTutor('How does Dynamic Assessment separate Difference vs. Disorder?')" class="btn-tactile">
+              &rarr; Ask Hint 2: What does the 20-min practice lesson prove?
             </button>
           </div>
         </aside>
@@ -951,41 +999,51 @@
       const fb = document.getElementById('quizFeedbackBox');
       const log = document.getElementById('scormApiLog');
 
+      ['A', 'B', 'C'].forEach(k => {
+        const el = document.getElementById('quiz_opt_' + k);
+        if (el) {
+          el.style.borderWidth = (k === opt) ? '2px' : '1px';
+          el.style.borderColor = (k === opt) ? 'var(--cf-ink-primary)' : 'var(--cf-rule-strong)';
+          el.style.backgroundColor = (k === opt) ? 'var(--cf-highlight-mark)' : 'var(--cf-bg-surface)';
+        }
+      });
+
       if (opt === 'B') {
         fb.style.backgroundColor = 'var(--cf-forest-tint)';
         fb.style.borderColor = 'var(--cf-forest-pass)';
         fb.style.color = 'var(--cf-forest-pass)';
-        fb.innerHTML = `<strong>[VERIFIED // SCORE: 95/100]</strong> Under the <code>TTL-MSM</code> rule specification, intact L1 home language development combined with rapid Dynamic Assessment modifiability confirms a <strong>Language Difference / Bilingual Variation</strong> rather than an underlying language disorder.`;
+        fb.innerHTML = `<strong>&check; CORRECT ANSWER (SCORE: 95/100)</strong> &mdash; Strong home language skills combined with fast learning during a 20-minute practice lesson confirm <strong>Normal Bilingual Development</strong> (not a learning disorder).`;
         log.innerHTML += `
-          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.score.raw", "95")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
-          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.lesson_status", "passed")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
-          <div><span style="color:#FCE588;">LMSCommit("")</span> &rarr; <span style="color:#86EFAC;">"true"</span></div>
+          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.score.raw", "95")</span> &rarr; <span style="color:#86EFAC;">"Score 95% Saved"</span></div>
+          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.lesson_status", "passed")</span> &rarr; <span style="color:#86EFAC;">"Lesson Passed"</span></div>
+          <div><span style="color:#FCE588;">LMSCommit("")</span> &rarr; <span style="color:#86EFAC;">"Synced to LMS Gradebook"</span></div>
         `;
-        document.getElementById('rubricMasteryBadge').textContent = 'MASTERY: 96%';
+        document.getElementById('rubricMasteryBadge').textContent = 'SCORE: 96%';
       } else if (opt === 'A') {
         fb.style.backgroundColor = 'var(--cf-brass-tint)';
         fb.style.borderColor = 'var(--cf-brass-warn)';
         fb.style.color = 'var(--cf-brass-warn)';
-        fb.innerHTML = `<strong>[DISTRACTOR ANALYSIS // MISCONCEPTION DETECTED]</strong> Relying solely on an English-only standardized score (&le; -1.5 SD) for a bilingual learner produces a false-positive over-identification. Review the Socratic Study Coach prompt on how Dynamic Assessment functions as an override gate.`;
-        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_distractor_A")</span> &rarr; <span style="color:#FCE588;">"recorded"</span></div>`;
+        fb.innerHTML = `<strong>! NOT QUITE (COMMON MISTAKE)</strong> &mdash; Relying only on an English-only test score for a bilingual student causes false positives. Look at how fast the student learned in the 20-minute practice lesson (Try Answer B).`;
+        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_choice_A")</span> &rarr; <span style="color:#FCE588;">"Recorded for Review"</span></div>`;
       } else {
         fb.style.backgroundColor = 'var(--cf-accent-tint)';
         fb.style.borderColor = 'var(--cf-accent-primary)';
         fb.style.color = 'var(--cf-accent-primary)';
-        fb.innerHTML = `<strong>[DISTRACTOR ANALYSIS // PROCEDURAL ERROR]</strong> Delaying multi-source coding violates timely evaluation mandates. The TTL-MSM matrix evaluates L1 caregiver report and Dynamic Assessment immediately without waiting for L2 saturation.`;
+        fb.innerHTML = `<strong>! INCORRECT (PROCEDURAL ERROR)</strong> &mdash; Waiting 12 months delays helpful support. You can evaluate home language skills and a 20-minute practice lesson right away (Try Answer B).`;
+        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_choice_C")</span> &rarr; <span style="color:#FCE588;">"Recorded for Review"</span></div>`;
       }
       log.scrollTop = log.scrollHeight;
     }
 
     function askSocraticTutor(question) {
       const box = document.getElementById('socraticChatBox');
-      let reply = "Think about what Dynamic Assessment measures: it tests the student's rate of learning when given mediated feedback. If a child had a true Developmental Language Disorder (DLD), would they immediately generalize a new grammatical rule in 20 minutes?";
-      if (question.includes('Norm-Referenced')) {
-        reply = "Consider who was in the normative sample of an English-only vocabulary test. Does a low English score measure intrinsic language capacity, or simply cumulative years of English exposure?";
+      let reply = "A 20-minute practice lesson measures how fast a student learns when taught a new rule. If a child had a true language disorder, they would struggle to learn new grammar rules even with help.";
+      if (question.includes('Norm-Referenced') || question.includes('English-only')) {
+        reply = "An English-only vocabulary test compares a bilingual student against children who spoke only English since birth. A low English score just shows they are still learning English — not that they have a disorder.";
       }
       box.innerHTML += `
         <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
-          <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:4px;">[INQUIRY: ${escapeHtml(String(question).toUpperCase())}]</div>
+          <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:4px;">[STUDY HINT]</div>
           &ldquo;${escapeHtml(reply)}&rdquo;
         </div>
       `;
@@ -995,7 +1053,7 @@
     function downloadScormManifest() {
       const xml = window.TTL_MSM_ENGINE.generateScormManifest({
         identifier: "CALIBER_FOUNDRY_ORFF_SCORM12_2026",
-        title: "ORFF Maestra TTL-MSM & Certification Course (ADL SCORM 1.2)"
+        title: "EdTech Courseware & Certification Quiz Module (ADL SCORM 1.2)"
       });
       const blob = new Blob([xml], { type: 'application/xml' });
       const url = URL.createObjectURL(blob);
@@ -1010,8 +1068,14 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       recalculateTtlMsm();
+      const params = new URLSearchParams(window.location.search || '');
+      if (params.get('mode') === 'orff' || params.get('preset') === 'orff') {
+        switchStudioMode('mode_orff');
+      } else {
+        switchStudioMode('mode_scorm');
+      }
     });
   </script>
-  <script src="../assets/js/cf-telemetry.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
 </body>
 </html>

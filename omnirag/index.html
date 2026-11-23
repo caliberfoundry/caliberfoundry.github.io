@@ -457,41 +457,238 @@
       font-family: var(--font-mono);
       font-size: 11px;
     }
+
+    /* Plain-English Guided 3-Step Bar & Scenario Cards */
+    .how-it-works-strip {
+      background-color: #141413;
+      color: #F6F4EF;
+      padding: 10px 24px;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      font-size: 12.5px;
+    }
+    @media (max-width: 860px) {
+      .how-it-works-strip {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+    .hiw-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hiw-num {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .pack-picker-bar {
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      padding: 14px 24px;
+    }
+    .pack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    @media (max-width: 960px) {
+      .pack-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .pack-card {
+      text-align: left;
+      background-color: var(--cf-bg-surface);
+      border: 1.5px solid var(--cf-rule-mid);
+      padding: 12px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .pack-card:hover {
+      border-color: var(--cf-ink-primary);
+    }
+    .pack-card.active-pack {
+      border: 2px solid var(--cf-ink-primary);
+      box-shadow: 3px 3px 0px var(--cf-ink-primary);
+      background-color: #FFFFFF;
+    }
+    .pack-card-title {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--cf-ink-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .pack-card-desc {
+      font-size: 12px;
+      color: var(--cf-ink-secondary);
+      line-height: 1.4;
+    }
+    .pack-status-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-top: 4px;
+      width: fit-content;
+    }
+    .pack-status-ok {
+      background-color: var(--cf-forest-tint);
+      color: var(--cf-forest-pass);
+      border: 1px solid var(--cf-forest-pass);
+    }
+    .pack-status-warn {
+      background-color: var(--cf-accent-tint);
+      color: var(--cf-accent-primary);
+      border: 1px solid var(--cf-accent-primary);
+    }
+
+    .finding-card {
+      border: 1px solid var(--cf-rule-mid);
+      background-color: #FFFFFF;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--cf-forest-pass);
+    }
+    .finding-card.finding-alert {
+      border-left-color: var(--cf-accent-primary);
+      background-color: #FFFDFB;
+    }
+    .finding-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .finding-title {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--cf-ink-primary);
+    }
+    .finding-desc {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--cf-ink-secondary);
+      margin-bottom: 8px;
+    }
+    .finding-proof-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-drawer {
+      border-top: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-stone);
+    }
+    .tech-drawer summary {
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--cf-ink-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tech-drawer summary:hover {
+      color: var(--cf-ink-primary);
+    }
+
+    /* Audit Report Preview Modal */
+    .om-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 19, 0.62);
+      z-index: 9500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .om-modal-backdrop.om-hidden {
+      display: none !important;
+    }
+    .om-modal-window {
+      background: #FFFFFF;
+      border: 2px solid #141413;
+      box-shadow: 6px 6px 0 #141413;
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .om-modal-header {
+      background: #141413;
+      color: #F6F4EF;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .om-modal-body {
+      padding: 20px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Top Masthead with 3 Client Presets & Direct Email -->
+  <!-- Top Masthead with Plain-English Title & Clear Actions -->
   <header class="masthead">
     <div class="masthead-inner">
       <div class="brand-group">
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">OmniRAG&trade; Document Citation Studio</h1>
+            <h1 class="app-title">OmniRAG&trade; Document &amp; Spreadsheet Cross-Checker</h1>
             <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              MULTI-DOCUMENT PAGE &amp; CELL VERIFIER
+              PDF + WORD + EXCEL VERIFIER
             </span>
           </div>
-          <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Multi-Format Ingestion (<span class="mono" style="font-weight:600;">PDF / DOCX / XLSX</span>) &bull; Hybrid BM25 + Vector RRF &bull; Clickable Page &amp; Cell Coordinate Citations
+          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
+            Automatically compare numbers, dates, and clauses across PDFs, Word contracts, and Excel sheets &mdash; and see the exact page or cell proof in 1 click.
           </div>
         </div>
       </div>
 
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">PRESET:</span>
-        <button onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="btn-tactile">
-          01 // ENTERPRISE PDF/DOCX/XLSX
+        <button type="button" onclick="openAuditPreviewModal()" id="btnOpenAuditModal" class="btn-tactile">
+          <span>Preview Audit Report</span>
         </button>
-        <button onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="btn-tactile">
-          02 // AGENTPRESS MCP DEAL DESK
+        <button type="button" onclick="triggerExpertSignOff()" id="btnSignOff" class="btn-tactile btn-tactile-forest">
+          <span>Download Report (.JSON)</span>
+          <span>&darr;</span>
         </button>
-        <button onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="btn-tactile">
-          03 // BUILDQ SOLAR 200K-PDF VERIFIER
-        </button>
-        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
-          <span>engineering@caliberfoundry.com</span>
+        <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Document%20Cross-Checker%20Inquiry" class="btn-tactile">
+          <span>Contact Engineering</span>
           <span>&nearr;</span>
         </a>
       </div>
@@ -500,81 +697,84 @@
 
   <main class="shell">
 
-    <!-- StateGraph Pipeline Header Bar -->
-    <div class="pipeline-bar">
-      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-          DETERMINISTIC STATEGRAPH EXECUTION TRACE //
-        </span>
-        <span id="presetSubBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-rule-strong); background:var(--cf-bg-surface); color:var(--cf-accent-primary); font-weight:600;"></span>
+    <!-- Plain-English 1 -> 2 -> 3 Guided Bar -->
+    <div class="how-it-works-strip" aria-label="How to use OmniRAG in 3 steps">
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 1</span>
+        <span><strong>Pick a Document Pack</strong> below (Finance, Sales Deal, or Engineering Spec).</span>
       </div>
-      <div class="mono" style="display:flex; align-items:center; gap:16px; font-size:11.5px;">
-        <span>TTFT: <strong id="metricTtft" style="color:var(--cf-forest-pass);">380ms</strong></span>
-        <span>RRF RECALL@5: <strong style="color:var(--cf-navy-authority);">99.4%</strong></span>
-        <span>QUERY COST: <strong id="metricCost" style="color:var(--cf-accent-primary);">$0.0041</strong></span>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 2</span>
+        <span><strong>Click any green/red Proof button</strong> on the left (or ask a question).</span>
+      </div>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 3</span>
+        <span><strong>See the exact highlighted page or Excel cell</strong> on the right &amp; export.</span>
       </div>
     </div>
 
-    <!-- 4 StateGraph Nodes Strip -->
-    <section class="nodes-grid">
-      <div id="lg_node_1" class="node-cell">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="node-index">01</div>
-          <div>
-            <div style="font-size:12.5px; font-weight:700;">Document &amp; MCP Router</div>
-            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">PDF + DOCX + XLSX Parser</div>
-          </div>
-        </div>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">42ms</span>
+    <!-- Step 1: Visual 3-Card Scenario Picker -->
+    <section class="pack-picker-bar" aria-label="Step 1: Choose a sample document pack">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
+          STEP 1 &mdash; CHOOSE A SAMPLE DOCUMENT PACK TO CROSS-CHECK:
+        </span>
+        <span class="mono" style="font-size:11px; color:var(--cf-ink-secondary);">
+          3 sample files loaded per pack (Excel + Word + PDF)
+        </span>
       </div>
-
-      <div id="lg_node_2" class="node-cell">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="node-index">02</div>
-          <div>
-            <div style="font-size:12.5px; font-weight:700;">Hybrid pgvector + BM25</div>
-            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Reciprocal Rank Fusion (k=60)</div>
+      <div class="pack-grid">
+        <button type="button" onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="pack-card active-pack">
+          <div class="pack-card-title">
+            <span>1. Financial &amp; Contract Audit</span>
+            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
           </div>
-        </div>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">128ms</span>
-      </div>
-
-      <div id="lg_node_3" class="node-cell">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="node-index">03</div>
-          <div>
-            <div style="font-size:12.5px; font-weight:700;">Cross-Table &amp; Clause Verifier</div>
-            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">XLSX Row vs. PDF Clause Diff</div>
+          <div class="pack-card-desc">
+            Compares Q3 revenue, profit, and penalty limits across an Excel financial model, a Word contract, and a Board PDF.
           </div>
-        </div>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">115ms</span>
-      </div>
+          <span class="pack-status-pill pack-status-ok">&check; All 3 Numbers Match</span>
+        </button>
 
-      <div id="lg_node_4" class="node-cell">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="node-index">04</div>
-          <div>
-            <div style="font-size:12.5px; font-weight:700;">Citation Grounding Guardrail</div>
-            <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">100% Coordinate Verification</div>
+        <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">
+          <div class="pack-card-title">
+            <span>2. Sales Order &amp; Discount Approval</span>
+            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
           </div>
-        </div>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">95ms</span>
+          <div class="pack-card-desc">
+            Checks if a customer's $240,000 order form and 18.5% discount follow the company's Excel pricing rules.
+          </div>
+          <span class="pack-status-pill pack-status-ok">&check; Auto-Approved (Under 20% Limit)</span>
+        </button>
+
+        <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">
+          <div class="pack-card-title">
+            <span>3. Engineering Permit vs. Excel BOM</span>
+            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
+          </div>
+          <div class="pack-card-desc">
+            Catches a costly mismatch where the Excel equipment list orders 50.0 MW of power, but the PDF permit only allows 42.5 MW.
+          </div>
+          <span class="pack-status-pill pack-status-warn">! 1 Critical Mismatch Caught</span>
+        </button>
       </div>
     </section>
 
     <!-- Split-Screen Workbench -->
     <section class="split-workbench">
 
-      <!-- Left 6 Cols: Citation-Grounded Verification Stream -->
+      <!-- Left 6 Cols: Automated Cross-Check Findings & Plain-English Q&A -->
       <div class="left-pane">
         <div class="pane-toolbar">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-            <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-              LEFT PANE // CITATION-GROUNDED VERIFICATION STREAM (CLICK ANY [CITATION] BADGE)
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+            <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
+              STEP 2 &mdash; CROSS-CHECK FINDINGS (CLICK ANY PROOF BUTTON TO HIGHLIGHT SOURCE)
             </span>
-            <span class="mono" style="font-size:10.5px; padding:1px 6px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-              1:1 COORDINATE LOCK
+            <span class="mono" style="font-size:10.5px; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
+              0 HALLUCINATIONS &bull; EXACT PAGE &amp; CELL LINKS
             </span>
+          </div>
+          <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-bottom:6px;">
+            Or click a sample question to test live retrieval:
           </div>
           <div id="promptChipsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
             <!-- Populated by JS -->
@@ -587,35 +787,36 @@
 
         <div style="padding:12px 20px; border-top:1px solid var(--cf-rule-mid); background-color:var(--cf-bg-stone);">
           <form onsubmit="handleCustomQuery(event)" style="display:flex; gap:8px;">
-            <input id="customQueryInput" type="text" placeholder="Query cross-document covenants, tables, and numerical schedules across PDF, DOCX, and XLSX..." class="input-mechanical" style="flex:1;" />
+            <input id="customQueryInput" type="text" placeholder="Ask any question across these 3 files (e.g., What is the penalty cap? Is there a mismatch?)..." class="input-mechanical" style="flex:1;" />
             <button type="submit" class="btn-tactile btn-tactile-vermilion">
-              <span>EXECUTE VERIFICATION</span>
+              <span>Check Documents</span>
               <span>&rarr;</span>
             </button>
           </form>
         </div>
       </div>
 
-      <!-- Right 6 Cols: Multi-Format Document & Spreadsheet Source Inspector -->
+      <!-- Right 6 Cols: Source Document Viewer -->
       <div class="right-pane">
         <div class="pane-toolbar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
-          <div id="docTabsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
-            <!-- Populated by JS -->
+          <div>
+            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px; margin-bottom:6px;">
+              STEP 3 &mdash; SOURCE DOCUMENT VIEWER (3 UPLOADED FILES):
+            </div>
+            <div id="docTabsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
+              <!-- Populated by JS -->
+            </div>
           </div>
-          <button onclick="triggerExpertSignOff()" id="btnSignOff" class="btn-tactile btn-tactile-forest">
-            <span>EXPERT SIGN-OFF &amp; EXPORT AUDIT JSON</span>
-            <span>&darr;</span>
-          </button>
         </div>
 
         <!-- Active Citation Banner -->
-        <div id="activeCitationBanner" style="padding:9px 20px; background-color:var(--cf-highlight-mark); border-bottom:1px solid var(--cf-rule-strong); display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:11.5px;">
+        <div id="activeCitationBanner" style="padding:10px 20px; background-color:var(--cf-highlight-mark); border-bottom:1px solid var(--cf-rule-strong); display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:11.5px;">
           <div>
-            <strong>§ SOURCE LOCATOR:</strong>
-            <span id="activeCitationText">Click any [Citation] badge on the left to jump to the exact page, clause, or spreadsheet cell.</span>
+            <strong>HIGHLIGHTED PROOF:</strong>
+            <span id="activeCitationText">Click any proof button on the left to highlight the exact page, clause, or spreadsheet cell.</span>
           </div>
-          <span id="activeConfidenceBadge" style="padding:1px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px;">
-            99.6% MATCH
+          <span id="activeConfidenceBadge" style="padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px; white-space:nowrap;">
+            EXACT MATCH
           </span>
         </div>
 
@@ -626,7 +827,90 @@
 
     </section>
 
+    <!-- Collapsible Technical Architecture Drawer (Keeps main UI simple while preserving deep technical specs) -->
+    <details class="tech-drawer">
+      <summary>
+        <span>Technical Architecture &amp; Retrieval Pipeline Metrics (4-Stage Hybrid Search &bull; 380ms Latency &bull; 99.4% Recall)</span>
+        <span>Show / Hide Technical Specs &darr;</span>
+      </summary>
+      <div class="pipeline-bar">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
+            PIPELINE CONFIGURATION //
+          </span>
+          <span id="presetSubBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-rule-strong); background:var(--cf-bg-surface); color:var(--cf-accent-primary); font-weight:600;"></span>
+        </div>
+        <div class="mono" style="display:flex; align-items:center; gap:16px; font-size:11.5px;">
+          <span>RESPONSE TIME: <strong id="metricTtft" style="color:var(--cf-forest-pass);">380ms</strong></span>
+          <span>ACCURACY (RECALL@5): <strong style="color:var(--cf-navy-authority);">99.4%</strong></span>
+          <span>COST PER CHECK: <strong id="metricCost" style="color:var(--cf-accent-primary);">$0.0041</strong></span>
+        </div>
+      </div>
+      <section class="nodes-grid">
+        <div id="lg_node_1" class="node-cell">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="node-index">01</div>
+            <div>
+              <div style="font-size:12.5px; font-weight:700;">File Reader</div>
+              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Reads PDF, Word &amp; Excel</div>
+            </div>
+          </div>
+          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">42ms</span>
+        </div>
+        <div id="lg_node_2" class="node-cell">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="node-index">02</div>
+            <div>
+              <div style="font-size:12.5px; font-weight:700;">Hybrid Keyword + Semantic Search</div>
+              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">pgvector + BM25 Search</div>
+            </div>
+          </div>
+          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">128ms</span>
+        </div>
+        <div id="lg_node_3" class="node-cell">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="node-index">03</div>
+            <div>
+              <div style="font-size:12.5px; font-weight:700;">Cross-File Number Checker</div>
+              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Excel Row vs. PDF Clause Diff</div>
+            </div>
+          </div>
+          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">115ms</span>
+        </div>
+        <div id="lg_node_4" class="node-cell">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="node-index">04</div>
+            <div>
+              <div style="font-size:12.5px; font-weight:700;">Page &amp; Cell Proof Linker</div>
+              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Locks Every Answer to Source</div>
+            </div>
+          </div>
+          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">95ms</span>
+        </div>
+      </section>
+    </details>
+
   </main>
+
+  <!-- Printable Audit Report Preview Modal -->
+  <div id="auditReportModalBackdrop" class="om-modal-backdrop om-hidden" role="dialog" aria-modal="true" aria-labelledby="auditReportModalTitle">
+    <div class="om-modal-window">
+      <div class="om-modal-header">
+        <div>
+          <div class="mono" style="font-size:10px; color:#C8431F; text-transform:uppercase; letter-spacing:0.08em;">VERIFIED CROSS-DOCUMENT AUDIT REPORT</div>
+          <h2 id="auditReportModalTitle" style="font-family:var(--font-display); font-size:22px; font-weight:400; margin:2px 0 0; color:#F6F4EF;">OmniRAG&trade; Cross-Document Verification Summary</h2>
+        </div>
+        <button type="button" onclick="closeAuditPreviewModal()" class="btn-tactile" style="background:transparent; color:#F6F4EF; border-color:#78756D;">Close [X]</button>
+      </div>
+      <div class="om-modal-body">
+        <div id="auditReportModalContent"></div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px; padding-top:12px; border-top:1px solid var(--cf-rule-mid); flex-wrap:wrap;">
+          <button type="button" onclick="window.print()" class="btn-tactile">Print / Save as PDF</button>
+          <button type="button" onclick="triggerExpertSignOff()" class="btn-tactile btn-tactile-forest">Download JSON Audit File &darr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
@@ -638,29 +922,30 @@
   <script>
     const PRESETS = {
       enterprise_rag: {
-        badge: "SPEC-02A // MULTI-FORMAT PDF / DOCX / XLSX CITATION ENGINE",
+        title: "1. Financial & Contract Audit",
+        badge: "PDF + WORD + EXCEL FINANCIAL & CONTRACT AUDIT",
         prompts: [
-          "Compare Q3 EBITDA & cap thresholds across XLSX and MSA DOCX",
-          "Verify SLA penalty caps in PDF vs. Q3_Financials.xlsx Row 14"
+          "Compare Q3 profit vs. contract debt floor",
+          "Check if the $285,000 penalty cap matches across Excel and Word"
         ],
         docs: [
           {
             id: "doc_xlsx",
             name: "Q3_Financials.xlsx",
-            format: "XLSX",
+            format: "Excel",
             chunks: [
-              { id: "cit_xlsx_r12", coord: "Sheet 2, Row 12 (Cell D12)", title: "Enterprise Cloud ARR & Gross Margin", text: "Row 12 | Enterprise Tier ARR: $14,820,000 | Gross Margin: 81.4% | YoY Expansion: +34.2% | Verified by Finance ETL." },
-              { id: "cit_xlsx_r14", coord: "Sheet 2, Row 14 (Cell F14)", title: "Quarterly SLA Credit Liability Reserve", text: "Row 14 | Maximum SLA Liability Exposure Cap: $285,000 per fiscal quarter (strictly capped at 12.0% of quarterly contract billings)." },
-              { id: "cit_xlsx_r19", coord: "Sheet 2, Row 19 (Cell E19)", title: "Adjusted EBITDA & Compute Cost Ratio", text: "Row 19 | Adjusted Q3 EBITDA: $4,190,000 (28.2% margin) | Vector DB & Inference Spend: $142,500 ($0.0038/query avg)." }
+              { id: "cit_xlsx_r12", coord: "Sheet 2, Row 12 (Cell D12)", title: "Annual Recurring Revenue & Gross Margin", text: "Row 12 | Enterprise Tier Revenue: $14,820,000 | Gross Margin: 81.4% | Year-over-Year Growth: +34.2%." },
+              { id: "cit_xlsx_r14", coord: "Sheet 2, Row 14 (Cell F14)", title: "Quarterly SLA Penalty Reserve Limit", text: "Row 14 | Maximum SLA Penalty Cap: $285,000 per quarter (strictly capped at 12.0% of quarterly contract billings)." },
+              { id: "cit_xlsx_r19", coord: "Sheet 2, Row 19 (Cell E19)", title: "Q3 Operating Profit (Adjusted EBITDA)", text: "Row 19 | Q3 Operating Profit (EBITDA): $4,190,000 (28.2% margin) | Cloud Compute Spend: $142,500." }
             ]
           },
           {
             id: "doc_docx",
             name: "Master_Service_Agreement.docx",
-            format: "DOCX",
+            format: "Word",
             chunks: [
-              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Limitation of Liability & SLA Rebate Cap", text: "§4.2 Indemnification & Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
-              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Data Residency & Zero-Retention Policy", text: "§6.1 Enterprise Data Governance: All customer embeddings in PostgreSQL pgvector are isolated by tenant_id with zero third-party training retention." }
+              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
+              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Customer Data Privacy & Zero Retention", text: "§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
             ]
           },
           {
@@ -668,33 +953,64 @@
             name: "Board_Audit_Report_2026.pdf",
             format: "PDF",
             chunks: [
-              { id: "cit_pdf_p4", coord: "Page 4, Table 2.1", title: "Independent Audit Verification of Q3 Covenants", text: "Page 4, Table 2.1: Auditor confirms Q3 Adjusted EBITDA of $4.19M exceeds the $3.50M senior debt covenant threshold by +19.7%, with zero uncapped SLA liabilities." },
-              { id: "cit_pdf_p9", coord: "Page 9, Paragraph 3", title: "SOC2 Type II Cryptographic Citation Audit", text: "Page 9, Para 3: Every automated retrieval response enforces deterministic page-level and row-level citation links prior to streaming to the end user." }
+              { id: "cit_pdf_p4", coord: "Page 4, Table 2.1", title: "Auditor Sign-Off on Q3 Profit Minimum", text: "Page 4, Table 2.1: Independent auditor confirms Q3 profit of $4.19M exceeds the $3.50M minimum requirement by +19.7%." },
+              { id: "cit_pdf_p9", coord: "Page 9, Paragraph 3", title: "100% Source Citation Verification Rule", text: "Page 9, Para 3: Every automated check links directly to the exact page number and spreadsheet row before approval." }
             ]
           }
         ],
         initialChat: [
           {
-            role: "user",
-            text: "Cross-check our Q3 SLA liability exposure and Adjusted EBITDA across Q3_Financials.xlsx, Master_Service_Agreement.docx, and the Board Audit PDF."
-          },
-          {
             role: "assistant",
-            html: `Executed a 4-stage <strong>StateGraph</strong> verification across your <code>XLSX</code>, <code>DOCX</code>, and <code>PDF</code> repositories. All numerical figures and legal covenants are <strong>100% consistent</strong>:
-            <ul>
-              <li><strong>Quarterly SLA Liability Cap ($285,000 / 12.0%):</strong> The financial reserve model in <span onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">[Citation: Q3_Financials.xlsx &mdash; Sheet 2, Row 14]</span> allocates a maximum quarterly exposure of <strong>$285,000 (12.0%)</strong>, which matches the contractual ceiling in <span onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">[Citation: Master_Service_Agreement.docx &mdash; Page 7, §4.2]</span>.</li>
-              <li><strong>Q3 Adjusted EBITDA Covenant ($4.19M vs. $3.50M Floor):</strong> Spreadsheet line item <span onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">[Citation: Q3_Financials.xlsx &mdash; Sheet 2, Row 19]</span> reports <strong>$4,190,000 (28.2% margin)</strong>, independently attested in <span onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">[Citation: Board_Audit_Report_2026.pdf &mdash; Page 4, Table 2.1]</span> (+19.7% above threshold).</li>
-              <li><strong>Tenant Isolation &amp; Data Governance:</strong> Verified compliant with <span onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">[Citation: Master_Service_Agreement.docx &mdash; Page 11, §6.1]</span>.</li>
-            </ul>`
+            html: `
+              <div class="finding-card">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 1: SLA Penalty Cap ($285,000 / 12%)</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; EXACT MATCH</span>
+                </div>
+                <div class="finding-desc">
+                  The <strong>$285,000 (12.0%)</strong> quarterly penalty limit in your Excel budget matches the legal cap in the Word contract.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">Show in Excel (Row 14) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">Show in Word Contract (Page 7) &rarr;</button>
+                </div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 2: Q3 Profit vs. Required Minimum ($4.19M vs. $3.50M)</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; PASSED (+19.7% ABOVE FLOOR)</span>
+                </div>
+                <div class="finding-desc">
+                  Q3 profit of <strong>$4,190,000</strong> in Excel matches the signed Board Audit PDF and clears the $3.50M requirement.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">Show in Excel (Row 19) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">Show in Audit PDF (Page 4) &rarr;</button>
+                </div>
+              </div>
+              <div class="finding-card" style="margin-bottom:0;">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 3: Data Privacy Clause</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; VERIFIED</span>
+                </div>
+                <div class="finding-desc">
+                  Zero third-party data retention is active and signed in the Master Service Agreement.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">Show in Word Contract (Page 11) &rarr;</button>
+                </div>
+              </div>
+            `
           }
         ]
       },
 
       agentpress_mcp: {
-        badge: "SPEC-02B // AGENTPRESS B2B DEAL COPILOT + MCP TOOL STREAMING",
+        title: "2. Sales Order & Discount Approval",
+        badge: "SALES ORDER PDF vs. PRICING RULES EXCEL",
         prompts: [
-          "Run MCP Deal Desk check on Acme Corp $240k Enterprise Renewal",
-          "Draft CFO security & discount justification with page citations"
+          "Is Acme Corp's 18.5% discount allowed under our pricing rules?",
+          "Does the $240k order qualify for the free integration bundle?"
         ],
         docs: [
           {
@@ -702,93 +1018,128 @@
             name: "Acme_Enterprise_OrderForm.pdf",
             format: "PDF",
             chunks: [
-              { id: "ap_cit_p3", coord: "Page 3, Section 2 (Order Schedule)", title: "Acme Corp 3-Year Enterprise Commit ($240,000 ACV)", text: "Page 3, Section 2: 250 Revenue Seats @ $80/seat/mo ($240,000 Annual Contract Value). Requested Custom Discount: 18.5% off list price, contingent on Q4 signature." },
-              { id: "ap_cit_p5", coord: "Page 5, Rider B", title: "Custom MCP On-Premise Connector Addendum", text: "Page 5, Rider B: Customer requires bi-directional Model Context Protocol (MCP) integration with Salesforce CRM, Slack Deal Rooms, and Stripe Billing API." }
+              { id: "ap_cit_p3", coord: "Page 3, Section 2 (Order Schedule)", title: "Acme Corp 3-Year Order ($240,000/yr, 18.5% Discount)", text: "Page 3, Section 2: 250 Seats @ $80/seat/mo ($240,000 Annual Contract Value). Requested Discount: 18.5% off list price." },
+              { id: "ap_cit_p5", coord: "Page 5, Rider B", title: "Requested Salesforce & Slack Integration Add-On", text: "Page 5, Rider B: Customer requests bi-directional Salesforce CRM, Slack, and Stripe integration bundle included at $0." }
             ]
           },
           {
             id: "ap_xlsx",
             name: "RevOps_DealDesk_Matrix.xlsx",
-            format: "XLSX",
+            format: "Excel",
             chunks: [
-              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Discount Approval Guardrails ($200k–$500k ACV)", text: "Row 8 | ACV Band: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Multi-Year Commits | Gross Margin Floor: 78.0%." },
-              { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (MCP SKU Pricing)", title: "Enterprise MCP Connector Bundle SKU", text: "Row 15 | SKU: AP-MCP-ENT | Included free of charge for commitments >= $200,000 ACV." }
+              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
+              { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (Add-On Rules)", title: "Free Integration Bundle Rule (Orders >= $200k)", text: "Row 15 | Integration Bundle SKU: Included free of charge ($0) for any contract >= $200,000/year." }
             ]
           },
           {
             id: "ap_docx",
             name: "Security_DPA_Addendum.docx",
-            format: "DOCX",
+            format: "Word",
             chunks: [
-              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "SOC2 & Subprocessor Authorization", text: "§3.1 Subprocessors: Zero-Data-Retention enterprise inference endpoints pre-authorized under Customer DPA." }
+              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "Pre-Approved Security Terms", text: "§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
             ]
           }
         ],
         initialChat: [
           {
-            role: "user",
-            text: "Evaluate Acme Corp's $240k Order Form against our Deal Desk Matrix and MCP entitlement rules."
-          },
-          {
             role: "assistant",
-            html: `<strong>AgentPress Deal Desk Engine</strong> queried <code>mcp://salesforce-crm</code> and cross-verified the deal artifacts:
-            <ul>
-              <li><strong>Instant Deal Desk Auto-Approval (18.5% Discount):</strong> Acme Corp's requested <strong>18.5% discount</strong> on a $240,000 ACV 3-year commit in <span onclick="jumpToCitation('ap_pdf','ap_cit_p3')" class="citation-badge">[Citation: Acme_Enterprise_OrderForm.pdf &mdash; Page 3, §2]</span> falls safely within the <strong>20.0% ceiling</strong> in <span onclick="jumpToCitation('ap_xlsx','ap_cit_r8')" class="citation-badge">[Citation: RevOps_DealDesk_Matrix.xlsx &mdash; Sheet 1, Row 8]</span>.</li>
-              <li><strong>$0 Waived Fee for MCP Connector Bundle:</strong> Per <span onclick="jumpToCitation('ap_pdf','ap_cit_p5')" class="citation-badge">[Citation: Acme_Enterprise_OrderForm.pdf &mdash; Page 5, Rider B]</span>, the Salesforce/Slack/Stripe MCP add-on qualifies for a 100% fee waiver under <span onclick="jumpToCitation('ap_xlsx','ap_cit_r15')" class="citation-badge">[Citation: RevOps_DealDesk_Matrix.xlsx &mdash; Sheet 1, Row 15]</span>.</li>
-              <li><strong>DPA Security Sign-Off Ready:</strong> Zero-retention endpoints confirmed in <span onclick="jumpToCitation('ap_docx','ap_cit_s31')" class="citation-badge">[Citation: Security_DPA_Addendum.docx &mdash; Page 4, §3.1]</span>.</li>
-            </ul>`
+            html: `
+              <div class="finding-card">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 1: 18.5% Discount Is Within the 20.0% Limit</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; AUTO-APPROVED</span>
+                </div>
+                <div class="finding-desc">
+                  Acme Corp's <strong>18.5% discount</strong> on their $240,000/yr order is below the <strong>20.0% maximum</strong> in your Excel pricing sheet.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('ap_pdf','ap_cit_p3')" class="citation-badge">Show in Order PDF (Page 3) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('ap_xlsx','ap_cit_r8')" class="citation-badge">Show in Pricing Excel (Row 8) &rarr;</button>
+                </div>
+              </div>
+              <div class="finding-card" style="margin-bottom:0;">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 2: Free Integration Add-On Qualifies ($240k &ge; $200k)</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; ELIGIBLE FOR $0 WAIVER</span>
+                </div>
+                <div class="finding-desc">
+                  Because the order is over $200,000/yr, the Salesforce/Slack integration bundle qualifies for a 100% fee waiver.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('ap_pdf','ap_cit_p5')" class="citation-badge">Show in Order PDF (Page 5) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('ap_xlsx','ap_cit_r15')" class="citation-badge">Show in Pricing Excel (Row 15) &rarr;</button>
+                </div>
+              </div>
+            `
           }
         ]
       },
 
       buildq_solar: {
-        badge: "SPEC-02C // BUILDQ 200K-PDF SOLAR PROJECT DUE DILIGENCE VERIFIER",
+        title: "3. Engineering Permit vs. Excel BOM",
+        badge: "ENGINEERING PERMIT PDF vs. EQUIPMENT EXCEL BOM",
         prompts: [
-          "Detect MW capacity & lease term collisions across Solar PDFs & EPC XLSX",
-          "Verify ERCOT Interconnection POI limit vs. BESS inverter schedule"
+          "Show the exact MW power mismatch between the PDF permit and Excel",
+          "Verify if the 35-year land lease date matches the financial model"
         ],
         docs: [
-          {
-            id: "bq_lease_pdf",
-            name: "Solar_Land_Lease.pdf",
-            format: "PDF",
-            chunks: [
-              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "Parcel B-14 Acreage & Decommissioning Covenant", text: "Page 4, §3.2: Lessor grants 480 contiguous acres in Travis County, TX for a maximum operational term of 35 years (expiring December 31, 2061)." },
-              { id: "bq_cit_p12", coord: "Page 12, Exhibit C", title: "Substation Easement & Transmission Right-of-Way", text: "Page 12, Exhibit C: 138kV Gen-Tie transmission corridor easement recorded under County Instrument #2026-0098412." }
-            ]
-          },
           {
             id: "bq_grid_pdf",
             name: "Grid_Interconnection_Study.pdf",
             format: "PDF",
             chunks: [
-              { id: "bq_cit_p18", coord: "Page 18, Table 3 (ERCOT POI Limit)", title: "CRITICAL: Point of Interconnection Maximum Export Limit", text: "Page 18, Table 3 | ERCOT FIS Stability Limit: Maximum continuous net injection at Substation POI is strictly capped at 42.5 MW AC without $11.4M network transformer upgrade." }
+              { id: "bq_cit_p18", coord: "Page 18, Table 3 (Grid Limit)", title: "Permit Limit: Maximum 42.5 MW Allowed", text: "Page 18, Table 3 | Official Grid Limit: Maximum continuous power injection at the substation is strictly capped at 42.5 MW AC unless an $11.4M transformer upgrade is paid." }
             ]
           },
           {
             id: "bq_epc_xlsx",
             name: "EPC_Engineering_Spec.xlsx",
-            format: "XLSX",
+            format: "Excel",
             chunks: [
-              { id: "bq_cit_r9", coord: "Sheet 1, Row 9 (Inverter Block BOM)", title: "COLLISION DETECTED: Scheduled Nameplate AC Capacity", text: "Row 9 | Scheduled Sungrow Central Inverter Blocks: 20 x 2.5 MW AC = 50.0 MW AC Continuous Export (Exceeds ERCOT POI Cap by +7.5 MW AC!)." },
-              { id: "bq_cit_r22", coord: "Sheet 1, Row 22 (Financial Model Term)", title: "PPA & Asset Depreciation Horizon", text: "Row 22 | Project Finance Revenue Horizon: 35 Years aligned with December 31, 2061 Land Lease expiration." }
+              { id: "bq_cit_r9", coord: "Sheet 1, Row 9 (Equipment List)", title: "MISMATCH: Excel Orders 50.0 MW of Inverters", text: "Row 9 | Scheduled Inverter Equipment: 20 x 2.5 MW = 50.0 MW AC capacity (Exceeds the 42.5 MW PDF permit limit by +7.5 MW!)." },
+              { id: "bq_cit_r22", coord: "Sheet 1, Row 22 (Project Timeline)", title: "35-Year Financial Horizon (Ends Dec 31, 2061)", text: "Row 22 | Project Finance Timeline: 35 Years aligned with December 31, 2061 land lease expiration." }
+            ]
+          },
+          {
+            id: "bq_lease_pdf",
+            name: "Solar_Land_Lease.pdf",
+            format: "PDF",
+            chunks: [
+              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, §3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
             ]
           }
         ],
         initialChat: [
           {
-            role: "user",
-            text: "Run automated cross-document Due Diligence across the Land Lease PDF, ERCOT Grid Interconnection Study PDF, and EPC Engineering Spec XLSX."
-          },
-          {
             role: "assistant",
-            html: `<div style="padding:10px 12px; background-color:var(--cf-accent-tint); border:1.5px solid var(--cf-accent-primary); color:var(--cf-accent-primary); font-family:var(--font-mono); font-size:11.5px; font-weight:600; margin-bottom:10px;">
-              [ALERT // 1 CRITICAL DILIGENCE COLLISION DETECTED &mdash; SAVES 3 WEEKS OF MANUAL PROJECT FINANCE REVIEW]
-            </div>
-            <ul>
-              <li><strong style="color:var(--cf-accent-primary);">7.5 MW AC Interconnection Mismatch (Action Required):</strong> The ERCOT Facility Study in <span onclick="jumpToCitation('bq_grid_pdf','bq_cit_p18')" class="citation-badge">[Citation: Grid_Interconnection_Study.pdf &mdash; Page 18, Table 3]</span> caps continuous POI export at <strong>42.5 MW AC</strong>, whereas the EPC Bill of Materials in <span onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r9')" class="citation-badge">[Citation: EPC_Engineering_Spec.xlsx &mdash; Sheet 1, Row 9]</span> schedules <strong>50.0 MW AC</strong> of inverter capacity without budgeting the $11.4M substation upgrade.</li>
-              <li><strong style="color:var(--cf-forest-pass);">35-Year Lease &amp; Easement Verified:</strong> The 35-year operational term (through Dec 31, 2061) in <span onclick="jumpToCitation('bq_lease_pdf','bq_cit_p4')" class="citation-badge">[Citation: Solar_Land_Lease.pdf &mdash; Page 4, §3.2]</span> matches the depreciation model in <span onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r22')" class="citation-badge">[Citation: EPC_Engineering_Spec.xlsx &mdash; Sheet 1, Row 22]</span>.</li>
-            </ul>`
+            html: `
+              <div class="finding-card finding-alert">
+                <div class="finding-header">
+                  <span class="finding-title" style="color:var(--cf-accent-primary);">! Finding 1: Power Capacity Mismatch (42.5 MW Permit vs. 50.0 MW Excel)</span>
+                  <span class="pack-status-pill pack-status-warn" style="margin:0;">! ACTION REQUIRED</span>
+                </div>
+                <div class="finding-desc">
+                  The official grid permit PDF caps power output at <strong>42.5 MW</strong>, but the Excel equipment list orders <strong>50.0 MW</strong> of inverters (a 7.5 MW conflict that would trigger an unbudgeted $11.4M upgrade).
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('bq_grid_pdf','bq_cit_p18')" class="citation-badge">Show 42.5 MW Cap in Permit PDF (Page 18) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r9')" class="citation-badge">Show 50.0 MW Order in Excel (Row 9) &rarr;</button>
+                </div>
+              </div>
+              <div class="finding-card" style="margin-bottom:0;">
+                <div class="finding-header">
+                  <span class="finding-title">Finding 2: 35-Year Lease Dates Match (Through Dec 31, 2061)</span>
+                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; DATES MATCH</span>
+                </div>
+                <div class="finding-desc">
+                  The 35-year term in the Land Lease PDF matches the financial timeline in Excel Row 22.
+                </div>
+                <div class="finding-proof-btns">
+                  <button type="button" onclick="jumpToCitation('bq_lease_pdf','bq_cit_p4')" class="citation-badge">Show in Land Lease PDF (Page 4) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r22')" class="citation-badge">Show in Excel (Row 22) &rarr;</button>
+                </div>
+              </div>
+            `
           }
         ]
       }
@@ -813,18 +1164,20 @@
 
       ['enterprise_rag', 'agentpress_mcp', 'buildq_solar'].forEach(k => {
         const btn = document.getElementById('preset_' + k);
+        if (!btn) return;
         if (k === presetKey) {
-          btn.className = "btn-tactile btn-tactile-vermilion";
+          btn.className = "pack-card active-pack";
         } else {
-          btn.className = "btn-tactile";
+          btn.className = "pack-card";
         }
       });
 
-      document.getElementById('presetSubBadge').textContent = preset.badge;
+      const subBadge = document.getElementById('presetSubBadge');
+      if (subBadge) subBadge.textContent = preset.badge;
 
       const chipsDiv = document.getElementById('promptChipsContainer');
       chipsDiv.innerHTML = preset.prompts.map(p => `
-        <button onclick="runPromptChip('${p.replace(/'/g, "\\'")}')" class="prompt-chip">
+        <button type="button" onclick="runPromptChip('${p.replace(/'/g, "\\'")}')" class="prompt-chip">
           &rarr; ${p}
         </button>
       `).join('');
@@ -837,22 +1190,26 @@
       renderDocumentTabs();
       renderDocumentViewport();
       animateLangGraphNodes();
+
+      const firstDoc = preset.docs[0];
+      const firstChunk = firstDoc.chunks[0];
+      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) — "${firstChunk.title}"`;
     }
 
     function renderChatMessageHTML(msg) {
       if (msg.role === 'user') {
         return `
           <div class="msg-user">
-            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">AUDIT QUERY</div>
+            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">YOUR QUESTION</div>
             <div style="font-size:13px;">${escapeHtml(msg.text)}</div>
           </div>
         `;
       }
       return `
-        <div class="msg-system">
+        <div class="msg-system" style="font-family:var(--font-sans);">
           <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px; margin-bottom:10px; font-family:var(--font-mono); font-size:10.5px;">
-            <span style="font-weight:600; color:var(--cf-navy-authority);">VERIFIED ANSWER &amp; CITATIONS</span>
-            <span style="color:var(--cf-forest-pass); font-weight:600;">100% GROUNDED &bull; CLICK BADGES TO INSPECT SOURCE</span>
+            <span style="font-weight:700; color:var(--cf-ink-primary);">AUTOMATED CROSS-CHECK RESULTS</span>
+            <span style="color:var(--cf-forest-pass); font-weight:600;">CLICK ANY BUTTON BELOW TO HIGHLIGHT THE SOURCE</span>
           </div>
           <div>${msg.html}</div>
         </div>
@@ -865,8 +1222,8 @@
       container.innerHTML = preset.docs.map(doc => {
         const active = doc.id === currentDocId;
         return `
-          <button onclick="selectDocTab('${doc.id}')" class="btn-tactile ${active ? 'btn-tactile-ink' : ''}">
-            <span>[${doc.format}]</span>
+          <button type="button" onclick="selectDocTab('${doc.id}')" class="btn-tactile ${active ? 'btn-tactile-ink' : ''}">
+            <span>${doc.format}:</span>
             <span>${doc.name}</span>
           </button>
         `;
@@ -875,6 +1232,12 @@
 
     function selectDocTab(docId) {
       currentDocId = docId;
+      const preset = PRESETS[currentPresetKey];
+      const doc = preset.docs.find(d => d.id === docId);
+      if (doc && doc.chunks[0]) {
+        highlightedChunkId = doc.chunks[0].id;
+        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) — "${doc.chunks[0].title}"`;
+      }
       renderDocumentTabs();
       renderDocumentViewport();
     }
@@ -890,13 +1253,13 @@
           <div id="chunk_${chunk.id}" onclick="jumpToCitation('${doc.id}','${chunk.id}')" class="doc-chunk ${isHighlighted ? 'source-highlighted' : ''}">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px;">
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <span class="mono" style="font-size:10.5px; font-weight:600; padding:1px 6px; border:1px solid var(--cf-ink-primary); background:${isHighlighted ? 'var(--cf-ink-primary)' : 'var(--cf-bg-paper)'}; color:${isHighlighted ? 'var(--cf-ink-on-dark)' : 'var(--cf-ink-primary)'};">
+                <span class="mono" style="font-size:10.5px; font-weight:600; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:${isHighlighted ? 'var(--cf-ink-primary)' : 'var(--cf-bg-paper)'}; color:${isHighlighted ? 'var(--cf-ink-on-dark)' : 'var(--cf-ink-primary)'};">
                   ${doc.name} &mdash; ${chunk.coord}
                 </span>
-                <span style="font-size:13px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
+                <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
               </div>
-              <span class="mono" style="font-size:10.5px; font-weight:600; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? '§ HIGHLIGHTED SOURCE PASSAGE' : 'VERIFIED SOURCE'}
+              <span class="mono" style="font-size:10.5px; font-weight:700; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
+                ${isHighlighted ? '✓ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
               </span>
             </div>
             <p class="chunk-body-text">
@@ -931,6 +1294,7 @@
       const ids = ['lg_node_1', 'lg_node_2', 'lg_node_3', 'lg_node_4'];
       ids.forEach((id, idx) => {
         const el = document.getElementById(id);
+        if (!el) return;
         setTimeout(() => {
           el.classList.add('pulsing');
           setTimeout(() => {
@@ -961,53 +1325,109 @@
       const chatDiv = document.getElementById('chatMessages');
       chatDiv.innerHTML += renderChatMessageHTML({ role: 'user', text: query });
 
-      const replyHtml = `Executed hybrid <code>pgvector + BM25</code> retrieval for <em>&ldquo;${escapeHtml(query)}&rdquo;</em> across all indexed formats:
-        <ul>
-          <li>Primary evidence retrieved from <span onclick="jumpToCitation('${escapeHtml(firstDoc.id)}','${escapeHtml(c1.id)}')" class="citation-badge">[Citation: ${escapeHtml(firstDoc.name)} &mdash; ${escapeHtml(c1.coord)}]</span>: <code>${escapeHtml(c1.text)}</code></li>
-          <li>Cross-verified against <span onclick="jumpToCitation('${escapeHtml(secondDoc.id)}','${escapeHtml(c2.id)}')" class="citation-badge">[Citation: ${escapeHtml(secondDoc.name)} &mdash; ${escapeHtml(c2.coord)}]</span> with <strong>99.6% coordinate grounding confidence</strong>.</li>
-        </ul>`;
+      const replyHtml = `
+        <div class="finding-card" style="margin-bottom:0;">
+          <div class="finding-header">
+            <span class="finding-title">Answer for: &ldquo;${escapeHtml(query)}&rdquo;</span>
+            <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; 2 SOURCES MATCHED</span>
+          </div>
+          <div class="finding-desc">
+            <strong>1. ${escapeHtml(firstDoc.name)} (${escapeHtml(c1.coord)}):</strong> ${escapeHtml(c1.text)}<br/>
+            <strong>2. ${escapeHtml(secondDoc.name)} (${escapeHtml(c2.coord)}):</strong> ${escapeHtml(c2.text)}
+          </div>
+          <div class="finding-proof-btns">
+            <button type="button" onclick="jumpToCitation('${escapeHtml(firstDoc.id)}','${escapeHtml(c1.id)}')" class="citation-badge">Show in ${escapeHtml(firstDoc.name)} &rarr;</button>
+            <button type="button" onclick="jumpToCitation('${escapeHtml(secondDoc.id)}','${escapeHtml(c2.id)}')" class="citation-badge">Show in ${escapeHtml(secondDoc.name)} &rarr;</button>
+          </div>
+        </div>`;
 
       setTimeout(() => {
         chatDiv.innerHTML += renderChatMessageHTML({ role: 'assistant', html: replyHtml });
         chatDiv.scrollTop = chatDiv.scrollHeight;
         jumpToCitation(firstDoc.id, c1.id);
-      }, 240);
+      }, 180);
 
       input.value = '';
+    }
+
+    function openAuditPreviewModal() {
+      const preset = PRESETS[currentPresetKey];
+      const modal = document.getElementById('auditReportModalBackdrop');
+      const content = document.getElementById('auditReportModalContent');
+      if (!modal || !content) return;
+
+      const rowsHtml = preset.docs.map(d =>
+        d.chunks.map(c => `
+          <tr>
+            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); font-weight:600;">${escapeHtml(d.name)}</td>
+            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);" class="mono">${escapeHtml(c.coord)}</td>
+            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);">${escapeHtml(c.title)}</td>
+            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); color:var(--cf-forest-pass); font-weight:700;" class="mono">VERIFIED</td>
+          </tr>
+        `).join('')
+      ).join('');
+
+      content.innerHTML = `
+        <div style="background:var(--cf-bg-paper); border:1px solid var(--cf-rule-mid); padding:12px 14px; margin-bottom:14px;">
+          <div><strong>Document Pack:</strong> ${escapeHtml(preset.title)}</div>
+          <div><strong>Files Cross-Checked:</strong> ${preset.docs.map(d => escapeHtml(d.name)).join(', ')}</div>
+          <div><strong>Verification Timestamp:</strong> ${new Date().toISOString().slice(0, 19).replace('T', ' ')} UTC</div>
+        </div>
+        <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+          <thead>
+            <tr style="background:var(--cf-bg-stone); text-align:left; font-family:var(--font-mono); font-size:11px;">
+              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">FILE</th>
+              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">PAGE / EXCEL CELL</th>
+              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">CLAUSE / ITEM</th>
+              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `;
+      modal.classList.remove('om-hidden');
+    }
+
+    function closeAuditPreviewModal() {
+      const modal = document.getElementById('auditReportModalBackdrop');
+      if (modal) modal.classList.add('om-hidden');
     }
 
     function triggerExpertSignOff() {
       const preset = PRESETS[currentPresetKey];
       const auditPayload = {
-        studio_version: "caliberfoundry-omnirag-v3.1.0",
+        studio_version: "caliberfoundry-omnirag-v3.2.0",
         preset: currentPresetKey,
+        pack_title: preset.title,
         timestamp: new Date().toISOString(),
         verified_documents: preset.docs.map(d => ({ name: d.name, format: d.format, chunks_verified: d.chunks.length })),
         active_citation_inspected: highlightedChunkId,
         grounding_pass_rate: 1.0,
-        expert_sign_off: "APPROVED_WITH_CRYPTOGRAPHIC_AUDIT_TRAIL"
+        expert_sign_off: "APPROVED_WITH_SOURCE_CITATIONS"
       };
       const blob = new Blob([JSON.stringify(auditPayload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `omnirag_audit_signoff_${currentPresetKey}.json`;
+      a.download = `omnirag_audit_report_${currentPresetKey}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
       const btn = document.getElementById('btnSignOff');
-      btn.innerHTML = `<span>SIGNED OFF &amp; AUDIT JSON DOWNLOADED</span>`;
-      setTimeout(() => {
-        btn.innerHTML = `<span>EXPERT SIGN-OFF &amp; EXPORT AUDIT JSON</span><span>&darr;</span>`;
-      }, 1800);
+      if (btn) {
+        btn.innerHTML = `<span>&check; REPORT DOWNLOADED (.JSON)</span>`;
+        setTimeout(() => {
+          btn.innerHTML = `<span>Download Report (.JSON)</span><span>&darr;</span>`;
+        }, 1800);
+      }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       switchPreset('enterprise_rag');
     });
   </script>
-  <script src="../assets/js/cf-telemetry.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
 </body>
 </html>

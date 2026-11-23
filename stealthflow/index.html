@@ -469,6 +469,66 @@
       font-family: var(--font-mono);
       font-size: 11px;
     }
+
+    .how-it-works-strip {
+      background-color: #141413;
+      color: #F6F4EF;
+      padding: 10px 24px;
+      border-bottom: 1.5px solid var(--cf-rule-strong);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      font-size: 12.5px;
+    }
+    @media (max-width: 860px) {
+      .how-it-works-strip {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+    .hiw-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hiw-num {
+      background-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .quick-filter-strip {
+      background-color: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-mid);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tech-drawer {
+      border-top: 1.5px solid var(--cf-rule-strong);
+      background-color: var(--cf-bg-stone);
+    }
+    .tech-drawer summary {
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--cf-ink-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tech-drawer summary:hover {
+      color: var(--cf-ink-primary);
+    }
   </style>
 </head>
 <body>
@@ -480,86 +540,78 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">StealthFlow&trade; Data Hub</h1>
-            <span class="status-tag">12/12 SOURCES HEALTHY</span>
-            <span class="spec-label" style="border:1px solid var(--cf-rule-mid); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary);">
-              WEBHOOK DISPATCHER + SCHEMA ETL
-            </span>
+            <h1 class="app-title">StealthFlow&trade; Web Scraper &amp; Clean Data Hub</h1>
+            <span class="status-tag">12 WEBSITE SOURCES &bull; 50 VERIFIED RECORDS</span>
           </div>
-          <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Async Playwright Extraction Cluster &bull; Direct XHR/GraphQL Interception &bull; Pydantic v2 Schema Guard &bull; Deterministic URL Canonicalization
+          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
+            Extract clean company contacts, product prices, and catalog data from protected websites &mdash; ready for Excel (.CSV) or Make.com / n8n webhooks.
           </div>
         </div>
       </div>
 
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <a href="mailto:engineering@caliberfoundry.com" class="btn-tactile">
-          <span>engineering@caliberfoundry.com</span>
-          <span>&nearr;</span>
-        </a>
-        <button onclick="exportCleanJSON()" class="btn-tactile">
-          <span>EXPORT CLEAN JSON (50)</span>
+        <button type="button" onclick="exportCleanCSV()" class="btn-tactile btn-tactile-forest">
+          <span>Download Excel (.CSV)</span>
           <span>&darr;</span>
         </button>
-        <button onclick="exportCleanCSV()" class="btn-tactile">
-          <span>EXPORT CSV (50)</span>
+        <button type="button" onclick="exportCleanJSON()" class="btn-tactile">
+          <span>Download JSON (50)</span>
           <span>&darr;</span>
         </button>
-        <button onclick="scrollToWebhookTester()" class="btn-tactile btn-tactile-vermilion">
-          <span>FIRE TEST PAYLOAD TO MAKE.COM</span>
+        <button type="button" onclick="scrollToWebhookTester()" class="btn-tactile btn-tactile-vermilion">
+          <span>Send Test Data to Webhook</span>
           <span>&rarr;</span>
         </button>
+        <a href="mailto:engineering@caliberfoundry.com?subject=StealthFlow%20Custom%20Web%20Scraper%20Inquiry" class="btn-tactile">
+          <span>Contact Engineering</span>
+          <span>&nearr;</span>
+        </a>
       </div>
     </div>
   </header>
 
   <main class="shell">
 
-    <!-- 5-Column KPI Telemetry Strip -->
-    <section class="kpi-strip">
-      <div class="kpi-cell">
-        <div class="spec-label">01 // PLAYWRIGHT TEMPLATES</div>
-        <div class="kpi-val">12 / 12 <span style="font-size:12px; color:var(--cf-forest-pass);">ONLINE</span></div>
-        <div class="kpi-sub">Isolated Docker Workers + Residential Proxy Pool</div>
+    <!-- Plain-English 1 -> 2 -> 3 Guided Bar -->
+    <div class="how-it-works-strip" aria-label="How to use StealthFlow in 3 steps">
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 1</span>
+        <span><strong>Filter or search the 50 extracted records</strong> below by industry, company, or website source.</span>
       </div>
-      <div class="kpi-cell">
-        <div class="spec-label">02 // VALIDATED DATASET</div>
-        <div class="kpi-val">50 <span style="font-size:12px; color:var(--cf-navy-authority);">100% COVERAGE</span></div>
-        <div class="kpi-sub">18 Schema Fields &bull; Zero Null Required Keys</div>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 2</span>
+        <span><strong>Click any row in the table</strong> to inspect all 18 cleaned fields (contact email, phone, SKUs, price).</span>
       </div>
-      <div class="kpi-cell">
-        <div class="spec-label">03 // PYDANTIC V2 PASS RATE</div>
-        <div class="kpi-val" style="color:var(--cf-forest-pass);">100.0%</div>
-        <div class="kpi-sub">Strict Type Coercion + URL Canonicalization</div>
+      <div class="hiw-step">
+        <span class="hiw-num">STEP 3</span>
+        <span><strong>Download Excel (.CSV)</strong> at the top or click <strong>"Send Test Data to Webhook"</strong> on the right.</span>
       </div>
-      <div class="kpi-cell">
-        <div class="spec-label">04 // EXTRACTION THROUGHPUT</div>
-        <div class="kpi-val">16.4 <span style="font-size:12px; color:var(--cf-accent-primary);">REC/SEC</span></div>
-        <div class="kpi-sub">Direct XHR/GraphQL Capture (Immune to CSS Drift)</div>
-      </div>
-      <div class="kpi-cell">
-        <div class="spec-label">05 // MAKE.COM WEBHOOK SLA</div>
-        <div class="kpi-val">99.98% <span style="font-size:12px; color:var(--cf-forest-pass);">200 OK</span></div>
-        <div class="kpi-sub">HMAC-SHA256 Signed + Exponential Backoff</div>
-      </div>
-    </section>
-
-    <!-- Section Bar: 12 Source Templates -->
-    <div class="section-bar">
-      <div>
-        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-          SECTION I // 12 ISOLATED PLAYWRIGHT SOURCE TEMPLATES (CLICK ANY SOURCE TO FILTER DATASET)
-        </span>
-      </div>
-      <button onclick="selectSource('ALL')" id="btnResetSources" class="btn-tactile" style="padding:4px 10px; font-size:10.5px;">
-        SHOWING ALL 12 SOURCES (50 RECORDS)
-      </button>
     </div>
 
-    <!-- 12 Source Templates Grid -->
-    <section id="sourcesGrid" class="sources-grid">
-      <!-- Populated dynamically by JS -->
-    </section>
+    <!-- Step 1 Quick Industry Filter Strip -->
+    <div class="quick-filter-strip">
+      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; margin-right:4px;">STEP 1 &mdash; QUICK FILTER:</span>
+        <button type="button" onclick="selectSource('ALL')" id="btnResetSources" class="btn-tactile btn-tactile-ink" style="padding:5px 10px; font-size:11px;">
+          All 12 Website Sources (50 Records)
+        </button>
+        <button type="button" onclick="selectSource('src_02_shopify_plus')" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
+          Shopify &amp; eCommerce Catalogs
+        </button>
+        <button type="button" onclick="selectSource('src_03_g2_saas')" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
+          B2B SaaS Directories
+        </button>
+        <button type="button" onclick="selectSource('src_01_thomasnet')" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
+          Industrial Manufacturers
+        </button>
+        <button type="button" onclick="selectSource('src_05_medtech_reg')" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
+          Healthcare &amp; MedTech
+        </button>
+      </div>
+      <div class="mono" style="font-size:11.5px; color:var(--cf-ink-secondary);">
+        SHOWING: <strong id="matchingCount" style="color:var(--cf-accent-primary);">50</strong> / 50 RECORDS
+      </div>
+    </div>
 
     <!-- Split Workbench: Left = 50-Record Ledger | Right = Make.com Webhook Dispatcher & JSON Inspector -->
     <section class="workbench-grid">
@@ -568,13 +620,13 @@
       <div class="ledger-pane">
         <div class="filter-toolbar">
           <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:260px; flex-wrap:wrap;">
-            <input id="searchInput" type="text" oninput="renderLeadsTable()" placeholder="Filter 50 records by company, URL, email, city, or executive..." class="input-mechanical" style="flex:1; min-width:220px;" />
+            <input id="searchInput" type="text" oninput="renderLeadsTable()" placeholder="Search 50 extracted companies by name, website, email, city, or contact person..." class="input-mechanical" style="flex:1; min-width:220px;" />
             <select id="categoryFilter" onchange="renderLeadsTable()" class="input-mechanical">
-              <option value="ALL">ALL SECTORS (12)</option>
+              <option value="ALL">All Industries (12)</option>
             </select>
           </div>
-          <div class="mono" style="font-size:11.5px; color:var(--cf-ink-secondary);">
-            MATCHING: <strong id="matchingCount" style="color:var(--cf-accent-primary);">50</strong> / 50 &bull; <span style="color:var(--cf-ink-muted);">CLICK ROW TO INSPECT PAYLOAD</span>
+          <div class="mono" style="font-size:11px; color:var(--cf-ink-secondary);">
+            STEP 2: CLICK ANY ROW TO INSPECT &rarr;
           </div>
         </div>
 
@@ -582,12 +634,12 @@
           <table class="ft-ledger">
             <thead>
               <tr>
-                <th>ID / SOURCE</th>
-                <th>MERCHANT / CANONICAL URL</th>
-                <th>EXECUTIVE &amp; VERIFIED CONTACT</th>
-                <th style="text-align:right;">SKUS / AVG PRICE</th>
-                <th>PROTECTION &amp; EXTRACTION</th>
-                <th style="text-align:center;">SCHEMA</th>
+                <th>ID / WEBSITE SOURCE</th>
+                <th>COMPANY &amp; WEBSITE URL</th>
+                <th>DECISION MAKER &amp; DIRECT CONTACT</th>
+                <th style="text-align:right;">PRODUCTS / AVG PRICE</th>
+                <th>EXTRACTION METHOD</th>
+                <th style="text-align:center;">DATA QUALITY</th>
               </tr>
             </thead>
             <tbody id="leadsTableBody">
@@ -604,43 +656,43 @@
         <div id="webhookTesterCard" class="inspector-block" style="background-color:var(--cf-bg-stone);">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:600;">WEBHOOK DELIVERY TESTER</div>
-              <h3 style="font-family:var(--font-display); font-size:22px; font-weight:400;">Live Make.com Webhook Tester</h3>
+              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 3 &mdash; SEND DATA TO YOUR AUTOMATION</div>
+              <h3 style="font-family:var(--font-display); font-size:22px; font-weight:400;">Send to Make.com / n8n Webhook</h3>
             </div>
-            <span class="status-tag">HMAC READY</span>
+            <span class="status-tag">READY</span>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:10px;">
             <div>
-              <label class="spec-label" style="display:block; margin-bottom:4px;">TARGET MAKE.COM CUSTOM WEBHOOK URL:</label>
+              <label class="spec-label" style="display:block; margin-bottom:4px;">YOUR WEBHOOK URL (MAKE.COM / N8N / ZAPIER):</label>
               <input id="webhookUrlInput" type="text" value="https://hook.us1.make.com/stealthflow-12sources-ingest" class="input-mechanical" style="width:100%;" />
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
               <div>
-                <label class="spec-label" style="display:block; margin-bottom:4px;">DISPATCH BATCH MODE:</label>
+                <label class="spec-label" style="display:block; margin-bottom:4px;">RECORDS TO SEND:</label>
                 <select id="dispatchModeSelect" class="input-mechanical" style="width:100%;">
-                  <option value="selected">Selected Record (1)</option>
-                  <option value="batch_50">Full Validated Batch (50)</option>
+                  <option value="selected">Selected Row Only (1)</option>
+                  <option value="batch_50">All 50 Extracted Records</option>
                 </select>
               </div>
               <div>
-                <label class="spec-label" style="display:block; margin-bottom:4px;">RETRY POLICY:</label>
+                <label class="spec-label" style="display:block; margin-bottom:4px;">AUTO-RETRY ON FAILURE:</label>
                 <div class="input-mechanical" style="background-color:var(--cf-bg-paper); color:var(--cf-forest-pass); font-weight:600;">
-                  EXP BACKOFF (2S/4S/8S)
+                  3x Automatic Retries
                 </div>
               </div>
             </div>
 
-            <button onclick="fireMakeWebhook()" id="btnFireWebhook" class="btn-tactile btn-tactile-vermilion" style="width:100%; padding:10px;">
-              <span>FIRE TEST PAYLOAD TO MAKE.COM WEBHOOK NOW</span>
+            <button type="button" onclick="fireMakeWebhook()" id="btnFireWebhook" class="btn-tactile btn-tactile-vermilion" style="width:100%; padding:10px;">
+              <span>Send Test Data to Webhook Now</span>
               <span>&rarr;</span>
             </button>
 
             <div class="terminal-box" id="webhookTerminal">
-              <div style="color:#A39E93;">// Click "FIRE TEST PAYLOAD" to dispatch signed JSON batch...</div>
-              <div>HmacHeader: <span style="color:#FCE588;">X-StealthFlow-Signature: v1=8f92a6c4...</span></div>
-              <div>Idempotency: <span style="color:#86EFAC;">X-Idempotency-Key: BATCH-20261121-SF</span></div>
+              <div style="color:#A39E93;">// Click "Send Test Data to Webhook Now" above to test live delivery...</div>
+              <div>Signature: <span style="color:#FCE588;">X-StealthFlow-Signature: v1=8f92a6c4...</span></div>
+              <div>Batch ID: <span style="color:#86EFAC;">BATCH-20261123-SF</span></div>
             </div>
           </div>
         </div>
@@ -649,12 +701,12 @@
         <div class="inspector-block" style="flex:1;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label">NORMALIZED RECORD INSPECTOR</div>
+              <div class="spec-label">SELECTED ROW DETAILS (ALL 18 FIELDS)</div>
               <h3 style="font-family:var(--font-display); font-size:22px; font-weight:400;">
-                Record Payload: <span id="inspectedLeadId" class="mono" style="font-size:16px; color:var(--cf-accent-primary); font-weight:600;">SF-1001</span>
+                Selected Record: <span id="inspectedLeadId" class="mono" style="font-size:16px; color:var(--cf-accent-primary); font-weight:600;">SF-1001</span>
               </h3>
             </div>
-            <button onclick="copySelectedJson()" id="btnCopyJson" class="btn-tactile" style="padding:4px 9px; font-size:10.5px;">
+            <button type="button" onclick="copySelectedJson()" id="btnCopyJson" class="btn-tactile" style="padding:4px 9px; font-size:10.5px;">
               COPY JSON
             </button>
           </div>
@@ -662,7 +714,7 @@
           <!-- URL Canonicalization Proof -->
           <div style="background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-mid); padding:10px 12px; margin-bottom:12px; font-family:var(--font-mono); font-size:11px;">
             <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-              <span style="color:var(--cf-ink-muted); text-transform:uppercase;">URL CANONICALIZATION &amp; SKU DEDUPE:</span>
+              <span style="color:var(--cf-ink-muted); text-transform:uppercase;">CLEANED WEBSITE URL (TRACKING STRIPPED):</span>
               <span id="inspectedMatchScore" style="color:var(--cf-forest-pass); font-weight:600;">MATCH: 99.4%</span>
             </div>
             <div id="inspectedDirtyUrl" style="color:var(--cf-ink-muted); text-decoration:line-through; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
@@ -674,6 +726,44 @@
 
       </aside>
     </section>
+
+    <!-- Collapsible Drawer: All 12 Scraper Templates & Anti-Bot Technical Specs -->
+    <details class="tech-drawer">
+      <summary>
+        <span>View All 12 Website Scraper Templates &amp; Anti-Bot Technical Specs (Playwright, Cloudflare, DataDome, GraphQL)</span>
+        <span>Show / Hide 12 Scraper Specs &darr;</span>
+      </summary>
+      <section class="kpi-strip">
+        <div class="kpi-cell">
+          <div class="spec-label">01 // ACTIVE SCRAPERS</div>
+          <div class="kpi-val">12 / 12 <span style="font-size:12px; color:var(--cf-forest-pass);">ONLINE</span></div>
+          <div class="kpi-sub">Isolated Browser Workers + Proxy Rotation</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="spec-label">02 // EXTRACTED RECORDS</div>
+          <div class="kpi-val">50 <span style="font-size:12px; color:var(--cf-navy-authority);">100% COMPLETE</span></div>
+          <div class="kpi-sub">18 Standardized Columns &bull; Zero Missing Emails</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="spec-label">03 // DATA VALIDATION</div>
+          <div class="kpi-val" style="color:var(--cf-forest-pass);">100.0%</div>
+          <div class="kpi-sub">Verified Schema + Cleaned URLs</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="spec-label">04 // EXTRACTION SPEED</div>
+          <div class="kpi-val">16.4 <span style="font-size:12px; color:var(--cf-accent-primary);">ROWS/SEC</span></div>
+          <div class="kpi-sub">Direct API/JSON Capture (Doesn't break on UI changes)</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="spec-label">05 // WEBHOOK RELIABILITY</div>
+          <div class="kpi-val">99.98% <span style="font-size:12px; color:var(--cf-forest-pass);">200 OK</span></div>
+          <div class="kpi-sub">Signed Delivery + Automatic Retries</div>
+        </div>
+      </section>
+      <section id="sourcesGrid" class="sources-grid">
+        <!-- Populated dynamically by JS -->
+      </section>
+    </details>
 
   </main>
 
@@ -805,11 +895,15 @@
     function selectSource(sourceId) {
       activeSourceId = (activeSourceId === sourceId && sourceId !== 'ALL') ? 'ALL' : sourceId;
       const resetBtn = document.getElementById('btnResetSources');
-      if (activeSourceId === 'ALL') {
-        resetBtn.textContent = 'SHOWING ALL 12 SOURCES (50 RECORDS)';
-      } else {
-        const src = SOURCE_TEMPLATES.find(s => s.id === activeSourceId);
-        resetBtn.textContent = `FILTERED: ${src ? src.name.toUpperCase() : activeSourceId} (CLICK TO RESET)`;
+      if (resetBtn) {
+        if (activeSourceId === 'ALL') {
+          resetBtn.textContent = 'All 12 Website Sources (50 Records)';
+          resetBtn.className = 'btn-tactile btn-tactile-ink';
+        } else {
+          const src = SOURCE_TEMPLATES.find(s => s.id === activeSourceId);
+          resetBtn.textContent = `Filtered: ${src ? src.name : activeSourceId} (Click to Show All 50)`;
+          resetBtn.className = 'btn-tactile btn-tactile-vermilion';
+        }
       }
       renderSourcesGrid();
       renderLeadsTable();
@@ -973,6 +1067,6 @@
 
     window.addEventListener('DOMContentLoaded', initDashboard);
   </script>
-  <script src="../assets/js/cf-telemetry.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,7 +13,7 @@
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Caliber Foundry" />
-  <meta property="og:title" content="Raenest Cross-Border Treasury &amp; Settlement Architecture — Technical Monograph" />
+  <meta property="og:title" content="Raenest Cross-Border Treasury &amp; Settlement Architecture вЂ” Technical Monograph" />
   <meta property="og:description" content="How Raenest replaces 4-hop SWIFT correspondent chains with named virtual accounts, programmable multi-currency treasuries, and instant local + stablecoin settlement rails." />
   <meta property="og:url" content="https://caliberfoundry.com/insights/raenest-cross-border-settlement-architecture.html" />
   <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
@@ -471,15 +471,15 @@
     <h1 class="article-title">Raenest Cross-Border Treasury &amp; Settlement Architecture</h1>
 
     <p class="article-lede">
-      Legacy SWIFT wires cost global contractors and borderless teams 4.5%–7.2% in fees and 3–5 business days in clearing delays. By unifying named USD/EUR/GBP accounts, wholesale FX pools, and local + stablecoin rails, Raenest settles cross-border payouts in under 60 minutes while retaining 99.1%+ of capital.
+      Legacy SWIFT wires cost global contractors and borderless teams 4.5%вЂ“7.2% in fees and 3вЂ“5 business days in clearing delays. By unifying named USD/EUR/GBP accounts, wholesale FX pools, and local + stablecoin rails, Raenest settles cross-border payouts in under 60 minutes while retaining 99.1%+ of capital.
     </p>
 
     <!-- 1. CONCISE EXECUTIVE KPI STRIP (VISIBLE IMMEDIATELY ABOVE THE FOLD) -->
     <div class="kpi-grid">
       <div class="kpi-cell">
         <span class="kpi-label">01 // LEGACY SWIFT MT103 LATENCY</span>
-        <span class="kpi-value">72–120 hrs</span>
-        <span class="kpi-sub" style="color:var(--cf-accent-primary);">3–4 Correspondent Nostro Hops</span>
+        <span class="kpi-value">72вЂ“120 hrs</span>
+        <span class="kpi-sub" style="color:var(--cf-accent-primary);">3вЂ“4 Correspondent Nostro Hops</span>
       </div>
       <div class="kpi-cell">
         <span class="kpi-label">02 // RAENEST SETTLEMENT WINDOW</span>
@@ -488,7 +488,7 @@
       </div>
       <div class="kpi-cell">
         <span class="kpi-label">03 // EFFECTIVE FX &amp; WIRE SAVINGS</span>
-        <span class="kpi-value">410–580 bps</span>
+        <span class="kpi-value">410вЂ“580 bps</span>
         <span class="kpi-sub">4.1% to 5.8% Capital Retained per Payout</span>
       </div>
       <div class="kpi-cell">
@@ -575,7 +575,7 @@
           <line x1="0" y1="205" x2="920" y2="205" stroke="#141413" stroke-width="1.5" stroke-dasharray="4 4"/>
 
           <!-- Top Track: Legacy SWIFT -->
-          <text x="24" y="32" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#9C5A08">TRACK A // LEGACY CORRESPONDENT BANKING (SWIFT MT103 — T+3 TO T+5 DAYS · 4.8% TO 7.2% LOSS)</text>
+          <text x="24" y="32" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#9C5A08">TRACK A // LEGACY CORRESPONDENT BANKING (SWIFT MT103 вЂ” T+3 TO T+5 DAYS В· 4.8% TO 7.2% LOSS)</text>
 
           <rect x="24" y="54" width="175" height="96" fill="#FFFFFF" stroke="#141413" stroke-width="1.2"/>
           <text x="36" y="76" font-family="IBM Plex Mono, monospace" font-size="10" fill="#78756D">NODE 01 // ORIGIN</text>
@@ -611,7 +611,7 @@
           <text x="726" y="136" font-family="IBM Plex Mono, monospace" font-size="10" fill="#141413">Net Received: ~93.1%</text>
 
           <!-- Bottom Track: Raenest Architecture -->
-          <text x="24" y="236" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">TRACK B // RAENEST UNIFIED MULTI-CURRENCY &amp; STABLECOIN SETTLEMENT ENGINE (T+0 / &lt; 60 MIN · 99.1%+ RETAINED)</text>
+          <text x="24" y="236" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#1A5638">TRACK B // RAENEST UNIFIED MULTI-CURRENCY &amp; STABLECOIN SETTLEMENT ENGINE (T+0 / &lt; 60 MIN В· 99.1%+ RETAINED)</text>
 
           <rect x="24" y="256" width="240" height="142" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
           <rect x="24" y="256" width="240" height="24" fill="#141413"/>
@@ -662,9 +662,9 @@
             When a Delaware corporation or London SaaS company pays an engineering team in Lagos, Nairobi, Accra, or Cairo via traditional bank wire, the payment does not travel directly from Point A to Point B. Instead, it traverses a brittle chain of correspondent banks holding bilateral <em>Nostro</em> and <em>Vostro</em> accounts:
           </p>
           <ol>
-            <li><strong>Originating Bank Initiation ($25–$45 Outbound Wire Fee):</strong> The U.S. or European employer initiates a SWIFT MT103 payment instruction. Funds are debited immediately, but settlement awaits batch cut-off windows.</li>
-            <li><strong>Intermediary Correspondent Bank Hops ($15–$30 Lifting Fee per Hop):</strong> Because most Tier-1 U.S. banks do not maintain direct local-currency clearing relationships with emerging-market domestic banks, 1 to 2 intermediary correspondent institutions deduct undisclosed &ldquo;lifting fees&rdquo; directly from the principal amount in transit.</li>
-            <li><strong>Forced Beneficiary Bank FX Conversion (350–550 bps Spread):</strong> When the truncated USD or EUR wire arrives at the recipient&rsquo;s local commercial bank, either the funds are forcibly converted at an opaque retail desk rate 4% to 6% worse than mid-market, or they are locked inside a restricted domiciliary account requiring physical branch paperwork to access.</li>
+            <li><strong>Originating Bank Initiation ($25вЂ“$45 Outbound Wire Fee):</strong> The U.S. or European employer initiates a SWIFT MT103 payment instruction. Funds are debited immediately, but settlement awaits batch cut-off windows.</li>
+            <li><strong>Intermediary Correspondent Bank Hops ($15вЂ“$30 Lifting Fee per Hop):</strong> Because most Tier-1 U.S. banks do not maintain direct local-currency clearing relationships with emerging-market domestic banks, 1 to 2 intermediary correspondent institutions deduct undisclosed &ldquo;lifting fees&rdquo; directly from the principal amount in transit.</li>
+            <li><strong>Forced Beneficiary Bank FX Conversion (350вЂ“550 bps Spread):</strong> When the truncated USD or EUR wire arrives at the recipient&rsquo;s local commercial bank, either the funds are forcibly converted at an opaque retail desk rate 4% to 6% worse than mid-market, or they are locked inside a restricted domiciliary account requiring physical branch paperwork to access.</li>
           </ol>
         </div>
       </details>
@@ -682,9 +682,9 @@
             Rather than acting as another thin remittance wrapper atop SWIFT, Raenest (evolving from Geegpay&rsquo;s creator/freelancer rails into a full B2B and individual multi-currency treasury platform serving 700,000+ users and global teams) re-architects cross-border flow across three decoupled layers:
           </p>
           <ul>
-            <li><strong>Layer 1 — Local-First Virtual Account Ingestion (Eliminating Outbound International Wires):</strong> Raenest provisions named USD (ACH &amp; Fedwire), EUR (SEPA), and GBP (UK Faster Payments) bank accounts in the contractor&rsquo;s or enterprise&rsquo;s own legal name. To a U.S. client, marketplace (Upwork, Deel, Toptal), or global customer, paying a Raenest user looks identical to a domestic local bank transfer—eliminating the $35–$50 international SWIFT initiation fee at the source.</li>
-            <li><strong>Layer 2 — Sovereign Multi-Currency Treasury &amp; Wholesale FX Matching:</strong> Incoming funds settle into an inflation-hedged USD, EUR, or GBP balance. Users and CFOs are never subjected to mandatory same-day local currency conversion. When conversion is triggered, Raenest matches orders against deep wholesale liquidity pools and stablecoin settlement corridors (USDC/USDT), compressing spreads from 450 bps down to sub-90 bps.</li>
-            <li><strong>Layer 3 — Programmable Multi-Rail Egress (Local Instant Rails, Stablecoins &amp; Corporate Cards):</strong> Capital can be deployed across three parallel egress channels without leaving the platform:
+            <li><strong>Layer 1 вЂ” Local-First Virtual Account Ingestion (Eliminating Outbound International Wires):</strong> Raenest provisions named USD (ACH &amp; Fedwire), EUR (SEPA), and GBP (UK Faster Payments) bank accounts in the contractor&rsquo;s or enterprise&rsquo;s own legal name. To a U.S. client, marketplace (Upwork, Deel, Toptal), or global customer, paying a Raenest user looks identical to a domestic local bank transferвЂ”eliminating the $35вЂ“$50 international SWIFT initiation fee at the source.</li>
+            <li><strong>Layer 2 вЂ” Sovereign Multi-Currency Treasury &amp; Wholesale FX Matching:</strong> Incoming funds settle into an inflation-hedged USD, EUR, or GBP balance. Users and CFOs are never subjected to mandatory same-day local currency conversion. When conversion is triggered, Raenest matches orders against deep wholesale liquidity pools and stablecoin settlement corridors (USDC/USDT), compressing spreads from 450 bps down to sub-90 bps.</li>
+            <li><strong>Layer 3 вЂ” Programmable Multi-Rail Egress (Local Instant Rails, Stablecoins &amp; Corporate Cards):</strong> Capital can be deployed across three parallel egress channels without leaving the platform:
               <ol>
                 <li><em>Instant Local Currency Settlement:</em> Direct payout to domestic bank accounts and mobile money wallets across Nigeria (NIP), Kenya (M-Pesa / Pesalink), Ghana, Egypt, and 50+ jurisdictions in minutes.</li>
                 <li><em>Stablecoin Liquidity Rail:</em> Direct settlement and treasury funding via regulated stablecoin rails (USDC / USDT across low-fee chains) for instant 24/7/365 treasury rebalancing.</li>
@@ -725,23 +725,23 @@
                 </tr>
                 <tr>
                   <td><strong>Fixed Inbound + Outbound Wire Fee</strong></td>
-                  <td class="mono" style="color:var(--cf-accent-primary);">$45.00 – $85.00 / transfer</td>
-                  <td class="mono">$15.00 – $30.00 / transfer</td>
-                  <td class="mono">$5.00 – $15.00</td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">$0.00 – $1.50 (ACH / Local)</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">$45.00 вЂ“ $85.00 / transfer</td>
+                  <td class="mono">$15.00 вЂ“ $30.00 / transfer</td>
+                  <td class="mono">$5.00 вЂ“ $15.00</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">$0.00 вЂ“ $1.50 (ACH / Local)</td>
                 </tr>
                 <tr>
                   <td><strong>Effective FX Spread vs. Mid-Market</strong></td>
-                  <td class="mono" style="color:var(--cf-accent-primary);">3.80% – 6.20%</td>
-                  <td class="mono">1.80% – 3.00%</td>
-                  <td class="mono">1.50% – 2.50%</td>
-                  <td class="mono" style="color:var(--cf-forest-pass);">0.50% – 0.95% Transparent</td>
+                  <td class="mono" style="color:var(--cf-accent-primary);">3.80% вЂ“ 6.20%</td>
+                  <td class="mono">1.80% вЂ“ 3.00%</td>
+                  <td class="mono">1.50% вЂ“ 2.50%</td>
+                  <td class="mono" style="color:var(--cf-forest-pass);">0.50% вЂ“ 0.95% Transparent</td>
                 </tr>
                 <tr>
                   <td><strong>End-to-End Settlement Finality</strong></td>
                   <td class="mono">T+3 to T+5 Business Days</td>
                   <td class="mono">T+1 to T+3 Business Days</td>
-                  <td class="mono">1–6 Hours (Manual Escrow)</td>
+                  <td class="mono">1вЂ“6 Hours (Manual Escrow)</td>
                   <td class="mono" style="color:var(--cf-forest-pass);">Instant to &lt; 60 Minutes (24/7)</td>
                 </tr>
                 <tr>
@@ -754,7 +754,7 @@
                 <tr>
                   <td><strong>Direct USD SaaS Card Spend</strong></td>
                   <td>Blocked / Strict Monthly Limits</td>
-                  <td>1.5% – 3.0% Cross-Border Fee</td>
+                  <td>1.5% вЂ“ 3.0% Cross-Border Fee</td>
                   <td>None</td>
                   <td class="mono" style="color:var(--cf-forest-pass);">Native Virtual &amp; Physical USD Cards</td>
                 </tr>
@@ -777,7 +777,7 @@
             <div class="scene-row">
               <div class="scene-time">SCENE 01<br/>00:00 &ndash; 00:06</div>
               <div class="scene-visual"><strong>The $655 SWIFT Fee &amp; 5-Day Freeze:</strong> Clean focal typography highlighting $655 lost and 120 hours locked on a single $10,000 invoice.</div>
-              <div class="scene-vo">&ldquo;Why does a ten-thousand-dollar cross-border invoice lose six hundred and fifty-five dollars—and wait five days to clear?&rdquo;</div>
+              <div class="scene-vo">&ldquo;Why does a ten-thousand-dollar cross-border invoice lose six hundred and fifty-five dollarsвЂ”and wait five days to clear?&rdquo;</div>
             </div>
             <div class="scene-row">
               <div class="scene-time">SCENE 02<br/>00:06 &ndash; 00:12</div>
@@ -791,8 +791,8 @@
             </div>
             <div class="scene-row">
               <div class="scene-time">SCENE 04<br/>00:18 &ndash; 00:24</div>
-              <div class="scene-visual"><strong>Before vs. After Verdict:</strong> High-contrast two-column comparison: Legacy SWIFT (5 Days · 6.55% Lost) vs. Raenest (&lt; 60 Min · 99.1%+ Retained).</div>
-              <div class="scene-vo">&ldquo;From five days down to under sixty minutes—retaining over ninety-nine percent of your capital.&rdquo;</div>
+              <div class="scene-visual"><strong>Before vs. After Verdict:</strong> High-contrast two-column comparison: Legacy SWIFT (5 Days В· 6.55% Lost) vs. Raenest (&lt; 60 Min В· 99.1%+ Retained).</div>
+              <div class="scene-vo">&ldquo;From five days down to under sixty minutesвЂ”retaining over ninety-nine percent of your capital.&rdquo;</div>
             </div>
             <div class="scene-row">
               <div class="scene-time">SCENE 05<br/>00:24 &ndash; 00:30</div>
@@ -859,6 +859,6 @@
       recalc();
     })();
   </script>
-  <script src="../assets/js/cf-telemetry.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
 </body>
 </html>

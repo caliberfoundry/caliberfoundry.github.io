@@ -362,30 +362,36 @@
     var styleEl = document.createElement("style");
     styleEl.id = "cfFeedbackWidgetStyles";
     styleEl.textContent = [
-      "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop { display: none !important; } }",
+      "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop, #cfContactModalBackdrop { display: none !important; } }",
       "#cfFeedbackDockRoot { position: fixed; bottom: 14px; right: 14px; z-index: 9990; font-family: 'IBM Plex Mono', monospace; }",
       "#cfFeedbackDockRoot.cf-fb-in-header { position: static; display: inline-flex; align-items: center; }",
       ".cf-fb-trigger-btn { background: #141413; color: #F6F4EF; border: 1.5px solid #141413; border-left: 4px solid #C8431F; padding: 7px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; box-shadow: 2px 2px 0 rgba(20,20,19,0.18); transition: background 0.15s ease; }",
       "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: transparent; color: #F6F4EF; border: 1px solid #4A4842; border-left: 3px solid #C8431F; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
-      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; border-left: 3px solid #C8431F; }",
+      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn, .top-bar #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; border-left: 3px solid #C8431F; padding: 5px 10px; }",
       ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #C8431F !important; border-color: #141413 !important; color: #FFFFFF !important; }",
-      "#cfFeedbackModalBackdrop { position: fixed; inset: 0; background: rgba(20,20,19,0.62); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
-      "#cfFeedbackModalBackdrop.cf-fb-hidden { display: none !important; }",
-      ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 2px solid #141413; box-shadow: 6px 6px 0 #141413; width: 100%; max-width: 520px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
+      "#cfFeedbackModalBackdrop, #cfContactModalBackdrop { position: fixed; inset: 0; background: rgba(20,20,19,0.62); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
+      "#cfFeedbackModalBackdrop.cf-fb-hidden, #cfContactModalBackdrop.cf-fb-hidden { display: none !important; }",
+      ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 2px solid #141413; box-shadow: 6px 6px 0 #141413; width: 100%; max-width: 540px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; max-height: 92vh; overflow-y: auto; }",
       ".cf-fb-header { background: #141413; color: #F6F4EF; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }",
       ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #C8431F; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
       ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #F6F4EF; }",
-      ".cf-fb-close { background: transparent; border: 1px solid #78756D; color: #F6F4EF; width: 26px; height: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; }",
+      ".cf-fb-close { background: transparent; border: 1px solid #78756D; color: #F6F4EF; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
+      ".cf-fb-close:hover { background: #C8431F; border-color: #C8431F; color: #FFFFFF; }",
       ".cf-fb-body { padding: 18px; }",
       ".cf-fb-context-bar { background: #ECE9E1; border: 1px solid #C9C4B8; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #4A4842; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
+      ".cf-contact-copy-banner { background: #EDF5F0; border: 1.5px solid #1A5638; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }",
+      ".cf-contact-copy-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #1A5638; font-weight: 600; }",
+      ".cf-contact-quick-btns { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }",
+      ".cf-contact-quick-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; padding: 5px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
+      ".cf-contact-quick-btn:hover { background: #141413; color: #F6F4EF; }",
       ".cf-fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }",
       "@media (max-width: 520px) { .cf-fb-row { grid-template-columns: 1fr; } }",
       ".cf-fb-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }",
       ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #141413; }",
-      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1.5px solid #141413; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #141413; width: 100%; border-radius: 0; }",
+      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1.5px solid #141413; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #141413; width: 100%; border-radius: 0; box-sizing: border-box; }",
       ".cf-fb-textarea { min-height: 88px; resize: vertical; line-height: 1.45; }",
       ".cf-fb-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }",
-      ".cf-fb-submit { background: #C8431F; color: #FFFFFF; border: 1.5px solid #141413; padding: 9px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
+      ".cf-fb-submit { background: #C8431F; color: #FFFFFF; border: 1.5px solid #141413; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
       ".cf-fb-submit:hover { background: #A63415; }",
       ".cf-fb-success { background: #EDF5F0; border: 1.5px solid #1A5638; color: #141413; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
       ".cf-fb-success.cf-fb-hidden { display: none !important; }"
@@ -393,7 +399,7 @@
     document.head.appendChild(styleEl);
 
     var headerMountTarget = document.querySelector(
-      ".cf-account-cluster, .ds-account-cluster, .cd-global-controls, .masthead-inner"
+      ".cf-account-cluster, .ds-account-cluster, .cd-global-controls, .cf-top-actions, .masthead-inner"
     );
     var dock = document.createElement("div");
     dock.id = "cfFeedbackDockRoot";
@@ -557,9 +563,258 @@
       document.getElementById("cfFbMessageInput").value = "";
     });
 
+    // =========================================================================
+    // UNIVERSAL MAILTO INTERCEPTOR & DIRECT ENGINEERING CONTACT MODAL
+    // Solves silent failure of <a href="mailto:..."> when no OS desktop mail app is set
+    // =========================================================================
+    var contactModal = document.createElement("div");
+    contactModal.id = "cfContactModalBackdrop";
+    contactModal.className = "cf-fb-hidden";
+    contactModal.setAttribute("role", "dialog");
+    contactModal.setAttribute("aria-modal", "true");
+    contactModal.setAttribute("aria-labelledby", "cfContactModalTitle");
+    contactModal.innerHTML =
+      '<div class="cf-fb-modal">' +
+      '<div class="cf-fb-header">' +
+      "<div>" +
+      '<span class="cf-fb-kicker">100% ASYNCHRONOUS ENGINEERING &amp; CUSTOM SPRINT INTAKE</span>' +
+      '<h2 class="cf-fb-title" id="cfContactModalTitle">Contact Caliber Foundry Engineering</h2>' +
+      "</div>" +
+      '<button type="button" class="cf-fb-close" id="cfContactCloseBtn" aria-label="Close Contact Modal">X</button>' +
+      "</div>" +
+      '<div class="cf-fb-body">' +
+      '<div class="cf-contact-copy-banner">' +
+      '<div class="cf-contact-copy-top">' +
+      '<span id="cfContactCopyStatusText">&check; Email copied to clipboard: <strong>engineering@caliberfoundry.com</strong></span>' +
+      "</div>" +
+      '<div class="cf-contact-quick-btns">' +
+      '<button type="button" class="cf-contact-quick-btn" id="cfContactCopyAgainBtn">Copy Email Address</button>' +
+      '<a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=engineering@caliberfoundry.com" target="_blank" rel="noopener noreferrer" class="cf-contact-quick-btn" id="cfContactGmailWebLink">Open in Gmail Web &#8599;</a>' +
+      '<a href="mailto:engineering@caliberfoundry.com" data-native-mailto="1" class="cf-contact-quick-btn" id="cfContactNativeMailLink">Open Desktop Mail App</a>' +
+      "</div>" +
+      "</div>" +
+      '<form id="cfDirectContactForm">' +
+      '<div style="font-size:12px;color:#4A4842;margin-bottom:10px;line-height:1.45;">' +
+      "<strong>Or send your message directly right here</strong> (no email client required — delivered immediately to our engineering desk):" +
+      "</div>" +
+      '<div class="cf-fb-row">' +
+      '<div class="cf-fb-field" style="margin-bottom:0;">' +
+      '<label class="cf-fb-label" for="cfContactNameInput">Your Name / Company</label>' +
+      '<input type="text" class="cf-fb-input" id="cfContactNameInput" placeholder="Alex Rivera · Acme Corp" />' +
+      "</div>" +
+      '<div class="cf-fb-field" style="margin-bottom:0;">' +
+      '<label class="cf-fb-label" for="cfContactEmailInput">Your Work Email *</label>' +
+      '<input type="email" class="cf-fb-input" id="cfContactEmailInput" required placeholder="alex@company.com" />' +
+      "</div>" +
+      "</div>" +
+      '<div class="cf-fb-field">' +
+      '<label class="cf-fb-label" for="cfContactSubjectInput">Subject / Scope</label>' +
+      '<input type="text" class="cf-fb-input" id="cfContactSubjectInput" required value="' +
+      escapeHtmlSafe("Engineering Inquiry — " + prodName) +
+      '" />' +
+      "</div>" +
+      '<div class="cf-fb-field" style="margin-bottom:4px;">' +
+      '<label class="cf-fb-label" for="cfContactMessageInput">Message, Specification, or Purchase Order Request *</label>' +
+      '<textarea class="cf-fb-textarea" id="cfContactMessageInput" required placeholder="Tell us what you want built, customized, or licensed (e.g., custom document pipeline, scraper target, SCORM courseware, or enterprise license)..."></textarea>' +
+      "</div>" +
+      '<div class="cf-fb-actions">' +
+      '<button type="submit" class="cf-fb-submit" id="cfContactSubmitBtn">Send Message Directly to Caliber Foundry &rarr;</button>' +
+      "</div>" +
+      "</form>" +
+      '<div class="cf-fb-success cf-fb-hidden" id="cfContactSuccessBox" role="status"></div>' +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(contactModal);
+
+    function copyTextToClipboard(text, cb) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          if (cb) cb(true);
+        }).catch(function () {
+          fallbackCopy(text, cb);
+        });
+      } else {
+        fallbackCopy(text, cb);
+      }
+    }
+
+    function fallbackCopy(text, cb) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (cb) cb(true);
+      } catch (_) {
+        if (cb) cb(false);
+      }
+    }
+
+    function parseMailtoHref(href) {
+      var raw = String(href || "").replace(/^mailto:/i, "");
+      var parts = raw.split("?");
+      var emailAddr = (parts[0] || "engineering@caliberfoundry.com").trim() || "engineering@caliberfoundry.com";
+      var subject = "";
+      var body = "";
+      if (parts[1]) {
+        try {
+          var q = new URLSearchParams(parts[1]);
+          subject = q.get("subject") || "";
+          body = q.get("body") || "";
+        } catch (_) {}
+      }
+      return { email: emailAddr, subject: subject, body: body };
+    }
+
+    function openContactModal(mailtoHref) {
+      var parsed = parseMailtoHref(mailtoHref || "mailto:engineering@caliberfoundry.com");
+      var subjEl = document.getElementById("cfContactSubjectInput");
+      var msgEl = document.getElementById("cfContactMessageInput");
+      var sucEl = document.getElementById("cfContactSuccessBox");
+      var statusEl = document.getElementById("cfContactCopyStatusText");
+      var gmailLink = document.getElementById("cfContactGmailWebLink");
+      var nativeLink = document.getElementById("cfContactNativeMailLink");
+
+      if (sucEl) sucEl.classList.add("cf-fb-hidden");
+      if (subjEl) {
+        subjEl.value = parsed.subject || ("Engineering Inquiry — " + prodName);
+      }
+      if (msgEl && parsed.body) {
+        msgEl.value = parsed.body;
+      }
+
+      var encSubj = encodeURIComponent(subjEl ? subjEl.value : ("Engineering Inquiry — " + prodName));
+      var encBody = encodeURIComponent(msgEl ? msgEl.value : "");
+      if (gmailLink) {
+        gmailLink.href =
+          "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+          encodeURIComponent(parsed.email) +
+          "&su=" +
+          encSubj +
+          (encBody ? "&body=" + encBody : "");
+      }
+      if (nativeLink) {
+        nativeLink.href =
+          "mailto:" +
+          parsed.email +
+          "?subject=" +
+          encSubj +
+          (encBody ? "&body=" + encBody : "");
+      }
+
+      copyTextToClipboard(parsed.email, function () {
+        if (statusEl) {
+          statusEl.innerHTML =
+            "&check; Email copied to clipboard: <strong>" +
+            escapeHtmlSafe(parsed.email) +
+            "</strong>";
+        }
+      });
+
+      contactModal.classList.remove("cf-fb-hidden");
+      var emailInp = document.getElementById("cfContactEmailInput");
+      if (emailInp) setTimeout(function () { emailInp.focus(); }, 40);
+    }
+
+    function closeContactModal() {
+      contactModal.classList.add("cf-fb-hidden");
+    }
+
+    document.getElementById("cfContactCloseBtn").addEventListener("click", closeContactModal);
+    contactModal.addEventListener("click", function (ev) {
+      if (ev.target === contactModal) closeContactModal();
+    });
+
+    document.getElementById("cfContactCopyAgainBtn").addEventListener("click", function () {
+      var btn = document.getElementById("cfContactCopyAgainBtn");
+      copyTextToClipboard("engineering@caliberfoundry.com", function () {
+        if (btn) {
+          var orig = btn.textContent;
+          btn.textContent = "✓ Copied: engineering@caliberfoundry.com";
+          setTimeout(function () { btn.textContent = orig; }, 2200);
+        }
+      });
+    });
+
+    document.getElementById("cfDirectContactForm").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var nameVal = document.getElementById("cfContactNameInput").value.trim();
+      var emailVal = document.getElementById("cfContactEmailInput").value.trim();
+      var subjVal = document.getElementById("cfContactSubjectInput").value.trim();
+      var msgVal = document.getElementById("cfContactMessageInput").value.trim();
+      if (!emailVal || !msgVal) return;
+
+      var refId = "MSG-2026-" + Math.floor(1000 + Math.random() * 9000);
+      var msgPayload = {
+        messageId: refId,
+        senderName: nameVal.slice(0, 120),
+        senderEmail: emailVal.slice(0, 120),
+        subject: subjVal.slice(0, 180),
+        message: msgVal.slice(0, 1800),
+        product: prodName,
+        pageUrl: window.location.href.slice(0, 220),
+        buyerFields: {
+          name: nameVal.slice(0, 120),
+          email: emailVal.slice(0, 120),
+          subject: subjVal.slice(0, 180)
+        }
+      };
+
+      dispatchEvent("direct_contact_message", msgPayload);
+
+      try {
+        var cHist = JSON.parse(localStorage.getItem("cf_direct_contact_history_v1") || "[]");
+        cHist.unshift(Object.assign({ submittedAt: new Date().toISOString() }, msgPayload));
+        localStorage.setItem("cf_direct_contact_history_v1", JSON.stringify(cHist.slice(0, 20)));
+      } catch (_) {}
+
+      var cSuc = document.getElementById("cfContactSuccessBox");
+      if (cSuc) {
+        cSuc.innerHTML =
+          "<strong>&check; Message Delivered to Caliber Foundry Engineering · Ref <code>" +
+          escapeHtmlSafe(refId) +
+          "</code></strong><br/>" +
+          "We received your message for <strong>" +
+          escapeHtmlSafe(subjVal) +
+          "</strong> and will reply asynchronously to <strong>" +
+          escapeHtmlSafe(emailVal) +
+          "</strong> within 4 business hours.";
+        cSuc.classList.remove("cf-fb-hidden");
+      }
+      document.getElementById("cfContactMessageInput").value = "";
+    });
+
+    // Global capture listener for any <a href="mailto:..."> or [data-mailto] button on the page
+    document.addEventListener(
+      "click",
+      function (ev) {
+        var link = ev.target && ev.target.closest
+          ? ev.target.closest('a[href^="mailto:"], button[data-mailto]')
+          : null;
+        if (!link) return;
+        if (link.getAttribute("data-native-mailto") === "1") return;
+        ev.preventDefault();
+        var href = link.getAttribute("href") || link.getAttribute("data-mailto") || "mailto:engineering@caliberfoundry.com";
+        openContactModal(href);
+      },
+      false
+    );
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && !contactModal.classList.contains("cf-fb-hidden")) {
+        closeContactModal();
+      }
+    });
+
     window.CaliberFeedback = {
       open: openFbModal,
-      close: closeFbModal
+      close: closeFbModal,
+      openContact: openContactModal,
+      closeContact: closeContactModal
     };
   }
 

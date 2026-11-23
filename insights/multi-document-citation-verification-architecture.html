@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>Multi-Document Citation Verification Architecture: Page &amp; Cell-Level Source Grounding | Caliber Foundry</title>
-  <meta name="description" content="How to architect deterministic multi-document citation verification for financial, legal, and due diligence workflows. Compare naive chunked vector RAG vs. OmniRAG™ structure-aware page, bounding-box, and spreadsheet cell-coordinate grounding." />
+  <meta name="description" content="How to architect deterministic multi-document citation verification for financial, legal, and due diligence workflows. Compare naive chunked vector RAG vs. OmniRAGв„ў structure-aware page, bounding-box, and spreadsheet cell-coordinate grounding." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="https://caliberfoundry.com/insights/multi-document-citation-verification-architecture.html" />
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
@@ -19,8 +19,8 @@
   <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CaliberFoundry" />
-  <meta name="twitter:title" content="Multi-Document Citation Verification Architecture (OmniRAG™) — Caliber Foundry" />
-  <meta name="twitter:description" content="Why naive 512-token chunk RAG fails financial and legal audits—and how structure-aware cell &amp; page coordinate grounding solves it." />
+  <meta name="twitter:title" content="Multi-Document Citation Verification Architecture (OmniRAGв„ў) вЂ” Caliber Foundry" />
+  <meta name="twitter:description" content="Why naive 512-token chunk RAG fails financial and legal auditsвЂ”and how structure-aware cell &amp; page coordinate grounding solves it." />
   <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
   <script type="application/ld+json">
   {
@@ -224,7 +224,7 @@
         Most off-the-shelf document assistants slice PDFs and spreadsheets into arbitrary 500-to-1,000 token windows, embed them into a vector database, and retrieve top-<em>k</em> chunks by cosine similarity. While acceptable for casual knowledge bases, this pattern breaks down catastrophically in enterprise verification workflows for three structural reasons:
       </p>
       <ul>
-        <li><strong>Table Header Decapitation:</strong> When a 40-row financial schedule or fee table is split across token boundaries, rows 25–40 lose their column headers (`FY2024 Audited`, `Pro Forma Adjusted`, `Currency: USD Thousands`) and footnote qualifiers.</li>
+        <li><strong>Table Header Decapitation:</strong> When a 40-row financial schedule or fee table is split across token boundaries, rows 25вЂ“40 lose their column headers (`FY2024 Audited`, `Pro Forma Adjusted`, `Currency: USD Thousands`) and footnote qualifiers.</li>
         <li><strong>Cross-Clause Exception Severance:</strong> In commercial leases, MSAs, and federal regulations, a baseline obligation on Page 14 (`Section 4.2: Tenant shall maintain coverage of $5,000,000`) is routinely modified by an addendum or schedule on Page 47 (`Schedule C: Notwithstanding Section 4.2...`). Pure semantic search retrieves the baseline obligation while missing the cross-referenced override.</li>
         <li><strong>Unverifiable Attribution:</strong> Returning a document filename (`Credit_Agreement_Final.pdf`) forces a human analyst to spend 15 minutes manually searching a 200-page PDF to confirm a single figure.</li>
       </ul>
@@ -311,7 +311,7 @@
     <div class="cta-inline" style="background-color:var(--cf-bg-ink-panel); color:var(--cf-ink-on-dark); margin-top:48px;">
       <div>
         <span class="cta-inline-label">24-HOUR WORKING PROOF // OMNIRAG&trade; ARCHITECTURE</span>
-        <h3 style="color:var(--cf-ink-on-dark);">Send us 3 sample PDFs or spreadsheets—we will return a live citation-grounded prototype</h3>
+        <h3 style="color:var(--cf-ink-on-dark);">Send us 3 sample PDFs or spreadsheetsвЂ”we will return a live citation-grounded prototype</h3>
       </div>
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
         <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Working%20Prototype%20Request" class="btn btn-primary"><span>Email engineering@caliberfoundry.com</span><span>&nearr;</span></a>
@@ -330,6 +330,6 @@
       <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
     </div>
   </footer>
-  <script src="../assets/js/cf-telemetry.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
 </body>
 </html>
