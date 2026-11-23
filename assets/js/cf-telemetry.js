@@ -364,8 +364,11 @@
     styleEl.textContent = [
       "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop { display: none !important; } }",
       "#cfFeedbackDockRoot { position: fixed; bottom: 14px; right: 14px; z-index: 9990; font-family: 'IBM Plex Mono', monospace; }",
+      "#cfFeedbackDockRoot.cf-fb-in-header { position: static; display: inline-flex; align-items: center; }",
       ".cf-fb-trigger-btn { background: #141413; color: #F6F4EF; border: 1.5px solid #141413; border-left: 4px solid #C8431F; padding: 7px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; box-shadow: 2px 2px 0 rgba(20,20,19,0.18); transition: background 0.15s ease; }",
-      ".cf-fb-trigger-btn:hover { background: #C8431F; border-color: #141413; color: #FFFFFF; }",
+      "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: transparent; color: #F6F4EF; border: 1px solid #4A4842; border-left: 3px solid #C8431F; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
+      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; border-left: 3px solid #C8431F; }",
+      ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #C8431F !important; border-color: #141413 !important; color: #FFFFFF !important; }",
       "#cfFeedbackModalBackdrop { position: fixed; inset: 0; background: rgba(20,20,19,0.62); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
       "#cfFeedbackModalBackdrop.cf-fb-hidden { display: none !important; }",
       ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 2px solid #141413; box-shadow: 6px 6px 0 #141413; width: 100%; max-width: 520px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
@@ -389,13 +392,23 @@
     ].join("\n");
     document.head.appendChild(styleEl);
 
+    var headerMountTarget = document.querySelector(
+      ".cf-account-cluster, .ds-account-cluster, .cd-global-controls, .masthead-inner"
+    );
     var dock = document.createElement("div");
     dock.id = "cfFeedbackDockRoot";
+    if (headerMountTarget) {
+      dock.className = "cf-fb-in-header";
+    }
     dock.innerHTML =
       '<button type="button" class="cf-fb-trigger-btn" id="cfFeedbackDockBtn" title="Report a software bug or request a feature improvement (Alt+F)">' +
-      "Report Bug / Feature" +
+      "Report Bug" +
       "</button>";
-    document.body.appendChild(dock);
+    if (headerMountTarget) {
+      headerMountTarget.appendChild(dock);
+    } else {
+      document.body.appendChild(dock);
+    }
 
     var prodName = detectProduct(window.location.pathname);
     var modalBackdrop = document.createElement("div");
