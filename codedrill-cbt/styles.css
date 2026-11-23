@@ -54,12 +54,13 @@
 }
 
 html, body {
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
   font-family: var(--font-sans);
   color: var(--cf-ink-primary);
   background-color: var(--cf-bg-paper);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -76,18 +77,19 @@ button, input, select, textarea {
    ========================================================================== */
 .codedrill-global-bar,
 .global-suite-bar {
-  height: 40px;
+  min-height: 40px;
+  position: sticky;
+  top: 0;
   background: var(--cf-bg-ink-panel);
   color: var(--cf-ink-on-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 4px 10px;
   border-bottom: 1px solid var(--cf-rule-strong);
   gap: 8px;
-  flex-wrap: nowrap;
-  overflow: hidden;
-  z-index: 100;
+  flex-wrap: wrap;
+  z-index: 400;
   user-select: none;
 }
 
@@ -309,19 +311,17 @@ button, input, select, textarea {
    2. MAIN WORKSPACE & COMPACT PEARSON VUE HEADER CHROME
    ========================================================================== */
 .codedrill-main-container {
-  height: calc(100vh - 40px);
+  min-height: calc(100vh - 140px);
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .workspace-view {
-  height: 100%;
+  min-height: calc(100vh - 140px);
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* Prussian Institutional Navy Top Bar (#1B365D) — Compact 36px */
@@ -828,7 +828,8 @@ button, input, select, textarea {
   flex: 1;
   display: flex;
   width: 100%;
-  height: 100%;
+  min-height: 620px;
+  height: calc(100vh - 180px);
   overflow: hidden;
   background: var(--cf-bg-paper);
 }
