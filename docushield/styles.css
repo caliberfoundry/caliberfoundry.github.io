@@ -1622,6 +1622,59 @@ button, input, select, textarea {
   box-shadow: 4px 4px 0px rgba(20, 20, 19, 0.25);
 }
 
+.ds-toast-success {
+  border-left-color: var(--cf-forest-pass);
+}
+
+.ds-modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-modal-paywall-window {
+  max-width: 960px;
+}
+
+.ds-paywall-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.ds-tier-pro {
+  border-color: var(--cf-accent-primary);
+}
+
+.ds-pay-tab {
+  cursor: pointer;
+}
+
+.ds-pay-panel.hidden {
+  display: none !important;
+}
+
+.ds-tree-before,
+.ds-tree-after {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-score-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ds-cert-modal,
+.ds-export-modal {
+  max-width: 920px;
+}
+
+.ds-auth-panel.hidden {
+  display: none !important;
+}
+
 @media print {
   body * {
     visibility: hidden;

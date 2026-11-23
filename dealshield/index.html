@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261123b" />
 </head>
 <body>
   <!-- =====================================================================
@@ -54,7 +54,7 @@
        ===================================================================== -->
   <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
     <div class="dsh-steps-track">
-      <div class="dsh-step-pill active" onclick="document.getElementById('presetSelect').focus()" title="Step 1: Pick a framework or upload your customer's questionnaire">
+      <div class="dsh-step-pill active" data-step-action="step1" title="Step 1: Pick a framework or upload your customer's questionnaire">
         <span class="dsh-step-num">1</span>
         <div>
           <strong>Choose Questionnaire</strong>
@@ -62,7 +62,7 @@
         </div>
       </div>
       <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" onclick="document.getElementById('ddqMatrixTable').scrollIntoView({behavior:'smooth'})" title="Step 2: Click any row to review or edit its citation-locked answer">
+      <div class="dsh-step-pill" data-step-action="step2" title="Step 2: Click any row to review or edit its citation-locked answer">
         <span class="dsh-step-num">2</span>
         <div>
           <strong>Review Answers</strong>
@@ -70,7 +70,7 @@
         </div>
       </div>
       <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" onclick="document.getElementById('btnOpenEvalDossier').click()" title="Step 3: Download answered CSV or printable VPAT 2.5 PDF report">
+      <div class="dsh-step-pill" data-step-action="step3" title="Step 3: Download answered CSV or printable VPAT 2.5 PDF report">
         <span class="dsh-step-num">3</span>
         <div>
           <strong>Export Report</strong>
@@ -111,19 +111,19 @@
             <span class="cf-block-tag" id="uploadStatusTag">12 Questions Active</span>
           </div>
           <div class="dsh-quick-presets">
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='caiq-v4';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card active" data-preset-card="caiq-v4">
               <strong>CSA CAIQ v4 / SOC 2</strong>
               <span>Enterprise Cloud · Free</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='hecvat-3';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="hecvat-3">
               <strong>EDUCAUSE HECVAT v3</strong>
               <span>Higher-Ed &amp; FERPA · Free</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='sig-lite';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="sig-lite">
               <strong>SIG-Lite 2026 Risk</strong>
               <span>Banking &amp; FinTech · PRO</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='vpat-25';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="vpat-25">
               <strong>ITI VPAT® 2.5</strong>
               <span>Section 508 &amp; EAA · PRO</span>
             </button>
@@ -694,7 +694,7 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20261123b"></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

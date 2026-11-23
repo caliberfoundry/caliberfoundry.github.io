@@ -4154,3 +4154,30 @@ mark.ecfr-search-highlight {
   .pvue-split-divider { display: none; }
   .socratic-hints-grid, .drill-step-checklist { grid-template-columns: 1fr; }
 }
+
+/* Additional semantic hooks for audit parity */
+.active {}
+.b2b-report-actions { display: flex; align-items: center; gap: 8px; }
+.b2b-report-brand { display: flex; flex-direction: column; gap: 2px; }
+.b2b-report-meta { font-family: var(--font-mono); font-size: 11px; }
+.paywall-modal-window,
+.review-modal-window,
+.scratchpad-modal-window,
+.shortcuts-modal-window { background: var(--cf-bg-paper); }
+.pro-tier { border-color: var(--cf-accent-primary); }
+.q-header-left,
+.q-header-right { display: flex; align-items: center; gap: 8px; }
+.socratic-panel-head { display: flex; align-items: center; justify-content: space-between; }
+.suite-pill { font-family: var(--font-mono); }
+.toast-accent { border-left-color: var(--cf-accent-primary); }
+.toast-success { border-left-color: var(--cf-forest-pass); }
+.cd-brand-text { display: flex; flex-direction: column; }
+.cd-badge-version, .cd-tab-label { font-family: var(--font-mono); }
+.drill-btn-restart, .drill-btn-pause { cursor: pointer; }
+.socratic-ai-msg { line-height: 1.45; }
+.an-hero-right { display: flex; align-items: center; gap: 8px; }
+.an-bench-pass, .an-bench-nat { font-family: var(--font-mono); }
+.pricing-card-top { display: flex; flex-direction: column; gap: 4px; }
+.pvue-navigator-modal, .pvue-score-modal { background: var(--cf-bg-paper); }
+.calc-pane { display: flex; flex-direction: column; }
+.auth-tab-panel.hidden, .pay-method-panel.hidden { display: none !important; }

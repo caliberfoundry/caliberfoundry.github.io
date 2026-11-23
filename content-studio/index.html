@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261123b" />
 </head>
 <body>
   <!-- =====================================================================
@@ -54,7 +54,7 @@
        ===================================================================== -->
   <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
     <div class="dsh-steps-track">
-      <div class="dsh-step-pill active" onclick="document.getElementById('presetSelect').focus()" title="Step 1: Choose an automation or evaluation scenario">
+      <div class="dsh-step-pill active" data-step-action="step1" title="Step 1: Choose an automation or evaluation scenario">
         <span class="dsh-step-num">1</span>
         <div>
           <strong>Choose Scenario</strong>
@@ -62,7 +62,7 @@
         </div>
       </div>
       <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" onclick="document.getElementById('tabRightEval').click()" title="Step 2: Inspect generated output and 0% hallucination check">
+      <div class="dsh-step-pill" data-step-action="step2" title="Step 2: Inspect generated output and 0% hallucination check">
         <span class="dsh-step-num">2</span>
         <div>
           <strong>Verify Output</strong>
@@ -70,7 +70,7 @@
         </div>
       </div>
       <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" onclick="document.getElementById('btnOpenEvalDossier').click()" title="Step 3: Export n8n JSON payload or printable evaluation PDF">
+      <div class="dsh-step-pill" data-step-action="step3" title="Step 3: Export n8n JSON payload or printable evaluation PDF">
         <span class="dsh-step-num">3</span>
         <div>
           <strong>Export JSON / PDF</strong>
@@ -111,19 +111,19 @@
             <span class="cf-block-tag" id="sourceCharCountBadge">6 Verified Anchors</span>
           </div>
           <div class="dsh-quick-presets">
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='n8n-pipeline';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card active" data-preset-card="n8n-pipeline">
               <strong>n8n / Make Pipeline</strong>
               <span>Webhook &amp; Content · Free</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='eval-harness';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="eval-harness">
               <strong>Evaluation Harness</strong>
               <span>Document F1 · Free</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='edtech-courseware';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="edtech-courseware">
               <strong>EdTech Courseware</strong>
               <span>SCORM 1.2 &amp; Quiz · PRO</span>
             </button>
-            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='fintech-monograph';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+            <button type="button" class="dsh-preset-card" data-preset-card="fintech-monograph">
               <strong>FinTech Monograph</strong>
               <span>Cross-Border FX · PRO</span>
             </button>
@@ -512,9 +512,9 @@
         </div>
 
         <div class="cf-pay-tabs" role="tablist">
-          <button type="button" class="cf-pay-tab active" data-paytab="card" id="payTabCard">1. Instant Card / Sprint</button>
-          <button type="button" class="cf-pay-tab" data-paytab="invoice" id="payTabInvoice">2. Corporate Invoice (Net-14)</button>
-          <button type="button" class="cf-pay-tab" data-paytab="key" id="payTabKey">3. Activate License Key</button>
+          <button type="button" class="cf-pay-tab active" data-pay-tab="card" id="payTabCard">1. Instant Card / Sprint</button>
+          <button type="button" class="cf-pay-tab" data-pay-tab="invoice" id="payTabInvoice">2. Corporate Invoice (Net-14)</button>
+          <button type="button" class="cf-pay-tab" data-pay-tab="key" id="payTabKey">3. Activate License Key</button>
         </div>
 
         <div id="payPanelCard">
@@ -650,7 +650,7 @@
   <div class="cf-toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="presets-data.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261123b"></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

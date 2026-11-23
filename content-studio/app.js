@@ -677,6 +677,9 @@
   function renderLeftPane() {
     const preset = getActivePreset();
     const bundle = getActiveSynthesizedBundle();
+    document.querySelectorAll('.dsh-preset-card[data-preset-card]').forEach(card => {
+      card.classList.toggle('active', card.getAttribute('data-preset-card') === STATE.activePresetId);
+    });
 
     // 1. 5-Stage Pipeline Matrix
     const stagesContainer = document.getElementById('pipelineStagesList');
@@ -990,6 +993,9 @@
   }
 
   function refreshAllViews() {
+    document.querySelectorAll('[data-preset-card]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-preset-card') === STATE.activePresetId);
+    });
     renderTopBars();
     renderLeftPane();
     renderRightPaneTabs();
@@ -1367,6 +1373,28 @@
       });
     }
 
+    document.querySelectorAll('[data-preset-card]').forEach(cardBtn => {
+      cardBtn.addEventListener('click', () => {
+        const targetId = cardBtn.getAttribute('data-preset-card');
+        if (targetId) selectPreset(targetId);
+      });
+    });
+
+    document.querySelectorAll('[data-step-action]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const act = pill.getAttribute('data-step-action');
+        document.querySelectorAll('.dsh-step-pill').forEach(p => p.classList.toggle('active', p === pill));
+        if (act === 'step1') {
+          const sel = document.getElementById('presetSelect');
+          if (sel) sel.focus();
+        } else if (act === 'step2') {
+          switchRightTab('eval');
+        } else if (act === 'step3') {
+          openEvalDossierModal();
+        }
+      });
+    });
+
     document.querySelectorAll('.cf-out-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         const tabKey = btn.getAttribute('data-tab');
@@ -1494,7 +1522,11 @@
 
     const btnSignIn = document.getElementById('btnHeaderSignIn');
     if (btnSignIn) {
-      btnSignIn.addEventListener('click', () => openPaywallModal());
+      btnSignIn.addEventListener('click', () => {
+        const acctModal = document.getElementById('modalAccount');
+        if (acctModal) acctModal.classList.remove('hidden');
+        else openPaywallModal();
+      });
     }
 
     const btnClosePaywall = document.getElementById('btnClosePaywallModal');

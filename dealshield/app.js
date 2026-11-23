@@ -727,6 +727,9 @@
 
   function renderDdqMatrixTab() {
     const preset = PRESETS[state.activePresetId] || PRESETS["caiq-v4"];
+    document.querySelectorAll(".dsh-preset-card[data-preset-card]").forEach((card) => {
+      card.classList.toggle("active", card.getAttribute("data-preset-card") === state.activePresetId);
+    });
     const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value || preset.sourceCorpus;
     const sha = deterministicHash(corpusText + JSON.stringify(state.controls));
 
@@ -967,6 +970,9 @@
   }
 
   function renderAll() {
+    document.querySelectorAll("[data-preset-card]").forEach((btn) => {
+      btn.classList.toggle("active", btn.getAttribute("data-preset-card") === state.activePresetId);
+    });
     renderHeaderState();
     renderLeftPaneMetrics();
     renderDdqMatrixTab();
@@ -1289,6 +1295,47 @@
     if (presetSelect) {
       presetSelect.addEventListener("change", (e) => {
         loadPreset(e.target.value, false);
+      });
+    }
+
+    document.querySelectorAll("[data-preset-card]").forEach((cardBtn) => {
+      cardBtn.addEventListener("click", () => {
+        const targetPreset = cardBtn.getAttribute("data-preset-card");
+        if (targetPreset) {
+          loadPreset(targetPreset, false);
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-step-action]").forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const act = pill.getAttribute("data-step-action");
+        document.querySelectorAll(".dsh-step-pill").forEach((p) => p.classList.toggle("active", p === pill));
+        if (act === "step1") {
+          const sel = document.getElementById("presetSelect");
+          if (sel) sel.focus();
+        } else if (act === "step2") {
+          const tbl = document.getElementById("ddqMatrixTable");
+          if (tbl) tbl.scrollIntoView({ behavior: "smooth" });
+        } else if (act === "step3") {
+          openPrintableDossier();
+        }
+      });
+    });
+
+    const resetBtn = document.getElementById("btnResetStudio");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        try {
+          localStorage.removeItem(STORAGE_KEYS.PRO_UNLOCKED);
+          localStorage.removeItem(STORAGE_KEYS.LICENSE_KEY);
+          localStorage.removeItem(STORAGE_KEYS.USER_SESSION);
+          localStorage.removeItem(STORAGE_KEYS.LAST_INVOICE);
+        } catch (_) {}
+        state.isProUnlocked = false;
+        state.licenseKey = "";
+        state.userSession = null;
+        loadPreset("caiq-v4", true);
       });
     }
 
@@ -1654,21 +1701,6 @@
         } catch (_) {}
         document.getElementById("modalAccount").classList.add("hidden");
         renderHeaderState();
-      });
-    }
-
-    // Reset session button
-    const resetBtn = document.getElementById("btnResetStudio");
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        state.isProUnlocked = false;
-        state.userSession = null;
-        try {
-          localStorage.removeItem(STORAGE_KEYS.PRO_UNLOCKED);
-          localStorage.removeItem(STORAGE_KEYS.USER_SESSION);
-          localStorage.removeItem(STORAGE_KEYS.LAST_INVOICE);
-        } catch (_) {}
-        loadPreset("caiq-v4", true);
       });
     }
 
