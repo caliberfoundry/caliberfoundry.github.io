@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>DealShield™ — Security Questionnaire (DDQ / CAIQ / HECVAT) &amp; VPAT 2.5 Auto-Responder | Caliber Foundry</title>
+  <meta name="description" content="Zero-library B2B Security Questionnaire (CSA CAIQ v4, EDUCAUSE HECVAT, SIG-Lite) and ITI VPAT 2.5 (Section 508 &amp; EU EAA EN 301 549) citation-locked auto-responder. Pay-Per-Deal ($199) without annual contracts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       BAR 1: CLEAN RESPONSIVE HEADER BAR (ZERO OVERLAP AT ANY RESOLUTION)
+       ===================================================================== -->
+  <header class="cf-global-header" role="banner">
+    <div class="cf-brand-cluster">
+      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
+      <div class="cf-logo-mark" aria-hidden="true">CF</div>
+      <div class="cf-brand-titles">
+        <span class="cf-brand-name">DealShield<span class="cf-tm">™</span></span>
+        <span class="cf-brand-sub">Citation-Locked DDQ &amp; VPAT 2.5 Responder</span>
+      </div>
+    </div>
+
+    <!-- 4 Enterprise & EdTech Procurement Questionnaire Presets -->
+    <div class="cf-preset-selector-wrap">
+      <label for="presetSelect" class="cf-preset-label">Framework:</label>
+      <select id="presetSelect" class="cf-preset-select" aria-label="Select Procurement Questionnaire or VPAT Framework">
+        <option value="caiq-v4">1. CSA CAIQ v4.0.3 &amp; SOC 2 Enterprise DDQ (FREE)</option>
+        <option value="hecvat-3">2. EDUCAUSE HECVAT v3.04 Higher-Ed &amp; FERPA DDQ (FREE)</option>
+        <option value="sig-lite">3. Shared Assessments SIG-Lite 2026 Vendor Risk · PRO</option>
+        <option value="vpat-25">4. ITI VPAT® 2.5 (Section 508 + EU EAA EN 301 549) · PRO</option>
+      </select>
+    </div>
+
+    <!-- Right Account & Licensing Cluster -->
+    <div class="cf-account-cluster" id="headerAccountCluster">
+      <span class="cf-gate-pill hidden" id="headerGateBadge">100% Citation-Locked</span>
+      <span class="cf-license-pill" id="headerLicenseBadge">Free Tier (2/4)</span>
+      <span class="cf-user-email-pill hidden" id="headerUserEmailBadge"></span>
+      <button type="button" class="cf-header-btn" id="btnHeaderSignIn">Sign In</button>
+      <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Unlock Deal Pack ($199)</button>
+      <button type="button" class="cf-header-btn cf-btn-reset" id="btnResetStudio" title="Reset session">Reset</button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       BAR 2: CONCISE KPI SUMMARY & PRIMARY ACTION BAR (FLEX-WRAP SAFE)
+       ===================================================================== -->
+  <section class="cf-action-toolbar" aria-label="Questionnaire Telemetry and Execution Controls">
+    <div class="cf-toolbar-left">
+      <span class="cf-preset-code-badge" id="activePresetCodeBadge">DDQ-CAIQ-01</span>
+      <span class="cf-active-pipeline-name hidden" id="activePresetTitleBar">CSA CAIQ v4.0.3 Cloud Controls &amp; SOC 2 Type II Enterprise DDQ</span>
+
+      <div class="cf-telemetry-strip" aria-label="Real-Time Verification Metrics">
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Unanchored:</span>
+          <strong class="cf-metric-val val-pass" id="metricHallucination">0.0%</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Controls:</span>
+          <strong class="cf-metric-val" id="metricPrecision">12/12 Verified</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Confidence:</span>
+          <strong class="cf-metric-val" id="metricLatency">99.4%</strong>
+        </div>
+        <div class="cf-metric-chip">
+          <span class="cf-metric-label">Turnaround:</span>
+          <strong class="cf-metric-val" id="metricCost">14.2s</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="cf-toolbar-right">
+      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable VPAT 2.5 &amp; Executive Security Attestation Dossier (PDF)">
+        VPAT 2.5 &amp; Attestation (PDF)
+      </button>
+      <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">
+        Auto-Fill DDQ →
+      </button>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       MAIN SPLIT-SCREEN WORKBENCH (PROGRESSIVE DISCLOSURE ARCHITECTURE)
+       ===================================================================== -->
+  <main class="cf-split-workbench" id="cfMainWorkbench">
+
+    <!-- ===================================================================
+         LEFT PANEL: CONCISE EVIDENCE CORPUS FIRST -> DRILL-DOWN DRAWERS BELOW
+         =================================================================== -->
+    <section class="cf-left-pane" aria-label="Security Policy Evidence Corpus and Custom Questionnaire Importer">
+      <div class="cf-left-scroll">
+
+        <!-- 1. CONCISE SOURCE EVIDENCE CORPUS (VISIBLE IMMEDIATELY ABOVE THE FOLD) -->
+        <div class="cf-card-block">
+          <div class="cf-block-header">
+            <div>
+              <span class="cf-block-kicker">STEP 1 · VENDOR EVIDENCE CORPUS (ZERO-LIBRARY)</span>
+              <h2 class="cf-block-title">Security Policy, SOC 2 &amp; Stack Anchors</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="cf-block-tag" id="sourceCharCountBadge">0 chars · 0 controls</span>
+              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource" title="Restore default preset policy corpus">
+                Restore Default
+              </button>
+            </div>
+          </div>
+
+          <div class="cf-field-group">
+            <label for="sourceTitleInput" class="cf-field-label">Vendor Policy / Architecture Dossier Title</label>
+            <input
+              type="text"
+              id="sourceTitleInput"
+              class="cf-input"
+              value="SOC 2 Type II Bridge Dossier &amp; Cloud Security Controls (2026)"
+            />
+          </div>
+
+          <div class="cf-field-group">
+            <label for="sourceCorpusTextarea" class="cf-field-label">
+              Policy &amp; Control Clauses (Anchors like <code>[SOC2-CC6.1]</code> lock directly to buyer DDQ answers)
+            </label>
+            <textarea
+              id="sourceCorpusTextarea"
+              class="cf-textarea"
+              rows="5"
+              spellcheck="false"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 2. COLLAPSIBLE DRILL-DOWN: UPLOAD CUSTOM CLIENT .CSV / .TSV / .JSON QUESTIONNAIRE -->
+        <details class="cf-card-block cf-collapsible-block" id="detailsCustomUpload">
+          <summary class="cf-collapsible-summary">
+            <div>
+              <span class="cf-block-kicker">TECHNICAL DRILL-DOWN 01</span>
+              <h2 class="cf-block-title">Import Custom Client DDQ (.CSV / .TSV / .JSON)</h2>
+            </div>
+            <span class="cf-block-tag" id="uploadStatusTag">12 Questions Active</span>
+          </summary>
+          <div class="cf-collapsible-body">
+            <div class="dsh-upload-zone">
+              <label for="fileInputQuestionnaire" class="cf-field-label" style="cursor:pointer;">
+                Drop or select a client questionnaire (<code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or <code>.txt</code>)
+              </label>
+              <input type="file" id="fileInputQuestionnaire" accept=".csv,.tsv,.json,.txt" class="cf-input" style="margin-top:6px;" />
+            </div>
+            <div class="cf-field-group" style="margin-top:8px;">
+              <label for="customQuestionsTextarea" class="cf-field-label">
+                Or paste buyer questions (one per line or <code>Control-ID | Question</code>)
+              </label>
+              <textarea
+                id="customQuestionsTextarea"
+                class="cf-textarea"
+                rows="4"
+                placeholder="CAIQ-IAM-01 | Do you enforce multi-factor authentication (MFA) and SSO (SAML 2.0 / OIDC) for production access?&#10;CAIQ-CRY-02 | How is customer data encrypted in transit and at rest?"
+              ></textarea>
+            </div>
+            <div class="cf-webhook-btn-row">
+              <button type="button" class="cf-btn-secondary" id="btnParseCustomQuestions">
+                Parse &amp; Auto-Answer Questions
+              </button>
+            </div>
+            <div class="cf-webhook-status hidden" id="customParseFeedback"></div>
+          </div>
+        </details>
+
+        <!-- 3. COLLAPSIBLE DRILL-DOWN: 5-STAGE CITATION-LOCK TOPOLOGY & VANTA/DRATA WEBHOOK -->
+        <details class="cf-card-block cf-collapsible-block" id="detailsPipelineDag">
+          <summary class="cf-collapsible-summary">
+            <div>
+              <span class="cf-block-kicker">TECHNICAL DRILL-DOWN 02</span>
+              <h2 class="cf-block-title">5-Stage Citation-Lock DAG &amp; Trust Center Webhook</h2>
+            </div>
+            <span class="cf-block-tag" id="dagStatusBadge">5/5 VERIFIED · SHA-256</span>
+          </summary>
+          <div class="cf-collapsible-body">
+            <div class="cf-dag-list" id="pipelineDagContainer" role="list">
+              <!-- Populated by app.js -->
+            </div>
+            <div class="cf-field-group" style="margin-top:10px;">
+              <label for="webhookUrlInput" class="cf-field-label">Trust Center / Slack / Vanta Webhook Endpoint</label>
+              <input
+                type="url"
+                id="webhookUrlInput"
+                class="cf-input"
+                value="https://hooks.caliberfoundry.com/v1/dealshield/ddq-signed-attestation"
+              />
+            </div>
+            <div class="cf-webhook-btn-row">
+              <button type="button" class="cf-btn-secondary" id="btnTestWebhook">
+                Dispatch Signed DDQ Manifest
+              </button>
+              <button type="button" class="cf-btn-outline" id="btnCopyN8nJson">
+                Copy JSON Manifest
+              </button>
+            </div>
+            <div class="cf-webhook-status hidden" id="webhookStatusBox" role="status"></div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         RIGHT PANEL: 4-TAB DDQ MATRIX, VPAT 2.5, GAP AUDIT & CSV/XLSX EXPORT
+         =================================================================== -->
+    <section class="cf-right-pane" aria-label="Answered DDQ Matrix, VPAT 2.5 Conformance Report and Export">
+
+      <!-- Tab Bar (Clean 4-Tab Layout) -->
+      <div class="cf-tabs-header">
+        <div class="cf-tab-list" role="tablist" aria-label="DealShield Output Views">
+          <button
+            type="button"
+            class="cf-tab-btn active"
+            role="tab"
+            aria-selected="true"
+            data-tab="tab-ddq-matrix"
+            id="tabBtnDdqMatrix"
+          >
+            1. Answered DDQ Matrix
+          </button>
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-vpat-report"
+            id="tabBtnVpatReport"
+          >
+            2. VPAT 2.5 / EAA Report
+          </button>
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-gap-audit"
+            id="tabBtnGapAudit"
+          >
+            3. Gap &amp; Remediation Audit
+          </button>
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-export-pack"
+            id="tabBtnExportPack"
+          >
+            4. Export (.CSV / Excel / JSON)
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Output Canvas -->
+      <div class="cf-right-scroll" id="rightOutputScroll">
+
+        <!-- ===============================================================
+             TAB 1: ANSWERED DDQ MATRIX & INLINE RESPONSE INSPECTOR
+             =============================================================== -->
+        <div class="cf-tab-panel active" id="tab-ddq-matrix" role="tabpanel">
+          <article class="cf-monograph-paper">
+            <div class="cf-monograph-top-bar">
+              <div>
+                <span class="cf-kicker-red" id="monographKicker">ENTERPRISE PROCUREMENT CLEARANCE · ZERO-LIBRARY CITATION LOCK</span>
+                <h1 class="cf-monograph-h1" id="monographTitle">CSA CAIQ v4.0.3 &amp; SOC 2 Type II Automated Security Questionnaire</h1>
+              </div>
+              <div class="cf-monograph-actions">
+                <button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download Answered .CSV</button>
+                <button type="button" class="cf-btn-mini" id="btnCopyAllAnswers">Copy Full DDQ Table</button>
+              </div>
+            </div>
+
+            <div class="cf-monograph-meta-strip">
+              <span>Manifest SHA-256: <code id="monographSha">8f4e2a91c0b3d7e2...</code></span>
+              <span>Verified Controls: <strong id="monographSpanCount">12/12</strong></span>
+              <span>Unanchored Claims: <strong class="val-pass">0.0%</strong></span>
+              <span>Turnaround: <strong id="monographReadTime">14.2s (vs. 11.5 hrs manual)</strong></span>
+            </div>
+
+            <!-- Concise Executive Summary Bullets -->
+            <div class="cf-takeaways-box">
+              <div class="cf-takeaways-title">PROCUREMENT CLEARANCE SUMMARY (100% EVIDENCE-BACKED)</div>
+              <ul class="cf-takeaways-list" id="monographTakeawaysList">
+                <!-- Populated by app.js -->
+              </ul>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="dsh-filter-bar">
+              <div class="dsh-filter-group" role="group" aria-label="Filter Questionnaire Controls">
+                <button type="button" class="dsh-filter-btn active" data-filter="all" id="filterBtnAll">All Controls (12)</button>
+                <button type="button" class="dsh-filter-btn" data-filter="COMPLIANT" id="filterBtnCompliant">Compliant (10)</button>
+                <button type="button" class="dsh-filter-btn" data-filter="COMPENSATING" id="filterBtnCompensating">Compensating / Action (2)</button>
+              </div>
+              <span class="cf-block-tag" id="ddqUnlockCounterBadge">Showing 12 Controls (6 Free · 6 Pro)</span>
+            </div>
+
+            <!-- Interactive Answered DDQ Table -->
+            <div class="cf-table-scroll-wrap">
+              <table class="cf-eval-table" id="ddqMatrixTable">
+                <thead>
+                  <tr>
+                    <th>Control ID</th>
+                    <th>Domain &amp; Buyer Procurement Question</th>
+                    <th>Evidence-Locked Response &amp; Policy Citation</th>
+                    <th>Anchor</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="ddqMatrixTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Inline Selected Control Inspector & Response Editor -->
+            <div class="dsh-editor-card" id="selectedControlInspector">
+              <div class="cf-block-header">
+                <div>
+                  <span class="cf-block-kicker" id="inspectorControlId">SELECTED CONTROL · CLICK ANY ROW TO EDIT OR VERIFY SOURCE</span>
+                  <h3 class="cf-block-title" id="inspectorQuestionTitle">Select any row above to inspect or customize its citation-locked answer</h3>
+                </div>
+                <span class="dsh-status-pill dsh-status-pass" id="inspectorAnchorBadge">[SOC2-CC6.1]</span>
+              </div>
+              <div class="cf-field-group">
+                <label for="inspectorAnswerTextarea" class="cf-field-label">Approved Vendor Response (Editable before .CSV / PDF export)</label>
+                <textarea id="inspectorAnswerTextarea" class="cf-textarea" rows="3"></textarea>
+              </div>
+              <div class="cf-webhook-btn-row" style="margin-top:6px;">
+                <button type="button" class="cf-btn-secondary" id="btnSaveEditedAnswer">Save Custom Response</button>
+                <button type="button" class="cf-btn-outline" id="btnCopySingleAnswer">Copy Row Answer</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- ===============================================================
+             TAB 2: ITI VPAT® 2.5 (SECTION 508 + EU EAA EN 301 549 + WCAG 2.2 AA)
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-vpat-report" role="tabpanel">
+          <div class="cf-eval-summary-grid">
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">WCAG 2.2 Level A &amp; AA</span>
+              <strong class="cf-eval-kpi-num val-pass" id="vpatWcagScore">50 / 50 Criteria</strong>
+              <span class="cf-eval-kpi-sub">Supports (48) · Partially Supports (2)</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">US Revised Section 508</span>
+              <strong class="cf-eval-kpi-num val-pass" id="vpat508Score">Chapters 3–6 Pass</strong>
+              <span class="cf-eval-kpi-sub">Federal &amp; Higher-Ed HECVAT Ready</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">EU EN 301 549 (EAA 2019/882)</span>
+              <strong class="cf-eval-kpi-num" id="vpatEaaScore">Clauses 9, 10, 11</strong>
+              <span class="cf-eval-kpi-sub">Web, Non-Web PDF/UA &amp; Software</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">ACR Edition &amp; Signature</span>
+              <strong class="cf-eval-kpi-num" id="vpatEditionLabel">VPAT® 2.5 INT</strong>
+              <span class="cf-eval-kpi-sub">1-Click Printable PDF Dossier</span>
+            </div>
+          </div>
+
+          <div class="cf-panel-card">
+            <div class="cf-panel-card-header">
+              <div>
+                <span class="cf-kicker-red">ITI VPAT® 2.5 INTERNATIONAL EDITION · ACCESSIBILITY CONFORMANCE REPORT (ACR)</span>
+                <h3 class="cf-panel-card-title">WCAG 2.2 AA, US Section 508 &amp; EU EN 301 549 Conformance Matrix</h3>
+              </div>
+              <button type="button" class="cf-btn-secondary" id="btnPrintVpatFromTab">
+                Open Printable VPAT 2.5 PDF
+              </button>
+            </div>
+
+            <div class="cf-table-scroll-wrap">
+              <table class="cf-eval-table" id="vpatTable">
+                <thead>
+                  <tr>
+                    <th>Standard &amp; Criterion</th>
+                    <th>Criterion Title</th>
+                    <th>Conformance Level</th>
+                    <th>Engineering Remarks &amp; Verification Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="vpatTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 3: PRE-SUBMISSION GAP & REMEDIATION AUDIT
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-gap-audit" role="tabpanel">
+          <div class="cf-panel-card">
+            <div class="cf-panel-card-header">
+              <div>
+                <span class="cf-kicker-red">CISO RED-FLAG PRE-FLIGHT DETECTOR</span>
+                <h3 class="cf-panel-card-title">Compensating Controls &amp; Drop-In Policy Addendum Clauses</h3>
+              </div>
+              <span class="cf-badge-pass" id="gapCountBadge">2 Compensating Controls Ready</span>
+            </div>
+            <div id="gapAuditCardsContainer" class="cf-quiz-list">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 4: EXPORT (.CSV / EXCEL XML / JSON / SIGNED ATTESTATION)
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-export-pack" role="tabpanel">
+          <div class="cf-dual-grid">
+            <div class="cf-panel-card">
+              <div class="cf-panel-card-header">
+                <div>
+                  <span class="cf-kicker-red">INSTANT PROCUREMENT DELIVERABLES</span>
+                  <h3 class="cf-panel-card-title">Download Completed Questionnaire (.CSV / Excel / .JSON)</h3>
+                </div>
+                <span class="cf-badge-neutral">UTF-8 BOM · Excel Ready</span>
+              </div>
+              <p style="font-size:12.5px;color:var(--cf-ink-secondary);margin-bottom:12px;">
+                Export the completed questionnaire with every buyer question, citation-locked response, control status, confidence score, and policy clause reference preserved in column order.
+              </p>
+              <div class="cf-webhook-btn-row" style="margin-bottom:12px;">
+                <button type="button" class="cf-btn-secondary" id="btnExportCsvFile">
+                  Download Answered .CSV (Excel)
+                </button>
+                <button type="button" class="cf-btn-outline" id="btnExportJsonFile">
+                  Download Trust-Center .JSON
+                </button>
+                <button type="button" class="cf-btn-outline" id="btnExportVpatPdf">
+                  Open Printable VPAT 2.5 PDF
+                </button>
+              </div>
+              <pre class="cf-code-block" id="exportCsvPreviewBox"></pre>
+            </div>
+
+            <div class="cf-panel-card">
+              <div class="cf-panel-card-header">
+                <div>
+                  <span class="cf-kicker-red">CRYPTOGRAPHIC VENDOR ATTESTATION</span>
+                  <h3 class="cf-panel-card-title">Signed DDQ &amp; VPAT 2.5 JSON Manifest</h3>
+                </div>
+                <button type="button" class="cf-btn-mini" id="btnCopyManifestJson">Copy JSON</button>
+              </div>
+              <pre class="cf-code-block" id="exportJsonPreviewBox"></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       MODAL 1: PRINTABLE VPAT 2.5 & VENDOR SECURITY ATTESTATION DOSSIER
+       ===================================================================== -->
+  <div class="cf-modal-backdrop hidden" id="modalEvalDossier" role="dialog" aria-modal="true" aria-labelledby="evalDossierTitle">
+    <div class="cf-modal-box cf-modal-wide">
+      <div class="cf-modal-header no-print">
+        <div>
+          <span class="cf-kicker-red">OFFICIAL PROCUREMENT &amp; ACCESSIBILITY CONFORMANCE DOSSIER</span>
+          <h2 class="cf-modal-title" id="evalDossierTitle">DealShield™ VPAT® 2.5 &amp; Security Questionnaire Attestation</h2>
+        </div>
+        <div class="cf-modal-header-actions">
+          <button type="button" class="cf-btn-secondary" id="btnPrintEvalDossier">Print / Save as PDF</button>
+          <button type="button" class="cf-btn-close" id="btnCloseEvalDossier" aria-label="Close Dossier">✕</button>
+        </div>
+      </div>
+      <div class="cf-modal-body" id="evalDossierPrintArea">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: COMMERCIAL PAYWALL, CHECKOUT & CORPORATE INVOICE GENERATOR
+       ===================================================================== -->
+  <div class="cf-modal-backdrop hidden" id="modalPaywall" role="dialog" aria-modal="true" aria-labelledby="paywallModalTitle">
+    <div class="cf-modal-box cf-modal-wide">
+      <div class="cf-modal-header">
+        <div>
+          <span class="cf-kicker-red" id="paywallTriggerReason">PRO PROCUREMENT PACK · UNLOCK ALL CONTROLS &amp; VPAT 2.5 EXPORT</span>
+          <h2 class="cf-modal-title" id="paywallModalTitle">DealShield™ Pay-Per-Deal &amp; B2B SaaS Licensing</h2>
+        </div>
+        <button type="button" class="cf-btn-close" id="btnClosePaywall" aria-label="Close Licensing Modal">✕</button>
+      </div>
+
+      <div class="cf-modal-body">
+        <!-- 3 Pricing Tiers (Under $500 Corporate Expense Card Threshold) -->
+        <div class="cf-pricing-grid">
+          <div class="cf-price-card">
+            <span class="cf-price-tier">SINGLE ENTERPRISE DEAL</span>
+            <h3 class="cf-price-name">Pay-Per-Questionnaire + VPAT 2.5</h3>
+            <div class="cf-price-amount">$199 <span class="cf-price-period">/ deal pack</span></div>
+            <p class="cf-price-desc">Built for CTOs &amp; Founders unblocking an active enterprise or university procurement deal today (zero annual subscription).</p>
+            <ul class="cf-price-features">
+              <li>Full 250-row CSV / Excel DDQ auto-fill with exact policy citations</li>
+              <li>Complete ITI VPAT® 2.5 (Section 508 + EU EAA + WCAG 2.2 AA) PDF</li>
+              <li>All 4 Frameworks unlocked (CAIQ v4, HECVAT v3, SIG-Lite, VPAT 2.5)</li>
+              <li>Instant corporate invoice (<code>INV-DSH-2026-XXXX</code>) for expense reimbursement</li>
+            </ul>
+            <button type="button" class="cf-btn-secondary cf-w-full" data-Select-Plan="DealShield Single Deal Pack ($199)" data-Plan-Price="$199.00">
+              Select Single Deal Pack ($199)
+            </button>
+          </div>
+
+          <div class="cf-price-card cf-price-featured">
+            <span class="cf-price-tier">MOST POPULAR · B2B SAAS &amp; AGENCIES</span>
+            <h3 class="cf-price-name">DealShield™ Studio Unlimited</h3>
+            <div class="cf-price-amount">$399 <span class="cf-price-period">/ month</span></div>
+            <p class="cf-price-desc">97% cheaper than Loopio or Responsive ($18,000/yr). Unlimited security questionnaires, VPAT updates &amp; custom policy ingestion.</p>
+            <ul class="cf-price-features">
+              <li>Unlimited custom client Excel/CSV questionnaires &amp; HECVAT/SIG-Lite packs</li>
+              <li>Zero-Library SOC 2, ISO 27001, HIPAA &amp; GDPR policy corpus ingestion</li>
+              <li>Pre-submission CISO Gap Detector &amp; drop-in DPA/BAA addendum clauses</li>
+              <li>5 seats + signed Trust Center JSON &amp; Slack/Vanta webhook integration</li>
+            </ul>
+            <button type="button" class="cf-btn-primary cf-w-full" data-Select-Plan="DealShield Studio Unlimited ($399/mo)" data-Plan-Price="$399.00">
+              Select Studio Unlimited ($399/mo)
+            </button>
+          </div>
+
+          <div class="cf-price-card">
+            <span class="cf-price-tier">TURNKEY COMPLIANCE ENGINEERING</span>
+            <h3 class="cf-price-name">Custom Trust Portal &amp; PDF/UA Sprint</h3>
+            <div class="cf-price-amount">$1,950 <span class="cf-price-period">/ fixed sprint</span></div>
+            <p class="cf-price-desc">100% asynchronous delivery of a custom citation-locked Trust Center, VPAT 2.5 audit, and PDF/UA remediation pipeline.</p>
+            <ul class="cf-price-features">
+              <li>Custom-tuned DDQ &amp; VPAT 2.5 responder hosted on your domain</li>
+              <li>Full WCAG 2.2 AA &amp; ISO 14289-1 (PDF/UA) audit of your web app &amp; docs</li>
+              <li>Dedicated GitHub PR delivery &amp; CI/CD regression harness</li>
+              <li>100% async delivery via GitHub &amp; email (<code>engineering@caliberfoundry.com</code>)</li>
+            </ul>
+            <button type="button" class="cf-btn-secondary cf-w-full" data-Select-Plan="Turnkey Trust & VPAT Engineering Sprint ($1,950)" data-Plan-Price="$1,950.00">
+              Commission Turnkey Sprint ($1,950)
+            </button>
+          </div>
+        </div>
+
+        <!-- Checkout & License Key Activation Split Area -->
+        <div class="cf-checkout-split">
+          <!-- Left: Card / Corporate Invoice Checkout Form -->
+          <div class="cf-checkout-panel">
+            <h4 class="cf-subpanel-title">1. Instant Checkout &amp; Corporate Tax Invoice Generator</h4>
+            <div class="cf-selected-plan-banner" id="checkoutSelectedPlanBanner">
+              Selected Plan: <strong>DealShield Single Deal Pack ($199)</strong> — <span>$199.00</span>
+            </div>
+            <form id="checkoutForm" class="cf-form-grid">
+              <div class="cf-field-group">
+                <label for="chkCompany" class="cf-field-label">Company / Legal Entity</label>
+                <input type="text" id="chkCompany" class="cf-input" placeholder="Acme Cloud Systems Inc." required />
+              </div>
+              <div class="cf-field-group">
+                <label for="chkEmail" class="cf-field-label">Work Email (for Invoice &amp; Key)</label>
+                <input type="email" id="chkEmail" class="cf-input" placeholder="cto@acmecloud.io" required />
+              </div>
+              <div class="cf-field-group">
+                <label for="chkCardNumber" class="cf-field-label">Corporate Card Reference (Last 4 or Test Card)</label>
+                <input type="text" id="chkCardNumber" class="cf-input" value="4242 •••• •••• 4242" required />
+              </div>
+              <button type="submit" class="cf-btn-primary cf-w-full" id="btnCompleteCheckout">
+                Authorize &amp; Unlock DealShield™ PRO + Generate Invoice
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Existing Enterprise License Key Activation -->
+          <div class="cf-checkout-panel">
+            <h4 class="cf-subpanel-title">2. Activate Existing DealShield™ PRO License Key</h4>
+            <p class="cf-help-text">
+              Already received an enterprise license key or evaluating as an invited CTO/procurement partner? Enter your key below to unlock all 4 frameworks (`CAIQ v4`, `HECVAT v3`, `SIG-Lite 2026`, `VPAT 2.5 INT`) and full `.CSV` / PDF exports.
+            </p>
+            <div class="cf-field-group">
+              <label for="licenseKeyInput" class="cf-field-label">Enterprise License Key</label>
+              <input
+                type="text"
+                id="licenseKeyInput"
+                class="cf-input"
+                placeholder="DSH-PRO-2026-CALIBER"
+                value=""
+              />
+            </div>
+            <div class="cf-webhook-btn-row">
+              <button type="button" class="cf-btn-secondary" id="btnActivateLicenseKey">
+                Activate Key
+              </button>
+              <button type="button" class="cf-btn-outline" id="btnFillDemoKey">
+                Fill Evaluation Key
+              </button>
+            </div>
+            <div class="cf-license-feedback hidden" id="licenseFeedbackBox" role="status"></div>
+
+            <!-- Generated Corporate Invoice Box -->
+            <div class="cf-invoice-box hidden" id="generatedInvoiceBox">
+              <!-- Populated upon checkout -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: ACCOUNT SIGN-IN / REGISTRATION
+       ===================================================================== -->
+  <div class="cf-modal-backdrop hidden" id="modalAccount" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+    <div class="cf-modal-box">
+      <div class="cf-modal-header">
+        <div>
+          <span class="cf-kicker-red">WORKSPACE SESSION &amp; AUDIT TRAIL</span>
+          <h2 class="cf-modal-title" id="accountModalTitle">Sign In or Register DealShield™ Account</h2>
+        </div>
+        <button type="button" class="cf-btn-close" id="btnCloseAccountModal" aria-label="Close Account Modal">✕</button>
+      </div>
+      <div class="cf-modal-body">
+        <form id="accountSignInForm" class="cf-form-grid">
+          <div class="cf-field-group">
+            <label for="accNameInput" class="cf-field-label">Full Name / Role</label>
+            <input type="text" id="accNameInput" class="cf-input" placeholder="Elena Rostova, VP Engineering" required />
+          </div>
+          <div class="cf-field-group">
+            <label for="accEmailInput" class="cf-field-label">Corporate Email</label>
+            <input type="email" id="accEmailInput" class="cf-input" placeholder="elena@vanguardcloud.io" required />
+          </div>
+          <div class="cf-field-group">
+            <label for="accOrgInput" class="cf-field-label">Organization</label>
+            <input type="text" id="accOrgInput" class="cf-input" placeholder="Vanguard Cloud Infrastructure Corp." required />
+          </div>
+          <button type="submit" class="cf-btn-primary cf-w-full" id="btnSubmitAccountSignIn">
+            Save Workspace Session
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
