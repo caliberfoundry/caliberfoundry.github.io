@@ -1743,16 +1743,22 @@
     return `${prefix}-${block1}-${block2}`;
   }
 
+  function isLocalQaEnvironment() {
+    if (typeof window === 'undefined' || !window.location) return true;
+    const h = window.location.hostname;
+    return h === '127.0.0.1' || h === 'localhost' || !h;
+  }
+
   /**
-   * Validates and activates a Caliber Foundry license key (CF-PRO-2026-... or CF-TEAM-2026-...)
+   * Validates and activates a Caliber Foundry license key (CDR-PRO-2026-CALIBER, CF-PRO-2026-..., or CF-TEAM-2026-...)
    */
   function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
-    const pattern = /^CF-(PRO|TEAM)-2026-[A-Z0-9]{4,8}(-[A-Z0-9]{4,8})?$/;
+    const pattern = /^(?:CF|CDR)-(PRO|TEAM)-2026-[A-Z0-9]{4,12}(-[A-Z0-9]{4,12})?$/;
     const match = clean.match(pattern);
 
     if (!match) {
-      showToast('Invalid license key format. Expected CF-PRO-2026-XXXX-XXXX or CF-TEAM-2026-XXXX-XXXX.');
+      showToast('Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your license key.');
       return false;
     }
 
@@ -4326,7 +4332,7 @@
       });
     });
 
-    // Method A: Card / Instant Checkout Submit -> Generates License Key & Unlocks Pro
+    // Method A: Card / Contra B2B Instant Checkout Submit
     const stripeForm = document.getElementById('stripeCheckoutForm');
     if (stripeForm) {
       stripeForm.addEventListener('submit', (e) => {
@@ -4340,10 +4346,24 @@
             fullName: holder || (STATE.accountUser && STATE.accountUser.fullName) || email.split('@')[0],
             email
           });
+          saveUserState();
         }
 
-        const generatedKey = generateSignedLicenseKey(plan.tier);
-        validateAndActivateLicenseKey(generatedKey);
+        if (isLocalQaEnvironment()) {
+          const generatedKey = generateSignedLicenseKey(plan.tier);
+          validateAndActivateLicenseKey(generatedKey);
+          return;
+        }
+
+        const gwEl = document.querySelector('#stripeCheckoutForm select');
+        const gw = gwEl ? gwEl.value : 'gumroad';
+        const url =
+          gw === 'contra'
+            ? 'https://contra.com/s/qAZQN6OW-code-drilltm-cbt-and-interactive-exam-courseware-team-license'
+            : 'https://caliberfoundry.gumroad.com/l/codedrill-pro';
+        window.open(url, '_blank', 'noopener');
+        switchPaymentMethodSubTab('key');
+        showToast('Opened secure checkout. Paste the license key from your receipt to unlock CodeDrill CBT Pro.');
       });
     }
 

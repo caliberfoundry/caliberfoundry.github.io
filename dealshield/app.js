@@ -766,7 +766,7 @@
     if (anchorEl) anchorEl.textContent = ctrl.anchor;
     if (ansEl) {
       ansEl.value = isLocked
-        ? "[PRO LOCK] Unlock DealShield Single Deal Pack ($199) or activate enterprise key DSH-PRO-2026-CALIBER to edit and export rows 7+."
+        ? "[PRO LOCK] Unlock DealShield Single Deal Pack ($199) or activate your enterprise license key to edit and export rows 7+."
         : ctrl.answer;
       ansEl.disabled = isLocked;
     }
@@ -1116,16 +1116,48 @@
     renderAll();
   }
 
+  function isLocalQaEnvironment() {
+    if (typeof window === "undefined" || !window.location) return false;
+    const h = window.location.hostname;
+    return h === "127.0.0.1" || h === "localhost";
+  }
+
   function renderInvoiceBox(inv) {
     const box = document.getElementById("generatedInvoiceBox");
     if (!box) return;
+    const isPaid = Boolean(inv.isPaid || state.isProUnlocked);
+    const statusLabel = isPaid ? "PAID · PRO ACTIVE" : "AWAITING PAYMENT · NET-15 / INSTANT CHECKOUT";
+    const statusColor = isPaid ? "#1A5638" : "#C8431F";
+    const gumroadUrl = "https://caliberfoundry.gumroad.com/l/dealshield-pro";
+    const contraUrl =
+      inv.amount === "$1,950.00"
+        ? "https://contra.com/s/LrFvkNX2-turnkey-b2-b-software-data-and-ai-engineering-sprint"
+        : "https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua";
+
+    const keyOrCheckoutRow = isPaid
+      ? "<div>License Status: <strong>Enterprise PRO Unlocked</strong></div>"
+      : '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #C9C4B8;">' +
+        "<div><strong>Complete Payment to Receive Instant License Key:</strong></div>" +
+        '<div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">' +
+        '<a href="' +
+        gumroadUrl +
+        '" target="_blank" rel="noopener" class="cf-btn-primary" style="text-decoration:none;padding:6px 10px;font-size:11px;">Pay Card / Apple Pay ($199 · Auto-Key) ↗</a>' +
+        '<a href="' +
+        contraUrl +
+        '" target="_blank" rel="noopener" class="cf-btn-secondary" style="text-decoration:none;padding:6px 10px;font-size:11px;">Pay via Contra B2B (0% Fee) ↗</a>' +
+        "</div></div>";
+
     box.innerHTML =
       '<div style="border:1.5px solid #141413;background:#F6F4EF;padding:12px;margin-top:10px;font-family:var(--font-mono);font-size:11.5px;">' +
-      '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:6px;margin-bottom:8px;">' +
-      "<strong>PAID CORPORATE TAX INVOICE · " +
+      '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:6px;margin-bottom:8px;gap:8px;flex-wrap:wrap;">' +
+      "<strong>CORPORATE TAX INVOICE · " +
       escapeHtml(inv.invoiceId) +
       "</strong>" +
-      '<span style="color:#1A5638;font-weight:700;">PAID · PRO ACTIVE</span>' +
+      '<span style="color:' +
+      statusColor +
+      ';font-weight:700;">' +
+      statusLabel +
+      "</span>" +
       "</div>" +
       "<div>Billed To: <strong>" +
       escapeHtml(inv.company) +
@@ -1137,7 +1169,7 @@
       " · Amount: <strong>" +
       escapeHtml(inv.amount) +
       "</strong></div>" +
-      "<div>License Key: <code>DSH-PRO-2026-CALIBER</code></div>" +
+      keyOrCheckoutRow +
       "</div>";
     box.classList.remove("hidden");
   }
@@ -1423,6 +1455,7 @@
         e.preventDefault();
         const company = (document.getElementById("chkCompany") || {}).value || "Enterprise SaaS Customer";
         const email = (document.getElementById("chkEmail") || {}).value || "cto@customer.io";
+        const gateway = (document.getElementById("chkGatewaySelect") || {}).value || "gumroad";
         const invId = "INV-DSH-2026-" + Math.floor(1000 + Math.random() * 9000);
         const invObj = {
           invoiceId: invId,
@@ -1430,17 +1463,42 @@
           email: email,
           plan: state.selectedPlanName,
           amount: state.selectedPlanPrice,
+          gateway: gateway,
+          isPaid: isLocalQaEnvironment(),
           issuedAt: new Date().toISOString()
         };
-        unlockProLicense("Corporate Card Checkout " + invId, invObj);
-      });
-    }
 
-    const fillDemoKeyBtn = document.getElementById("btnFillDemoKey");
-    if (fillDemoKeyBtn) {
-      fillDemoKeyBtn.addEventListener("click", () => {
-        const keyIn = document.getElementById("licenseKeyInput");
-        if (keyIn) keyIn.value = "DSH-PRO-2026-CALIBER";
+        if (isLocalQaEnvironment()) {
+          unlockProLicense("Corporate Card Checkout " + invId, invObj);
+          return;
+        }
+
+        // Production: save invoice, open real checkout gateway, and require valid license key to unlock
+        try {
+          localStorage.setItem(STORAGE_KEYS.LAST_INVOICE, JSON.stringify(invObj));
+        } catch (_) {}
+        renderInvoiceBox(invObj);
+
+        const fb = document.getElementById("licenseFeedbackBox");
+        if (fb) {
+          fb.textContent =
+            "Invoice " +
+            invId +
+            " generated for " +
+            company +
+            ". Complete payment in the checkout window to receive your instant DealShield PRO license key.";
+          fb.classList.remove("hidden");
+        }
+
+        if (gateway === "contra") {
+          const contraTarget =
+            state.selectedPlanPrice === "$1,950.00"
+              ? "https://contra.com/s/LrFvkNX2-turnkey-b2-b-software-data-and-ai-engineering-sprint"
+              : "https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua";
+          window.open(contraTarget, "_blank", "noopener");
+        } else if (gateway === "gumroad") {
+          window.open("https://caliberfoundry.gumroad.com/l/dealshield-pro", "_blank", "noopener");
+        }
       });
     }
 
@@ -1455,12 +1513,13 @@
             company: (state.userSession && state.userSession.org) || "Enterprise License Holder",
             email: (state.userSession && state.userSession.email) || "security@enterprise.io",
             plan: "DealShield Studio PRO License",
-            amount: "$399.00"
+            amount: "$399.00",
+            isPaid: true
           });
         } else {
           const fb = document.getElementById("licenseFeedbackBox");
           if (fb) {
-            fb.textContent = "Invalid license key. Use evaluation key DSH-PRO-2026-CALIBER.";
+            fb.textContent = "Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your activation key.";
             fb.classList.remove("hidden");
           }
         }

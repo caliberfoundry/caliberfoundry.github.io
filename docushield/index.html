@@ -521,40 +521,53 @@
             </button>
           </div>
 
-          <!-- METHOD A: INSTANT CARD CHECKOUT -->
+          <!-- METHOD A: INSTANT CARD / CONTRA B2B CHECKOUT -->
           <div class="ds-pay-panel" id="payPanelCard">
             <form id="cardCheckoutForm" class="ds-form">
               <div class="ds-two-col">
                 <div class="ds-field">
-                  <label for="cardHolderName">Cardholder Name / Organization</label>
-                  <input type="text" id="cardHolderName" required placeholder="Dr. Claire Vance / Northwestern" value="Dr. Claire Vance" />
+                  <label for="cardHolderName">Buyer Name / Organization</label>
+                  <input type="text" id="cardHolderName" required placeholder="Dr. Claire Vance / Northwestern" />
                 </div>
                 <div class="ds-field">
-                  <label for="cardBillingEmail">Billing Email</label>
-                  <input type="email" id="cardBillingEmail" required placeholder="c.vance@university.edu" value="c.vance@university.edu" />
+                  <label for="cardBillingEmail">Billing Email (for Receipt &amp; Key)</label>
+                  <input type="email" id="cardBillingEmail" required placeholder="c.vance@university.edu" />
                 </div>
               </div>
               <div class="ds-field">
-                <label for="cardNumberInput">Card Number</label>
-                <input type="text" id="cardNumberInput" required placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242" />
-              </div>
-              <div class="ds-two-col">
-                <div class="ds-field">
-                  <label for="cardExpiryInput">Expiry (MM/YY)</label>
-                  <input type="text" id="cardExpiryInput" required placeholder="09/29" value="09/29" />
-                </div>
-                <div class="ds-field">
-                  <label for="cardCvcInput">CVC</label>
-                  <input type="text" id="cardCvcInput" required placeholder="842" value="842" />
-                </div>
+                <label for="cardNumberInput">Preferred Payment Gateway</label>
+                <select id="cardNumberInput">
+                  <option value="gumroad">Instant Credit Card / Apple Pay (Gumroad · $299 Auto-Key Delivery)</option>
+                  <option value="contra">Contra B2B Checkout (0% Fee · $299 Corporate Card / ACH)</option>
+                </select>
               </div>
               <button type="submit" class="ds-submit-btn" id="btnSubmitCardPayment">
-                Complete Payment &amp; Issue License →
+                Proceed to Secure Checkout (Gumroad / Contra 0% Fee) →
               </button>
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                <a
+                  href="https://caliberfoundry.gumroad.com/l/docushield-pro"
+                  target="_blank"
+                  rel="noopener"
+                  class="ds-btn-secondary"
+                  style="text-decoration:none;text-align:center;flex:1;"
+                >
+                  Instant Card ($299 · Auto-Key) ↗
+                </a>
+                <a
+                  href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua"
+                  target="_blank"
+                  rel="noopener"
+                  class="ds-btn-secondary"
+                  style="text-decoration:none;text-align:center;flex:1;"
+                >
+                  Contra B2B (0% Fee · $299) ↗
+                </a>
+              </div>
             </form>
           </div>
 
-          <!-- METHOD B: CORPORATE INVOICE GENERATOR (WITH 14-DAY PROVISIONAL PRO UNLOCK) -->
+          <!-- METHOD B: CORPORATE INVOICE GENERATOR -->
           <div class="ds-pay-panel hidden" id="payPanelInvoice">
             <div class="ds-form">
               <div class="ds-two-col">
@@ -568,7 +581,7 @@
                 </div>
               </div>
               <button type="button" class="ds-submit-btn" id="btnGenerateCorporateInvoice">
-                Generate Official Invoice &amp; Activate 14-Day Provisional PRO Unlock →
+                Generate Official Commercial Invoice (Net-15 / PO) →
               </button>
 
               <div class="ds-invoice-preview-box" id="corporateInvoicePreviewBox">
@@ -595,9 +608,9 @@
                   type="text"
                   id="licenseKeyInput"
                   class="ds-key-input"
-                  placeholder="DS-XXXX-XXXX-XXXX"
+                  placeholder="DS-PRO-2026-XXXX"
                 />
-                <span class="ds-key-hint">Enter the license key delivered to your corporate email upon checkout or invoice confirmation.</span>
+                <span class="ds-key-hint">Delivered automatically on your Gumroad or Contra receipt, or upon Corporate Invoice confirmation.</span>
               </div>
               <button type="button" class="ds-submit-btn" id="btnActivateLicenseKey">
                 Validate &amp; Activate License Key →
@@ -608,7 +621,7 @@
           <!-- Activation Confirmation Banner -->
           <div class="ds-activation-success hidden" id="activationSuccessBox">
             <div class="ds-success-kicker">PRO STUDIO UNLOCKED // ALL 6 PACKETS &amp; UNLIMITED AUDITS ACTIVE</div>
-            <h3 id="activationSuccessKeyHeading">Active Enterprise License</h3>
+            <h3 id="activationSuccessKeyHeading">Active License: DS-PRO-2026-CALIBER</h3>
             <p id="activationSuccessText">
               All 6 industry packets (FIN-03, MED-04, EDTECH-05, GOV-06), unlimited local PDF/HTML inspections, Batch Archive Mode, and CI/CD Webhook API are now unlocked.
             </p>

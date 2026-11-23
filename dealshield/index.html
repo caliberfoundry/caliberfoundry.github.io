@@ -571,7 +571,7 @@
 
         <!-- Checkout & License Key Activation Split Area -->
         <div class="cf-checkout-split">
-          <!-- Left: Card / Corporate Invoice Checkout Form -->
+          <!-- Left: Real Contra (0% Fee) / Gumroad Checkout & Corporate Invoice Form -->
           <div class="cf-checkout-panel">
             <h4 class="cf-subpanel-title">1. Instant Checkout &amp; Corporate Tax Invoice Generator</h4>
             <div class="cf-selected-plan-banner" id="checkoutSelectedPlanBanner">
@@ -583,16 +583,40 @@
                 <input type="text" id="chkCompany" class="cf-input" placeholder="Acme Cloud Systems Inc." required />
               </div>
               <div class="cf-field-group">
-                <label for="chkEmail" class="cf-field-label">Work Email (for Invoice &amp; Key)</label>
+                <label for="chkEmail" class="cf-field-label">Work Email (for Receipt, Invoice &amp; Key)</label>
                 <input type="email" id="chkEmail" class="cf-input" placeholder="cto@acmecloud.io" required />
               </div>
               <div class="cf-field-group">
-                <label for="chkCardNumber" class="cf-field-label">Corporate Card Reference (Last 4 or Test Card)</label>
-                <input type="text" id="chkCardNumber" class="cf-input" value="4242 •••• •••• 4242" required />
+                <label for="chkGatewaySelect" class="cf-field-label">Preferred Payment Method</label>
+                <select id="chkGatewaySelect" class="cf-select">
+                  <option value="gumroad">Instant Credit Card / Apple Pay (Gumroad · Auto-Key Delivery)</option>
+                  <option value="contra">Contra B2B Checkout (0% Fee · Corporate Card / ACH / Escrow)</option>
+                  <option value="invoice">Generate Net-15 Corporate Tax Invoice (PO / Wire / ACH)</option>
+                </select>
               </div>
               <button type="submit" class="cf-btn-primary cf-w-full" id="btnCompleteCheckout">
-                Authorize &amp; Unlock DealShield™ PRO + Generate Invoice
+                Proceed to Secure Checkout &amp; Generate Tax Invoice →
               </button>
+              <div class="cf-webhook-btn-row" style="margin-top:8px;">
+                <a
+                  href="https://caliberfoundry.gumroad.com/l/dealshield-pro"
+                  target="_blank"
+                  rel="noopener"
+                  class="cf-btn-secondary"
+                  style="text-decoration:none;text-align:center;flex:1;"
+                >
+                  Instant Card ($199 · Auto-Key) ↗
+                </a>
+                <a
+                  href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua"
+                  target="_blank"
+                  rel="noopener"
+                  class="cf-btn-outline"
+                  style="text-decoration:none;text-align:center;flex:1;"
+                >
+                  Contra B2B (0% Fee · $299) ↗
+                </a>
+              </div>
             </form>
           </div>
 
@@ -600,7 +624,7 @@
           <div class="cf-checkout-panel">
             <h4 class="cf-subpanel-title">2. Activate Existing DealShield™ PRO License Key</h4>
             <p class="cf-help-text">
-              Already received an enterprise license key or evaluating as an invited CTO/procurement partner? Enter your key below to unlock all 4 frameworks (`CAIQ v4`, `HECVAT v3`, `SIG-Lite 2026`, `VPAT 2.5 INT`) and full `.CSV` / PDF exports.
+              Your Enterprise License Key is delivered automatically upon completing checkout on Gumroad or Contra (or upon Corporate Invoice confirmation). Paste your key below to unlock all 4 frameworks (<code>CAIQ v4</code>, <code>HECVAT v3</code>, <code>SIG-Lite 2026</code>, <code>VPAT 2.5 INT</code>) and full <code>.CSV</code> / PDF exports.
             </p>
             <div class="cf-field-group">
               <label for="licenseKeyInput" class="cf-field-label">Enterprise License Key</label>
@@ -614,11 +638,15 @@
             </div>
             <div class="cf-webhook-btn-row">
               <button type="button" class="cf-btn-secondary" id="btnActivateLicenseKey">
-                Activate Key
+                Activate License Key
               </button>
-              <button type="button" class="cf-btn-outline" id="btnFillDemoKey">
-                Fill Evaluation Key
-              </button>
+              <a
+                href="mailto:engineering@caliberfoundry.com?subject=DealShield%20Enterprise%20License%20%26%20PO%20Request"
+                class="cf-btn-outline"
+                style="text-decoration:none;"
+              >
+                Request PO / Vendor Onboarding
+              </a>
             </div>
             <div class="cf-license-feedback hidden" id="licenseFeedbackBox" role="status"></div>
 

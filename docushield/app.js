@@ -1365,6 +1365,12 @@
     backdrop.classList.remove('hidden');
   }
 
+  function isLocalQaEnvironment() {
+    if (typeof window === 'undefined' || !window.location) return true;
+    const h = window.location.hostname;
+    return h === '127.0.0.1' || h === 'localhost' || !h;
+  }
+
   function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
     const validList = (DATASET.meta && Array.isArray(DATASET.meta.validLicenseKeys))
@@ -1373,7 +1379,7 @@
 
     const isPatternMatch = /^(DS-(PRO|ENT)-2026-[A-Z0-9-]{4,16}|CF-DOCUSHIELD-ENT)$/.test(clean);
     if (!validList.includes(clean) && !isPatternMatch) {
-      showToast('Invalid license key. Expected DS-PRO-2026-CALIBER or CF-DOCUSHIELD-ENT.');
+      showToast('Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your license key.');
       return false;
     }
 
@@ -1430,7 +1436,7 @@
           <strong>$${plan.amountUsd}.00 USD</strong>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:#4A4842;">
-          <span>Provisional License Key: DS-PRO-2026-CALIBER (All 6 Packets Unlocked)</span>
+          <span>Pay Online: <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener">Gumroad Card</a> · <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener">Contra B2B (0% Fee)</a></span>
           <strong>Total Due: $${plan.amountUsd}.00 USD</strong>
         </div>
       `;
@@ -1479,9 +1485,10 @@
 
     const invoiceObj = renderCorporateInvoiceBox(comp, email, pCode, po);
 
-    // Activate 14-Day Provisional PRO Unlock immediately so the B2B buyer can test Packets 3-6
-    STATE.licenseTier = 'PRO_PROVISIONAL';
-    STATE.licenseKey = 'DS-PRO-2026-CALIBER';
+    if (isLocalQaEnvironment()) {
+      STATE.licenseTier = 'PRO_PROVISIONAL';
+      STATE.licenseKey = 'DS-PRO-2026-CALIBER';
+    }
     STATE.lastGeneratedInvoice = invoiceObj;
     saveState();
 
@@ -1490,11 +1497,11 @@
     const keyHeading = document.getElementById('activationSuccessKeyHeading');
 
     if (alertBanner) alertBanner.classList.add('hidden');
-    if (keyHeading) keyHeading.textContent = `14-Day Provisional PRO Unlocked (${invoiceObj.invoiceNumber})`;
-    if (successBox) successBox.classList.remove('hidden');
+    if (keyHeading) keyHeading.textContent = `Commercial Invoice Issued (${invoiceObj.invoiceNumber})`;
+    if (successBox && isLocalQaEnvironment()) successBox.classList.remove('hidden');
 
     renderAll();
-    showToast(`Generated ${invoiceObj.invoiceNumber} & Activated 14-Day Provisional PRO Unlock`);
+    showToast(`Generated ${invoiceObj.invoiceNumber} — Complete payment or send PO to receive your license key`);
     return invoiceObj;
   }
 
@@ -1778,8 +1785,21 @@
       const email = document.getElementById('cardBillingEmail').value.trim();
       if (email) {
         STATE.accountUser = Object.assign({}, STATE.accountUser || {}, { fullName: holder, email });
+        saveState();
       }
-      validateAndActivateLicenseKey('DS-PRO-2026-CALIBER');
+      if (isLocalQaEnvironment()) {
+        validateAndActivateLicenseKey('DS-PRO-2026-CALIBER');
+        return;
+      }
+      const gwEl = document.querySelector('#cardCheckoutForm select');
+      const gw = gwEl ? gwEl.value : 'gumroad';
+      const url =
+        gw === 'contra'
+          ? 'https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua'
+          : 'https://caliberfoundry.gumroad.com/l/docushield-pro';
+      window.open(url, '_blank', 'noopener');
+      switchPayMethodTab('key');
+      showToast('Opened secure checkout. Paste the license key from your receipt to unlock DocuShield Pro.');
     });
 
     document.getElementById('btnGenerateCorporateInvoice').addEventListener('click', () => {

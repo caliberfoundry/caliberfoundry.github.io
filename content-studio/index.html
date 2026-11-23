@@ -535,13 +535,36 @@
                 <input type="text" id="checkoutOrgInput" class="cf-text-input" placeholder="Acme SaaS Inc." required />
               </div>
               <div class="cf-field-group">
-                <label for="cardNumberInput" class="cf-field-label">Card Details (Simulated Sandbox)</label>
-                <input type="text" id="cardNumberInput" class="cf-text-input" value="4242 •••• •••• 4242  |  11/29  |  884" readonly />
+                <label for="cardNumberInput" class="cf-field-label">Preferred Payment Gateway</label>
+                <select id="cardNumberInput" class="cf-text-input">
+                  <option value="gumroad">Instant Card / Apple Pay (Gumroad · $299 Auto-Key)</option>
+                  <option value="contra">Contra B2B Checkout (0% Fee · $399 / $2,500 Sprint)</option>
+                </select>
               </div>
             </div>
             <button type="submit" class="cf-btn-primary cf-btn-full" id="btnSubmitCardCheckout">
-              Authorize &amp; Unlock ContentForge™ Pro Immediately →
+              Proceed to Secure Checkout (Gumroad / Contra 0% Fee) →
             </button>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <a
+                href="https://caliberfoundry.gumroad.com/l/contentforge-pro"
+                target="_blank"
+                rel="noopener"
+                class="cf-btn-secondary"
+                style="text-decoration:none;text-align:center;flex:1;"
+              >
+                Instant Card ($299 · Auto-Key) ↗
+              </a>
+              <a
+                href="https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio"
+                target="_blank"
+                rel="noopener"
+                class="cf-btn-secondary"
+                style="text-decoration:none;text-align:center;flex:1;"
+              >
+                Contra B2B (0% Fee · Sprint) ↗
+              </a>
+            </div>
           </form>
         </div>
 

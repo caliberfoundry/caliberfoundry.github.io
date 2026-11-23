@@ -1106,6 +1106,12 @@
     document.getElementById('payPanelKey').classList.toggle('hidden', tabKey !== 'key');
   }
 
+  function isLocalQaEnvironment() {
+    if (typeof window === 'undefined' || !window.location) return true;
+    const h = window.location.hostname;
+    return h === '127.0.0.1' || h === 'localhost' || !h;
+  }
+
   function generateCorporateInvoice(customOrg, customPo) {
     const orgInput = document.getElementById('invoiceOrgInput');
     const poInput = document.getElementById('invoicePoInput');
@@ -1115,31 +1121,36 @@
     const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.N8N_SPRINT;
     const invoiceId = `INV-CF-CS-2026-${plan.amountUsd}`;
 
-    // Grant 14-Day Provisional PRO Unlock upon official invoice generation
-    STATE.licenseTier = 'PRO';
+    if (isLocalQaEnvironment()) {
+      STATE.licenseTier = 'PRO';
+    }
     STATE.provisionalInvoiceId = invoiceId;
     saveState();
 
     renderCorporateInvoicePreview(orgName, poNumber, invoiceId);
+    const invBox = document.getElementById('corporateInvoicePreviewBox');
+    if (invBox) invBox.classList.remove('hidden');
+    const printBtn = document.getElementById('btnPrintCorporateInvoice');
+    if (printBtn) printBtn.classList.remove('hidden');
     refreshAllViews();
 
     const successBanner = document.getElementById('paywallSuccessBanner');
     const successTitle = document.getElementById('paywallSuccessTitle');
     const successDesc = document.getElementById('paywallSuccessDesc');
     if (successBanner && successTitle && successDesc) {
-      successTitle.textContent = `14-Day Provisional Enterprise Unlock Active (${invoiceId})`;
-      successDesc.textContent = `Issued official invoice ${invoiceId} for ${orgName} (PO: ${poNumber}). All 4 ContentForge™ presets are now unlocked.`;
+      successTitle.textContent = `Commercial Tax Invoice Issued (${invoiceId})`;
+      successDesc.textContent = `Issued official invoice ${invoiceId} for ${orgName} (PO: ${poNumber}). Complete payment via Contra (0% fee) or Gumroad, or email engineering@caliberfoundry.com to receive your license key.`;
       successBanner.classList.remove('hidden');
     }
 
-    showToast(`Generated Invoice ${invoiceId} — 14-Day Provisional PRO Unlock Activated`);
+    showToast(`Generated Invoice ${invoiceId} for ${orgName}`);
     return {
       invoiceId,
       organization: orgName,
       poNumber,
       amountUsd: plan.amountUsd,
       planName: plan.name,
-      provisionalUnlock: true
+      provisionalUnlock: isLocalQaEnvironment()
     };
   }
 
@@ -1187,7 +1198,7 @@
     const patternMatch = /^CF-(FORGE|CONTENT|PRO|STUDIO)-(2026|ENT)(-[A-Z0-9]{3,10})?$/.test(clean);
 
     if (!validList.includes(clean) && !patternMatch) {
-      showToast('Invalid license key. Expected CF-FORGE-2026-PRO or CF-CONTENT-ENT.');
+      showToast('Invalid license key. Complete checkout via Gumroad or Contra (0% fee) to receive your enterprise key.');
       return false;
     }
 
@@ -1454,7 +1465,22 @@
         const email = document.getElementById('checkoutEmailInput').value.trim();
         const org = document.getElementById('checkoutOrgInput').value.trim();
         STATE.accountUser = { fullName: name, email, organization: org };
-        validateAndActivateLicenseKey('CF-FORGE-2026-PRO');
+        saveState();
+
+        if (isLocalQaEnvironment()) {
+          validateAndActivateLicenseKey('CF-FORGE-2026-PRO');
+          return;
+        }
+
+        const gatewayEl = document.querySelector('#cfCardCheckoutForm select');
+        const gateway = gatewayEl ? gatewayEl.value : 'gumroad';
+        const targetUrl =
+          gateway === 'contra'
+            ? 'https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio'
+            : 'https://caliberfoundry.gumroad.com/l/contentforge-pro';
+        window.open(targetUrl, '_blank', 'noopener');
+        switchPaywallSubTab('key');
+        showToast('Opened secure checkout. Enter the license key from your receipt to unlock ContentForge Pro.');
       });
     }
 
