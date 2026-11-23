@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>OmniRAG™ — Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
+  <title>OmniRAGв„ў вЂ” Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -273,7 +273,7 @@
       flex: 1;
     }
 
-    @media (min-width: 1080px) {
+    @media (min-width: 820px) {
       .split-workbench {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       }
@@ -287,7 +287,7 @@
       min-width: 0;
     }
 
-    @media (min-width: 1080px) {
+    @media (min-width: 820px) {
       .left-pane {
         border-bottom: none;
         border-right: 1.5px solid var(--cf-rule-strong);
@@ -462,33 +462,76 @@
     .how-it-works-strip {
       background-color: #141413;
       color: #F6F4EF;
-      padding: 10px 24px;
+      padding: 8px 20px;
       border-bottom: 1.5px solid var(--cf-rule-strong);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      font-size: 12.5px;
+      gap: 10px;
+      font-size: 12px;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 820px) {
       .how-it-works-strip {
         grid-template-columns: 1fr;
         gap: 6px;
       }
     }
-    .hiw-step {
+    .hiw-step-btn {
       display: flex;
       align-items: center;
       gap: 10px;
+      background: #1F1E1C;
+      color: #F6F4EF;
+      border: 1px solid #4A4842;
+      padding: 7px 10px;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .hiw-step-btn:hover {
+      background: #2C2A27;
+      border-color: #FCE588;
     }
     .hiw-num {
       background-color: var(--cf-accent-primary);
       color: #FFFFFF;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 2px;
       flex-shrink: 0;
+      white-space: nowrap;
+    }
+    @keyframes cfFlashPulse {
+      0% { box-shadow: 0 0 0 4px #FCE588; background-color: #FEF3C7; }
+      100% { box-shadow: none; }
+    }
+    .cf-flash-active {
+      animation: cfFlashPulse 0.9s ease;
+    }
+    .diff-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+    .diff-col-a {
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      padding: 7px 9px;
+    }
+    .diff-col-b {
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      padding: 7px 9px;
+    }
+    .diff-col-mismatch {
+      background: #FDF2EF;
+      border: 1px solid var(--cf-accent-primary);
+      padding: 7px 9px;
     }
 
     .pack-picker-bar {
@@ -697,42 +740,42 @@
 
   <main class="shell">
 
-    <!-- Plain-English 1 -> 2 -> 3 Guided Bar -->
-    <div class="how-it-works-strip" aria-label="How to use OmniRAG in 3 steps">
-      <div class="hiw-step">
-        <span class="hiw-num">STEP 1</span>
-        <span><strong>Pick a Document Pack</strong> below (Finance, Sales Deal, or Engineering Spec).</span>
-      </div>
-      <div class="hiw-step">
-        <span class="hiw-num">STEP 2</span>
-        <span><strong>Click any green/red Proof button</strong> on the left (or ask a question).</span>
-      </div>
-      <div class="hiw-step">
-        <span class="hiw-num">STEP 3</span>
-        <span><strong>See the exact highlighted page or Excel cell</strong> on the right &amp; export.</span>
-      </div>
+    <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
+    <div class="how-it-works-strip" aria-label="Click any step to test OmniRAG live">
+      <button type="button" class="hiw-step-btn" onclick="cycleNextPreset()">
+        <span class="hiw-num">STEP 1 &rarr;</span>
+        <span><strong>Click to Switch Document Pack</strong> (or test your own Contract vs. Excel numbers below).</span>
+      </button>
+      <button type="button" class="hiw-step-btn" onclick="triggerStep2HighlightDemo()">
+        <span class="hiw-num">STEP 2 &rarr;</span>
+        <span><strong>Click any Proof button on the left</strong> to jump to the exact page or Excel row.</span>
+      </button>
+      <button type="button" class="hiw-step-btn" onclick="openAuditPreviewModal()">
+        <span class="hiw-num">STEP 3 &rarr;</span>
+        <span><strong>Click to Preview Printable Audit Report</strong> (or download the verified JSON file).</span>
+      </button>
     </div>
 
-    <!-- Step 1: Visual 3-Card Scenario Picker -->
+    <!-- Step 1: Visual 3-Card Scenario Picker + Live Custom Text Tester -->
     <section class="pack-picker-bar" aria-label="Step 1: Choose a sample document pack">
       <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
         <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
-          STEP 1 &mdash; CHOOSE A SAMPLE DOCUMENT PACK TO CROSS-CHECK:
+          STEP 1 &mdash; CHOOSE A SAMPLE DOCUMENT PACK (OR TEST YOUR OWN NUMBERS BELOW):
         </span>
-        <span class="mono" style="font-size:11px; color:var(--cf-ink-secondary);">
-          3 sample files loaded per pack (Excel + Word + PDF)
+        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">
+          &check; Automatically flags number mismatches across PDF, Word &amp; Excel
         </span>
       </div>
       <div class="pack-grid">
         <button type="button" onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="pack-card active-pack">
           <div class="pack-card-title">
-            <span>1. Financial &amp; Contract Audit</span>
+            <span>1. Financial, Contract &amp; Invoice Audit</span>
             <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
           </div>
           <div class="pack-card-desc">
-            Compares Q3 revenue, profit, and penalty limits across an Excel financial model, a Word contract, and a Board PDF.
+            Catches a $42,000 SLA overbilling mismatch while verifying Q3 profit ($4.19M vs. $3.50M floor) across Excel, Word &amp; PDF.
           </div>
-          <span class="pack-status-pill pack-status-ok">&check; All 3 Numbers Match</span>
+          <span class="pack-status-pill pack-status-warn">! Caught $42k Overbilling + 2 Matches</span>
         </button>
 
         <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">
@@ -743,7 +786,7 @@
           <div class="pack-card-desc">
             Checks if a customer's $240,000 order form and 18.5% discount follow the company's Excel pricing rules.
           </div>
-          <span class="pack-status-pill pack-status-ok">&check; Auto-Approved (Under 20% Limit)</span>
+          <span class="pack-status-pill pack-status-ok">&check; Auto-Approved (18.5% &le; 20% Limit)</span>
         </button>
 
         <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">
@@ -754,8 +797,27 @@
           <div class="pack-card-desc">
             Catches a costly mismatch where the Excel equipment list orders 50.0 MW of power, but the PDF permit only allows 42.5 MW.
           </div>
-          <span class="pack-status-pill pack-status-warn">! 1 Critical Mismatch Caught</span>
+          <span class="pack-status-pill pack-status-warn">! Caught 7.5 MW Conflict ($11.4M Risk)</span>
         </button>
+      </div>
+
+      <!-- Interactive Live Custom Contract vs. Excel Mismatch Tester -->
+      <div style="margin-top:10px; background:#FFFDFB; border:1.5px solid var(--cf-rule-strong); padding:10px 14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+          <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; font-size:11px;">
+            &#9654; TRY IT LIVE ON YOUR OWN TEXT: EDIT NUMBERS IN FILE A &amp; FILE B TO TEST INSTANT MISMATCH DETECTION
+          </span>
+          <span id="customDiffStatusBadge" class="mono" style="font-size:10.5px; color:var(--cf-forest-pass); font-weight:600;">
+            LIVE NUMBER &amp; CLAUSE DIFF ENGINE
+          </span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center;">
+          <input id="customDocAInput" type="text" value="Contract_Clause.pdf (В§4.1): Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
+          <input id="customDocBInput" type="text" value="Vendor_Invoice.xlsx (Row 8): Billed annual fee is $68,500 with 15-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document B row" />
+          <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile btn-tactile-vermilion" style="padding:8px 14px; white-space:nowrap;">
+            <span>&#9654; Cross-Check Now</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -944,8 +1006,8 @@
             name: "Master_Service_Agreement.docx",
             format: "Word",
             chunks: [
-              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
-              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Customer Data Privacy & Zero Retention", text: "§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
+              { id: "cit_docx_s42", coord: "Page 7, Section В§4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "В§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
+              { id: "cit_docx_s61", coord: "Page 11, Section В§6.1", title: "Customer Data Privacy & Zero Retention", text: "В§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
             ]
           },
           {
@@ -962,17 +1024,24 @@
           {
             role: "assistant",
             html: `
-              <div class="finding-card">
+              <div class="finding-card finding-alert">
                 <div class="finding-header">
-                  <span class="finding-title">Finding 1: SLA Penalty Cap ($285,000 / 12%)</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; EXACT MATCH</span>
+                  <span class="finding-title" style="color:var(--cf-accent-primary);">! Finding 1: Caught $42,000 SLA Overbilling vs. Contract Cap</span>
+                  <span class="pack-status-pill pack-status-warn" style="margin:0;">! OVERBILLING CAUGHT</span>
                 </div>
-                <div class="finding-desc">
-                  The <strong>$285,000 (12.0%)</strong> quarterly penalty limit in your Excel budget matches the legal cap in the Word contract.
+                <div class="diff-compare-grid">
+                  <div class="diff-col-a">
+                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-forest-pass);">WORD CONTRACT (В§4.2) &amp; EXCEL (ROW 14)</div>
+                    <div>Max SLA Penalty Cap: <strong>$285,000 (12.0%)</strong></div>
+                  </div>
+                  <div class="diff-col-mismatch">
+                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-accent-primary);">UNVERIFIED VENDOR CLAIM</div>
+                    <div>Claimed SLA Credit: <strong>$327,000 (+$42,000 Over Cap!)</strong></div>
+                  </div>
                 </div>
                 <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">Show in Excel (Row 14) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">Show in Word Contract (Page 7) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">&#9654; Highlight $285k Cap in Excel (Row 14) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">&#9654; Highlight В§4.2 in Word Contract (Page 7) &rarr;</button>
                 </div>
               </div>
               <div class="finding-card">
@@ -980,24 +1049,31 @@
                   <span class="finding-title">Finding 2: Q3 Profit vs. Required Minimum ($4.19M vs. $3.50M)</span>
                   <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; PASSED (+19.7% ABOVE FLOOR)</span>
                 </div>
-                <div class="finding-desc">
-                  Q3 profit of <strong>$4,190,000</strong> in Excel matches the signed Board Audit PDF and clears the $3.50M requirement.
+                <div class="diff-compare-grid">
+                  <div class="diff-col-a">
+                    <div class="mono" style="font-size:10px; font-weight:700;">EXCEL FINANCIALS (ROW 19)</div>
+                    <div>Q3 Operating Profit: <strong>$4,190,000 (28.2%)</strong></div>
+                  </div>
+                  <div class="diff-col-b">
+                    <div class="mono" style="font-size:10px; font-weight:700;">BOARD AUDIT PDF (PAGE 4)</div>
+                    <div>Required Covenant Floor: <strong>$3,500,000 (&check; Passed)</strong></div>
+                  </div>
                 </div>
                 <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">Show in Excel (Row 19) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">Show in Audit PDF (Page 4) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">&#9654; Highlight in Excel (Row 19) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">&#9654; Highlight in Audit PDF (Page 4) &rarr;</button>
                 </div>
               </div>
               <div class="finding-card" style="margin-bottom:0;">
                 <div class="finding-header">
-                  <span class="finding-title">Finding 3: Data Privacy Clause</span>
+                  <span class="finding-title">Finding 3: Data Privacy Clause (В§6.1)</span>
                   <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; VERIFIED</span>
                 </div>
                 <div class="finding-desc">
                   Zero third-party data retention is active and signed in the Master Service Agreement.
                 </div>
                 <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">Show in Word Contract (Page 11) &rarr;</button>
+                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">&#9654; Highlight in Word Contract (Page 11) &rarr;</button>
                 </div>
               </div>
             `
@@ -1027,7 +1103,7 @@
             name: "RevOps_DealDesk_Matrix.xlsx",
             format: "Excel",
             chunks: [
-              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
+              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200kвЂ“$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
               { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (Add-On Rules)", title: "Free Integration Bundle Rule (Orders >= $200k)", text: "Row 15 | Integration Bundle SKU: Included free of charge ($0) for any contract >= $200,000/year." }
             ]
           },
@@ -1036,7 +1112,7 @@
             name: "Security_DPA_Addendum.docx",
             format: "Word",
             chunks: [
-              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "Pre-Approved Security Terms", text: "§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
+              { id: "ap_cit_s31", coord: "Page 4, Clause В§3.1", title: "Pre-Approved Security Terms", text: "В§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
             ]
           }
         ],
@@ -1105,7 +1181,7 @@
             name: "Solar_Land_Lease.pdf",
             format: "PDF",
             chunks: [
-              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, §3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
+              { id: "bq_cit_p4", coord: "Page 4, Section В§3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, В§3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
             ]
           }
         ],
@@ -1193,7 +1269,7 @@
 
       const firstDoc = preset.docs[0];
       const firstChunk = firstDoc.chunks[0];
-      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) — "${firstChunk.title}"`;
+      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) вЂ” "${firstChunk.title}"`;
     }
 
     function renderChatMessageHTML(msg) {
@@ -1236,7 +1312,7 @@
       const doc = preset.docs.find(d => d.id === docId);
       if (doc && doc.chunks[0]) {
         highlightedChunkId = doc.chunks[0].id;
-        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) — "${doc.chunks[0].title}"`;
+        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) вЂ” "${doc.chunks[0].title}"`;
       }
       renderDocumentTabs();
       renderDocumentViewport();
@@ -1259,7 +1335,7 @@
                 <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
               </div>
               <span class="mono" style="font-size:10.5px; font-weight:700; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? '✓ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
+                ${isHighlighted ? 'вњ“ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
               </span>
             </div>
             <p class="chunk-body-text">
@@ -1268,6 +1344,91 @@
           </div>
         `;
       }).join('');
+    }
+
+    function flashOmniElement(elId) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.classList.remove('cf-flash-active');
+      void el.offsetWidth;
+      el.classList.add('cf-flash-active');
+    }
+
+    function cycleNextPreset() {
+      const order = ['enterprise_rag', 'agentpress_mcp', 'buildq_solar'];
+      const next = order[(order.indexOf(currentPresetKey) + 1) % order.length];
+      switchPreset(next);
+    }
+
+    function triggerStep2HighlightDemo() {
+      const preset = PRESETS[currentPresetKey];
+      const targetDoc = preset.docs[1] || preset.docs[0];
+      const targetChunk = targetDoc.chunks[0];
+      jumpToCitation(targetDoc.id, targetChunk.id);
+    }
+
+    function runCustomTextDiff() {
+      const textA = (document.getElementById('customDocAInput').value || '').trim();
+      const textB = (document.getElementById('customDocBInput').value || '').trim();
+      if (!textA || !textB) return;
+
+      const numsA = textA.match(/\$?\d[\d,.]*/g) || [];
+      const numsB = textB.match(/\$?\d[\d,.]*/g) || [];
+      const hasMismatch = JSON.stringify(numsA) !== JSON.stringify(numsB);
+      const badge = document.getElementById('customDiffStatusBadge');
+      if (badge) {
+        badge.textContent = hasMismatch
+          ? `! CAUGHT NUMBER MISMATCH (${numsA.join(', ') || 'Text A'} vs. ${numsB.join(', ') || 'Text B'})`
+          : 'вњ“ NUMBERS MATCH ACROSS BOTH FILES';
+        badge.style.color = hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)';
+      }
+
+      PRESETS[currentPresetKey].docs[0].chunks.unshift({
+        id: 'cit_custom_a',
+        coord: 'Custom File A (В§1.1)',
+        title: 'Uploaded Contract / Source A',
+        text: textA
+      });
+      if (PRESETS[currentPresetKey].docs[1]) {
+        PRESETS[currentPresetKey].docs[1].chunks.unshift({
+          id: 'cit_custom_b',
+          coord: 'Custom File B (Row 1)',
+          title: 'Uploaded Spreadsheet / Source B',
+          text: textB
+        });
+      }
+
+      const cardHtml = `
+        <div class="finding-card ${hasMismatch ? 'finding-alert' : ''}">
+          <div class="finding-header">
+            <span class="finding-title" style="color:${hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)'};">
+              ${hasMismatch ? '! Live Custom Check: Number Mismatch Caught!' : '&check; Live Custom Check: Both Texts Match'}
+            </span>
+            <span class="pack-status-pill ${hasMismatch ? 'pack-status-warn' : 'pack-status-ok'}" style="margin:0;">
+              ${hasMismatch ? '! MISMATCH DETECTED' : '&check; VERIFIED MATCH'}
+            </span>
+          </div>
+          <div class="diff-compare-grid">
+            <div class="diff-col-a">
+              <div class="mono" style="font-size:10px; font-weight:700;">FILE A EXTRACTED NUMBERS: ${escapeHtml(numsA.join(' В· ') || 'None')}</div>
+              <div>${escapeHtml(textA)}</div>
+            </div>
+            <div class="${hasMismatch ? 'diff-col-mismatch' : 'diff-col-b'}">
+              <div class="mono" style="font-size:10px; font-weight:700;">FILE B EXTRACTED NUMBERS: ${escapeHtml(numsB.join(' В· ') || 'None')}</div>
+              <div>${escapeHtml(textB)}</div>
+            </div>
+          </div>
+          <div class="finding-proof-btns">
+            <button type="button" onclick="jumpToCitation('${escapeHtml(PRESETS[currentPresetKey].docs[0].id)}','cit_custom_a')" class="citation-badge">&#9654; Highlight Custom File A &rarr;</button>
+            ${PRESETS[currentPresetKey].docs[1] ? `<button type="button" onclick="jumpToCitation('${escapeHtml(PRESETS[currentPresetKey].docs[1].id)}','cit_custom_b')" class="citation-badge">&#9654; Highlight Custom File B &rarr;</button>` : ''}
+          </div>
+        </div>
+      `;
+
+      const chatDiv = document.getElementById('chatMessages');
+      chatDiv.innerHTML = renderChatMessageHTML({ role: 'assistant', html: cardHtml }) + chatDiv.innerHTML;
+      jumpToCitation(PRESETS[currentPresetKey].docs[0].id, 'cit_custom_a');
+      flashOmniElement('chatMessages');
     }
 
     function jumpToCitation(docId, chunkId) {
@@ -1281,12 +1442,15 @@
       const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
 
       if (doc && chunk) {
-        document.getElementById('activeCitationText').textContent = `${doc.name} (${chunk.coord}) — "${chunk.title}"`;
+        document.getElementById('activeCitationText').textContent = `вњ“ JUMPED TO: ${doc.name} (${chunk.coord}) вЂ” "${chunk.title}"`;
       }
+
+      flashOmniElement('activeCitationBanner');
+      flashOmniElement('chunk_' + chunkId);
 
       const el = document.getElementById('chunk_' + chunkId);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }
 
@@ -1428,6 +1592,6 @@
       switchPreset('enterprise_rag');
     });
   </script>
-  <script src="../assets/js/cf-telemetry.js?v=20261123c" defer></script>
+  <script src="../assets/js/cf-telemetry.js?v=20261123d" defer></script>
 </body>
 </html>

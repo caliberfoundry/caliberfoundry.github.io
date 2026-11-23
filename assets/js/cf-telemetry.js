@@ -788,10 +788,25 @@
       document.getElementById("cfContactMessageInput").value = "";
     });
 
-    // Global capture listener for any <a href="mailto:..."> or [data-mailto] button on the page
+    // Global capture listener for any <a href="mailto:...">, [data-mailto], or [data-cf-proxy-click] button on the page
     document.addEventListener(
       "click",
       function (ev) {
+        var proxyBtn = ev.target && ev.target.closest
+          ? ev.target.closest("[data-cf-proxy-click]")
+          : null;
+        if (proxyBtn) {
+          var sel = proxyBtn.getAttribute("data-cf-proxy-click");
+          var targetEl = sel ? document.querySelector(sel) : null;
+          if (targetEl) {
+            if (targetEl.tagName === "SELECT" || targetEl.tagName === "INPUT") {
+              targetEl.focus();
+            } else {
+              targetEl.click();
+            }
+          }
+          return;
+        }
         var link = ev.target && ev.target.closest
           ? ev.target.closest('a[href^="mailto:"], button[data-mailto]')
           : null;
