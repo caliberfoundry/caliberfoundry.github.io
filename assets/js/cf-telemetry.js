@@ -365,35 +365,36 @@
       "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop, #cfContactModalBackdrop { display: none !important; } }",
       "#cfFeedbackDockRoot { position: fixed; bottom: 14px; right: 14px; z-index: 9990; font-family: 'IBM Plex Mono', monospace; }",
       "#cfFeedbackDockRoot.cf-fb-in-header { position: static; display: inline-flex; align-items: center; }",
-      ".cf-fb-trigger-btn { background: #141413; color: #F6F4EF; border: 1.5px solid #141413; border-left: 4px solid #C8431F; padding: 7px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; box-shadow: 2px 2px 0 rgba(20,20,19,0.18); transition: background 0.15s ease; }",
-      "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: transparent; color: #F6F4EF; border: 1px solid #4A4842; border-left: 3px solid #C8431F; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
-      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn, .top-bar #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; border-left: 3px solid #C8431F; padding: 5px 10px; }",
-      ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #C8431F !important; border-color: #141413 !important; color: #FFFFFF !important; }",
-      "#cfFeedbackModalBackdrop, #cfContactModalBackdrop { position: fixed; inset: 0; background: rgba(20,20,19,0.62); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
+      ".cf-fb-trigger-btn { background: #111113; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; border-radius: 5px; padding: 6px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; box-shadow: 0 1px 2px rgba(17,17,19,0.12); transition: all 0.14s ease; }",
+      "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
+      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn, .top-bar #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; padding: 4px 9px; }",
+      ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #4F46E5 !important; border-color: #4338CA !important; color: #FFFFFF !important; }",
+      "#cfFeedbackModalBackdrop, #cfContactModalBackdrop { position: fixed; inset: 0; background: rgba(17,17,19,0.55); backdrop-filter: blur(2px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
       "#cfFeedbackModalBackdrop.cf-fb-hidden, #cfContactModalBackdrop.cf-fb-hidden { display: none !important; }",
-      ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 2px solid #141413; box-shadow: 6px 6px 0 #141413; width: 100%; max-width: 540px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; max-height: 92vh; overflow-y: auto; }",
-      ".cf-fb-header { background: #141413; color: #F6F4EF; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }",
-      ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #C8431F; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
-      ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #F6F4EF; }",
-      ".cf-fb-close { background: transparent; border: 1px solid #78756D; color: #F6F4EF; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
-      ".cf-fb-close:hover { background: #C8431F; border-color: #C8431F; color: #FFFFFF; }",
+      ".cf-fb-modal { background: #FAF9F6; color: #111113; border: 1px solid #D4D1C8; border-radius: 8px; box-shadow: 0 20px 44px -8px rgba(17,17,19,0.22); width: 100%; max-width: 540px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; max-height: 92vh; overflow-y: auto; }",
+      ".cf-fb-header { background: #111113; color: #FAF9F6; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; border-radius: 7px 7px 0 0; }",
+      ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #818CF8; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
+      ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #FAF9F6; }",
+      ".cf-fb-close { background: transparent; border: 1px solid #3F3F46; border-radius: 4px; color: #FAF9F6; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
+      ".cf-fb-close:hover { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }",
       ".cf-fb-body { padding: 18px; }",
-      ".cf-fb-context-bar { background: #ECE9E1; border: 1px solid #C9C4B8; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #4A4842; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
-      ".cf-contact-copy-banner { background: #EDF5F0; border: 1.5px solid #1A5638; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }",
-      ".cf-contact-copy-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #1A5638; font-weight: 600; }",
+      ".cf-fb-context-bar { background: #F3F2EE; border: 1px solid #E4E2DD; border-radius: 5px; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #52514E; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
+      ".cf-contact-copy-banner { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }",
+      ".cf-contact-copy-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #15803D; font-weight: 600; }",
       ".cf-contact-quick-btns { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }",
-      ".cf-contact-quick-btn { background: #FFFFFF; color: #141413; border: 1px solid #141413; padding: 5px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
-      ".cf-contact-quick-btn:hover { background: #141413; color: #F6F4EF; }",
+      ".cf-contact-quick-btn { background: #FFFFFF; color: #111113; border: 1px solid #D4D1C8; border-radius: 4px; padding: 5px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
+      ".cf-contact-quick-btn:hover { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }",
       ".cf-fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }",
       "@media (max-width: 520px) { .cf-fb-row { grid-template-columns: 1fr; } }",
       ".cf-fb-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }",
-      ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #141413; }",
-      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1.5px solid #141413; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #141413; width: 100%; border-radius: 0; box-sizing: border-box; }",
+      ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #111113; }",
+      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1px solid #D4D1C8; border-radius: 5px; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #111113; width: 100%; box-sizing: border-box; }",
+      ".cf-fb-input:focus, .cf-fb-select:focus, .cf-fb-textarea:focus { outline: 2px solid #4F46E5; border-color: #4F46E5; }",
       ".cf-fb-textarea { min-height: 88px; resize: vertical; line-height: 1.45; }",
       ".cf-fb-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }",
-      ".cf-fb-submit { background: #C8431F; color: #FFFFFF; border: 1.5px solid #141413; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
-      ".cf-fb-submit:hover { background: #A63415; }",
-      ".cf-fb-success { background: #EDF5F0; border: 1.5px solid #1A5638; color: #141413; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
+      ".cf-fb-submit { background: #4F46E5; color: #FFFFFF; border: 1px solid #4338CA; border-radius: 5px; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
+      ".cf-fb-submit:hover { background: #4338CA; }",
+      ".cf-fb-success { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; color: #111113; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
       ".cf-fb-success.cf-fb-hidden { display: none !important; }"
     ].join("\n");
     document.head.appendChild(styleEl);
@@ -836,21 +837,27 @@
   }
 
   // =========================================================================
-  // UNIVERSAL VISUAL PALETTE, SVG ICONS & 3-CLICK LIVE VALUE SHOWCASE
-  // Shows: 1) What Problem It Solves, 2) Why This Product Wins (with SVG Flow),
-  //        3) Prove It in 3 Clicks (Interactive Live Demo + Result Banner)
+  // DESIGN SYSTEM v2.0: EXECUTIVE EDITORIAL & PRECISION WORKBENCH
+  // (Linear Light · Attio · Stripe · Anthropic Standard)
+  // - Warm Alabaster (#FAF9F6) + Pure Elevated White (#FFFFFF) + Deep Zinc (#111113)
+  // - Single Primary Interactive Accent: Executive Indigo (#4F46E5)
+  // - Lucide 1.75px Geometric Stroke SVG Iconography
+  // - 42px Compact Value & 3-Click Proof Ribbon + 0px-Footprint Floating Popover
+  // - Universal Scroll-Trap Prevention (>= 82% Viewport Height for Reading)
   // =========================================================================
   var SVG_ICONS = {
-    alert: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-    shield: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
-    bolt: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-    search: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
-    magic: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-    cert: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
-    check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-    doc: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
-    cpu: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>',
-    award: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>'
+    alert: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    shield: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+    bolt: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+    search: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+    magic: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>',
+    cert: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>',
+    check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    doc: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    cpu: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>',
+    award: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
+    info: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+    chevronDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
   };
 
   function getProductShowcaseConfig(pathname) {
@@ -867,8 +874,8 @@
         flow: ["Broken PDF (38%)", "Auto-Tag Engine (1.4s)", "100% PDF/UA + VPAT 2.5"],
         clicks: [
           {
-            label: "1. Scan Broken PDF (14 Failures)",
-            outcome: "✓ CLICK 1 PROVEN: Scanned 28-page manual and pinpointed 14 critical ISO 14289-1 / WCAG 2.2 accessibility failures (38% score, red bounding boxes below). Now click Button 2 →",
+            label: "1. Scan Broken PDF",
+            outcome: "✓ CLICK 1 PROVEN: Scanned 28-page manual and pinpointed 14 critical ISO 14289-1 / WCAG 2.2 accessibility failures (38% score). Now click Button 2 →",
             run: function () {
               var rev = document.getElementById("revertRemediationBtn");
               if (rev) rev.click();
@@ -877,16 +884,16 @@
             }
           },
           {
-            label: "2. Auto-Fix Tags (38% → 100%)",
-            outcome: "✓ CLICK 2 PROVEN: All 14 PDF/UA & WCAG 2.2 failures auto-fixed in 1.4 seconds! Score jumped from 38% FAIL to 100% PASS (saving ~38 hours of manual Acrobat tagging). Now click Button 3 →",
+            label: "2. Auto-Fix Tags (100%)",
+            outcome: "✓ CLICK 2 PROVEN: All 14 PDF/UA & WCAG 2.2 failures auto-fixed in 1.4s! Score jumped from 38% FAIL to 100% PASS. Now click Button 3 →",
             run: function () {
               var rem = document.getElementById("runRemediationBtn");
               if (rem) rem.click();
             }
           },
           {
-            label: "3. Open Signed VPAT 2.5 Certificate",
-            outcome: "✓ CLICK 3 PROVEN: Generated Printable ISO 14289-1 & ITI VPAT® 2.5 Conformance Certificate ready for legal & procurement sign-off!",
+            label: "3. VPAT 2.5 Certificate",
+            outcome: "✓ CLICK 3 PROVEN: Generated Printable ISO 14289-1 & ITI VPAT® 2.5 Conformance Certificate ready for legal sign-off!",
             run: function () {
               var rem = document.getElementById("runRemediationBtn");
               if (rem) rem.click();
@@ -912,8 +919,8 @@
         flow: ["Exam Scenario", "14s eCFR Locator", "84% Pass Team PDF"],
         clicks: [
           {
-            label: "1. Auto-Locate 19 CFR Law (1.2s)",
-            outcome: "✓ CLICK 1 PROVEN: Located the exact matching 19 CFR statutory section in the right-hand Reference Library in 1.2 seconds (vs. 180s manual binder search)! Now click Button 2 →",
+            label: "1. Locate 19 CFR Law",
+            outcome: "✓ CLICK 1 PROVEN: Located the matching 19 CFR section in the right-hand Reference Library in 1.2s (vs. 180s manual binder search)! Now click Button 2 →",
             run: function () {
               var cbtTab = document.getElementById("tabModeCbt");
               if (cbtTab) cbtTab.click();
@@ -922,8 +929,8 @@
             }
           },
           {
-            label: "2. Cite Law & Grade Answer (100%)",
-            outcome: "✓ CLICK 2 PROVEN: Cited 19 CFR regulation as legal proof (+38.8s faster than CBP 40s target) and verified the winning exam answer with statutory explanation! Now click Button 3 →",
+            label: "2. Cite & Grade (100%)",
+            outcome: "✓ CLICK 2 PROVEN: Cited 19 CFR regulation as legal proof (+38.8s faster than CBP 40s target) and verified the winning answer! Now click Button 3 →",
             run: function () {
               var cbtTab = document.getElementById("tabModeCbt");
               if (cbtTab) cbtTab.click();
@@ -936,8 +943,8 @@
             }
           },
           {
-            label: "3. Open 12-Broker Readiness PDF",
-            outcome: "✓ CLICK 3 PROVEN: Opened Printable 12-Seat Customs Brokerage Readiness PDF Dossier (84% Pass Readiness & 18.4s Citation Speed across 6 CBP regulatory domains)!",
+            label: "3. Team Readiness PDF",
+            outcome: "✓ CLICK 3 PROVEN: Opened Printable 12-Seat Customs Brokerage Readiness PDF Dossier (84% Pass Readiness & 18.4s Citation Speed)!",
             run: function () {
               var repBtn = document.getElementById("btnOpenTeamReadinessReport");
               if (repBtn) {
@@ -964,21 +971,21 @@
         flow: ["Protected Website", "Playwright API Capture", "Clean CSV + Webhook"],
         clicks: [
           {
-            label: "1. Extract Protected Website (1.1s)",
-            outcome: "✓ CLICK 1 PROVEN: Bypassed Cloudflare Turnstile, captured 412 SKUs via GraphQL XHR, and anonymized personal contact PII (M. V*** · m***@apexprecisioncnc.com)! Now click Button 2 →",
+            label: "1. Extract Protected Site",
+            outcome: "✓ CLICK 1 PROVEN: Bypassed Cloudflare Turnstile, captured 412 SKUs via GraphQL XHR, and anonymized personal contact PII (M. V***)! Now click Button 2 →",
             run: function () {
               if (typeof window.runLiveUrlExtraction === "function") window.runLiveUrlExtraction();
             }
           },
           {
-            label: "2. Compare Messy HTML vs. Clean",
-            outcome: "✓ CLICK 2 PROVEN: Look at the Before vs. After card on the right — HTTP 403 & messy tracking URLs are transformed into 18 validated, GDPR-safe CRM columns! Now click Button 3 →",
+            label: "2. Raw vs. Clean Diff",
+            outcome: "✓ CLICK 2 PROVEN: Look at the Before vs. After card on the right — HTTP 403 & messy tracking URLs are transformed into 18 GDPR-safe columns! Now click Button 3 →",
             run: function () {
               if (typeof window.triggerStep2Demo === "function") window.triggerStep2Demo();
             }
           },
           {
-            label: "3. Send Clean Batch to Make.com",
+            label: "3. Send to Make.com",
             outcome: "✓ CLICK 3 PROVEN: Dispatched HMAC-signed JSON payload to Make.com / n8n Webhook and confirmed HTTP/2 200 OK delivery in 118ms!",
             run: function () {
               if (typeof window.scrollToWebhookTester === "function") window.scrollToWebhookTester();
@@ -1000,22 +1007,22 @@
         flow: ["PDF + Word + Excel", "Cross-File Number Diff", "Exact Page & Cell Proof"],
         clicks: [
           {
-            label: "1. Catch $18.5k Contract vs. Excel Diff",
-            outcome: "✓ CLICK 1 PROVEN: Cross-checked Contract PDF ($50,000 fee cap, 30-day terms) against Vendor Invoice Excel ($68,500 billed, 15-day terms) and caught the $18,500 overbilling conflict! Now click Button 2 →",
+            label: "1. Catch $18.5k Diff",
+            outcome: "✓ CLICK 1 PROVEN: Cross-checked Contract PDF ($50,000 cap) against Invoice Excel ($68,500 billed) and caught the $18,500 overbilling conflict! Now click Button 2 →",
             run: function () {
               if (typeof window.runCustomTextDiff === "function") window.runCustomTextDiff();
             }
           },
           {
-            label: "2. Highlight Exact Excel & PDF Proof",
-            outcome: "✓ CLICK 2 PROVEN: Jumped directly to the exact source row in the right-hand Document Viewer with 100% coordinate lock (zero AI hallucination)! Now click Button 3 →",
+            label: "2. Highlight Cell Proof",
+            outcome: "✓ CLICK 2 PROVEN: Jumped directly to the exact source row in the right-hand Document Viewer with 100% coordinate lock! Now click Button 3 →",
             run: function () {
               if (typeof window.triggerStep2HighlightDemo === "function") window.triggerStep2HighlightDemo();
             }
           },
           {
-            label: "3. Open Printable Audit Report (PDF)",
-            outcome: "✓ CLICK 3 PROVEN: Generated Printable Cross-Document Verification Summary listing every verified file, page number, and spreadsheet cell!",
+            label: "3. Audit Report PDF",
+            outcome: "✓ CLICK 3 PROVEN: Generated Printable Cross-Document Verification Summary listing every verified file, page number, and cell!",
             run: function () {
               if (typeof window.openAuditPreviewModal === "function") window.openAuditPreviewModal();
             }
@@ -1036,22 +1043,22 @@
         flow: ["Training Paragraph", "Graded Quiz + Coach", "Canvas/Moodle SCORM 1.2"],
         clicks: [
           {
-            label: "1. Generate Quiz from Training Rule",
-            outcome: "✓ CLICK 1 PROVEN: Converted the raw 90-day API key & mTLS security rule into an interactive 3-option certification scenario question below! Now click Button 2 →",
+            label: "1. Generate Quiz",
+            outcome: "✓ CLICK 1 PROVEN: Converted the raw 90-day API key & mTLS security rule into an interactive 3-option certification scenario question! Now click Button 2 →",
             run: function () {
               if (typeof window.generateCustomScormQuestion === "function") window.generateCustomScormQuestion();
             }
           },
           {
-            label: "2. Grade Answer & Sync LMS (100%)",
-            outcome: "✓ CLICK 2 PROVEN: Graded Option B (100/100 Passed), displayed diagnostic feedback, and recorded LMSSetValue('cmi.core.score.raw', '95') in the SCORM gradebook! Now click Button 3 →",
+            label: "2. Grade & Sync LMS",
+            outcome: "✓ CLICK 2 PROVEN: Graded Option B (100/100 Passed) and recorded LMSSetValue('cmi.core.score.raw', '95') in the SCORM gradebook! Now click Button 3 →",
             run: function () {
               if (typeof window.selectQuizOption === "function") window.selectQuizOption("B");
             }
           },
           {
-            label: "3. Export Canvas/Moodle SCORM (.XML)",
-            outcome: "✓ CLICK 3 PROVEN: Exported ready-to-upload ADL SCORM 1.2 imsmanifest.xml package for Canvas, Moodle, Blackboard, and Docebo!",
+            label: "3. Export SCORM 1.2",
+            outcome: "✓ CLICK 3 PROVEN: Exported ready-to-upload ADL SCORM 1.2 imsmanifest.xml package for Canvas, Moodle, and Docebo!",
             run: function () {
               if (typeof window.downloadScormManifest === "function") window.downloadScormManifest();
             }
@@ -1072,24 +1079,24 @@
         flow: ["Buyer Excel DDQ", "SOC 2 Clause Matcher", "Signed VPAT 2.5 Dossier"],
         clicks: [
           {
-            label: "1. Auto-Answer Buyer DDQ Rows",
-            outcome: "✓ CLICK 1 PROVEN: Matched buyer security questionnaire controls against verified SOC 2 Type II & ISO 27001 clauses with 0.0% unanchored claims! Now click Button 2 →",
+            label: "1. Auto-Answer DDQ",
+            outcome: "✓ CLICK 1 PROVEN: Matched buyer security questionnaire controls against verified SOC 2 Type II & ISO 27001 clauses (0.0% unanchored claims)! Now click Button 2 →",
             run: function () {
               var btn = document.getElementById("btnRunAutoMatch") || document.querySelector("[data-preset-card]");
               if (btn) btn.click();
             }
           },
           {
-            label: "2. Inspect CISO Gap & VPAT Matrix",
-            outcome: "✓ CLICK 2 PROVEN: Flagged partial controls and auto-drafted CISO compensating control language + ITI VPAT® 2.5 conformance table! Now click Button 3 →",
+            label: "2. CISO Gap & VPAT",
+            outcome: "✓ CLICK 2 PROVEN: Flagged partial controls and auto-drafted CISO compensating control language + ITI VPAT® 2.5 matrix! Now click Button 3 →",
             run: function () {
               var tab = document.querySelector('[data-tab="vpat"], [data-tab="gaps"], .js-ddq-row');
               if (tab) tab.click();
             }
           },
           {
-            label: "3. Open Signed Buyer Security Dossier",
-            outcome: "✓ CLICK 3 PROVEN: Opened Printable Enterprise Security & ITI VPAT® 2.5 Attestation Dossier ready to send to the buyer's procurement desk!",
+            label: "3. Security Dossier PDF",
+            outcome: "✓ CLICK 3 PROVEN: Opened Printable Enterprise Security & ITI VPAT® 2.5 Attestation Dossier ready for procurement!",
             run: function () {
               var dos = document.getElementById("btnOpenEvalDossier");
               if (dos) dos.click();
@@ -1111,7 +1118,7 @@
         flow: ["Raw Technical Spec", "5-Stage Eval Harness", "6 Formats + n8n Webhook"],
         clicks: [
           {
-            label: "1. Run 5-Stage Synthesis & Eval Gate",
+            label: "1. Run 5-Stage Eval",
             outcome: "✓ CLICK 1 PROVEN: Executed 5-stage synthesis pipeline with 100% Ground-Truth Claim Concordance (0.0% hallucinated metrics)! Now click Button 2 →",
             run: function () {
               var runBtn = document.getElementById("btnRunPipeline");
@@ -1119,15 +1126,15 @@
             }
           },
           {
-            label: "2. Inspect Multi-Format & n8n Output",
-            outcome: "✓ CLICK 2 PROVEN: Synthesized validated JSON Schema, n8n Webhook DAG, and Graded SCORM 1.2 Quiz from a single source specification! Now click Button 3 →",
+            label: "2. Multi-Format & n8n",
+            outcome: "✓ CLICK 2 PROVEN: Synthesized validated JSON Schema, n8n Webhook DAG, and Graded SCORM 1.2 Quiz from one specification! Now click Button 3 →",
             run: function () {
               var tab = document.querySelector('[data-tab="eval"], [data-tab="webhook"], [data-preset-card="eval-harness"]');
               if (tab) tab.click();
             }
           },
           {
-            label: "3. Open Printable Evaluation Dossier",
+            label: "3. Eval Dossier PDF",
             outcome: "✓ CLICK 3 PROVEN: Opened Printable Ground-Truth Evaluation & Content Architecture Dossier ready for client review!",
             run: function () {
               var dos = document.getElementById("btnOpenEvalDossier");
@@ -1142,83 +1149,323 @@
   }
 
   function mountVisualValueShowcase() {
-    var cfg = getProductShowcaseConfig(window.location.pathname);
-    if (!cfg || document.getElementById("cfVisualValueShowcase")) return;
-
-    var themeStyle = document.createElement("style");
-    themeStyle.id = "cfVisualThemeUpgrade";
-    themeStyle.textContent = [
-      "/* Modern Executive High-Contrast Visual Palette (Slate-Alabaster + Midnight Navy + Cobalt + Emerald + Crimson) */",
+    if (!document.getElementById("cfVisualThemeUpgrade")) {
+      var themeStyle = document.createElement("style");
+      themeStyle.id = "cfVisualThemeUpgrade";
+      themeStyle.textContent = [
+      "/* Design System v2.0 — Executive Editorial & Precision Workbench (Linear Light / Attio / Stripe / Anthropic Standard) */",
       ":root {",
-      "  --cf-bg-paper: #F1F5F9 !important;",
-      "  --cf-bg-stone: #E2E8F0 !important;",
+      "  --cf-bg-paper: #FAF9F6 !important;",
+      "  --cf-bg-stone: #F3F2EE !important;",
       "  --cf-bg-surface: #FFFFFF !important;",
-      "  --cf-bg-ink-panel: #0F172A !important;",
-      "  --cf-ink-primary: #0F172A !important;",
-      "  --cf-ink-secondary: #334155 !important;",
-      "  --cf-ink-muted: #64748B !important;",
-      "  --cf-rule-strong: #1E293B !important;",
-      "  --cf-rule-mid: #CBD5E1 !important;",
-      "  --cf-rule-subtle: #E2E8F0 !important;",
-      "  --cf-accent-primary: #E11D48 !important;",
-      "  --cf-accent-hover: #BE123C !important;",
-      "  --cf-accent-tint: #FFF1F2 !important;",
-      "  --cf-navy-authority: #2563EB !important;",
-      "  --cf-navy-tint: #EFF6FF !important;",
-      "  --cf-forest-pass: #059669 !important;",
-      "  --cf-forest-tint: #ECFDF5 !important;",
-      "  --cf-brass-warn: #D97706 !important;",
+      "  --cf-bg-ink-panel: #111113 !important;",
+      "  --cf-ink-primary: #111113 !important;",
+      "  --cf-ink-secondary: #52514E !important;",
+      "  --cf-ink-muted: #8A8884 !important;",
+      "  --cf-ink-on-dark: #FAF9F6 !important;",
+      "  --cf-rule-strong: #D4D1C8 !important;",
+      "  --cf-rule-mid: #E4E2DD !important;",
+      "  --cf-rule-subtle: #EFECE6 !important;",
+      "  --cf-accent-primary: #4F46E5 !important;",
+      "  --cf-accent-hover: #4338CA !important;",
+      "  --cf-accent-tint: #EEF2FF !important;",
+      "  --cf-navy-authority: #1E293B !important;",
+      "  --cf-navy-tint: #F1F5F9 !important;",
+      "  --cf-forest-pass: #15803D !important;",
+      "  --cf-forest-tint: #F0FDF4 !important;",
+      "  --cf-brass-warn: #B45309 !important;",
       "  --cf-brass-tint: #FFFBEB !important;",
       "  --cf-highlight-mark: #FEF08A !important;",
       "}",
-      "html, body { background-color: #F1F5F9 !important; }",
-      ".masthead, .ds-global-header, .codedrill-global-bar, .cf-global-header { flex-shrink: 0 !important; z-index: 450 !important; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; color: #F8FAFC !important; border-bottom: 2px solid #2563EB !important; box-shadow: 0 4px 14px rgba(15,23,42,0.14) !important; }",
-      ".masthead .app-title { color: #F8FAFC !important; }",
-      ".masthead .spec-label, .masthead .status-tag { background: rgba(37,99,235,0.28) !important; border: 1px solid #60A5FA !important; color: #F8FAFC !important; }",
-      ".masthead div[style*='color:var(--cf-ink-secondary)'] { color: #CBD5E1 !important; }",
-      ".masthead .back-link { background: #2563EB !important; border-color: #60A5FA !important; color: #FFFFFF !important; }",
+      "/* 1. Never lock html/body or reading panes into tiny scroll cages (>= 82% reading viewport law) */",
+      "html, body {",
+      "  background-color: #FAF9F6 !important;",
+      "  color: #111113 !important;",
+      "  min-height: 100vh !important;",
+      "  height: auto !important;",
+      "  overflow-x: hidden !important;",
+      "  overflow-y: auto !important;",
+      "}",
+      ".ds-split-workbench, .ds-left-pane, .ds-right-pane, .ds-left-scroll, .ds-checkpoints-scroll, .ds-visual-canvas, .ds-tree-code,",
+      ".codedrill-main-container, .workspace-view, .pvue-split-workspace, .pvue-left-pane, .pvue-right-pane, .pvue-pane-scroll, .ref-library-body, .ref-doc-reader-wrap, .ref-doc-article, .analytics-page-scroll {",
+      "  height: auto !important;",
+      "  max-height: none !important;",
+      "  overflow: visible !important;",
+      "}",
+      "@media (min-width: 861px) {",
+      "  .ds-split-workbench { display: grid !important; grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.76fr) !important; align-items: start !important; }",
+      "}",
+      "/* 2. Cohesive Deep Zinc Top Header (42px Compact) & Quiet Hairline Cards */",
+      ".masthead, .ds-global-header, .codedrill-global-bar, .cf-global-header {",
+      "  flex-shrink: 0 !important;",
+      "  z-index: 450 !important;",
+      "  background: #111113 !important;",
+      "  color: #FAF9F6 !important;",
+      "  border-bottom: 1px solid #27272A !important;",
+      "  box-shadow: 0 1px 2px rgba(17,17,19,0.08) !important;",
+      "}",
+      ".masthead-inner { padding: 8px 16px !important; gap: 10px !important; }",
+      ".masthead .app-title { color: #FAF9F6 !important; font-size: 20px !important; margin-top: 2px !important; }",
+      ".masthead div[style*='max-width:740px'] { font-size: 11.5px !important; line-height: 1.3 !important; margin-top: 2px !important; }",
+      ".masthead .spec-label, .masthead .status-tag { background: #1E1E22 !important; border: 1px solid #3F3F46 !important; color: #E4E4E7 !important; border-radius: 4px !important; }",
+      ".masthead div[style*='color:var(--cf-ink-secondary)'] { color: #A1A1AA !important; }",
+      ".masthead .back-link, .ds-back-link, .cd-back-link { background: #1E1E22 !important; border: 1px solid #3F3F46 !important; color: #F4F4F5 !important; border-radius: 4px !important; }",
+      ".masthead .back-link:hover, .ds-back-link:hover, .cd-back-link:hover { background: #27272A !important; border-color: #71717A !important; }",
+      ".ds-logo-mark, .cd-logo-mark { background: #4F46E5 !important; border-color: #6366F1 !important; border-radius: 5px !important; color: #FFFFFF !important; }",
+      "/* Soften harsh 2px black cartoon shadows into crisp Linear/Attio tactile elevation */",
+      ".tactile-btn, .ds-tool-btn, .pvue-tool-btn, .ds-export-btn, .q-nav-btn, .q-action-primary, .q-action-secondary, .drill-ctrl-btn {",
+      "  border-radius: 5px !important;",
+      "  box-shadow: 0 1px 2px rgba(17,17,19,0.06) !important;",
+      "}",
+      ".tactile-btn-vermilion, .ds-btn-accent, .pvue-btn-grade-exam, #runRemediationBtn, .ds-btn-remediate, #btnCheckCurrentAnswer, .pvue-btn-check {",
+      "  background: #4F46E5 !important;",
+      "  color: #FFFFFF !important;",
+      "  border: 1px solid #4338CA !important;",
+      "  border-radius: 5px !important;",
+      "  box-shadow: 0 1px 2px rgba(79,70,229,0.25) !important;",
+      "}",
+      ".tactile-btn-vermilion:hover, .ds-btn-accent:hover, .pvue-btn-grade-exam:hover, #runRemediationBtn:hover, .ds-btn-remediate:hover, #btnCheckCurrentAnswer:hover, .pvue-btn-check:hover {",
+      "  background: #4338CA !important;",
+      "}",
+      ".ds-page-sheet-frame, .ds-node-inspector-card, .ds-editor-section, .ds-tree-col, .ds-ledger-box, .q-stem-card, .an-panel-card, .an-hero-banner {",
+      "  border: 1px solid #E4E2DD !important;",
+      "  border-radius: 6px !important;",
+      "  box-shadow: 0 1px 3px rgba(17,17,19,0.04) !important;",
+      "}",
       ".how-it-works-strip, .cf-journey-bar, .dsh-journey-bar { display: none !important; }",
-      "@keyframes cfVCardPulse { 0% { box-shadow: 0 0 0 4px rgba(37,99,235,0.35); } 100% { box-shadow: 0 4px 12px rgba(15,23,42,0.06); } }",
-      ".cf-v-pulse { animation: cfVCardPulse 0.9s ease; }",
-      "#cfVisualValueShowcase { flex-shrink: 0 !important; background: linear-gradient(180deg, #E2E8F0 0%, #F1F5F9 100%); border-bottom: 2px solid #CBD5E1; padding: 10px 16px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }",
-      ".cf-vvs-inner { max-width: 1540px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }",
-      ".cf-vvs-grid { display: grid; grid-template-columns: 0.95fr 1.05fr 1.35fr; gap: 10px; align-items: stretch; }",
-      "@media (max-width: 780px) { .cf-vvs-grid { grid-template-columns: 1fr; } }",
-      ".cf-vvs-card { background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px; box-shadow: 0 4px 12px rgba(15,23,42,0.06); display: flex; flex-direction: column; justify-content: space-between; gap: 6px; position: relative; overflow: hidden; }",
-      ".cf-vvs-card-problem { border-top: 4px solid #E11D48; }",
-      ".cf-vvs-card-why { border-top: 4px solid #2563EB; }",
-      ".cf-vvs-card-prove { border-top: 4px solid #059669; background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%); }",
-      ".cf-vvs-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }",
-      ".cf-vvs-icon-group { display: flex; align-items: center; gap: 10px; }",
-      ".cf-vvs-icon-box { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }",
-      ".cf-vvs-icon-problem { background: #FFE4E6; color: #E11D48; border: 1px solid #FECDD3; }",
-      ".cf-vvs-icon-why { background: #DBEAFE; color: #2563EB; border: 1px solid #BFDBFE; }",
-      ".cf-vvs-icon-prove { background: #D1FAE5; color: #059669; border: 1px solid #A7F3D0; }",
-      ".cf-vvs-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }",
-      ".cf-vvs-pill { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }",
-      ".cf-vvs-pill-problem { background: #FFF1F2; color: #BE123C; border: 1px solid #FDA4AF; }",
-      ".cf-vvs-pill-why { background: #EFF6FF; color: #1D4ED8; border: 1px solid #93C5FD; }",
-      ".cf-vvs-pill-prove { background: #ECFDF5; color: #047857; border: 1px solid #6EE7B7; }",
-      ".cf-vvs-title { font-size: 15px; font-weight: 700; color: #0F172A; line-height: 1.3; margin: 2px 0; }",
-      ".cf-vvs-desc { font-size: 12.5px; color: #334155; line-height: 1.45; margin: 0; }",
-      ".cf-vvs-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 4px; padding-top: 8px; border-top: 1px dashed #CBD5E1; }",
-      ".cf-vvs-node { display: inline-flex; align-items: center; gap: 5px; background: #F8FAFC; border: 1px solid #94A3B8; color: #0F172A; padding: 4px 8px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; }",
-      ".cf-vvs-node-mid { background: #EFF6FF; border-color: #2563EB; color: #1D4ED8; }",
-      ".cf-vvs-node-end { background: #ECFDF5; border-color: #059669; color: #047857; }",
-      ".cf-vvs-arrow { color: #64748B; font-weight: 700; font-size: 12px; }",
-      ".cf-vvs-btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 2px; }",
-      "@media (max-width: 680px) { .cf-vvs-btn-grid { grid-template-columns: 1fr; } }",
-      ".cf-vvs-proof-btn { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 10px; border-radius: 6px; border: 1.5px solid #0F172A; background: #FFFFFF; color: #0F172A; cursor: pointer; text-align: left; box-shadow: 0 2px 0 #0F172A; transition: all 0.14s ease; }",
-      ".cf-vvs-proof-btn:hover { background: #EFF6FF; border-color: #2563EB; transform: translateY(-1px); }",
-      ".cf-vvs-proof-btn.cf-proof-done { background: #059669; border-color: #065F46; color: #FFFFFF; box-shadow: 0 2px 0 #064E3B; }",
-      ".cf-vvs-btn-top { display: flex; align-items: center; justify-content: space-between; width: 100%; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; }",
-      ".cf-vvs-btn-badge { background: #2563EB; color: #FFFFFF; padding: 1px 6px; border-radius: 4px; }",
-      ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-badge { background: #ECFDF5; color: #047857; }",
-      ".cf-vvs-btn-label { font-size: 11.5px; font-weight: 700; line-height: 1.25; }",
-      ".cf-vvs-outcome { background: #0F172A; color: #F8FAFC; border: 1.5px solid #2563EB; border-left: 5px solid #10B981; border-radius: 6px; padding: 9px 12px; font-size: 12.5px; font-weight: 600; display: flex; align-items: center; gap: 10px; line-height: 1.4; }",
-      ".cf-vvs-outcome-icon { color: #10B981; display: inline-flex; flex-shrink: 0; }"
+      "@keyframes cfVCardPulse { 0% { box-shadow: 0 0 0 3px rgba(79,70,229,0.28); } 100% { box-shadow: 0 1px 3px rgba(17,17,19,0.04); } }",
+      ".cf-v-pulse { animation: cfVCardPulse 0.8s ease; }",
+      "/* 3. Sleek 42px Single-Row Value & 3-Click Proof Ribbon (#cfVisualValueShowcase) */",
+      "#cfVisualValueShowcase {",
+      "  position: relative;",
+      "  flex-shrink: 0 !important;",
+      "  background: #FFFFFF;",
+      "  border-bottom: 1px solid #E4E2DD;",
+      "  padding: 5px 14px;",
+      "  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;",
+      "  z-index: 420;",
+      "}",
+      ".cf-ribbon-bar {",
+      "  max-width: 1600px;",
+      "  margin: 0 auto;",
+      "  min-height: 30px;",
+      "  display: flex;",
+      "  align-items: center;",
+      "  justify-content: space-between;",
+      "  gap: 8px;",
+      "  flex-wrap: nowrap;",
+      "}",
+      "@media (max-width: 940px) { .cf-ribbon-bar { flex-wrap: wrap; } }",
+      ".cf-ribbon-left {",
+      "  display: flex;",
+      "  align-items: center;",
+      "  gap: 6px;",
+      "  flex-shrink: 0;",
+      "}",
+      ".cf-ribbon-icon-pill {",
+      "  width: 24px;",
+      "  height: 24px;",
+      "  border-radius: 5px;",
+      "  background: #EEF2FF;",
+      "  color: #4F46E5;",
+      "  border: 1px solid #C7D2FE;",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  justify-content: center;",
+      "  flex-shrink: 0;",
+      "}",
+      ".cf-ribbon-value-summary {",
+      "  font-size: 11.5px;",
+      "  color: #111113;",
+      "  font-weight: 600;",
+      "  white-space: nowrap;",
+      "  overflow: hidden;",
+      "  text-overflow: ellipsis;",
+      "  max-width: 210px;",
+      "}",
+      "@media (max-width: 1460px) { .cf-ribbon-value-summary { display: none; } }",
+      ".cf-ribbon-roi-tag {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 600;",
+      "  padding: 2px 7px;",
+      "  border-radius: 4px;",
+      "  background: #F3F2EE;",
+      "  color: #52514E;",
+      "  border: 1px solid #E4E2DD;",
+      "  white-space: nowrap;",
+      "}",
+      ".cf-ribbon-popover-btn {",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  gap: 4px;",
+      "  padding: 3px 8px;",
+      "  border-radius: 4px;",
+      "  border: 1px solid #D4D1C8;",
+      "  background: #FAF9F6;",
+      "  color: #111113;",
+      "  font-size: 11px;",
+      "  font-weight: 600;",
+      "  cursor: pointer;",
+      "  white-space: nowrap;",
+      "  flex-shrink: 0;",
+      "  transition: all 0.12s ease;",
+      "}",
+      ".cf-ribbon-popover-btn:hover, .cf-ribbon-popover-btn.active {",
+      "  background: #EEF2FF;",
+      "  border-color: #4F46E5;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-ribbon-center {",
+      "  display: flex;",
+      "  align-items: center;",
+      "  gap: 5px;",
+      "  flex-wrap: nowrap;",
+      "  flex-shrink: 0;",
+      "}",
+      "@media (max-width: 940px) { .cf-ribbon-center { flex-wrap: wrap; } }",
+      ".cf-ribbon-step-label {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 600;",
+      "  color: #8A8884;",
+      "  text-transform: uppercase;",
+      "  letter-spacing: 0.04em;",
+      "  margin-right: 2px;",
+      "}",
+      "@media (max-width: 1200px) { .cf-ribbon-step-label { display: none; } }",
+      ".cf-vvs-proof-btn {",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  gap: 5px;",
+      "  height: 27px;",
+      "  padding: 0 8px;",
+      "  border-radius: 5px;",
+      "  border: 1px solid #D4D1C8;",
+      "  background: #FFFFFF;",
+      "  color: #111113;",
+      "  font-size: 11px;",
+      "  font-weight: 600;",
+      "  cursor: pointer;",
+      "  white-space: nowrap;",
+      "  box-shadow: 0 1px 2px rgba(17,17,19,0.04);",
+      "  transition: all 0.12s ease;",
+      "}",
+      ".cf-vvs-proof-btn:hover {",
+      "  background: #EEF2FF;",
+      "  border-color: #4F46E5;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-vvs-proof-btn.cf-proof-done {",
+      "  background: #F0FDF4;",
+      "  border-color: #15803D;",
+      "  color: #15803D;",
+      "}",
+      ".cf-vvs-btn-badge {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 600;",
+      "  padding: 1px 5px;",
+      "  border-radius: 3px;",
+      "  background: #EEF2FF;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-badge {",
+      "  background: #15803D;",
+      "  color: #FFFFFF;",
+      "}",
+      ".cf-vvs-btn-icon {",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  color: #4F46E5;",
+      "}",
+      ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-icon {",
+      "  color: #15803D;",
+      "}",
+      ".cf-vvs-pill-prove {",
+      "  font-family: 'IBM Plex Mono', monospace;",
+      "  font-size: 10px;",
+      "  font-weight: 600;",
+      "  padding: 2px 7px;",
+      "  border-radius: 999px;",
+      "  background: #EEF2FF;",
+      "  color: #4F46E5;",
+      "  border: 1px solid #C7D2FE;",
+      "  white-space: nowrap;",
+      "  flex-shrink: 0;",
+      "}",
+      ".cf-vvs-outcome {",
+      "  flex: 1 1 0%;",
+      "  min-width: 0;",
+      "  display: flex;",
+      "  align-items: center;",
+      "  gap: 6px;",
+      "  font-size: 11px;",
+      "  color: #52514E;",
+      "  background: #FAF9F6;",
+      "  border: 1px solid #E4E2DD;",
+      "  border-radius: 5px;",
+      "  padding: 3px 8px;",
+      "  overflow: hidden;",
+      "}",
+      "#cfLiveProofOutcomeText {",
+      "  flex: 1 1 0%;",
+      "  min-width: 0;",
+      "  white-space: nowrap;",
+      "  overflow: hidden;",
+      "  text-overflow: ellipsis;",
+      "}",
+      ".cf-vvs-outcome.cf-outcome-active {",
+      "  background: #F0FDF4;",
+      "  border-color: #BBF7D0;",
+      "  color: #15803D;",
+      "  font-weight: 600;",
+      "}",
+      ".cf-vvs-outcome-icon {",
+      "  color: #15803D;",
+      "  display: inline-flex;",
+      "  flex-shrink: 0;",
+      "}",
+      "/* 4. Floating Value & Architecture Popover Drawer (0px Permanent Vertical Height!) */",
+      "#cfValuePopoverDrawer {",
+      "  position: absolute;",
+      "  top: 100%;",
+      "  left: 14px;",
+      "  right: 14px;",
+      "  max-width: 1220px;",
+      "  margin: 4px auto 0;",
+      "  background: #FFFFFF;",
+      "  border: 1px solid #D4D1C8;",
+      "  border-radius: 8px;",
+      "  box-shadow: 0 16px 36px -4px rgba(17,17,19,0.16), 0 4px 12px -2px rgba(17,17,19,0.08);",
+      "  padding: 14px 16px;",
+      "  z-index: 950;",
+      "}",
+      "#cfValuePopoverDrawer.cf-popover-hidden { display: none !important; }",
+      ".cf-vvs-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; align-items: stretch; }",
+      "@media (max-width: 900px) {",
+      "  .cf-vvs-grid { grid-template-columns: 1fr; }",
+      "  .cf-vvs-outcome { max-width: 100%; white-space: normal; }",
+      "}",
+      ".cf-vvs-card { background: #FAF9F6; border: 1px solid #E4E2DD; border-radius: 6px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }",
+      ".cf-vvs-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
+      ".cf-vvs-icon-group { display: flex; align-items: center; gap: 7px; }",
+      ".cf-vvs-icon-box { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE; }",
+      ".cf-vvs-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #52514E; }",
+      ".cf-vvs-pill { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #FFFFFF; color: #111113; border: 1px solid #D4D1C8; }",
+      ".cf-vvs-title { font-size: 14px; font-weight: 700; color: #111113; line-height: 1.3; margin: 2px 0; }",
+      ".cf-vvs-desc { font-size: 12px; color: #52514E; line-height: 1.48; margin: 0; }",
+      ".cf-vvs-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 4px; padding-top: 8px; border-top: 1px solid #E4E2DD; }",
+      ".cf-vvs-node { display: inline-flex; align-items: center; gap: 5px; background: #FFFFFF; border: 1px solid #D4D1C8; color: #111113; padding: 3px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; }",
+      ".cf-vvs-node-mid { background: #EEF2FF; border-color: #C7D2FE; color: #4F46E5; }",
+      ".cf-vvs-node-end { background: #F0FDF4; border-color: #BBF7D0; color: #15803D; }",
+      ".cf-vvs-arrow { color: #8A8884; font-weight: 600; font-size: 11px; }"
     ].join("\n");
-    document.head.appendChild(themeStyle);
+      document.head.appendChild(themeStyle);
+    }
+
+    var cfg = getProductShowcaseConfig(window.location.pathname);
+    if (!cfg || document.getElementById("cfVisualValueShowcase")) return;
 
     var headerEl = document.querySelector(
       "header.masthead, header.ds-global-header, header.codedrill-global-bar, header.cf-global-header, header"
@@ -1232,48 +1479,83 @@
     var btnIcons = [SVG_ICONS.search, SVG_ICONS.magic, SVG_ICONS.cert];
     var btnsHtml = cfg.clicks
       .map(function (c, idx) {
+        var cleanLabel = String(c.label || "").replace(/^[123]\.\s*/, "");
         return (
           '<button type="button" class="cf-vvs-proof-btn" id="cfProofClick' +
           (idx + 1) +
           '" data-proof-idx="' +
           idx +
+          '" title="' +
+          escapeHtmlSafe(c.outcome) +
           '">' +
-          '<div class="cf-vvs-btn-top">' +
           '<span class="cf-vvs-btn-badge" id="cfProofBadge' +
           (idx + 1) +
-          '">CLICK ' +
+          '">' +
           (idx + 1) +
           "</span>" +
-          "<span>" +
+          '<span class="cf-vvs-btn-icon">' +
           btnIcons[idx] +
           "</span>" +
-          "</div>" +
-          '<div class="cf-vvs-btn-label">' +
-          escapeHtmlSafe(c.label) +
-          "</div>" +
+          '<span class="cf-vvs-btn-label">' +
+          escapeHtmlSafe(cleanLabel) +
+          "</span>" +
           "</button>"
         );
       })
       .join("");
 
     showcase.innerHTML =
-      '<div class="cf-vvs-inner">' +
+      '<div class="cf-ribbon-bar">' +
+      // Left: Compact Value Summary + On-Demand Popover Toggle
+      '<div class="cf-ribbon-left">' +
+      '<span class="cf-ribbon-icon-pill">' +
+      SVG_ICONS.shield +
+      "</span>" +
+      '<span class="cf-ribbon-value-summary" title="' +
+      escapeHtmlSafe(cfg.whyTitle + " — " + cfg.whyDesc) +
+      '">' +
+      escapeHtmlSafe(cfg.whyTitle) +
+      "</span>" +
+      '<span class="cf-ribbon-roi-tag">' +
+      escapeHtmlSafe(cfg.whyMetric) +
+      "</span>" +
+      '<button type="button" class="cf-ribbon-popover-btn" id="cfToggleValuePopoverBtn" aria-expanded="false">' +
+      SVG_ICONS.info +
+      "<span>Why &amp; Architecture</span>" +
+      SVG_ICONS.chevronDown +
+      "</button>" +
+      "</div>" +
+      // Center: 3-Click Interactive Proof Buttons + Progress Pill
+      '<div class="cf-ribbon-center">' +
+      '<span class="cf-ribbon-step-label">3-Click Proof:</span>' +
+      btnsHtml +
+      '<span class="cf-vvs-pill-prove" id="cfProofProgressBadge">0 / 3 Proven</span>' +
+      "</div>" +
+      // Right: Flex-shrinking Outcome Pill (0px overlap!)
+      '<div class="cf-vvs-outcome" id="cfLiveProofOutcome">' +
+      '<span class="cf-vvs-outcome-icon">' +
+      SVG_ICONS.check +
+      "</span>" +
+      '<span id="cfLiveProofOutcomeText">Click 1 &rarr; 2 &rarr; 3 to verify live</span>' +
+      "</div>" +
+      "</div>" +
+      // Floating Popover Drawer (0px vertical height unless toggled!)
+      '<div id="cfValuePopoverDrawer" class="cf-popover-hidden" role="region" aria-label="Product Architecture & Problem Breakdown">' +
       '<div class="cf-vvs-grid">' +
-      // Card 1: THE PROBLEM IT SOLVES
-      '<div class="cf-vvs-card cf-vvs-card-problem">' +
+      '<div class="cf-vvs-card">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
       '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box cf-vvs-icon-problem">' +
+      '<div class="cf-vvs-icon-box">' +
       SVG_ICONS.alert +
       "</div>" +
-      '<span class="cf-vvs-kicker" style="color:#E11D48;">1. THE PROBLEM IT SOLVES</span>' +
+      '<span class="cf-vvs-kicker">1. The Problem It Solves</span>' +
       "</div>" +
-      '<span class="cf-vvs-pill cf-vvs-pill-problem">' +
+      '<span class="cf-vvs-pill">' +
       escapeHtmlSafe(cfg.problemMetric) +
       "</span>" +
       "</div>" +
-      '<h2 class="cf-vvs-title" style="margin-top:8px;">' +
+      '<h2 class="cf-vvs-title" style="margin-top:6px;">' +
       escapeHtmlSafe(cfg.problemTitle) +
       "</h2>" +
       '<p class="cf-vvs-desc">' +
@@ -1281,21 +1563,20 @@
       "</p>" +
       "</div>" +
       "</div>" +
-      // Card 2: WHY THIS PRODUCT WINS + VISUAL 3-ICON FLOW
-      '<div class="cf-vvs-card cf-vvs-card-why">' +
+      '<div class="cf-vvs-card">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
       '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box cf-vvs-icon-why">' +
+      '<div class="cf-vvs-icon-box">' +
       SVG_ICONS.shield +
       "</div>" +
-      '<span class="cf-vvs-kicker" style="color:#2563EB;">2. WHY THIS PRODUCT WINS</span>' +
+      '<span class="cf-vvs-kicker">2. Why This Product Wins</span>' +
       "</div>" +
-      '<span class="cf-vvs-pill cf-vvs-pill-why">' +
+      '<span class="cf-vvs-pill">' +
       escapeHtmlSafe(cfg.whyMetric) +
       "</span>" +
       "</div>" +
-      '<h2 class="cf-vvs-title" style="margin-top:8px;">' +
+      '<h2 class="cf-vvs-title" style="margin-top:6px;">' +
       escapeHtmlSafe(cfg.whyTitle) +
       "</h2>" +
       '<p class="cf-vvs-desc">' +
@@ -1322,33 +1603,45 @@
       "</span>" +
       "</div>" +
       "</div>" +
-      // Card 3: PROVE IT IN 3 CLICKS
-      '<div class="cf-vvs-card cf-vvs-card-prove">' +
+      '<div class="cf-vvs-card">' +
       "<div>" +
       '<div class="cf-vvs-top">' +
       '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box cf-vvs-icon-prove">' +
+      '<div class="cf-vvs-icon-box">' +
       SVG_ICONS.bolt +
       "</div>" +
-      '<span class="cf-vvs-kicker" style="color:#059669;">3. PROVE IT IN 3 CLICKS (LIVE DEMO)</span>' +
+      '<span class="cf-vvs-kicker">3. Live Verification Outcome</span>' +
       "</div>" +
-      '<span class="cf-vvs-pill cf-vvs-pill-prove" id="cfProofProgressBadge">0 / 3 PROVEN</span>' +
+      '<span class="cf-vvs-pill">Zero Setup Required</span>' +
       "</div>" +
-      '<div class="cf-vvs-btn-grid" style="margin-top:8px;">' +
-      btnsHtml +
-      "</div>" +
-      "</div>" +
-      '<div class="cf-vvs-outcome" id="cfLiveProofOutcome">' +
-      '<span class="cf-vvs-outcome-icon">' +
-      SVG_ICONS.check +
-      "</span>" +
-      '<span id="cfLiveProofOutcomeText">Click <strong>CLICK 1</strong>, <strong>CLICK 2</strong>, and <strong>CLICK 3</strong> above to watch this product solve the problem live in 3 clicks.</span>' +
+      '<h2 class="cf-vvs-title" style="margin-top:6px;">Prove Value in 3 Clicks</h2>' +
+      '<p class="cf-vvs-desc" id="cfPopoverOutcomeDetail">Use the 3 segmented proof buttons in the ribbon above to execute the live workflow and inspect the generated output below.</p>' +
       "</div>" +
       "</div>" +
       "</div>" +
       "</div>";
 
     headerEl.parentNode.insertBefore(showcase, headerEl.nextSibling);
+
+    var popBtn = document.getElementById("cfToggleValuePopoverBtn");
+    var popDrawer = document.getElementById("cfValuePopoverDrawer");
+    if (popBtn && popDrawer) {
+      popBtn.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var isHidden = popDrawer.classList.toggle("cf-popover-hidden");
+        popBtn.classList.toggle("active", !isHidden);
+        popBtn.setAttribute("aria-expanded", !isHidden ? "true" : "false");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!popDrawer.classList.contains("cf-popover-hidden")) {
+          if (!popDrawer.contains(ev.target) && ev.target !== popBtn && !popBtn.contains(ev.target)) {
+            popDrawer.classList.add("cf-popover-hidden");
+            popBtn.classList.remove("active");
+            popBtn.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    }
 
     var provenMap = {};
     [0, 1, 2].forEach(function (idx) {
@@ -1358,15 +1651,23 @@
         provenMap[idx] = true;
         btn.classList.add("cf-proof-done");
         var bdg = document.getElementById("cfProofBadge" + (idx + 1));
-        if (bdg) bdg.textContent = "✓ PROVEN";
+        if (bdg) bdg.textContent = "✓";
         var doneCount = Object.keys(provenMap).length;
         var prog = document.getElementById("cfProofProgressBadge");
-        if (prog) prog.textContent = doneCount + " / 3 PROVEN";
+        if (prog) prog.textContent = doneCount + " / 3 Proven";
 
         var outText = document.getElementById("cfLiveProofOutcomeText");
         var outBox = document.getElementById("cfLiveProofOutcome");
-        if (outText) outText.textContent = cfg.clicks[idx].outcome;
+        var popDetail = document.getElementById("cfPopoverOutcomeDetail");
+        if (outText) {
+          outText.textContent = cfg.clicks[idx].outcome;
+          outText.title = cfg.clicks[idx].outcome;
+        }
+        if (popDetail) {
+          popDetail.textContent = cfg.clicks[idx].outcome;
+        }
         if (outBox) {
+          outBox.classList.add("cf-outcome-active");
           outBox.classList.remove("cf-v-pulse");
           void outBox.offsetWidth;
           outBox.classList.add("cf-v-pulse");

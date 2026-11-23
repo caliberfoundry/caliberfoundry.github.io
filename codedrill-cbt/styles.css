@@ -7,38 +7,38 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  /* 1. Surfaces (Warm Archival Paper & Milled Stone) */
-  --cf-bg-paper:       #F6F4EF;
-  --cf-bg-stone:       #ECE9E1;
+  /* 1. Surfaces (Warm Alabaster Canvas & Pure Elevated White Sheets — Design System v2.0) */
+  --cf-bg-paper:       #FAF9F6;
+  --cf-bg-stone:       #F3F2EE;
   --cf-bg-surface:     #FFFFFF;
-  --cf-bg-ink-panel:   #141413;
+  --cf-bg-ink-panel:   #111113;
 
-  /* 2. Typography & Ink (High-Contrast Warm Carbon) */
-  --cf-ink-primary:    #141413;
-  --cf-ink-secondary:  #4A4842;
-  --cf-ink-muted:      #78756D;
-  --cf-ink-on-dark:    #F6F4EF;
+  /* 2. Typography & Ink (High-Contrast Deep Zinc) */
+  --cf-ink-primary:    #111113;
+  --cf-ink-secondary:  #52514E;
+  --cf-ink-muted:      #8A8884;
+  --cf-ink-on-dark:    #FAF9F6;
 
-  /* 3. Structural Grid & Hairlines */
-  --cf-rule-strong:    #141413;
-  --cf-rule-mid:       #C9C4B8;
-  --cf-rule-subtle:    #DFDBD2;
+  /* 3. Structural Grid & Hairlines (Quiet Precision) */
+  --cf-rule-strong:    #D4D1C8;
+  --cf-rule-mid:       #E4E2DD;
+  --cf-rule-subtle:    #EFECE6;
 
-  /* 4. Semantic & Industrial Accents (Zero Neon) */
-  --cf-accent-primary: #C8431F;
-  --cf-accent-hover:   #A63415;
-  --cf-accent-tint:    #FDF2EE;
+  /* 4. Single Primary Interactive Accent (Executive Indigo) & Restrained Status Tokens */
+  --cf-accent-primary: #4F46E5;
+  --cf-accent-hover:   #4338CA;
+  --cf-accent-tint:    #EEF2FF;
 
-  --cf-navy-authority: #1B365D;
-  --cf-navy-tint:      #EEF2F7;
+  --cf-navy-authority: #1E293B;
+  --cf-navy-tint:      #F1F5F9;
 
-  --cf-forest-pass:    #1A5638;
-  --cf-forest-tint:    #EDF5F0;
+  --cf-forest-pass:    #15803D;
+  --cf-forest-tint:    #F0FDF4;
 
-  --cf-brass-warn:     #9C5A08;
-  --cf-brass-tint:     #FBF4E9;
+  --cf-brass-warn:     #B45309;
+  --cf-brass-tint:     #FFFBEB;
 
-  --cf-highlight-mark: #FCE588;
+  --cf-highlight-mark: #FEF08A;
 
   /* 5. Editorial & Technical Typography */
   --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
@@ -54,14 +54,13 @@
 }
 
 html, body {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  display: flex;
-  flex-direction: column;
   font-family: var(--font-sans);
   color: var(--cf-ink-primary);
   background-color: var(--cf-bg-paper);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -312,22 +311,17 @@ button, input, select, textarea {
    2. MAIN WORKSPACE & COMPACT PEARSON VUE HEADER CHROME
    ========================================================================== */
 .codedrill-main-container {
-  flex: 1;
-  min-height: 0;
+  min-height: calc(100vh - 88px);
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .workspace-view {
-  flex: 1;
-  min-height: 0;
-  height: 100%;
+  min-height: calc(100vh - 88px);
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* Prussian Institutional Navy Top Bar (#1B365D) — Compact 36px */
@@ -832,29 +826,26 @@ button, input, select, textarea {
    ========================================================================== */
 .pvue-split-workspace {
   flex: 1;
-  min-height: 0;
   display: flex;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: calc(100vh - 160px);
   background: var(--cf-bg-paper);
+  align-items: stretch;
 }
 
 .pvue-left-pane {
   width: 50%;
-  height: 100%;
+  min-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background: var(--cf-bg-paper);
 }
 
 .pvue-right-pane {
   width: 50%;
-  height: 100%;
+  min-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background: var(--cf-bg-surface);
 }
 
@@ -896,11 +887,11 @@ button, input, select, textarea {
 /* Compact Above-the-Fold Editorial Padding */
 .pvue-pane-scroll {
   flex: 1;
-  overflow-y: auto;
-  padding: 12px 22px 32px 22px;
+  overflow: visible;
+  padding: 16px 22px 32px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* ==========================================================================
@@ -2057,7 +2048,8 @@ mark.user-highlight:hover {
 .ref-library-body {
   flex: 1;
   display: flex;
-  overflow: hidden;
+  overflow: visible;
+  align-items: flex-start;
 }
 
 .ref-tree-sidebar {
@@ -2066,7 +2058,7 @@ mark.user-highlight:hover {
   border-right: 1px solid var(--cf-rule-mid);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
 }
 
@@ -2201,7 +2193,7 @@ mark.user-highlight:hover {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   background: var(--cf-bg-surface);
 }
 
@@ -2291,7 +2283,7 @@ mark.user-highlight:hover {
 /* Main Statutory Article Content (Westlaw Precision / U.S. Code Editorial Layout) */
 .ref-doc-article {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
   padding: 24px 28px 44px 28px;
 }
 
@@ -2442,7 +2434,7 @@ mark.ecfr-search-highlight {
    ========================================================================== */
 .analytics-page-scroll {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
   padding: 28px 32px 64px 32px;
   max-width: 1380px;
   margin: 0 auto;
