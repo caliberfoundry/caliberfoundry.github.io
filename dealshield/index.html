@@ -50,143 +50,169 @@
   </header>
 
   <!-- =====================================================================
-       BAR 2: CONCISE KPI SUMMARY & PRIMARY ACTION BAR (FLEX-WRAP SAFE)
+       BAR 2: GUIDED 3-STEP USER JOURNEY BAR (INTUITIVE 1 -> 2 -> 3 FLOW)
        ===================================================================== -->
-  <section class="cf-action-toolbar" aria-label="Questionnaire Telemetry and Execution Controls">
-    <div class="cf-toolbar-left">
-      <span class="cf-preset-code-badge" id="activePresetCodeBadge">DDQ-CAIQ-01</span>
-      <span class="cf-active-pipeline-name hidden" id="activePresetTitleBar">CSA CAIQ v4.0.3 Cloud Controls &amp; SOC 2 Type II Enterprise DDQ</span>
-
-      <div class="cf-telemetry-strip" aria-label="Real-Time Verification Metrics">
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Unanchored:</span>
-          <strong class="cf-metric-val val-pass" id="metricHallucination">0.0%</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Controls:</span>
-          <strong class="cf-metric-val" id="metricPrecision">12/12 Verified</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Confidence:</span>
-          <strong class="cf-metric-val" id="metricLatency">99.4%</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Turnaround:</span>
-          <strong class="cf-metric-val" id="metricCost">14.2s</strong>
+  <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
+    <div class="dsh-steps-track">
+      <div class="dsh-step-pill active" onclick="document.getElementById('presetSelect').focus()" title="Step 1: Pick a framework or upload your customer's questionnaire">
+        <span class="dsh-step-num">1</span>
+        <div>
+          <strong>Choose Questionnaire</strong>
+          <span class="dsh-step-sub" id="activePresetCodeBadge">DDQ-CAIQ-01</span>
         </div>
       </div>
+      <span class="dsh-step-arrow" aria-hidden="true">→</span>
+      <div class="dsh-step-pill" onclick="document.getElementById('ddqMatrixTable').scrollIntoView({behavior:'smooth'})" title="Step 2: Click any row to review or edit its citation-locked answer">
+        <span class="dsh-step-num">2</span>
+        <div>
+          <strong>Review Answers</strong>
+          <span class="dsh-step-sub"><span id="metricPrecision">12/12 Verified</span> · <span id="metricHallucination">0.0%</span> unverified</span>
+        </div>
+      </div>
+      <span class="dsh-step-arrow" aria-hidden="true">→</span>
+      <div class="dsh-step-pill" onclick="document.getElementById('btnOpenEvalDossier').click()" title="Step 3: Download answered CSV or printable VPAT 2.5 PDF report">
+        <span class="dsh-step-num">3</span>
+        <div>
+          <strong>Export Report</strong>
+          <span class="dsh-step-sub"><span id="metricCost">14.2s</span> · <span id="metricLatency">99.4%</span> match</span>
+        </div>
+      </div>
+      <span class="hidden" id="activePresetTitleBar">CSA CAIQ v4.0.3</span>
     </div>
 
     <div class="cf-toolbar-right">
-      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable VPAT 2.5 &amp; Executive Security Attestation Dossier (PDF)">
-        VPAT 2.5 &amp; Attestation (PDF)
+      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable VPAT 2.5 &amp; Security Attestation PDF">
+        Export PDF / VPAT 2.5
       </button>
       <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">
-        Auto-Fill DDQ →
+        Auto-Fill Answers →
       </button>
     </div>
   </section>
 
   <!-- =====================================================================
-       MAIN SPLIT-SCREEN WORKBENCH (PROGRESSIVE DISCLOSURE ARCHITECTURE)
+       MAIN SPLIT-SCREEN WORKBENCH (CLEAN, LOW-TEXT, INTUITIVE UX)
        ===================================================================== -->
   <main class="cf-split-workbench" id="cfMainWorkbench">
 
     <!-- ===================================================================
-         LEFT PANEL: CONCISE EVIDENCE CORPUS FIRST -> DRILL-DOWN DRAWERS BELOW
+         LEFT PANEL: SIMPLE 3-STEP CONTROLS (NO WALLS OF TEXT)
          =================================================================== -->
-    <section class="cf-left-pane" aria-label="Security Policy Evidence Corpus and Custom Questionnaire Importer">
+    <section class="cf-left-pane" aria-label="Questionnaire Selection and Policy Setup">
       <div class="cf-left-scroll">
 
-        <!-- 1. CONCISE SOURCE EVIDENCE CORPUS (VISIBLE IMMEDIATELY ABOVE THE FOLD) -->
+        <!-- STEP 1: QUICK TEMPLATE SWITCHER (1-CLICK VISUAL CARDS) -->
         <div class="cf-card-block">
           <div class="cf-block-header">
             <div>
-              <span class="cf-block-kicker">STEP 1 · VENDOR EVIDENCE CORPUS (ZERO-LIBRARY)</span>
-              <h2 class="cf-block-title">Security Policy, SOC 2 &amp; Stack Anchors</h2>
+              <span class="cf-block-kicker">STEP 1 OF 3</span>
+              <h2 class="cf-block-title">Select Questionnaire Template</h2>
             </div>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-              <span class="cf-block-tag" id="sourceCharCountBadge">0 chars · 0 controls</span>
-              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource" title="Restore default preset policy corpus">
-                Restore Default
-              </button>
-            </div>
+            <span class="cf-block-tag" id="uploadStatusTag">12 Questions Active</span>
           </div>
-
-          <div class="cf-field-group">
-            <label for="sourceTitleInput" class="cf-field-label">Vendor Policy / Architecture Dossier Title</label>
-            <input
-              type="text"
-              id="sourceTitleInput"
-              class="cf-input"
-              value="SOC 2 Type II Bridge Dossier &amp; Cloud Security Controls (2026)"
-            />
-          </div>
-
-          <div class="cf-field-group">
-            <label for="sourceCorpusTextarea" class="cf-field-label">
-              Policy &amp; Control Clauses (Anchors like <code>[SOC2-CC6.1]</code> lock directly to buyer DDQ answers)
-            </label>
-            <textarea
-              id="sourceCorpusTextarea"
-              class="cf-textarea"
-              rows="5"
-              spellcheck="false"
-            ></textarea>
+          <div class="dsh-quick-presets">
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='caiq-v4';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>CSA CAIQ v4 / SOC 2</strong>
+              <span>Enterprise Cloud · Free</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='hecvat-3';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>EDUCAUSE HECVAT v3</strong>
+              <span>Higher-Ed &amp; FERPA · Free</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='sig-lite';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>SIG-Lite 2026 Risk</strong>
+              <span>Banking &amp; FinTech · PRO</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='vpat-25';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>ITI VPAT® 2.5</strong>
+              <span>Section 508 &amp; EAA · PRO</span>
+            </button>
           </div>
         </div>
 
-        <!-- 2. COLLAPSIBLE DRILL-DOWN: UPLOAD CUSTOM CLIENT .CSV / .TSV / .JSON QUESTIONNAIRE -->
+        <!-- STEP 1B: UPLOAD OR PASTE CUSTOM CLIENT QUESTIONS -->
         <details class="cf-card-block cf-collapsible-block" id="detailsCustomUpload">
           <summary class="cf-collapsible-summary">
             <div>
-              <span class="cf-block-kicker">TECHNICAL DRILL-DOWN 01</span>
-              <h2 class="cf-block-title">Import Custom Client DDQ (.CSV / .TSV / .JSON)</h2>
+              <span class="cf-block-kicker">CUSTOM QUESTIONNAIRE</span>
+              <h2 class="cf-block-title">+ Upload Client .CSV / Paste Questions</h2>
             </div>
-            <span class="cf-block-tag" id="uploadStatusTag">12 Questions Active</span>
+            <span class="cf-block-tag">Import</span>
           </summary>
           <div class="cf-collapsible-body">
             <div class="dsh-upload-zone">
               <label for="fileInputQuestionnaire" class="cf-field-label" style="cursor:pointer;">
-                Drop or select a client questionnaire (<code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or <code>.txt</code>)
+                Select file (<code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or <code>.txt</code>)
               </label>
               <input type="file" id="fileInputQuestionnaire" accept=".csv,.tsv,.json,.txt" class="cf-input" style="margin-top:6px;" />
             </div>
             <div class="cf-field-group" style="margin-top:8px;">
               <label for="customQuestionsTextarea" class="cf-field-label">
-                Or paste buyer questions (one per line or <code>Control-ID | Question</code>)
+                Or paste questions (one per line)
               </label>
               <textarea
                 id="customQuestionsTextarea"
                 class="cf-textarea"
-                rows="4"
-                placeholder="CAIQ-IAM-01 | Do you enforce multi-factor authentication (MFA) and SSO (SAML 2.0 / OIDC) for production access?&#10;CAIQ-CRY-02 | How is customer data encrypted in transit and at rest?"
+                rows="3"
+                placeholder="CAIQ-IAM-01 | Do you enforce MFA and SAML 2.0 SSO?&#10;CAIQ-CRY-02 | How is customer data encrypted?"
               ></textarea>
             </div>
             <div class="cf-webhook-btn-row">
               <button type="button" class="cf-btn-secondary" id="btnParseCustomQuestions">
-                Parse &amp; Auto-Answer Questions
+                Auto-Answer Custom Questions
               </button>
             </div>
             <div class="cf-webhook-status hidden" id="customParseFeedback"></div>
           </div>
         </details>
 
-        <!-- 3. COLLAPSIBLE DRILL-DOWN: 5-STAGE CITATION-LOCK TOPOLOGY & VANTA/DRATA WEBHOOK -->
+        <!-- STEP 2: SOURCE SECURITY POLICIES (CLEAN PILLS BY DEFAULT, EDITABLE ON CLICK) -->
+        <details class="cf-card-block cf-collapsible-block" id="detailsSourceCorpus">
+          <summary class="cf-collapsible-summary">
+            <div>
+              <span class="cf-block-kicker">STEP 2 OF 3 · KNOWLEDGE BASE</span>
+              <h2 class="cf-block-title">Active Security Policies (SOC 2 / ISO)</h2>
+            </div>
+            <span class="cf-block-tag" id="sourceCharCountBadge">12 Verified Rules</span>
+          </summary>
+          <div class="cf-collapsible-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <label for="sourceTitleInput" class="cf-field-label">Policy Dossier Name</label>
+              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource">Restore Default</button>
+            </div>
+            <input
+              type="text"
+              id="sourceTitleInput"
+              class="cf-input"
+              value="SOC 2 Type II Bridge Dossier &amp; Cloud Security Controls (2026)"
+            />
+            <div class="cf-field-group" style="margin-top:8px;">
+              <label for="sourceCorpusTextarea" class="cf-field-label">
+                Verified Policy Clauses (<code>[SOC2-CC6.1]</code>)
+              </label>
+              <textarea
+                id="sourceCorpusTextarea"
+                class="cf-textarea"
+                rows="4"
+                spellcheck="false"
+              ></textarea>
+            </div>
+          </div>
+        </details>
+
+        <!-- STEP 3: OPTIONAL WEBHOOK & API SYNC -->
         <details class="cf-card-block cf-collapsible-block" id="detailsPipelineDag">
           <summary class="cf-collapsible-summary">
             <div>
-              <span class="cf-block-kicker">TECHNICAL DRILL-DOWN 02</span>
-              <h2 class="cf-block-title">5-Stage Citation-Lock DAG &amp; Trust Center Webhook</h2>
+              <span class="cf-block-kicker">OPTIONAL · API &amp; TRUST CENTER</span>
+              <h2 class="cf-block-title">Webhook &amp; Vanta / Drata Sync</h2>
             </div>
-            <span class="cf-block-tag" id="dagStatusBadge">5/5 VERIFIED · SHA-256</span>
+            <span class="cf-block-tag" id="dagStatusBadge">5/5 Ready</span>
           </summary>
           <div class="cf-collapsible-body">
-            <div class="cf-dag-list" id="pipelineDagContainer" role="list">
-              <!-- Populated by app.js -->
-            </div>
+            <div class="cf-dag-list" id="pipelineDagContainer" role="list"></div>
             <div class="cf-field-group" style="margin-top:10px;">
-              <label for="webhookUrlInput" class="cf-field-label">Trust Center / Slack / Vanta Webhook Endpoint</label>
+              <label for="webhookUrlInput" class="cf-field-label">Webhook Endpoint</label>
               <input
                 type="url"
                 id="webhookUrlInput"
@@ -196,10 +222,10 @@
             </div>
             <div class="cf-webhook-btn-row">
               <button type="button" class="cf-btn-secondary" id="btnTestWebhook">
-                Dispatch Signed DDQ Manifest
+                Send Signed Webhook
               </button>
               <button type="button" class="cf-btn-outline" id="btnCopyN8nJson">
-                Copy JSON Manifest
+                Copy JSON
               </button>
             </div>
             <div class="cf-webhook-status hidden" id="webhookStatusBox" role="status"></div>
@@ -214,7 +240,7 @@
          =================================================================== -->
     <section class="cf-right-pane" aria-label="Answered DDQ Matrix, VPAT 2.5 Conformance Report and Export">
 
-      <!-- Tab Bar (Clean 4-Tab Layout) -->
+      <!-- Tab Bar (Short, Clear Human Labels) -->
       <div class="cf-tabs-header">
         <div class="cf-tab-list" role="tablist" aria-label="DealShield Output Views">
           <button
@@ -225,7 +251,7 @@
             data-tab="tab-ddq-matrix"
             id="tabBtnDdqMatrix"
           >
-            1. Answered DDQ Matrix
+            1. Answers Table
           </button>
           <button
             type="button"
@@ -235,7 +261,7 @@
             data-tab="tab-vpat-report"
             id="tabBtnVpatReport"
           >
-            2. VPAT 2.5 / EAA Report
+            2. VPAT 2.5 Report
           </button>
           <button
             type="button"
@@ -245,7 +271,7 @@
             data-tab="tab-gap-audit"
             id="tabBtnGapAudit"
           >
-            3. Gap &amp; Remediation Audit
+            3. Risk Gaps (2)
           </button>
           <button
             type="button"
@@ -255,7 +281,7 @@
             data-tab="tab-export-pack"
             id="tabBtnExportPack"
           >
-            4. Export (.CSV / Excel / JSON)
+            4. Export (.CSV / PDF)
           </button>
         </div>
       </div>
@@ -270,75 +296,68 @@
           <article class="cf-monograph-paper">
             <div class="cf-monograph-top-bar">
               <div>
-                <span class="cf-kicker-red" id="monographKicker">ENTERPRISE PROCUREMENT CLEARANCE · ZERO-LIBRARY CITATION LOCK</span>
+                <span class="cf-kicker-red" id="monographKicker">STEP 2 · CLICK ANY QUESTION ROW BELOW TO REVIEW OR EDIT ITS ANSWER</span>
                 <h1 class="cf-monograph-h1" id="monographTitle">CSA CAIQ v4.0.3 &amp; SOC 2 Type II Automated Security Questionnaire</h1>
               </div>
               <div class="cf-monograph-actions">
-                <button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download Answered .CSV</button>
-                <button type="button" class="cf-btn-mini" id="btnCopyAllAnswers">Copy Full DDQ Table</button>
+                <button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download .CSV</button>
+                <button type="button" class="cf-btn-mini" id="btnCopyAllAnswers">Copy All Answers</button>
               </div>
             </div>
 
-            <div class="cf-monograph-meta-strip">
-              <span>Manifest SHA-256: <code id="monographSha">8f4e2a91c0b3d7e2...</code></span>
-              <span>Verified Controls: <strong id="monographSpanCount">12/12</strong></span>
-              <span>Unanchored Claims: <strong class="val-pass">0.0%</strong></span>
-              <span>Turnaround: <strong id="monographReadTime">14.2s (vs. 11.5 hrs manual)</strong></span>
+            <!-- Hidden metadata anchors preserved for programmatic export/tests -->
+            <div class="hidden">
+              <code id="monographSha">8f4e2a91c0b3d7e2...</code>
+              <strong id="monographSpanCount">12/12</strong>
+              <strong id="monographReadTime">14.2s</strong>
+              <ul id="monographTakeawaysList"></ul>
             </div>
 
-            <!-- Concise Executive Summary Bullets -->
-            <div class="cf-takeaways-box">
-              <div class="cf-takeaways-title">PROCUREMENT CLEARANCE SUMMARY (100% EVIDENCE-BACKED)</div>
-              <ul class="cf-takeaways-list" id="monographTakeawaysList">
-                <!-- Populated by app.js -->
-              </ul>
+            <!-- Inline Selected Control Inspector & Response Editor (Placed right above the table for instant editing!) -->
+            <div class="dsh-editor-card" id="selectedControlInspector" style="margin-bottom: 12px;">
+              <div class="cf-block-header">
+                <div>
+                  <span class="cf-block-kicker" id="inspectorControlId">SELECTED QUESTION · EDIT ANSWER BELOW</span>
+                  <h3 class="cf-block-title" id="inspectorQuestionTitle">Select any row below to inspect or customize its answer</h3>
+                </div>
+                <span class="dsh-status-pill dsh-status-pass" id="inspectorAnchorBadge">[SOC2-CC6.1]</span>
+              </div>
+              <div class="cf-field-group">
+                <label for="inspectorAnswerTextarea" class="cf-field-label" style="display:none;">Answer</label>
+                <textarea id="inspectorAnswerTextarea" class="cf-textarea" rows="2"></textarea>
+              </div>
+              <div class="cf-webhook-btn-row" style="margin-top:6px;">
+                <button type="button" class="cf-btn-secondary" id="btnSaveEditedAnswer">Save Answer</button>
+                <button type="button" class="cf-btn-outline" id="btnCopySingleAnswer">Copy Answer</button>
+              </div>
             </div>
 
             <!-- Filter Bar -->
             <div class="dsh-filter-bar">
               <div class="dsh-filter-group" role="group" aria-label="Filter Questionnaire Controls">
-                <button type="button" class="dsh-filter-btn active" data-filter="all" id="filterBtnAll">All Controls (12)</button>
+                <button type="button" class="dsh-filter-btn active" data-filter="all" id="filterBtnAll">All (12)</button>
                 <button type="button" class="dsh-filter-btn" data-filter="COMPLIANT" id="filterBtnCompliant">Compliant (10)</button>
-                <button type="button" class="dsh-filter-btn" data-filter="COMPENSATING" id="filterBtnCompensating">Compensating / Action (2)</button>
+                <button type="button" class="dsh-filter-btn" data-filter="COMPENSATING" id="filterBtnCompensating">Needs Note (2)</button>
               </div>
-              <span class="cf-block-tag" id="ddqUnlockCounterBadge">Showing 12 Controls (6 Free · 6 Pro)</span>
+              <span class="cf-block-tag" id="ddqUnlockCounterBadge">6 Free · 6 Pro</span>
             </div>
 
-            <!-- Interactive Answered DDQ Table -->
+            <!-- Interactive Answered DDQ Table (Clean, Scannable Rows) -->
             <div class="cf-table-scroll-wrap">
               <table class="cf-eval-table" id="ddqMatrixTable">
                 <thead>
                   <tr>
-                    <th>Control ID</th>
-                    <th>Domain &amp; Buyer Procurement Question</th>
-                    <th>Evidence-Locked Response &amp; Policy Citation</th>
-                    <th>Anchor</th>
-                    <th>Status</th>
+                    <th style="width:90px;">ID</th>
+                    <th style="width:34%;">Question</th>
+                    <th>Auto-Filled Answer (Click row to edit)</th>
+                    <th style="width:110px;">Source</th>
+                    <th style="width:110px;">Status</th>
                   </tr>
                 </thead>
                 <tbody id="ddqMatrixTableBody">
                   <!-- Populated by app.js -->
                 </tbody>
               </table>
-            </div>
-
-            <!-- Inline Selected Control Inspector & Response Editor -->
-            <div class="dsh-editor-card" id="selectedControlInspector">
-              <div class="cf-block-header">
-                <div>
-                  <span class="cf-block-kicker" id="inspectorControlId">SELECTED CONTROL · CLICK ANY ROW TO EDIT OR VERIFY SOURCE</span>
-                  <h3 class="cf-block-title" id="inspectorQuestionTitle">Select any row above to inspect or customize its citation-locked answer</h3>
-                </div>
-                <span class="dsh-status-pill dsh-status-pass" id="inspectorAnchorBadge">[SOC2-CC6.1]</span>
-              </div>
-              <div class="cf-field-group">
-                <label for="inspectorAnswerTextarea" class="cf-field-label">Approved Vendor Response (Editable before .CSV / PDF export)</label>
-                <textarea id="inspectorAnswerTextarea" class="cf-textarea" rows="3"></textarea>
-              </div>
-              <div class="cf-webhook-btn-row" style="margin-top:6px;">
-                <button type="button" class="cf-btn-secondary" id="btnSaveEditedAnswer">Save Custom Response</button>
-                <button type="button" class="cf-btn-outline" id="btnCopySingleAnswer">Copy Row Answer</button>
-              </div>
             </div>
           </article>
         </div>

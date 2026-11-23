@@ -50,36 +50,39 @@
   </header>
 
   <!-- =====================================================================
-       BAR 2: CONCISE KPI SUMMARY & PRIMARY ACTION BAR (FLEX-WRAP SAFE)
+       BAR 2: GUIDED 3-STEP USER JOURNEY BAR (INTUITIVE 1 -> 2 -> 3 FLOW)
        ===================================================================== -->
-  <section class="cf-action-toolbar" aria-label="Pipeline Telemetry and Execution Controls">
-    <div class="cf-toolbar-left">
-      <span class="cf-preset-code-badge" id="activePresetCodeBadge">PIPE-N8N-01</span>
-      <span class="cf-active-pipeline-name hidden" id="activePresetTitleBar">n8n / Make.com Multi-Format Content &amp; Webhook Automation</span>
-
-      <div class="cf-telemetry-strip" aria-label="Real-Time Verification Metrics">
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Hallucination:</span>
-          <strong class="cf-metric-val val-pass" id="metricHallucination">0.0%</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Span F1:</span>
-          <strong class="cf-metric-val" id="metricPrecision">99.4%</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Latency:</span>
-          <strong class="cf-metric-val" id="metricLatency">1.38s</strong>
-        </div>
-        <div class="cf-metric-chip">
-          <span class="cf-metric-label">Cost:</span>
-          <strong class="cf-metric-val" id="metricCost">$0.014/run</strong>
+  <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
+    <div class="dsh-steps-track">
+      <div class="dsh-step-pill active" onclick="document.getElementById('presetSelect').focus()" title="Step 1: Choose an automation or evaluation scenario">
+        <span class="dsh-step-num">1</span>
+        <div>
+          <strong>Choose Scenario</strong>
+          <span class="dsh-step-sub" id="activePresetCodeBadge">PIPE-N8N-01</span>
         </div>
       </div>
+      <span class="dsh-step-arrow" aria-hidden="true">→</span>
+      <div class="dsh-step-pill" onclick="document.getElementById('tabRightEval').click()" title="Step 2: Inspect generated output and 0% hallucination check">
+        <span class="dsh-step-num">2</span>
+        <div>
+          <strong>Verify Output</strong>
+          <span class="dsh-step-sub">Span F1: <span id="metricPrecision">99.4%</span> · <span id="metricHallucination">0.0%</span> hallucination</span>
+        </div>
+      </div>
+      <span class="dsh-step-arrow" aria-hidden="true">→</span>
+      <div class="dsh-step-pill" onclick="document.getElementById('btnOpenEvalDossier').click()" title="Step 3: Export n8n JSON payload or printable evaluation PDF">
+        <span class="dsh-step-num">3</span>
+        <div>
+          <strong>Export JSON / PDF</strong>
+          <span class="dsh-step-sub"><span id="metricLatency">1.38s</span> · <span id="metricCost">$0.014/run</span></span>
+        </div>
+      </div>
+      <span class="hidden" id="activePresetTitleBar">n8n / Make.com Multi-Format Content &amp; Webhook Automation</span>
     </div>
 
     <div class="cf-toolbar-right">
-      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable Ground-Truth Evaluation &amp; Content Dossier (PDF)">
-        Evaluation Report (PDF)
+      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable Evaluation &amp; Content Dossier (PDF)">
+        Export PDF Report
       </button>
       <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">
         Run Pipeline →
@@ -88,33 +91,59 @@
   </section>
 
   <!-- =====================================================================
-       MAIN SPLIT-SCREEN WORKBENCH (PROGRESSIVE DISCLOSURE ARCHITECTURE)
+       MAIN SPLIT-SCREEN WORKBENCH (CLEAN 3-STEP PROGRESSIVE DISCLOSURE)
        ===================================================================== -->
   <main class="cf-split-workbench" id="cfMainWorkbench">
 
     <!-- ===================================================================
-         LEFT PANEL: CONCISE SOURCE INPUT FIRST -> DRILL-DOWN DRAWERS BELOW
+         LEFT PANEL: 1-CLICK SCENARIO CARDS FIRST -> DRILL-DOWN DRAWERS BELOW
          =================================================================== -->
     <section class="cf-left-pane" aria-label="Source Corpus, Pipeline Graph and Webhook Controls">
       <div class="cf-left-scroll">
 
-        <!-- 1. CONCISE SOURCE INPUT (VISIBLE IMMEDIATELY AT THE TOP) -->
+        <!-- STEP 1: 1-CLICK SCENARIO SWITCHER (ZERO WALLS OF TEXT) -->
         <div class="cf-card-block">
           <div class="cf-block-header">
             <div>
-              <span class="cf-block-kicker">STEP 1 · INPUT SOURCE DOCUMENT</span>
-              <h2 class="cf-block-title">Source Excerpt &amp; Citation Anchors</h2>
+              <span class="cf-block-kicker">STEP 1 OF 3</span>
+              <h2 class="cf-block-title">Select Workflow Scenario</h2>
             </div>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-              <span class="cf-block-tag" id="sourceCharCountBadge">0 chars · 0 anchors</span>
-              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource" title="Restore default preset source">
-                Restore Default
-              </button>
-            </div>
+            <span class="cf-block-tag" id="sourceCharCountBadge">6 Verified Anchors</span>
           </div>
+          <div class="dsh-quick-presets">
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='n8n-pipeline';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>n8n / Make Pipeline</strong>
+              <span>Webhook &amp; Content · Free</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='eval-harness';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>Evaluation Harness</strong>
+              <span>Document F1 · Free</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='edtech-courseware';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>EdTech Courseware</strong>
+              <span>SCORM 1.2 &amp; Quiz · PRO</span>
+            </button>
+            <button type="button" class="dsh-preset-card" onclick="document.getElementById('presetSelect').value='fintech-monograph';document.getElementById('presetSelect').dispatchEvent(new Event('change'))">
+              <strong>FinTech Monograph</strong>
+              <span>Cross-Border FX · PRO</span>
+            </button>
+          </div>
+        </div>
 
-          <div class="cf-field-group">
-            <label for="sourceTitleInput" class="cf-field-label">Document Title</label>
+        <!-- STEP 1B: EDIT SOURCE DOCUMENT (COLLAPSED BY DEFAULT FOR CLEAN UI) -->
+        <details class="cf-drilldown-drawer" id="detailsSourceExcerpt">
+          <summary class="cf-drawer-summary">
+            <div>
+              <span class="cf-drawer-kicker">STEP 2 OF 3 · SOURCE INPUT</span>
+              <strong class="cf-drawer-title">Edit Source Document &amp; Citation Anchors</strong>
+            </div>
+            <span class="cf-block-tag">Customize</span>
+          </summary>
+          <div class="cf-drawer-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <label for="sourceTitleInput" class="cf-field-label">Document Title</label>
+              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource">Restore Default</button>
+            </div>
             <input
               type="text"
               id="sourceTitleInput"
@@ -122,20 +151,19 @@
               value=""
               placeholder="Enter source specification title..."
             />
+            <div class="cf-field-group" style="margin-top:6px;">
+              <label for="sourceTextInput" class="cf-field-label">
+                Source Text (<code>[Clause X.Y]</code>)
+              </label>
+              <textarea
+                id="sourceTextInput"
+                class="cf-textarea cf-source-textarea"
+                rows="4"
+                placeholder="Paste technical specification or statute..."
+              ></textarea>
+            </div>
           </div>
-
-          <div class="cf-field-group">
-            <label for="sourceTextInput" class="cf-field-label">
-              Source Text (Anchors like <code>[Clause X.Y]</code> are verified against generated claims)
-            </label>
-            <textarea
-              id="sourceTextInput"
-              class="cf-textarea cf-source-textarea"
-              rows="4"
-              placeholder="Paste technical specification, regulatory statute, or audit excerpt..."
-            ></textarea>
-          </div>
-        </div>
+        </details>
 
         <!-- 2. DRILL-DOWN DRAWER A: 5-STAGE PIPELINE TOPOLOGY (COLLAPSED BY DEFAULT FOR ZERO CLUTTER) -->
         <details class="cf-drilldown-drawer">

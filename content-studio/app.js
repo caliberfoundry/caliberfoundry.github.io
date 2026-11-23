@@ -1407,7 +1407,7 @@
       });
     }
 
-    const acctForm = document.getElementById('cfAccountForm');
+    const acctForm = document.getElementById('formAccountSignIn');
     if (acctForm) {
       acctForm.addEventListener('submit', (e) => {
         e.preventDefault();

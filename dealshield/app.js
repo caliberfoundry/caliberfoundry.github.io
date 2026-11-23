@@ -698,18 +698,21 @@
       const isSelected = idx === state.selectedControlIndex;
       const statusClass = ctrl.status === "COMPLIANT" ? "dsh-status-pass" : "dsh-status-warn";
 
+      const conciseAns =
+        ctrl.answer && ctrl.answer.length > 105
+          ? ctrl.answer.slice(0, 102) + "…"
+          : ctrl.answer;
+
       const answerCellHtml = isLockedRow
         ? '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
-          '<span style="color:var(--cf-ink-muted);font-family:var(--font-mono);font-size:11.5px;">[PRO LOCK · Citation-locked answer verified against ' +
+          '<span style="color:var(--cf-ink-muted);font-family:var(--font-mono);font-size:11.5px;">Locked (' +
           escapeHtml(ctrl.anchor) +
-          " (" +
-          escapeHtml(ctrl.confidence) +
-          ")]</span>" +
+          ")</span>" +
           '<button type="button" class="cf-btn-mini js-unlock-row-btn" data-row-index="' +
           idx +
-          '">Unlock Deal Pack ($199)</button>' +
+          '">Unlock ($199)</button>' +
           "</div>"
-        : "<div>" + escapeHtml(ctrl.answer) + "</div>";
+        : '<div class="dsh-concise-ans">' + escapeHtml(conciseAns) + "</div>";
 
       rowsHtml.push(
         '<tr class="js-ddq-row ' +
