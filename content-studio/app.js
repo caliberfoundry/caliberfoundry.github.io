@@ -1562,7 +1562,9 @@
         saveState();
 
         if (isLocalQaEnvironment()) {
-          validateAndActivateLicenseKey('CF-FORGE-2026-PRO');
+          STATE.licenseTier = 'PRO';
+          saveState();
+          refreshAllViews();
           return;
         }
 

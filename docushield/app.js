@@ -1875,7 +1875,9 @@
         saveState();
       }
       if (isLocalQaEnvironment()) {
-        validateAndActivateLicenseKey('DS-PRO-2026-CALIBER');
+        STATE.licenseTier = 'PRO';
+        saveState();
+        renderAll();
         return;
       }
       const gwEl = document.querySelector('#cardCheckoutForm select');
