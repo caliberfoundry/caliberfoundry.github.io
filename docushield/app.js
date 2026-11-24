@@ -1170,8 +1170,18 @@
     document.getElementById('scorecardPacketHeading').textContent = pkt.fileName;
     const openChecks = pkt.checkpoints.filter(cp => (isRem ? cp.statusAfter : cp.statusBefore) !== 'PASS');
     const first = openChecks.find(cp => pkt.visualRegions.some(reg => reg.checkpointId === cp.id)) || openChecks[0];
+    const fileTitle = document.getElementById('docCurrentFile');
+    fileTitle.replaceChildren();
+    for (const part of pkt.fileName.split(/(?<=[_-])/)) {
+      if (fileTitle.childNodes.length) fileTitle.append(document.createElement('wbr'));
+      fileTitle.append(part);
+    }
+    document.getElementById('docInputKind').textContent = pkt.id === 'CUSTOM-UPLOAD' ? 'Your document' : 'Sample document';
+    document.getElementById('docFindingsCount').textContent = failedCp;
+    document.getElementById('docFindingsLabel').textContent = failedCp === 1 ? 'open finding' : 'open findings';
+    document.getElementById('dsReviewResults').textContent = first ? 'Inspect first finding' : 'Inspect document';
     document.getElementById('dsAssessmentSummary').textContent =
-      pkt.fileName + ' · ' + passedCp + ' of ' + totalCp + ' checks passed. ' + (first ? 'First finding: ' + first.title : 'Review reading order, descriptions and table semantics manually.');
+      passedCp + ' of ' + totalCp + ' checks passed. ' + (first ? 'First finding: ' + first.title : 'Review reading order, descriptions and table semantics manually.');
 
     const riskPill = document.getElementById('scorecardRiskPill');
     const bigNum = document.getElementById('scorecardPercentVal');
@@ -1794,10 +1804,10 @@
       showToast('Copied Remediated /StructTreeRoot & XMP Payload to Clipboard');
     });
 
-    document.getElementById('btnDownloadExportFile').addEventListener('click', () => {
+    function downloadAssessment(format) {
       const pkt = getActivePacket();
-      const ext = STATE.activeExportFormat === 'xml' ? 'xml' : 'json';
-      const content = buildExportPayloadString(STATE.activeExportFormat);
+      const ext = format === 'xml' ? 'xml' : 'json';
+      const content = buildExportPayloadString(format);
       const blob = new Blob([content], { type: ext === 'xml' ? 'application/xml' : 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -1808,7 +1818,10 @@
       a.remove();
       URL.revokeObjectURL(url);
       showToast(`Downloaded ${pkt.code}_PDFUA_StructTreeRoot.${ext}`);
-    });
+    }
+
+    document.getElementById('btnDownloadExportFile').addEventListener('click', () => downloadAssessment(STATE.activeExportFormat));
+    document.getElementById('dsDownloadAssessment').addEventListener('click', () => downloadAssessment('json'));
 
     // 9. Paywall, Registration & 3 Payment Methods Modal
     document.getElementById('btnClosePaywallModal').addEventListener('click', () => {
@@ -1921,6 +1934,7 @@
       const domainParam = params.get('domain');
       const fileParam = params.get('file');
       if (domainParam) {
+        document.getElementById('dsAdvancedWorkspace').open = true;
         scanDomainOrUrl(domainParam, fileParam);
       }
     } catch (e) {
@@ -1936,6 +1950,7 @@
     initEventListeners();
     function openStep(step) {
       if (step === 1) {
+        document.getElementById('dsAdvancedWorkspace').open = true;
         STATE.activeLeftTab = 'visual';
         const pkt = getActivePacket();
         const phase = isActivePacketRemediated() ? 'statusAfter' : 'statusBefore';

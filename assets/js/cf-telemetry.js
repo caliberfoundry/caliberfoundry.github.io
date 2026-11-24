@@ -385,6 +385,8 @@
       ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #818CF8; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
       ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #F6F4EF; }",
       ".cf-fb-close { background: transparent; border: 1px solid #3F3F46; border-radius: 4px; color: #F6F4EF; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
+      "#cfFeedbackDockRoot.cf-fb-product-footer { position:static; z-index:auto; display:inline-block; margin:8px 12px; }",
+      "#cfFeedbackDockRoot.cf-fb-product-footer .cf-fb-trigger-btn { background:transparent; color:inherit; border:0; box-shadow:none; padding:6px; font:inherit; font-size:12px; text-decoration:underline; text-underline-offset:3px; }",
       ".cf-fb-close:hover { background: #C8431F; border-color: #C8431F; color: #FFFFFF; }",
       ".cf-fb-body { padding: 18px; }",
       ".cf-fb-context-bar { background: #ECE9E1; border: 1px solid #E4E2DD; border-radius: 5px; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #52514E; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
@@ -408,7 +410,9 @@
     ].join("\n");
     document.head.appendChild(styleEl);
 
-    var headerMountTarget = document.querySelector(
+    var productDesign = document.documentElement.hasAttribute("data-product-design");
+    var feedbackFooter = document.querySelector("[data-product-feedback]");
+    var headerMountTarget = productDesign || feedbackFooter ? null : document.querySelector(
       ".cf-account-cluster, .ds-account-cluster, .cd-global-controls, .cf-top-actions, .masthead-inner"
     );
     var dock = document.createElement("div");
@@ -422,6 +426,14 @@
       "</button>";
     if (headerMountTarget) {
       headerMountTarget.appendChild(dock);
+    } else if (productDesign || feedbackFooter) {
+      var utilityArea = feedbackFooter || document.querySelector("footer");
+      if (!utilityArea) {
+        utilityArea = document.createElement("footer");
+        document.body.appendChild(utilityArea);
+      }
+      dock.className = "cf-fb-product-footer";
+      utilityArea.appendChild(dock);
     } else {
       document.body.appendChild(dock);
     }
@@ -858,7 +870,7 @@
       closeContact: closeContactModal
     };
 
-    mountWorkbenchTheme();
+    if (!productDesign) mountWorkbenchTheme();
   }
 
   function mountWorkbenchTheme() {

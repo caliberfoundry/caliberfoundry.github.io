@@ -2145,6 +2145,7 @@
     renderAttachedCitationProofBar(q, work);
 
     // 6. Options A–E with Radio Selection & Right-Click / Button Strikethrough
+    document.getElementById('btnVerifyAnswerMain').disabled = !work.selectedOption;
     const optionsContainer = document.getElementById('qOptionsList');
     optionsContainer.innerHTML = '';
 
@@ -2173,7 +2174,7 @@
             class="q-option-radio"
             value="${escapeHtml(opt.letter)}"
             ${isSelected ? 'checked' : ''}
-            aria-label="Option ${escapeHtml(opt.letter)}"
+            aria-label="Option ${escapeHtml(opt.letter)}. ${escapeHtml(opt.text)}"
           />
           <span class="q-option-letter">${escapeHtml(opt.letter)}.</span>
           <span class="q-option-text">${escapeHtml(opt.text)}</span>
@@ -2278,6 +2279,7 @@
     work.struckOptions = (work.struckOptions || []).filter(l => l !== letter);
     saveUserState();
     renderQuestionWorkspace();
+    document.querySelector('#qOptionsList input:checked')?.focus({preventScroll:true});
 
     if (STATE.activeMode === 'drill') {
       updateDrillHudMetrics();
@@ -2347,7 +2349,9 @@
 
     const expPanel = document.getElementById('qExplanationPanel');
     if (expPanel) {
-      expPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      expPanel.tabIndex = -1;
+      expPanel.focus({preventScroll:true});
+      expPanel.scrollIntoView({block:'start'});
     }
   }
 
@@ -4023,8 +4027,8 @@
         const ws = document.getElementById('pvueSplitWorkspace');
         const leftPane = document.getElementById('pvueLeftPane');
         const rightPane = document.getElementById('pvueRightPane');
-        leftPane.style.width = '';
-        rightPane.style.width = '';
+        leftPane.style.removeProperty('--pane-width');
+        rightPane.style.removeProperty('--pane-width');
         ws.setAttribute('data-ratio', ratio);
         document.querySelectorAll('.pvue-ratio-btn').forEach(b => b.classList.toggle('active', b === btn));
       });
@@ -4044,8 +4048,8 @@
         const rect = ws.getBoundingClientRect();
         if (rect.width < 600) return;
         const leftPct = Math.max(28, Math.min(72, ((e.clientX - rect.left) / rect.width) * 100));
-        document.getElementById('pvueLeftPane').style.width = `${leftPct}%`;
-        document.getElementById('pvueRightPane').style.width = `${100 - leftPct}%`;
+        document.getElementById('pvueLeftPane').style.setProperty('--pane-width', `${leftPct}%`);
+        document.getElementById('pvueRightPane').style.setProperty('--pane-width', `${100 - leftPct}%`);
       });
       window.addEventListener('mouseup', () => {
         if (isDraggingSplit) {
@@ -4565,20 +4569,22 @@
     const split = document.getElementById('pvueSplitWorkspace');
     const buttons = document.querySelectorAll('[data-study-pane]');
     const storedPositions = { question: null, source: null };
-    const narrow = window.matchMedia('(max-width: 900px)');
-    const menus = [document.querySelector('.study-settings'),document.querySelector('.exam-tools')];
-    const sizeMenus = () => menus.forEach(menu => { menu.open = !narrow.matches; });
-    sizeMenus();
-    narrow.addEventListener('change', sizeMenus);
     function showPane(name, remember = true) {
       const previous = split.dataset.pane || 'question';
       const start = split.getBoundingClientRect().top + window.scrollY;
       if (remember && previous !== name) storedPositions[previous] = window.scrollY - start;
+      split.classList.remove('study-split');
       split.dataset.pane = name;
       buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.studyPane === name)));
-      if (narrow.matches) window.scrollTo(0, Math.max(0, start + (storedPositions[name] ?? -52)));
+      window.scrollTo(0, Math.max(0, start + (storedPositions[name] ?? -52)));
     }
     buttons.forEach(button => button.addEventListener('click', () => showPane(button.dataset.studyPane)));
+    for (const id of ['btnJumpToAttachedProof', 'btnExpOpenTargetSection']) {
+      document.getElementById(id).addEventListener('click', () => showPane('source'));
+    }
+    document.querySelectorAll('[data-split]').forEach(button => button.addEventListener('click', () => {
+      if (window.matchMedia('(min-width: 901px)').matches) split.classList.add('study-split');
+    }));
     window.addEventListener('cf:open-step', event => {
       const step = Number(event.detail?.step);
       if (step === 3) { openB2BTeamReadinessReport(); return; }

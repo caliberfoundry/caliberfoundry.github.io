@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="stealthflow">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -9,7 +9,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>StealthFlow™ — 12-Source Playwright Extraction & Make.com Webhook Hub | Caliber Foundry</title>
+  <title>StealthFlow · Sample catalog export | Caliber Foundry</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -600,114 +600,40 @@
     }
     [hidden] { display:none !important; }
   </style>
+  <link rel="stylesheet" href="./catalog.css" />
 </head>
 <body>
 
-  <!-- Top Masthead -->
-  <header class="masthead">
-    <div class="masthead-inner">
-      <div class="brand-group">
-        <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
-        <div>
-          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">StealthFlow&trade; Catalog Data Explorer</h1>
-            <span class="status-tag">50 SAMPLE RECORDS</span>
-          </div>
-          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Filter 50 sample records, inspect the cleaned fields and download your selection.
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <a class="btn-tactile" href="#filters">Filter records</a>
-        <button type="button" onclick="exportCleanJSON()" id="btnDownloadJsonTop" class="btn-tactile">
-          <span>Download all 50 as JSON</span>
-          <span>&darr;</span>
-        </button>
-        <button type="button" onclick="scrollToWebhookTester()" class="btn-tactile btn-tactile-vermilion">
-          <span>Preview payload</span>
-          <span>&rarr;</span>
-        </button>
-        <a href="mailto:engineering@caliberfoundry.com?subject=StealthFlow%20Custom%20Web%20Scraper%20Inquiry" class="btn-tactile">
-          <span>Contact Engineering</span>
-          <span>&nearr;</span>
-        </a>
-      </div>
-    </div>
+  <header class="sf-banner">
+    <div class="sf-width sf-top"><a class="sf-name" href="./">StealthFlow</a><a href="../#work">All products ↗</a></div>
   </header>
-
-  <main class="shell">
-
-    <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
-    <div class="how-it-works-strip" aria-label="Catalog workflow">
-      <button type="button" class="hiw-step-btn" onclick="document.getElementById('liveScrapeUrlInput').focus()">
-        <span class="hiw-num">STEP 1 &rarr;</span>
-        <span><strong>Choose a sample record</strong></span>
-      </button>
-      <button type="button" class="hiw-step-btn" onclick="triggerStep2Demo()">
-        <span class="hiw-num">STEP 2 &rarr;</span>
-        <span><strong>Compare the selected record</strong></span>
-      </button>
-      <button type="button" class="hiw-step-btn" onclick="scrollToWebhookTester()">
-        <span class="hiw-num">STEP 3 &rarr;</span>
-        <span><strong>Preview a JSON payload</strong> (or download as an Excel .CSV file).</span>
-      </button>
+  <main class="sf-width sf-shell">
+    <div class="sf-desk">
+      <section class="sf-export" aria-labelledby="catalog-heading">
+        <h1 id="catalog-heading">Catalog export</h1><p>Choose a sample segment and download its records.</p>
+        <div class="sf-segments" id="filters" aria-label="Catalog segment">
+          <button type="button" id="btnResetSources" onclick="selectSource('ALL')" aria-pressed="true">All records</button>
+          <button type="button" id="qf_src_02_shopify_plus" onclick="selectSource('src_02_shopify_plus')" aria-pressed="false">Shopify</button>
+          <button type="button" id="qf_src_03_g2_saas" onclick="selectSource('src_03_g2_saas')" aria-pressed="false">B2B software</button>
+        </div>
+        <div class="sf-count"><strong id="matchingCount" aria-live="polite">50</strong><span>rows selected</span></div>
+        <button type="button" id="btnDownloadCsvTop" onclick="exportCleanCSV()">Download CSV ↓</button>
+        <p id="sfExportStatus" role="status"></p>
+      </section>
+      <section class="sf-samples" aria-labelledby="sfPreviewTitle">
+        <div class="sf-preview-title"><h2 id="sfPreviewTitle">Selection preview</h2><span id="sfPreviewCount"></span></div>
+        <div id="sfPreviewRows"></div>
+        <details class="sf-more" id="sfDownloadOptions">
+          <summary>Other download formats</summary>
+          <div><button type="button" id="exportAllCsv" onclick="exportCleanCSV('all')">All 50 as CSV</button>
+          <button type="button" id="btnDownloadJsonTop" onclick="exportCleanJSON()">All 50 as JSON</button></div>
+        </details>
+      </section>
     </div>
-
-    <!-- Step 1 Live Website Scraper Simulator -->
-    <div class="live-scraper-bar">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-        <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; font-size:11.5px;">
-          1. Select a sample record
-        </span>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">
-          Local sample dataset
-        </span>
-      </div>
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <label for="liveScrapeUrlInput">Sample</label>
-        <select id="liveScrapeUrlInput" class="input-mechanical" style="flex:1;min-width:0;"></select>
-        <button type="button" onclick="runLiveUrlExtraction()" id="btnRunLiveExtraction" class="btn-tactile btn-tactile-vermilion" style="padding:8px 16px;">
-          <span>Inspect sample</span>
-        </button>
-      </div>
-      <div id="liveExtractionStatusBanner" class="live-status-banner">
-        <span role="status" id="liveExtractionStatusText">Choose a sample record to inspect.</span>
-      </div>
-    </div>
-
-    <!-- Step 1 Quick Industry Filter Strip -->
-    <div class="quick-filter-strip" id="filters">
-      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; margin-right:4px;">FILTER BY INDUSTRY:</span>
-        <button type="button" onclick="selectSource('ALL')" id="btnResetSources" class="btn-tactile btn-tactile-ink" style="padding:5px 10px; font-size:11px;">
-          All 12 Website Sources (50)
-        </button>
-        <button type="button" onclick="selectSource('src_02_shopify_plus')" id="qf_src_02_shopify_plus" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-          Shopify &amp; eCommerce (5)
-        </button>
-        <button type="button" onclick="selectSource('src_03_g2_saas')" id="qf_src_03_g2_saas" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-          B2B SaaS Directories (4)
-        </button>
-        <button type="button" onclick="selectSource('src_01_thomasnet')" id="qf_src_01_thomasnet" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-          Industrial Manufacturers (5)
-        </button>
-        <button type="button" onclick="selectSource('src_05_medtech_reg')" id="qf_src_05_medtech_reg" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-          Healthcare &amp; MedTech (4)
-        </button>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap" aria-label="CSV downloads">
-        <button type="button" id="btnDownloadCsvTop" onclick="exportCleanCSV()" class="btn-tactile">Export filtered rows</button>
-        <button type="button" id="exportAllCsv" onclick="exportCleanCSV('all')" class="btn-tactile">Export all 50 (CSV)</button>
-      </div>
-      <div class="mono" style="font-size:11.5px; color:var(--cf-ink-secondary);">
-        SHOWING: <strong aria-live="polite" id="matchingCount" style="color:var(--cf-accent-primary);">50</strong> / 50 RECORDS
-      </div>
-    </div>
-
+    <details class="sf-drawer" id="sfRecords">
+      <summary>Browse and filter the records</summary>
     <!-- Split Workbench: Left = 50-Record Ledger | Right = Before/After Comparison + Make.com Webhook Dispatcher -->
-    <section class="workbench-grid">
+    <div class="sf-records-body">
 
       <!-- Left Cols: 50 Validated Records Ledger -->
       <div class="ledger-pane">
@@ -719,12 +645,12 @@
             </select>
           </div>
           <div class="mono" style="font-size:11px; color:var(--cf-accent-primary); font-weight:700;">
-            &rarr; CLICK ANY ROW TO COMPARE BEFORE vs. AFTER
+            Select a record to inspect it
           </div>
         </div>
 
         <div class="table-scroll" style="max-height:540px;">
-          <table class="ft-ledger">
+          <table class="ft-ledger" aria-label="Records matching your filters">
             <thead>
               <tr>
                 <th>ID / SOURCE</th>
@@ -741,14 +667,20 @@
         </div>
       </div>
 
-      <!-- Right Cols: STEP 2 Before vs After Card + STEP 3 Make.com Webhook Dispatcher -->
-      <aside class="inspector-pane">
-
+    </div>
+    </details>
+    <details class="sf-drawer" id="sfInspector">
+      <summary>Inspect a record and its cleaned fields</summary>
+      <div class="sf-drawer-content">
+        <label for="liveScrapeUrlInput">Sample record</label>
+        <div class="sf-record-picker"><select id="liveScrapeUrlInput" class="input-mechanical"></select>
+        <button type="button" onclick="runLiveUrlExtraction()" id="btnRunLiveExtraction" class="btn-tactile">Inspect record</button></div>
+        <div id="liveExtractionStatusBanner"><span role="status" id="liveExtractionStatusText">Choose a sample record to inspect.</span></div>
         <!-- Block 1 (TOP OF RIGHT PANE): Before vs. After Data Cleaning WOW Card -->
-        <div id="beforeAfterCard" class="inspector-block" style="background-color:#FFFFFF;">
+        <div id="beforeAfterCard" tabindex="-1" class="inspector-block" style="background-color:#FFFFFF;">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; padding-bottom:8px; border-bottom:1.5px solid var(--cf-rule-strong);">
             <div>
-              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 2 &mdash; BEFORE vs. AFTER DATA CLEANING</div>
+              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">Field comparison</div>
               <h3 style="font-family:var(--font-display); font-size:21px; font-weight:400;">
                 Sample record &middot; <span id="inspectedLeadId" class="mono" style="font-size:15px; color:var(--cf-accent-primary); font-weight:700;">SF-1001</span>
               </h3>
@@ -764,19 +696,19 @@
             <!-- BEFORE: Raw Blocked / Messy Web Page -->
             <div class="ba-box-raw">
               <div class="mono" style="font-size:10.5px; font-weight:700; color:var(--cf-accent-primary); margin-bottom:6px;">
-                &#10007; BEFORE (RAW SCRAPE / BROKEN HTML)
+                Source format
               </div>
               <div class="mono" style="font-size:10.5px; color:#5C2B22; line-height:1.5;">
-                <div><strong>1. Anti-Bot Block:</strong> <span id="baRawBlock">HTTP 403 Cloudflare Turnstile</span></div>
-                <div style="margin-top:4px;"><strong>2. Dirty Tracking URL:</strong><br/><span id="inspectedDirtyUrl" style="text-decoration:line-through; word-break:break-all;"></span></div>
-                <div style="margin-top:4px;"><strong>3. Unparsed Price &amp; Raw PII:</strong><br/><span id="baRawPrice">"From $1,450.00* USD (Call for quote)"</span><br/><span>Unmasked personal email (GDPR risk)</span></div>
+                <div><strong>Sample field status:</strong> <span id="baRawBlock">HTTP 403 Cloudflare Turnstile</span></div>
+                <div style="margin-top:4px;"><strong>Source URL:</strong><br/><span id="inspectedDirtyUrl" style="text-decoration:line-through; word-break:break-all;"></span></div>
+                <div style="margin-top:4px;"><strong>Price text:</strong><br/><span id="baRawPrice">"From $1,450.00* USD (Call for quote)"</span></div>
               </div>
             </div>
 
             <!-- AFTER: 100% Clean, Typed & Anonymized -->
             <div class="ba-box-clean">
               <div class="mono" style="font-size:10.5px; font-weight:700; color:var(--cf-forest-pass); margin-bottom:6px; display:flex; justify-content:space-between;">
-                <span>&check; AFTER STEALTHFLOW&trade; (CLEAN)</span>
+                <span>Cleaned fields</span>
                 <span id="inspectedMatchScore">99.4%</span>
               </div>
               <div style="font-size:11.5px; color:var(--cf-ink-primary); line-height:1.5;">
@@ -790,17 +722,21 @@
 
           <details style="margin-top:10px; border:1px solid var(--cf-rule-mid); background:var(--cf-bg-stone);">
             <summary class="mono" style="padding:6px 10px; font-size:10.5px; font-weight:600; cursor:pointer;">
-              Inspect Full 18-Field Validated JSON Payload &darr;
+              Inspect all fields &darr;
             </summary>
             <pre id="jsonInspectorPre" class="terminal-box" style="max-height:160px; color:#E7E5DF; margin:0; border:none;"></pre>
           </details>
         </div>
 
+      </div>
+    </details>
+    <details class="sf-drawer" id="sfPayload">
+      <summary>Preview JSON payload</summary>
         <!-- Block 2: Live Make.com Webhook Dispatcher -->
         <div id="webhookTesterCard" class="inspector-block" style="background-color:var(--cf-bg-stone); flex:1;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">3. Preview or export</div>
+              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">Preview</div>
               <h3 style="font-family:var(--font-display); font-size:20px; font-weight:400;">JSON payload preview</h3>
             </div>
             <span class="status-tag">LOCAL PREVIEW</span>
@@ -829,11 +765,10 @@
           </div>
         </div>
 
-      </aside>
-    </section>
+    </details>
 
     <!-- Collapsible Drawer: All 12 Scraper Templates & Anti-Bot Technical Specs -->
-    <details class="tech-drawer">
+    <details class="sf-drawer" id="sfAllSources">
       <summary>Browse all 12 sample source categories</summary>
       <section id="sourcesGrid" class="sources-grid">
         <!-- Populated dynamically by JS -->
@@ -842,13 +777,7 @@
 
   </main>
 
-  <footer class="site-footer">
-    <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
-      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; STEALTHFLOW&trade; CATALOG DATA EXPLORER</span>
-      <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
-    </div>
-  </footer>
-
+  <footer class="sf-width sf-footer"><span>StealthFlow · Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com?subject=StealthFlow%20inquiry">Contact engineering</a></footer>
   <script>
     const SOURCE_TEMPLATES = [
       { id: "src_01_thomasnet", code: "S01", name: "ThomasNet Industrial", bypass: "Cloudflare Turnstile + JA3", method: "GraphQL XHR", latency: "140ms", pass: "100%" },
@@ -970,23 +899,38 @@
     }
 
     function updateSourceButtonHighlights() {
-      const resetBtn = document.getElementById('btnResetSources');
-      if (resetBtn) {
-        resetBtn.className = (activeSourceId === 'ALL') ? 'btn-tactile btn-tactile-ink' : 'btn-tactile';
-        resetBtn.textContent = (activeSourceId === 'ALL')
-          ? 'All 12 Website Sources (50)'
-          : 'Show All 50 Records';
+      for (const [id, source] of [['btnResetSources','ALL'],['qf_src_02_shopify_plus','src_02_shopify_plus'],['qf_src_03_g2_saas','src_03_g2_saas']]) {
+        const matches = activeSourceId === source && document.getElementById('categoryFilter').value === 'ALL';
+        document.getElementById(id).setAttribute('aria-pressed', String(matches));
       }
-      ['src_02_shopify_plus', 'src_03_g2_saas', 'src_01_thomasnet', 'src_05_medtech_reg'].forEach(id => {
-        const qf = document.getElementById('qf_' + id);
-        if (qf) {
-          qf.className = (activeSourceId === id) ? 'btn-tactile btn-tactile-vermilion' : 'btn-tactile';
-        }
+    }
+
+    function showRecord(leadId) {
+      inspectLead(leadId);
+      document.getElementById('sfInspector').open = true;
+      document.getElementById('beforeAfterCard').focus();
+    }
+
+    function renderSelectionPreview(records) {
+      const panel = document.getElementById('sfPreviewRows');
+      const first = records.slice(0, 3);
+      document.getElementById('sfPreviewCount').textContent = first.length ? first.length + ' of ' + records.length : '';
+      panel.replaceChildren();
+      if (!first.length) panel.textContent = 'No matching records. Change the filters to include a company.';
+      first.forEach(row => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'sf-preview-row';
+        button.innerHTML = '<span class="sf-code">' + escapeHtml(row.lead_id) + '</span><span><strong>' + escapeHtml(row.company_name) +
+          '</strong><small>' + escapeHtml(row.location) + '</small></span><span class="sf-chevron" aria-hidden="true">↗</span>';
+        button.addEventListener('click', () => showRecord(row.lead_id));
+        panel.append(button);
       });
     }
 
     function selectSource(sourceId, userSelected = true) {
-      activeSourceId = (activeSourceId === sourceId && sourceId !== 'ALL') ? 'ALL' : sourceId;
+      activeSourceId = sourceId;
+      document.getElementById('searchInput').value = '';
       const catSelect = document.getElementById('categoryFilter');
       if (catSelect) catSelect.value = 'ALL';
       updateSourceButtonHighlights();
@@ -1042,8 +986,10 @@
     function renderLeadsTable() {
       const filtered = getFilteredLeads();
       document.getElementById('matchingCount').textContent = filtered.length;
+      renderSelectionPreview(filtered);
+      document.getElementById('sfExportStatus').textContent = '';
       const csv = document.getElementById('btnDownloadCsvTop');
-      csv.textContent = `Export ${filtered.length} filtered rows (CSV)`;
+      csv.textContent = `Download ${filtered.length} rows as CSV ↓`;
       csv.disabled = filtered.length === 0;
       document.getElementById('beforeAfterCard').hidden = !filtered.length;
       if (!filtered.length) {
@@ -1057,9 +1003,9 @@
       tbody.innerHTML = filtered.map(item => {
         const isSelected = selectedLead && selectedLead.lead_id === item.lead_id;
         return `
-          <tr onclick="inspectLead('${escapeHtml(item.lead_id)}')" class="${isSelected ? 'selected-row' : ''}">
+          <tr onclick="showRecord('${escapeHtml(item.lead_id)}')" class="${isSelected ? 'selected-row' : ''}">
             <td>
-              <button type="button" class="btn-tactile" onclick="event.stopPropagation(); inspectLead('${escapeHtml(item.lead_id)}')" aria-label="Inspect ${escapeHtml(item.company_name)}">${escapeHtml(item.lead_id)}</button>
+              <button type="button" class="btn-tactile" onclick="event.stopPropagation(); showRecord('${escapeHtml(item.lead_id)}')" aria-label="Inspect ${escapeHtml(item.company_name)}">${escapeHtml(item.lead_id)}</button>
               <div style="font-size:10.5px; color:var(--cf-ink-muted); max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.source_name)}</div>
             </td>
             <td>
@@ -1108,7 +1054,7 @@
       const cleanSkusEl = document.getElementById('baCleanSkus');
       const cleanContactEl = document.getElementById('baCleanContact');
 
-      if (rawBlockEl) rawBlockEl.textContent = `HTTP 403 (${found.anti_bot_bypass.split('+')[0].trim()} Block)`;
+      if (rawBlockEl) rawBlockEl.textContent = 'Sample text input';
       if (rawPriceEl) rawPriceEl.textContent = `"From $${Number(found.unit_price_avg).toLocaleString()}* USD across ~${found.sku_count} messy HTML tags"`;
       if (cleanCompEl) cleanCompEl.textContent = `${found.company_name} (${found.location} · ${found.annual_revenue_est})`;
       if (cleanSkusEl) cleanSkusEl.textContent = `${Number(found.sku_count).toLocaleString()} SKUs · $${Number(found.unit_price_avg).toLocaleString()} normalized float`;
@@ -1128,6 +1074,7 @@
     }
 
     function triggerStep2Demo() {
+      document.getElementById('sfInspector').open = true;
       const filtered = getFilteredLeads();
       if (!filtered.length) return;
       const row = filtered.includes(selectedLead) ? selectedLead : filtered[0];
@@ -1136,6 +1083,7 @@
     }
 
     function runLiveUrlExtraction() {
+      document.getElementById('sfInspector').open = true;
       const url = document.getElementById('liveScrapeUrlInput').value;
       const sample = LEADS_DATA.find(row => row.canonical_url === url);
       if (!sample) return;
@@ -1190,11 +1138,13 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       const statusText = document.getElementById('liveExtractionStatusText');
-      if (statusText) statusText.textContent = `Downloaded ${records.length} ${scope} sample rows as CSV.`;
+      if (statusText) statusText.textContent = `Downloaded ${records.length} sample rows as CSV.`;
+      document.getElementById('sfExportStatus').textContent = `CSV prepared · ${records.length} sample rows.`;
       window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'export_ready'}}));
     }
 
     function scrollToWebhookTester() {
+      document.getElementById('sfPayload').open = true;
       document.getElementById('btnFireWebhook').focus();
       fireMakeWebhook();
     }
@@ -1212,7 +1162,7 @@
 
     document.getElementById('dispatchModeSelect').addEventListener('change', fireMakeWebhook);
     window.addEventListener('cf:open-step', ({detail}) => {
-      if (detail.step === 1) document.getElementById('liveScrapeUrlInput').focus();
+      if (detail.step === 1) { document.getElementById('sfInspector').open = true; document.getElementById('liveScrapeUrlInput').focus(); }
       if (detail.step === 2) runLiveUrlExtraction();
       if (detail.step === 3) scrollToWebhookTester();
     });

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -1184,277 +1184,221 @@
       font-size: 0.74rem;
     }
   </style>
+  <link rel="stylesheet" href="library.css" />
 </head>
 <body>
   <header class="top-bar">
     <a href="../index.html" class="brand-cluster">
-      <span class="brand-badge">CODEDRILL // CBT</span>
-      <span class="brand-title">CBLE &amp; 19 CFR Public Knowledge Hub</span>
-      <span class="brand-sub">// Programmatic Regulatory Reference &amp; 60s Citation-Speed Drills</span>
+      <span class="brand-badge">CD</span>
+      <span class="brand-title">CodeDrill</span>
     </a>
     <nav class="top-actions">
-      <a href="../index.html?source=pseo_hub" class="cta-top-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><polyline points="4.5,6 7,8 4.5,10"/><line x1="8.5" y1="10" x2="11.5" y2="10"/></svg>Launch Full 1:1 Pearson VUE Split-Screen Simulator &rarr;</a>
+      <a href="../index.html?source=pseo_hub" class="cta-top-btn">Open simulator</a>
     </nav>
   </header>
 
   <main class="hub-container">
     <section class="hub-hero">
-      <div class="grid-corner-mark">
-        <span>+ [00 // DIRECTORY LEDGER] OPEN-BOOK REGULATORY SPEED-NAVIGATION</span>
-        <span>[TITLE 19 CFR &amp; HTSUS GRI] +</span>
-      </div>
-      <h1>US Customs Broker License Exam (CBLE) — 19 CFR &amp; HTSUS GRI Citation Hub</h1>
-      <p>
-        85% of CBLE candidates fail not from lack of memorizing theory, but because they run out of time searching 1,200+ pages of 19 CFR and the 4,000-page HTSUS under the 4.5-hour Pearson VUE clock. Select any high-frequency statutory specification below to inspect verbatim <strong>Golden Quotes</strong>, review <strong>Socratic Code-Path Trap Analyses</strong>, and benchmark your lookup reflex on a <strong>60-Second Citation-Speed Drill</strong>.
-      </p>
-      <div class="hub-stats-row">
-        <div class="hub-stat">
-          <div class="hub-stat-val">[08] Specifications</div>
-          <div class="hub-stat-lbl">High-Frequency 19 CFR &amp; GRI Targets</div>
-        </div>
-        <div class="hub-stat">
-          <div class="hub-stat-val">&lt; 40 Seconds</div>
-          <div class="hub-stat-lbl">Target eCFR Citation Pin-Drop Speed</div>
-        </div>
-        <div class="hub-stat">
-          <div class="hub-stat-val">75.0% Pass Threshold</div>
-          <div class="hub-stat-lbl">60 / 80 Questions on Official CBP Exam</div>
-        </div>
-        <div class="hub-stat">
-          <a href="../index.html?source=pseo_hub_hero" class="cta-top-btn" style="width:100%;">
-            Open Full Split-Screen Pearson VUE Simulator &rarr;
-          </a>
-        </div>
-      </div>
+      <h1>Customs exam study library</h1>
+      <p>Choose a 19 CFR or HTSUS topic to read the guide and try its practice question.</p>
     </section>
 
-    <!-- Search & Part Filter Controls -->
+    <!-- Search and category filters -->
     <section class="controls-bar" aria-label="Filter Regulations">
       <div class="search-input-wrap">
         <input
           type="search"
           id="hub-search"
           class="hub-search-input"
-          placeholder="[FILTER LEDGER] Enter 19 CFR section (111.32, 152.103, 142.12), GRI 3(b), or keyword (assists, drawback, bond)..."
+          aria-label="Search study guides" placeholder="Search by topic or section, e.g. 111.32"
           oninput="filterHubCards()"
         />
       </div>
-      <div class="filter-pills" id="filter-pills">
+      <details class="hub-categories"><summary>Filter by topic</summary><div class="filter-pills" id="filter-pills">
         
           <button type="button" class="filter-pill active" data-cat="All" onclick="setCategoryFilter('All', this)">
-            [ALL SPECIFICATIONS: 08]
+            All topics
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 111" onclick="setCategoryFilter('19 CFR Part 111', this)">
-            [19 CFR Part 111]
+            19 CFR Part 111
           </button>
 
           <button type="button" class="filter-pill " data-cat="HTSUS Classification" onclick="setCategoryFilter('HTSUS Classification', this)">
-            [HTSUS Classification]
+            HTSUS Classification
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 152" onclick="setCategoryFilter('19 CFR Part 152', this)">
-            [19 CFR Part 152]
+            19 CFR Part 152
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 142" onclick="setCategoryFilter('19 CFR Part 142', this)">
-            [19 CFR Part 142]
+            19 CFR Part 142
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 190" onclick="setCategoryFilter('19 CFR Part 190', this)">
-            [19 CFR Part 190]
+            19 CFR Part 190
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 177" onclick="setCategoryFilter('19 CFR Part 177', this)">
-            [19 CFR Part 177]
+            19 CFR Part 177
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 141" onclick="setCategoryFilter('19 CFR Part 141', this)">
-            [19 CFR Part 141]
+            19 CFR Part 141
           </button>
 
           <button type="button" class="filter-pill " data-cat="19 CFR Part 113" onclick="setCategoryFilter('19 CFR Part 113', this)">
-            [19 CFR Part 113]
+            19 CFR Part 113
           </button>
       </div>
-    </section>
+    </details></section>
 
     <!-- Programmatic SEO Cards Grid -->
     <section class="cards-grid" id="hub-cards-grid">
+      <p class="hub-empty" id="hub-empty" role="status" hidden>No guides match. Try another section or clear the topic filter.</p>
       
         <article
           class="hub-card"
           data-part="19 CFR Part 111"
-          data-search="19 cfr § 111.32 19 cfr § 111.32: false information & mandatory cbp disclosure duty why "quietly firing the client" is the #1 distractor trap on broker compliance questions — and what 19 cfr § 111.32 and § 111.39(c) actually mandate. 19 cfr 111.32 19 cfr 111.32 false information cble exam question customs broker client omission report cbp 19 cfr part 111 broker compliance exam traps cble past exam questions 19 cfr 111.32"
+          data-search="19 cfr § 111.32 19 cfr § 111.32: false information &amp; mandatory cbp disclosure duty why &quot;quietly firing the client&quot; is the #1 distractor trap on broker compliance questions — and what 19 cfr § 111.32 and § 111.39(c) actually mandate. 19 cfr 111.32 19 cfr 111.32 false information cble exam question customs broker client omission report cbp 19 cfr part 111 broker compliance exam traps cble past exam questions 19 cfr 111.32"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[01] 19 CFR § 111.32</span>
-              <span class="freq-tag">94% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 111.32</span>
             </div>
             <h2>19 CFR § 111.32: False Information & Mandatory CBP Disclosure Duty</h2>
-            <p>Why "quietly firing the client" is the #1 distractor trap on Broker Compliance questions — and what 19 CFR § 111.32 and § 111.39(c) actually mandate.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> The "Sever Ties & Keep Confidential" Distractor
-            </div>
+            <p>Review false filings and the reporting requirement when a broker ends representation because of fraud.</p>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-111-32-false-information-broker-compliance.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20111.32" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-111-32-false-information-broker-compliance.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20111.32" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="HTSUS Classification"
-          data-search="htsus gri 3(b) htsus general rule of interpretation 3(b): essential character & retail sets how to distinguish a true gri 3(b) retail set from separately classifiable items — and when to fall back to gri 3(c) "last in numerical order". gri 3(b) essential character retail sets customs broker exam htsus general rules of interpretation gri 3b goods put up in sets for retail sale cble gri 3b vs gri 3c customs broker exam cble classification practice questions"
+          data-search="htsus gri 3(b) htsus general rule of interpretation 3(b): essential character &amp; retail sets how to distinguish a true gri 3(b) retail set from separately classifiable items — and when to fall back to gri 3(c) &quot;last in numerical order&quot;. gri 3(b) essential character retail sets customs broker exam htsus general rules of interpretation gri 3b goods put up in sets for retail sale cble gri 3b vs gri 3c customs broker exam cble classification practice questions"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[02] HTSUS GRI 3(b)</span>
-              <span class="freq-tag">100% Past Exam Frequency</span>
+              <span class="cite-badge">HTSUS GRI 3(b)</span>
             </div>
             <h2>HTSUS General Rule of Interpretation 3(b): Essential Character & Retail Sets</h2>
             <p>How to distinguish a true GRI 3(b) retail set from separately classifiable items — and when to fall back to GRI 3(c) "Last in Numerical Order".</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> The "Fake Set" (Failing Requirement #2: Specific Activity)
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./htsus-gri-3b-essential-character-retail-sets.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=HTSUS%20GRI%203(b)" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./htsus-gri-3b-essential-character-retail-sets.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=HTSUS%20GRI%203(b)" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 152"
-          data-search="19 cfr § 152.103 19 cfr § 152.103: transaction value, statutory additions & assists math how to solve cbp valuation story problems in under 45 seconds without falling for the u.s.-domiciled engineering trap or buying commissions. 19 cfr 152.103 transaction value assists royalty calculation cble valuation appraisement math questions 19 cfr 152.102 assist definition u.s. engineering buying commission vs selling commission customs valuation price actually paid or payable 19 cfr 152.103"
+          data-search="19 cfr § 152.103 19 cfr § 152.103: transaction value, statutory additions &amp; assists math how to solve cbp valuation story problems in under 45 seconds without falling for the u.s.-domiciled engineering trap or buying commissions. 19 cfr 152.103 transaction value assists royalty calculation cble valuation appraisement math questions 19 cfr 152.102 assist definition u.s. engineering buying commission vs selling commission customs valuation price actually paid or payable 19 cfr 152.103"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[03] 19 CFR § 152.103</span>
-              <span class="freq-tag">96% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 152.103</span>
             </div>
             <h2>19 CFR § 152.103: Transaction Value, Statutory Additions & Assists Math</h2>
             <p>How to solve CBP valuation story problems in under 45 seconds without falling for the U.S.-domiciled engineering trap or buying commissions.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> Engineering / Artwork Performed Inside vs. Outside the U.S.
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-152-103-transaction-value-assists-appraisement.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20152.103" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-152-103-transaction-value-assists-appraisement.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20152.103" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 142"
-          data-search="19 cfr § 142.3 & § 142.12 19 cfr § 142.3 & § 142.12: entry documentation & the 10-working-day summary rule never confuse "15 calendar days to file entry (142.2)" with "10 working days to file entry summary 7501 (142.12)" on the cble. 19 cfr 142.3 entry documentation 10 working days 142.12 cbp form 3461 vs cbp form 7501 deadlines cble 19 cfr 142.2 15 calendar days general order warehouse entry summary filing time limit customs broker exam 19 cfr part 142 cble exam questions"
+          data-search="19 cfr § 142.3 &amp; § 142.12 19 cfr § 142.3 &amp; § 142.12: entry documentation &amp; the 10-working-day summary rule never confuse &quot;15 calendar days to file entry (142.2)&quot; with &quot;10 working days to file entry summary 7501 (142.12)&quot; on the cble. 19 cfr 142.3 entry documentation 10 working days 142.12 cbp form 3461 vs cbp form 7501 deadlines cble 19 cfr 142.2 15 calendar days general order warehouse entry summary filing time limit customs broker exam 19 cfr part 142 cble exam questions"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[04] 19 CFR § 142.3 & § 142.12</span>
-              <span class="freq-tag">92% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 142.3 & § 142.12</span>
             </div>
             <h2>19 CFR § 142.3 & § 142.12: Entry Documentation & The 10-Working-Day Summary Rule</h2>
             <p>Never confuse "15 Calendar Days to File Entry (142.2)" with "10 Working Days to File Entry Summary 7501 (142.12)" on the CBLE.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> 15 Calendar Days (§ 142.2) vs. 10 Working Days (§ 142.12)
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-142-3-entry-documentation-release-deadlines.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-142-3-entry-documentation-release-deadlines.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 190"
-          data-search="19 cfr § 190.32 & § 190.22 19 cfr § 190.32: tftea modernized drawback & 8-digit htsus substitution why outdated study guides teaching "part 191 commercial interchangeability" will cost you points — and how the 8-digit htsus rule and "other" subheading exception actually work. 19 cfr 190.32 unused merchandise substitution drawback 8 digit htsus tftea modernized drawback 19 cfr part 190 cble exam drawback 5 year filing deadline date of importation 8 digit htsus subheading begins with other drawback rule 99 percent duty drawback refund calculation cble"
+          data-search="19 cfr § 190.32 &amp; § 190.22 19 cfr § 190.32: tftea modernized drawback &amp; 8-digit htsus substitution why outdated study guides teaching &quot;part 191 commercial interchangeability&quot; will cost you points — and how the 8-digit htsus rule and &quot;other&quot; subheading exception actually work. 19 cfr 190.32 unused merchandise substitution drawback 8 digit htsus tftea modernized drawback 19 cfr part 190 cble exam drawback 5 year filing deadline date of importation 8 digit htsus subheading begins with other drawback rule 99 percent duty drawback refund calculation cble"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[05] 19 CFR § 190.32 & § 190.22</span>
-              <span class="freq-tag">88% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 190.32 & § 190.22</span>
             </div>
             <h2>19 CFR § 190.32: TFTEA Modernized Drawback & 8-Digit HTSUS Substitution</h2>
             <p>Why outdated study guides teaching "Part 191 Commercial Interchangeability" will cost you points — and how the 8-digit HTSUS rule and "Other" subheading exception actually work.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> The 8-Digit vs. 10-Digit "Other" Subheading Exception (§ 190.32(b))
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-190-32-modernized-drawback-substitution-tftea.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-190-32-modernized-drawback-substitution-tftea.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 177"
-          data-search="19 cfr § 177.9 & § 177.12 19 cfr § 177.9 & § 177.12: binding ruling letters & the 60-day revocation rule immediate effect for new rulings vs. the 30-day comment / 60-calendar-day delayed effective date when cbp modifies or revokes an existing binding ruling. 19 cfr 177.9 administrative rulings 60 day revocation 19 cfr 177.12 modification or revocation of interpretive rulings binding ruling effective date cble exam question 30 calendar days public comment customs bulletin 19 cfr 177.12 prospective transaction ruling request 19 cfr 177.1"
+          data-search="19 cfr § 177.9 &amp; § 177.12 19 cfr § 177.9 &amp; § 177.12: binding ruling letters &amp; the 60-day revocation rule immediate effect for new rulings vs. the 30-day comment / 60-calendar-day delayed effective date when cbp modifies or revokes an existing binding ruling. 19 cfr 177.9 administrative rulings 60 day revocation 19 cfr 177.12 modification or revocation of interpretive rulings binding ruling effective date cble exam question 30 calendar days public comment customs bulletin 19 cfr 177.12 prospective transaction ruling request 19 cfr 177.1"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[06] 19 CFR § 177.9 & § 177.12</span>
-              <span class="freq-tag">85% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 177.9 & § 177.12</span>
             </div>
             <h2>19 CFR § 177.9 & § 177.12: Binding Ruling Letters & The 60-Day Revocation Rule</h2>
             <p>Immediate effect for new rulings vs. the 30-day comment / 60-calendar-day delayed effective date when CBP modifies or revokes an existing binding ruling.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> Confusing the 30-Day Comment Period with the 60-Day Effective Date
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-177-9-administrative-rulings-60-day-revocation.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20177.9%20%26%20%C2%A7%20177.12" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-177-9-administrative-rulings-60-day-revocation.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20177.9%20%26%20%C2%A7%20177.12" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 141"
-          data-search="19 cfr § 141.86 & § 141.89 19 cfr § 141.86: contents of commercial invoices & mandatory entry disclosures every april and october cble includes an "all of the following are required on a commercial invoice except..." question from § 141.86(a). 19 cfr 141.86 commercial invoice requirements cble customs commercial invoice mandatory elements 19 cfr 141.86 19 cfr 141.86 english translation requirement pro forma invoice 120 days 19 cfr 141.91 cble part 141 entry of merchandise practice questions"
+          data-search="19 cfr § 141.86 &amp; § 141.89 19 cfr § 141.86: contents of commercial invoices &amp; mandatory entry disclosures every april and october cble includes an &quot;all of the following are required on a commercial invoice except...&quot; question from § 141.86(a). 19 cfr 141.86 commercial invoice requirements cble customs commercial invoice mandatory elements 19 cfr 141.86 19 cfr 141.86 english translation requirement pro forma invoice 120 days 19 cfr 141.91 cble part 141 entry of merchandise practice questions"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[07] 19 CFR § 141.86 & § 141.89</span>
-              <span class="freq-tag">90% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 141.86 & § 141.89</span>
             </div>
             <h2>19 CFR § 141.86: Contents of Commercial Invoices & Mandatory Entry Disclosures</h2>
             <p>Every April and October CBLE includes an "All of the following are required on a commercial invoice EXCEPT..." question from § 141.86(a).</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> Overlooking "Kind of Currency (Gold, Silver, or Paper)" (§ 141.86(a)(7))
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-141-86-commercial-invoice-requirements-cble.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20141.86%20%26%20%C2%A7%20141.89" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-141-86-commercial-invoice-requirements-cble.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20141.86%20%26%20%C2%A7%20141.89" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
 
         <article
           class="hub-card"
           data-part="19 CFR Part 113"
-          data-search="19 cfr § 113.62 19 cfr § 113.62: basic importation bond conditions & liquidated damages math how to calculate liquidated damages deterministically: 3x value for restricted/prohibited/alcohol/tobacco vs. 1x value (or duties) for general merchandise. 19 cfr 113.62 basic importation bond liquidated damages liquidated damages 3 times value restricted merchandise cble failure to redeliver merchandise 30 days cbp form 4647 19 cfr part 113 customs bonds cble practice questions late filing entry summary liquidated damages 113.62"
+          data-search="19 cfr § 113.62 19 cfr § 113.62: basic importation bond conditions &amp; liquidated damages math how to calculate liquidated damages deterministically: 3x value for restricted/prohibited/alcohol/tobacco vs. 1x value (or duties) for general merchandise. 19 cfr 113.62 basic importation bond liquidated damages liquidated damages 3 times value restricted merchandise cble failure to redeliver merchandise 30 days cbp form 4647 19 cfr part 113 customs bonds cble practice questions late filing entry summary liquidated damages 113.62"
         >
           <div>
             <div class="hub-card-top">
-              <span class="cite-badge">[08] 19 CFR § 113.62</span>
-              <span class="freq-tag">89% Past Exam Frequency</span>
+              <span class="cite-badge">19 CFR § 113.62</span>
             </div>
             <h2>19 CFR § 113.62: Basic Importation Bond Conditions & Liquidated Damages Math</h2>
             <p>How to calculate Liquidated Damages deterministically: 3x Value for Restricted/Prohibited/Alcohol/Tobacco vs. 1x Value (or Duties) for General Merchandise.</p>
-            <div class="trap-preview">
-              <strong>[TRAP-01]:</strong> 3x Value vs. 1x Value on Failure to Redeliver (§ 113.62(n)(1))
-            </div>
           </div>
           <div class="card-actions">
-            <a href="./19-cfr-113-62-basic-importation-bond-liquidated-damages.html" class="btn-guide"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[OPEN GUIDE &amp; 60s DRILL]</a>
-            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20113.62" class="btn-sim-quick" title="Open in Full Simulator">[SIMULATOR &rarr;]</a>
+            <a href="./19-cfr-113-62-basic-importation-bond-liquidated-damages.html" class="btn-guide">Read guide</a>
+            <a href="../index.html?source=pseo_card&cite=19%20CFR%20%C2%A7%20113.62" class="btn-sim-quick" title="Open in Full Simulator">Open in simulator</a>
           </div>
         </article>
     </section>
@@ -1463,11 +1407,11 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div>
-        <strong>CODEDRILL // CBT</strong> — Programmatic SEO Knowledge Hub for US Customs Broker License Exam (CBLE) Candidates
+        <strong>CODEDRILL // CBT</strong> — Customs exam study library
       </div>
       <div class="footer-links">
-        <a href="../index.html">[FULL PEARSON VUE SIMULATOR]</a>
-        <a href="./sitemap.xml">[GOOGLE SEARCH CONSOLE XML SITEMAP]</a>
+        <a href="../index.html">Exam simulator</a>
+        <a href="./sitemap.xml">Sitemap</a>
       </div>
     </div>
   </footer>
@@ -1485,13 +1429,17 @@
     function filterHubCards() {
       const q = (document.getElementById('hub-search').value || '').toLowerCase().trim();
       const cards = document.querySelectorAll('.hub-card');
+      let count = 0;
       cards.forEach((card) => {
         const part = card.getAttribute('data-part');
         const text = card.getAttribute('data-search');
         const matchesCat = activeCategory === 'All' || part === activeCategory;
         const matchesQuery = !q || text.includes(q);
-        card.style.display = matchesCat && matchesQuery ? 'flex' : 'none';
+        const visible = matchesCat && matchesQuery;
+        if (visible) count++;
+        card.style.display = visible ? 'flex' : 'none';
       });
+      document.getElementById('hub-empty').hidden = count > 0;
     }
   </script>
   <script src="../../assets/js/cf-telemetry.js?v=20261123k" defer></script>

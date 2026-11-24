@@ -259,9 +259,8 @@
   function updateSourceStatus(message) {
     const stale = sourceNeedsRun();
     const status = document.getElementById('sourceRunStatus');
-    if (status) status.textContent = message || (stale ? 'Source or scenario changed. Run it to update the dossier.' :
-      `Current source: ${STATE.customSourceTitle}. The dossier is ready to preview.`);
-    document.querySelector('[data-step-action="step3"]').disabled = stale;
+    if (status) status.textContent = message || (stale ? 'Source changed. Create the dossier to use these edits.' :
+      'The dossier uses the document above.');
     for (const id of ['btnOpenEvalDossier','btnPrintEvalDossier','btnExportJsonPayload','btnCopyWebhookJson','btnCopySocialThread','btnCopyMonographMarkdown','btnFireWebhook','btnDispatchFromTab']) {
       const action = document.getElementById(id);
       if (action) action.disabled = stale;
@@ -677,9 +676,6 @@
   function renderLeftPane() {
     const preset = getActivePreset();
     const bundle = getActiveSynthesizedBundle();
-    document.querySelectorAll('.dsh-preset-card[data-preset-card]').forEach(card => {
-      card.classList.toggle('active', card.getAttribute('data-preset-card') === STATE.activePresetId);
-    });
 
     // 1. 5-Stage Pipeline Matrix
     const stagesContainer = document.getElementById('pipelineStagesList');
@@ -710,11 +706,6 @@
     const textInput = document.getElementById('sourceTextInput');
     if (textInput && document.activeElement !== textInput) {
       textInput.value = STATE.sourceDraft?.text ?? STATE.customSourceText;
-    }
-
-    const charBadge = document.getElementById('sourceCharCountBadge');
-    if (charBadge) {
-      charBadge.textContent = `${bundle.charCount} chars · ${bundle.anchorCount} anchors`;
     }
 
     // 3. Schema Template Input
@@ -983,9 +974,6 @@
   }
 
   function refreshAllViews() {
-    document.querySelectorAll('[data-preset-card]').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-preset-card') === STATE.activePresetId);
-    });
     renderTopBars();
     renderLeftPane();
     renderRightPaneTabs();
@@ -1040,7 +1028,6 @@
       STATE.sourceDraft = {title, text};
       STATE.needsRun = true;
       saveState();
-      document.getElementById('detailsSourceExcerpt').open = true;
       updateSourceStatus('Enter a document title and source text, then run again.');
       (!title ? titleEl : textEl)?.focus();
       return null;
@@ -1080,6 +1067,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
   /* ==========================================================================
      8. PRINTABLE EVALUATION & CONTENT DOSSIER MODAL (#modalEvalDossier)
      ========================================================================== */
+  let dossierTrigger = null;
   function openEvalDossierModal() {
     const modal = document.getElementById('modalEvalDossier');
     const body = document.getElementById('evalDossierPrintableBody');
@@ -1146,6 +1134,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
       </ul>
     `;
 
+    dossierTrigger = document.activeElement;
     modal.classList.remove('hidden');
     document.getElementById('btnCloseEvalDossierModal')?.focus();
     workflow('export_ready');
@@ -1330,6 +1319,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
 
   function switchRightTab(tabKey) {
     if (!['monograph', 'eval', 'webhook', 'storyboard'].includes(tabKey)) return;
+    document.getElementById('deskOutputs').open = true;
     STATE.activeRightTab = tabKey;
     saveState();
     renderRightPaneTabs();
@@ -1349,6 +1339,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     }
     const tabParam = params.get('tab');
     if (tabParam && ['monograph', 'eval', 'webhook', 'storyboard'].includes(tabParam)) {
+      document.getElementById('deskOutputs').open = true;
       STATE.activeRightTab = tabParam;
     }
   }
@@ -1368,7 +1359,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         switchRightTab('webhook');
         document.getElementById('tabRightWebhook').focus();
       }
-      if (detail.step === 3) openEvalDossierModal();
+      if (detail.step === 3 && (!sourceNeedsRun() || runPipelineSynthesis())) openEvalDossierModal();
     });
     const presetSelect = document.getElementById('presetSelect');
     if (presetSelect) {
@@ -1376,30 +1367,6 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         selectPreset(presetSelect.value);
       });
     }
-
-    document.querySelectorAll('[data-preset-card]').forEach(cardBtn => {
-      cardBtn.addEventListener('click', () => {
-        const targetId = cardBtn.getAttribute('data-preset-card');
-        if (targetId) selectPreset(targetId);
-      });
-    });
-
-    document.querySelectorAll('[data-step-action]').forEach(pill => {
-      pill.addEventListener('click', () => {
-        const act = pill.getAttribute('data-step-action');
-        document.querySelectorAll('.dsh-step-pill').forEach(p => p.classList.toggle('active', p === pill));
-        if (act === 'step1') {
-          const sel = document.getElementById('presetSelect');
-          if (sel) sel.focus();
-        } else if (act === 'step2') {
-          if (sourceNeedsRun() && !runPipelineSynthesis()) return;
-          switchRightTab('eval');
-          document.getElementById('tabRightEval').focus();
-        } else if (act === 'step3') {
-          openEvalDossierModal();
-        }
-      });
-    });
 
     document.querySelectorAll('.cf-out-tab').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1411,7 +1378,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const runBtn = document.getElementById('runPipelineBtn');
     if (runBtn) {
       runBtn.addEventListener('click', () => {
-        runPipelineSynthesis();
+        if (runPipelineSynthesis()) openEvalDossierModal();
       });
     }
 
@@ -1503,28 +1470,32 @@ ${JSON.stringify(preview.payload, null, 2)}`;
 
     const closeDossier = () => {
       document.getElementById('modalEvalDossier').classList.add('hidden');
-      document.getElementById('btnOpenEvalDossier').focus();
+      const trigger = dossierTrigger?.getClientRects().length && dossierTrigger !== document.body
+        ? dossierTrigger : document.getElementById('runPipelineBtn');
+      trigger.focus();
     };
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !document.getElementById('modalEvalDossier').classList.contains('hidden')) closeDossier();
+      if (document.getElementById('modalEvalDossier').classList.contains('hidden')) return;
+      if (event.key === 'Escape') closeDossier();
+      if (event.key === 'Tab') {
+        const first = document.getElementById('btnCloseEvalDossierModal');
+        const last = document.getElementById('btnTriggerPrintDossier');
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     });
     const btnCloseDossier = document.getElementById('btnCloseEvalDossierModal');
     if (btnCloseDossier) btnCloseDossier.addEventListener('click', closeDossier);
-    const btnCloseDossierFooter = document.getElementById('btnCloseEvalDossierFooter');
-    if (btnCloseDossierFooter) btnCloseDossierFooter.addEventListener('click', closeDossier);
 
     const btnTriggerPrint = document.getElementById('btnTriggerPrintDossier');
     if (btnTriggerPrint) {
       btnTriggerPrint.addEventListener('click', () => {
         window.print();
-      });
-    }
-
-    const btnUnlockFromDossier = document.getElementById('btnUnlockFromDossier');
-    if (btnUnlockFromDossier) {
-      btnUnlockFromDossier.addEventListener('click', () => {
-        closeDossier();
-        openPaywallModal();
       });
     }
 

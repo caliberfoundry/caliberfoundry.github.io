@@ -143,7 +143,7 @@
             stemHtml:
               "<p><strong>Scenario (Module 1 &middot; Robotics Lab):</strong> An educational autonomous rover climbs a <strong>12&deg; incline</strong> inside a Unity WebGL simulation. Relying only on proportional wheel speed (<code>Kp</code>) causes steady-state backward drift, while unbounded integral accumulation causes overshoot at the crest.</p>" +
               "<p style=\"margin-top:8px;font-weight:700;\">Question: Which controller design eliminates steady-state ramp drift without crest overshoot?</p>",
-            questionPlain: "An autonomous rover climbs a 12-degree ramp. Which PID and sensor fusion design eliminates steady-state drift without crest overshoot?",
+            questionPlain: "A rover drifts backward on a 12° ramp. Which controller keeps it steady without overshooting the crest?",
             options: [
               {
                 letter: "A",
@@ -748,6 +748,8 @@
 
   function renderAll() {
     const preset = PRESETS[state.presetKey] || PRESETS["steminno-kr"];
+    const supportsKo = Boolean(activeQuestion().ko);
+    if (!supportsKo) state.lang = "en";
     const pack = getActiveModulePack();
 
     // Header license badge
@@ -758,12 +760,8 @@
     }
     const payBtn = document.getElementById("btnOpenPaywall");
     if (payBtn) {
-      payBtn.textContent = state.proUnlocked ? "PRO Unlocked ✓" : "Unlock Pack ($299)";
+      payBtn.textContent = state.proUnlocked ? "Manage license" : "Plans and license";
     }
-
-    // Preset dropdown & Option 1..3 cards
-    const sel = document.getElementById("presetSelect");
-    if (sel && sel.value !== state.presetKey) sel.value = state.presetKey;
 
     ["steminno-kr", "saas-academy", "clinical-ferpa"].forEach((key, idx) => {
       const card = document.getElementById("optCard" + (idx + 1));
@@ -772,19 +770,8 @@
       }
     });
 
-    const activeBadge = document.getElementById("activePresetBadge");
-    if (activeBadge) {
-      activeBadge.textContent = state.customVariants
-        ? "ACTIVE: CUSTOM GENERATED MODULE (#" + state.generationCount + ")"
-        : preset.badgeLabel;
-    }
-
     // Language toggle visibility & state
     const langWrap = document.getElementById("bilingualToggleWrap");
-    const supportsKo = Boolean(
-      (state.customVariants && state.customVariants[state.activeCustomIdx] && state.customVariants[state.activeCustomIdx].ko) ||
-      preset.supportsKorean
-    );
     if (langWrap) {
       langWrap.className = supportsKo ? "af-lang-bar" : "af-lang-bar hidden";
     }
@@ -814,19 +801,31 @@
     }
 
     // Quiz title, stem, and 3 options
+    const korean = state.lang === "ko" && supportsKo;
+    const courseName = { "steminno-kr": korean ? "로보틱스 랩" : "Robotics lab", "saas-academy": "Developer academy", "clinical-ferpa": "Bilingual assessment" };
+    document.getElementById("quizWorkbenchCard").lang = korean ? "ko" : "en";
+    document.getElementById("lessonKicker").textContent = state.customVariants ? (korean ? "나의 연습문제" : "Your exercise") : courseName[state.presetKey];
+    document.getElementById("questionHeading").textContent = pack.questionPlain;
     document.getElementById("quizScenarioTitle").textContent = pack.title;
+    document.querySelector("#scenarioDetails summary").textContent = korean ? "시나리오 읽기" : "Read the scenario";
+    document.querySelector(".af-study-hint summary").textContent = korean ? "힌트 보기" : "Need a hint?";
+    document.getElementById("btnLangEn").setAttribute("aria-pressed", String(!korean));
+    document.getElementById("btnLangKo").setAttribute("aria-pressed", String(korean));
     document.getElementById("quizScenarioBody").innerHTML = pack.stemHtml;
 
     ["A", "B", "C"].forEach((letter, idx) => {
       const opt = pack.options[idx];
       const btn = document.getElementById("quizOptBtn" + letter);
       const content = document.getElementById("quizOptContent" + letter);
-      if (btn) btn.className = "af-quiz-opt";
+      if (btn) {
+        btn.className = "af-quiz-opt";
+        btn.setAttribute("aria-pressed", "false");
+      }
       if (content && opt) {
         content.innerHTML =
-          '<div class="af-opt-heading">' +
+          '<span class="af-opt-heading">' +
           escapeHtml(opt.title) +
-          "</div>";
+          "</span>";
       }
     });
 
@@ -891,10 +890,15 @@
     feedback.className = "af-feedback-banner";
     badge.textContent = attempt ? attempt.score + "%" : (korean ? "아직 응답 없음" : "No attempt yet");
     if (!option) {
-      feedback.textContent = korean ? "답을 고르면 해설이 표시됩니다." : "Choose an answer to see your score and explanation.";
+      feedback.hidden = true;
+      feedback.textContent = "";
+      document.getElementById("quizOptionsContainer").after(feedback);
       return;
     }
     const button = document.getElementById("quizOptBtn" + option.letter);
+    feedback.hidden = false;
+    button.after(feedback);
+    button.setAttribute("aria-pressed", "true");
     button.classList.add(option.correct ? "selected-correct" : "selected-wrong");
     feedback.classList.add(option.correct ? "pass" : "warn");
     feedback.textContent = attempt.score + "/100 · " + option.rationale;
@@ -907,6 +911,7 @@
     state.attempts.set(activeQuestion(), { letter, score });
     appendScormLog(getActiveModulePack().title, letter + " · " + score + "/100 (local preview)");
     renderAll();
+    document.getElementById("quizFeedbackBox").scrollIntoView({ block: "nearest" });
     window.dispatchEvent(new CustomEvent("cf:workflow", { detail: { stage: "result_ready" } }));
   }
 
@@ -1412,7 +1417,7 @@
       const pane = document.getElementById("sectionStep" + step);
       pane.tabIndex = -1;
       pane.focus({ preventScroll: true });
-      pane.scrollIntoView({ block: "start" });
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
   }
 
@@ -1437,18 +1442,8 @@
       if (qPreset === "saas" || qPreset === "saas-academy") state.presetKey = "saas-academy";
       else if (qPreset === "orff" || qPreset === "clinical" || qPreset === "clinical-ferpa") state.presetKey = "clinical-ferpa";
       else if (qPreset === "kr" || qPreset === "steminno" || qPreset === "steminno-kr") state.presetKey = "steminno-kr";
-      if (params.get("lang") === "ko") state.lang = "ko";
+      if (params.get("lang") === "ko" && PRESETS[state.presetKey].supportsKorean) state.lang = "ko";
     } catch (_) {}
-
-    // Header preset dropdown
-    document.getElementById("presetSelect").addEventListener("change", (ev) => {
-      state.presetKey = ev.target.value;
-      window.dispatchEvent(new CustomEvent("cf:workflow", { detail: { stage: "sample_selected" } }));
-      state.customVariants = null;
-      state.moduleIdx = 0;
-      if (!PRESETS[state.presetKey].supportsKorean) state.lang = "en";
-      renderAll();
-    });
 
     // Stepper navigation buttons (Step 1, 2, 3)
     document.querySelectorAll("[data-step-nav]").forEach((btn) => {
@@ -1465,7 +1460,10 @@
         state.customVariants = null;
         state.moduleIdx = 0;
         if (!PRESETS[state.presetKey].supportsKorean) state.lang = "en";
+        document.getElementById("moduleDrawer").open = false;
+        document.getElementById("scenarioDetails").open = false;
         renderAll();
+        showStep(2, true);
       });
     });
 
@@ -1494,6 +1492,7 @@
           state.lang = "en";
         }
         renderAll();
+        showStep(2, true);
       });
     });
 
@@ -1517,7 +1516,9 @@
         }
         state.customVariants = null;
         state.moduleIdx = idx;
+        document.getElementById("moduleDrawer").open = false;
         renderAll();
+        showStep(2, true);
       });
     });
 
@@ -1572,7 +1573,6 @@
     // Paywall & Invoice Modal Controls
     document.getElementById("btnOpenPaywall").addEventListener("click", () => openPaywallModal(false));
     document.getElementById("btnOpenInvoiceModal").addEventListener("click", () => openPaywallModal(true));
-    document.getElementById("btnBottomOpenInvoice").addEventListener("click", () => openPaywallModal(true));
     document.getElementById("btnClosePaywall").addEventListener("click", closePaywallModal);
     document.getElementById("modalPaywall").addEventListener("click", (ev) => {
       if (ev.target.id === "modalPaywall") closePaywallModal();

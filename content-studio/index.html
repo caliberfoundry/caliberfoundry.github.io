@@ -1,12 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-product-design="content-studio">
 <head>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self';" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>ContentForge™ — Multi-Format B2B, EdTech &amp; Technical Content Generation Studio | Caliber Foundry</title>
@@ -15,141 +12,46 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=20261124-ux" />
+  <link rel="stylesheet" href="./desk.css" />
 </head>
 <body>
-  <!-- =====================================================================
-       BAR 1: CLEAN RESPONSIVE HEADER BAR (ZERO OVERLAP AT ANY RESOLUTION)
-       ===================================================================== -->
-  <header class="cf-global-header" role="banner">
-    <div class="cf-brand-cluster">
-      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
-      <div class="cf-logo-mark" aria-hidden="true">CF</div>
-      <div class="cf-brand-titles">
-        <span class="cf-brand-name">ContentForge<span class="cf-tm">™</span></span>
-        <span class="cf-brand-sub">Citation-Locked Content &amp; Evaluation Studio</span>
+  <header class="desk-mast">
+    <a href="../#work">← All products</a><a href="./" class="desk-brand">ContentForge</a>
+    <details class="desk-account"><summary>Studio account</summary>
+      <div class="cf-account-cluster" id="headerAccountCluster">
+        <span id="headerLicenseBadge">Free studio</span><span class="hidden" id="headerUserEmailBadge"></span>
+        <button type="button" id="btnHeaderSignIn">Sign in</button><button type="button" id="btnOpenPaywall">Plans</button>
+        <button type="button" id="btnResetStudio">Reset studio</button>
       </div>
-    </div>
-
-    <!-- 4 Industry & Engineering Pipeline Presets Selector -->
-    <div class="cf-preset-selector-wrap">
-      <label for="presetSelect" class="cf-preset-label">Scenario:</label>
-      <select id="presetSelect" class="cf-preset-select" aria-label="Select Content and Evaluation Pipeline Preset">
-        <option value="n8n-pipeline">1. n8n / Make.com Content &amp; Webhook Pipeline (FREE)</option>
-        <option value="eval-harness">2. Document Extraction &amp; 0.0% Hallucination Eval Harness (FREE)</option>
-        <option value="edtech-courseware">3. EdTech SCORM 1.2 &amp; Curriculum Engine · PRO</option>
-        <option value="fintech-monograph">4. B2B FinTech Monograph &amp; Video Storyboard · PRO</option>
-      </select>
-    </div>
-
-    <!-- Right Account & Licensing Cluster -->
-    <div class="cf-account-cluster" id="headerAccountCluster">
-      <span class="cf-gate-pill hidden" id="headerGateBadge">0.0% Hallucination Gate</span>
-      <span class="cf-license-pill" id="headerLicenseBadge">Free Tier (2/4)</span>
-      <span class="cf-user-email-pill hidden" id="headerUserEmailBadge"></span>
-      <button type="button" class="cf-header-btn" id="btnHeaderSignIn">Sign In</button>
-      <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Custom Pipeline ($2,500)</button>
-      <button type="button" class="cf-header-btn cf-btn-reset" id="btnResetStudio" title="Reset session">Reset</button>
-    </div>
+    </details>
   </header>
-
-  <!-- =====================================================================
-       BAR 2: GUIDED 3-STEP USER JOURNEY BAR (INTUITIVE 1 -> 2 -> 3 FLOW)
-       ===================================================================== -->
-  <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
-    <div class="dsh-steps-track">
-      <button type="button" class="dsh-step-pill active" data-step-action="step1"><span class="dsh-step-num">1</span>Choose scenario</button>
-      <button type="button" class="dsh-step-pill" data-step-action="step2"><span class="dsh-step-num">2</span>Review source excerpts</button>
-      <button type="button" class="dsh-step-pill" data-step-action="step3"><span class="dsh-step-num">3</span>Preview dossier</button>
-    </div>
-
-
-  </section>
-
-  <!-- =====================================================================
-       MAIN SPLIT-SCREEN WORKBENCH (CLEAN 3-STEP PROGRESSIVE DISCLOSURE)
-       ===================================================================== -->
-  <main class="cf-split-workbench" id="cfMainWorkbench">
-
-    <!-- ===================================================================
-         LEFT PANEL: 1-CLICK SCENARIO CARDS FIRST -> DRILL-DOWN DRAWERS BELOW
-         =================================================================== -->
-    <section class="cf-left-pane" aria-label="Source Corpus, Pipeline Graph and Webhook Controls">
-      <div class="cf-left-scroll">
-
-        <!-- STEP 1: 1-CLICK SCENARIO SWITCHER (ZERO WALLS OF TEXT) -->
-        <div class="cf-card-block">
-          <div class="cf-block-header">
-            <div>
-              <span class="cf-block-kicker">STEP 1 OF 3</span>
-              <h2 class="cf-block-title">Select Workflow Scenario</h2>
-            </div>
-            <span class="cf-block-tag" id="sourceCharCountBadge">6 Verified Anchors</span>
-          </div>
-          <div class="dsh-quick-presets">
-            <button type="button" class="dsh-preset-card active" data-preset-card="n8n-pipeline">
-              <strong>n8n / Make Pipeline</strong>
-              <span>Webhook &amp; Content · Free</span>
-            </button>
-            <button type="button" class="dsh-preset-card" data-preset-card="eval-harness">
-              <strong>Evaluation Harness</strong>
-              <span>Document F1 · Free</span>
-            </button>
-            <button type="button" class="dsh-preset-card" data-preset-card="edtech-courseware">
-              <strong>EdTech Courseware</strong>
-              <span>SCORM 1.2 &amp; Quiz · PRO</span>
-            </button>
-            <button type="button" class="dsh-preset-card" data-preset-card="fintech-monograph">
-              <strong>FinTech Monograph</strong>
-              <span>Cross-Border FX · PRO</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- STEP 1B: EDIT SOURCE DOCUMENT (COLLAPSED BY DEFAULT FOR CLEAN UI) -->
-        <details class="cf-drilldown-drawer" id="detailsSourceExcerpt">
-          <summary class="cf-drawer-summary">
-            <div>
-              <span class="cf-drawer-kicker">Source input</span>
-              <strong class="cf-drawer-title">Edit Source Document &amp; Citation Anchors</strong>
-            </div>
-            <span class="cf-block-tag">Customize</span>
-          </summary>
-          <div class="cf-drawer-body">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <label for="sourceTitleInput" class="cf-field-label">Document Title</label>
-              <button type="button" class="cf-btn-mini" id="btnLoadSampleSource">Restore Default</button>
-            </div>
-            <input
-              type="text"
-              id="sourceTitleInput"
-              class="cf-text-input"
-              value=""
-              placeholder="Enter source specification title..."
-            />
-            <div class="cf-field-group" style="margin-top:6px;">
-              <label for="sourceTextInput" class="cf-field-label">
-                Source text (optional clause labels in brackets)
-              </label>
-              <textarea
-                id="sourceTextInput"
-                class="cf-textarea cf-source-textarea"
-                rows="4"
-                placeholder="Paste technical specification or statute..."
-              ></textarea>
-            </div>
-          </div>
-        </details>
-
-        <div class="cf-source-actions">
-          <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">Run on this source</button>
-          <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier">Preview printable dossier</button>
-          <p id="sourceRunStatus" role="status" aria-live="polite"></p>
-        </div>
+  <main class="desk-work" id="cfMainWorkbench">
+    <div class="desk-intro"><h1>Make a source dossier.</h1><p>Edit the sample or paste your document. Its quoted passages stay together in the printable brief.</p></div>
+    <section class="desk-paper" aria-label="Dossier editor">
+      <div class="desk-paper-head">
+        <label for="sourceTitleInput">Document title</label>
+        <input id="sourceTitleInput" type="text" placeholder="Title of your document" />
+      </div>
+      <div class="desk-source" id="detailsSourceExcerpt">
+        <label for="sourceTextInput">Source text</label>
+        <textarea id="sourceTextInput" rows="4" placeholder="Paste the source passages here"></textarea>
+      </div>
+      <div class="desk-actions">
+        <button type="button" id="runPipelineBtn">Create printable dossier <span aria-hidden="true">→</span></button>
+        <button type="button" id="btnLoadSampleSource">Restore sample</button>
+      </div>
+      <p id="sourceRunStatus" role="status" aria-live="polite"></p>
+    </section>
+    <div class="desk-secondary">
+      <details class="desk-tools" id="deskSettings"><summary>Template and source settings</summary>
+        <div class="desk-options">
+          <label for="presetSelect">Template</label>
+          <select id="presetSelect"><option value="n8n-pipeline">Workflow payload</option><option value="eval-harness">Document evaluation</option><option value="edtech-courseware">Courseware · Pro</option><option value="fintech-monograph">Finance brief · Pro</option></select>
         <!-- 2. DRILL-DOWN DRAWER A: 5-STAGE PIPELINE TOPOLOGY (COLLAPSED BY DEFAULT FOR ZERO CLUTTER) -->
         <details class="cf-drilldown-drawer">
           <summary class="cf-drawer-summary">
             <div>
-              <span class="cf-drawer-kicker">TECHNICAL DRILL-DOWN 01</span>
+              <span class="cf-drawer-kicker">Processing</span>
               <strong class="cf-drawer-title">5-Stage Citation-Locked Pipeline Topology</strong>
             </div>
             <span class="cf-block-tag" id="pipelineRunStatusBadge">5/5 STAGES VERIFIED</span>
@@ -165,7 +67,7 @@
         <details class="cf-drilldown-drawer">
           <summary class="cf-drawer-summary">
             <div>
-              <span class="cf-drawer-kicker">TECHNICAL DRILL-DOWN 02</span>
+              <span class="cf-drawer-kicker">Export settings</span>
               <strong class="cf-drawer-title">JSON payload preview &amp; example schema</strong>
             </div>
             <span class="cf-block-tag" id="webhookHeaderPill">LOCAL PREVIEW</span>
@@ -206,27 +108,24 @@
           </div>
         </details>
 
-      </div>
-    </section>
 
-    <!-- ===================================================================
-         RIGHT PANEL: EXECUTIVE SUMMARY FIRST -> DRILL-DOWN FULL ARTICLE
-         =================================================================== -->
-    <section class="cf-right-pane" aria-label="Multi-Format Output and Evaluation Harness Inspector">
-
+        </div>
+      </details>
+      <details class="desk-tools" id="deskOutputs"><summary>Review excerpts and other formats</summary>
+        <div class="desk-output-inner"><button type="button" id="btnOpenEvalDossier">Reopen current dossier</button>
       <!-- 4 Concise Responsive Inspector Tabs -->
       <nav class="cf-output-tabs" role="tablist" aria-label="Output Format and Verification Views">
         <button type="button" class="cf-out-tab active" data-tab="monograph" id="tabRightMonograph">
-          1. Executive Summary &amp; Diagram
+          Summary
         </button>
         <button type="button" class="cf-out-tab" data-tab="eval" id="tabRightEval">
-          2. Source excerpts
+          Source excerpts
         </button>
         <button type="button" class="cf-out-tab" data-tab="webhook" id="tabRightWebhook">
-          3. n8n JSON &amp; Quiz
+          JSON &amp; quiz
         </button>
         <button type="button" class="cf-out-tab" data-tab="storyboard" id="tabRightStoryboard">
-          4. Social Thread &amp; Video
+          Social &amp; video
         </button>
       </nav>
 
@@ -402,9 +301,13 @@
         </div>
 
       </div>
-    </section>
 
+        </div>
+      </details>
+    </div>
   </main>
+  <footer class="desk-footer"><span>ContentForge · Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com?subject=ContentForge%20inquiry">Contact engineering</a></footer>
+
 
   <!-- =====================================================================
        MODAL 1: PRINTABLE GROUND-TRUTH EVALUATION & CONTENT DOSSIER (#modalEvalDossier)
@@ -414,7 +317,7 @@
       <div class="cf-modal-header no-print">
         <div class="cf-modal-title-row">
           <span class="cf-modal-mark">§</span>
-          <h2 id="evalDossierModalTitle">Printable Ground-Truth Extraction Evaluation &amp; Content Dossier (PDF)</h2>
+          <h2 id="evalDossierModalTitle">Your source dossier</h2>
         </div>
         <button type="button" class="cf-modal-close" id="btnCloseEvalDossierModal" aria-label="Close Evaluation Dossier">×</button>
       </div>
@@ -424,15 +327,7 @@
       </div>
 
       <div class="cf-modal-footer no-print">
-        <button type="button" class="cf-btn-secondary" id="btnCloseEvalDossierFooter">Return to Workbench</button>
-        <div class="cf-modal-footer-right">
-          <button type="button" class="cf-btn-secondary" id="btnTriggerPrintDossier">
-            Print / Save Official Evaluation Dossier PDF
-          </button>
-          <button type="button" class="cf-btn-primary" id="btnUnlockFromDossier">
-            Deploy Custom Pipeline Sprint ($2,500 / $3,000) →
-          </button>
-        </div>
+        <button type="button" class="cf-btn-primary" id="btnTriggerPrintDossier">Print or save as PDF</button>
       </div>
     </div>
   </div>
@@ -629,8 +524,8 @@
 
   <div class="cf-toast-container" id="toastContainer" aria-live="polite"></div>
 
+  <script src="/assets/js/cf-telemetry.js" defer></script>
   <script src="presets-data.js"></script>
   <script src="app.js?v=20261124-ux"></script>
-  <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

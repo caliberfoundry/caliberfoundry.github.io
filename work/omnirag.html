@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="omnirag">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -11,88 +11,18 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>OmniRAG™ Document Verifier — Case Study &amp; Architecture | Caliber Foundry</title>
   <link rel="canonical" href="https://caliberfoundry.com/work/omnirag.html" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-      --cf-bg-paper: #F6F4EF; --cf-bg-stone: #ECE9E1; --cf-bg-surface: #FFFFFF; --cf-bg-ink-panel: #141413;
-      --cf-ink-primary: #141413; --cf-ink-secondary: #4A4842; --cf-ink-muted: #78756D; --cf-ink-on-dark: #F6F4EF;
-      --cf-rule-strong: #141413; --cf-rule-mid: #D6D1C7; --cf-rule-subtle: #E4E0D7;
-      --cf-accent-primary: #C8431F; --cf-accent-hover: #A63415; --cf-forest-pass: #1A5638;
-      --font-display: 'Instrument Serif', Georgia, serif; --font-serif: 'Newsreader', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
-    .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
-    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
-    .brand-name { font-family: var(--font-display); font-size: 22px; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none; background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong); }
-    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
-    .container { max-width: 1080px; margin: 0 auto; padding: 56px 32px 80px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); margin-bottom: 24px; display: block; text-decoration: none; }
-    .breadcrumb:hover { color: var(--cf-accent-primary); }
-    .title { font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); font-weight: 400; line-height: 1.06; margin-bottom: 18px; }
-    .lede { font-family: var(--font-serif); font-size: 20px; color: var(--cf-ink-secondary); max-width: 62ch; margin-bottom: 32px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
-    @media (min-width: 820px) { .grid-2 { grid-template-columns: 3fr 2fr; } }
-    .panel { background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 32px; }
-    .panel-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; margin-bottom: 16px; }
-    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--cf-ink-secondary); }
-    .spec-list strong { color: var(--cf-ink-primary); }
-    .spec-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
-    .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--cf-rule-subtle); }
-    .spec-table td:first-child { color: var(--cf-ink-muted); }
-    .spec-table td:last-child { text-align: right; font-weight: 600; }
-    .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  </style>
+  <link rel="stylesheet" href="../omnirag/reader.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
-      <div style="display:flex; gap:12px;">
-        <a href="../omnirag/" class="btn btn-primary"><span>Try a document pack</span><span>&rarr;</span></a>
-      </div>
+<body class="product-case">
+  <header class="om-search-head"><nav class="om-bound om-brand-line" aria-label="Product navigation"><a class="om-wordmark" href="../omnirag/">OmniRAG</a><a href="../#work">All products ↗</a></nav>
+    <div class="om-bound om-intro"><h1>Trace an answer<br>to its source.</h1><p>Find matching passages in sample spreadsheets, contracts and reports.</p>
+      <nav class="om-case-actions" aria-label="Try the workflow">
+        <a href="../omnirag/?autoProof=2">Try a cited question ↗</a><a href="../omnirag/?autoProof=1">Choose a document pack</a><a href="../omnirag/?autoProof=3">Preview a report</a>
+      </nav>
     </div>
   </header>
-
-  <main class="container">
-    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <h1 class="title">OmniRAG · Find the source behind an answer</h1>
-    <p class="lede">Compare example financial, sales or engineering documents. Choose a question, read the cited passage and open the exact page or cell. Export the questions and evidence in a JSON report or print the dossier.</p>
-    <nav aria-label="Try the workflow" style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="../omnirag/?autoProof=1" class="btn btn-primary"><span>Choose a document pack</span></a>
-      <a href="../omnirag/?autoProof=2" class="btn"><span>Check a question and its sources</span></a>
-      <a href="../omnirag/?autoProof=3" class="btn"><span>Preview the evidence report</span></a>
-    </nav>
-
-    <div class="grid-2">
-      <section class="panel">
-        <h2 class="panel-title">What you can do</h2>
-        <ul class="spec-list">
-          <li><strong>Choose a sample.</strong> Three packs contain short excerpts from spreadsheets, contracts and reports.</li>
-          <li><strong>Check the passage.</strong> Search for an exact phrase or choose one of the pack’s three questions. Missing answers are marked in both the workbench and report.</li>
-          <li><strong>Compare your own numbers.</strong> Paste two passages and compare their numeric tokens side by side.</li>
-        </ul>
-      </section>
-      <section class="panel">
-        <h2 class="panel-title">Example and output</h2>
-        <table class="spec-table">
-          <tr><th scope="row">Inputs</th><td>Sample excerpts and two pasted passages</td></tr>
-          <tr><th scope="row">Example</th><td>Q3 profit of $4.19M against a $3.50M minimum</td></tr>
-          <tr><th scope="row">Outputs</th><td>Source excerpts, comparison, JSON report and print view</td></tr>
-        </table>
-      </section>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <span>&copy; 2026 Caliber Foundry</span>
-    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary); text-decoration:none;">engineering@caliberfoundry.com</a>
-  </footer>
+  <main class="om-bound om-case-body"><h2>What counts as evidence?</h2><p>A financial question can refer to the minimum net-profit covenant in the board report. OmniRAG links the answer to page 4 so you can check its wording.</p><dl><dt>Ask</dt><dd>Choose one of the suggested questions or search for a phrase in the selected pack.</dd><dt>Check</dt><dd>Open the page, clause or spreadsheet cell attached to the passage. If no matching passage is found, the answer says so.</dd><dt>Keep</dt><dd>Download the evidence as JSON or print the report.</dd></dl></main>
+  <footer class="om-bound om-footer"><span>Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a></footer>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

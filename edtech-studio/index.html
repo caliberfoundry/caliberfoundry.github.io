@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="edtech-studio">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -9,140 +9,44 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>AcademyForge™ — EdTech Studio v2.0 (EN/KR STEM, B2B Academy &amp; SCORM 1.2 Packager) | Caliber Foundry</title>
-  <meta name="description" content="AcademyForge™ (EdTech Studio v2.0) builds multilingual EN/Korean STEM curricula, B2B SaaS Customer Academies, FERPA AES-256 assessments, 30fps voiced video lessons, and binary SCORM 1.2 .ZIP packages." />
+  <title>AcademyForge · Practice studio | Caliber Foundry</title>
+  <meta name="description" content="Practise a lesson in AcademyForge, get feedback on your answer and download a SCORM 1.2 course. The robotics lesson is available in English and Korean." />
   <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
 
-  <!-- =====================================================================
-       BAR 1: COMPACT GLOBAL HEADER (<= 42px Desktop, Flex-Wrap Safe)
-       ===================================================================== -->
-  <header class="cf-global-header" role="banner">
-    <div class="cf-brand-cluster">
-      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">&larr; Caliber Foundry</a>
-      <div class="cf-logo-mark" aria-hidden="true">AF</div>
-      <div class="cf-brand-titles">
-        <span class="cf-brand-name">AcademyForge<span class="cf-tm">&trade;</span></span>
-        <span class="cf-brand-sub">Course studio</span>
-      </div>
-    </div>
-
-    <div class="cf-preset-selector-wrap">
-      <label for="presetSelect" class="cf-preset-label">Preset:</label>
-      <select id="presetSelect" class="cf-preset-select" aria-label="Select Courseware Architecture Preset">
-        <option value="steminno-kr">Option 1: EN / 한국어 STEM &amp; Robotics (STEMinnoKey)</option>
-        <option value="saas-academy">Option 2: B2B SaaS Customer Academy-in-a-Box</option>
-        <option value="clinical-ferpa">Option 3: Clinical &amp; FERPA AES-256 Compliance</option>
-      </select>
-    </div>
-
-    <div class="cf-account-cluster" id="headerAccountCluster">
-      <span class="cf-license-pill" id="headerLicenseBadge">Free Tier (Mod 1)</span>
-      <button type="button" class="cf-header-btn" id="btnOpenInvoiceModal">B2B Invoice</button>
-      <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Unlock Pack ($299)</button>
+  <header class="af-studio-header">
+    <div class="af-studio-mast">
+      <a class="af-wordmark" href="../index.html#work" aria-label="AcademyForge, back to Caliber Foundry products"><span class="af-book-mark" aria-hidden="true"></span>AcademyForge</a>
+      <nav class="af-studio-tabs" aria-label="Course workspace">
+        <button type="button" id="stepNav1" aria-controls="sectionStep1" data-step-nav="1">Lesson library</button>
+        <button type="button" id="stepNav2" aria-controls="sectionStep2" data-step-nav="2" aria-current="step">Practice</button>
+        <button type="button" id="stepNav3" aria-controls="sectionStep3" data-step-nav="3">Course export</button>
+      </nav>
     </div>
   </header>
-
-  <!-- =====================================================================
-       BAR 2: COMPACT 3-STEP GUIDED RIBBON (ADR-018)
-       ===================================================================== -->
-  <nav class="af-stepper-ribbon" aria-label="AcademyForge 3-Step Workflow">
-    <div class="af-stepper-track">
-      <button type="button" class="af-step-btn active" id="stepNav1" aria-controls="sectionStep1" data-step-nav="1">
-        <span class="af-step-num">1</span>
-        <span>Author lesson</span>
-      </button>
-      <span class="af-step-sep" aria-hidden="true">&rarr;</span>
-      <button type="button" class="af-step-btn" id="stepNav2" aria-controls="sectionStep2" data-step-nav="2">
-        <span class="af-step-num">2</span>
-        <span>Try as a learner</span>
-      </button>
-      <span class="af-step-sep" aria-hidden="true">&rarr;</span>
-      <button type="button" class="af-step-btn" id="stepNav3" aria-controls="sectionStep3" data-step-nav="3">
-        <span class="af-step-num">3</span>
-        <span>Export course</span>
-      </button>
-    </div>
-    <div class="af-ribbon-actions">
-      <span class="mono" id="activeContentHashBadge" style="font-size:11px;color:var(--cf-ink-muted);">SHA-256: AF-STEM-01</span>
-      <button type="button" class="btn-primary" id="btnTopExportScormZip" style="padding:5px 11px;font-size:11.5px;">
-        <svg class="af-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Export SCORM 1.2 (.ZIP)</span>
-      </button>
-    </div>
-  </nav>
-
   <main class="af-main-shell" id="afMainWorkbench">
 
-    <!-- ===================================================================
-         STEP 1: 3 READY-TO-PICK COURSE OPTIONS (ADR-023) + CUSTOM GENERATOR
-         =================================================================== -->
-    <section hidden class="af-section-card" id="sectionStep1" aria-labelledby="step1Heading">
-      <div class="af-section-head">
-        <div>
-          <span class="af-kicker">Lesson authoring</span>
-          <h1 class="af-section-title" id="step1Heading">Choose or adapt a lesson</h1>
-        </div>
-        <span class="af-vvs-metric" id="activePresetBadge">ACTIVE: OPTION 1 (EN / 한국어 STEM)</span>
-      </div>
-
-      <div class="af-options-grid" role="group" aria-label="Three Ready Course Options">
-        <!-- Option 1 -->
-        <button type="button" class="af-option-card active" id="optCard1" data-preset-option="steminno-kr">
-          <div>
-            <div class="af-opt-top">
-              <span class="af-opt-tag">Option 1 &middot; EN &harr; 한국어</span>
-              <span class="af-opt-tier">STEMinnoKey Preset</span>
-            </div>
-            <div class="af-opt-title" style="margin-top:8px;">Multilingual STEM &amp; Robotics Curriculum</div>
-            <p class="af-opt-desc" style="margin-top:4px;">1-click English &harr; Korean (`한국어`) modular robotics &amp; PID sensor fusion lab with math-token integrity, competency matrix, and bilingual SCORM 1.2 export.</p>
-          </div>
-          <div class="af-opt-meta">
-            <span>3 Competency Axes</span>
-            <span>EN / KO Dual SCO &rarr;</span>
-          </div>
+    <section hidden class="af-section-card af-library" id="sectionStep1" aria-labelledby="step1Heading">
+      <h1 class="af-section-title" id="step1Heading">Lesson library</h1>
+      <p>Choose a lesson to start practicing.</p>
+      <div class="af-options-grid" role="group" aria-label="Practice lessons">
+        <button type="button" class="af-option-card" id="optCard1" data-preset-option="steminno-kr">
+          <span class="af-library-subject">Engineering · English / 한국어</span><strong>Robotics lab</strong><span>Design a controller for a rover climbing a steep ramp.</span><span class="af-card-link">Open lesson <span aria-hidden="true">→</span></span>
         </button>
-
-        <!-- Option 2 -->
         <button type="button" class="af-option-card" id="optCard2" data-preset-option="saas-academy">
-          <div>
-            <div class="af-opt-top">
-              <span class="af-opt-tag">Option 2 &middot; B2B SaaS</span>
-              <span class="af-opt-tier">$2,900 Academy Sprint</span>
-            </div>
-            <div class="af-opt-title" style="margin-top:8px;">Customer Academy-in-a-Box (Developer &amp; API)</div>
-            <p class="af-opt-desc" style="margin-top:4px;">Turnkey B2B SaaS &amp; DevTools onboarding course: HMAC-SHA256 webhooks, idempotency keys, API troubleshooting labs, and developer certification exam.</p>
-          </div>
-          <div class="af-opt-meta">
-            <span>5-Module Blueprint</span>
-            <span>Skilljar / Docebo Ready &rarr;</span>
-          </div>
+          <span class="af-library-subject">Software engineering</span><strong>Developer academy</strong><span>Verify signed webhooks and handle repeated deliveries.</span><span class="af-card-link">Open lesson <span aria-hidden="true">→</span></span>
         </button>
-
-        <!-- Option 3 -->
         <button type="button" class="af-option-card" id="optCard3" data-preset-option="clinical-ferpa">
-          <div>
-            <div class="af-opt-top">
-              <span class="af-opt-tag">Option 3 &middot; Compliance</span>
-              <span class="af-opt-tier">FERPA AES-256 + 19 CFR</span>
-            </div>
-            <div class="af-opt-title" style="margin-top:8px;">Clinical &amp; Regulatory Compliance Studio</div>
-            <p class="af-opt-desc" style="margin-top:4px;">Deterministic 4-gate TTL-MSM clinical assessment matrix paired with in-browser WebCrypto AES-256-GCM student PII masking and 19 CFR regulatory items.</p>
-          </div>
-          <div class="af-opt-meta">
-            <span>4-Gate Rule Trace</span>
-            <span>Zero-PII Encrypted &rarr;</span>
-          </div>
+          <span class="af-library-subject">Education</span><strong>Bilingual assessment</strong><span>Interpret language evidence from home and the classroom.</span><span class="af-card-link">Open lesson <span aria-hidden="true">→</span></span>
         </button>
       </div>
-
-      <!-- Custom 3-Variant Course Generator with Mandatory ADR-024 Inline Progress & ETA -->
+      <details class="af-library-tools" id="authorDrawer"><summary>Write exercises from your own topic</summary>
       <div class="af-custom-gen-box">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-          <span class="af-kicker" style="color:var(--cf-ink-primary);">CUSTOM TOPIC OR ADJUSTMENT BRIEF &rarr; GENERATES 3 NEW MODULE OPTIONS</span>
-          <span class="mono" style="font-size:11px;color:var(--cf-ink-muted);" id="customGenCounterBadge">Generation #1 Ready</span>
+          <span class="af-kicker" style="color:var(--cf-ink-primary);">New exercise topic</span>
+          <span class="mono" style="font-size:11px;color:var(--cf-ink-muted);" id="customGenCounterBadge"></span>
         </div>
 
         <div class="af-chips-row" role="group" aria-label="Quick Topic Adjustment Chips">
@@ -183,147 +87,8 @@
           <button type="button" class="af-gen-variant-btn" id="genVarBtn2" data-gen-idx="2"></button>
         </div>
       </div>
-    </section>
-
-    <!-- ===================================================================
-         STEP 2: INTERACTIVE LESSON, EN/KR QUIZ, 30S VIDEO & TTL-MSM ENGINE
-         =================================================================== -->
-    <section class="af-workbench-split" id="sectionStep2" aria-label="Interactive Lesson, Video Player, and Competency Engine">
-
-      <!-- LEFT COLUMN: Interactive Bilingual Lesson, Module Switcher & Graded Quiz -->
-      <div class="af-col-stack">
-        <div class="af-section-card" id="quizWorkbenchCard">
-          <div class="af-section-head">
-            <div>
-              <span class="af-kicker" id="lessonKicker">Practice question</span>
-              <h2 class="af-section-title" id="quizScenarioTitle">Autonomous Robotics PID &amp; Sensor Fusion</h2>
-            </div>
-            <div class="af-lang-bar" id="bilingualToggleWrap">
-              <span class="mono" style="font-size:10.5px;font-weight:600;color:var(--cf-ink-secondary);">LOCALE:</span>
-              <div class="af-seg-group" role="group" aria-label="Course Language Switcher">
-                <button type="button" class="af-seg-btn active" id="btnLangEn" data-lang="en">EN (English)</button>
-                <button type="button" class="af-seg-btn" id="btnLangKo" data-lang="ko">한국어 (Korean)</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Concise Lesson Context + Scenario Question -->
-          <div class="af-lesson-stem" id="quizScenarioBody"></div>
-
-          <!-- 3 Clickable Answer Options -->
-          <div class="af-quiz-list" id="quizOptionsContainer">
-            <button type="button" class="af-quiz-opt" id="quizOptBtnA" data-opt-letter="A">
-              <span class="af-opt-letter">A</span>
-              <div class="af-opt-body" id="quizOptContentA"></div>
-            </button>
-            <button type="button" class="af-quiz-opt" id="quizOptBtnB" data-opt-letter="B">
-              <span class="af-opt-letter">B</span>
-              <div class="af-opt-body" id="quizOptContentB"></div>
-            </button>
-            <button type="button" class="af-quiz-opt" id="quizOptBtnC" data-opt-letter="C">
-              <span class="af-opt-letter">C</span>
-              <div class="af-opt-body" id="quizOptContentC"></div>
-            </button>
-          </div>
-
-          <!-- Instant Distractor-Aware Grading Feedback -->
-          <div class="af-feedback-banner" id="quizFeedbackBox" role="status">
-            Choose an answer to see your score and explanation.
-          </div>
-
-          <!-- Freemium Module Switcher (Module 1 Free, Modules 2-3 PRO) -->
-          <div class="af-module-tabs" role="group" aria-label="Course Modules">
-            <button type="button" class="af-mod-tab active" id="btnMod1" data-mod-idx="0">
-              <span>Module 1 (Free Diagnostic)</span>
-            </button>
-            <button type="button" class="af-mod-tab pro-locked" id="btnMod2" data-mod-idx="1">
-              <span id="btnMod2Label">Module 2: Advanced Lab</span>
-              <span class="af-pro-pill" id="proPillMod2">PRO</span>
-            </button>
-            <button type="button" class="af-mod-tab pro-locked" id="btnMod3" data-mod-idx="2">
-              <span id="btnMod3Label">Module 3: Final Certification</span>
-              <span class="af-pro-pill" id="proPillMod3">PRO</span>
-            </button>
-          </div>
-
-          <!-- Non-Spoiling Study Coach Hints -->
-          <div class="af-coach-strip">
-            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-              <span class="mono" style="font-size:11px;font-weight:600;color:var(--cf-ink-secondary);" id="coachHeaderLabel">GUIDED STUDY COACH (NON-SPOILING HINTS):</span>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                <button type="button" class="btn-secondary" id="btnCoachHint1" style="padding:4px 9px;font-size:11px;">Hint 1: Core Concept</button>
-                <button type="button" class="btn-secondary" id="btnCoachHint2" style="padding:4px 9px;font-size:11px;">Hint 2: Common Trap</button>
-              </div>
-            </div>
-            <div class="af-coach-reply hidden" id="socraticChatBox"></div>
-          </div>
-
-          <!-- Live SCORM 1.2 Runtime Log -->
-          <div class="af-terminal" style="margin-top:14px;">
-            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #27272A;padding-bottom:5px;margin-bottom:6px;">
-              <span style="color:#A1A1AA;">Practice attempt log</span>
-              <span style="color:#4ADE80;font-weight:600;" id="lmsConnBadge">Local preview</span>
-            </div>
-            <div id="scormApiLog"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: 30s Voiced Video Lesson + Adaptive Competency Matrix + TTL-MSM / FERPA -->
-      <div class="af-col-stack">
-
-        <!-- Card R1: Embedded 30.0s, 30 FPS Voiced Educational Video Lesson -->
-        <details class="af-section-card af-walkthrough">
-          <summary>Watch a worked example <span>30 seconds</span></summary>
-          <div class="af-video-frame">
-            <video
-              id="afDemoVideoPlayer"
-              class="af-video-el"
-              controls
-              preload="metadata"
-              playsinline
-              poster="./assets/academyforge_demo_poster.jpg"
-            >
-              <source src="./assets/academyforge_demo_lesson.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </details>
-
-        <!-- Card R2: Adaptive Competency & Mastery Matrix -->
-        <div class="af-section-card">
-          <div class="af-section-head" style="margin-bottom:10px;">
-            <div>
-              <span class="af-kicker" id="compMatrixKicker">Course practice</span>
-              <h2 class="af-section-title" style="font-size:21px;" id="compMatrixTitle">Practice results by module</h2>
-            </div>
-            <span class="af-vvs-metric" id="rubricMasteryBadge">No attempt yet</span>
-          </div>
-          <div class="af-comp-list" id="competencyBarsContainer">
-            <div class="af-comp-row">
-              <div class="af-comp-head">
-                <span id="compLabel1">1. Sensor Fusion &amp; PID Stability</span>
-                <span id="compVal1">—</span>
-              </div>
-              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill1" style="width:0%;"></div></div>
-            </div>
-            <div class="af-comp-row">
-              <div class="af-comp-head">
-                <span id="compLabel2">2. Multilingual Math Token Integrity</span>
-                <span id="compVal2">—</span>
-              </div>
-              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill2" style="width:0%;"></div></div>
-            </div>
-            <div class="af-comp-row">
-              <div class="af-comp-head">
-                <span id="compLabel3">3. LMS Telemetry &amp; Edge Verification</span>
-                <span id="compVal3">—</span>
-              </div>
-              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill3" style="width:0%;"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card R3: Deterministic TTL-MSM Rubric & FERPA AES-256-GCM Shield (0 Checkboxes!) -->
+      </details>
+      <details class="af-library-tools" id="assessmentDrawer"><summary>Assessment rubric &amp; encrypted record</summary>
         <div class="af-section-card" id="ttlFerpaCard">
           <div class="af-section-head" style="margin-bottom:8px;">
             <div>
@@ -423,26 +188,124 @@
             </button>
           </div>
         </div>
-
-      </div>
+      </details>
     </section>
 
-    <!-- ===================================================================
-         STEP 3: BINARY SCORM 1.2 .ZIP PACKAGER & PROGRESSIVE DISCLOSURE
-         =================================================================== -->
+    <section id="sectionStep2" class="af-practice" aria-labelledby="questionHeading">
+      <article class="af-notebook" id="quizWorkbenchCard">
+        <div class="af-lesson-line">
+          <span id="lessonKicker">Robotics lab</span>
+          <div class="af-lang-bar" id="bilingualToggleWrap" role="group" aria-label="Language">
+            <button type="button" class="af-seg-btn active" id="btnLangEn" data-lang="en">English</button>
+            <button type="button" class="af-seg-btn" id="btnLangKo" data-lang="ko" lang="ko">한국어</button>
+          </div>
+        </div>
+        <h1 id="questionHeading"></h1>
+        <details class="af-scenario" id="scenarioDetails"><summary>Read the scenario</summary><h2 id="quizScenarioTitle"></h2><div id="quizScenarioBody"></div></details>
+        <div class="af-answer-set" id="quizOptionsContainer" role="group" aria-labelledby="questionHeading">
+          <button type="button" class="af-quiz-opt" id="quizOptBtnA" data-opt-letter="A">
+            <span class="af-opt-letter" aria-hidden="true">A</span><span class="af-opt-body" id="quizOptContentA"></span>
+          </button>
+          <button type="button" class="af-quiz-opt" id="quizOptBtnB" data-opt-letter="B">
+            <span class="af-opt-letter" aria-hidden="true">B</span><span class="af-opt-body" id="quizOptContentB"></span>
+          </button>
+          <button type="button" class="af-quiz-opt" id="quizOptBtnC" data-opt-letter="C">
+            <span class="af-opt-letter" aria-hidden="true">C</span><span class="af-opt-body" id="quizOptContentC"></span>
+          </button>
+        </div>
+        <div hidden class="af-feedback-banner" id="quizFeedbackBox" role="status" aria-live="polite" aria-atomic="true"></div>
+        <details class="af-study-hint"><summary>Need a hint?</summary>
+          <div class="af-hint-actions"><button type="button" class="btn-secondary" id="btnCoachHint1">Key idea</button><button type="button" class="btn-secondary" id="btnCoachHint2">Common mistake</button></div>
+          <div class="af-coach-reply hidden" id="socraticChatBox" role="status"></div>
+        </details>
+      </article>
+      <div class="af-underbook">
+        <button type="button" class="af-save-lesson" id="btnTopExportScormZip">Download lesson (.zip) <span aria-hidden="true">↓</span></button>
+        <details class="af-more-modules" id="moduleDrawer"><summary>More modules</summary>
+          <div class="af-module-tabs" role="group" aria-label="Course Modules">
+            <button type="button" class="af-mod-tab active" id="btnMod1" data-mod-idx="0">
+              <span>Module 1 (Free Diagnostic)</span>
+            </button>
+            <button type="button" class="af-mod-tab pro-locked" id="btnMod2" data-mod-idx="1">
+              <span id="btnMod2Label">Module 2: Advanced Lab</span>
+              <span class="af-pro-pill" id="proPillMod2">PRO</span>
+            </button>
+            <button type="button" class="af-mod-tab pro-locked" id="btnMod3" data-mod-idx="2">
+              <span id="btnMod3Label">Module 3: Final Certification</span>
+              <span class="af-pro-pill" id="proPillMod3">PRO</span>
+            </button>
+          </div>
+        </details>
+      </div>
+      <details class="af-appendix" id="studyRecord"><summary>Practice record &amp; worked example</summary>
+        <div class="af-appendix-body">
+        <details class="af-section-card af-walkthrough">
+          <summary>Watch a worked example <span>30 seconds</span></summary>
+          <div class="af-video-frame">
+            <video
+              id="afDemoVideoPlayer"
+              class="af-video-el"
+              controls
+              preload="metadata"
+              playsinline
+              poster="./assets/academyforge_demo_poster.jpg"
+            >
+              <source src="./assets/academyforge_demo_lesson.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </details>
+        <div class="af-section-card">
+          <div class="af-section-head" style="margin-bottom:10px;">
+            <div>
+              <span class="af-kicker" id="compMatrixKicker">Course practice</span>
+              <h2 class="af-section-title" style="font-size:21px;" id="compMatrixTitle">Practice results by module</h2>
+            </div>
+            <span class="af-vvs-metric" id="rubricMasteryBadge">No attempt yet</span>
+          </div>
+          <div class="af-comp-list" id="competencyBarsContainer">
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel1">1. Sensor Fusion &amp; PID Stability</span>
+                <span id="compVal1">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill1" style="width:0%;"></div></div>
+            </div>
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel2">2. Multilingual Math Token Integrity</span>
+                <span id="compVal2">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill2" style="width:0%;"></div></div>
+            </div>
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel3">3. LMS Telemetry &amp; Edge Verification</span>
+                <span id="compVal3">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill3" style="width:0%;"></div></div>
+            </div>
+          </div>
+        </div>
+          <div class="af-terminal" style="margin-top:14px;">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #27272A;padding-bottom:5px;margin-bottom:6px;">
+              <span style="color:#A1A1AA;">Practice attempt log</span>
+              <span style="color:#4ADE80;font-weight:600;" id="lmsConnBadge">Local preview</span>
+            </div>
+            <div id="scormApiLog"></div>
+          </div>
+        </div>
+      </details>
+    </section>
     <section hidden class="af-section-card" id="sectionStep3" aria-labelledby="step3Heading">
       <div class="af-export-bar">
         <div>
-          <span class="af-kicker">STEP 3 OF 3 &middot; ZERO-CDN CLIENT-SIDE BINARY ARCHIVE COMPILER</span>
-          <h2 class="af-section-title" id="step3Heading">Export your course</h2>
+          <span class="af-kicker">Course file</span>
+          <h1 class="af-section-title" id="step3Heading">Export your lesson</h1>
           <p style="font-size:13px;color:var(--cf-ink-secondary);margin-top:3px;">
-            Packages <code>imsmanifest.xml</code>, <code>scorm_api_wrapper.js</code>, and a self-contained interactive <code>index.html</code> (with EN &harr; 한국어 toggle) using IEEE 802.3 CRC-32 PKZIP headers.
+            Download a SCORM 1.2 ZIP for your learning management system, or open its lesson in a browser.
           </p>
         </div>
         <div class="af-export-actions">
-          <button type="button" class="btn-secondary" id="btnBottomOpenInvoice">
-            <span>Generate B2B Invoice (INV-ED-2026)</span>
-          </button>
           <button type="button" class="btn-primary" id="btnExportScormZip">
             <svg class="af-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span id="btnExportScormZipLabel">Download course (.zip)</span>
@@ -468,6 +331,7 @@
           <span class="mono" style="color:var(--cf-accent-primary);">Expand &darr;</span>
         </summary>
         <div class="af-details-body">
+          <p id="activeContentHashBadge" class="mono"></p>
           <button class="btn-secondary" type="button" id="downloadManifest">Download manifest (.xml)</button>
           <pre class="af-code-pre" id="manifestXmlPreviewCode"></pre>
         </div>
@@ -475,7 +339,7 @@
 
       <details class="af-details-drawer" id="drawerTtlGates">
         <summary class="af-details-summary">
-          <span>TECHNICAL DRILL-DOWN 02 // Inspect 4-Gate Deterministic TTL-MSM Rule Evaluation Trace</span>
+          <span>Inspect rubric rule trace</span>
           <span class="mono" style="color:var(--cf-accent-primary);">Expand &darr;</span>
         </summary>
         <div class="af-details-body">
@@ -483,12 +347,7 @@
         </div>
       </details>
     </section>
-
   </main>
-
-  <!-- =====================================================================
-       COMMERCIAL FREEMIUM PAYWALL, INVOICE (INV-ED-2026-XXXX) & RSA-512 MODAL
-       ===================================================================== -->
   <div class="af-modal-backdrop hidden" id="modalPaywall" role="dialog" aria-modal="true" aria-labelledby="paywallModalTitle">
     <div class="af-modal-card">
       <div class="af-modal-head">
@@ -602,13 +461,18 @@
     </div>
   </div>
 
-  <footer class="af-footer">
-    <div class="af-footer-inner">
-      <span>&copy; 2026 Caliber Foundry (<a href="../index.html" style="color:var(--cf-ink-primary);text-decoration:none;">caliberfoundry.com</a>) &middot; AcademyForge&trade; EdTech Studio v2.0</span>
-      <span>100% Asynchronous Engineering &middot; <a href="../work/edtech-studio.html" style="color:var(--cf-accent-primary);text-decoration:none;">Architecture Overview</a> &middot; <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary);text-decoration:none;">engineering@caliberfoundry.com</a></span>
-    </div>
+  <footer class="af-studio-footer">
+    <a href="../index.html#work">All products</a>
+    <a href="../work/edtech-studio.html">About AcademyForge</a>
+    <details id="licenseDrawer"><summary>Licensing &amp; help</summary>
+      <div class="cf-account-cluster" id="headerAccountCluster">
+        <span class="cf-license-pill" id="headerLicenseBadge"></span>
+        <button class="btn-secondary" type="button" id="btnOpenPaywall">Plans and license</button>
+        <button class="btn-secondary" type="button" id="btnOpenInvoiceModal">Get an invoice</button>
+        <a href="mailto:engineering@caliberfoundry.com">Contact engineering</a>
+      </div>
+    </details>
   </footer>
-
   <script src="./scorm_and_ttl_engine.js"></script>
   <script src="./app.js"></script>
   <script src="/assets/js/cf-telemetry.js" defer></script>

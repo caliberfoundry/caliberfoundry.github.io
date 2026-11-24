@@ -4126,8 +4126,7 @@ mark.ecfr-search-highlight {
 /* Responsive Adjustments */
 @media (max-width: 1550px) {
   .cd-telemetry-pill,
-  #globalPassProbBadge,
-  .cd-global-link {
+  #globalPassProbBadge {
     display: none !important;
   }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=20261123h" />
+  <link rel="stylesheet" href="workspace.css" />
 </head>
 <body>
   <!-- =====================================================================
@@ -16,7 +17,7 @@
        ===================================================================== -->
   <header class="codedrill-global-bar" role="banner">
     <div class="cd-brand-group">
-      <a href="../index.html" class="cd-back-foundry-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
+      <a href="../#work" class="cd-back-foundry-link">← All products</a>
       <span class="cd-brand-sep" aria-hidden="true">/</span>
       <div class="cd-logo-mark" aria-hidden="true">CD</div>
       <div class="cd-brand-text">
@@ -28,7 +29,7 @@
     </div>
 
     <!-- 3 Key Mode Switcher Tabs -->
-    <details class="study-settings"><summary>Modes &amp; account</summary><div class="study-settings-body">
+    <details class="study-settings"><summary>Practice settings</summary><div class="study-settings-body">
     <nav class="cd-mode-switcher" aria-label="Application Modes">
       <button type="button" class="cd-mode-tab active" data-mode="cbt" id="tabModeCbt" title="1:1 Pearson VUE Testing Center Split-Screen Simulator (Alt+1)">
         <span class="cd-tab-label">Exam Simulator</span>
@@ -98,7 +99,7 @@
         <!-- Prussian Institutional Navy Top Bar (#1B365D) -->
         <div class="pvue-top-bar">
           <div class="pvue-exam-identity">
-            <span class="pvue-system-badge">Pearson VUE CBT</span>
+            <span class="pvue-system-badge">Practice session</span>
             <h1 class="pvue-exam-title" id="pvueExamTitle">U.S. Customs Broker License Examination</h1>
           </div>
 
@@ -107,7 +108,13 @@
             <span class="pvue-q-status-pill" id="pvueCitationVerifyPill">No Proof Cited</span>
           </div>
 
-          <div class="pvue-timer-cluster">
+
+        </div>
+
+        <!-- Milled Stone Action Toolbar (#ECE9E1) -->
+        <details class="exam-tools"><summary>Exam tools</summary>
+        <div class="pvue-action-bar" role="toolbar" aria-label="Pearson VUE Candidate Exam Tools">
+          <div class="pvue-tools-left"><div class="pvue-timer-cluster">
             <div class="pvue-timer-display" id="pvueTimerDisplayWrap">
               <span class="pvue-timer-icon" aria-hidden="true">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -118,12 +125,6 @@
             <button type="button" class="pvue-timer-btn" id="btnToggleCbtTimer" title="Pause or Resume 4:30:00 Exam Clock">Pause</button>
             <button type="button" class="pvue-timer-btn" id="btnResetCbtTimer" title="Reset Clock to 04:30:00">Reset</button>
           </div>
-        </div>
-
-        <!-- Milled Stone Action Toolbar (#ECE9E1) -->
-        <details class="exam-tools"><summary>Exam tools and timer controls</summary>
-        <div class="pvue-action-bar" role="toolbar" aria-label="Pearson VUE Candidate Exam Tools">
-          <div class="pvue-tools-left">
             <button type="button" class="pvue-tool-btn" id="btnFlagForReview" title="Flag current question for review before exam submission">
               <span class="pvue-tool-icon" id="flagToolIcon">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3v18M5 4h13l-2.5 4.5L18 13H5"/></svg>
@@ -319,7 +320,7 @@
             <!-- Question Case Stem (Supports Yellow Marker Highlighting) -->
             <article class="q-stem-card" aria-label="Exam Question Scenario">
               <div class="q-stem-toolbar">
-                <span class="q-stem-label">Exam Fact Pattern</span>
+                <span class="q-stem-label">Case question</span>
                 <span class="q-highlight-hint" id="highlightModeStatusHint">Select text + click Highlight to mark key facts</span>
               </div>
               <div class="q-stem-content" id="qStemContent">
@@ -329,7 +330,7 @@
 
             <!-- Answer Options A-E with Radio Selection & Right-Click / Button Strikethrough -->
             <div class="q-options-header">
-              <span>Select Best Legal Ruling (A–E)</span>
+              <span>Choose your answer</span>
               <span class="q-strike-tip">Right-click any option or click <strong>Strike</strong> to cross out distractors</span>
             </div>
 
@@ -375,7 +376,49 @@
             <!-- ===========================================================
                  COLLAPSIBLE STUDY COACH & HINTS (3 STEP-BY-STEP CLUES)
                  =========================================================== -->
-            <section class="socratic-tutor-panel" id="socraticTutorPanel" aria-label="Study Coach and Progressive Hints">
+            <section class="q-explanation-panel hidden" id="qExplanationPanel" aria-label="Official Legal Explanation and Distractor Analysis">
+              <div class="exp-status-banner" id="expStatusBanner">
+                <div class="exp-status-title" id="expStatusTitle">Correct Determination</div>
+                <div class="exp-status-meta" id="expStatusMeta">Target Citation: 19 CFR § 152.103</div>
+              </div>
+
+              <!-- Governing Citation & Shortest Path -->
+              <div class="exp-citation-card">
+                <div class="exp-citation-top">
+                  <div>
+                    <span class="exp-section-tag">Governing Authority</span>
+                    <h3 class="exp-target-citation" id="expTargetCitationHeading">19 CFR § 152.103</h3>
+                  </div>
+                  <button type="button" class="exp-open-code-btn" id="btnExpOpenTargetSection">
+                    Open Section in Code Reader →
+                  </button>
+                </div>
+                <div class="exp-shortest-path">
+                  <strong>Fastest Lookup Path:</strong> <span id="expShortestPathVal"></span>
+                </div>
+              </div>
+
+              <!-- Verbatim Golden Quote -->
+              <div class="exp-golden-quote-box">
+                <div class="exp-quote-header">§ Verbatim Golden Quote from Regulation</div>
+                <blockquote class="exp-golden-quote-text" id="expGoldenQuoteText"></blockquote>
+              </div>
+
+              <!-- Official Legal Reasoning -->
+              <div class="exp-reasoning-box">
+                <div class="exp-sub-header">Official Legal &amp; Regulatory Analysis</div>
+                <p class="exp-reasoning-text" id="expCorrectReasoningText"></p>
+              </div>
+
+              <!-- Option-by-Option Distractor Audit (A-E) -->
+              <div class="exp-distractors-box">
+                <div class="exp-sub-header">Option-by-Option Distractor Breakdown (A–E)</div>
+                <div class="exp-distractors-list" id="expDistractorsList">
+                  <!-- Populated dynamically for A, B, C, D, E -->
+                </div>
+              </div>
+            </section>
+<section class="socratic-tutor-panel" id="socraticTutorPanel" aria-label="Study Coach and Progressive Hints">
               <button type="button" class="socratic-collapse-trigger" id="btnToggleStudyCoach" aria-expanded="false">
                 <div class="socratic-title-group">
                   <span class="socratic-ai-badge">Study Coach</span>
@@ -465,48 +508,7 @@
             <!-- ===========================================================
                  OFFICIAL CBP LEGAL EXPLANATION & DISTRACTOR BREAKDOWN (A-E)
                  =========================================================== -->
-            <section class="q-explanation-panel hidden" id="qExplanationPanel" aria-label="Official Legal Explanation and Distractor Analysis">
-              <div class="exp-status-banner" id="expStatusBanner">
-                <div class="exp-status-title" id="expStatusTitle">Correct Determination</div>
-                <div class="exp-status-meta" id="expStatusMeta">Target Citation: 19 CFR § 152.103</div>
-              </div>
 
-              <!-- Governing Citation & Shortest Path -->
-              <div class="exp-citation-card">
-                <div class="exp-citation-top">
-                  <div>
-                    <span class="exp-section-tag">Governing Authority</span>
-                    <h3 class="exp-target-citation" id="expTargetCitationHeading">19 CFR § 152.103</h3>
-                  </div>
-                  <button type="button" class="exp-open-code-btn" id="btnExpOpenTargetSection">
-                    Open Section in Code Reader →
-                  </button>
-                </div>
-                <div class="exp-shortest-path">
-                  <strong>Fastest Lookup Path:</strong> <span id="expShortestPathVal"></span>
-                </div>
-              </div>
-
-              <!-- Verbatim Golden Quote -->
-              <div class="exp-golden-quote-box">
-                <div class="exp-quote-header">§ Verbatim Golden Quote from Regulation</div>
-                <blockquote class="exp-golden-quote-text" id="expGoldenQuoteText"></blockquote>
-              </div>
-
-              <!-- Official Legal Reasoning -->
-              <div class="exp-reasoning-box">
-                <div class="exp-sub-header">Official Legal &amp; Regulatory Analysis</div>
-                <p class="exp-reasoning-text" id="expCorrectReasoningText"></p>
-              </div>
-
-              <!-- Option-by-Option Distractor Audit (A-E) -->
-              <div class="exp-distractors-box">
-                <div class="exp-sub-header">Option-by-Option Distractor Breakdown (A–E)</div>
-                <div class="exp-distractors-list" id="expDistractorsList">
-                  <!-- Populated dynamically for A, B, C, D, E -->
-                </div>
-              </div>
-            </section>
 
           </div>
         </div>
@@ -1397,8 +1399,9 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- External Data Payload + Core Application Logic -->
+  <footer class="product-utilities" data-product-feedback><a href="../#work">All products</a></footer>
   <script src="data/codedrill-data.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261124-workspace"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

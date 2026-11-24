@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="edtech-studio">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -9,182 +9,48 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>AcademyForge&trade; (EdTech Studio v2.0) — Multilingual STEM, B2B Customer Academy &amp; SCORM 1.2 Packager | Caliber Foundry</title>
-  <meta name="description" content="AcademyForge™ (EdTech Studio v2.0) compiles bilingual EN/Korean STEM curricula, B2B SaaS Customer Academies, 30fps voiced video lessons, FERPA AES-256 rubrics, and binary SCORM 1.2 .ZIP packages." />
+  <title>AcademyForge · Practice lessons and course export | Caliber Foundry</title>
+  <meta name="description" content="Try a robotics, developer or assessment lesson in AcademyForge. See an explanation for each answer and download a SCORM 1.2 package for your learning management system." />
   <link rel="canonical" href="https://caliberfoundry.com/work/edtech-studio.html" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Sans+KR:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-      --cf-bg-paper: #FAF9F6;
-      --cf-bg-stone: #F3F2EE;
-      --cf-bg-surface: #FFFFFF;
-      --cf-bg-ink-panel: #111113;
-      --cf-ink-primary: #111113;
-      --cf-ink-secondary: #52514E;
-      --cf-ink-muted: #8A8884;
-      --cf-ink-on-dark: #FAF9F6;
-      --cf-rule-strong: #D4D1C8;
-      --cf-rule-mid: #E4E2DD;
-      --cf-rule-subtle: #EFECE6;
-      --cf-accent-primary: #4F46E5;
-      --cf-accent-hover: #4338CA;
-      --cf-accent-tint: #EEF2FF;
-      --cf-accent-border: #C7D2FE;
-      --cf-forest-pass: #15803D;
-      --cf-forest-tint: #F0FDF4;
-      --font-display: 'Instrument Serif', Georgia, serif;
-      --font-serif: 'Newsreader', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    .site-header { background-color: var(--cf-bg-ink-panel); color: var(--cf-ink-on-dark); border-bottom: 1px solid #27272A; position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1120px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cf-ink-on-dark); }
-    .brand-mark { width: 26px; height: 26px; border-radius: 5px; background-color: var(--cf-accent-primary); color: #FFFFFF; font-family: var(--font-mono); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-    .brand-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; padding: 8px 14px; border-radius: 5px; border: 1px solid var(--cf-rule-strong); text-decoration: none; background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); transition: all 0.14s ease; }
-    .btn:hover { background-color: var(--cf-bg-stone); border-color: var(--cf-ink-primary); }
-    .btn-primary { background-color: var(--cf-accent-primary); border-color: var(--cf-accent-hover); color: #FFFFFF; box-shadow: 0 1px 2px rgba(79,70,229,0.25); }
-    .btn-primary:hover { background-color: var(--cf-accent-hover); color: #FFFFFF; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 40px 20px 72px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); margin-bottom: 16px; display: inline-block; text-decoration: none; }
-    .breadcrumb:hover { color: var(--cf-accent-primary); }
-    .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--cf-accent-primary); margin-bottom: 8px; font-weight: 700; }
-    .title { font-family: var(--font-display); font-size: clamp(34px, 4.8vw, 52px); font-weight: 400; line-height: 1.08; margin-bottom: 14px; }
-    .lede { font-family: var(--font-serif); font-size: 19px; color: var(--cf-ink-secondary); max-width: 68ch; margin-bottom: 24px; line-height: 1.58; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
-    .video-showcase { background: var(--cf-bg-surface); border: 1px solid var(--cf-rule-mid); border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(17,17,19,0.05); margin-bottom: 28px; }
-    .video-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-    .video-wrap { border-radius: 6px; overflow: hidden; border: 1px solid var(--cf-rule-mid); background: #111113; }
-    .video-wrap video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
-    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 28px; }
-    @media (min-width: 840px) { .grid-2 { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); } }
-    .panel { background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-mid); border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(17,17,19,0.04); min-width: 0; }
-    .panel-title { font-family: var(--font-display); font-size: 25px; font-weight: 400; margin-bottom: 14px; border-bottom: 1px solid var(--cf-rule-subtle); padding-bottom: 8px; }
-    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 14.5px; color: var(--cf-ink-secondary); }
-    .spec-list strong { color: var(--cf-ink-primary); }
-    .spec-list code { font-family: var(--font-mono); font-size: 12px; background: var(--cf-bg-stone); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--cf-rule-mid); color: var(--cf-ink-primary); }
-    .spec-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
-    .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--cf-rule-subtle); vertical-align: top; }
-    .spec-table td:first-child { color: var(--cf-ink-muted); padding-right: 10px; }
-    .spec-table td:last-child { text-align: right; font-weight: 600; color: var(--cf-ink-primary); }
-    .matrix-section { margin-top: 28px; background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-mid); border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(17,17,19,0.04); }
-    .table-scroll { width: 100%; overflow-x: auto; }
-    .matrix-table { width: 100%; min-width: 620px; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; margin-top: 10px; }
-    .matrix-table th, .matrix-table td { border-bottom: 1px solid var(--cf-rule-subtle); padding: 10px 8px; text-align: left; }
-    .matrix-table th { background-color: var(--cf-bg-stone); color: var(--cf-ink-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; }
-    .badge-pass { display: inline-block; padding: 2px 7px; border: 1px solid #BBF7D0; background-color: var(--cf-forest-tint); color: var(--cf-forest-pass); font-weight: 600; font-size: 11px; border-radius: 4px; white-space: nowrap; }
-    .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 24px 20px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  </style>
+  <link rel="stylesheet" href="../edtech-studio/styles.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../index.html" class="brand">
-        <span class="brand-mark">CF</span>
-        <span class="brand-name">Caliber Foundry</span>
-      </a>
-      <div class="header-actions cf-account-cluster">
-        <a href="../index.html#work" class="btn">&larr; All products</a>
-      </div>
+<body class="af-case">
+  <header class="af-studio-header">
+    <div class="af-studio-mast">
+      <a href="../edtech-studio/" class="af-wordmark"><span class="af-book-mark" aria-hidden="true"></span>AcademyForge</a>
+      <a href="../index.html#work">All products</a>
     </div>
   </header>
-
-  <main class="container">
-    <h1 class="title">EdTech Studio</h1>
-    <p class="lede">Turn a sample lesson into a practice question. Try it as a learner, review the score and package the lesson for your LMS.</p>
-    <nav class="cta-row" aria-label="Try a course workflow">
-      <a href="../edtech-studio/?autoProof=2" class="btn btn-primary">Try a practice question &rarr;</a>
-      <a href="../edtech-studio/?autoProof=1" class="btn">Choose or adapt a lesson</a>
-      <a href="../edtech-studio/?autoProof=3" class="btn">Inspect course exports</a>
-    </nav>
-    <p>Practice scores stay in the browser preview. The course ZIP includes the lesson, a runtime wrapper and its manifest. A standalone XML manifest is also available.</p>
-    <p><a href="../edtech-studio/?preset=steminno-kr&amp;lang=ko">Korean robotics lesson</a> · <a href="../edtech-studio/?preset=saas-academy">Developer academy</a> · <a href="../edtech-studio/?preset=clinical-ferpa">Education assessment</a></p>
-
-    <!-- 30.0s 30FPS Voiced Commercial Walkthrough Video -->
-    <section class="video-showcase" aria-labelledby="videoHeading">
-      <div class="video-head">
-        <div>
-          <div class="kicker" style="margin-bottom:2px;">30.0 SECONDS &middot; 30 FPS &middot; 48KHZ STEREO NEURAL VOICEOVER</div>
-          <h2 id="videoHeading" style="font-size:19px;font-weight:700;">Watch AcademyForge&trade; v2.0 Compile EN/KR Quizzes &amp; SCORM 1.2 .ZIP</h2>
-        </div>
-        <span class="badge-pass">H.264 + 48kHz AAC</span>
+  <main class="af-case-main">
+    <section class="af-case-intro">
+      <div class="af-case-lede">
+        <h1>AcademyForge</h1>
+        <p>Answer a practice question, get an explanation and take the lesson into your learning management system.</p>
+        <nav aria-label="Try a course workflow">
+          <a href="../edtech-studio/?autoProof=2" class="af-primary">Try a practice question <span aria-hidden="true">→</span></a>
+          <a href="../edtech-studio/?autoProof=1">Choose or adapt a lesson</a>
+          <a href="../edtech-studio/?autoProof=3">Export a course</a>
+        </nav>
       </div>
-      <div class="video-wrap">
-        <video id="workEdtechVideo" controls preload="metadata" playsinline poster="../edtech-studio/assets/academyforge_demo_poster.jpg">
-          <source src="../edtech-studio/assets/academyforge_demo_lesson.mp4" type="video/mp4" />
-        </video>
+      <div class="af-case-library">
+        <h2>Inside the lesson library</h2>
+        <a href="../edtech-studio/?preset=steminno-kr"><strong>Robotics lab</strong><span>Control a rover on a 12° ramp.</span></a>
+        <a href="../edtech-studio/?preset=saas-academy"><strong>Developer academy</strong><span>Handle a repeated webhook delivery.</span></a>
+        <a href="../edtech-studio/?preset=clinical-ferpa"><strong>Bilingual assessment</strong><span>Interpret language evidence from two settings.</span></a>
+        <a class="af-korean-link" href="../edtech-studio/?preset=steminno-kr&amp;lang=ko" lang="ko">한국어로 로보틱스 실습 열기 →</a>
       </div>
     </section>
-
-    <div class="grid-2">
-      <div class="panel">
-        <h2 class="panel-title">Architecture &amp; Engineering Capabilities</h2>
-        <ul class="spec-list">
-          <li><strong>01. Decoupled Multilingual Curriculum AST (<code>EN &harr; 한국어</code>):</strong> Separates versioned JSON lesson schemas, competency rubrics, and formula tokens from Unity WebGL manipulatives and web frontends so curriculum teams switch locales in 1 click without recompiling binaries.</li>
-          <li><strong>02. Zero-CDN Client-Side Binary <code>SCORM 1.2 .ZIP</code> Compiler:</strong> Generates IEEE 802.3 CRC-32 verified PKZIP archives (<code>imsmanifest.xml</code> + <code>scorm_api_wrapper.js</code> + standalone bilingual <code>index.html</code>) ready for Canvas, Moodle, Blackboard, Skilljar, and Docebo.</li>
-          <li><strong>03. Deterministic <code>TTL-MSM</code> Rubric &amp; FERPA Zero-PII Encryption:</strong> Evaluates 4 structured student evidence streams via auditable rule gates and encrypts learner identifiers in-browser via WebCrypto <code>AES-256-GCM</code> before export.</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h2 class="panel-title">System &amp; Licensing Specifications</h2>
-        <table class="spec-table">
-          <tr><td>MULTILINGUAL ENGINE</td><td>1-Click EN &harr; 한국어 JSON AST</td></tr>
-          <tr><td>ARCHIVE COMPILER</td><td>Pure JS PKZIP (PK\x03\x04 + CRC-32)</td></tr>
-          <tr><td>LMS COMPATIBILITY</td><td>ADL SCORM 1.2 / Canvas / Moodle / Docebo</td></tr>
-          <tr><td>VIDEO PIPELINE</td><td>30s 30fps H.264 + 48kHz Stereo AAC</td></tr>
-          <tr><td>PRIVACY SHIELD</td><td>WebCrypto AES-256-GCM + SHA-256</td></tr>
-          <tr><td>SELF-SERVE PACK</td><td>$299 USD (Gumroad / Contra / Net-14 Invoice)</td></tr>
-          <tr><td>TURNKEY SPRINT</td><td>$2,900 USD (5 Modules + 5 Videos + 25 Qs)</td></tr>
-        </table>
-      </div>
+    <div class="af-case-details">
+      <details><summary>Watch the 30-second walkthrough</summary>
+        <video id="workEdtechVideo" class="af-video-el" controls preload="metadata" playsinline poster="../edtech-studio/assets/academyforge_demo_poster.jpg"><source src="../edtech-studio/assets/academyforge_demo_lesson.mp4" type="video/mp4" /></video>
+      </details>
+      <details><summary>Course files, scoring and licensing</summary>
+        <p>The SCORM 1.2 ZIP contains the lesson, its runtime adapter and the manifest. Practice here stays in your browser. Your learning management system records new attempts when it accepts scores from the downloaded lesson.</p>
+        <dl><dt>Course package</dt><dd>$299 for the self-serve course pack.</dd><dt>Custom course</dt><dd>$2,900 for five modules, five videos and 25 questions.</dd><dt>Languages</dt><dd>The robotics sample includes English and Korean versions. The developer and assessment samples open in English.</dd></dl>
+      </details>
     </div>
-
-    <section class="matrix-section" aria-labelledby="presetsHeading">
-      <h2 class="panel-title" id="presetsHeading">3 Ready Courseware Presets (1-Click Browser Deep-Links)</h2>
-      <div class="table-scroll">
-        <table class="matrix-table">
-          <thead>
-            <tr>
-              <th>Option</th>
-              <th>Domain &amp; Target Architecture</th>
-              <th>Key Deliverable</th>
-              <th>Interactive Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Option 1</strong></td>
-              <td>EN / 한국어 Multilingual STEM &amp; Robotics Curriculum (STEMinnoKey Preset)</td>
-              <td><span class="badge-pass">EN &harr; KO Toggle + SCORM .ZIP</span></td>
-              <td><a href="../edtech-studio/?preset=steminno-kr" style="color:var(--cf-accent-primary);font-weight:600;text-decoration:none;">Launch Option 1 &rarr;</a></td>
-            </tr>
-            <tr>
-              <td><strong>Option 2</strong></td>
-              <td>B2B SaaS Customer Academy-in-a-Box (Developer &amp; API Certification)</td>
-              <td><span class="badge-pass">HMAC Webhook Lab + $2,900 Sprint</span></td>
-              <td><a href="../edtech-studio/?preset=saas-academy" style="color:var(--cf-accent-primary);font-weight:600;text-decoration:none;">Launch Option 2 &rarr;</a></td>
-            </tr>
-            <tr>
-              <td><strong>Option 3</strong></td>
-              <td>Clinical &amp; Regulatory Compliance Studio (FERPA AES-256-GCM &amp; 19 CFR)</td>
-              <td><span class="badge-pass">4-Gate TTL-MSM + Zero-PII</span></td>
-              <td><a href="../edtech-studio/?preset=clinical-ferpa" style="color:var(--cf-accent-primary);font-weight:600;text-decoration:none;">Launch Option 3 &rarr;</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
   </main>
-
-  <footer class="site-footer">
-    <span>&copy; 2026 Caliber Foundry &middot; 100% Asynchronous Engineering Studio</span>
-    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary);text-decoration:none;">engineering@caliberfoundry.com</a>
-  </footer>
+  <footer class="af-studio-footer"><a href="../index.html">Caliber Foundry</a><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a><div class="cf-account-cluster"></div></footer>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

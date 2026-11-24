@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="stealthflow">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -11,88 +11,15 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>StealthFlow™ Data Hub — Case Study &amp; Architecture | Caliber Foundry</title>
   <link rel="canonical" href="https://caliberfoundry.com/work/stealthflow.html" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-      --cf-bg-paper: #F6F4EF; --cf-bg-stone: #ECE9E1; --cf-bg-surface: #FFFFFF; --cf-bg-ink-panel: #141413;
-      --cf-ink-primary: #141413; --cf-ink-secondary: #4A4842; --cf-ink-muted: #78756D; --cf-ink-on-dark: #F6F4EF;
-      --cf-rule-strong: #141413; --cf-rule-mid: #D6D1C7; --cf-rule-subtle: #E4E0D7;
-      --cf-accent-primary: #C8431F; --cf-accent-hover: #A63415; --cf-forest-pass: #1A5638;
-      --font-display: 'Instrument Serif', Georgia, serif; --font-serif: 'Newsreader', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
-    .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
-    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
-    .brand-name { font-family: var(--font-display); font-size: 22px; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none; background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong); }
-    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
-    .container { max-width: 1080px; margin: 0 auto; padding: 56px 32px 80px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); margin-bottom: 24px; display: block; text-decoration: none; }
-    .breadcrumb:hover { color: var(--cf-accent-primary); }
-    .title { font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); font-weight: 400; line-height: 1.06; margin-bottom: 18px; }
-    .lede { font-family: var(--font-serif); font-size: 20px; color: var(--cf-ink-secondary); max-width: 62ch; margin-bottom: 32px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
-    @media (min-width: 820px) { .grid-2 { grid-template-columns: 3fr 2fr; } }
-    .panel { background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 32px; }
-    .panel-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; margin-bottom: 16px; }
-    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--cf-ink-secondary); }
-    .spec-list strong { color: var(--cf-ink-primary); }
-    .spec-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
-    .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--cf-rule-subtle); }
-    .spec-table td:first-child { color: var(--cf-ink-muted); }
-    .spec-table td:last-child { text-align: right; font-weight: 600; }
-    .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  </style>
+  <link rel="stylesheet" href="../stealthflow/catalog.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
-      <div style="display:flex; gap:12px;">
-        <a href="../stealthflow/" class="btn btn-primary"><span>Explore 50 sample records</span><span>&rarr;</span></a>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <h1 class="title">StealthFlow · Inspect and export sample catalog data</h1>
-    <p class="lede">Filter a catalog of 50 sample records from 12 source categories. Compare the original and cleaned fields, then download your selection or preview a JSON payload locally.</p>
-    <nav aria-label="Try the workflow" style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="../stealthflow/?autoProof=1" class="btn btn-primary"><span>Choose a sample record</span></a>
-      <a href="../stealthflow/?autoProof=2" class="btn"><span>Inspect the selected record</span></a>
-      <a href="../stealthflow/?autoProof=3" class="btn"><span>Preview its JSON payload</span></a>
-    </nav>
-
-    <div class="grid-2">
-      <section class="panel">
-        <h2 class="panel-title">What you can do</h2>
-        <ul class="spec-list">
-          <li><strong>Choose a record.</strong> Select a supplier or narrow the catalog by industry and search text.</li>
-          <li><strong>Compare fields.</strong> See the source-style URL and price beside the normalized fields.</li>
-          <li><strong>Export a selection.</strong> Download filtered rows or the full sample catalog. The payload preview runs entirely in the browser.</li>
-        </ul>
-      </section>
-      <section class="panel">
-        <h2 class="panel-title">Example and output</h2>
-        <table class="spec-table">
-          <tr><th scope="row">Input</th><td>50 bundled sample records</td></tr>
-          <tr><th scope="row">Example</th><td>Filter Shopify to five matching records</td></tr>
-          <tr><th scope="row">Outputs</th><td>Filtered CSV, full CSV or JSON, local payload preview</td></tr>
-        </table>
-      </section>
-    </div>
+<body class="product-case">
+  <header class="sf-banner"><div class="sf-width sf-top"><a class="sf-name" href="../stealthflow/">StealthFlow</a><a href="../#work">All products ↗</a></div></header>
+  <main class="sf-width sf-case"><div class="sf-export"><h1>Export the records you need.</h1><p>Choose an industry segment from a bundled catalog of 50 sample records. Each CSV contains the rows in your current selection.</p><a href="../stealthflow/" class="sf-case-launch">Open the export desk ↗</a></div>
+    <section class="sf-case-options"><h2>Inspect the sample</h2><nav aria-label="Try the workflow"><a href="../stealthflow/?autoProof=1">Choose a record ↗</a><a href="../stealthflow/?autoProof=2">Compare original and cleaned fields ↗</a><a href="../stealthflow/?autoProof=3">Preview a JSON payload ↗</a></nav>
+      <p>The Shopify segment contains five records. Preview the companies, download just those rows, or keep all 50 as CSV or JSON. The payload preview runs in your browser.</p></section>
   </main>
-
-  <footer class="site-footer">
-    <span>&copy; 2026 Caliber Foundry</span>
-    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary); text-decoration:none;">engineering@caliberfoundry.com</a>
-  </footer>
+  <footer class="sf-width sf-footer"><span>Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a></footer>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

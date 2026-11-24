@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="dealshield">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -15,42 +15,74 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=20261123h" />
+  <link rel="stylesheet" href="workspace.css" />
 </head>
 <body>
   <!-- =====================================================================
        BAR 1: CLEAN RESPONSIVE HEADER BAR (ZERO OVERLAP AT ANY RESOLUTION)
        ===================================================================== -->
-  <header class="cf-global-header" role="banner">
-    <div class="cf-brand-cluster">
-      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
-      <div class="cf-logo-mark" aria-hidden="true">CF</div>
+  <header class="deal-rail"><div class="cf-brand-cluster">
+      <a href="../#work" class="cf-back-link">← All products</a>
+      <div class="cf-logo-mark" aria-hidden="true">D</div>
       <div class="cf-brand-titles">
         <span class="cf-brand-name">DealShield<span class="cf-tm">™</span></span>
-        <span class="cf-brand-sub">Citation-Locked DDQ &amp; VPAT 2.5 Responder</span>
+        <span class="cf-brand-sub">Security questionnaires</span>
       </div>
     </div>
+      <div class="cf-tabs-header">
+        <div class="cf-tab-list" role="tablist" aria-label="DealShield Output Views">
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-gap-audit"
+            id="tabBtnGapAudit"
+          >
+            Evidence inbox
+          </button>
+<button
+            type="button"
+            class="cf-tab-btn active"
+            role="tab"
+            aria-selected="true"
+            data-tab="tab-ddq-matrix"
+            id="tabBtnDdqMatrix"
+          >
+            All answers
+          </button>
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-vpat-report"
+            id="tabBtnVpatReport"
+          >
+            Accessibility report
+          </button>
 
-    <!-- 4 Enterprise & EdTech Procurement Questionnaire Presets -->
-    <div class="cf-preset-selector-wrap">
-      <label for="presetSelect" class="cf-preset-label">Framework:</label>
-      <select id="presetSelect" class="cf-preset-select" aria-label="Select Procurement Questionnaire or VPAT Framework">
-        <option value="caiq-v4">1. CSA CAIQ v4.0.3 &amp; SOC 2 Enterprise DDQ (FREE)</option>
-        <option value="hecvat-3">2. EDUCAUSE HECVAT v3.04 Higher-Ed &amp; FERPA DDQ (FREE)</option>
-        <option value="sig-lite">3. Shared Assessments SIG-Lite 2026 Vendor Risk · PRO</option>
-        <option value="vpat-25">4. ITI VPAT® 2.5 (Section 508 + EU EAA EN 301 549) · PRO</option>
-      </select>
-    </div>
-
-    <!-- Right Account & Licensing Cluster -->
-    <div class="cf-account-cluster" id="headerAccountCluster">
+          <button
+            type="button"
+            class="cf-tab-btn"
+            role="tab"
+            aria-selected="false"
+            data-tab="tab-export-pack"
+            id="tabBtnExportPack"
+          >
+            Export files
+          </button>
+        </div>
+      </div>
+      <details class="deal-account"><summary>Account and access</summary><div class="cf-account-cluster" id="headerAccountCluster">
       <span class="cf-gate-pill hidden" id="headerGateBadge">100% Citation-Locked</span>
       <span class="cf-license-pill" id="headerLicenseBadge">Free Tier (2/4)</span>
       <span class="cf-user-email-pill hidden" id="headerUserEmailBadge"></span>
       <button type="button" class="cf-header-btn" id="btnHeaderSignIn">Sign In</button>
       <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Unlock Deal Pack ($199)</button>
       <button type="button" class="cf-header-btn cf-btn-reset" id="btnResetStudio" title="Reset session">Reset</button>
-    </div>
-  </header>
+    </div></details>
+    </header>
 
   <!-- =====================================================================
        BAR 2: GUIDED 3-STEP USER JOURNEY BAR (INTUITIVE 1 -> 2 -> 3 FLOW)
@@ -61,18 +93,234 @@
        MAIN SPLIT-SCREEN WORKBENCH (CLEAN, LOW-TEXT, INTUITIVE UX)
        ===================================================================== -->
   <section class="evidence-start">
-    <h1>Review questionnaire evidence</h1>
-    <p id="evidenceReviewSummary" role="status" tabindex="-1"></p>
-    <button type="button" class="cf-btn-secondary" id="reviewMissingEvidence">Review missing evidence</button>
-    <button type="button" id="runPipelineBtn" class="cf-btn-outline">Refresh answers</button>
-    <button type="button" id="btnOpenEvalDossier" class="cf-btn-outline">Preview report</button>
-  </section>
+       <div class="deal-heading"><p>Questionnaire review</p><h1 id="dealTitle">Evidence inbox</h1></div>
+       <p id="evidenceReviewSummary" role="status" tabindex="-1"></p>
+       <div class="deal-actions"><button type="button" id="reviewMissingEvidence">Open first gap</button>
+       <button type="button" id="runPipelineBtn">Refresh answers</button><button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download answers (.csv)</button></div>
+     </section>
   <main class="cf-split-workbench" id="cfMainWorkbench">
 
     <!-- ===================================================================
          LEFT PANEL: SIMPLE 3-STEP CONTROLS (NO WALLS OF TEXT)
          =================================================================== -->
-    <section class="cf-left-pane" aria-label="Questionnaire Selection and Policy Setup">
+
+
+    <!-- ===================================================================
+         RIGHT PANEL: 4-TAB DDQ MATRIX, VPAT 2.5, GAP AUDIT & CSV/XLSX EXPORT
+         =================================================================== -->
+    <section class="cf-right-pane" aria-label="Answered DDQ Matrix, VPAT 2.5 Conformance Report and Export">
+
+      <!-- Tab Bar (Short, Clear Human Labels) -->
+
+
+      <!-- Scrollable Output Canvas -->
+      <div class="cf-right-scroll" id="rightOutputScroll">
+
+        <!-- ===============================================================
+             TAB 1: ANSWERED DDQ MATRIX & INLINE RESPONSE INSPECTOR
+             =============================================================== -->
+        <div class="cf-tab-panel active" id="tab-ddq-matrix" role="tabpanel">
+          <article class="cf-monograph-paper">
+            <div class="cf-monograph-top-bar">
+              <div>
+                <span class="cf-kicker-red" id="monographKicker">STEP 2 · CLICK ANY QUESTION ROW BELOW TO REVIEW OR EDIT ITS ANSWER</span>
+                <h1 class="cf-monograph-h1" id="monographTitle">CSA CAIQ v4.0.3 &amp; SOC 2 Type II Automated Security Questionnaire</h1>
+              </div>
+              <div class="cf-monograph-actions">
+
+                <button type="button" class="cf-btn-mini" id="btnCopyAllAnswers">Copy All Answers</button>
+              </div>
+            </div>
+
+            <!-- Hidden metadata anchors preserved for programmatic export/tests -->
+            <div class="hidden">
+              <code id="monographSha">8f4e2a91c0b3d7e2...</code>
+              <strong id="monographSpanCount">12/12</strong>
+              <strong id="monographReadTime">14.2s</strong>
+              <ul id="monographTakeawaysList"></ul>
+            </div>
+
+            <!-- Inline Selected Control Inspector & Response Editor (Placed right above the table for instant editing!) -->
+            <div class="dsh-editor-card" id="selectedControlInspector" tabindex="-1" style="margin-bottom: 12px;">
+              <div class="cf-block-header">
+                <div>
+                  <span class="cf-block-kicker" id="inspectorControlId">SELECTED QUESTION · EDIT ANSWER BELOW</span>
+                  <h3 class="cf-block-title" id="inspectorQuestionTitle">Select any row below to inspect or customize its answer</h3>
+                </div>
+                <span class="dsh-status-pill dsh-status-pass" id="inspectorAnchorBadge">[SOC2-CC6.1]</span>
+              </div>
+              <p id="inspectorReviewReason"></p>
+              <p class="policy-excerpt"><strong>Policy evidence</strong><br><span id="inspectorPolicyExcerpt"></span></p>
+              <div class="cf-field-group">
+                <label for="inspectorAnswerTextarea" class="cf-field-label" style="display:none;">Answer</label>
+                <textarea aria-label="Answer" id="inspectorAnswerTextarea" class="cf-textarea" rows="2"></textarea>
+              </div>
+              <div class="cf-webhook-btn-row" style="margin-top:6px;">
+                <button type="button" class="cf-btn-secondary" id="btnSaveEditedAnswer">Save answer</button>
+                <span id="inspectorSaveStatus" role="status"></span>
+                <button type="button" class="cf-btn-outline" id="btnCopySingleAnswer">Copy Answer</button>
+              </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="dsh-filter-bar">
+              <div class="dsh-filter-group" role="group" aria-label="Filter Questionnaire Controls">
+                <button type="button" class="dsh-filter-btn active" data-filter="all" id="filterBtnAll">All (12)</button>
+                <button type="button" class="dsh-filter-btn" data-filter="COMPLIANT" id="filterBtnCompliant">Compliant (10)</button>
+                <button type="button" class="dsh-filter-btn" data-filter="COMPENSATING" id="filterBtnCompensating">Needs Note (2)</button>
+              </div>
+              <span class="cf-block-tag" id="ddqUnlockCounterBadge">6 Free · 6 Pro</span>
+            </div>
+
+            <!-- Interactive Answered DDQ Table (Clean, Scannable Rows) -->
+            <div class="cf-table-scroll-wrap">
+              <table class="cf-eval-table" id="ddqMatrixTable">
+                <thead>
+                  <tr>
+                    <th style="width:90px;">ID</th>
+                    <th style="width:34%;">Question</th>
+                    <th>Auto-Filled Answer (Click row to edit)</th>
+                    <th style="width:110px;">Source</th>
+                    <th style="width:110px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="ddqMatrixTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+        <!-- ===============================================================
+             TAB 2: ITI VPAT® 2.5 (SECTION 508 + EU EAA EN 301 549 + WCAG 2.2 AA)
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-vpat-report" role="tabpanel">
+          <div class="cf-eval-summary-grid">
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">WCAG 2.2 Level A &amp; AA</span>
+              <strong class="cf-eval-kpi-num val-pass" id="vpatWcagScore">50 / 50 Criteria</strong>
+              <span class="cf-eval-kpi-sub">Supports (48) · Partially Supports (2)</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">US Revised Section 508</span>
+              <strong class="cf-eval-kpi-num val-pass" id="vpat508Score">Chapters 3–6 Pass</strong>
+              <span class="cf-eval-kpi-sub">Federal &amp; Higher-Ed HECVAT Ready</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">EU EN 301 549 (EAA 2019/882)</span>
+              <strong class="cf-eval-kpi-num" id="vpatEaaScore">Clauses 9, 10, 11</strong>
+              <span class="cf-eval-kpi-sub">Web, Non-Web PDF/UA &amp; Software</span>
+            </div>
+            <div class="cf-eval-kpi-card">
+              <span class="cf-eval-kpi-label">ACR Edition &amp; Signature</span>
+              <strong class="cf-eval-kpi-num" id="vpatEditionLabel">VPAT® 2.5 INT</strong>
+              <span class="cf-eval-kpi-sub">1-Click Printable PDF Dossier</span>
+            </div>
+          </div>
+
+          <div class="cf-panel-card">
+            <div class="cf-panel-card-header">
+              <div>
+                <span class="cf-kicker-red">ITI VPAT® 2.5 INTERNATIONAL EDITION · ACCESSIBILITY CONFORMANCE REPORT (ACR)</span>
+                <h3 class="cf-panel-card-title">WCAG 2.2 AA, US Section 508 &amp; EU EN 301 549 Conformance Matrix</h3>
+              </div>
+              <button type="button" class="cf-btn-secondary" id="btnPrintVpatFromTab">
+                Open Printable VPAT 2.5 PDF
+              </button>
+            </div>
+
+            <div class="cf-table-scroll-wrap">
+              <table class="cf-eval-table" id="vpatTable">
+                <thead>
+                  <tr>
+                    <th>Standard &amp; Criterion</th>
+                    <th>Criterion Title</th>
+                    <th>Conformance Level</th>
+                    <th>Engineering Remarks &amp; Verification Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="vpatTableBody">
+                  <!-- Populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 3: PRE-SUBMISSION GAP & REMEDIATION AUDIT
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-gap-audit" role="tabpanel">
+          <div class="cf-panel-card">
+            <div class="cf-panel-card-header">
+              <div>
+                <span class="cf-kicker-red">Policy review</span>
+                <h3 class="cf-panel-card-title">Questions that need evidence</h3>
+              </div>
+              <span class="cf-badge-pass" id="gapCountBadge">2 Compensating Controls Ready</span>
+            </div>
+            <div id="gapAuditCardsContainer" tabindex="-1" class="cf-quiz-list">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 4: EXPORT (.CSV / EXCEL XML / JSON / SIGNED ATTESTATION)
+             =============================================================== -->
+        <div class="cf-tab-panel" id="tab-export-pack" role="tabpanel"><p id="evidenceExportSummary" role="status"></p>
+          <div class="cf-dual-grid">
+            <div class="cf-panel-card">
+              <div class="cf-panel-card-header">
+                <div>
+                  <span class="cf-kicker-red">INSTANT PROCUREMENT DELIVERABLES</span>
+                  <h3 class="cf-panel-card-title">Download Completed Questionnaire (.CSV / Excel / .JSON)</h3>
+                </div>
+                <span class="cf-badge-neutral">UTF-8 BOM · Excel Ready</span>
+              </div>
+              <p style="font-size:12.5px;color:var(--cf-ink-secondary);margin-bottom:12px;">
+                Export the completed questionnaire with every buyer question, citation-locked response, control status, confidence score, and policy clause reference preserved in column order.
+              </p>
+              <div class="cf-webhook-btn-row" style="margin-bottom:12px;">
+                <button type="button" class="cf-btn-secondary" id="btnExportCsvFile">
+                  Download Answered .CSV (Excel)
+                </button>
+                <button type="button" class="cf-btn-outline" id="btnExportJsonFile">
+                  Download Trust-Center .JSON
+                </button>
+                <button type="button" class="cf-btn-outline" id="btnExportVpatPdf">
+                  Open Printable VPAT 2.5 PDF
+                </button>
+              </div>
+              <pre class="cf-code-block" id="exportCsvPreviewBox"></pre>
+            </div>
+
+            <div class="cf-panel-card">
+              <div class="cf-panel-card-header">
+                <div>
+                  <span class="cf-kicker-red">CRYPTOGRAPHIC VENDOR ATTESTATION</span>
+                  <h3 class="cf-panel-card-title">Signed DDQ &amp; VPAT 2.5 JSON Manifest</h3>
+                </div>
+                <button type="button" class="cf-btn-mini" id="btnCopyManifestJson">Copy JSON</button>
+              </div>
+              <pre class="cf-code-block" id="exportJsonPreviewBox"></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+    <details id="dealSetup" class="deal-setup"><summary>Questionnaire setup and source policies</summary><div class="cf-preset-selector-wrap">
+      <label for="presetSelect" class="cf-preset-label">Framework:</label>
+      <select id="presetSelect" class="cf-preset-select" aria-label="Select Procurement Questionnaire or VPAT Framework">
+        <option value="caiq-v4">1. CSA CAIQ v4.0.3 &amp; SOC 2 Enterprise DDQ (FREE)</option>
+        <option value="hecvat-3">2. EDUCAUSE HECVAT v3.04 Higher-Ed &amp; FERPA DDQ (FREE)</option>
+        <option value="sig-lite">3. Shared Assessments SIG-Lite 2026 Vendor Risk · PRO</option>
+        <option value="vpat-25">4. ITI VPAT® 2.5 (Section 508 + EU EAA EN 301 549) · PRO</option>
+      </select>
+    </div> <section class="cf-left-pane" aria-label="Questionnaire Selection and Policy Setup">
       <div class="cf-left-scroll">
 
         <!-- STEP 1: QUICK TEMPLATE SWITCHER (1-CLICK VISUAL CARDS) -->
@@ -205,256 +453,9 @@
         </details>
 
       </div>
-    </section>
+    </section></details>
+    <footer class="product-utilities" data-product-feedback><button type="button" id="btnOpenEvalDossier">Preview printable report</button><a href="../#work">All products</a></footer>
 
-    <!-- ===================================================================
-         RIGHT PANEL: 4-TAB DDQ MATRIX, VPAT 2.5, GAP AUDIT & CSV/XLSX EXPORT
-         =================================================================== -->
-    <section class="cf-right-pane" aria-label="Answered DDQ Matrix, VPAT 2.5 Conformance Report and Export">
-
-      <!-- Tab Bar (Short, Clear Human Labels) -->
-      <div class="cf-tabs-header">
-        <div class="cf-tab-list" role="tablist" aria-label="DealShield Output Views">
-          <button
-            type="button"
-            class="cf-tab-btn active"
-            role="tab"
-            aria-selected="true"
-            data-tab="tab-ddq-matrix"
-            id="tabBtnDdqMatrix"
-          >
-            1. Answers Table
-          </button>
-          <button
-            type="button"
-            class="cf-tab-btn"
-            role="tab"
-            aria-selected="false"
-            data-tab="tab-vpat-report"
-            id="tabBtnVpatReport"
-          >
-            2. VPAT 2.5 Report
-          </button>
-          <button
-            type="button"
-            class="cf-tab-btn"
-            role="tab"
-            aria-selected="false"
-            data-tab="tab-gap-audit"
-            id="tabBtnGapAudit"
-          >
-            3. Risk Gaps (2)
-          </button>
-          <button
-            type="button"
-            class="cf-tab-btn"
-            role="tab"
-            aria-selected="false"
-            data-tab="tab-export-pack"
-            id="tabBtnExportPack"
-          >
-            4. Export (.CSV / PDF)
-          </button>
-        </div>
-      </div>
-
-      <!-- Scrollable Output Canvas -->
-      <div class="cf-right-scroll" id="rightOutputScroll">
-
-        <!-- ===============================================================
-             TAB 1: ANSWERED DDQ MATRIX & INLINE RESPONSE INSPECTOR
-             =============================================================== -->
-        <div class="cf-tab-panel active" id="tab-ddq-matrix" role="tabpanel">
-          <article class="cf-monograph-paper">
-            <div class="cf-monograph-top-bar">
-              <div>
-                <span class="cf-kicker-red" id="monographKicker">STEP 2 · CLICK ANY QUESTION ROW BELOW TO REVIEW OR EDIT ITS ANSWER</span>
-                <h1 class="cf-monograph-h1" id="monographTitle">CSA CAIQ v4.0.3 &amp; SOC 2 Type II Automated Security Questionnaire</h1>
-              </div>
-              <div class="cf-monograph-actions">
-                <button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download .CSV</button>
-                <button type="button" class="cf-btn-mini" id="btnCopyAllAnswers">Copy All Answers</button>
-              </div>
-            </div>
-
-            <!-- Hidden metadata anchors preserved for programmatic export/tests -->
-            <div class="hidden">
-              <code id="monographSha">8f4e2a91c0b3d7e2...</code>
-              <strong id="monographSpanCount">12/12</strong>
-              <strong id="monographReadTime">14.2s</strong>
-              <ul id="monographTakeawaysList"></ul>
-            </div>
-
-            <!-- Inline Selected Control Inspector & Response Editor (Placed right above the table for instant editing!) -->
-            <div class="dsh-editor-card" id="selectedControlInspector" tabindex="-1" style="margin-bottom: 12px;">
-              <div class="cf-block-header">
-                <div>
-                  <span class="cf-block-kicker" id="inspectorControlId">SELECTED QUESTION · EDIT ANSWER BELOW</span>
-                  <h3 class="cf-block-title" id="inspectorQuestionTitle">Select any row below to inspect or customize its answer</h3>
-                </div>
-                <span class="dsh-status-pill dsh-status-pass" id="inspectorAnchorBadge">[SOC2-CC6.1]</span>
-              </div>
-              <p class="policy-excerpt"><strong>Policy evidence</strong><br><span id="inspectorPolicyExcerpt"></span></p>
-              <div class="cf-field-group">
-                <label for="inspectorAnswerTextarea" class="cf-field-label" style="display:none;">Answer</label>
-                <textarea aria-label="Answer" id="inspectorAnswerTextarea" class="cf-textarea" rows="2"></textarea>
-              </div>
-              <div class="cf-webhook-btn-row" style="margin-top:6px;">
-                <button type="button" class="cf-btn-secondary" id="btnSaveEditedAnswer">Save Answer</button>
-                <button type="button" class="cf-btn-outline" id="btnCopySingleAnswer">Copy Answer</button>
-              </div>
-            </div>
-
-            <!-- Filter Bar -->
-            <div class="dsh-filter-bar">
-              <div class="dsh-filter-group" role="group" aria-label="Filter Questionnaire Controls">
-                <button type="button" class="dsh-filter-btn active" data-filter="all" id="filterBtnAll">All (12)</button>
-                <button type="button" class="dsh-filter-btn" data-filter="COMPLIANT" id="filterBtnCompliant">Compliant (10)</button>
-                <button type="button" class="dsh-filter-btn" data-filter="COMPENSATING" id="filterBtnCompensating">Needs Note (2)</button>
-              </div>
-              <span class="cf-block-tag" id="ddqUnlockCounterBadge">6 Free · 6 Pro</span>
-            </div>
-
-            <!-- Interactive Answered DDQ Table (Clean, Scannable Rows) -->
-            <div class="cf-table-scroll-wrap">
-              <table class="cf-eval-table" id="ddqMatrixTable">
-                <thead>
-                  <tr>
-                    <th style="width:90px;">ID</th>
-                    <th style="width:34%;">Question</th>
-                    <th>Auto-Filled Answer (Click row to edit)</th>
-                    <th style="width:110px;">Source</th>
-                    <th style="width:110px;">Status</th>
-                  </tr>
-                </thead>
-                <tbody id="ddqMatrixTableBody">
-                  <!-- Populated by app.js -->
-                </tbody>
-              </table>
-            </div>
-          </article>
-        </div>
-
-        <!-- ===============================================================
-             TAB 2: ITI VPAT® 2.5 (SECTION 508 + EU EAA EN 301 549 + WCAG 2.2 AA)
-             =============================================================== -->
-        <div class="cf-tab-panel" id="tab-vpat-report" role="tabpanel">
-          <div class="cf-eval-summary-grid">
-            <div class="cf-eval-kpi-card">
-              <span class="cf-eval-kpi-label">WCAG 2.2 Level A &amp; AA</span>
-              <strong class="cf-eval-kpi-num val-pass" id="vpatWcagScore">50 / 50 Criteria</strong>
-              <span class="cf-eval-kpi-sub">Supports (48) · Partially Supports (2)</span>
-            </div>
-            <div class="cf-eval-kpi-card">
-              <span class="cf-eval-kpi-label">US Revised Section 508</span>
-              <strong class="cf-eval-kpi-num val-pass" id="vpat508Score">Chapters 3–6 Pass</strong>
-              <span class="cf-eval-kpi-sub">Federal &amp; Higher-Ed HECVAT Ready</span>
-            </div>
-            <div class="cf-eval-kpi-card">
-              <span class="cf-eval-kpi-label">EU EN 301 549 (EAA 2019/882)</span>
-              <strong class="cf-eval-kpi-num" id="vpatEaaScore">Clauses 9, 10, 11</strong>
-              <span class="cf-eval-kpi-sub">Web, Non-Web PDF/UA &amp; Software</span>
-            </div>
-            <div class="cf-eval-kpi-card">
-              <span class="cf-eval-kpi-label">ACR Edition &amp; Signature</span>
-              <strong class="cf-eval-kpi-num" id="vpatEditionLabel">VPAT® 2.5 INT</strong>
-              <span class="cf-eval-kpi-sub">1-Click Printable PDF Dossier</span>
-            </div>
-          </div>
-
-          <div class="cf-panel-card">
-            <div class="cf-panel-card-header">
-              <div>
-                <span class="cf-kicker-red">ITI VPAT® 2.5 INTERNATIONAL EDITION · ACCESSIBILITY CONFORMANCE REPORT (ACR)</span>
-                <h3 class="cf-panel-card-title">WCAG 2.2 AA, US Section 508 &amp; EU EN 301 549 Conformance Matrix</h3>
-              </div>
-              <button type="button" class="cf-btn-secondary" id="btnPrintVpatFromTab">
-                Open Printable VPAT 2.5 PDF
-              </button>
-            </div>
-
-            <div class="cf-table-scroll-wrap">
-              <table class="cf-eval-table" id="vpatTable">
-                <thead>
-                  <tr>
-                    <th>Standard &amp; Criterion</th>
-                    <th>Criterion Title</th>
-                    <th>Conformance Level</th>
-                    <th>Engineering Remarks &amp; Verification Evidence</th>
-                  </tr>
-                </thead>
-                <tbody id="vpatTableBody">
-                  <!-- Populated by app.js -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===============================================================
-             TAB 3: PRE-SUBMISSION GAP & REMEDIATION AUDIT
-             =============================================================== -->
-        <div class="cf-tab-panel" id="tab-gap-audit" role="tabpanel">
-          <div class="cf-panel-card">
-            <div class="cf-panel-card-header">
-              <div>
-                <span class="cf-kicker-red">CISO RED-FLAG PRE-FLIGHT DETECTOR</span>
-                <h3 class="cf-panel-card-title">Questions that need evidence</h3>
-              </div>
-              <span class="cf-badge-pass" id="gapCountBadge">2 Compensating Controls Ready</span>
-            </div>
-            <div id="gapAuditCardsContainer" tabindex="-1" class="cf-quiz-list">
-              <!-- Populated by app.js -->
-            </div>
-          </div>
-        </div>
-
-        <!-- ===============================================================
-             TAB 4: EXPORT (.CSV / EXCEL XML / JSON / SIGNED ATTESTATION)
-             =============================================================== -->
-        <div class="cf-tab-panel" id="tab-export-pack" role="tabpanel"><p id="evidenceExportSummary" role="status"></p>
-          <div class="cf-dual-grid">
-            <div class="cf-panel-card">
-              <div class="cf-panel-card-header">
-                <div>
-                  <span class="cf-kicker-red">INSTANT PROCUREMENT DELIVERABLES</span>
-                  <h3 class="cf-panel-card-title">Download Completed Questionnaire (.CSV / Excel / .JSON)</h3>
-                </div>
-                <span class="cf-badge-neutral">UTF-8 BOM · Excel Ready</span>
-              </div>
-              <p style="font-size:12.5px;color:var(--cf-ink-secondary);margin-bottom:12px;">
-                Export the completed questionnaire with every buyer question, citation-locked response, control status, confidence score, and policy clause reference preserved in column order.
-              </p>
-              <div class="cf-webhook-btn-row" style="margin-bottom:12px;">
-                <button type="button" class="cf-btn-secondary" id="btnExportCsvFile">
-                  Download Answered .CSV (Excel)
-                </button>
-                <button type="button" class="cf-btn-outline" id="btnExportJsonFile">
-                  Download Trust-Center .JSON
-                </button>
-                <button type="button" class="cf-btn-outline" id="btnExportVpatPdf">
-                  Open Printable VPAT 2.5 PDF
-                </button>
-              </div>
-              <pre class="cf-code-block" id="exportCsvPreviewBox"></pre>
-            </div>
-
-            <div class="cf-panel-card">
-              <div class="cf-panel-card-header">
-                <div>
-                  <span class="cf-kicker-red">CRYPTOGRAPHIC VENDOR ATTESTATION</span>
-                  <h3 class="cf-panel-card-title">Signed DDQ &amp; VPAT 2.5 JSON Manifest</h3>
-                </div>
-                <button type="button" class="cf-btn-mini" id="btnCopyManifestJson">Copy JSON</button>
-              </div>
-              <pre class="cf-code-block" id="exportJsonPreviewBox"></pre>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </main>
 
   <!-- =====================================================================
        MODAL 1: PRINTABLE VPAT 2.5 & VENDOR SECURITY ATTESTATION DOSSIER
@@ -667,7 +668,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261123b"></script>
+  <script src="app.js?v=20261124-workspace"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

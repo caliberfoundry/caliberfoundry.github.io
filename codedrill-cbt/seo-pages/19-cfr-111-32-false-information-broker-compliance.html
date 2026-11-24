@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -929,19 +929,19 @@
       text-decoration: underline;
     }
   </style>
+  <link rel="stylesheet" href="library.css" />
 </head>
 <body>
   <!-- Sticky Institutional Header -->
   <header class="top-bar">
     <a href="../index.html" class="brand-cluster">
-      <span class="brand-badge">CODEDRILL // CBT</span>
-      <span class="brand-title">19 CFR &amp; HTSUS Speed-Navigation Engine</span>
-      <span class="brand-sub">// US Customs Broker License Exam (CBLE)</span>
+      <span class="brand-badge">CD</span>
+      <span class="brand-title">CodeDrill</span>
     </a>
     <nav class="top-actions" aria-label="Primary Navigation">
-      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[INDEX] All 19 CFR / GRI Guides</a>
-      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>[60s DRILL] Citation Sprint</a>
-      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20111.32" class="cta-top-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><polyline points="4.5,6 7,8 4.5,10"/><line x1="8.5" y1="10" x2="11.5" y2="10"/></svg>Launch Full 1:1 Pearson VUE Simulator &rarr;</a>
+      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>Study library</a>
+      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>Try the question</a>
+      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20111.32" class="cta-top-btn">Open in simulator</a>
     </nav>
   </header>
 
@@ -951,7 +951,7 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="../index.html">CodeDrill Simulator</a>
         <span>/</span>
-        <a href="./index.html">CBLE Knowledge Hub</a>
+        <a href="./index.html">Study library</a>
         <span>/</span>
         <span>19 CFR Part 111</span>
         <span>/</span>
@@ -976,7 +976,8 @@
         <p><a href="https://www.ecfr.gov/current/title-19/chapter-I/part-111/subpart-C/section-111.39#p-111.39(c)">Read § 111.39(c) in the eCFR</a></p></div>
       </article>
       <section class="section-card"><div class="card-header"><h2 class="card-title">Study explanation</h2></div><div class="ecfr-body"><p>Section 111.32 bars knowingly filing or helping file false documents. When the broker ends representation because the client intentionally tried to use the broker to defraud the U.S. government or commit a crime against it, the broker must document and report that separation to CBP. Section 111.39(c) covers prompt advice, corrective action and recordkeeping.</p></div></section>
-    </div>
+      <section class="section-card" aria-labelledby="related-heading">
+        <div class="card-header"><h2 id="related-heading" class="card-title">Related study guides</h2></div>
         <div class="related-grid">
           
             <a href="./htsus-gri-3b-essential-character-retail-sets.html" class="related-card">
@@ -1026,7 +1027,7 @@
           </div>
           <div class="timer-cluster">
             <div class="timer-display" id="drill-timer" aria-live="polite">01:00</div>
-            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">[START 60s]</button>
+            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">Start timer</button>
           </div>
         </div>
 
@@ -1037,9 +1038,8 @@
           </div>
           <div class="drill-stem">A broker discovers that a client intentionally tried to use the broker to defraud the U.S. government. The broker refuses to file the false entries and ends the representation for that reason. What must the broker do about the separation under § 111.32?</div>
 
-          <div class="strike-hint">
-            <span>Select one best answer (A–E):</span>
-            <span>Click <strong>[STRIKE]</strong> to cross out distractors</span>
+          <div class="strike-hint"><span>Choose your answer</span>
+            <details class="drill-tools"><summary>Eliminate answers</summary><p>Use the Strike button beside an answer to cross it out. Select it again to restore it.</p></details>
           </div>
 
           <div class="options-list" id="drill-options-list" role="radiogroup" aria-label="CBLE Practice Question Options">
@@ -1096,7 +1096,7 @@
           </div>
 
           <button type="button" class="submit-drill-btn" id="submit-drill-btn" onclick="gradeDrillQuestion()" disabled>
-            [Check answer]
+            Check answer
           </button>
 
           <!-- Instant Grading & Citation Breakdown -->
@@ -1106,13 +1106,7 @@
           </div>
           <!-- High-Converting Simulator CTA -->
           <div class="sim-cta-box" style="margin-top:1.15rem;">
-            <div class="sim-cta-title">Train Under Real 4.5-Hour Pearson VUE Conditions</div>
-            <div class="sim-cta-desc">
-              Open the full split-screen Pearson VUE CBT Simulator with synchronized 19 CFR + HTSUS search, Socratic Code-Path Examiner, and Citation Pin-Drop verification.
-            </div>
-            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20111.32" class="sim-cta-btn">
-              Launch Full 1:1 Pearson VUE Split-Screen Simulator &rarr;
-            </a>
+            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20111.32" class="sim-cta-btn">Open this source in the simulator</a>
           </div>
         </div>
       </div>
@@ -1204,9 +1198,9 @@
         isGraded = false;
         selectedLetter = null;
         updateTimerUI();
-        document.getElementById('start-timer-btn').textContent = '[START 60s]';
+        document.getElementById('start-timer-btn').textContent = 'Start timer';
         document.getElementById('submit-drill-btn').disabled = true;
-        document.getElementById('submit-drill-btn').textContent = '[Check answer]';
+        document.getElementById('submit-drill-btn').textContent = 'Check answer';
         document.getElementById('drill-feedback').classList.remove('visible');
         document.querySelectorAll('.option-row').forEach((row) => {
           row.classList.remove('selected', 'correct-reveal', 'wrong-reveal', 'struck');

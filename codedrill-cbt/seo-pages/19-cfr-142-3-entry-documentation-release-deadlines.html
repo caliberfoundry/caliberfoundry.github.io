@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -1018,19 +1018,19 @@
       text-decoration: underline;
     }
   </style>
+  <link rel="stylesheet" href="library.css" />
 </head>
 <body>
   <!-- Sticky Institutional Header -->
   <header class="top-bar">
     <a href="../index.html" class="brand-cluster">
-      <span class="brand-badge">CODEDRILL // CBT</span>
-      <span class="brand-title">19 CFR &amp; HTSUS Speed-Navigation Engine</span>
-      <span class="brand-sub">// US Customs Broker License Exam (CBLE)</span>
+      <span class="brand-badge">CD</span>
+      <span class="brand-title">CodeDrill</span>
     </a>
     <nav class="top-actions" aria-label="Primary Navigation">
-      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[INDEX] All 19 CFR / GRI Guides</a>
-      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>[60s DRILL] Citation Sprint</a>
-      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="cta-top-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><polyline points="4.5,6 7,8 4.5,10"/><line x1="8.5" y1="10" x2="11.5" y2="10"/></svg>Launch Full 1:1 Pearson VUE Simulator &rarr;</a>
+      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>Study library</a>
+      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>Try the question</a>
+      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="cta-top-btn">Open in simulator</a>
     </nav>
   </header>
 
@@ -1040,27 +1040,18 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="../index.html">CodeDrill Simulator</a>
         <span>/</span>
-        <a href="./index.html">CBLE Knowledge Hub</a>
+        <a href="./index.html">Study library</a>
         <span>/</span>
         <span>19 CFR Part 142</span>
         <span>/</span>
         <strong style="color:var(--cf-ink-primary);">19 CFR § 142.3 & § 142.12</strong>
       </nav>
-      <div class="meta-pills">
-        <span class="meta-pill hot">[FREQ] 92% Past Exam Frequency</span>
-        <span class="meta-pill">[WEIGHT] 15% of CBLE (12 Questions)</span>
-        <span class="meta-pill">[TARGET] &lt;25s Lookup</span>
-      </div>
     </div>
   </div>
 
   <main class="page-container">
     <!-- Editorial Masthead Section -->
     <section class="hero-card">
-      <div class="grid-corner-mark">
-        <span>+ [04 // SPEC-CFR-142.3] OFFICIAL CBP EXAM REFERENCE</span>
-        <span>[19 CFR § 142.3 & § 142.12 — Entry & Release Process] +</span>
-      </div>
       <h1>19 CFR § 142.3 & § 142.12: Entry Documentation & The 10-Working-Day Summary Rule</h1>
       <p class="hero-subtitle">Never confuse "15 Calendar Days to File Entry (142.2)" with "10 Working Days to File Entry Summary 7501 (142.12)" on the CBLE.</p>
       <div class="shortcut-banner">
@@ -1235,7 +1226,7 @@
           </div>
           <div class="timer-cluster">
             <div class="timer-display" id="drill-timer" aria-live="polite">01:00</div>
-            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">[START 60s]</button>
+            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">Start timer</button>
           </div>
         </div>
 
@@ -1246,9 +1237,8 @@
           </div>
           <div class="drill-stem">A container ship arrives at the Port of Los Angeles on Monday, May 4. The customs broker files Entry (CBP Form 3461) with a Basic Importation Bond on Tuesday, May 5, and CBP grants immediate release (Time of Entry) on Wednesday, May 6. Assuming Monday, May 25 is Memorial Day (a Federal holiday), what is the LAST day the broker may timely file the Entry Summary (CBP Form 7501) with estimated duties under 19 CFR 142.12(b) without incurring liquidated damages?</div>
 
-          <div class="strike-hint">
-            <span>Select one best answer (A–E):</span>
-            <span>Click <strong>[STRIKE]</strong> to cross out distractors</span>
+          <div class="strike-hint"><span>Choose your answer</span>
+            <details class="drill-tools"><summary>Eliminate answers</summary><p>Use the Strike button beside an answer to cross it out. Select it again to restore it.</p></details>
           </div>
 
           <div class="options-list" id="drill-options-list" role="radiogroup" aria-label="CBLE Practice Question Options">
@@ -1338,13 +1328,7 @@ Therefore, Wednesday, May 20 is the 10th working day.
 
           <!-- High-Converting Simulator CTA -->
           <div class="sim-cta-box" style="margin-top:1.15rem;">
-            <div class="sim-cta-title">Train Under Real 4.5-Hour Pearson VUE Conditions</div>
-            <div class="sim-cta-desc">
-              Open the full split-screen Pearson VUE CBT Simulator with synchronized 19 CFR + HTSUS search, Socratic Code-Path Examiner, and Citation Pin-Drop verification.
-            </div>
-            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="sim-cta-btn">
-              Launch Full 1:1 Pearson VUE Split-Screen Simulator &rarr;
-            </a>
+            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20142.3%20%26%20%C2%A7%20142.12" class="sim-cta-btn">Open this source in the simulator</a>
           </div>
         </div>
       </div>
@@ -1436,7 +1420,7 @@ Therefore, Wednesday, May 20 is the 10th working day.
         isGraded = false;
         selectedLetter = null;
         updateTimerUI();
-        document.getElementById('start-timer-btn').textContent = '[START 60s]';
+        document.getElementById('start-timer-btn').textContent = 'Start timer';
         document.getElementById('submit-drill-btn').disabled = true;
         document.getElementById('submit-drill-btn').textContent = '[LOCK IN ANSWER & VERIFY CITATION]';
         document.getElementById('drill-feedback').classList.remove('visible');

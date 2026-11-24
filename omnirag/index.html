@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="omnirag">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -710,194 +710,60 @@
     }
     [hidden] { display: none !important; }
   </style>
+  <link rel="stylesheet" href="./reader.css" />
 </head>
 <body>
 
-  <!-- Top Masthead with Plain-English Title & Clear Actions -->
-  <header class="masthead">
-    <div class="masthead-inner">
-      <div class="brand-group">
-        <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
-        <div>
-          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">OmniRAG&trade; Document &amp; Spreadsheet Cross-Checker</h1>
-            <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              PDF + WORD + EXCEL VERIFIER
-            </span>
-          </div>
-          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Pick an example pack, find a passage and open its page or spreadsheet cell.
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button type="button" onclick="openAuditPreviewModal()" id="btnOpenAuditModal" class="btn-tactile">
-          <span>Preview Audit Report</span>
-        </button>
-        <button type="button" onclick="triggerExpertSignOff()" id="btnSignOff" class="btn-tactile btn-tactile-forest">
-          <span>Download Report (.JSON)</span>
-          <span>&darr;</span>
-        </button>
-        <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Document%20Cross-Checker%20Inquiry" class="btn-tactile">
-          <span>Contact Engineering</span>
-          <span>&nearr;</span>
-        </a>
-      </div>
+  <header class="om-search-head">
+    <nav class="om-bound om-brand-line" aria-label="Product navigation">
+      <a class="om-wordmark" href="./">OmniRAG</a>
+      <a href="../#work">All products ↗</a>
+    </nav>
+    <div class="om-bound om-intro">
+      <h1>Find the passage<br>behind the answer.</h1>
+      <p>Check the figures and clauses in a sample document pack.</p>
+      <form class="om-search" onsubmit="handleCustomQuery(event)">
+        <input id="customQueryInput" aria-label="Question or exact phrase" type="search" required placeholder="Question or phrase" />
+        <button type="submit">Find evidence <span aria-hidden="true">↗</span></button>
+      </form>
     </div>
   </header>
 
-  <main class="shell">
-
-    <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
-    <div class="how-it-works-strip" aria-label="Click any step to test OmniRAG live">
-      <button type="button" class="hiw-step-btn" onclick="document.querySelector('.active-pack').focus()">
-        <span class="hiw-num">STEP 1 &rarr;</span>
-        <span><strong>Choose a document pack</strong></span>
-      </button>
-      <button type="button" class="hiw-step-btn" onclick="runPromptChip(QUESTIONS[currentPresetKey][0][0])">
-        <span class="hiw-num">STEP 2 &rarr;</span>
-        <span><strong>Check a sample question</strong></span>
-      </button>
-      <button type="button" class="hiw-step-btn" onclick="openAuditPreviewModal()">
-        <span class="hiw-num">STEP 3 &rarr;</span>
-        <span><strong>Preview the report</strong></span>
-      </button>
+  <main class="om-bound om-work">
+    <section class="om-questions" aria-labelledby="omQuestionsHeading">
+      <div class="om-choice-head"><h2 id="omQuestionsHeading">Try a question</h2><span id="omPackName">Financial audit</span></div>
+      <div id="promptChipsContainer"></div>
+    </section>
+    <section id="chatMessages" class="om-answer-list" aria-label="Answers with evidence" aria-live="polite"></section>
+    <details id="omSources" class="om-tool right-pane">
+      <summary>Read source documents</summary>
+      <div class="pane-toolbar"><span class="spec-label">Source documents and excerpts</span><div id="docTabsContainer"></div></div>
+      <div id="activeCitationBanner"><span id="activeCitationText" role="status"></span><button type="button" id="backToAnswer" class="btn-tactile" hidden>Back to answer</button></div>
+      <div id="documentViewport" class="doc-viewport"></div>
+    </details>
+    <div class="om-extras">
+      <details class="om-tool" id="omPacks">
+        <summary>Change document pack</summary>
+        <div class="om-pack-list" aria-label="Sample document packs">
+          <button type="button" onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="pack-card active-pack">Financial audit</button>
+          <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">Sales order</button>
+          <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">Engineering permit</button>
+        </div>
+      </details>
+      <details class="om-tool" id="omCompare">
+        <summary>Compare two passages</summary>
+        <div class="om-compare-fields">
+          <label>First passage<input id="customDocAInput" value="Maximum annual fee is $50,000 with 30-day payment terms." /></label>
+          <label>Second passage<input id="customDocBInput" value="Billed annual fee is $68,500 with 15-day payment terms." /></label>
+          <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile">Compare numbers</button>
+          <p id="customDiffStatusBadge" role="status">Ready to compare.</p>
+        </div>
+      </details>
     </div>
-
-    <!-- Step 1: Visual 3-Card Scenario Picker + Live Custom Text Tester -->
-    <section class="pack-picker-bar" aria-label="Step 1: Choose a sample document pack">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-        <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
-          1. Choose a document pack
-        </span>
-        <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">
-          Three sample scenarios
-        </span>
-      </div>
-      <div class="pack-grid">
-        <button type="button" onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="pack-card active-pack">
-          <div class="pack-card-title">
-            <span>1. Financial, Contract &amp; Invoice Audit</span>
-            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
-          </div>
-          <div class="pack-card-desc">
-            Compare Q3 profit and the $3.50M minimum in the spreadsheet and audit report.
-          </div>
-          <span class="pack-status-pill pack-status-warn">Profit, penalty cap and retention</span>
-        </button>
-
-        <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">
-          <div class="pack-card-title">
-            <span>2. Sales Order &amp; Discount Approval</span>
-            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
-          </div>
-          <div class="pack-card-desc">
-            Checks if a customer's $240,000 order form and 18.5% discount follow the company's Excel pricing rules.
-          </div>
-          <span class="pack-status-pill pack-status-ok">Discount and order terms</span>
-        </button>
-
-        <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">
-          <div class="pack-card-title">
-            <span>3. Engineering Permit vs. Excel BOM</span>
-            <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
-          </div>
-          <div class="pack-card-desc">
-            Catches a costly mismatch where the Excel equipment list orders 50.0 MW of power, but the PDF permit only allows 42.5 MW.
-          </div>
-          <span class="pack-status-pill pack-status-warn">Power limit and lease dates</span>
-        </button>
-      </div>
-
-      <!-- Interactive Live Custom Contract vs. Excel Mismatch Tester -->
-      <div style="margin-top:10px; background:#FFFDFB; border:1.5px solid var(--cf-rule-strong); padding:10px 14px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-          <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; font-size:11px;">
-            Compare numbers in two pasted passages
-          </span>
-          <span id="customDiffStatusBadge" role="status" class="mono" style="font-size:10.5px; color:var(--cf-forest-pass); font-weight:600;">
-            LIVE NUMBER &amp; CLAUSE DIFF ENGINE
-          </span>
-        </div>
-        <div class="comparison-fields" style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center;">
-          <input id="customDocAInput" type="text" value="Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
-          <input id="customDocBInput" type="text" value="Billed annual fee is $68,500 with 15-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document B row" />
-          <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile btn-tactile-vermilion" style="padding:8px 14px; white-space:nowrap;">
-            <span>&#9654; Cross-Check Now</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Split-Screen Workbench -->
-    <section class="split-workbench">
-
-      <!-- Left 6 Cols: Automated Cross-Check Findings & Plain-English Q&A -->
-      <div class="left-pane">
-        <div class="pane-toolbar">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-            <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
-              2. Check a question and open its citation
-            </span>
-            <span class="mono" style="font-size:10.5px; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-              SAMPLE SOURCE EXCERPTS
-            </span>
-          </div>
-          <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-bottom:6px;">
-            Or click a sample question to test live retrieval:
-          </div>
-          <div id="promptChipsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-
-        <div id="chatMessages" aria-live="polite" class="stream-viewport">
-          <!-- Populated by JS -->
-        </div>
-
-        <div style="padding:12px 20px; border-top:1px solid var(--cf-rule-mid); background-color:var(--cf-bg-stone);">
-          <form onsubmit="handleCustomQuery(event)" style="display:flex; gap:8px;">
-            <input aria-label="Question or exact phrase" id="customQueryInput" type="text" placeholder="Ask a sample question or search for an exact phrase…" class="input-mechanical" style="flex:1;" />
-            <button type="submit" class="btn-tactile btn-tactile-vermilion">
-              <span>Check Documents</span>
-              <span>&rarr;</span>
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <!-- Right 6 Cols: Source Document Viewer -->
-      <div class="right-pane">
-        <div class="pane-toolbar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
-          <div>
-            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px; margin-bottom:6px;">
-              Source documents and excerpts
-            </div>
-            <div id="docTabsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
-              <!-- Populated by JS -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Active Citation Banner -->
-        <div id="activeCitationBanner" style="padding:10px 20px; background-color:var(--cf-highlight-mark); border-bottom:1px solid var(--cf-rule-strong); display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:11.5px;">
-          <div>
-            <strong>Selected passage</strong>
-            <span id="activeCitationText" role="status">Open a citation to read the matching passage.</span>
-          </div>
-          <button type="button" id="backToAnswer" class="btn-tactile" hidden>Back to answer</button><span id="activeConfidenceBadge" style="padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px; white-space:nowrap;">
-            SOURCE EXCERPT
-          </span>
-        </div>
-
-        <div id="documentViewport" class="doc-viewport">
-          <!-- Populated dynamically by JS -->
-        </div>
-      </div>
-
-    </section>
-
+    <div class="om-report-actions" aria-label="Export evidence">
+      <button type="button" onclick="openAuditPreviewModal()" id="btnOpenAuditModal">Preview evidence report</button>
+      <button type="button" onclick="triggerExpertSignOff()" id="btnSignOff">Download JSON ↓</button>
+    </div>
   </main>
 
   <!-- Printable Audit Report Preview Modal -->
@@ -905,10 +771,10 @@
     <div class="om-modal-window">
       <div class="om-modal-header">
         <div>
-          <div class="mono" style="font-size:10px; color:#C8431F; text-transform:uppercase; letter-spacing:0.08em;">VERIFIED CROSS-DOCUMENT AUDIT REPORT</div>
-          <h2 id="auditReportModalTitle" style="font-family:var(--font-display); font-size:22px; font-weight:400; margin:2px 0 0; color:#F6F4EF;">OmniRAG&trade; Cross-Document Verification Summary</h2>
+          <div class="mono" style="font-size:10px; color:#C8431F; text-transform:uppercase; letter-spacing:0.08em;">Evidence report</div>
+          <h2 id="auditReportModalTitle" style="font-family:var(--font-display); font-size:22px; font-weight:400; margin:2px 0 0; color:#F6F4EF;">Document evidence</h2>
         </div>
-        <button type="button" onclick="closeAuditPreviewModal()" class="btn-tactile" style="background:transparent; color:#F6F4EF; border-color:#78756D;">Close [X]</button>
+        <button type="button" onclick="closeAuditPreviewModal()" class="btn-tactile" style="background:transparent; color:#F6F4EF; border-color:#78756D;">Close</button>
       </div>
       <div class="om-modal-body">
         <div id="auditReportModalContent"></div>
@@ -920,13 +786,7 @@
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
-      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; OMNIRAG&trade; MULTI-DOCUMENT CITATION &amp; WORKFLOW STUDIO</span>
-      <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
-    </div>
-  </footer>
-
+  <footer class="om-bound om-footer"><span>OmniRAG · Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20inquiry">Contact engineering</a></footer>
   <script>
     const PRESETS = {
       enterprise_rag: {
@@ -1095,6 +955,10 @@
         }
       });
 
+      document.getElementById('omPackName').textContent = document.querySelector('.active-pack').textContent;
+      document.getElementById('omSources').open = false;
+      document.getElementById('omPacks').open = false;
+      if (selectedByUser) document.getElementById('customQueryInput').focus();
       const subBadge = document.getElementById('presetSubBadge');
       if (subBadge) subBadge.textContent = preset.badge;
 
@@ -1107,7 +971,7 @@
         chip.addEventListener('click', () => runPromptChip(question));
         return chip;
       }));
-      document.getElementById('chatMessages').textContent = 'Choose a question above or search for an exact phrase in the selected pack.';
+      document.getElementById('chatMessages').replaceChildren();
       currentDocId = preset.docs[0].id;
       highlightedChunkId = preset.docs[0].chunks[0].id;
       renderDocumentTabs();
@@ -1128,11 +992,8 @@
         `;
       }
       return `
-        <div class="msg-system" style="font-family:var(--font-sans);">
-          <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px; margin-bottom:10px; font-family:var(--font-mono); font-size:10.5px;">
-            <span style="font-weight:700; color:var(--cf-ink-primary);">AUTOMATED CROSS-CHECK RESULTS</span>
-            <span style="color:var(--cf-forest-pass); font-weight:600;">DOCUMENT PACK</span>
-          </div>
+        <div class="msg-system">
+          <p class="om-receipt-label">Evidence from this pack</p>
           <div>${msg.html}</div>
         </div>
       `;
@@ -1260,6 +1121,7 @@
     }
 
     function jumpToCitation(docId, chunkId) {
+      document.getElementById('omSources').open = true;
       currentDocId = docId;
       highlightedChunkId = chunkId;
       renderDocumentTabs();
@@ -1270,7 +1132,7 @@
       const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
 
       if (doc && chunk) {
-        document.getElementById('activeCitationText').textContent = `✓ JUMPED TO: ${doc.name} (${chunk.coord}) — "${chunk.title}"`;
+        document.getElementById('activeCitationText').textContent = `${doc.name} (${chunk.coord}) — "${chunk.title}"`;
       }
 
       const trigger = document.activeElement;
@@ -1318,7 +1180,7 @@
       if (answers.length === 1 && !comparison) chat.replaceChildren();
       chat.insertAdjacentHTML('beforeend', renderChatMessageHTML({role:'assistant', html:`<div class="finding-card"><strong>${escapeHtml(query)}</strong><div>${body}</div></div>`}));
       workflow('result_ready');
-      chat.lastElementChild?.scrollIntoView({block:'nearest'});
+      chat.lastElementChild?.scrollIntoView({block:'start'});
       input.value = '';
     }
 
@@ -1411,7 +1273,10 @@
       if (event.key === 'Escape' && !document.getElementById('auditReportModalBackdrop').classList.contains('om-hidden')) closeAuditPreviewModal();
     });
     window.addEventListener('cf:open-step', ({detail}) => {
-      if (detail.step === 1) document.querySelector('.pack-card.active-pack').focus();
+      if (detail.step === 1) {
+        document.getElementById('omPacks').open = true;
+        document.querySelector('.pack-card.active-pack').focus();
+      }
       if (detail.step === 2) runPromptChip(QUESTIONS[currentPresetKey][0][0]);
       if (detail.step === 3) openAuditPreviewModal();
     });

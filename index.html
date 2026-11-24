@@ -542,6 +542,36 @@
     .experimental-tool a { color:var(--cf-accent-primary); }
     #work, .product-filters a { scroll-margin-top:95px; }
     @media(max-width:720px){ .container{padding-inline:18px}.work-grid{grid-template-columns:minmax(0,1fr)}.work-title{font-size:25px}.section{padding:30px 0}.hero{padding:34px 0}.product-filters a{font-size:13px}.work-outcome{font-size:16px}.work-card{padding:16px}.work-footer{padding-top:10px} }
+    .work-grid { gap:20px; }
+    .work-card { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto 1fr auto; align-content:start; gap:0; padding:0; border:1px solid var(--cf-rule-mid); }
+    .work-card[hidden] { display:none; }
+    .product-screen { display:block; width:100%; height:auto; aspect-ratio:2.65; object-fit:cover; object-position:top; background:var(--cf-bg-stone); border-bottom:1px solid var(--cf-rule-mid); }
+    .product-copy { padding:18px 20px 0; }
+    .work-card .work-title { margin:0 0 6px; }
+    .work-card .product-name { color:var(--product-ink); font-weight:700; }
+    .work-card .work-footer { padding:12px 20px 18px; border:0; margin:0; justify-content:flex-start; }
+    .work-card .btn-primary { background:var(--product-ink); border-color:var(--product-ink); color:white; box-shadow:none; }
+    .work-card .btn-primary:hover { text-decoration:underline; text-underline-offset:3px; }
+    [data-product="docushield"] { --product-ink:#174d8b; }
+    [data-product="dealshield"] { --product-ink:#813a63; }
+    [data-product="codedrill-cbt"] { --product-ink:#674400; }
+    [data-product="omnirag"] { --product-ink:#103e41; }
+    [data-product="stealthflow"] { --product-ink:#344224; }
+    [data-product="edtech-studio"] { --product-ink:#4b3871; }
+    [data-product="content-studio"] { --product-ink:#a3422a; }
+    [data-product="oobe-agent"] { --product-ink:#28283c; }
+    @media(max-width:720px) {
+      .work-grid { gap:14px; }
+      .work-card { padding:0; }
+      .product-screen { aspect-ratio:3.3; }
+      .product-copy { padding:14px 15px 0; }
+      .work-card .work-footer { padding:10px 15px 14px; }
+      .work-card .btn { min-height:42px; }
+    }
+    @media (min-width:721px) and (max-width:1000px) {
+      .nav-links a[href="#capabilities"], .nav-links a[href="#process"] { display:none; }
+      .header-inner .brand-name, .nav-links .btn { white-space:nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -587,53 +617,65 @@
         <a href="#work" aria-current="true">All products</a>
         <a id="documents" href="#documents">Documents &amp; compliance</a>
         <a id="learning" href="#learning">Learning &amp; assessment</a>
-        <a id="data" href="#data">Data &amp; content</a>
+        <a id="data" href="#data">Data &amp; simulation</a>
       </nav>
       <div class="work-grid">
-        <article class="work-card" data-groups="documents">
-          <div><p class="product-name">DocuShield</p><h3 class="work-title">Check PDF accessibility</h3>
+        <article class="work-card" data-product="docushield" data-groups="documents">
+          <img class="product-screen" src="./assets/product-previews/docushield.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">DocuShield</p><h3 class="work-title">Check PDF accessibility</h3>
             <p class="work-outcome">Inspect a sample PDF, find a structural issue and review the audit report.</p></div>
           <div class="work-footer"><a href="./docushield/" class="btn btn-primary">Inspect a PDF &rarr;</a>
             <a href="./work/docushield.html" class="link-subtle" aria-label="About DocuShield">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="documents">
-          <div><p class="product-name">DealShield</p><h3 class="work-title">Answer a security questionnaire</h3>
-            <p class="work-outcome">Review a customer’s question alongside the policy that supports your answer.</p></div>
+        <article class="work-card" data-product="dealshield" data-groups="documents">
+          <img class="product-screen" src="./assets/product-previews/dealshield.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">DealShield</p><h3 class="work-title">Answer a security questionnaire</h3>
+            <p class="work-outcome">Find a response that needs evidence, check the policy and export your answers.</p></div>
           <div class="work-footer"><a href="./dealshield/" class="btn btn-primary">Try a questionnaire &rarr;</a>
             <a href="./work/dealshield.html" class="link-subtle" aria-label="About DealShield">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="documents">
-          <div><p class="product-name">OmniRAG</p><h3 class="work-title">Find evidence in documents</h3>
+        <article class="work-card" data-product="omnirag" data-groups="documents">
+          <img class="product-screen" src="./assets/product-previews/omnirag.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">OmniRAG</p><h3 class="work-title">Find evidence in documents</h3>
             <p class="work-outcome">Ask a question about the sample documents and open the passage behind the answer.</p></div>
           <div class="work-footer"><a href="./omnirag/" class="btn btn-primary">Find a source &rarr;</a>
             <a href="./work/omnirag.html" class="link-subtle" aria-label="About OmniRAG">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="learning">
-          <div><p class="product-name">CodeDrill</p><h3 class="work-title">Practise an open-book exam</h3>
+        <article class="work-card" data-product="codedrill-cbt" data-groups="learning">
+          <img class="product-screen" src="./assets/product-previews/codedrill-cbt.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">CodeDrill</p><h3 class="work-title">Practise an open-book exam</h3>
             <p class="work-outcome">Answer a licensing question and attach the regulation that supports your choice.</p></div>
           <div class="work-footer"><a href="./codedrill-cbt/" class="btn btn-primary">Try an exam question &rarr;</a>
             <a href="./work/codedrill.html" class="link-subtle" aria-label="About CodeDrill">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="learning">
-          <div><p class="product-name">EdTech Studio</p><h3 class="work-title">Build a lesson for an LMS</h3>
-            <p class="work-outcome">Choose a lesson, try its assessment and download a SCORM course package.</p></div>
+        <article class="work-card" data-product="edtech-studio" data-groups="learning">
+          <img class="product-screen" src="./assets/product-previews/edtech-studio.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">AcademyForge</p><h3 class="work-title">Try and export a lesson</h3>
+            <p class="work-outcome">Answer a practice question, see the explanation and download the lesson for your LMS.</p></div>
           <div class="work-footer"><a href="./edtech-studio/" class="btn btn-primary">Try a lesson &rarr;</a>
-            <a href="./work/edtech-studio.html" class="link-subtle" aria-label="About EdTech Studio">About the product</a></div>
+            <a href="./work/edtech-studio.html" class="link-subtle" aria-label="About AcademyForge">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="data learning">
-          <div><p class="product-name">ContentForge</p><h3 class="work-title">Prepare content from a source</h3>
-            <p class="work-outcome">Review an evaluation dossier for a source document or explore a courseware workflow.</p></div>
+        <article class="work-card" data-product="content-studio" data-groups="data learning">
+          <img class="product-screen" src="./assets/product-previews/content-studio.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">ContentForge</p><h3 class="work-title">Prepare content from a source</h3>
+            <p class="work-outcome">Turn source text and its quoted passages into a printable brief.</p></div>
           <div class="work-footer"><a href="./content-studio/" class="btn btn-primary">Try a source document &rarr;</a>
             <a href="./work/content-studio.html" class="link-subtle" aria-label="About ContentForge">About the product</a></div>
         </article>
-        <article class="work-card" data-groups="data">
-          <div><p class="product-name">StealthFlow</p><h3 class="work-title">Clean and export sample records</h3>
+        <article class="work-card" data-product="stealthflow" data-groups="data">
+          <img class="product-screen" src="./assets/product-previews/stealthflow.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">StealthFlow</p><h3 class="work-title">Clean and export sample records</h3>
             <p class="work-outcome">Compare raw and cleaned values, filter the sample and download a CSV.</p></div>
-          <div class="work-footer"><a href="./stealthflow/" class="btn btn-primary">Explore sample data &rarr;</a>
+          <div class="work-footer"><a href="./stealthflow/" class="btn btn-primary">Get sample records &rarr;</a>
             <a href="./work/stealthflow.html" class="link-subtle" aria-label="About StealthFlow">About the product</a></div>
         </article>
+        <article class="work-card" data-product="oobe-agent" data-groups="data">
+          <img class="product-screen" src="./assets/product-previews/oobe-agent.jpg" loading="lazy" width="600" height="390" alt="">
+          <div class="product-copy"><p class="product-name">OOBE Sentinel</p><h3 class="work-title">Compare portfolio decisions</h3>
+            <p class="work-outcome">See how a simulated portfolio responds to five market conditions.</p></div>
+          <div class="work-footer"><a href="./oobe-agent/" class="btn btn-primary">Try the simulator &rarr;</a></div>
+        </article>
       </div>
-      <p class="experimental-tool"><strong>Engineering simulation</strong> · <a href="./oobe-agent/">Explore OOBE Sentinel</a></p>
     </section>
 
     <!-- What We Build (3 Simple Business Pillars) -->
@@ -726,7 +768,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>&copy; 2026 Caliber Foundry (CaliberFoundry) &mdash; United States (Remote)</span>
-      <div style="display:flex; flex-wrap:wrap; gap: 20px;">
+      <div data-product-feedback style="display:flex; flex-wrap:wrap; gap: 20px;">
         <a href="./pricing.html">Pricing</a>
         <a href="./terms.html">Terms of Service</a>
         <a href="./privacy.html">Privacy Policy</a>

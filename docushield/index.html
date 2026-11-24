@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="docushield">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=20261123h" />
+  <link rel="stylesheet" href="workspace.css" />
 </head>
 <body>
   <!-- =====================================================================
@@ -19,17 +20,46 @@
        ===================================================================== -->
   <header class="ds-global-header" role="banner">
     <div class="ds-brand-cluster">
-      <a href="../index.html" class="ds-back-link" title="Return to Caliber Foundry">← Caliber Foundry</a>
+      <a href="../#work" class="ds-back-link">← All products</a>
       <span class="ds-brand-sep" aria-hidden="true">/</span>
       <div class="ds-logo-mark" aria-hidden="true">DS</div>
       <div class="ds-brand-titles">
         <span class="ds-brand-name">DocuShield<span class="ds-tm">™</span></span>
-        <span class="ds-brand-sub">PDF/UA &amp; EAA Remediation Studio</span>
+        <span class="ds-brand-sub">Document accessibility</span>
       </div>
     </div>
 
     <!-- 6 Built-in Document Packets Selector -->
-    <div class="ds-packet-selector-wrap">
+
+
+    <!-- Right License & Account Controls -->
+
+  <details class="ds-account-menu"><summary>Account</summary><div class="ds-account-cluster">
+      <span class="ds-license-pill" id="headerLicenseBadge">Free Diagnostic Tier (2/6 Packets)</span>
+      <span class="ds-user-email-pill hidden" id="headerUserEmailBadge"></span>
+      <button type="button" class="ds-header-btn" id="btnHeaderSignIn">Sign In</button>
+      <button type="button" class="ds-header-btn ds-btn-accent" id="btnHeaderUnlockPro">Unlock Pro Studio ($199)</button>
+      <button type="button" class="ds-header-btn hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
+      <button type="button" class="ds-header-btn ds-btn-reset" id="btnResetStudio" title="Reset session state">Reset</button>
+    </div></details>
+  </header>
+
+  <!-- =====================================================================
+       2. WORKBENCH ACTION & INGESTION TOOLBAR
+       ===================================================================== -->
+  <section class="doc-opening" aria-label="Document accessibility review">
+    <div class="doc-intro">
+      <h1>Document <br>accessibility<span aria-hidden="true">.</span></h1>
+      <p>Check a file for structural issues and take its findings into a manual review.</p>
+      <div class="ds-upload-dropzone" id="fileDropZone" title="Drag and drop a local .pdf or .html file to inspect raw COS structure">
+        <input type="file" id="fileUploadInput" accept=".pdf,.html,.htm" class="hidden" />
+        <button type="button" class="ds-tool-btn" id="btnTriggerFileUpload">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/></svg>
+          <span>Choose a PDF or HTML file</span>
+        </button>
+        <span class="ds-drop-hint" id="uploadQuotaHint">1 Free Local File Audit</span>
+      </div>
+      <details class="doc-samples"><summary>Choose a sample document</summary><div class="ds-packet-selector-wrap">
       <label for="packetSelect" class="ds-packet-label">Packet:</label>
       <select id="packetSelect" class="ds-packet-select" aria-label="Select Regulatory Document Packet">
         <option value="EDTECH-01">[FREE] EDTECH-01 — University STEM &amp; Clinical Course Syllabus &amp; Lab Manual (28 pp — Section 508 / Title II ADA)</option>
@@ -39,39 +69,22 @@
         <option value="EDTECH-05">[PRO] EDTECH-05 — K-12 &amp; Professional Certification Digital Textbook Chapter (96 pp — WCAG 2.2 AA &amp; QTI/SCORM)</option>
         <option value="GOV-06">[PRO] GOV-06 — Municipal Infrastructure RFP &amp; Procurement Specification (112 pp — EN 301 549 &amp; Section 508)</option>
       </select>
+    </div></details>
     </div>
-
-    <!-- Right License & Account Controls -->
-    <div class="ds-account-cluster">
-      <span class="ds-license-pill" id="headerLicenseBadge">Free Diagnostic Tier (2/6 Packets)</span>
-      <span class="ds-user-email-pill hidden" id="headerUserEmailBadge"></span>
-      <button type="button" class="ds-header-btn" id="btnHeaderSignIn">Sign In</button>
-      <button type="button" class="ds-header-btn ds-btn-accent" id="btnHeaderUnlockPro">Unlock Pro Studio ($199)</button>
-      <button type="button" class="ds-header-btn hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
-      <button type="button" class="ds-header-btn ds-btn-reset" id="btnResetStudio" title="Reset session state">Reset</button>
-    </div>
-  </header>
-
-  <!-- =====================================================================
-       2. WORKBENCH ACTION & INGESTION TOOLBAR
-       ===================================================================== -->
-  <section class="ds-start" aria-label="Check document accessibility">
-    <h1>Check document accessibility</h1>
-    <p id="dsAssessmentSummary" role="status" tabindex="-1"></p>
-    <button type="button" id="dsReviewResults" class="ds-tool-btn">Review findings</button>
-    <button type="button" id="dsOpenReport" class="ds-tool-btn">Open assessment report</button>
+    <article class="doc-sheet" aria-label="Current assessment">
+      <div class="doc-sheet-rule"><span>Assessment</span><span id="docInputKind"></span></div>
+      <h2 id="docCurrentFile"></h2>
+      <div class="doc-count"><strong id="docFindingsCount"></strong><span id="docFindingsLabel">open findings</span></div>
+      <p id="dsAssessmentSummary" role="status" tabindex="-1"></p>
+      <div class="doc-actions"><button type="button" id="dsOpenReport">Open assessment report</button>
+      <button type="button" id="dsReviewResults">Inspect first finding</button></div>
+    </article>
   </section>
+  <details class="doc-advanced" id="dsAdvancedWorkspace"><summary>Document inspector and editing tools</summary>
   <section class="ds-workbench-toolbar" aria-label="Document Ingestion and Remediation Controls">
     <div class="ds-toolbar-left">
       <!-- Local PDF / HTML Client-Side Byte Inspector -->
-      <div class="ds-upload-dropzone" id="fileDropZone" title="Drag and drop a local .pdf or .html file to inspect raw COS structure">
-        <input type="file" id="fileUploadInput" accept=".pdf,.html,.htm" class="hidden" />
-        <button type="button" class="ds-tool-btn" id="btnTriggerFileUpload">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/></svg>
-          <span>Inspect a local PDF or HTML file</span>
-        </button>
-        <span class="ds-drop-hint" id="uploadQuotaHint">1 Free Local File Audit</span>
-      </div>
+
 
       <!-- Live Domain / PDF URL Scanner Input ("Trojan-Horse" Outreach Bar) -->
       <div class="ds-domain-scanner-group">
@@ -331,6 +344,7 @@
     </aside>
 
   </main>
+  </details>
 
   <!-- =====================================================================
        MODAL 1: OFFICIAL PRINTABLE EU EAA & VPAT 2.5 CONFORMANCE CERTIFICATE
@@ -350,7 +364,8 @@
       </div>
 
       <div class="ds-modal-footer">
-        <button type="button" class="ds-btn-secondary" id="btnDownloadAuditBundle">Download JSON/XML Audit Bundle</button>
+        <button type="button" class="ds-btn-secondary" id="btnDownloadAuditBundle">View JSON or XML</button>
+        <button type="button" class="ds-btn-secondary" id="dsDownloadAssessment">Download assessment (.json)</button>
         <button type="button" class="ds-btn-primary" id="btnPrintCertificate">Print / Save report as PDF</button>
       </div>
     </div>
@@ -638,8 +653,9 @@
   <div id="toastContainer" class="ds-toast-container" aria-live="polite"></div>
 
   <!-- External Corpus Payload + Core Application Architecture -->
+  <footer class="product-utilities" data-product-feedback><a href="../#work">All products</a></footer>
   <script src="corpus-data.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261124-workspace"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

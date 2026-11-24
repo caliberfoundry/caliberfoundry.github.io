@@ -198,13 +198,13 @@
           confidence: "99.9%"
         },
         {
-          id: "CAIQ-SEF-06",
-          domain: "Incident Response",
-          question: "What is your contractual notification window to customers in the event of a confirmed data breach?",
-          answer: "Our 24/7 security operations team notifies affected enterprise customers within 24 hours of confirmation, well inside the 72-hour GDPR threshold.",
-          anchor: "[SOC2-CC7.4]",
-          status: "COMPLIANT",
-          confidence: "99.4%"
+          id: "CAIQ-BYO-11",
+          domain: "Customer Managed Keys",
+          question: "Do you support Customer-Managed Encryption Keys (CMEK / BYOK) in AWS KMS for single-tenant vaults?",
+          answer: "Compensating Control: Default deployment uses dedicated per-tenant envelope keys in AWS KMS; full customer-owned CMEK ARN delegation is available via Enterprise Addendum.",
+          anchor: "[SOC2-CC6.7]",
+          status: "COMPENSATING",
+          confidence: "98.4%"
         },
         {
           id: "CAIQ-LOG-07",
@@ -243,13 +243,13 @@
           confidence: "98.9%"
         },
         {
-          id: "CAIQ-BYO-11",
-          domain: "Customer Managed Keys",
-          question: "Do you support Customer-Managed Encryption Keys (CMEK / BYOK) in AWS KMS for single-tenant vaults?",
-          answer: "Compensating Control: Default deployment uses dedicated per-tenant envelope keys in AWS KMS; full customer-owned CMEK ARN delegation is available via Enterprise Addendum.",
-          anchor: "[SOC2-CC6.7]",
-          status: "COMPENSATING",
-          confidence: "98.4%"
+          id: "CAIQ-SEF-06",
+          domain: "Incident Response",
+          question: "What is your contractual notification window to customers in the event of a confirmed data breach?",
+          answer: "Our 24/7 security operations team notifies affected enterprise customers within 24 hours of confirmation, well inside the 72-hour GDPR threshold.",
+          anchor: "[SOC2-CC7.4]",
+          status: "COMPLIANT",
+          confidence: "99.4%"
         },
         {
           id: "CAIQ-ONP-12",
@@ -330,13 +330,13 @@
           confidence: "99.5%"
         },
         {
-          id: "HECVAT-CRY-06",
-          domain: "Encryption Standards",
-          question: "Are all student assessment submissions and gradebook exports encrypted in transit and at rest?",
-          answer: "Yes. All assessment payloads use AES-256-GCM encryption at rest and TLS 1.3 in transit.",
-          anchor: "[HECVAT-ENC-04]",
-          status: "COMPLIANT",
-          confidence: "99.7%"
+          id: "HECVAT-PROC-11",
+          domain: "Biometric Proctoring",
+          question: "Does the system capture webcam facial biometrics or keystroke biometric profiles of minor students?",
+          answer: "Compensating Control: By default we collect zero webcam or biometric data; deterministic browser focus & citation latency telemetry validates exam integrity without invasive surveillance.",
+          anchor: "[FERPA-99.31]",
+          status: "COMPENSATING",
+          confidence: "99.1%"
         },
         {
           id: "HECVAT-ACC-07",
@@ -375,13 +375,13 @@
           confidence: "99.4%"
         },
         {
-          id: "HECVAT-PROC-11",
-          domain: "Biometric Proctoring",
-          question: "Does the system capture webcam facial biometrics or keystroke biometric profiles of minor students?",
-          answer: "Compensating Control: By default we collect zero webcam or biometric data; deterministic browser focus & citation latency telemetry validates exam integrity without invasive surveillance.",
-          anchor: "[FERPA-99.31]",
-          status: "COMPENSATING",
-          confidence: "99.1%"
+          id: "HECVAT-CRY-06",
+          domain: "Encryption Standards",
+          question: "Are all student assessment submissions and gradebook exports encrypted in transit and at rest?",
+          answer: "Yes. All assessment payloads use AES-256-GCM encryption at rest and TLS 1.3 in transit.",
+          anchor: "[HECVAT-ENC-04]",
+          status: "COMPLIANT",
+          confidence: "99.7%"
         },
         {
           id: "HECVAT-ONP-12",
@@ -827,6 +827,9 @@
     if (idEl) {
       idEl.textContent = "CONTROL " + ctrl.id + " · " + ctrl.domain.toUpperCase() + " · CONFIDENCE " + ctrl.confidence;
     }
+    document.getElementById('inspectorReviewReason').textContent = !sourceClause(ctrl)
+      ? 'Evidence gap. Add a source policy that supports this answer.'
+      : ctrl.status === 'COMPENSATING' ? 'Partial evidence. Verify with the policy owner whether this clause covers the buyer’s request.' : 'A supporting policy clause is available.';
     document.getElementById('inspectorPolicyExcerpt').textContent = sourceClause(ctrl) || 'No matching clause in the current policy.';
     if (qEl) qEl.textContent = ctrl.question;
     if (anchorEl) anchorEl.textContent = ctrl.anchor;
@@ -835,6 +838,9 @@
         ? "[PRO LOCK] Unlock DealShield Single Deal Pack ($199) or activate your enterprise license key to edit and export rows 7+."
         : ctrl.answer;
       ansEl.disabled = isLocked;
+      document.getElementById("btnSaveEditedAnswer").disabled = isLocked;
+      document.getElementById("btnCopySingleAnswer").disabled = isLocked;
+      document.getElementById("inspectorSaveStatus").textContent = !isLocked && ctrl.edited ? 'Edited answer saved to this questionnaire.' : '';
     }
   }
 
@@ -884,9 +890,19 @@
     document.getElementById('gapAuditCardsContainer').focus();
   }
 
+  function inspectResponse(ctrl) {
+    if (!ctrl) return;
+    state.selectedControlIndex = state.controls.indexOf(ctrl);
+    renderDdqMatrixTab();
+    document.getElementById('tabBtnDdqMatrix').click();
+    document.getElementById('selectedControlInspector').focus();
+  }
+
   function renderGapAuditTab() {
     const container = document.getElementById('gapAuditCardsContainer');
     const gaps = state.controls.filter(needsReview);
+    const review = document.getElementById('reviewMissingEvidence');
+    review.disabled = !gaps.length;
     document.getElementById('gapCountBadge').textContent = gaps.length + ' to review';
     document.getElementById('tabBtnGapAudit').textContent = 'Evidence gaps (' + gaps.length + ')';
     container.replaceChildren();
@@ -895,20 +911,19 @@
       const card = document.createElement('article');
       card.className = 'cf-quiz-card';
       const heading = document.createElement('h4');
-      heading.textContent = ctrl.id + ' · ' + ctrl.question;
+      const label = document.createElement('span');
+      label.className = 'deal-control-id';
+      label.textContent = ctrl.id;
+      heading.textContent = ctrl.question;
       const evidence = document.createElement('p');
-      evidence.textContent = sourceClause(ctrl) || 'No matching clause in the current policy.';
+      const clause = sourceClause(ctrl);
+      evidence.textContent = clause ? 'Partial evidence · ' + ctrl.anchor + ' ' + clause : 'No matching clause in the current policy.';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'cf-btn-secondary';
       button.textContent = 'Inspect this response';
-      button.onclick = () => {
-        state.selectedControlIndex = state.controls.indexOf(ctrl);
-        renderDdqMatrixTab();
-        document.getElementById('tabBtnDdqMatrix').click();
-        document.getElementById('selectedControlInspector').focus();
-      };
-      card.append(heading, evidence, button);
+      button.onclick = () => inspectResponse(ctrl);
+      card.append(label, heading, evidence, button);
       container.append(card);
     }
   }
@@ -1361,7 +1376,7 @@
       window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
     }
     document.getElementById('runPipelineBtn').addEventListener('click', refreshAnswers);
-    document.getElementById('reviewMissingEvidence').addEventListener('click', reviewGaps);
+    document.getElementById('reviewMissingEvidence').addEventListener('click', () => inspectResponse(state.controls.find(needsReview)));
     document.getElementById('refreshEditedPolicy').addEventListener('click', refreshAnswers);
     window.addEventListener('cf:open-step', event => {
       if (event.detail?.step === 1) {
@@ -1424,7 +1439,7 @@
     if (copySingleBtn) {
       copySingleBtn.addEventListener("click", () => {
         const ctrl = state.controls[state.selectedControlIndex];
-        if (ctrl && navigator.clipboard) {
+        if (ctrl && !copySingleBtn.disabled && navigator.clipboard) {
           navigator.clipboard.writeText(ctrl.id + " (" + ctrl.anchor + "): " + ctrl.answer);
         }
       });
@@ -1492,6 +1507,8 @@
     document.querySelectorAll(".cf-tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const targetId = btn.getAttribute("data-tab");
+        const titles = {"tab-gap-audit":"Evidence inbox", "tab-ddq-matrix":"Questionnaire answers", "tab-vpat-report":"Accessibility report", "tab-export-pack":"Export questionnaire"};
+        document.getElementById('dealTitle').textContent = titles[targetId];
         document.querySelectorAll(".cf-tab-btn").forEach((b) => {
           b.classList.toggle("active", b === btn);
           b.setAttribute("aria-selected", b === btn ? "true" : "false");
@@ -1751,6 +1768,7 @@
     } else {
       loadPreset("caiq-v4", true, false);
     }
+    document.getElementById("tabBtnGapAudit").click();
   }
 
   if (document.readyState === "loading") {

@@ -1,0 +1,97 @@
+/* Distraction-free case practice with a separate source reader. */
+:root {
+  --cf-bg-paper:#faf6e9;--cf-bg-stone:#efe9d7;--cf-bg-surface:#fffdf7;--cf-bg-ink-panel:#292a24;
+  --cf-ink-primary:#252822;--cf-ink-secondary:#525449;--cf-ink-muted:#646155;--cf-ink-on-dark:#faf7e9;
+  --cf-accent-primary:#a15d00;--cf-accent-hover:#784600;--cf-accent-tint:#fff0be;
+  --cf-rule-mid:#d6cfb7;--cf-rule-strong:#a9a187;--cf-navy-authority:#34372e;
+}
+html:root,html>body {overflow-x:clip!important;overflow-y:visible!important;height:auto;}
+body {background:#242720;color:#252822;}
+body>.codedrill-global-bar {position:relative!important;z-index:20;min-height:65px;height:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px clamp(16px,5vw,70px);background:#242720;border-bottom:1px solid #545648;color:#fff9dd;}
+.cd-brand-group {display:flex;align-items:center;flex-wrap:wrap;gap:11px;}
+.cd-logo-mark {order:-1;width:34px;height:34px;border-radius:8px;background:#ffd15a;border:0;display:grid;place-items:center;color:#27281d;font:800 14px var(--font-sans);}
+.cd-brand-title {font:750 23px var(--font-sans);color:#fff9db;letter-spacing:-.055em;}
+.cd-back-foundry-link {order:2;background:transparent;border:0;box-shadow:none;color:#e0d9bc;font:12px var(--font-sans);}
+.cd-brand-sep {display:none;}
+.study-settings {display:block;position:relative;margin-left:auto;}
+.study-settings summary,.exam-tools summary {display:list-item;cursor:pointer;font:600 13px var(--font-sans);padding:8px 10px;color:#eee7cb;}
+.study-settings-body {position:absolute;right:0;top:100%;z-index:20;width:min(570px,90vw);padding:14px;display:grid;gap:10px;background:#32362d;border:1px solid #6c6f5d;border-radius:5px;color:#fff;}
+.study-settings:not([open]) .study-settings-body,.exam-tools:not([open]) .pvue-action-bar {display:none!important;}
+.cd-global-controls,.cd-account-cluster,.cd-mode-switcher {flex-wrap:wrap;}
+.study-settings[open] .cd-global-link {display:inline-flex;color:#fff3bf;text-decoration:underline;}
+.codedrill-main-container,.workspace-view {height:auto;max-height:none;min-height:0;overflow:visible;}
+#workspaceSimulatorView {display:block;min-height:calc(100vh - 65px);padding:0 18px 32px;background:#242720;}
+#workspaceSimulatorView.hidden {display:none!important;}
+.pvue-header-group {width:min(850px,100%);margin:22px auto 6px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;align-items:center;}
+.pvue-top-bar {height:auto;min-width:0;padding:0;background:transparent;border:0;gap:16px;flex-wrap:wrap;}
+.pvue-exam-identity,.pvue-system-badge,#pvueCitationVerifyPill {display:none;}
+.pvue-question-counter-box {margin:0;padding:0;border:0;background:transparent;}
+.pvue-q-pos {font:650 15px var(--font-sans);color:#ffdb75;}
+.exam-tools {display:block;}
+.exam-tools[open] {width:100%;}
+.exam-tools::details-content {display:block;}
+.exam-tools .pvue-action-bar {height:auto;display:flex;flex-wrap:wrap;gap:10px;background:#e9e4d1;}
+.pvue-timer-cluster,.pvue-tools-left,.pvue-tools-right {height:auto;flex-wrap:wrap;}
+.pvue-timer-display {background:#34372e;}
+.study-pane-switch {display:flex;position:sticky;top:0;z-index:12;justify-content:center;gap:3px;width:fit-content;max-width:100%;margin:0 auto 14px;padding:4px;border:1px solid #636553;border-radius:22px;background:#30332a;}
+.study-pane-switch button {min-height:34px;padding:6px 18px;border:0;border-radius:20px;font:650 13px var(--font-sans);background:transparent;color:#f4edcd;cursor:pointer;}
+.study-pane-switch button[aria-pressed="true"] {color:#292819;background:#ffd15a;}
+#pvueSplitWorkspace {margin:0 auto;display:block;width:min(850px,100%);height:auto;min-height:0;}
+#pvueSplitWorkspace .pvue-left-pane,#pvueSplitWorkspace .pvue-right-pane {width:100%!important;max-width:100%;height:auto;min-height:0;overflow:visible;border:0;border-radius:12px;background:#fffdf7;color:#292b24;}
+#pvueSplitWorkspace:not(.study-split)[data-pane="question"] #pvueRightPane,#pvueSplitWorkspace:not(.study-split)[data-pane="source"] #pvueLeftPane,#pvueSplitWorkspace:not(.study-split) .pvue-split-divider {display:none!important;}
+.pvue-pane-scroll {height:auto;overflow:visible;padding:clamp(18px,3.7vw,48px);}
+.q-meta-strip {display:block;height:auto;padding:0 0 13px;margin:0 0 14px;border:0;border-bottom:1px solid #d9d2b9;background:transparent;}
+.q-meta-badges {display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.q-meta-badges .q-badge {background:transparent;border:0;color:#5a5949;padding:0;font:600 12px var(--font-sans);}
+.q-meta-badges .q-badge-cat {display:inline;color:#504b34;}
+.q-meta-badges .q-badge-num,.q-meta-badges .q-badge-track,.q-meta-badges .q-badge-target,.q-meta-timer-mini,.q-highlight-hint,.q-strike-tip {display:none;}
+.q-stem-card {padding:0;margin:0 0 17px;background:none;border:0;box-shadow:none;}
+.q-stem-toolbar {padding:0;margin:0 0 8px;background:transparent;border:0;}
+.q-stem-label {color:#675321;font:650 12px var(--font-sans);letter-spacing:.03em;}
+.q-stem-content,.pvue-pane-scroll .q-stem-content {font:500 clamp(17px,1.6vw,23px)/1.44 var(--font-serif);color:#292b24;}
+.q-stem-content p+p {margin-top:.55em;}
+.q-options-header {padding:0;margin:0 0 8px;background:none;border:0;font:650 14px var(--font-sans);color:#474739;}
+.q-options-list {display:grid;gap:7px;}
+.q-option-row {background:#fffdf7;border:1px solid #d2cbb4;border-radius:7px;padding:10px 12px;gap:6px;}
+.q-option-row.selected {background:#fff3c9;border-color:#9d7026;} .q-option-row.correct-graded {background:#edf6df;border-color:#5b762e;} .q-option-row.wrong-graded {background:#fcebe5;border-color:#aa6250;}
+.q-option-main {min-width:0;gap:8px;}
+.q-option-radio {accent-color:#825600;} .q-option-letter {min-width:20px;font-size:13px;}
+.q-option-text {font:15px/1.45 var(--font-sans);}
+body:not(:has(.exam-tools[open])) .q-option-strike-btn {display:none;}
+.q-bottom-nav-bar {flex-wrap:wrap;gap:6px;margin:10px 0 12px;}
+#btnVerifyAnswerMain {background:#f8c74e;border:1px solid #8d6a20;border-radius:6px;color:#282719;min-height:43px;padding:8px 17px;font:700 14px var(--font-sans);}
+#btnVerifyAnswerMain:disabled {background:#ece7d3;color:#625e51;border-color:#cbc3a7;}
+#btnSwitchToDrillFromCbt {display:none;} body:has(.exam-tools[open]) #btnSwitchToDrillFromCbt {display:inline-block;}
+#qExplanationPanel {scroll-margin-top:61px;}
+#qExplanationPanel .exp-status-banner {font-size:16px;}
+.ref-library-body,.ref-doc-reader-wrap,.ref-doc-article {max-height:none;overflow:visible;}
+.product-utilities {display:flex;justify-content:center;align-items:center;gap:16px;padding:18px;background:#242720;font:13px var(--font-sans);}
+.product-utilities a {color:#eee5bf;}
+:focus-visible {outline:3px solid #b47a11;outline-offset:3px;}
+@media(min-width:901px) {
+ #pvueSplitWorkspace.study-split {display:flex;width:100%;gap:2px;}
+ #pvueSplitWorkspace.study-split .pvue-left-pane,#pvueSplitWorkspace.study-split .pvue-right-pane {width:var(--pane-width,50%)!important;}
+ #pvueSplitWorkspace.study-split[data-ratio="60-40"] .pvue-left-pane {--pane-width:60%;}
+ #pvueSplitWorkspace.study-split[data-ratio="60-40"] .pvue-right-pane {--pane-width:40%;}
+ #pvueSplitWorkspace.study-split[data-ratio="38-62"] .pvue-left-pane {--pane-width:38%;}
+ #pvueSplitWorkspace.study-split[data-ratio="38-62"] .pvue-right-pane {--pane-width:62%;}
+ #pvueSplitWorkspace.study-split .pvue-pane-scroll {padding:20px;}
+}
+@media(max-width:900px) {
+  .pvue-split-ratio-group,.pvue-split-divider {display:none;}
+  #pvueSplitWorkspace[data-pane="question"] #pvueRightPane,#pvueSplitWorkspace[data-pane="source"] #pvueLeftPane {display:none!important;}
+}
+@media(max-width:600px) {
+  body>.codedrill-global-bar {min-height:50px;padding:8px 12px;gap:4px;}
+  .cd-brand-group {gap:6px;} .cd-brand-title {font-size:20px;}
+  .cd-back-foundry-link {font-size:10px;}
+  .study-settings[open] {width:100%;}
+  .study-settings-body {position:static;width:100%;}
+  #workspaceSimulatorView {padding:0 9px 25px;}
+  .pvue-header-group {margin-top:9px;}
+  .study-pane-switch {margin-bottom:8px;}
+  .pvue-pane-scroll {padding:14px;}
+  .q-meta-strip {padding-bottom:6px;margin-bottom:8px;}
+  .q-option-row {padding:9px;}
+  .q-stem-content,.pvue-pane-scroll .q-stem-content {font-size:17px;line-height:1.38;}
+}

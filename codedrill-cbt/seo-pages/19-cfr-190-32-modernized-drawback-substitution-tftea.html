@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -1018,19 +1018,19 @@
       text-decoration: underline;
     }
   </style>
+  <link rel="stylesheet" href="library.css" />
 </head>
 <body>
   <!-- Sticky Institutional Header -->
   <header class="top-bar">
     <a href="../index.html" class="brand-cluster">
-      <span class="brand-badge">CODEDRILL // CBT</span>
-      <span class="brand-title">19 CFR &amp; HTSUS Speed-Navigation Engine</span>
-      <span class="brand-sub">// US Customs Broker License Exam (CBLE)</span>
+      <span class="brand-badge">CD</span>
+      <span class="brand-title">CodeDrill</span>
     </a>
     <nav class="top-actions" aria-label="Primary Navigation">
-      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>[INDEX] All 19 CFR / GRI Guides</a>
-      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>[60s DRILL] Citation Sprint</a>
-      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="cta-top-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><polyline points="4.5,6 7,8 4.5,10"/><line x1="8.5" y1="10" x2="11.5" y2="10"/></svg>Launch Full 1:1 Pearson VUE Simulator &rarr;</a>
+      <a href="./index.html" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><path d="M2 3h4.5a1.5 1.5 0 0 1 1.5 1.5v9a1 1 0 0 0-1-1H2V3z"/><path d="M14 3H9.5A1.5 1.5 0 0 0 8 4.5v9a1 1 0 0 1 1-1H14V3z"/></svg>Study library</a>
+      <a href="#interactive-drill-widget" class="nav-link"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align:-2px;margin-right:4px;"><circle cx="8" cy="9" r="5.5"/><line x1="8" y1="9" x2="10.5" y2="6.5"/><line x1="6" y1="1.5" x2="10" y2="1.5"/></svg>Try the question</a>
+      <a href="../index.html?source=pseo&amp;cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="cta-top-btn">Open in simulator</a>
     </nav>
   </header>
 
@@ -1040,27 +1040,18 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="../index.html">CodeDrill Simulator</a>
         <span>/</span>
-        <a href="./index.html">CBLE Knowledge Hub</a>
+        <a href="./index.html">Study library</a>
         <span>/</span>
         <span>19 CFR Part 190</span>
         <span>/</span>
         <strong style="color:var(--cf-ink-primary);">19 CFR § 190.32 & § 190.22</strong>
       </nav>
-      <div class="meta-pills">
-        <span class="meta-pill hot">[FREQ] 88% Past Exam Frequency</span>
-        <span class="meta-pill">[WEIGHT] 6% of CBLE (5 Questions)</span>
-        <span class="meta-pill">[TARGET] &lt;35s Lookup</span>
-      </div>
     </div>
   </div>
 
   <main class="page-container">
     <!-- Editorial Masthead Section -->
     <section class="hero-card">
-      <div class="grid-corner-mark">
-        <span>+ [05 // SPEC-CFR-190.32] OFFICIAL CBP EXAM REFERENCE</span>
-        <span>[19 CFR § 190.32 & § 190.22 — Modernized Drawback (TFTEA)] +</span>
-      </div>
       <h1>19 CFR § 190.32: TFTEA Modernized Drawback & 8-Digit HTSUS Substitution</h1>
       <p class="hero-subtitle">Why outdated study guides teaching "Part 191 Commercial Interchangeability" will cost you points — and how the 8-digit HTSUS rule and "Other" subheading exception actually work.</p>
       <div class="shortcut-banner">
@@ -1227,7 +1218,7 @@
           </div>
           <div class="timer-cluster">
             <div class="timer-display" id="drill-timer" aria-live="polite">01:00</div>
-            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">[START 60s]</button>
+            <button type="button" class="timer-btn" id="start-timer-btn" onclick="toggleDrillTimer()">Start timer</button>
           </div>
         </div>
 
@@ -1238,9 +1229,8 @@
           </div>
           <div class="drill-stem">On March 10, 2023, an importer imports and pays $10,000 in regular customs duties and $500 in Merchandise Processing Fees (MPF) on 500 units of high-grade widgets ($20/unit invoice value) classified under 8-digit HTSUS subheading 8543.70.85 ("Electrical machines and apparatus..."). On June 15, 2026, the company exports 500 domestically produced lower-cost widgets ($12/unit value) that are also classifiable under 8543.70.85 without having been used in the United States. Under 19 CFR 190.32, how much Unused Merchandise Substitution Drawback may the claimant recover?</div>
 
-          <div class="strike-hint">
-            <span>Select one best answer (A–E):</span>
-            <span>Click <strong>[STRIKE]</strong> to cross out distractors</span>
+          <div class="strike-hint"><span>Choose your answer</span>
+            <details class="drill-tools"><summary>Eliminate answers</summary><p>Use the Strike button beside an answer to cross it out. Select it again to restore it.</p></details>
           </div>
 
           <div class="options-list" id="drill-options-list" role="radiogroup" aria-label="CBLE Practice Question Options">
@@ -1328,13 +1318,7 @@
 
           <!-- High-Converting Simulator CTA -->
           <div class="sim-cta-box" style="margin-top:1.15rem;">
-            <div class="sim-cta-title">Train Under Real 4.5-Hour Pearson VUE Conditions</div>
-            <div class="sim-cta-desc">
-              Open the full split-screen Pearson VUE CBT Simulator with synchronized 19 CFR + HTSUS search, Socratic Code-Path Examiner, and Citation Pin-Drop verification.
-            </div>
-            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="sim-cta-btn">
-              Launch Full 1:1 Pearson VUE Split-Screen Simulator &rarr;
-            </a>
+            <a href="../index.html?source=pseo_widget&cite=19%20CFR%20%C2%A7%20190.32%20%26%20%C2%A7%20190.22" class="sim-cta-btn">Open this source in the simulator</a>
           </div>
         </div>
       </div>
@@ -1426,7 +1410,7 @@
         isGraded = false;
         selectedLetter = null;
         updateTimerUI();
-        document.getElementById('start-timer-btn').textContent = '[START 60s]';
+        document.getElementById('start-timer-btn').textContent = 'Start timer';
         document.getElementById('submit-drill-btn').disabled = true;
         document.getElementById('submit-drill-btn').textContent = '[LOCK IN ANSWER & VERIFY CITATION]';
         document.getElementById('drill-feedback').classList.remove('visible');

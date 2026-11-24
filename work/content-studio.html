@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product-design="content-studio">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -12,114 +12,15 @@
   <title>ContentForge&trade; Studio — Multi-Source Document Extraction, Ground-Truth Evaluation &amp; Content Pipeline | Caliber Foundry</title>
   <meta name="description" content="ContentForge™ Studio is a deterministic 5-stage document extraction, ground-truth evaluation harness, educational assessment compiler, and idempotent n8n webhook automation workbench by Caliber Foundry." />
   <link rel="canonical" href="https://caliberfoundry.com/work/content-studio.html" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-      --cf-bg-paper: #F6F4EF; --cf-bg-stone: #ECE9E1; --cf-bg-surface: #FFFFFF; --cf-bg-ink-panel: #141413;
-      --cf-ink-primary: #141413; --cf-ink-secondary: #4A4842; --cf-ink-muted: #78756D; --cf-ink-on-dark: #F6F4EF;
-      --cf-rule-strong: #141413; --cf-rule-mid: #C9C4B8; --cf-rule-subtle: #DFDBD2;
-      --cf-accent-primary: #C8431F; --cf-accent-hover: #A63415; --cf-accent-tint: #FDF2EE;
-      --cf-navy-authority: #1B365D; --cf-forest-pass: #1A5638; --cf-forest-tint: #EDF5F0;
-      --font-display: 'Instrument Serif', Georgia, serif; --font-serif: 'Newsreader', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
-    .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
-    .brand-mark::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; background-color: var(--cf-accent-primary); }
-    .brand-name { font-family: var(--font-display); font-size: 22px; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 2px; border: 1px solid var(--cf-rule-strong); text-decoration: none; background-color: var(--cf-bg-surface); color: var(--cf-ink-primary); box-shadow: 2px 2px 0px var(--cf-rule-strong); transition: transform 0.08s ease, box-shadow 0.08s ease; }
-    .btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px var(--cf-rule-strong); }
-    .btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--cf-rule-strong); }
-    .btn-primary { background-color: var(--cf-accent-primary); color: #FFFFFF; }
-    .btn-primary:hover { background-color: var(--cf-accent-hover); }
-    .container { max-width: 1080px; margin: 0 auto; padding: 56px 32px 80px; }
-    .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); margin-bottom: 24px; display: block; text-decoration: none; }
-    .breadcrumb:hover { color: var(--cf-accent-primary); }
-    .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cf-accent-primary); margin-bottom: 10px; font-weight: 600; }
-    .title { font-family: var(--font-display); font-size: clamp(38px, 5vw, 56px); font-weight: 400; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 18px; }
-    .lede { font-family: var(--font-serif); font-size: 20px; color: var(--cf-ink-secondary); max-width: 66ch; margin-bottom: 32px; line-height: 1.62; }
-    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
-    @media (min-width: 820px) { .grid-2 { grid-template-columns: 3fr 2fr; } }
-    .panel { background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 32px; border-radius: 0px; }
-    .panel-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; margin-bottom: 16px; border-bottom: 1px solid var(--cf-rule-subtle); padding-bottom: 10px; }
-    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 16px; font-size: 15px; color: var(--cf-ink-secondary); }
-    .spec-list strong { color: var(--cf-ink-primary); }
-    .spec-list code { font-family: var(--font-mono); font-size: 12.5px; background: var(--cf-bg-stone); padding: 2px 5px; border: 1px solid var(--cf-rule-mid); color: var(--cf-ink-primary); }
-    .spec-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
-    .spec-table td { padding: 11px 0; border-bottom: 1px solid var(--cf-rule-subtle); vertical-align: top; }
-    .spec-table td:first-child { color: var(--cf-ink-muted); padding-right: 12px; }
-    .spec-table td:last-child { text-align: right; font-weight: 600; color: var(--cf-ink-primary); }
-    .matrix-section { margin-top: 32px; background-color: var(--cf-bg-surface); border: 1px solid var(--cf-rule-strong); padding: 32px; border-radius: 0px; }
-    .matrix-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 12px; }
-    .matrix-table th, .matrix-table td { border-bottom: 1px solid var(--cf-rule-subtle); padding: 10px 8px; text-align: left; }
-    .matrix-table th { background-color: var(--cf-bg-stone); color: var(--cf-ink-primary); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; border-top: 1px solid var(--cf-rule-mid); }
-    .badge-pass { display: inline-block; padding: 2px 6px; border: 1px solid var(--cf-forest-pass); background-color: var(--cf-forest-tint); color: var(--cf-forest-pass); font-weight: 600; font-size: 11px; border-radius: 2px; }
-    .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .template-links {display:grid;gap:8px;list-style:none;padding:0;}
-    .template-links li {display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap;border-bottom:1px solid #dedcd6;padding:8px 0;}
-    .template-links a {padding:6px 0;font-weight:650;text-underline-offset:3px;}
-    .template-links span {color:#52514e;}
-  </style>
+  <link rel="stylesheet" href="../content-studio/desk.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
-      <div style="display:flex; gap:12px;">
-        <a href="../content-studio/" class="btn btn-primary"><span>Try a source document</span><span>&rarr;</span></a>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-
-    <h1 class="title">ContentForge · Turn a source passage into a printable dossier</h1>
-    <p class="lede">Choose a scenario and edit its source text. Run the extraction, inspect each quoted passage and open a dossier containing your selected source and its version.</p>
-    <nav aria-label="Try the workflow" style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="../content-studio/?autoProof=1" class="btn btn-primary"><span>Run the current source</span></a>
-      <a href="../content-studio/?autoProof=2" class="btn"><span>Inspect the scenario’s JSON</span></a>
-      <a href="../content-studio/?autoProof=3" class="btn"><span>Preview the current dossier</span></a>
-    </nav>
-
-    <div class="grid-2">
-      <section class="panel">
-        <h2 class="panel-title">What you can do</h2>
-        <ul class="spec-list">
-          <li><strong>Choose a scenario.</strong> Start with a workflow payload or document evaluation example.</li>
-          <li><strong>Work from your own text.</strong> Paste your own source, supply a title and run it again after edits.</li>
-          <li><strong>Review the result.</strong> Preview the JSON and print the dossier. The source title and excerpt identify the exact input.</li>
-        </ul>
-      </section>
-      <section class="panel">
-        <h2 class="panel-title">Example and output</h2>
-        <table class="spec-table">
-          <tr><th scope="row">Input</th><td>Pasted text, optional clause markers</td></tr>
-          <tr><th scope="row">Example</th><td>Edit a date and find the same date in the report</td></tr>
-          <tr><th scope="row">Outputs</th><td>Source excerpts, JSON preview and printable dossier</td></tr>
-        </table>
-      </section>
-    </div>
-
-    <section class="matrix-section" aria-labelledby="presets-matrix-heading">
-      <h2 class="panel-title" id="presets-matrix-heading">Choose a template</h2>
-      <ul class="template-links">
-        <li><a href="../content-studio/?preset=n8n-pipeline">Workflow payload</a><span>Free · Preview JSON from a source document</span></li>
-        <li><a href="../content-studio/?preset=eval-harness">Document evaluation</a><span>Free · Review source excerpts and claims</span></li>
-        <li><a href="../content-studio/?preset=edtech-courseware">Course materials</a><span>Pro · Explore the courseware example</span></li>
-        <li><a href="../content-studio/?preset=fintech-monograph">Financial brief</a><span>Pro · Explore the financial report example</span></li>
-      </ul>
-    </section>
+<body class="product-case">
+  <header class="desk-mast"><a href="../#work">← All products</a><a href="../content-studio/" class="desk-brand">ContentForge</a></header>
+  <main class="desk-work"><div class="desk-intro"><h1>From source to printable brief.</h1><p>Bring a policy, specification or research passage. ContentForge gathers its quoted excerpts into a dossier you can review and print.</p></div>
+    <article class="desk-paper desk-case"><h2>Try a sample source</h2><p>Open the sample dossier first, or use the writing desk to replace the title and text. Rebuilding the dossier ties it to your latest edit.</p><nav aria-label="Try the workflow"><a href="../content-studio/?autoProof=3">Open sample dossier →</a><a href="../content-studio/?autoProof=1">Run the source</a><a href="../content-studio/?autoProof=2">Review the JSON</a></nav></article>
+    <section class="desk-secondary desk-templates"><h2>Choose a template</h2><ul class="template-links"><li><a href="../content-studio/?preset=n8n-pipeline">Workflow payload</a><span>Free · JSON export</span></li><li><a href="../content-studio/?preset=eval-harness">Document evaluation</a><span>Free · Traceable excerpts</span></li><li><a href="../content-studio/?preset=edtech-courseware">Courseware</a><span>Pro · Lesson and quiz</span></li><li><a href="../content-studio/?preset=fintech-monograph">Finance brief</a><span>Pro · Article and storyboard</span></li></ul></section>
   </main>
-
-  <footer class="site-footer">
-    <span>&copy; 2026 Caliber Foundry</span>
-    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary); text-decoration:none;">engineering@caliberfoundry.com</a>
-  </footer>
+  <footer class="desk-footer"><span>Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a></footer>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>
