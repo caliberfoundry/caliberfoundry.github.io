@@ -54,42 +54,38 @@
     <div class="header-inner">
       <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
       <div style="display:flex; gap:12px;">
-        <a href="../omnirag/" class="btn btn-primary"><span>Launch Live Studio</span><span>&rarr;</span></a>
+        <a href="../omnirag/" class="btn btn-primary"><span>Try a document pack</span><span>&rarr;</span></a>
       </div>
     </div>
   </header>
 
   <main class="container">
     <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <h1 class="title">OmniRAG&trade; Multi-Document Citation &amp; Verification Studio</h1>
-    <p class="lede">
-      Cross-checks facts, tables, and clauses across large sets of PDFs, Word contracts, and Excel models—linking every answer to the exact page and row in the source file.
-    </p>
-    <div style="display:flex; flex-wrap:wrap; gap:14px;">
-      <a href="../omnirag/" class="btn btn-primary"><span>Open Split-Screen Citation Demo</span><span>&rarr;</span></a>
-      <a href="mailto:engineering@caliberfoundry.com?subject=Document%20Verification%20Inquiry" class="btn"><span>Discuss Your Document Workflow</span><span>&nearr;</span></a>
-    </div>
+    <h1 class="title">OmniRAG · Find the source behind an answer</h1>
+    <p class="lede">Compare example financial, sales or engineering documents. Choose a question, read the cited passage and open the exact page or cell. Export the questions and evidence in a JSON report or print the dossier.</p>
+    <nav aria-label="Try the workflow" style="display:flex;flex-wrap:wrap;gap:10px">
+      <a href="../omnirag/?autoProof=1" class="btn btn-primary"><span>Choose a document pack</span></a>
+      <a href="../omnirag/?autoProof=2" class="btn"><span>Check a question and its sources</span></a>
+      <a href="../omnirag/?autoProof=3" class="btn"><span>Preview the evidence report</span></a>
+    </nav>
 
     <div class="grid-2">
-      <div class="panel">
-        <h2 class="panel-title">Business &amp; Technical Capabilities</h2>
+      <section class="panel">
+        <h2 class="panel-title">What you can do</h2>
         <ul class="spec-list">
-          <li><strong>01. Page &amp; Cell-Level Source Grounding:</strong> Clicking any citation badge immediately opens the underlying PDF, DOCX, or XLSX file on the right and highlights the exact paragraph or spreadsheet cell.</li>
-          <li><strong>02. Cross-Document Discrepancy Detection:</strong> Automatically flags conflicting numbers across legal agreements, engineering studies, and financial spreadsheets for rapid human sign-off.</li>
-          <li><strong>03. Three Pre-Built Industry Presets:</strong> Test live workflows for Enterprise Legal/Financial Audit, Deal Desk Contract Verification, and Large-Scale Infrastructure Due Diligence.</li>
+          <li><strong>Choose a sample.</strong> Three packs contain short excerpts from spreadsheets, contracts and reports.</li>
+          <li><strong>Check the passage.</strong> Search for an exact phrase or choose one of the pack’s three questions. Missing answers are marked in both the workbench and report.</li>
+          <li><strong>Compare your own numbers.</strong> Paste two passages and compare their numeric tokens side by side.</li>
         </ul>
-      </div>
-
-      <div class="panel">
-        <h2 class="panel-title">Technical Specifications</h2>
+      </section>
+      <section class="panel">
+        <h2 class="panel-title">Example and output</h2>
         <table class="spec-table">
-          <tr><td>BACKEND ARCHITECTURE</td><td>Python / FastAPI / StateGraph</td></tr>
-          <tr><td>SEARCH INDEX</td><td>PostgreSQL pgvector + BM25 RRF</td></tr>
-          <tr><td>SUPPORTED FORMATS</td><td>PDF, DOCX, XLSX, CSV</td></tr>
-          <tr><td>AUDIT EXPORT</td><td>1-Click Verified JSON / PDF Sign-Off</td></tr>
-          <tr><td>REFERENCE BACKEND</td><td><a href="../omnirag/fastapi_langgraph_rag.py" rel="noopener noreferrer" target="_blank">fastapi_langgraph_rag.py &nearr;</a></td></tr>
+          <tr><th scope="row">Inputs</th><td>Sample excerpts and two pasted passages</td></tr>
+          <tr><th scope="row">Example</th><td>Q3 profit of $4.19M against a $3.50M minimum</td></tr>
+          <tr><th scope="row">Outputs</th><td>Source excerpts, comparison, JSON report and print view</td></tr>
         </table>
-      </div>
+      </section>
     </div>
   </main>
 

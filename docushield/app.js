@@ -597,6 +597,10 @@
 
     const isHtml = /\.html?$/i.test(fileName) || /<!DOCTYPE\s+html|<html\b/i.test(rawText.slice(0, 500));
     const pdfVerMatch = rawText.match(/%PDF-(\d\.\d)/);
+    if (!rawText.trim() || (!pdfVerMatch && !(isHtml && /<[a-z][^>]*>/i.test(rawText)))) {
+      document.getElementById('dsAssessmentSummary').textContent = 'Could not inspect ' + fileName + '. Choose a readable PDF or HTML file. The previous assessment is still selected.';
+      return null;
+    }
     const detectedVersion = isHtml ? 'HTML5 / XHTML' : (pdfVerMatch ? `%PDF-${pdfVerMatch[1]}` : '%PDF-1.7');
 
     // Scan raw COS dictionary tokens
@@ -649,7 +653,7 @@
           displayDocTitle: hasDisplayDocTitle ? 'true' : 'false (/ViewerPreferences /DisplayDocTitle absent)',
           structTreeRoot: hasStructTreeRoot ? 'Partial /StructTreeRoot detected' : 'NULL (No /StructTreeRoot dictionary found)',
           tabOrder: '/R (Default row order — /Tabs /S absent)',
-          contrastRatio: '3.1:1 FAIL (Unverified foreground/background luminance)'
+          contrastRatio: 'Manual measurement required'
         },
         after: {
           pdfuaid: 'pdfuaid:part=1 (ISO 14289-1:2014 XMP packet injected)',
@@ -658,13 +662,33 @@
           displayDocTitle: `true (dc:title = '${safeFileName}')`,
           structTreeRoot: `Constructed /StructTreeRoot across ${detectedPages} page(s) (${imageCount} <Figure>, ${Math.max(1, tableCount)} <Table>)`,
           tabOrder: `/S (Structure order enforced across ${detectedPages} Page object(s))`,
-          contrastRatio: '7.4:1 PASS (Normalized to WCAG 2.2 AA/AAA)'
+          contrastRatio: 'Manual measurement required'
         }
       },
       structTreeBefore: `${detectedVersion}\n% [CLIENT-SIDE BYTE SCAN OF: ${safeFileName}]\n% Bytes Scanned: ${rawText.length} | Pages: ${detectedPages} | Images: ${imageCount} | Tables: ${tableCount} | Widgets: ${annotCount}\n1 0 obj\n<<\n  /Type /Catalog\n  /Pages 2 0 R\n  /MarkInfo << /Marked ${hasMarkedTrue ? 'true' : 'false'} >>\n  % /StructTreeRoot: ${hasStructTreeRoot ? 'Present' : 'ABSENT (Matterhorn 01-006 Failure)'}\n  % /Lang: ${hasLang ? 'Present' : 'ABSENT (Matterhorn 11-001 Failure)'}\n  % XMP pdfuaid:part=1: ${hasPdfUaId ? 'Present' : 'ABSENT (Matterhorn 06-001 Failure)'}\n>>\nendobj`,
       structTreeAfter: `${detectedVersion}\n% [REMEDIATED ISO 14289-1 (PDF/UA-1) AST FOR: ${safeFileName}]\n1 0 obj\n<<\n  /Type /Catalog\n  /Pages 2 0 R\n  /Lang (en-US)\n  /MarkInfo << /Marked true /Suspects false >>\n  /ViewerPreferences << /DisplayDocTitle true >>\n  /Metadata 10 0 R\n  /StructTreeRoot 20 0 R\n>>\nendobj\n\n10 0 obj\n<< /Type /Metadata /Subtype /XML >>\nstream\n<x:xmpmeta xmlns:x="adobe:ns:meta/">\n  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n    <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">\n      <pdfuaid:part>1</pdfuaid:part>\n      <dc:title><rdf:Alt><rdf:li xml:lang="x-default">${safeFileName}</rdf:li></rdf:Alt></dc:title>\n    </rdf:Description>\n  </rdf:RDF>\n</x:xmpmeta>\nendstream\nendobj`
     }, 99);
 
+    const signals = [
+      ['structure', 'Document structure', hasStructTreeRoot, isHtml ? 'A main, article, section or nav element' : '/StructTreeRoot'],
+      ['headings', 'Structure markers', hasMarkedTrue, isHtml ? 'A heading or table element' : '/Marked true'],
+      ['language', 'Document language', hasLang, isHtml ? 'HTML lang attribute' : '/Lang'],
+      ['title', 'Document title', hasDisplayDocTitle, isHtml ? 'Nonempty title element' : '/DisplayDocTitle true']
+    ];
+    if (!isHtml) signals.push(['metadata', 'PDF/UA metadata marker', hasPdfUaId, 'pdfuaid:part']);
+    customPacket.checkpoints = signals.map(([id, title, present, marker]) => ({
+      id, title, clause: 'Local file inspection', wcag: '', category: 'Document structure',
+      statusBefore: present ? 'PASS' : 'FAIL', statusAfter: present ? 'PASS' : 'FAIL',
+      evidenceBefore: marker + (present ? ' found' : ' not found'),
+      evidenceAfter: marker + (present ? ' found' : ' not found')
+    }));
+    customPacket.visualRegions = customPacket.checkpoints.map(cp => ({
+      id: cp.id, checkpointId: cp.id, label: cp.title, tagType: cp.id, page: null,
+      previewText: cp.evidenceBefore, beforeTag: cp.evidenceBefore,
+      issueSummary: 'Document-wide source inspection', afterTag: 'Review the source file to confirm its semantics.'
+    }));
+    customPacket.tables = [];
+    customPacket.figures = [];
     DATASET.packetsById['CUSTOM-UPLOAD'] = customPacket;
     const existingIdx = DATASET.packets.findIndex(p => p.id === 'CUSTOM-UPLOAD');
     if (existingIdx >= 0) {
@@ -688,6 +712,7 @@
 
     STATE.customUploadsCount = (STATE.customUploadsCount || 0) + 1;
     STATE.activePacketId = 'CUSTOM-UPLOAD';
+    window.dispatchEvent(new CustomEvent('cf:workflow',{detail:{stage:'result_ready'}}));
     STATE.remediatedPackets['CUSTOM-UPLOAD'] = false;
     STATE.selectedRegionId = customPacket.visualRegions[0] ? customPacket.visualRegions[0].id : null;
     saveState();
@@ -750,11 +775,7 @@
     if (fileEl) fileEl.textContent = extractedFile;
     if (scanInput && !scanInput.value) scanInput.value = extractedDomain;
     if (findingsEl) {
-      findingsEl.innerHTML =
-        `Detected Structural Failures on <strong>${safeDomain}</strong> (<code>${safeFile}</code>): ` +
-        `<code>/StructTreeRoot absent (Matterhorn 01-006)</code> · ` +
-        `<code>Missing XMP pdfuaid:part=1 (06-001)</code> · ` +
-        `<code>Unbound &lt;TH scope&gt; &amp; &lt;Figure Alt&gt; (15-002 / 13-004)</code>`;
+      findingsEl.textContent = 'This domain example uses a sample assessment. Upload a local document to inspect its structure.';
     }
     if (banner) banner.classList.remove('hidden');
 
@@ -764,10 +785,10 @@
       id: 'DOMAIN-SCAN',
       tier: 'FREE',
       code: 'DOMAIN-AUDIT',
-      title: `${extractedDomain} — ${extractedFile}`,
+      title: `Illustrative domain example · ${extractedDomain} / ${extractedFile}`,
       sector: 'Pre-Scanned Domain & Public PDF Asset Dossier',
       regulation: 'EU Directive 2019/882 (EAA), WCAG 2.2 AA & ISO 14289-1',
-      fileName: extractedFile,
+      fileName: 'Sample: ' + extractedFile,
       initialScore: 31,
       remediatedScore: 100
     }), 98);
@@ -788,7 +809,7 @@
         opt.value = 'DOMAIN-SCAN';
         selectEl.prepend(opt);
       }
-      opt.textContent = `[DOMAIN AUDIT] ${extractedDomain} / ${extractedFile} (EAA & PDF/UA-1)`;
+      opt.textContent = `[DOMAIN EXAMPLE] ${extractedDomain} / ${extractedFile} (EAA & PDF/UA-1)`;
       selectEl.value = 'DOMAIN-SCAN';
     }
 
@@ -816,7 +837,8 @@
     STATE.remediatedPackets[pkt.id] = true;
     saveState();
     renderAll();
-    showToast(`Remediated ${pkt.code}: 100% ISO 14289-1 (PDF/UA-1) & WCAG 2.2 AA Verified`);
+    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
+    showToast('Prepared a tag-tree draft for ' + pkt.fileName + '. Review it before use.');
     return true;
   }
 
@@ -844,6 +866,7 @@
     if (!pkt) return false;
 
     STATE.activePacketId = pkt.id;
+    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
     STATE.selectedRegionId = pkt.visualRegions[0] ? pkt.visualRegions[0].id : null;
     saveState();
     renderAll();
@@ -926,11 +949,11 @@
 
     const statusBadge = document.getElementById('docStatusBadge');
     if (isRem) {
-      statusBadge.textContent = pkt.remediatedStatus || '100% ISO 14289-1 (PDF/UA-1) & WCAG 2.2 AA VERIFIED';
+      statusBadge.textContent = 'Tag-tree draft prepared';
       statusBadge.classList.remove('status-fail');
       statusBadge.classList.add('status-pass');
     } else {
-      statusBadge.textContent = pkt.riskLevel || 'UNREMEDIATED (NON-COMPLIANT — HIGH LITIGATION RISK)';
+      statusBadge.textContent = pkt.id === 'CUSTOM-UPLOAD' ? 'Local file inspected' : 'Sample document';
       statusBadge.classList.remove('status-pass');
       statusBadge.classList.add('status-fail');
     }
@@ -947,8 +970,8 @@
     document.getElementById('visualPageHeaderLabel').textContent =
       `PAGE 1 OF ${pkt.pages} // ${pkt.fileName} (${pkt.pdfVersion})`;
     document.getElementById('visualPageTagStateLabel').textContent = isRem
-      ? 'TAG STATE: REMEDIATED (/StructTreeRoot + pdfuaid:part=1)'
-      : 'TAG STATE: UNREMEDIATED (/MarkInfo /Marked false)';
+      ? 'Proposed tag-tree view'
+      : 'Original source view';
 
     const canvas = document.getElementById('visualPageCanvas');
     canvas.innerHTML = '';
@@ -959,16 +982,17 @@
 
     pkt.visualRegions.forEach((reg, idx) => {
       const isSelected = reg.id === STATE.selectedRegionId;
-      const box = document.createElement('div');
+      const box = document.createElement('button');
+      box.type = 'button';
       box.className = `ds-bbox-region ${isRem ? 'remediated' : ''} ${isSelected ? 'selected' : ''}`;
-      const stateTag = isRem
+      const stateTag = pkt.id === 'CUSTOM-UPLOAD' ? (pkt.checkpoints[idx].statusBefore + ': file signal') : isRem
         ? `PASS: <${reg.tagType}> ISO 14289-1 Tagged`
         : `FAIL: Untagged <${reg.tagType}>`;
 
       box.innerHTML = `
         <div class="ds-bbox-tag-bar">
           <span class="ds-bbox-tag-chip">${escapeHtml(stateTag)}</span>
-          <span class="ds-bbox-clause-ref">Page ${reg.page || 1} · Matterhorn ${escapeHtml(reg.checkpointId)} · ${escapeHtml(reg.label)}</span>
+          <span class="ds-bbox-clause-ref">${reg.page ? `Page ${reg.page}` : 'Document-wide'} · ${escapeHtml(reg.checkpointId)} · ${escapeHtml(reg.label)}</span>
         </div>
         <div class="ds-bbox-preview-content">${escapeHtml(reg.previewText)}</div>
       `;
@@ -985,7 +1009,7 @@
     // Selected Region Diff Card
     const activeReg = pkt.visualRegions.find(r => r.id === STATE.selectedRegionId) || pkt.visualRegions[0];
     if (activeReg) {
-      document.getElementById('inspectorRegionTitle').textContent = `${activeReg.label} (Page ${activeReg.page || 1})`;
+      document.getElementById('inspectorRegionTitle').textContent = `${activeReg.label} · ${activeReg.page ? `Page ${activeReg.page}` : 'Document-wide'}`;
       document.getElementById('inspectorClauseBadge').textContent = `Matterhorn ${activeReg.checkpointId}`;
       document.getElementById('inspectorBeforeTag').textContent = `${activeReg.beforeTag}\n// Issue: ${activeReg.issueSummary}`;
       document.getElementById('inspectorAfterTag').textContent = activeReg.afterTag;
@@ -1130,19 +1154,24 @@
     return 'METADATA_FORMS';
   }
 
+  function assessment(pkt, draft) {
+    const statuses = pkt.checkpoints.map(cp => draft ? cp.statusAfter : cp.statusBefore);
+    const total = statuses.length;
+    const passed = statuses.filter(status => status === 'PASS').length;
+    return { total, passed, failed: total - passed, percent: total ? Math.round(100 * passed / total) : 0 };
+  }
+
   function renderRightScorecard() {
     const pkt = getActivePacket();
     if (!pkt) return;
     const isRem = isActivePacketRemediated();
 
-    const totalCp = pkt.checkpoints.length;
-    const passedCp = isRem
-      ? totalCp
-      : pkt.checkpoints.filter(c => c.statusBefore === 'PASS').length;
-    const failedCp = totalCp - passedCp;
-    const scorePct = isRem ? (pkt.remediatedScore || 100) : (pkt.initialScore || 34);
-
-    document.getElementById('scorecardPacketHeading').textContent = `${pkt.code} — ${pkt.pages} Pages`;
+    const {total:totalCp, passed:passedCp, failed:failedCp, percent:scorePct} = assessment(pkt, isRem);
+    document.getElementById('scorecardPacketHeading').textContent = pkt.fileName;
+    const openChecks = pkt.checkpoints.filter(cp => (isRem ? cp.statusAfter : cp.statusBefore) !== 'PASS');
+    const first = openChecks.find(cp => pkt.visualRegions.some(reg => reg.checkpointId === cp.id)) || openChecks[0];
+    document.getElementById('dsAssessmentSummary').textContent =
+      pkt.fileName + ' · ' + passedCp + ' of ' + totalCp + ' checks passed. ' + (first ? 'First finding: ' + first.title : 'Review reading order, descriptions and table semantics manually.');
 
     const riskPill = document.getElementById('scorecardRiskPill');
     const bigNum = document.getElementById('scorecardPercentVal');
@@ -1154,19 +1183,16 @@
     bigNum.classList.toggle('score-pass', isRem);
 
     ratioEl.textContent = `${passedCp} / ${totalCp} Core Checkpoints Passed`;
-    subEl.textContent = isRem
-      ? '0 Matterhorn Failures · Ready for VPAT 2.5 & EU EAA Certification'
-      : `${failedCp} Critical Matterhorn Protocol Failures Detected`;
-
+    subEl.textContent = failedCp + ' open findings · Manual review required';
     barFill.style.width = `${scorePct}%`;
     barFill.classList.toggle('fill-pass', isRem);
 
     if (isRem) {
-      riskPill.textContent = 'ISO 14289-1 & EAA VERIFIED';
+      riskPill.textContent = 'Draft assessment';
       riskPill.classList.remove('risk-high');
       riskPill.classList.add('risk-verified');
     } else {
-      riskPill.textContent = 'HIGH LITIGATION RISK';
+      riskPill.textContent = 'Source assessment';
       riskPill.classList.remove('risk-verified');
       riskPill.classList.add('risk-high');
     }
@@ -1196,7 +1222,8 @@
       const isPass = curStatus === 'PASS';
       const evidenceText = isRem ? cp.evidenceAfter : cp.evidenceBefore;
 
-      const card = document.createElement('div');
+      const card = document.createElement('button');
+      card.type = 'button';
       card.className = `ds-cp-card ${isPass ? 'cp-pass' : ''}`;
       card.innerHTML = `
         <div class="ds-cp-top">
@@ -1214,12 +1241,14 @@
         const matchingReg = pkt.visualRegions.find(r => r.checkpointId === cp.id);
         if (matchingReg) {
           STATE.selectedRegionId = matchingReg.id;
+          STATE.activeLeftTab = 'visual';
         }
         if (cp.id === '15-002' || cp.id === '13-004') {
           // Optionally keep current tab or highlight in visual
         }
         saveState();
         renderLeftPane();
+        if (matchingReg) document.getElementById('selectedRegionInspector').scrollIntoView({block:'center'});
       });
 
       listEl.appendChild(card);
@@ -1243,7 +1272,7 @@
       return [
         `<?xml version="1.0" encoding="UTF-8"?>`,
         `<!-- DocuShield™ ISO 14289-1 (PDF/UA-1) & EU EAA 2019/882 XMP & StructTreeRoot Bundle -->`,
-        `<DocuShieldAuditPacket id="${escapeHtml(pkt.id)}" status="${isRem ? 'VERIFIED_PDFUA_1' : 'UNREMEDIATED'}">`,
+        `<DocuShieldAuditPacket id="${escapeHtml(pkt.id)}" fileName="${escapeHtml(pkt.fileName)}" manualReviewRequired="true" checksPassed="${assessment(pkt,isRem).passed}" checksTotal="${pkt.checkpoints.length}" status="${isRem ? 'TAG_TREE_DRAFT' : 'SOURCE_ASSESSMENT'}">`,
         `  <x:xmpmeta xmlns:x="adobe:ns:meta/">`,
         `    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">`,
         `      <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">`,
@@ -1268,9 +1297,11 @@
       fileName: pkt.fileName,
       pages: pkt.pages,
       pdfVersion: pkt.pdfVersion,
-      remediationStatus: isRem ? '100% VERIFIED' : 'UNREMEDIATED',
-      complianceScorePercent: isRem ? pkt.remediatedScore : pkt.initialScore,
-      catalogMetadata: isRem ? pkt.metadata.after : pkt.metadata.before,
+      remediationStatus: isRem ? 'TAG_TREE_DRAFT' : 'SOURCE_ASSESSMENT',
+      assessment: assessment(pkt, isRem),
+      manualReviewRequired: ['Reading order', 'Alternative descriptions', 'Table semantics'],
+      complianceScorePercent: assessment(pkt, isRem).percent,
+      catalogMetadata: isRem && pkt.id !== 'CUSTOM-UPLOAD' ? pkt.metadata.after : pkt.metadata.before,
       matterhornCheckpoints: pkt.checkpoints.map(cp => ({
         id: cp.id,
         clause: cp.clause,
@@ -1301,39 +1332,14 @@
     if (!backdrop || !body) return;
 
     const issueDate = new Date().toISOString().slice(0, 10);
-    const certId = `CERT-CF-PDFUA-${pkt.code}-${isRem ? 'PASS100' : 'DIAG'}`;
-    const shaHash = `sha256:9f84c2e1b0a74d35e819a42f01c8b37d6e541190c82b47f1a3d9e024c6b87a12`;
-
+    const review = assessment(pkt, isRem);
     body.innerHTML = `
-      <div style="border:2px solid #141413;padding:20px;background:#FFFFFF;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid #141413;padding-bottom:12px;margin-bottom:14px;">
-          <div>
-            <div style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:#C8431F;">
-              CALIBER FOUNDRY // DOCUMENT ACCESSIBILITY CONFORMANCE REPORT (VPAT 2.5 INT &amp; EU EAA)
-            </div>
-            <h3 style="font-family:var(--font-display);font-size:26px;font-weight:400;margin-top:4px;">
-              ISO 14289-1 (PDF/UA-1) &amp; WCAG 2.2 Level AA Certificate
-            </h3>
-          </div>
-          <div style="text-align:right;font-family:var(--font-mono);font-size:11px;">
-            <strong>${escapeHtml(certId)}</strong><br/>
-            <span>Date: ${escapeHtml(issueDate)}</span>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#F6F4EF;border:1px solid #C9C4B8;padding:12px;margin-bottom:14px;font-family:var(--font-mono);font-size:11px;">
-          <div>
-            <strong>Audited Document:</strong> ${escapeHtml(pkt.title)}<br/>
-            <strong>Filename:</strong> ${escapeHtml(pkt.fileName)} (${pkt.pages} pp · ${escapeHtml(pkt.pdfVersion)})<br/>
-            <strong>Regulatory Scope:</strong> ${escapeHtml(pkt.regulation)}
-          </div>
-          <div>
-            <strong>Conformance Determination:</strong> <span style="color:${isRem ? '#1A5638' : '#C8431F'};font-weight:700;">${isRem ? 'SUPPORTS (100% ISO 14289-1 & WCAG 2.2 AA)' : `DOES NOT SUPPORT (${pkt.initialScore}% Unremediated)`}</span><br/>
-            <strong>XMP Stream:</strong> <code>pdfuaid:part=1</code> · <code>/MarkInfo /Marked ${isRem ? 'true' : 'false'}</code><br/>
-            <strong>Audit Digest:</strong> <code>${shaHash.slice(0, 38)}...</code>
-          </div>
-        </div>
-
+      <div class="ds-assessment-report">
+        <h3>${escapeHtml(pkt.fileName)}</h3>
+        <p>${escapeHtml(pkt.title)} · ${escapeHtml(issueDate)}</p>
+        <h4>${isRem ? 'Tag-tree draft assessment' : 'Source assessment'}</h4>
+        <p>${review.passed} / ${review.total} checks passed (${review.percent}%). ${review.failed} open findings.</p>
+        <p>Manual review required: reading order, the meaning of image descriptions and table relationships. This report covers the checks listed below.</p>
         <table class="ds-ledger-table" style="margin-bottom:14px;">
           <thead>
             <tr>
@@ -1359,13 +1365,15 @@
         </table>
 
         <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #141413;padding-top:10px;font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">
-          <span>Verified by: Caliber Foundry Document Compliance Engine (engineering@caliberfoundry.com)</span>
+          <span>Prepared by Caliber Foundry · document inspection</span>
           <span>Standard: ISO 14289-1:2014 · EN 301 549 V3.2.1 · US Section 508</span>
         </div>
       </div>
     `;
 
     backdrop.classList.remove('hidden');
+    document.getElementById('btnCloseCertificateModal').focus();
+    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'export_ready'}}));
   }
 
   /* ==========================================================================
@@ -1632,6 +1640,9 @@
       reader.onload = (e) => {
         const buf = new Uint8Array(e.target.result);
         inspectCustomFileBuffer(fileObj.name, buf, true);
+      };
+      reader.onerror = () => {
+        document.getElementById('dsAssessmentSummary').textContent = 'The file could not be read. Choose it again to retry.';
       };
       reader.readAsArrayBuffer(fileObj);
     };
@@ -1923,6 +1934,25 @@
       STATE.selectedRegionId = pkt.visualRegions[0].id;
     }
     initEventListeners();
+    function openStep(step) {
+      if (step === 1) {
+        STATE.activeLeftTab = 'visual';
+        const pkt = getActivePacket();
+        const phase = isActivePacketRemediated() ? 'statusAfter' : 'statusBefore';
+        const region = pkt.visualRegions.find(reg => pkt.checkpoints.some(cp => cp.id === reg.checkpointId && cp[phase] !== 'PASS')) || pkt.visualRegions[0];
+        STATE.selectedRegionId = region?.id || null;
+        renderAll();
+        const target = document.getElementById('selectedRegionInspector');
+        target.focus();
+        target.scrollIntoView({block:'center'});
+      } else if (step === 2) {
+        runAutoRemediation();
+        document.getElementById('dsAssessmentSummary').focus();
+      } else if (step === 3) openCertificateModal();
+    }
+    window.addEventListener('cf:open-step', event => openStep(Number(event.detail?.step)));
+    document.getElementById('dsReviewResults').addEventListener('click', () => openStep(1));
+    document.getElementById('dsOpenReport').addEventListener('click', () => openStep(3));
     renderAll();
     checkDeepLinkUrlParams();
   }

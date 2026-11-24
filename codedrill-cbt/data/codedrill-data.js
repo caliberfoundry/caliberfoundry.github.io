@@ -135,7 +135,7 @@
                 "19-cfr-111-53",
                 "31-cfr-10-21"
               ],
-              "text": "§ 111.32 False information.\n(a) Prohibition against filing false documents. A broker must not file or procure or assist in the filing of any claim, or of any document, affidavit, or other paper, known by such broker to be false. In addition, a broker must not knowingly give, or solicit or procure the giving of, any false or misleading information or testimony in any matter pending before the Department of Homeland Security or to any official representative of the Department of Homeland Security.\n\n(b) Duty upon discovering client noncompliance, error, or omission. A broker must not knowingly suggest to a client or prospective client any illegal plan for evading payment of any duty, tax, or other debt or obligation owing to the U.S. Government. If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.\n\n(c) Refusal to file and separation from ongoing noncompliance. If a client refuses to correct a known error or omission prior to filing, or attempts to induce the broker to continue a transaction that the broker knows to be false, fraudulent, or noncompliant with U.S. law, the broker must refuse to file the entry or document, must not participate in the continuation of the noncompliant conduct, and must document the termination or refusal in the broker's records."
+              "text": "Study summary of 19 CFR § 111.32. Section 111.32 bars knowingly filing or helping file false documents. When the broker ends representation because the client intentionally tried to use the broker to defraud the U.S. government or commit a crime against it, the broker must document and report that separation to CBP. Section 111.39(c) covers prompt advice, corrective action and recordkeeping. Source excerpt from § 111.32: “known by such broker to be false”."
             },
             {
               "id": "19-cfr-111-36",
@@ -1107,7 +1107,7 @@
         },
         {
           "letter": "C",
-          "text": "Promptly advise the client in writing of the noncompliance/omission and the required corrective action (declaring the full $75,000 transaction value), retain a copy of the written communication in his records, and refuse to file the false entry or participate in the transaction when the client refuses to correct it."
+          "text": "Refuse to file the known false entry. Advise the client promptly about the omission and corrective action, and keep a record of that advice."
         },
         {
           "letter": "D",
@@ -1120,22 +1120,22 @@
       ],
       "correctOption": "C",
       "targetSectionId": "19-cfr-111-32",
-      "targetCitation": "19 CFR § 111.32(a)–(c)",
-      "goldenQuote": "If a broker knows that a client has not complied with the law or has made an error in, or omission from, any document, affidavit, or other paper which the law requires the client to execute, the broker must promptly advise the client in writing of that noncompliance, error, or omission, must instruct the client on the proper corrective action required under the law, and must retain a copy of the written communication as a record under § 111.23.",
+      "targetCitation": "19 CFR § 111.32",
+      "goldenQuote": "known by such broker to be false",
       "shortestPathHint": "19 CFR -> Part 111 -> § 111.32 (False information)",
       "socraticHints": [
         "Hint 1 (Concept): A licensed customs broker is strictly prohibited from filing any document known to be false and has an affirmative regulatory duty when discovering client noncompliance or omission.",
-        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.32 ('False information') and examine paragraphs (a), (b), and (c).",
-        "Hint 3 (Trap Check): Notice that under 19 CFR § 111.32(b) and (c), the broker's advice to the client regarding noncompliance and corrective action MUST be in writing and retained as a record under § 111.23, and the broker must refuse to file when the client refuses to correct a known false declaration."
+        "Locate § 111.32 on false information. For advice about a client error, consult § 111.39(c).",
+        "Separate the decision whether to file from the corrective advice you must give the client."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 111.32(a), a broker must never file or assist in filing any claim or document known by the broker to be false. Under § 111.32(b), when a broker knows that a client has not complied with the law or has made an error in or omission from any required document, the broker must promptly advise the client in writing of the noncompliance, error, or omission, instruct the client on the proper corrective action, and retain a copy of that written communication for 5 years under § 111.23. Furthermore, under § 111.32(c), if the client refuses to correct the known false valuation and attempts to induce the broker to file the fraudulent $45,000 invoice, the broker must refuse to file the entry, separate from the noncompliant conduct, and document the refusal/termination.",
+        "correctReasoning": "Section 111.32 prohibits filing or helping file a document the broker knows is false. Section 111.39(c) requires prompt advice on the error and corrective action and a record of that communication. If representation later ends because the client tried to use the broker to defraud the U.S. government, § 111.32 also requires reporting that separation.",
         "distractors": {
-          "A": "Filing a document known by the broker to be false violates 19 CFR § 111.32(a) and subjects the broker to license revocation and a $30,000 monetary penalty under § 111.53 and § 111.91.",
-          "B": "Knowingly filing a false entry with the intent to amend it later still violates the absolute prohibition in 19 CFR § 111.32(a) against filing a known false document.",
-          "C": "CORRECT: Follows the exact mandatory steps of 19 CFR § 111.32(a), (b), and (c).",
+          "A": "Filing a known false document violates § 111.32.",
+          "B": "An intention to amend later does not permit a knowingly false filing.",
+          "C": "The broker refuses the false filing and records the corrective advice.",
           "D": "A customs broker is a private licensee, not a federal law enforcement officer, and has no authority to confiscate cargo, make arrests, or assess CBP penalties.",
-          "E": "Oral-only advice and continued participation in double-invoicing directly violate 19 CFR § 111.32(a)–(c)."
+          "E": "Continuing to file the false entry violates § 111.32. Section 111.39(c) also requires keeping a record of corrective advice."
         }
       }
     },

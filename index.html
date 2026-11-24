@@ -522,10 +522,26 @@
     }
 
     @media (max-width: 720px) {
-      .nav-links a.nav-item { display: none; }
+      .header-inner { display:block; padding:10px 18px; }
+      .nav-links { gap:16px; flex-wrap:wrap; margin-top:4px; }
+      .nav-links a.nav-item { display:inline-flex; align-items:center; min-height:32px; }
+      .nav-links a[href="#process"], .nav-links a[href="#capabilities"], .nav-links .btn { display:none; }
+      .work-card { padding:18px; }
+      .hero-actions .btn { justify-content:center; }
       .hero { padding: 56px 0; }
       .cta-banner { padding: 36px 24px; }
     }
+      .product-filters { display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 20px; }
+    .product-filters a { color:var(--cf-ink-primary);background:white;border:1px solid var(--cf-rule-mid);padding:7px 12px;border-radius:4px;font:600 14px var(--font-sans);text-decoration:none; }
+    .product-filters a[aria-current="true"] { background:var(--cf-ink-primary);color:white; }
+    .work-card[hidden] { display:none; }
+    .product-name { font:600 14px var(--font-sans);color:var(--cf-ink-secondary);margin-bottom:6px; }
+    .work-card { padding:22px;min-width:0; }
+    .work-footer { gap:12px;margin-top:14px; }
+    .experimental-tool { margin-top:24px;font-size:15px; }
+    .experimental-tool a { color:var(--cf-accent-primary); }
+    #work, .product-filters a { scroll-margin-top:95px; }
+    @media(max-width:720px){ .container{padding-inline:18px}.work-grid{grid-template-columns:minmax(0,1fr)}.work-title{font-size:25px}.section{padding:30px 0}.hero{padding:34px 0}.product-filters a{font-size:13px}.work-outcome{font-size:16px}.work-card{padding:16px}.work-footer{padding-top:10px} }
   </style>
 </head>
 <body>
@@ -540,12 +556,12 @@
 
       <nav class="nav-links">
         <a href="#capabilities" class="nav-item">Capabilities</a>
-        <a href="#work" class="nav-item">Live Systems</a>
+        <a href="#work" class="nav-item">Products</a>
         <a href="./pricing.html" class="nav-item">Pricing</a>
         <a href="./insights/" class="nav-item">Insights</a>
         <a href="#process" class="nav-item">How We Work</a>
-        <a href="mailto:engineering@caliberfoundry.com?subject=Project%20Brief%20for%20Caliber%20Foundry" class="btn btn-primary">
-          <span>Start a Project</span>
+        <a data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Project%20Brief%20for%20Caliber%20Foundry" class="btn btn-primary">
+          <span>Email a project brief</span>
           <span>&rarr;</span>
         </a>
       </nav>
@@ -556,23 +572,68 @@
 
     <!-- Concise, High-Impact Hero -->
     <section class="hero">
-      <span class="hero-eyebrow">Software, Data &amp; Product Engineering Studio</span>
-      <h1 class="hero-title">
-        Production systems shipped in days, <em>not quarters.</em>
-      </h1>
-      <p class="hero-subtitle">
-        Instead of slide decks or endless meetings, we build a working prototype of your product or data pipeline first—and deliver everything asynchronously.
-      </p>
+      <span class="hero-eyebrow">Independent software engineering studio</span>
+      <h1 class="hero-title">Software for documents, data and learning.</h1>
+      <p class="hero-subtitle">Try a working example in your browser, or email us a brief for a custom system.</p>
       <div class="hero-actions">
-        <a href="mailto:engineering@caliberfoundry.com?subject=Request%20a%20Working%20Prototype" class="btn btn-primary">
-          <span>Request a Free Working Prototype</span>
-          <span>&rarr;</span>
-        </a>
-        <a href="#work" class="btn">
-          <span>Test Our Live Systems</span>
-          <span>&darr;</span>
-        </a>
+        <a href="#work" class="btn btn-primary">Explore products &darr;</a>
+        <a data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Project%20Brief" class="btn">Email a project brief &nearr;</a>
       </div>
+    </section>
+
+    <section id="work" class="section" aria-labelledby="products-heading">
+      <h2 class="section-title" id="products-heading">Choose a product</h2>
+      <nav class="product-filters" aria-label="Filter products by task">
+        <a href="#work" aria-current="true">All products</a>
+        <a id="documents" href="#documents">Documents &amp; compliance</a>
+        <a id="learning" href="#learning">Learning &amp; assessment</a>
+        <a id="data" href="#data">Data &amp; content</a>
+      </nav>
+      <div class="work-grid">
+        <article class="work-card" data-groups="documents">
+          <div><p class="product-name">DocuShield</p><h3 class="work-title">Check PDF accessibility</h3>
+            <p class="work-outcome">Inspect a sample PDF, find a structural issue and review the audit report.</p></div>
+          <div class="work-footer"><a href="./docushield/" class="btn btn-primary">Inspect a PDF &rarr;</a>
+            <a href="./work/docushield.html" class="link-subtle" aria-label="About DocuShield">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="documents">
+          <div><p class="product-name">DealShield</p><h3 class="work-title">Answer a security questionnaire</h3>
+            <p class="work-outcome">Review a customer’s question alongside the policy that supports your answer.</p></div>
+          <div class="work-footer"><a href="./dealshield/" class="btn btn-primary">Try a questionnaire &rarr;</a>
+            <a href="./work/dealshield.html" class="link-subtle" aria-label="About DealShield">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="documents">
+          <div><p class="product-name">OmniRAG</p><h3 class="work-title">Find evidence in documents</h3>
+            <p class="work-outcome">Ask a question about the sample documents and open the passage behind the answer.</p></div>
+          <div class="work-footer"><a href="./omnirag/" class="btn btn-primary">Find a source &rarr;</a>
+            <a href="./work/omnirag.html" class="link-subtle" aria-label="About OmniRAG">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="learning">
+          <div><p class="product-name">CodeDrill</p><h3 class="work-title">Practise an open-book exam</h3>
+            <p class="work-outcome">Answer a licensing question and attach the regulation that supports your choice.</p></div>
+          <div class="work-footer"><a href="./codedrill-cbt/" class="btn btn-primary">Try an exam question &rarr;</a>
+            <a href="./work/codedrill.html" class="link-subtle" aria-label="About CodeDrill">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="learning">
+          <div><p class="product-name">EdTech Studio</p><h3 class="work-title">Build a lesson for an LMS</h3>
+            <p class="work-outcome">Choose a lesson, try its assessment and download a SCORM course package.</p></div>
+          <div class="work-footer"><a href="./edtech-studio/" class="btn btn-primary">Try a lesson &rarr;</a>
+            <a href="./work/edtech-studio.html" class="link-subtle" aria-label="About EdTech Studio">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="data learning">
+          <div><p class="product-name">ContentForge</p><h3 class="work-title">Prepare content from a source</h3>
+            <p class="work-outcome">Review an evaluation dossier for a source document or explore a courseware workflow.</p></div>
+          <div class="work-footer"><a href="./content-studio/" class="btn btn-primary">Try a source document &rarr;</a>
+            <a href="./work/content-studio.html" class="link-subtle" aria-label="About ContentForge">About the product</a></div>
+        </article>
+        <article class="work-card" data-groups="data">
+          <div><p class="product-name">StealthFlow</p><h3 class="work-title">Clean and export sample records</h3>
+            <p class="work-outcome">Compare raw and cleaned values, filter the sample and download a CSV.</p></div>
+          <div class="work-footer"><a href="./stealthflow/" class="btn btn-primary">Explore sample data &rarr;</a>
+            <a href="./work/stealthflow.html" class="link-subtle" aria-label="About StealthFlow">About the product</a></div>
+        </article>
+      </div>
+      <p class="experimental-tool"><strong>Engineering simulation</strong> · <a href="./oobe-agent/">Explore OOBE Sentinel</a></p>
     </section>
 
     <!-- What We Build (3 Simple Business Pillars) -->
@@ -606,165 +667,6 @@
             Interactive training simulators, licensing exam environments, and automated course builders that export directly into corporate LMS platforms.
           </p>
         </div>
-      </div>
-    </section>
-
-    <!-- Live Interactive Work & Products (Summary + Detail Subpages) -->
-    <section id="work" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Live Systems &amp; Products</h2>
-        <span class="section-index">02 // Try Directly in Your Browser</span>
-      </div>
-
-      <div class="work-grid">
-
-        <!-- Card 1: StealthFlow -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>01 // Data Collection &amp; Automation</span>
-              <span class="work-tag">Live Interactive Demo</span>
-            </div>
-            <h3 class="work-title">StealthFlow&trade; Data Hub</h3>
-            <p class="work-outcome">
-              Collects, cleans, and deduplicates live business and e-commerce data from 12 protected web sources and delivers ready-to-use records straight to your CRM or database.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./stealthflow/" class="btn btn-dark">
-              <span>Launch Live App</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/stealthflow.html" class="link-subtle">Case Study &amp; Technical Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 2: OmniRAG -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>02 // Document Intelligence</span>
-              <span class="work-tag">Live Interactive Demo</span>
-            </div>
-            <h3 class="work-title">OmniRAG&trade; Document Verifier</h3>
-            <p class="work-outcome">
-              Answers complex questions across hundreds of contracts, spreadsheets, and technical PDFs—highlighting the exact page and table row behind every number.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./omnirag/" class="btn btn-dark">
-              <span>Launch Live App</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/omnirag.html" class="link-subtle">Case Study &amp; Technical Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 3: EdTech & Assessment Studio -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>03 // EdTech &amp; Compliance</span>
-              <span class="work-tag">Live Interactive Demo</span>
-            </div>
-            <h3 class="work-title">Assessment &amp; SCORM Studio</h3>
-            <p class="work-outcome">
-              Interactive clinical and educational assessment platform with built-in student privacy protection and one-click export to standard corporate LMS packages.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./edtech-studio/" class="btn btn-dark">
-              <span>Launch Live App</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/edtech-studio.html" class="link-subtle">Case Study &amp; Technical Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 4: CodeDrill CBT -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>04 // Commercial Product</span>
-              <span class="work-tag" style="color: var(--cf-accent-primary);">Flagship Platform</span>
-            </div>
-            <h3 class="work-title">CodeDrill&trade; Exam Simulator</h3>
-            <p class="work-outcome">
-              A 1:1 open-book testing simulator for U.S. Customs Broker and federal licensing candidates, designed to train rapid regulation lookup under real exam conditions.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./codedrill-cbt/" class="btn btn-primary">
-              <span>Launch Simulator</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/codedrill.html" class="link-subtle">Product Overview &amp; Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 5: DocuShield PDF/UA & EAA Studio -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>05 // Commercial Product</span>
-              <span class="work-tag" style="color: var(--cf-accent-primary);">Accessibility &amp; EdTech</span>
-            </div>
-            <h3 class="work-title">DocuShield&trade; PDF/UA Studio</h3>
-            <p class="work-outcome">
-              Automated ISO 14289-1 (PDF/UA) and WCAG 2.2 AA structural tag tree remediation for university courseware, technical manuals, and regulated B2B document archives.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./docushield/" class="btn btn-primary">
-              <span>Launch Studio</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/docushield.html" class="link-subtle">Matterhorn Protocol &amp; Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 6: ContentForge Multi-Format Content & Eval Studio -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>06 // Commercial Product</span>
-              <span class="work-tag" style="color: var(--cf-accent-primary);">Content &amp; Evaluation</span>
-            </div>
-            <h3 class="work-title">ContentForge&trade; Studio</h3>
-            <p class="work-outcome">
-              Citation-locked technical content generation, 0.0% hallucination evaluation harness, n8n/Make.com webhook orchestration, and EdTech SCORM 1.2 quiz compiler.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./content-studio/" class="btn btn-primary">
-              <span>Launch Studio</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/content-studio.html" class="link-subtle">5-Stage DAG &amp; Eval Specs &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Card 7: DealShield DDQ & VPAT 2.5 Auto-Responder -->
-        <article class="work-card">
-          <div>
-            <div class="work-meta">
-              <span>07 // Commercial Product</span>
-              <span class="work-tag" style="color: var(--cf-accent-primary);">Enterprise Procurement</span>
-            </div>
-            <h3 class="work-title">DealShield&trade; DDQ &amp; VPAT 2.5</h3>
-            <p class="work-outcome">
-              Zero-library security questionnaire (CSA CAIQ v4, EDUCAUSE HECVAT v3, SIG-Lite) and ITI VPAT&reg; 2.5 (Section 508 + EU EAA) auto-responder for B2B SaaS deals.
-            </p>
-          </div>
-          <div class="work-footer">
-            <a href="./dealshield/" class="btn btn-primary">
-              <span>Launch Studio</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="./work/dealshield.html" class="link-subtle">Procurement Frameworks &amp; Specs &rarr;</a>
-          </div>
-        </article>
-
       </div>
     </section>
 
@@ -840,5 +742,24 @@
   </footer>
 
   <script src="./assets/js/cf-telemetry.js?v=20261123k" defer></script>
+  <script>
+    (() => {
+      const filters = document.querySelector('.product-filters');
+      const groups = ['documents', 'learning', 'data'];
+      function updateProducts() {
+        const key = location.hash.slice(1);
+        const group = groups.includes(key) ? key : 'work';
+        filters.querySelectorAll('a').forEach(link => {
+          if (link.hash === '#' + group) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        });
+        document.querySelectorAll('[data-groups]').forEach(card => {
+          card.hidden = group !== 'work' && !card.dataset.groups.split(' ').includes(group);
+        });
+      }
+      updateProducts();
+      window.addEventListener('hashchange', updateProducts);
+    })();
+  </script>
 </body>
 </html>

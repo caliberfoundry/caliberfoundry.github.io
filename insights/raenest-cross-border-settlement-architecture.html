@@ -445,7 +445,9 @@
       max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     }
     .site-footer a { color: var(--cf-ink-primary); text-decoration: none; }
-  </style>
+      .estimate-summary {padding:10px 0;border-top:1px solid var(--cf-rule-mid);font:600 15px/1.5 var(--font-sans);}
+    .estimate-summary details {margin-top:6px;font-size:13px;font-weight:400;}.estimate-summary summary{cursor:pointer;color:#3730a3;}.estimate-summary p{margin:5px 0;}
+    </style>
 </head>
 <body>
   <header class="site-header">
@@ -538,6 +540,9 @@
                 <option value="0.045|45|0.0060|1.0">GBP / EUR &rarr; Emerging Market Contractor Hub (Legacy 4.5% FX + $45 wire)</option>
                 <option value="0.042|50|0.0045|0.5">USD Corporate Treasury &rarr; On-Chain USDC / Hybrid Rail (Legacy 4.2% + $50)</option>
               </select>
+            </div>
+            <div class="estimate-summary"><output id="annualEstimate" aria-live="polite"></output>
+              <details><summary>Calculation assumptions</summary><p>Twelve months at the volume and number of payouts shown. Each selected corridor supplies the FX percentages and per-transfer fees.</p></details>
             </div>
           </div>
           <div class="calc-outputs">
@@ -853,6 +858,7 @@
         outRaenest.textContent = fmtUSD(raenestCost);
         outSaveMo.textContent  = fmtUSD(saveMo) + ' / mo';
         outSaveYr.textContent  = fmtUSD(saveYr);
+        document.getElementById("annualEstimate").textContent = "Estimated annual savings · " + outSaveYr.textContent;
         outHours.textContent   = hoursSaved.toLocaleString('en-US') + ' settlement-hrs / yr';
       }
 

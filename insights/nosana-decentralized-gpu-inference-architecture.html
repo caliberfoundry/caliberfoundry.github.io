@@ -276,7 +276,9 @@
       max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     }
     .site-footer a { color: var(--cf-ink-primary); text-decoration: none; }
-  </style>
+      .estimate-summary {padding:10px 0;border-top:1px solid var(--cf-rule-mid);font:600 15px/1.5 var(--font-sans);}
+    .estimate-summary details {margin-top:6px;font-size:13px;font-weight:400;}.estimate-summary summary{cursor:pointer;color:#3730a3;}.estimate-summary p{margin:5px 0;}
+    </style>
 </head>
 <body>
   <header class="site-header">
@@ -368,6 +370,9 @@
             <div class="field-group">
               <label for="ns-hours">Average Active Inference Hours Per Day (1–24h)</label>
               <input type="number" id="ns-hours" class="field-input" value="18" min="1" max="24" step="1" />
+            </div>
+            <div class="estimate-summary"><output id="annualEstimate" aria-live="polite"></output>
+              <details><summary>Calculation assumptions</summary><p>The selected GPU sets both hourly prices. The model uses 30 days per month and 12 months per year at the entered daily utilization.</p></details>
             </div>
           </div>
           <div class="calc-outputs">
@@ -626,6 +631,7 @@
         outTok.textContent    = '$' + nosCostPerM.toFixed(3) + ' / 1M tok (vs. $' + cldCostPerM.toFixed(3) + ' Cloud)';
         outPct.textContent    = pct + '% Saved (' + fmtUSD(saveMonth) + ' / mo)';
         outYear.textContent   = fmtUSD(saveYear);
+        document.getElementById("annualEstimate").textContent = "Estimated annual savings · " + outYear.textContent;
       }
 
       gpuEl.addEventListener('change', recalc);

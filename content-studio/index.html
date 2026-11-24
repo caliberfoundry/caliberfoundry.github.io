@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261123h" />
+  <link rel="stylesheet" href="styles.css?v=20261124-ux" />
 </head>
 <body>
   <!-- =====================================================================
@@ -57,40 +57,12 @@
        ===================================================================== -->
   <section class="cf-action-toolbar dsh-journey-bar" aria-label="3-Step Guided User Journey">
     <div class="dsh-steps-track">
-      <div class="dsh-step-pill active" data-step-action="step1" title="Step 1: Choose an automation or evaluation scenario">
-        <span class="dsh-step-num">1</span>
-        <div>
-          <strong>Choose Scenario</strong>
-          <span class="dsh-step-sub" id="activePresetCodeBadge">PIPE-N8N-01</span>
-        </div>
-      </div>
-      <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" data-step-action="step2" title="Step 2: Inspect generated output and 0% hallucination check">
-        <span class="dsh-step-num">2</span>
-        <div>
-          <strong>Verify Output</strong>
-          <span class="dsh-step-sub">Span F1: <span id="metricPrecision">99.4%</span> · <span id="metricHallucination">0.0%</span> hallucination</span>
-        </div>
-      </div>
-      <span class="dsh-step-arrow" aria-hidden="true">→</span>
-      <div class="dsh-step-pill" data-step-action="step3" title="Step 3: Export n8n JSON payload or printable evaluation PDF">
-        <span class="dsh-step-num">3</span>
-        <div>
-          <strong>Export JSON / PDF</strong>
-          <span class="dsh-step-sub"><span id="metricLatency">1.38s</span> · <span id="metricCost">$0.014/run</span></span>
-        </div>
-      </div>
-      <span class="hidden" id="activePresetTitleBar">n8n / Make.com Multi-Format Content &amp; Webhook Automation</span>
+      <button type="button" class="dsh-step-pill active" data-step-action="step1"><span class="dsh-step-num">1</span>Choose scenario</button>
+      <button type="button" class="dsh-step-pill" data-step-action="step2"><span class="dsh-step-num">2</span>Review source excerpts</button>
+      <button type="button" class="dsh-step-pill" data-step-action="step3"><span class="dsh-step-num">3</span>Preview dossier</button>
     </div>
 
-    <div class="cf-toolbar-right">
-      <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier" title="Open printable Evaluation &amp; Content Dossier (PDF)">
-        Export PDF Report
-      </button>
-      <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">
-        Run Pipeline →
-      </button>
-    </div>
+
   </section>
 
   <!-- =====================================================================
@@ -137,7 +109,7 @@
         <details class="cf-drilldown-drawer" id="detailsSourceExcerpt">
           <summary class="cf-drawer-summary">
             <div>
-              <span class="cf-drawer-kicker">STEP 2 OF 3 · SOURCE INPUT</span>
+              <span class="cf-drawer-kicker">Source input</span>
               <strong class="cf-drawer-title">Edit Source Document &amp; Citation Anchors</strong>
             </div>
             <span class="cf-block-tag">Customize</span>
@@ -156,7 +128,7 @@
             />
             <div class="cf-field-group" style="margin-top:6px;">
               <label for="sourceTextInput" class="cf-field-label">
-                Source Text (<code>[Clause X.Y]</code>)
+                Source text (optional clause labels in brackets)
               </label>
               <textarea
                 id="sourceTextInput"
@@ -168,6 +140,11 @@
           </div>
         </details>
 
+        <div class="cf-source-actions">
+          <button type="button" class="cf-tool-btn cf-btn-primary-run" id="runPipelineBtn">Run on this source</button>
+          <button type="button" class="cf-tool-btn" id="btnOpenEvalDossier">Preview printable dossier</button>
+          <p id="sourceRunStatus" role="status" aria-live="polite"></p>
+        </div>
         <!-- 2. DRILL-DOWN DRAWER A: 5-STAGE PIPELINE TOPOLOGY (COLLAPSED BY DEFAULT FOR ZERO CLUTTER) -->
         <details class="cf-drilldown-drawer">
           <summary class="cf-drawer-summary">
@@ -189,9 +166,9 @@
           <summary class="cf-drawer-summary">
             <div>
               <span class="cf-drawer-kicker">TECHNICAL DRILL-DOWN 02</span>
-              <strong class="cf-drawer-title">n8n / Make.com Webhook Tester &amp; JSON Schema Contract</strong>
+              <strong class="cf-drawer-title">JSON payload preview &amp; example schema</strong>
             </div>
-            <span class="cf-block-tag" id="webhookHeaderPill">HMAC-SHA256 SIGNED</span>
+            <span class="cf-block-tag" id="webhookHeaderPill">LOCAL PREVIEW</span>
           </summary>
           <div class="cf-drawer-body">
             <div class="cf-field-group">
@@ -208,13 +185,13 @@
                   aria-label="Webhook Target Endpoint URL"
                 />
                 <button type="button" class="cf-btn-dispatch" id="btnFireWebhook">
-                  Dispatch POST →
+                  Preview JSON →
                 </button>
               </div>
             </div>
 
-            <div class="cf-webhook-status-box" id="webhookStatusBox">
-              Ready to dispatch structured payload. Click “Dispatch POST” to verify delivery and SHA-256 signature.
+            <div class="cf-webhook-status-box" id="webhookStatusBox" role="status">
+              Preview the locally generated payload for your selected scenario.
             </div>
 
             <div class="cf-field-group" style="margin-top: 6px;">
@@ -243,7 +220,7 @@
           1. Executive Summary &amp; Diagram
         </button>
         <button type="button" class="cf-out-tab" data-tab="eval" id="tabRightEval">
-          2. 0% Hallucination Audit
+          2. Source excerpts
         </button>
         <button type="button" class="cf-out-tab" data-tab="webhook" id="tabRightWebhook">
           3. n8n JSON &amp; Quiz
@@ -316,7 +293,7 @@
             <div class="cf-eval-header-top">
               <div>
                 <span class="cf-block-kicker">GROUND-TRUTH EXTRACTION EVALUATION HARNESS</span>
-                <h2 class="cf-eval-heading">Source Span vs. Extracted Claim Verification</h2>
+                <h2 class="cf-eval-heading">Source excerpts and reported claims</h2>
               </div>
               <div class="cf-eval-controls">
                 <select id="evalFilterSelect" class="cf-filter-select" aria-label="Filter Evaluation Cases">
@@ -370,7 +347,7 @@
               </div>
               <div class="cf-json-actions">
                 <button type="button" class="cf-btn-mini" id="btnCopyWebhookJson">Copy JSON</button>
-                <button type="button" class="cf-btn-mini cf-btn-mini-pine" id="btnDispatchFromTab">Send Webhook →</button>
+                <button type="button" class="cf-btn-mini cf-btn-mini-pine" id="btnDispatchFromTab">Preview JSON →</button>
               </div>
             </summary>
             <div class="cf-drawer-body">
@@ -476,7 +453,7 @@
       <div class="cf-modal-body">
         <div class="cf-paywall-banner hidden" id="paywallReasonBanner">
           <strong>Enterprise Preset or Custom Pipeline Gate Reached.</strong>
-          <span id="paywallReasonText">Activate a ContentForge™ Pro License or commission a turnkey n8n / Evaluation Harness sprint to unlock all 4 presets and unlimited webhook dispatches.</span>
+          <span id="paywallReasonText">Activate a ContentForge™ Pro License or commission a turnkey n8n / Evaluation Harness sprint to unlock all 4 presets and additional workflow examples.</span>
         </div>
 
         <div class="cf-plan-grid" id="paywallPlanGrid">
@@ -653,7 +630,7 @@
   <div class="cf-toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="presets-data.js"></script>
-  <script src="app.js?v=20261123b"></script>
+  <script src="app.js?v=20261124-ux"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

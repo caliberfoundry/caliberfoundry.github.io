@@ -567,26 +567,6 @@
   ];
 
   // Pre-Submission CISO Gap & Compensating Control Cards
-  const GAP_AUDIT_ITEMS = [
-    {
-      id: "GAP-CMEK-01",
-      title: "Customer-Managed Encryption Keys (CMEK / BYOK) in Multi-Tenant Cloud",
-      risk: "Enterprise financial buyers often ask for single-tenant AWS KMS ARN key delegation on standard SaaS tiers.",
-      remediation:
-        "APPROVED COMPENSATING CONTROL ADDENDUM: 'Tenant data is encrypted at rest using dedicated per-tenant AES-256-GCM data encryption keys (DEKs) wrapped by aFIPS 140-3 Level 3 Hardware Security Module (AWS KMS) rotated every 90 days. Dedicated customer-owned KMS ARN key delegation (CMEK) is available under the Enterprise Single-Tenant Vault tier.'"
-    },
-    {
-      id: "GAP-AIRGAP-02",
-      title: "On-Premise Air-Gapped Deployment vs. Regional VPC Isolation",
-      risk: "Government, healthcare, and university questionnaires include legacy checkboxes asking for on-premise binary installers.",
-      remediation:
-        "APPROVED COMPENSATING CONTROL ADDENDUM: 'The platform operates inside dedicated, regionally pinned VPC subnets (US-East / EU-Frankfurt) with zero cross-region data replication and strict PostgreSQL Row-Level Security (RLS). For offline or self-hosted LMS/Enterprise environments, standalone zero-dependency SCORM 1.2 / Docker container bundles are provided under Enterprise Schedule B.'"
-    }
-  ];
-
-  // =========================================================================
-  // APPLICATION RUNTIME STATE
-  // =========================================================================
   const state = {
     activePresetId: "caiq-v4",
     isProUnlocked: false,
@@ -623,7 +603,7 @@
   // =========================================================================
   // CORE RENDERING & AUTO-FILL ENGINE
   // =========================================================================
-  function loadPreset(presetId, bypassPaywallCheck) {
+  function loadPreset(presetId, bypassPaywallCheck, trackSelection = true) {
     const preset = PRESETS[presetId] || PRESETS["caiq-v4"];
     if (preset.isPro && !state.isProUnlocked && !bypassPaywallCheck) {
       openPaywallModal("PRO FRAMEWORK SELECTED · UNLOCK SIG-LITE 2026 & VPAT 2.5 INTERNATIONAL ($199)");
@@ -632,9 +612,11 @@
       return;
     }
 
+    if (trackSelection) window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
     state.activePresetId = preset.id;
     state.controls = preset.controls.map((c) => Object.assign({}, c));
-    state.selectedControlIndex = 0;
+    state.selectedControlIndex = Math.max(0, state.controls.findIndex(c => c.status !== 'COMPLIANT'));
+    state.sourceDirty = false;
     state.activeFilter = "all";
 
     const selectEl = document.getElementById("presetSelect");
@@ -730,20 +712,8 @@
     document.querySelectorAll(".dsh-preset-card[data-preset-card]").forEach((card) => {
       card.classList.toggle("active", card.getAttribute("data-preset-card") === state.activePresetId);
     });
-    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value || preset.sourceCorpus;
+    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value ?? preset.sourceCorpus;
     const sha = deterministicHash(corpusText + JSON.stringify(state.controls));
-
-    const codeBadge = document.getElementById("activePresetCodeBadge");
-    if (codeBadge) codeBadge.textContent = preset.code;
-
-    const metricPrecision = document.getElementById("metricPrecision");
-    if (metricPrecision) metricPrecision.textContent = state.controls.length + "/" + state.controls.length + " Verified";
-
-    const metricLatency = document.getElementById("metricLatency");
-    if (metricLatency) metricLatency.textContent = preset.confidence;
-
-    const metricCost = document.getElementById("metricCost");
-    if (metricCost) metricCost.textContent = preset.turnaround;
 
     const kickerEl = document.getElementById("monographKicker");
     const titleEl = document.getElementById("monographTitle");
@@ -857,6 +827,7 @@
     if (idEl) {
       idEl.textContent = "CONTROL " + ctrl.id + " · " + ctrl.domain.toUpperCase() + " · CONFIDENCE " + ctrl.confidence;
     }
+    document.getElementById('inspectorPolicyExcerpt').textContent = sourceClause(ctrl) || 'No matching clause in the current policy.';
     if (qEl) qEl.textContent = ctrl.question;
     if (anchorEl) anchorEl.textContent = ctrl.anchor;
     if (ansEl) {
@@ -889,33 +860,57 @@
     ).join("");
   }
 
+  function sourceClause(ctrl) {
+    const corpus = document.getElementById('sourceCorpusTextarea').value;
+    if (!ctrl.anchor || !corpus.includes(ctrl.anchor)) return '';
+    const start = corpus.indexOf(ctrl.anchor) + ctrl.anchor.length;
+    return corpus.slice(start).split(/\[[\w.-]+\]/)[0].trim();
+  }
+
+  function needsReview(ctrl) {
+    return ctrl.status !== 'COMPLIANT' || !sourceClause(ctrl);
+  }
+
+  function reviewSummary() {
+    const open = state.controls.filter(needsReview).length;
+    return (state.controls.length - open) + ' responses backed by a policy clause · ' + open + ' to review';
+  }
+
+  function reviewGaps() {
+    const idx = state.controls.findIndex(needsReview);
+    if (idx >= 0) state.selectedControlIndex = idx;
+    renderDdqMatrixTab();
+    document.getElementById('tabBtnGapAudit').click();
+    document.getElementById('gapAuditCardsContainer').focus();
+  }
+
   function renderGapAuditTab() {
-    const container = document.getElementById("gapAuditCardsContainer");
-    if (!container) return;
-    container.innerHTML = GAP_AUDIT_ITEMS.map(
-      (g, i) =>
-        '<div class="cf-quiz-card">' +
-        '<div class="cf-quiz-card-top">' +
-        '<span class="cf-quiz-num">COMPENSATING CONTROL 0' +
-        (i + 1) +
-        " · " +
-        escapeHtml(g.id) +
-        "</span>" +
-        '<button type="button" class="cf-btn-mini js-copy-addendum-btn" data-addendum="' +
-        escapeHtml(g.remediation) +
-        '">Copy Addendum Clause</button>' +
-        "</div>" +
-        '<h4 class="cf-quiz-q">' +
-        escapeHtml(g.title) +
-        "</h4>" +
-        '<p style="font-size:12px;color:var(--cf-ink-secondary);margin-bottom:8px;"><strong>Procurement Friction Risk:</strong> ' +
-        escapeHtml(g.risk) +
-        "</p>" +
-        '<div class="cf-quiz-rationale">' +
-        escapeHtml(g.remediation) +
-        "</div>" +
-        "</div>"
-    ).join("");
+    const container = document.getElementById('gapAuditCardsContainer');
+    const gaps = state.controls.filter(needsReview);
+    document.getElementById('gapCountBadge').textContent = gaps.length + ' to review';
+    document.getElementById('tabBtnGapAudit').textContent = 'Evidence gaps (' + gaps.length + ')';
+    container.replaceChildren();
+    if (!gaps.length) container.textContent = 'Every response has a matching clause and no outstanding gap.';
+    for (const ctrl of gaps) {
+      const card = document.createElement('article');
+      card.className = 'cf-quiz-card';
+      const heading = document.createElement('h4');
+      heading.textContent = ctrl.id + ' · ' + ctrl.question;
+      const evidence = document.createElement('p');
+      evidence.textContent = sourceClause(ctrl) || 'No matching clause in the current policy.';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'cf-btn-secondary';
+      button.textContent = 'Inspect this response';
+      button.onclick = () => {
+        state.selectedControlIndex = state.controls.indexOf(ctrl);
+        renderDdqMatrixTab();
+        document.getElementById('tabBtnDdqMatrix').click();
+        document.getElementById('selectedControlInspector').focus();
+      };
+      card.append(heading, evidence, button);
+      container.append(card);
+    }
   }
 
   function buildCsvContent() {
@@ -935,16 +930,16 @@
 
   function buildJsonManifest() {
     const preset = PRESETS[state.activePresetId] || PRESETS["caiq-v4"];
-    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value || preset.sourceCorpus;
+    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value ?? preset.sourceCorpus;
     const freeLimit = 6;
     return {
       schema: "https://caliberfoundry.com/schemas/dealshield-ddq-v1.json",
       framework: preset.code,
       title: preset.title,
-      generatedAt: "2026-11-23T12:00:00Z",
-      unanchoredClaimRate: 0.0,
+      generatedAt: new Date().toISOString(),
+      reviewSummary: reviewSummary(),
       proUnlocked: state.isProUnlocked,
-      corpusSha256: deterministicHash(corpusText),
+      corpusFingerprint: deterministicHash(corpusText),
       controls: state.controls.map((c, idx) => ({
         id: c.id,
         domain: c.domain,
@@ -957,7 +952,7 @@
       vpat25Summary: {
         edition: "ITI VPAT 2.5 International (WCAG 2.2 AA + Section 508 + EN 301 549)",
         criteriaEvaluated: VPAT_CRITERIA_ROWS.length,
-        conformanceStatus: "Supports"
+        conformanceStatus: "Reference example; manual review required"
       }
     };
   }
@@ -965,6 +960,17 @@
   function renderExportTab() {
     const csvBox = document.getElementById("exportCsvPreviewBox");
     const jsonBox = document.getElementById("exportJsonPreviewBox");
+    const status = document.getElementById('evidenceReviewSummary');
+    const statusText = state.sourceDirty ? 'Policy edited. Run on edited policy to refresh responses and exports.' : reviewSummary();
+    status.textContent = statusText;
+    document.getElementById('evidenceExportSummary').textContent = statusText;
+    document.getElementById('refreshEditedPolicy').disabled = !state.sourceDirty;
+    document.getElementById('runPipelineBtn').hidden = !state.sourceDirty;
+    for (const id of ['btnExportCsvFile','btnExportJsonFile','btnExportVpatPdf','btnDownloadCsvQuick','btnCopyAllAnswers','btnOpenEvalDossier']) {
+      const action = document.getElementById(id);
+      if (action) action.disabled = !!state.sourceDirty;
+    }
+    if (state.sourceDirty) {csvBox.textContent = statusText; jsonBox.textContent = statusText; return;}
     if (csvBox) csvBox.textContent = buildCsvContent();
     if (jsonBox) jsonBox.textContent = JSON.stringify(buildJsonManifest(), null, 2);
   }
@@ -989,18 +995,18 @@
     const clauses = corpusText
       .split(/(?=\[[A-Za-z0-9._-]+\])/)
       .map((s) => s.trim())
-      .filter(Boolean);
+      .filter(clause => /^\[[\w.-]+\]\s*\S/.test(clause));
 
     const qLower = questionText.toLowerCase();
-    let bestClause = clauses[0] || "[SOC2-CC6.1] Production controls enforced under SOC 2 Type II.";
-    let bestScore = -1;
+    let bestClause = "";
+    let bestScore = 0;
 
     clauses.forEach((cl) => {
       const words = cl
         .toLowerCase()
         .replace(/[^a-z0-9\s]/g, " ")
         .split(/\s+/)
-        .filter((w) => w.length > 3);
+        .filter((w) => w.length > 3 && !['your','with','does','have','data','control','controls','policy','under','every'].includes(w));
       let score = 0;
       words.forEach((w) => {
         if (qLower.includes(w)) score += 2;
@@ -1019,17 +1025,17 @@
     });
 
     const anchorMatch = bestClause.match(/\[[A-Za-z0-9._-]+\]/);
-    const anchor = anchorMatch ? anchorMatch[0] : "[SOC2-CC6.1]";
+    const anchor = anchorMatch ? anchorMatch[0] : "";
     const cleanClause = bestClause.replace(/\[[A-Za-z0-9._-]+\]\s*/, "").trim();
 
     return {
       id: "CUST-Q" + String(idx + 1).padStart(2, "0"),
       domain: "Custom DDQ",
       question: questionText,
-      answer: "Verified Compliant: " + cleanClause,
+      answer: anchor ? cleanClause : "No supporting clause found. Request policy evidence.",
       anchor: anchor,
-      status: "COMPLIANT",
-      confidence: "99.2%"
+      status: anchor ? "COMPLIANT" : "COMPENSATING",
+      confidence: anchor ? "Text match" : "Needs evidence"
     };
   }
 
@@ -1092,18 +1098,19 @@
   // PRINTABLE VPAT 2.5 & SECURITY ATTESTATION DOSSIER
   // =========================================================================
   function openPrintableDossier() {
+    if (state.sourceDirty) { document.getElementById('evidenceReviewSummary').focus(); return; }
     const modal = document.getElementById("modalEvalDossier");
     const area = document.getElementById("evalDossierPrintArea");
     if (!modal || !area) return;
 
     const preset = PRESETS[state.activePresetId] || PRESETS["caiq-v4"];
-    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value || preset.sourceCorpus;
+    const corpusText = (document.getElementById("sourceCorpusTextarea") || {}).value ?? preset.sourceCorpus;
     const sha = deterministicHash(corpusText);
     const orgName = (state.userSession && state.userSession.org) || "Caliber Foundry Client Organization";
 
     const ddqRows = state.controls
       .map(
-        (c) =>
+        (c, idx) =>
           "<tr>" +
           "<td><code>" +
           escapeHtml(c.id) +
@@ -1112,7 +1119,7 @@
           escapeHtml(c.question) +
           "</td>" +
           "<td>" +
-          escapeHtml(c.answer) +
+          escapeHtml(!state.isProUnlocked && idx >= 6 ? "Locked response" : c.answer) +
           "</td>" +
           "<td><code>" +
           escapeHtml(c.anchor) +
@@ -1146,7 +1153,7 @@
       '<div class="cf-print-dossier">' +
       '<div style="border-bottom:2px solid #141413;padding-bottom:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">' +
       "<div>" +
-      '<div style="font-family:var(--font-mono);font-size:11px;color:#C8431F;font-weight:700;">OFFICIAL VENDOR SECURITY &amp; ACCESSIBILITY CONFORMANCE DOSSIER</div>' +
+      '<div style="font-family:var(--font-mono);font-size:11px;color:#C8431F;font-weight:700;">Procurement evidence review</div>' +
       '<h3 style="font-family:var(--font-display);font-size:24px;margin:4px 0;">' +
       escapeHtml(preset.title) +
       "</h3>" +
@@ -1157,10 +1164,10 @@
       "</code></div>" +
       "</div>" +
       '<div style="font-family:var(--font-mono);font-size:11px;text-align:right;">' +
-      "<div>Attestation SHA-256: <code>" +
+      "<div>Policy fingerprint: <code>" +
       escapeHtml(sha) +
       "</code></div>" +
-      "<div>Unanchored Claim Rate: <strong>0.0% (PASS)</strong></div>" +
+      "<div>" + escapeHtml(reviewSummary()) + "</div>" +
       "<div>ACR Standard: <strong>ITI VPAT® 2.5 INT</strong></div>" +
       "</div>" +
       "</div>" +
@@ -1172,7 +1179,7 @@
       "<tbody>" +
       ddqRows +
       "</tbody></table>" +
-      '<h4 style="font-family:var(--font-mono);font-size:12px;text-transform:uppercase;margin:14px 0 8px;">Part II — ITI VPAT® 2.5 Accessibility Conformance Report (WCAG 2.2 AA / Section 508 / EU EN 301 549)</h4>' +
+      '<h4 style="font-family:var(--font-mono);font-size:12px;text-transform:uppercase;margin:14px 0 8px;">Part II — Example accessibility criteria for manual review (WCAG 2.2 AA / Section 508 / EU EN 301 549)</h4>' +
       '<table class="cf-eval-table">' +
       "<thead><tr><th>Criterion</th><th>Requirement</th><th>Conformance</th><th>Engineering Evidence</th></tr></thead>" +
       "<tbody>" +
@@ -1181,6 +1188,8 @@
       "</div>";
 
     modal.classList.remove("hidden");
+    document.getElementById("btnCloseEvalDossier").focus();
+    window.dispatchEvent(new CustomEvent("cf:workflow", {detail:{stage:"export_ready"}}));
   }
 
   // =========================================================================
@@ -1307,22 +1316,6 @@
       });
     });
 
-    document.querySelectorAll("[data-step-action]").forEach((pill) => {
-      pill.addEventListener("click", () => {
-        const act = pill.getAttribute("data-step-action");
-        document.querySelectorAll(".dsh-step-pill").forEach((p) => p.classList.toggle("active", p === pill));
-        if (act === "step1") {
-          const sel = document.getElementById("presetSelect");
-          if (sel) sel.focus();
-        } else if (act === "step2") {
-          const tbl = document.getElementById("ddqMatrixTable");
-          if (tbl) tbl.scrollIntoView({ behavior: "smooth" });
-        } else if (act === "step3") {
-          openPrintableDossier();
-        }
-      });
-    });
-
     const resetBtn = document.getElementById("btnResetStudio");
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
@@ -1342,6 +1335,7 @@
     const corpusTextarea = document.getElementById("sourceCorpusTextarea");
     if (corpusTextarea) {
       corpusTextarea.addEventListener("input", () => {
+        state.sourceDirty = true;
         renderLeftPaneMetrics();
         renderDdqMatrixTab();
         renderExportTab();
@@ -1355,12 +1349,28 @@
       });
     }
 
-    const runBtn = document.getElementById("runPipelineBtn");
-    if (runBtn) {
-      runBtn.addEventListener("click", () => {
-        renderAll();
-      });
+    function refreshAnswers() {
+      if (state.sourceDirty) {
+        state.controls = state.controls.map((ctrl, idx) => {
+          const matched = matchQuestionAgainstCorpus(ctrl.question, idx);
+          return {...matched, id:ctrl.id, domain:ctrl.domain, ...(ctrl.edited ? {answer:ctrl.answer, edited:true, status:'COMPENSATING'} : {})};
+        });
+      }
+      state.sourceDirty = false;
+      renderAll();
+      window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
     }
+    document.getElementById('runPipelineBtn').addEventListener('click', refreshAnswers);
+    document.getElementById('reviewMissingEvidence').addEventListener('click', reviewGaps);
+    document.getElementById('refreshEditedPolicy').addEventListener('click', refreshAnswers);
+    window.addEventListener('cf:open-step', event => {
+      if (event.detail?.step === 1) {
+        refreshAnswers();
+        document.getElementById('tabBtnDdqMatrix').click();
+        document.getElementById('selectedControlInspector').focus();
+      } else if (event.detail?.step === 2) reviewGaps();
+      else if (event.detail?.step === 3) openPrintableDossier();
+    });
 
     // Filter buttons
     ["filterBtnAll", "filterBtnCompliant", "filterBtnCompensating"].forEach((btnId) => {
@@ -1403,6 +1413,7 @@
         const ansEl = document.getElementById("inspectorAnswerTextarea");
         if (ansEl && !ansEl.disabled && state.controls[state.selectedControlIndex]) {
           state.controls[state.selectedControlIndex].answer = ansEl.value.trim();
+          state.controls[state.selectedControlIndex].edited = true;
           renderDdqMatrixTab();
           renderExportTab();
         }
@@ -1431,13 +1442,19 @@
           const customBox = document.getElementById("customQuestionsTextarea");
           if (customBox) customBox.value = content;
           const parsed = parseCustomQuestionnaireInput(content);
+          if (!parsed.length) {
+            const feedback = document.getElementById('customParseFeedback');
+            feedback.textContent = 'No questions found. Choose another file or paste a question.';
+            feedback.classList.remove('hidden');
+          }
           if (parsed.length > 0) {
             state.controls = parsed;
+          state.sourceDirty = false;
             state.selectedControlIndex = 0;
             renderAll();
             const fb = document.getElementById("customParseFeedback");
             if (fb) {
-              fb.textContent = "Imported & auto-answered " + parsed.length + " questions from " + file.name + " (0.0% unanchored).";
+              fb.textContent = "Imported & auto-answered " + parsed.length + " questions from " + file.name + ". " + reviewSummary();
               fb.classList.remove("hidden");
             }
           }
@@ -1452,13 +1469,19 @@
         const customBox = document.getElementById("customQuestionsTextarea");
         const raw = customBox ? customBox.value : "";
         const parsed = parseCustomQuestionnaireInput(raw);
+        if (!parsed.length) {
+          const feedback = document.getElementById('customParseFeedback');
+          feedback.textContent = 'Enter at least one question, then try again.';
+          feedback.classList.remove('hidden');
+        }
         if (parsed.length > 0) {
           state.controls = parsed;
+          state.sourceDirty = false;
           state.selectedControlIndex = 0;
           renderAll();
           const fb = document.getElementById("customParseFeedback");
           if (fb) {
-            fb.textContent = "Parsed & auto-answered " + parsed.length + " custom procurement questions with citation locks.";
+            fb.textContent = "Parsed & auto-answered " + parsed.length + " custom questions. " + reviewSummary();
             fb.classList.remove("hidden");
           }
         }
@@ -1487,13 +1510,7 @@
         const urlIn = document.getElementById("webhookUrlInput");
         const manifest = buildJsonManifest();
         if (box) {
-          box.textContent =
-            "HTTP 200 OK · Dispatched signed DDQ manifest (" +
-            manifest.controls.length +
-            " controls, SHA-256 " +
-            manifest.corpusSha256 +
-            ") to " +
-            (urlIn ? urlIn.value : "webhook");
+          box.textContent = 'Prepared a local preview for ' + (urlIn?.value || 'the webhook') + ' with ' + manifest.controls.length + ' controls. No request has been sent.';
           box.classList.remove("hidden");
         }
       });
@@ -1726,13 +1743,13 @@
     const requestedPreset = params.get("preset");
     if (requestedPreset && PRESETS[requestedPreset]) {
       if (PRESETS[requestedPreset].isPro && !state.isProUnlocked) {
-        loadPreset("caiq-v4", true);
+        loadPreset("caiq-v4", true, false);
         openPaywallModal("PRO FRAMEWORK REQUESTED (" + requestedPreset.toUpperCase() + ") · UNLOCK DEAL PACK ($199)");
       } else {
         loadPreset(requestedPreset, true);
       }
     } else {
-      loadPreset("caiq-v4", true);
+      loadPreset("caiq-v4", true, false);
     }
   }
 

@@ -1,135 +1,503 @@
 /**
- * ORFF Maestra TTL-MSM Deterministic Assessment Engine, FERPA WebCrypto & SCORM 1.2 Generator
- * ===========================================================================================
- * Built for:
- * 1. HN #50339081 (https://orffmaestra.com/developer) — TTL-MSM Clinical Assessment Reasoning Prototype
- * 2. Upwork Job ~022122329038257767465 — Automated SCORM 1.2/2004 Certification Course Builder
- * 3. HN #50340985 (careers@memorang.com) — AI Stack for Education & Distractor-Aware Assessment Engine
+ * AcademyForge™ (EdTech Studio v2.0) — SCORM 1.2 Binary Packager & TTL-MSM Engine
+ * ===============================================================================
+ * - 100% Client-Side Binary PKZIP (PK\x03\x04 + IEEE 802.3 CRC-32, Zero External CDNs)
+ * - Standards-Compliant ADL SCORM 1.2 Manifest + Runtime Wrapper (LMSInitialize..LMSFinish)
+ * - Bilingual EN / 한국어 Self-Contained SCO Compiler (STEMinnoKey & Global EdTech Ready)
+ * - Deterministic 4-Gate TTL-MSM Clinical & Educational Rubric Engine
  */
+(function (root) {
+  "use strict";
 
-const TTL_MSM_ENGINE = {
+  function xmlEscape(str) {
+    return String(str == null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+  }
+
+  function htmlEscape(str) {
+    return String(str == null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Precompute IEEE 802.3 CRC-32 lookup table
+  const CRC32_TABLE = (function () {
+    const tbl = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+      let c = i;
+      for (let k = 0; k < 8; k++) {
+        c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+      }
+      tbl[i] = c >>> 0;
+    }
+    return tbl;
+  })();
+
+  function computeCrc32(bytes) {
+    let crc = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) {
+      crc = CRC32_TABLE[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function toUtf8Bytes(input) {
+    if (input instanceof Uint8Array) return input;
+    if (typeof TextEncoder !== "undefined") {
+      return new TextEncoder().encode(String(input == null ? "" : input));
+    }
+    const str = unescape(encodeURIComponent(String(input == null ? "" : input)));
+    const arr = new Uint8Array(str.length);
+    for (let i = 0; i < str.length; i++) arr[i] = str.charCodeAt(i);
+    return arr;
+  }
+
+  function getDosDateTime(dateObj) {
+    const d = dateObj || new Date();
+    const year = Math.max(1980, d.getUTCFullYear());
+    const month = d.getUTCMonth() + 1;
+    const day = d.getUTCDate();
+    const hours = d.getUTCHours();
+    const mins = d.getUTCMinutes();
+    const secs = Math.floor(d.getUTCSeconds() / 2);
+    const dosTime = ((hours & 0x1f) << 11) | ((mins & 0x3f) << 5) | (secs & 0x1f);
+    const dosDate = (((year - 1980) & 0x7f) << 9) | ((month & 0x0f) << 5) | (day & 0x1f);
+    return { dosTime, dosDate };
+  }
+
   /**
-   * Evaluates 4 coded clinical sources of evidence using a 100% deterministic rule tree (Zero Black-Box).
-   * Coding scale per source:
-   *   0 = Severe Deficit / Low Modifiability (< 7th percentile / significant concern across L1 & L2)
-   *   1 = Mild / Emerging / Context-Dependent (7th–16th percentile / L2 exposure artifact)
-   *   2 = Age-Appropriate / High Modifiability (> 16th percentile / strong L1 or rapid learning gain)
+   * Builds a valid binary PKZIP archive (PK\x03\x04 store mode + UTF-8 flag + CRC-32)
+   * with zero external dependencies.
    */
-  evaluate(inputs) {
-    const { parentL1, teacherObs, languageSample, dynamicAssessment } = inputs;
-    const totalScore = parentL1 + teacherObs + languageSample + dynamicAssessment;
+  function createBinaryZip(entries) {
+    const { dosTime, dosDate } = getDosDateTime(new Date());
+    const localChunks = [];
+    const centralChunks = [];
+    let localOffset = 0;
 
-    // Rule Gate 1: Cross-Setting L1 + Morphosyntax Convergence
-    const r1Pass = (parentL1 >= 1 && languageSample >= 1);
-    // Rule Gate 2: Dynamic Assessment Modifiability Override (Test-Teach-Retest)
-    const r2HighModifiability = (dynamicAssessment === 2);
-    // Rule Gate 3: Cross-Environment Deficit Check (Home L1 + Classroom + Direct Sample)
-    const r3TrueDisorder = (parentL1 === 0 && languageSample === 0 && dynamicAssessment <= 1);
+    for (let i = 0; i < entries.length; i++) {
+      const entry = entries[i];
+      const nameBytes = toUtf8Bytes(entry.name);
+      const dataBytes = toUtf8Bytes(entry.content);
+      const crc = computeCrc32(dataBytes);
+      const size = dataBytes.length;
 
-    let verdictCode = "TYPICAL_DEVELOPMENT";
-    let verdictTitle = "Typical Communicative Development (Tier 1 General Ed)";
-    let verdictColor = "emerald";
-    let confidence = 96;
-    let clinicalSummary = "";
+      // Local File Header (30 bytes + filename)
+      const localHeader = new Uint8Array(30 + nameBytes.length);
+      const lv = new DataView(localHeader.buffer);
+      lv.setUint32(0, 0x04034b50, true);  // PK\x03\x04
+      lv.setUint16(4, 20, true);          // Version needed (2.0)
+      lv.setUint16(6, 0x0800, true);      // General purpose bit flag: UTF-8
+      lv.setUint16(8, 0, true);           // Compression: 0 (STORE)
+      lv.setUint16(10, dosTime, true);
+      lv.setUint16(12, dosDate, true);
+      lv.setUint32(14, crc, true);
+      lv.setUint32(18, size, true);
+      lv.setUint32(22, size, true);
+      lv.setUint16(26, nameBytes.length, true);
+      lv.setUint16(28, 0, true);
+      localHeader.set(nameBytes, 30);
 
-    if (r3TrueDisorder || totalScore <= 2) {
-      verdictCode = "LANGUAGE_DISORDER";
-      verdictTitle = "Developmental Language Disorder (DLD) — Eligibility Supported";
-      verdictColor = "rose";
-      confidence = 98;
-      clinicalSummary =
-        "Convergent deficit across L1 Home Report, Direct Language Sample morphosyntax, and low Dynamic Assessment modifiability confirms an underlying language learning disorder rather than L2/dialectal exposure difference.";
-    } else if (r2HighModifiability && (teacherObs <= 1 || languageSample === 1)) {
-      verdictCode = "LANGUAGE_DIFFERENCE";
-      verdictTitle = "Language Difference / Bilingual or Dialectal Variation (Not a Disorder)";
-      verdictColor = "amber";
-      confidence = 95;
-      clinicalSummary =
-        "Although classroom L2 observation or surface standardized testing shows emerging divergence, intact L1 caregiver report and high Dynamic Assessment modifiability rule out an intrinsic language disorder under TTL-MSM rules.";
-    } else {
-      verdictCode = "TYPICAL_DEVELOPMENT";
-      verdictTitle = "Typical Communicative Profile — Age-Appropriate Proficiency";
-      verdictColor = "emerald";
-      confidence = 97;
-      clinicalSummary =
-        "All primary evidence sources and dynamic learning indicators meet or exceed age-expected thresholds across communicative environments.";
+      localChunks.push(localHeader, dataBytes);
+
+      // Central Directory Header (46 bytes + filename)
+      const centralHeader = new Uint8Array(46 + nameBytes.length);
+      const cv = new DataView(centralHeader.buffer);
+      cv.setUint32(0, 0x02014b50, true);  // PK\x01\x02
+      cv.setUint16(4, 20, true);          // Version made by
+      cv.setUint16(6, 20, true);          // Version needed
+      cv.setUint16(8, 0x0800, true);      // UTF-8 flag
+      cv.setUint16(10, 0, true);          // Compression: 0 (STORE)
+      cv.setUint16(12, dosTime, true);
+      cv.setUint16(14, dosDate, true);
+      cv.setUint32(16, crc, true);
+      cv.setUint32(20, size, true);
+      cv.setUint32(24, size, true);
+      cv.setUint16(28, nameBytes.length, true);
+      cv.setUint16(30, 0, true);
+      cv.setUint16(32, 0, true);
+      cv.setUint16(34, 0, true);
+      cv.setUint16(36, 0, true);
+      cv.setUint32(38, 0, true);
+      cv.setUint32(42, localOffset, true);
+      centralHeader.set(nameBytes, 46);
+
+      centralChunks.push(centralHeader);
+      localOffset += localHeader.length + size;
     }
 
-    const trace = [
-      {
-        gate: "RULE_GATE_01",
-        name: "L1 Caregiver & Home Environment Concordance",
-        inputVal: `Parent L1 Code = ${parentL1}/2`,
-        outcome: parentL1 === 0 ? "FLAG_HOME_L1_DEFICIT" : "INTACT_HOME_L1_BASELINE",
-        passed: parentL1 >= 1
-      },
-      {
-        gate: "RULE_GATE_02",
-        name: "Academic Classroom Discourse & Pragmatics",
-        inputVal: `Teacher Obs Code = ${teacherObs}/2`,
-        outcome: teacherObs === 0 ? "SIGNIFICANT_ACADEMIC_IMPACT" : "ADEQUATE_OR_L2_EMERGING",
-        passed: teacherObs >= 1
-      },
-      {
-        gate: "RULE_GATE_03",
-        name: "Direct Language Sample (MLU / Non-Biased Morphosyntax)",
-        inputVal: `Language Sample Code = ${languageSample}/2`,
-        outcome: languageSample === 0 ? "STRUCTURAL_GRAMMAR_DEFICIT" : "DIALECT_APPROPRIATE_STRUCTURE",
-        passed: languageSample >= 1
-      },
-      {
-        gate: "RULE_GATE_04",
-        name: "Dynamic Assessment (Test-Teach-Retest Modifiability Gate)",
-        inputVal: `Dynamic Modifiability = ${dynamicAssessment}/2`,
-        outcome: r2HighModifiability ? "HIGH_LEARNABILITY_DIFFERENCE_OVERRIDE" : "LOW_MODIFIABILITY_DISORDER_MARKER",
-        passed: r2HighModifiability
+    let centralSize = 0;
+    for (let i = 0; i < centralChunks.length; i++) centralSize += centralChunks[i].length;
+
+    // End of Central Directory Record (22 bytes)
+    const eocd = new Uint8Array(22);
+    const ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);    // PK\x05\x06
+    ev.setUint16(4, 0, true);
+    ev.setUint16(6, 0, true);
+    ev.setUint16(8, entries.length, true);
+    ev.setUint16(10, entries.length, true);
+    ev.setUint32(12, centralSize, true);
+    ev.setUint32(16, localOffset, true);
+    ev.setUint16(20, 0, true);
+
+    const totalLen = localOffset + centralSize + eocd.length;
+    const output = new Uint8Array(totalLen);
+    let pos = 0;
+    for (let i = 0; i < localChunks.length; i++) {
+      output.set(localChunks[i], pos);
+      pos += localChunks[i].length;
+    }
+    for (let i = 0; i < centralChunks.length; i++) {
+      output.set(centralChunks[i], pos);
+      pos += centralChunks[i].length;
+    }
+    output.set(eocd, pos);
+    return output;
+  }
+
+  // This function also runs as a standalone script inside the exported course.
+  function installScormRuntime(window) {
+    var api = null;
+    var initialized = false;
+    var log = [];
+
+    function findApi(frame) {
+      for (var depth = 0; frame && depth < 12; depth++) {
+        try {
+          if (frame.API) return frame.API;
+          if (frame.parent === frame) break;
+          frame = frame.parent;
+        } catch (error) {
+          break; // A cross-origin ancestor cannot expose its SCORM adapter.
+        }
       }
+      return null;
+    }
+
+    function call(method, args) {
+      var result = 'standalone';
+      if (api) {
+        try {
+          result = initialized || method === 'LMSInitialize'
+            ? String(api[method].apply(api, args))
+            : 'not initialized';
+        } catch (error) {
+          result = 'LMS error';
+        }
+      }
+      var entry = method + '(' + args.map(function (arg) { return JSON.stringify(arg); }).join(', ') + ')';
+      log.push({ at: new Date().toISOString(), call: entry, result: result });
+      if (typeof window.onScormWrapperEvent === 'function') window.onScormWrapperEvent(entry, result, log);
+      return result === 'true';
+    }
+
+    window.AcademyForgeSCORM = {
+      initialize: function () {
+        if (initialized) return true;
+        api = findApi(window) || findApi(window.opener);
+        initialized = call('LMSInitialize', ['']);
+        if (initialized) {
+          this.setValue('cmi.core.score.min', '0');
+          this.setValue('cmi.core.score.max', '100');
+        }
+        return initialized;
+      },
+      setValue: function (key, value) { return call('LMSSetValue', [String(key), String(value)]); },
+      commit: function () { return call('LMSCommit', ['']); },
+      reportScore: function (rawScore, masteryScore) {
+        var score = Math.max(0, Math.min(100, Math.round(Number(rawScore) || 0)));
+        var status = score >= (Number(masteryScore) || 80) ? 'passed' : 'failed';
+        var scoreSaved = this.setValue('cmi.core.score.raw', score);
+        var statusSaved = this.setValue('cmi.core.lesson_status', status);
+        var committed = this.commit();
+        return { score: score, status: status, connected: !!api, saved: scoreSaved && statusSaved && committed };
+      },
+      finish: function () {
+        if (!initialized) return false;
+        var ok = call('LMSFinish', ['']);
+        if (ok) initialized = false;
+        return ok;
+      },
+      getLogs: function () { return log.slice(); }
+    };
+    window.addEventListener('beforeunload', function () { window.AcademyForgeSCORM.finish(); });
+  }
+
+  function generateScormApiWrapperJs() {
+    return '(' + installScormRuntime.toString() + ')(window);';
+  }
+
+  function generateScormManifest(courseMeta) {
+    const meta = courseMeta || {};
+    const id = xmlEscape(meta.identifier || "ACADEMYFORGE_SCORM12_2026");
+    const title = xmlEscape(meta.title || "AcademyForge Interactive Certification Module (SCORM 1.2)");
+    const itemTitle = xmlEscape(meta.itemTitle || (meta.title ? meta.title + " — Interactive SCO" : "Module 1: Interactive Scenario & Assessment"));
+    const mastery = Math.max(50, Math.min(100, Number(meta.masteryScore) || 80));
+
+    return [
+      '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>',
+      '<manifest identifier="' + id + '" version="1.2"',
+      '          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"',
+      '          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"',
+      '          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+      '          xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">',
+      '  <metadata>',
+      '    <schema>ADL SCORM</schema>',
+      '    <schemaversion>1.2</schemaversion>',
+      '  </metadata>',
+      '  <organizations default="ORG_ACADEMYFORGE_01">',
+      '    <organization identifier="ORG_ACADEMYFORGE_01">',
+      '      <title>' + title + '</title>',
+      '      <item identifier="ITEM_SCO_01" identifierref="RES_SCO_01" isvisible="true">',
+      '        <title>' + itemTitle + '</title>',
+      '        <adlcp:masteryscore>' + mastery + '</adlcp:masteryscore>',
+      '      </item>',
+      '    </organization>',
+      '  </organizations>',
+      '  <resources>',
+      '    <resource identifier="RES_SCO_01" type="webcontent" adlcp:scormtype="sco" href="index.html">',
+      '      <file href="index.html"/>',
+      '      <file href="scorm_api_wrapper.js"/>',
+      '    </resource>',
+      '  </resources>',
+      '</manifest>',
+      ''
+    ].join("\n");
+  }
+
+  function generateStandaloneScoHtml(courseData) {
+    const dataJson = JSON.stringify(courseData).replace(/<\//g, "<\\/");
+    return [
+      "<!DOCTYPE html>",
+      '<html lang="en">',
+      "<head>",
+      '  <meta charset="UTF-8" />',
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+      "  <title>" + htmlEscape(courseData.title || "AcademyForge SCORM 1.2 Lesson") + "</title>",
+      '  <script src="./scorm_api_wrapper.js"></script>',
+      "  <style>",
+      "    * { box-sizing: border-box; margin: 0; padding: 0; }",
+      "    body { background: #FAF9F6; color: #111113; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif; line-height: 1.55; padding: 24px 16px; }",
+      "    .shell { max-width: 880px; margin: 0 auto; background: #FFFFFF; border: 1px solid #E4E2DD; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(17,17,19,0.05); }",
+      "    .top { background: #111113; color: #FAF9F6; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }",
+      "    .badge { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: #4F46E5; color: #FFFFFF; padding: 3px 8px; border-radius: 4px; font-weight: 600; }",
+      "    .lang-switch { display: inline-flex; gap: 4px; }",
+      "    .lang-btn { background: #27272A; color: #FAF9F6; border: 1px solid #3F3F46; border-radius: 4px; padding: 4px 10px; font-size: 12px; font-weight: 600; cursor: pointer; }",
+      "    .lang-btn.active { background: #4F46E5; border-color: #6366F1; }",
+      "    .body { padding: 24px; display: flex; flex-direction: column; gap: 18px; }",
+      "    h1 { font-size: 24px; line-height: 1.25; }",
+      "    .stem-box { background: #FAF9F6; border: 1px solid #D4D1C8; border-radius: 6px; padding: 16px; font-size: 15px; }",
+      "    .opts { display: flex; flex-direction: column; gap: 10px; }",
+      "    .opt-btn { text-align: left; background: #FFFFFF; border: 1px solid #D4D1C8; border-radius: 6px; padding: 12px 14px; cursor: pointer; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; transition: all 0.14s ease; }",
+      "    .opt-btn:hover { border-color: #4F46E5; background: #EEF2FF; }",
+      "    .opt-btn.correct { border-color: #15803D; background: #F0FDF4; }",
+      "    .opt-btn.wrong { border-color: #B45309; background: #FFFBEB; }",
+      "    .letter { font-family: ui-monospace, monospace; font-weight: 700; width: 26px; height: 26px; border-radius: 4px; background: #F3F2EE; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }",
+      "    .feedback { padding: 14px; border-radius: 6px; border: 1px solid #E4E2DD; background: #F3F2EE; font-size: 14px; }",
+      "    .log { background: #111113; color: #E4E4E7; font-family: ui-monospace, monospace; font-size: 11.5px; padding: 12px 14px; border-radius: 6px; max-height: 150px; overflow-y: auto; }",
+      "  </style>",
+      "</head>",
+      "<body>",
+      '  <div class="shell">',
+      '    <div class="top">',
+      '      <div><span class="badge">ADL SCORM 1.2 SCO</span> <strong id="scoHeaderCode" style="margin-left:8px;font-size:13px;"></strong></div>',
+      '      <div class="lang-switch" id="langSwitchWrap">',
+      '        <button type="button" class="lang-btn active" id="scoLangEn">EN</button>',
+      '        <button type="button" class="lang-btn" id="scoLangKo">한국어</button>',
+      "      </div>",
+      "    </div>",
+      '    <div class="body">',
+      '      <h1 id="scoTitle"></h1>',
+      '      <p id="scoSummary" style="color:#52514E;font-size:14.5px;"></p>',
+      '      <div class="stem-box" id="scoQuestionStem"></div>',
+      '      <div class="opts" id="scoOptions"></div>',
+      '      <div class="feedback" id="scoFeedback" role="status">Choose an answer to see your score.</div>',
+      '      <div class="log" id="scoLog"></div>',
+      "    </div>",
+      "  </div>",
+      "  <script>",
+      "    var COURSE = " + dataJson + ";",
+      "    var lastAttempt = null;",
+      "    var currentLang = COURSE.defaultLang || 'en';",
+      "    window.onScormWrapperEvent = function(callStr, res) {",
+      "      var el = document.getElementById('scoLog');",
+      "      if (!el) return;",
+      "      var line = document.createElement('div');",
+      "      line.textContent = callStr + ' -> ' + res;",
+      "      el.appendChild(line);",
+      "      el.scrollTop = el.scrollHeight;",
+      "    };",
+      "    function getActivePack() {",
+      "      if (currentLang === 'ko' && COURSE.ko) return COURSE.ko;",
+      "      return COURSE.en;",
+      "    }",
+      "    function renderSco() {",
+      "      var p = getActivePack();",
+      "      document.documentElement.lang = currentLang;",
+      "      document.getElementById('scoHeaderCode').textContent = COURSE.identifier || 'AF-SCORM-12';",
+      "      document.getElementById('scoTitle').textContent = p.title;",
+      "      document.getElementById('scoSummary').textContent = p.summary;",
+      "      document.getElementById('scoQuestionStem').textContent = p.question;",
+      "      var wrap = document.getElementById('langSwitchWrap');",
+      "      if (!COURSE.ko) { wrap.style.display = 'none'; }",
+      "      document.getElementById('scoLangEn').className = 'lang-btn' + (currentLang === 'en' ? ' active' : '');",
+      "      document.getElementById('scoLangKo').className = 'lang-btn' + (currentLang === 'ko' ? ' active' : '');",
+      "      var optsEl = document.getElementById('scoOptions');",
+      "      optsEl.innerHTML = '';",
+      "      p.options.forEach(function(o) {",
+      "        var b = document.createElement('button');",
+      "        b.type = 'button';",
+      "        var selected = lastAttempt && lastAttempt.letter === o.letter;",
+      "        b.className = selected ? 'opt-btn ' + (o.correct ? 'correct' : 'wrong') : 'opt-btn';",
+      "        b.setAttribute('aria-pressed', String(!!selected));",
+      "        if (selected) {",
+      "          var result = lastAttempt.result;",
+      "          var label = currentLang === 'ko' ? (result.saved ? 'LMS에 저장됨' : result.connected ? 'LMS 저장 실패' : '로컬 연습') : (result.saved ? 'Saved to LMS' : result.connected ? 'LMS could not save this attempt' : 'Local practice');",
+      "          document.getElementById('scoFeedback').textContent = result.score + '/100 · ' + o.rationale + ' · ' + label;",
+      "        }",
+      "        var l = document.createElement('span'); l.className = 'letter'; l.textContent = o.letter;",
+      "        var txt = document.createElement('div');",
+      "        var st = document.createElement('strong'); st.textContent = o.title;",
+      "        txt.appendChild(st);",
+      "        b.appendChild(l); b.appendChild(txt);",
+      "        b.addEventListener('click', function() {",
+      "          lastAttempt = { letter: o.letter, result: window.AcademyForgeSCORM.reportScore(o.correct ? 100 : 0, COURSE.masteryScore) };",
+      "          renderSco();",
+      "          optsEl.querySelector('[aria-pressed=true]').focus();",
+      "        });",
+      "        optsEl.appendChild(b);",
+      "      });",
+      "    }",
+      "    document.getElementById('scoLangEn').addEventListener('click', function() { currentLang = 'en'; renderSco(); });",
+      "    document.getElementById('scoLangKo').addEventListener('click', function() { if (COURSE.ko) { currentLang = 'ko'; renderSco(); } });",
+      "    window.AcademyForgeSCORM.initialize();",
+      "    renderSco();",
+      "  </script>",
+      "</body>",
+      "</html>",
+      ""
+    ].join("\n");
+  }
+
+  function compileScorm12Zip(courseData) {
+    const manifestXml = generateScormManifest({
+      identifier: courseData.identifier,
+      title: (courseData.en && courseData.en.title) || courseData.title,
+      masteryScore: courseData.masteryScore || 80
+    });
+    const wrapperJs = generateScormApiWrapperJs();
+    const indexHtml = generateStandaloneScoHtml(courseData);
+
+    const entries = [
+      { name: "imsmanifest.xml", content: manifestXml },
+      { name: "scorm_api_wrapper.js", content: wrapperJs },
+      { name: "index.html", content: indexHtml }
     ];
 
+    const zipBytes = createBinaryZip(entries);
     return {
-      verdictCode,
-      verdictTitle,
-      verdictColor,
-      confidence,
-      totalScore,
-      maxScore: 8,
-      clinicalSummary,
-      trace
+      zipBytes,
+      byteLength: zipBytes.length,
+      manifestXml,
+      wrapperJs,
+      indexHtml,
+      crc32Manifest: computeCrc32(toUtf8Bytes(manifestXml))
     };
-  },
-
-  /**
-   * Generates a valid ADL SCORM 1.2 imsmanifest.xml string for 1-click LMS import.
-   */
-  generateScormManifest(courseMeta) {
-    const id = courseMeta.identifier || "ORFF_SOCRATAI_CERT_2026";
-    const title = courseMeta.title || "Clinical Assessment & Bilingual Differential Diagnosis (SCORM 1.2)";
-    return `<?xml version="1.0" standalone="no" ?>
-<manifest identifier="${id}" version="1.2"
-          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
-          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <metadata>
-    <schema>ADL SCORM</schema>
-    <schemaversion>1.2</schemaversion>
-  </metadata>
-  <organizations default="ORG_SOCRATAI_01">
-    <organization identifier="ORG_SOCRATAI_01">
-      <title>${title}</title>
-      <item identifier="ITEM_MODULE_01" identifierref="RES_SCO_01" isvisible="true">
-        <title>Module 1: TTL-MSM Multi-Source Differential Diagnosis &amp; Socratic Case Review</title>
-        <adlcp:masteryscore>80</adlcp:masteryscore>
-      </item>
-    </organization>
-  </organizations>
-  <resources>
-    <resource identifier="RES_SCO_01" type="webcontent" adlcp:scormtype="sco" href="index.html">
-      <file href="index.html"/>
-      <file href="scorm_and_ttl_engine.js"/>
-    </resource>
-  </resources>
-</manifest>`;
   }
-};
 
-window.TTL_MSM_ENGINE = TTL_MSM_ENGINE;
+  const TTL_MSM_ENGINE = {
+    evaluate: function (inputs) {
+      const parentL1 = Number(inputs.parentL1) || 0;
+      const teacherObs = Number(inputs.teacherObs) || 0;
+      const languageSample = Number(inputs.languageSample) || 0;
+      const dynamicAssessment = Number(inputs.dynamicAssessment) || 0;
+      const totalScore = parentL1 + teacherObs + languageSample + dynamicAssessment;
+
+      const r2HighModifiability = dynamicAssessment === 2;
+      const r3TrueDisorder = parentL1 === 0 && languageSample === 0 && dynamicAssessment <= 1;
+
+      let verdictCode = "TYPICAL_DEVELOPMENT";
+      let verdictTitle = "Typical Communicative Profile — Age-Appropriate Proficiency";
+      let verdictColor = "emerald";
+      let confidence = 97;
+      let clinicalSummary =
+        "All primary evidence sources and dynamic learning indicators meet or exceed age-expected thresholds across communicative environments.";
+
+      if (r3TrueDisorder || totalScore <= 2) {
+        verdictCode = "LANGUAGE_DISORDER";
+        verdictTitle = "Developmental Language Disorder (DLD) — Specialized Support Eligible";
+        verdictColor = "rose";
+        confidence = 98;
+        clinicalSummary =
+          "Convergent deficit across L1 Home Report, Direct Language Sample morphosyntax, and low Dynamic Assessment modifiability confirms an underlying learning need rather than L2 exposure difference.";
+      } else if (r2HighModifiability && (teacherObs <= 1 || languageSample === 1)) {
+        verdictCode = "LANGUAGE_DIFFERENCE";
+        verdictTitle = "Bilingual / Dialectal Difference — General Education Supported";
+        verdictColor = "amber";
+        confidence = 95;
+        clinicalSummary =
+          "Although L2 classroom observation shows emerging variation, intact L1 caregiver baseline and rapid 20-minute Dynamic Assessment modifiability rule out an intrinsic disorder under TTL-MSM rules.";
+      }
+
+      const trace = [
+        {
+          gate: "Gate 01",
+          name: "Home L1 Caregiver Baseline",
+          inputVal: "Score " + parentL1 + "/2",
+          outcome: parentL1 === 0 ? "Home L1 Deficit Flag" : "Intact Home L1 Baseline",
+          passed: parentL1 >= 1
+        },
+        {
+          gate: "Gate 02",
+          name: "Academic Classroom Participation",
+          inputVal: "Score " + teacherObs + "/2",
+          outcome: teacherObs === 0 ? "High Classroom Struggle" : "Developing / Proficient",
+          passed: teacherObs >= 1
+        },
+        {
+          gate: "Gate 03",
+          name: "Direct Narrative & Grammar Sample",
+          inputVal: "Score " + languageSample + "/2",
+          outcome: languageSample === 0 ? "Structural Grammar Deficit" : "Age / Dialect Appropriate",
+          passed: languageSample >= 1
+        },
+        {
+          gate: "Gate 04",
+          name: "20-Min Dynamic Modifiability (Test-Teach-Retest)",
+          inputVal: "Score " + dynamicAssessment + "/2",
+          outcome: r2HighModifiability ? "Fast Learning Gain (Rules Out Disorder)" : "Requires Scaffolding",
+          passed: r2HighModifiability
+        }
+      ];
+
+      return {
+        verdictCode,
+        verdictTitle,
+        verdictColor,
+        confidence,
+        totalScore,
+        maxScore: 8,
+        clinicalSummary,
+        trace
+      };
+    },
+    generateScormManifest: generateScormManifest,
+    generateScormApiWrapperJs: generateScormApiWrapperJs,
+    compileScorm12Zip: compileScorm12Zip,
+    createBinaryZip: createBinaryZip,
+    computeCrc32: computeCrc32
+  };
+
+  root.TTL_MSM_ENGINE = TTL_MSM_ENGINE;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = TTL_MSM_ENGINE;
+  }
+})(typeof window !== "undefined" ? window : globalThis);

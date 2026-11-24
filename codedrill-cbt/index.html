@@ -28,6 +28,7 @@
     </div>
 
     <!-- 3 Key Mode Switcher Tabs -->
+    <details class="study-settings"><summary>Modes &amp; account</summary><div class="study-settings-body">
     <nav class="cd-mode-switcher" aria-label="Application Modes">
       <button type="button" class="cd-mode-tab active" data-mode="cbt" id="tabModeCbt" title="1:1 Pearson VUE Testing Center Split-Screen Simulator (Alt+1)">
         <span class="cd-tab-label">Exam Simulator</span>
@@ -78,6 +79,7 @@
         Reset
       </button>
     </div>
+    </div></details>
   </header>
 
   <!-- =====================================================================
@@ -119,6 +121,7 @@
         </div>
 
         <!-- Milled Stone Action Toolbar (#ECE9E1) -->
+        <details class="exam-tools"><summary>Exam tools and timer controls</summary>
         <div class="pvue-action-bar" role="toolbar" aria-label="Pearson VUE Candidate Exam Tools">
           <div class="pvue-tools-left">
             <button type="button" class="pvue-tool-btn" id="btnFlagForReview" title="Flag current question for review before exam submission">
@@ -180,6 +183,7 @@
             </button>
           </div>
         </div>
+        </details>
       </div>
 
       <!-- 1B. 90S SPEED DRILL HUD HEADER (Visible in Speed Drill Mode) -->
@@ -257,7 +261,12 @@
       <!-- =================================================================
            SPLIT-SCREEN WORKSPACE (LEFT: QUESTION | RIGHT: eCFR/HTSUS READER)
            ================================================================= -->
-      <div class="pvue-split-workspace" id="pvueSplitWorkspace" data-ratio="50-50">
+      <p role="status" id="studySourceNotice" hidden></p>
+      <nav class="study-pane-switch" aria-label="Study workspace">
+        <button type="button" data-study-pane="question" aria-controls="pvueLeftPane" aria-pressed="true">Question</button>
+        <button type="button" data-study-pane="source" aria-controls="pvueRightPane" aria-pressed="false">Source</button>
+      </nav>
+      <div data-pane="question" class="pvue-split-workspace" id="pvueSplitWorkspace" data-ratio="50-50">
 
         <!-- ===============================================================
              LEFT PANE: EXAM QUESTION WORKSPACE & COLLAPSIBLE STUDY COACH
@@ -318,21 +327,6 @@
               </div>
             </article>
 
-            <!-- Attached Citation Proof Banner -->
-            <div class="q-citation-proof-bar" id="qCitationProofBar">
-              <div class="q-proof-left">
-                <span class="q-proof-icon" id="qProofIcon">§</span>
-                <div class="q-proof-info">
-                  <span class="q-proof-label">Cited Proof:</span>
-                  <strong class="q-proof-citation" id="qProofCitationText">None cited yet — open section on the right &amp; click “Cite as Proof”</strong>
-                </div>
-              </div>
-              <div class="q-proof-actions">
-                <span class="q-proof-match-badge hidden" id="qProofMatchBadge"></span>
-                <button type="button" class="q-proof-jump-btn hidden" id="btnJumpToAttachedProof">View Section →</button>
-              </div>
-            </div>
-
             <!-- Answer Options A-E with Radio Selection & Right-Click / Button Strikethrough -->
             <div class="q-options-header">
               <span>Select Best Legal Ruling (A–E)</span>
@@ -341,6 +335,21 @@
 
             <div class="q-options-list" id="qOptionsList" role="radiogroup" aria-label="Answer Choices A through E">
               <!-- Populated dynamically with A-E choices -->
+            </div>
+
+            <!-- Attached Citation Proof Banner -->
+            <div class="q-citation-proof-bar" id="qCitationProofBar" role="status">
+              <div class="q-proof-left">
+                <span class="q-proof-icon" id="qProofIcon">§</span>
+                <div class="q-proof-info">
+                  <span class="q-proof-label">Cited Proof:</span>
+                  <strong class="q-proof-citation" id="qProofCitationText">Choose a section in Source and attach its citation.</strong>
+                </div>
+              </div>
+              <div class="q-proof-actions">
+                <span class="q-proof-match-badge hidden" id="qProofMatchBadge"></span>
+                <button type="button" class="q-proof-jump-btn hidden" id="btnJumpToAttachedProof">View Section →</button>
+              </div>
             </div>
 
             <!-- Question Bottom Action & Navigation Bar -->
@@ -600,6 +609,7 @@
               <article class="ref-doc-article" id="refDocArticle">
                 <header class="ref-doc-title-block">
                   <div class="ref-doc-citation-code" id="refDocCitationCode">19 CFR § 152.103</div>
+                  <a id="refOfficialSource" hidden>Read the official text in the eCFR</a>
                   <h3 class="ref-doc-section-title" id="refDocSectionTitle">Transaction value</h3>
                 </header>
 

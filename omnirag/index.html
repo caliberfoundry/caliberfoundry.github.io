@@ -703,6 +703,12 @@
       font-size: 13.5px;
       line-height: 1.55;
     }
+    @media (max-width: 600px) {
+      .comparison-fields { grid-template-columns: 1fr !important; }
+      .how-it-works-strip { gap: 4px; }
+      .masthead-inner { gap: 6px; }
+    }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
@@ -720,7 +726,7 @@
             </span>
           </div>
           <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Automatically compare numbers, dates, and clauses across PDFs, Word contracts, and Excel sheets &mdash; and see the exact page or cell proof in 1 click.
+            Pick an example pack, find a passage and open its page or spreadsheet cell.
           </div>
         </div>
       </div>
@@ -745,17 +751,17 @@
 
     <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
     <div class="how-it-works-strip" aria-label="Click any step to test OmniRAG live">
-      <button type="button" class="hiw-step-btn" onclick="cycleNextPreset()">
+      <button type="button" class="hiw-step-btn" onclick="document.querySelector('.active-pack').focus()">
         <span class="hiw-num">STEP 1 &rarr;</span>
-        <span><strong>Click to Switch Document Pack</strong> (or test your own Contract vs. Excel numbers below).</span>
+        <span><strong>Choose a document pack</strong></span>
       </button>
-      <button type="button" class="hiw-step-btn" onclick="triggerStep2HighlightDemo()">
+      <button type="button" class="hiw-step-btn" onclick="runPromptChip(QUESTIONS[currentPresetKey][0][0])">
         <span class="hiw-num">STEP 2 &rarr;</span>
-        <span><strong>Click any Proof button on the left</strong> to jump to the exact page or Excel row.</span>
+        <span><strong>Check a sample question</strong></span>
       </button>
       <button type="button" class="hiw-step-btn" onclick="openAuditPreviewModal()">
         <span class="hiw-num">STEP 3 &rarr;</span>
-        <span><strong>Click to Preview Printable Audit Report</strong> (or download the verified JSON file).</span>
+        <span><strong>Preview the report</strong></span>
       </button>
     </div>
 
@@ -763,10 +769,10 @@
     <section class="pack-picker-bar" aria-label="Step 1: Choose a sample document pack">
       <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
         <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
-          STEP 1 &mdash; CHOOSE A SAMPLE DOCUMENT PACK (OR TEST YOUR OWN NUMBERS BELOW):
+          1. Choose a document pack
         </span>
         <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">
-          &check; Automatically flags number mismatches across PDF, Word &amp; Excel
+          Three sample scenarios
         </span>
       </div>
       <div class="pack-grid">
@@ -776,9 +782,9 @@
             <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">3 Files</span>
           </div>
           <div class="pack-card-desc">
-            Catches a $42,000 SLA overbilling mismatch while verifying Q3 profit ($4.19M vs. $3.50M floor) across Excel, Word &amp; PDF.
+            Compare Q3 profit and the $3.50M minimum in the spreadsheet and audit report.
           </div>
-          <span class="pack-status-pill pack-status-warn">! Caught $42k Overbilling + 2 Matches</span>
+          <span class="pack-status-pill pack-status-warn">Profit, penalty cap and retention</span>
         </button>
 
         <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">
@@ -789,7 +795,7 @@
           <div class="pack-card-desc">
             Checks if a customer's $240,000 order form and 18.5% discount follow the company's Excel pricing rules.
           </div>
-          <span class="pack-status-pill pack-status-ok">&check; Auto-Approved (18.5% &le; 20% Limit)</span>
+          <span class="pack-status-pill pack-status-ok">Discount and order terms</span>
         </button>
 
         <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">
@@ -800,7 +806,7 @@
           <div class="pack-card-desc">
             Catches a costly mismatch where the Excel equipment list orders 50.0 MW of power, but the PDF permit only allows 42.5 MW.
           </div>
-          <span class="pack-status-pill pack-status-warn">! Caught 7.5 MW Conflict ($11.4M Risk)</span>
+          <span class="pack-status-pill pack-status-warn">Power limit and lease dates</span>
         </button>
       </div>
 
@@ -808,15 +814,15 @@
       <div style="margin-top:10px; background:#FFFDFB; border:1.5px solid var(--cf-rule-strong); padding:10px 14px;">
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
           <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; font-size:11px;">
-            &#9654; TRY IT LIVE ON YOUR OWN TEXT: EDIT NUMBERS IN FILE A &amp; FILE B TO TEST INSTANT MISMATCH DETECTION
+            Compare numbers in two pasted passages
           </span>
-          <span id="customDiffStatusBadge" class="mono" style="font-size:10.5px; color:var(--cf-forest-pass); font-weight:600;">
+          <span id="customDiffStatusBadge" role="status" class="mono" style="font-size:10.5px; color:var(--cf-forest-pass); font-weight:600;">
             LIVE NUMBER &amp; CLAUSE DIFF ENGINE
           </span>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center;">
-          <input id="customDocAInput" type="text" value="Contract_Clause.pdf (§4.1): Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
-          <input id="customDocBInput" type="text" value="Vendor_Invoice.xlsx (Row 8): Billed annual fee is $68,500 with 15-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document B row" />
+        <div class="comparison-fields" style="display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:center;">
+          <input id="customDocAInput" type="text" value="Maximum annual fee is $50,000 with 30-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document A clause" />
+          <input id="customDocBInput" type="text" value="Billed annual fee is $68,500 with 15-day payment terms." class="input-mechanical" style="width:100%;" aria-label="Document B row" />
           <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile btn-tactile-vermilion" style="padding:8px 14px; white-space:nowrap;">
             <span>&#9654; Cross-Check Now</span>
           </button>
@@ -832,10 +838,10 @@
         <div class="pane-toolbar">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
             <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px;">
-              STEP 2 &mdash; CROSS-CHECK FINDINGS (CLICK ANY PROOF BUTTON TO HIGHLIGHT SOURCE)
+              2. Check a question and open its citation
             </span>
             <span class="mono" style="font-size:10.5px; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-              0 HALLUCINATIONS &bull; EXACT PAGE &amp; CELL LINKS
+              SAMPLE SOURCE EXCERPTS
             </span>
           </div>
           <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-bottom:6px;">
@@ -846,13 +852,13 @@
           </div>
         </div>
 
-        <div id="chatMessages" class="stream-viewport">
+        <div id="chatMessages" aria-live="polite" class="stream-viewport">
           <!-- Populated by JS -->
         </div>
 
         <div style="padding:12px 20px; border-top:1px solid var(--cf-rule-mid); background-color:var(--cf-bg-stone);">
           <form onsubmit="handleCustomQuery(event)" style="display:flex; gap:8px;">
-            <input id="customQueryInput" type="text" placeholder="Ask any question across these 3 files (e.g., What is the penalty cap? Is there a mismatch?)..." class="input-mechanical" style="flex:1;" />
+            <input aria-label="Question or exact phrase" id="customQueryInput" type="text" placeholder="Ask a sample question or search for an exact phrase…" class="input-mechanical" style="flex:1;" />
             <button type="submit" class="btn-tactile btn-tactile-vermilion">
               <span>Check Documents</span>
               <span>&rarr;</span>
@@ -866,7 +872,7 @@
         <div class="pane-toolbar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
           <div>
             <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; font-size:11.5px; margin-bottom:6px;">
-              STEP 3 &mdash; SOURCE DOCUMENT VIEWER (3 UPLOADED FILES):
+              Source documents and excerpts
             </div>
             <div id="docTabsContainer" style="display:flex; flex-wrap:wrap; gap:6px;">
               <!-- Populated by JS -->
@@ -877,11 +883,11 @@
         <!-- Active Citation Banner -->
         <div id="activeCitationBanner" style="padding:10px 20px; background-color:var(--cf-highlight-mark); border-bottom:1px solid var(--cf-rule-strong); display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--font-mono); font-size:11.5px;">
           <div>
-            <strong>HIGHLIGHTED PROOF:</strong>
-            <span id="activeCitationText">Click any proof button on the left to highlight the exact page, clause, or spreadsheet cell.</span>
+            <strong>Selected passage</strong>
+            <span id="activeCitationText" role="status">Open a citation to read the matching passage.</span>
           </div>
-          <span id="activeConfidenceBadge" style="padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px; white-space:nowrap;">
-            EXACT MATCH
+          <button type="button" id="backToAnswer" class="btn-tactile" hidden>Back to answer</button><span id="activeConfidenceBadge" style="padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-surface); font-weight:600; font-size:10.5px; white-space:nowrap;">
+            SOURCE EXCERPT
           </span>
         </div>
 
@@ -891,69 +897,6 @@
       </div>
 
     </section>
-
-    <!-- Collapsible Technical Architecture Drawer (Keeps main UI simple while preserving deep technical specs) -->
-    <details class="tech-drawer">
-      <summary>
-        <span>Technical Architecture &amp; Retrieval Pipeline Metrics (4-Stage Hybrid Search &bull; 380ms Latency &bull; 99.4% Recall)</span>
-        <span>Show / Hide Technical Specs &darr;</span>
-      </summary>
-      <div class="pipeline-bar">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:600;">
-            PIPELINE CONFIGURATION //
-          </span>
-          <span id="presetSubBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-rule-strong); background:var(--cf-bg-surface); color:var(--cf-accent-primary); font-weight:600;"></span>
-        </div>
-        <div class="mono" style="display:flex; align-items:center; gap:16px; font-size:11.5px;">
-          <span>RESPONSE TIME: <strong id="metricTtft" style="color:var(--cf-forest-pass);">380ms</strong></span>
-          <span>ACCURACY (RECALL@5): <strong style="color:var(--cf-navy-authority);">99.4%</strong></span>
-          <span>COST PER CHECK: <strong id="metricCost" style="color:var(--cf-accent-primary);">$0.0041</strong></span>
-        </div>
-      </div>
-      <section class="nodes-grid">
-        <div id="lg_node_1" class="node-cell">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="node-index">01</div>
-            <div>
-              <div style="font-size:12.5px; font-weight:700;">File Reader</div>
-              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Reads PDF, Word &amp; Excel</div>
-            </div>
-          </div>
-          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">42ms</span>
-        </div>
-        <div id="lg_node_2" class="node-cell">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="node-index">02</div>
-            <div>
-              <div style="font-size:12.5px; font-weight:700;">Hybrid Keyword + Semantic Search</div>
-              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">pgvector + BM25 Search</div>
-            </div>
-          </div>
-          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">128ms</span>
-        </div>
-        <div id="lg_node_3" class="node-cell">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="node-index">03</div>
-            <div>
-              <div style="font-size:12.5px; font-weight:700;">Cross-File Number Checker</div>
-              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Excel Row vs. PDF Clause Diff</div>
-            </div>
-          </div>
-          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">115ms</span>
-        </div>
-        <div id="lg_node_4" class="node-cell">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="node-index">04</div>
-            <div>
-              <div style="font-size:12.5px; font-weight:700;">Page &amp; Cell Proof Linker</div>
-              <div class="mono" style="font-size:10.5px; color:var(--cf-ink-muted);">Locks Every Answer to Source</div>
-            </div>
-          </div>
-          <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">95ms</span>
-        </div>
-      </section>
-    </details>
 
   </main>
 
@@ -989,10 +932,6 @@
       enterprise_rag: {
         title: "1. Financial & Contract Audit",
         badge: "PDF + WORD + EXCEL FINANCIAL & CONTRACT AUDIT",
-        prompts: [
-          "Compare Q3 profit vs. contract debt floor",
-          "Check if the $285,000 penalty cap matches across Excel and Word"
-        ],
         docs: [
           {
             id: "doc_xlsx",
@@ -1022,75 +961,12 @@
               { id: "cit_pdf_p9", coord: "Page 9, Paragraph 3", title: "100% Source Citation Verification Rule", text: "Page 9, Para 3: Every automated check links directly to the exact page number and spreadsheet row before approval." }
             ]
           }
-        ],
-        initialChat: [
-          {
-            role: "assistant",
-            html: `
-              <div class="finding-card finding-alert">
-                <div class="finding-header">
-                  <span class="finding-title" style="color:var(--cf-accent-primary);">! Finding 1: Caught $42,000 SLA Overbilling vs. Contract Cap</span>
-                  <span class="pack-status-pill pack-status-warn" style="margin:0;">! OVERBILLING CAUGHT</span>
-                </div>
-                <div class="diff-compare-grid">
-                  <div class="diff-col-a">
-                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-forest-pass);">WORD CONTRACT (§4.2) &amp; EXCEL (ROW 14)</div>
-                    <div>Max SLA Penalty Cap: <strong>$285,000 (12.0%)</strong></div>
-                  </div>
-                  <div class="diff-col-mismatch">
-                    <div class="mono" style="font-size:10px; font-weight:700; color:var(--cf-accent-primary);">UNVERIFIED VENDOR CLAIM</div>
-                    <div>Claimed SLA Credit: <strong>$327,000 (+$42,000 Over Cap!)</strong></div>
-                  </div>
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r14')" class="citation-badge">&#9654; Highlight $285k Cap in Excel (Row 14) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s42')" class="citation-badge">&#9654; Highlight §4.2 in Word Contract (Page 7) &rarr;</button>
-                </div>
-              </div>
-              <div class="finding-card">
-                <div class="finding-header">
-                  <span class="finding-title">Finding 2: Q3 Profit vs. Required Minimum ($4.19M vs. $3.50M)</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; PASSED (+19.7% ABOVE FLOOR)</span>
-                </div>
-                <div class="diff-compare-grid">
-                  <div class="diff-col-a">
-                    <div class="mono" style="font-size:10px; font-weight:700;">EXCEL FINANCIALS (ROW 19)</div>
-                    <div>Q3 Operating Profit: <strong>$4,190,000 (28.2%)</strong></div>
-                  </div>
-                  <div class="diff-col-b">
-                    <div class="mono" style="font-size:10px; font-weight:700;">BOARD AUDIT PDF (PAGE 4)</div>
-                    <div>Required Covenant Floor: <strong>$3,500,000 (&check; Passed)</strong></div>
-                  </div>
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_xlsx','cit_xlsx_r19')" class="citation-badge">&#9654; Highlight in Excel (Row 19) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('doc_pdf','cit_pdf_p4')" class="citation-badge">&#9654; Highlight in Audit PDF (Page 4) &rarr;</button>
-                </div>
-              </div>
-              <div class="finding-card" style="margin-bottom:0;">
-                <div class="finding-header">
-                  <span class="finding-title">Finding 3: Data Privacy Clause (§6.1)</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; VERIFIED</span>
-                </div>
-                <div class="finding-desc">
-                  Zero third-party data retention is active and signed in the Master Service Agreement.
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('doc_docx','cit_docx_s61')" class="citation-badge">&#9654; Highlight in Word Contract (Page 11) &rarr;</button>
-                </div>
-              </div>
-            `
-          }
         ]
       },
 
       agentpress_mcp: {
         title: "2. Sales Order & Discount Approval",
         badge: "SALES ORDER PDF vs. PRICING RULES EXCEL",
-        prompts: [
-          "Is Acme Corp's 18.5% discount allowed under our pricing rules?",
-          "Does the $240k order qualify for the free integration bundle?"
-        ],
         docs: [
           {
             id: "ap_pdf",
@@ -1118,49 +994,12 @@
               { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "Pre-Approved Security Terms", text: "§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
             ]
           }
-        ],
-        initialChat: [
-          {
-            role: "assistant",
-            html: `
-              <div class="finding-card">
-                <div class="finding-header">
-                  <span class="finding-title">Finding 1: 18.5% Discount Is Within the 20.0% Limit</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; AUTO-APPROVED</span>
-                </div>
-                <div class="finding-desc">
-                  Acme Corp's <strong>18.5% discount</strong> on their $240,000/yr order is below the <strong>20.0% maximum</strong> in your Excel pricing sheet.
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('ap_pdf','ap_cit_p3')" class="citation-badge">Show in Order PDF (Page 3) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('ap_xlsx','ap_cit_r8')" class="citation-badge">Show in Pricing Excel (Row 8) &rarr;</button>
-                </div>
-              </div>
-              <div class="finding-card" style="margin-bottom:0;">
-                <div class="finding-header">
-                  <span class="finding-title">Finding 2: Free Integration Add-On Qualifies ($240k &ge; $200k)</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; ELIGIBLE FOR $0 WAIVER</span>
-                </div>
-                <div class="finding-desc">
-                  Because the order is over $200,000/yr, the Salesforce/Slack integration bundle qualifies for a 100% fee waiver.
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('ap_pdf','ap_cit_p5')" class="citation-badge">Show in Order PDF (Page 5) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('ap_xlsx','ap_cit_r15')" class="citation-badge">Show in Pricing Excel (Row 15) &rarr;</button>
-                </div>
-              </div>
-            `
-          }
         ]
       },
 
       buildq_solar: {
         title: "3. Engineering Permit vs. Excel BOM",
         badge: "ENGINEERING PERMIT PDF vs. EQUIPMENT EXCEL BOM",
-        prompts: [
-          "Show the exact MW power mismatch between the PDF permit and Excel",
-          "Verify if the 35-year land lease date matches the financial model"
-        ],
         docs: [
           {
             id: "bq_grid_pdf",
@@ -1187,43 +1026,41 @@
               { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, §3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
             ]
           }
-        ],
-        initialChat: [
-          {
-            role: "assistant",
-            html: `
-              <div class="finding-card finding-alert">
-                <div class="finding-header">
-                  <span class="finding-title" style="color:var(--cf-accent-primary);">! Finding 1: Power Capacity Mismatch (42.5 MW Permit vs. 50.0 MW Excel)</span>
-                  <span class="pack-status-pill pack-status-warn" style="margin:0;">! ACTION REQUIRED</span>
-                </div>
-                <div class="finding-desc">
-                  The official grid permit PDF caps power output at <strong>42.5 MW</strong>, but the Excel equipment list orders <strong>50.0 MW</strong> of inverters (a 7.5 MW conflict that would trigger an unbudgeted $11.4M upgrade).
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('bq_grid_pdf','bq_cit_p18')" class="citation-badge">Show 42.5 MW Cap in Permit PDF (Page 18) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r9')" class="citation-badge">Show 50.0 MW Order in Excel (Row 9) &rarr;</button>
-                </div>
-              </div>
-              <div class="finding-card" style="margin-bottom:0;">
-                <div class="finding-header">
-                  <span class="finding-title">Finding 2: 35-Year Lease Dates Match (Through Dec 31, 2061)</span>
-                  <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; DATES MATCH</span>
-                </div>
-                <div class="finding-desc">
-                  The 35-year term in the Land Lease PDF matches the financial timeline in Excel Row 22.
-                </div>
-                <div class="finding-proof-btns">
-                  <button type="button" onclick="jumpToCitation('bq_lease_pdf','bq_cit_p4')" class="citation-badge">Show in Land Lease PDF (Page 4) &rarr;</button>
-                  <button type="button" onclick="jumpToCitation('bq_epc_xlsx','bq_cit_r22')" class="citation-badge">Show in Excel (Row 22) &rarr;</button>
-                </div>
-              </div>
-            `
-          }
         ]
       }
     };
 
+    // Sample answers list only passages that contain the quoted evidence.
+    const QUESTIONS = {
+      enterprise_rag: [
+        ['What is the Q3 debt floor?', ['Compare Q3 profit vs. contract debt floor','What is the Q3 profit minimum?'], ['cit_pdf_p4','cit_xlsx_r19']],
+        ['What is the penalty cap?', ['Check if the $285,000 penalty cap matches across Excel and Word'], ['cit_xlsx_r14','cit_docx_s42']],
+        ['What is the data retention policy?', [], ['cit_docx_s61']]
+      ],
+      agentpress_mcp: [
+        ["Is Acme Corp's 18.5% discount allowed under our pricing rules?", ['What discount is allowed?'], ['ap_cit_p3','ap_cit_r8']],
+        ['Does the $240k order qualify for the free integration bundle?', [], ['ap_cit_p3','ap_cit_r15']],
+        ['Which security terms are pre-approved?', [], ['ap_cit_s31']]
+      ],
+      buildq_solar: [
+        ['Show the exact MW power mismatch between the PDF permit and Excel', ['What is the power limit?'], ['bq_cit_p18','bq_cit_r9']],
+        ['Verify if the 35-year land lease date matches the financial model', [], ['bq_cit_r22','bq_cit_p4']],
+        ['How many acres does the lease cover?', [], ['bq_cit_p4']]
+      ]
+    };
+    let answers = [];
+    const workflow = stage => window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage}}));
+    let returnToAnswer = null;
+    let comparison = null;
+    function availableDocs() {
+      const docs = PRESETS[currentPresetKey].docs;
+      if (!comparison) return docs;
+      return docs.concat(['a','b'].map(key => ({
+        id:'pasted_' + key, name:'Pasted passage ' + key.toUpperCase(), format:'Text',
+        chunks:[{id:'cit_custom_' + key, coord:'User input', title:'Compared passage', text:comparison['source_' + key]}]
+      })));
+    }
+    const normalized = value => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
     let currentPresetKey = 'enterprise_rag';
     let currentDocId = 'doc_xlsx';
     let highlightedChunkId = 'cit_xlsx_r14';
@@ -1237,7 +1074,14 @@
         .replace(/'/g, '&#39;');
     }
 
-    function switchPreset(presetKey) {
+    function switchPreset(presetKey, selectedByUser = true) {
+      if (!PRESETS[presetKey]) return;
+      if (selectedByUser) workflow('sample_selected');
+      answers = [];
+      comparison = null;
+      returnToAnswer = null;
+      document.getElementById('backToAnswer').hidden = true;
+      document.getElementById('customDiffStatusBadge').textContent = 'Ready to compare two passages.';
       currentPresetKey = presetKey;
       const preset = PRESETS[presetKey];
 
@@ -1255,20 +1099,19 @@
       if (subBadge) subBadge.textContent = preset.badge;
 
       const chipsDiv = document.getElementById('promptChipsContainer');
-      chipsDiv.innerHTML = preset.prompts.map(p => `
-        <button type="button" onclick="runPromptChip('${p.replace(/'/g, "\\'")}')" class="prompt-chip">
-          &rarr; ${p}
-        </button>
-      `).join('');
-
-      const chatDiv = document.getElementById('chatMessages');
-      chatDiv.innerHTML = preset.initialChat.map(msg => renderChatMessageHTML(msg)).join('');
-
+      chipsDiv.replaceChildren(...QUESTIONS[presetKey].map(([question]) => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'prompt-chip';
+        chip.textContent = question;
+        chip.addEventListener('click', () => runPromptChip(question));
+        return chip;
+      }));
+      document.getElementById('chatMessages').textContent = 'Choose a question above or search for an exact phrase in the selected pack.';
       currentDocId = preset.docs[0].id;
       highlightedChunkId = preset.docs[0].chunks[0].id;
       renderDocumentTabs();
       renderDocumentViewport();
-      animateLangGraphNodes();
 
       const firstDoc = preset.docs[0];
       const firstChunk = firstDoc.chunks[0];
@@ -1288,7 +1131,7 @@
         <div class="msg-system" style="font-family:var(--font-sans);">
           <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px; margin-bottom:10px; font-family:var(--font-mono); font-size:10.5px;">
             <span style="font-weight:700; color:var(--cf-ink-primary);">AUTOMATED CROSS-CHECK RESULTS</span>
-            <span style="color:var(--cf-forest-pass); font-weight:600;">CLICK ANY BUTTON BELOW TO HIGHLIGHT THE SOURCE</span>
+            <span style="color:var(--cf-forest-pass); font-weight:600;">DOCUMENT PACK</span>
           </div>
           <div>${msg.html}</div>
         </div>
@@ -1298,7 +1141,7 @@
     function renderDocumentTabs() {
       const preset = PRESETS[currentPresetKey];
       const container = document.getElementById('docTabsContainer');
-      container.innerHTML = preset.docs.map(doc => {
+      container.innerHTML = availableDocs().map(doc => {
         const active = doc.id === currentDocId;
         return `
           <button type="button" onclick="selectDocTab('${doc.id}')" class="btn-tactile ${active ? 'btn-tactile-ink' : ''}">
@@ -1312,7 +1155,7 @@
     function selectDocTab(docId) {
       currentDocId = docId;
       const preset = PRESETS[currentPresetKey];
-      const doc = preset.docs.find(d => d.id === docId);
+      const doc = availableDocs().find(d => d.id === docId);
       if (doc && doc.chunks[0]) {
         highlightedChunkId = doc.chunks[0].id;
         document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) — "${doc.chunks[0].title}"`;
@@ -1323,7 +1166,7 @@
 
     function renderDocumentViewport() {
       const preset = PRESETS[currentPresetKey];
-      const doc = preset.docs.find(d => d.id === currentDocId) || preset.docs[0];
+      const doc = availableDocs().find(d => d.id === currentDocId) || preset.docs[0];
       const viewport = document.getElementById('documentViewport');
 
       viewport.innerHTML = doc.chunks.map(chunk => {
@@ -1335,14 +1178,14 @@
                 <span class="mono" style="font-size:10.5px; font-weight:600; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:${isHighlighted ? 'var(--cf-ink-primary)' : 'var(--cf-bg-paper)'}; color:${isHighlighted ? 'var(--cf-ink-on-dark)' : 'var(--cf-ink-primary)'};">
                   ${doc.name} &mdash; ${chunk.coord}
                 </span>
-                <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${chunk.title}</span>
+                <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${escapeHtml(chunk.title)}</span>
               </div>
               <span class="mono" style="font-size:10.5px; font-weight:700; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? '✓ HIGHLIGHTED PROOF' : 'CLICK TO HIGHLIGHT'}
+                ${isHighlighted ? 'Selected passage' : 'Select passage'}
               </span>
             </div>
             <p class="chunk-body-text">
-              &ldquo;${chunk.text}&rdquo;
+              &ldquo;${escapeHtml(chunk.text)}&rdquo;
             </p>
           </div>
         `;
@@ -1357,27 +1200,23 @@
       el.classList.add('cf-flash-active');
     }
 
-    function cycleNextPreset() {
-      const order = ['enterprise_rag', 'agentpress_mcp', 'buildq_solar'];
-      const next = order[(order.indexOf(currentPresetKey) + 1) % order.length];
-      switchPreset(next);
-    }
-
-    function triggerStep2HighlightDemo() {
-      const preset = PRESETS[currentPresetKey];
-      const targetDoc = preset.docs[1] || preset.docs[0];
-      const targetChunk = targetDoc.chunks[0];
-      jumpToCitation(targetDoc.id, targetChunk.id);
-    }
-
     function runCustomTextDiff() {
       const textA = (document.getElementById('customDocAInput').value || '').trim();
       const textB = (document.getElementById('customDocBInput').value || '').trim();
-      if (!textA || !textB) return;
+      if (!textA || !textB) {
+        document.getElementById('customDiffStatusBadge').textContent = 'Enter both passages to compare their numbers.';
+        return;
+      }
 
       const numsA = textA.match(/\$?\d[\d,.]*/g) || [];
       const numsB = textB.match(/\$?\d[\d,.]*/g) || [];
+      if (!numsA.length || !numsB.length) {
+        document.getElementById('customDiffStatusBadge').textContent = 'Both passages need a number for comparison.';
+        return;
+      }
       const hasMismatch = JSON.stringify(numsA) !== JSON.stringify(numsB);
+      comparison = { source_a: textA, source_b: textB, numbers_a: numsA, numbers_b: numsB, status: hasMismatch ? 'different_numbers' : 'matching_numbers' };
+      document.getElementById('latestComparison')?.remove();
       const badge = document.getElementById('customDiffStatusBadge');
       if (badge) {
         badge.textContent = hasMismatch
@@ -1386,26 +1225,11 @@
         badge.style.color = hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)';
       }
 
-      PRESETS[currentPresetKey].docs[0].chunks.unshift({
-        id: 'cit_custom_a',
-        coord: 'Custom File A (§1.1)',
-        title: 'Uploaded Contract / Source A',
-        text: textA
-      });
-      if (PRESETS[currentPresetKey].docs[1]) {
-        PRESETS[currentPresetKey].docs[1].chunks.unshift({
-          id: 'cit_custom_b',
-          coord: 'Custom File B (Row 1)',
-          title: 'Uploaded Spreadsheet / Source B',
-          text: textB
-        });
-      }
-
       const cardHtml = `
-        <div class="finding-card ${hasMismatch ? 'finding-alert' : ''}">
+        <div id="latestComparison" class="finding-card ${hasMismatch ? 'finding-alert' : ''}">
           <div class="finding-header">
             <span class="finding-title" style="color:${hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)'};">
-              ${hasMismatch ? '! Live Custom Check: Number Mismatch Caught!' : '&check; Live Custom Check: Both Texts Match'}
+              ${hasMismatch ? '! Live Custom Check: Number Mismatch Caught!' : '&check; The numbers in both passages match'}
             </span>
             <span class="pack-status-pill ${hasMismatch ? 'pack-status-warn' : 'pack-status-ok'}" style="margin:0;">
               ${hasMismatch ? '! MISMATCH DETECTED' : '&check; VERIFIED MATCH'}
@@ -1422,15 +1246,16 @@
             </div>
           </div>
           <div class="finding-proof-btns">
-            <button type="button" onclick="jumpToCitation('${escapeHtml(PRESETS[currentPresetKey].docs[0].id)}','cit_custom_a')" class="citation-badge">&#9654; Highlight Custom File A &rarr;</button>
-            ${PRESETS[currentPresetKey].docs[1] ? `<button type="button" onclick="jumpToCitation('${escapeHtml(PRESETS[currentPresetKey].docs[1].id)}','cit_custom_b')" class="citation-badge">&#9654; Highlight Custom File B &rarr;</button>` : ''}
+            <button type="button" onclick="jumpToCitation('pasted_a','cit_custom_a')" class="citation-badge">Open passage A</button>
+            <button type="button" onclick="jumpToCitation('pasted_b','cit_custom_b')" class="citation-badge">Open passage B</button>
           </div>
         </div>
       `;
 
       const chatDiv = document.getElementById('chatMessages');
-      chatDiv.innerHTML = renderChatMessageHTML({ role: 'assistant', html: cardHtml }) + chatDiv.innerHTML;
-      jumpToCitation(PRESETS[currentPresetKey].docs[0].id, 'cit_custom_a');
+      chatDiv.insertAdjacentHTML('afterbegin', renderChatMessageHTML({ role: 'assistant', html: cardHtml }));
+      jumpToCitation('pasted_a', 'cit_custom_a');
+      workflow('result_ready');
       flashOmniElement('chatMessages');
     }
 
@@ -1441,13 +1266,21 @@
       renderDocumentViewport();
 
       const preset = PRESETS[currentPresetKey];
-      const doc = preset.docs.find(d => d.id === docId);
+      const doc = availableDocs().find(d => d.id === docId);
       const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
 
       if (doc && chunk) {
         document.getElementById('activeCitationText').textContent = `✓ JUMPED TO: ${doc.name} (${chunk.coord}) — "${chunk.title}"`;
       }
 
+      const trigger = document.activeElement;
+      if (trigger?.closest('#chatMessages')) {
+        returnToAnswer = trigger;
+        document.getElementById('backToAnswer').hidden = false;
+        const target = document.getElementById('activeCitationBanner');
+        target.tabIndex = -1;
+        target.focus();
+      }
       flashOmniElement('activeCitationBanner');
       flashOmniElement('chunk_' + chunkId);
 
@@ -1456,20 +1289,6 @@
       if (el && vp) {
         vp.scrollTo({ top: Math.max(0, el.offsetTop - vp.offsetTop - 20), behavior: 'smooth' });
       }
-    }
-
-    function animateLangGraphNodes() {
-      const ids = ['lg_node_1', 'lg_node_2', 'lg_node_3', 'lg_node_4'];
-      ids.forEach((id, idx) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        setTimeout(() => {
-          el.classList.add('pulsing');
-          setTimeout(() => {
-            el.classList.remove('pulsing');
-          }, 320);
-        }, idx * 100);
-      });
     }
 
     function runPromptChip(promptText) {
@@ -1483,38 +1302,23 @@
       const query = (input.value || '').trim();
       if (!query) return;
 
-      animateLangGraphNodes();
       const preset = PRESETS[currentPresetKey];
-      const firstDoc = preset.docs[0];
-      const secondDoc = preset.docs[1] || preset.docs[0];
-      const c1 = firstDoc.chunks[0];
-      const c2 = secondDoc.chunks[0];
-
-      const chatDiv = document.getElementById('chatMessages');
-      chatDiv.innerHTML += renderChatMessageHTML({ role: 'user', text: query });
-
-      const replyHtml = `
-        <div class="finding-card" style="margin-bottom:0;">
-          <div class="finding-header">
-            <span class="finding-title">Answer for: &ldquo;${escapeHtml(query)}&rdquo;</span>
-            <span class="pack-status-pill pack-status-ok" style="margin:0;">&check; 2 SOURCES MATCHED</span>
-          </div>
-          <div class="finding-desc">
-            <strong>1. ${escapeHtml(firstDoc.name)} (${escapeHtml(c1.coord)}):</strong> ${escapeHtml(c1.text)}<br/>
-            <strong>2. ${escapeHtml(secondDoc.name)} (${escapeHtml(c2.coord)}):</strong> ${escapeHtml(c2.text)}
-          </div>
-          <div class="finding-proof-btns">
-            <button type="button" onclick="jumpToCitation('${escapeHtml(firstDoc.id)}','${escapeHtml(c1.id)}')" class="citation-badge">Show in ${escapeHtml(firstDoc.name)} &rarr;</button>
-            <button type="button" onclick="jumpToCitation('${escapeHtml(secondDoc.id)}','${escapeHtml(c2.id)}')" class="citation-badge">Show in ${escapeHtml(secondDoc.name)} &rarr;</button>
-          </div>
-        </div>`;
-
-      setTimeout(() => {
-        chatDiv.innerHTML += renderChatMessageHTML({ role: 'assistant', html: replyHtml });
-        chatDiv.scrollTop = chatDiv.scrollHeight;
-        jumpToCitation(firstDoc.id, c1.id);
-      }, 180);
-
+      const passages = preset.docs.flatMap(doc => doc.chunks.map(chunk => ({doc, chunk})));
+      const phrase = normalized(query);
+      const known = QUESTIONS[currentPresetKey].find(([question, aliases]) => [question, ...aliases].some(value => normalized(value) === phrase));
+      const matches = known
+        ? known[2].map(id => passages.find(({chunk}) => chunk.id === id)).filter(Boolean)
+        : passages.filter(({chunk}) => phrase.length >= 4 && normalized(chunk.text).includes(phrase));
+      const evidence = matches.map(({doc, chunk}) => ({document: doc.name, location: chunk.coord, text: chunk.text, id: chunk.id}));
+      answers.push({question: query, result: matches.length ? 'source_found' : 'no_answer', evidence});
+      const body = matches.length ? matches.map(({doc, chunk}) =>
+        `<p>${escapeHtml(chunk.text)}</p><button class="citation-badge" type="button" onclick="jumpToCitation('${doc.id}','${chunk.id}')">Open ${escapeHtml(doc.name)} · ${escapeHtml(chunk.coord)}</button>`
+      ).join('') : 'No answer found in this document pack. Choose a sample question or enter a phrase from a source.';
+      const chat = document.getElementById('chatMessages');
+      if (answers.length === 1 && !comparison) chat.replaceChildren();
+      chat.insertAdjacentHTML('beforeend', renderChatMessageHTML({role:'assistant', html:`<div class="finding-card"><strong>${escapeHtml(query)}</strong><div>${body}</div></div>`}));
+      workflow('result_ready');
+      chat.lastElementChild?.scrollIntoView({block:'nearest'});
       input.value = '';
     }
 
@@ -1523,6 +1327,9 @@
       const modal = document.getElementById('auditReportModalBackdrop');
       const content = document.getElementById('auditReportModalContent');
       if (!modal || !content) return;
+      const opener = document.activeElement;
+      modal._opener = opener;
+
 
       const rowsHtml = preset.docs.map(d =>
         d.chunks.map(c => `
@@ -1530,7 +1337,7 @@
             <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); font-weight:600;">${escapeHtml(d.name)}</td>
             <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);" class="mono">${escapeHtml(c.coord)}</td>
             <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);">${escapeHtml(c.title)}</td>
-            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); color:var(--cf-forest-pass); font-weight:700;" class="mono">VERIFIED</td>
+            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); color:var(--cf-forest-pass); font-weight:700;" class="mono">Source excerpt</td>
           </tr>
         `).join('')
       ).join('');
@@ -1538,9 +1345,12 @@
       content.innerHTML = `
         <div style="background:var(--cf-bg-paper); border:1px solid var(--cf-rule-mid); padding:12px 14px; margin-bottom:14px;">
           <div><strong>Document Pack:</strong> ${escapeHtml(preset.title)}</div>
-          <div><strong>Files Cross-Checked:</strong> ${preset.docs.map(d => escapeHtml(d.name)).join(', ')}</div>
-          <div><strong>Verification Timestamp:</strong> ${new Date().toISOString().slice(0, 19).replace('T', ' ')} UTC</div>
+          <div><strong>Sample files:</strong> ${preset.docs.map(d => escapeHtml(d.name)).join(', ')}</div>
+          <div><strong>Report created:</strong> ${new Date().toISOString().slice(0, 19).replace('T', ' ')} UTC</div>
         </div>
+        <h3>Questions and evidence</h3>
+        ${answers.map(answer => `<p><strong>${escapeHtml(answer.question)}</strong> · ${answer.result === 'no_answer' ? 'No answer in this pack' : answer.evidence.map(c => escapeHtml(c.document + ' · ' + c.location + ' · ' + c.text)).join('<br>')}</p>`).join('') || '<p>No questions asked yet.</p>'}
+        ${comparison ? `<p><strong>Pasted passages</strong> · ${escapeHtml(comparison.status)}<br>${escapeHtml(comparison.source_a)}<br>${escapeHtml(comparison.source_b)}</p>` : ''}
         <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
           <thead>
             <tr style="background:var(--cf-bg-stone); text-align:left; font-family:var(--font-mono); font-size:11px;">
@@ -1554,11 +1364,15 @@
         </table>
       `;
       modal.classList.remove('om-hidden');
+      modal.querySelector('button')?.focus();
     }
 
     function closeAuditPreviewModal() {
       const modal = document.getElementById('auditReportModalBackdrop');
-      if (modal) modal.classList.add('om-hidden');
+      if (modal) {
+        modal.classList.add('om-hidden');
+        modal._opener?.focus();
+      }
     }
 
     function triggerExpertSignOff() {
@@ -1568,10 +1382,10 @@
         preset: currentPresetKey,
         pack_title: preset.title,
         timestamp: new Date().toISOString(),
-        verified_documents: preset.docs.map(d => ({ name: d.name, format: d.format, chunks_verified: d.chunks.length })),
-        active_citation_inspected: highlightedChunkId,
-        grounding_pass_rate: 1.0,
-        expert_sign_off: "APPROVED_WITH_SOURCE_CITATIONS"
+        documents: preset.docs.map(d => ({ name: d.name, format: d.format, passages: d.chunks.map(c => ({location:c.coord, text:c.text})) })),
+        selected_excerpt: highlightedChunkId,
+        questions: answers,
+        comparison
       };
       const blob = new Blob([JSON.stringify(auditPayload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -1583,6 +1397,7 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
+      workflow('export_ready');
       const btn = document.getElementById('btnSignOff');
       if (btn) {
         btn.innerHTML = `<span>&check; REPORT DOWNLOADED (.JSON)</span>`;
@@ -1592,8 +1407,26 @@
       }
     }
 
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !document.getElementById('auditReportModalBackdrop').classList.contains('om-hidden')) closeAuditPreviewModal();
+    });
+    window.addEventListener('cf:open-step', ({detail}) => {
+      if (detail.step === 1) document.querySelector('.pack-card.active-pack').focus();
+      if (detail.step === 2) runPromptChip(QUESTIONS[currentPresetKey][0][0]);
+      if (detail.step === 3) openAuditPreviewModal();
+    });
+    document.getElementById('backToAnswer').addEventListener('click', () => returnToAnswer?.focus());
+    for (const id of ['customDocAInput', 'customDocBInput']) {
+      document.getElementById(id).addEventListener('input', () => {
+        if (!comparison) return;
+        comparison = null;
+        document.getElementById('latestComparison')?.remove();
+        selectDocTab(PRESETS[currentPresetKey].docs[0].id);
+        document.getElementById('customDiffStatusBadge').textContent = 'Passage changed. Run the comparison again.';
+      });
+    }
     window.addEventListener('DOMContentLoaded', () => {
-      switchPreset('enterprise_rag');
+      switchPreset('enterprise_rag', false);
     });
   </script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>

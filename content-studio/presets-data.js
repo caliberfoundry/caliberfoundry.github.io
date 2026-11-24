@@ -29,7 +29,7 @@
       // =======================================================================
       {
         id: "n8n-pipeline",
-        badge: "UPWORK DEAL PLAN-25 · $3,000 FIXED",
+        badge: "Workflow payload example",
         title: "n8n & Multi-Model Document Extraction -> Multi-Channel Content Pipeline",
         sector: "B2B Revenue & Content Operations (n8n / Make.com / REST Webhooks)",
         hallucinationRate: "0.0%",
@@ -351,7 +351,7 @@
       // =======================================================================
       {
         id: "eval-harness",
-        badge: "UPWORK DEAL PLAN-26 · $100K+ US CLIENT",
+        badge: "Document evaluation example",
         title: "Production Document Extraction & Ground-Truth Evaluation Harness",
         sector: "Enterprise Document Engineering & Automated Quality Gate (Python / FastAPI / TypeScript)",
         hallucinationRate: "0.0%",

@@ -1614,24 +1614,11 @@
     }
     const lower = clean.toLowerCase();
 
-    let match = DATASET.allSections.find(s =>
-      s.id.toLowerCase() === lower ||
-      s.citation.toLowerCase() === lower ||
-      s.citation.toLowerCase().includes(lower) ||
-      lower.includes(s.citation.toLowerCase())
-    );
+    const match = DATASET.allSections.find(section => section.citation.toLowerCase() === lower);
     if (match) return match;
-
-    const numMatch = clean.match(/(\d+\.\d+[a-z]?|gri\s*\d)/i);
-    if (numMatch) {
-      const token = numMatch[1].toLowerCase().replace(/\s+/g, '');
-      match = DATASET.allSections.find(s =>
-        s.citation.toLowerCase().replace(/\s+/g, '').includes(token) ||
-        s.id.toLowerCase().replace(/[-_\s]+/g, '').includes(token.replace(/\./g, ''))
-      );
-      if (match) return match;
-    }
-
+    const token = value => (String(value).match(/\b\d+\.\d+[a-z]?\b|\bGRI\s*\d+/i) || [''])[0].replace(/\s/g, '').toLowerCase();
+    const requested = token(clean);
+    if (requested) return DATASET.allSections.find(section => token(section.citation) === requested) || null;
     return null;
   }
 
@@ -1649,7 +1636,7 @@
     }
 
     const numExtract = attachedSec.citation.match(/(\d+\.\d+|gri\s*\d)/i);
-    if (numExtract && question.targetCitation && question.targetCitation.toLowerCase().includes(numExtract[1].toLowerCase())) {
+    if (numExtract && !targetResolved && question.targetCitation && (question.targetCitation.match(/\d+\.\d+|gri\s*\d+/i) || [''])[0].toLowerCase() === numExtract[1].toLowerCase()) {
       return true;
     }
 
@@ -2259,7 +2246,7 @@
     matchBadge.classList.remove('match-ok', 'match-warn');
 
     if (!work.attachedSectionId) {
-      citeText.textContent = 'None cited yet — open governing regulation on the right & click “Cite as Proof”';
+      citeText.textContent = 'Choose a section in Source and attach its citation.';
       jumpBtn.classList.add('hidden');
       return;
     }
@@ -2656,7 +2643,7 @@
     if (isAlreadyLockedHere) {
       lockBtn.textContent = `Cited ${shortCite} for Q${posNum}`;
     } else {
-      lockBtn.textContent = `Cite ${shortCite} as Proof for Q${posNum}`;
+      lockBtn.textContent = `Attach citation · ${shortCite} to Q${posNum}`;
     }
   }
 
@@ -2818,6 +2805,13 @@
     const cleanFreq = String(activeSection.examFrequency || 'High Yield').replace(/\s*\(.*?\)/g, '');
     document.getElementById('refDocFreqBadge').textContent = cleanFreq;
     document.getElementById('refDocCitationCode').innerHTML = highlightTextWithSearchQuery(activeSection.citation, query);
+    const official = document.getElementById('refOfficialSource');
+    const federal = activeSection.citation.match(/^(19|31) CFR\s*§\s*(\d+\.\d+[a-z]?)/i);
+    official.hidden = !federal;
+    if (federal) {
+      official.href = 'https://www.ecfr.gov/current/title-' + federal[1] + '/section-' + federal[2];
+      official.textContent = 'Read the current ' + activeSection.citation + ' in the eCFR';
+    }
     document.getElementById('refDocSectionTitle').innerHTML = highlightTextWithSearchQuery(activeSection.title, query);
 
     updateRightPaneCiteButtonLabel();
@@ -2900,6 +2894,7 @@
     const matched = isCitationProofMatch(q, sec.id);
 
     saveUserState();
+    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
     renderQuestionWorkspace();
     renderReferenceLibrary();
     renderGlobalBarTelemetry();
@@ -3711,6 +3706,8 @@
 
     const reportData = renderB2BTeamReadinessReportModal(b2bReportViewMode);
     modal.classList.remove('hidden');
+    document.getElementById('btnCloseB2BTeamReportModal').focus();
+    window.dispatchEvent(new CustomEvent('cf:workflow',{detail:{stage:'export_ready'}}));
     return reportData;
   }
 
@@ -3854,6 +3851,7 @@
         }
 
         STATE.selectedTrack = requestedSuite;
+        window.dispatchEvent(new CustomEvent('cf:workflow',{detail:{stage:'sample_selected'}}));
         const pool = getFilteredQuestions();
         if (pool[0]) STATE.currentQuestionId = pool[0].id;
 
@@ -4563,6 +4561,60 @@
     }, 200);
   }
 
+  function setupStudyNavigation() {
+    const split = document.getElementById('pvueSplitWorkspace');
+    const buttons = document.querySelectorAll('[data-study-pane]');
+    const storedPositions = { question: null, source: null };
+    const narrow = window.matchMedia('(max-width: 900px)');
+    const menus = [document.querySelector('.study-settings'),document.querySelector('.exam-tools')];
+    const sizeMenus = () => menus.forEach(menu => { menu.open = !narrow.matches; });
+    sizeMenus();
+    narrow.addEventListener('change', sizeMenus);
+    function showPane(name, remember = true) {
+      const previous = split.dataset.pane || 'question';
+      const start = split.getBoundingClientRect().top + window.scrollY;
+      if (remember && previous !== name) storedPositions[previous] = window.scrollY - start;
+      split.dataset.pane = name;
+      buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.studyPane === name)));
+      if (narrow.matches) window.scrollTo(0, Math.max(0, start + (storedPositions[name] ?? -52)));
+    }
+    buttons.forEach(button => button.addEventListener('click', () => showPane(button.dataset.studyPane)));
+    window.addEventListener('cf:open-step', event => {
+      const step = Number(event.detail?.step);
+      if (step === 3) { openB2BTeamReadinessReport(); return; }
+      const question = getCurrentQuestion();
+      if (!question || ![1, 2].includes(step)) return;
+      if (STATE.activeMode === 'analytics') switchMode('cbt');
+      const section = resolveSectionByRef(question.targetSectionId) || resolveSectionByRef(question.targetCitation);
+      if (!section) return;
+      openSectionInReader(section);
+      if (step === 2) {
+        lockInActiveSectionAsProof();
+        showPane('question');
+        document.getElementById('qCitationProofBar').scrollIntoView({block:'center'});
+      } else {
+        showPane('source');
+        document.getElementById('btnLockCitationProof').focus();
+      }
+    });
+    const params = new URLSearchParams(location.search);
+    const oldGuide = (params.get('ref') || '').match(/^19-cfr-(\d+)-(\d+)-|^htsus-gri-(\d+)/);
+    const citation = params.get('cite') || (oldGuide && (oldGuide[3] ? 'GRI ' + oldGuide[3] : oldGuide[1] + '.' + oldGuide[2]));
+    if (citation) {
+      const section = resolveSectionByRef(citation);
+      if (section) {
+        if (STATE.activeMode === 'analytics') switchMode('cbt');
+        openSectionInReader(section);
+        showPane('source', false);
+        document.getElementById('btnLockCitationProof').focus({preventScroll:true});
+      } else {
+        const status = document.getElementById('studySourceNotice');
+        status.hidden = false;
+        status.textContent = 'This citation is outside the practice library: ' + citation;
+      }
+    }
+  }
+
   function initApp() {
     const verBadge = document.getElementById('cdVersionBadge');
     if (verBadge && DATASET.meta.version) {
@@ -4574,6 +4626,7 @@
     resetPerQuestionLookupStopwatch();
     startGlobalClocks();
     switchMode(STATE.activeMode || 'cbt');
+    setupStudyNavigation();
   }
 
   // Expose clean controller for external QA test harnesses without polluting production UI

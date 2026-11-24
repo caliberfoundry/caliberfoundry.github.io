@@ -59,6 +59,10 @@
     .matrix-table th { background-color: var(--cf-bg-stone); color: var(--cf-ink-primary); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; border-top: 1px solid var(--cf-rule-mid); }
     .badge-pass { display: inline-block; padding: 2px 6px; border: 1px solid var(--cf-forest-pass); background-color: var(--cf-forest-tint); color: var(--cf-forest-pass); font-weight: 600; font-size: 11px; border-radius: 2px; }
     .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 32px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .template-links {display:grid;gap:8px;list-style:none;padding:0;}
+    .template-links li {display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap;border-bottom:1px solid #dedcd6;padding:8px 0;}
+    .template-links a {padding:6px 0;font-weight:650;text-underline-offset:3px;}
+    .template-links span {color:#52514e;}
   </style>
 </head>
 <body>
@@ -66,88 +70,49 @@
     <div class="header-inner">
       <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
       <div style="display:flex; gap:12px;">
-        <a href="../content-studio/" class="btn btn-primary"><span>Launch ContentForge&trade; Studio</span><span>&rarr;</span></a>
+        <a href="../content-studio/" class="btn btn-primary"><span>Try a source document</span><span>&rarr;</span></a>
       </div>
     </div>
   </header>
 
   <main class="container">
     <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <div class="kicker">05 // MULTI-MODEL DOCUMENT EXTRACTION, EVALUATION HARNESS &amp; CONTENT AUTOMATION</div>
-    <h1 class="title">ContentForge&trade; Studio &mdash; Citation-Gated Content &amp; Evaluation Pipeline</h1>
-    <p class="lede">
-      A deterministic 5-stage document extraction, ground-truth evaluation harness, educational courseware compiler, and idempotent <code>n8n</code> webhook orchestration studio built to transform raw technical dossiers into verified multi-channel deliverables with 0.0% hallucination tolerance.
-    </p>
-    <div style="display:flex; flex-wrap:wrap; gap:14px;">
-      <a href="../content-studio/" class="btn btn-primary"><span>Launch ContentForge&trade; Studio</span><span>&rarr;</span></a>
-      <a href="../content-studio/?preset=n8n-pipeline" class="btn"><span>Open n8n Pipeline Preset</span><span>&rarr;</span></a>
-      <a href="../content-studio/?preset=eval-harness" class="btn"><span>Open Evaluation Harness Preset</span><span>&rarr;</span></a>
-    </div>
+
+    <h1 class="title">ContentForge · Turn a source passage into a printable dossier</h1>
+    <p class="lede">Choose a scenario and edit its source text. Run the extraction, inspect each quoted passage and open a dossier containing your selected source and its version.</p>
+    <nav aria-label="Try the workflow" style="display:flex;flex-wrap:wrap;gap:10px">
+      <a href="../content-studio/?autoProof=1" class="btn btn-primary"><span>Run the current source</span></a>
+      <a href="../content-studio/?autoProof=2" class="btn"><span>Inspect the scenario’s JSON</span></a>
+      <a href="../content-studio/?autoProof=3" class="btn"><span>Preview the current dossier</span></a>
+    </nav>
 
     <div class="grid-2">
-      <div class="panel">
-        <h2 class="panel-title">5-Stage Deterministic Pipeline Architecture</h2>
+      <section class="panel">
+        <h2 class="panel-title">What you can do</h2>
         <ul class="spec-list">
-          <li><strong>01. Multi-Source Document Ingestion &amp; Strict Schema Extraction:</strong> Parses regulatory PDFs, financial schedules, clinical rubrics, and REST/GraphQL webhooks into content-addressed AST envelopes with strict JSON Schema validation and <code>SHA-256</code> idempotency keys.</li>
-          <li><strong>02. Automated Ground-Truth Evaluation Harness (<code>0.0%</code> Hallucination Gate):</strong> Benchmarks every extracted claim and merged table cell against verbatim source spans (<code>[Page / Clause / Row / Cell]</code>), computing field-level Exact Match, Complex Table Cell F1 (<code>99.4%</code>), P95 extraction latency, and compute cost per 1,000 pages.</li>
-          <li><strong>03. Multi-Channel Asset Synthesis &amp; Idempotent <code>n8n</code> Webhook Dispatch:</strong> Compiles verified source ASTs simultaneously into long-form HTML/Markdown monographs, 5-option (<code>A–E</code>) EdTech mastery quizzes with Golden Quotes, 6-card distribution threads, 5-scene video storyboards, and signed <code>n8n</code> webhook JSON payloads with Dead-Letter Queue protection.</li>
+          <li><strong>Choose a scenario.</strong> Start with a workflow payload or document evaluation example.</li>
+          <li><strong>Work from your own text.</strong> Paste your own source, supply a title and run it again after edits.</li>
+          <li><strong>Review the result.</strong> Preview the JSON and print the dossier. The source title and excerpt identify the exact input.</li>
         </ul>
-      </div>
-
-      <div class="panel">
-        <h2 class="panel-title">System Specifications</h2>
+      </section>
+      <section class="panel">
+        <h2 class="panel-title">Example and output</h2>
         <table class="spec-table">
-          <tr><td>PIPELINE STAGES</td><td>5-Stage Ingestion &rarr; Schema &rarr; Eval &rarr; Synthesis &rarr; Webhook</td></tr>
-          <tr><td>EVALUATION METRICS</td><td>Exact Match / Table Cell F1 (99.4%) / 0.0% Hallucination</td></tr>
-          <tr><td>OUTPUT CHANNELS</td><td>Monograph + 5-Opt Quiz + 6-Card Thread + 5-Scene Script + JSON</td></tr>
-          <tr><td>ORCHESTRATION</td><td>Idempotent n8n / Make.com Webhook + SHA-256 Deduplication</td></tr>
-          <tr><td>COMMERCIAL TIERS</td><td>$199 Single Pipeline / $399 Growth Studio / $999 Enterprise</td></tr>
-          <tr><td>LIVE WORKBENCH</td><td><a href="../content-studio/" style="color:var(--cf-accent-primary); text-decoration:none;">Open ContentForge&trade; Studio &rarr;</a></td></tr>
+          <tr><th scope="row">Input</th><td>Pasted text, optional clause markers</td></tr>
+          <tr><th scope="row">Example</th><td>Edit a date and find the same date in the report</td></tr>
+          <tr><th scope="row">Outputs</th><td>Source excerpts, JSON preview and printable dossier</td></tr>
         </table>
-      </div>
+      </section>
     </div>
 
     <section class="matrix-section" aria-labelledby="presets-matrix-heading">
-      <h2 class="panel-title" id="presets-matrix-heading">Interactive Production Presets &amp; Deep-Link Workbenches</h2>
-      <p style="font-size:14px; color:var(--cf-ink-secondary); margin-bottom:14px;">
-        Inspect each pre-configured domain pipeline directly in the browser via deep-link parameters:
-      </p>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th>Preset Parameter</th>
-            <th>Engineering Domain &amp; Target Architecture</th>
-            <th>Evaluation Benchmark</th>
-            <th>Interactive Deep-Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong><code>?preset=n8n-pipeline</code></strong></td>
-            <td>n8n Multi-Model Content, API &amp; Idempotent Webhook Orchestration Pipeline</td>
-            <td><span class="badge-pass">6/6 Eval Cases &bull; 0.0% Hallucination</span></td>
-            <td><a href="../content-studio/?preset=n8n-pipeline" style="color:var(--cf-accent-primary); text-decoration:none; font-weight:600;">Launch Preset &rarr;</a></td>
-          </tr>
-          <tr>
-            <td><strong><code>?preset=eval-harness</code></strong></td>
-            <td>Python Document Extraction, Merged-Cell Table AST &amp; Ground-Truth Evaluation Harness</td>
-            <td><span class="badge-pass">99.4% Table Cell F1 &bull; 0.0% Hallucination</span></td>
-            <td><a href="../content-studio/?preset=eval-harness" style="color:var(--cf-accent-primary); text-decoration:none; font-weight:600;">Launch Preset &rarr;</a></td>
-          </tr>
-          <tr>
-            <td><strong><code>?preset=edtech-courseware</code></strong></td>
-            <td>Regulatory &amp; Clinical Curriculum Compiler (5-Option Vignette + SCORM/JSON Manifest)</td>
-            <td><span class="badge-pass">100% Golden-Quote Citation Lock</span></td>
-            <td><a href="../content-studio/?preset=edtech-courseware" style="color:var(--cf-accent-primary); text-decoration:none; font-weight:600;">Launch Preset &rarr;</a></td>
-          </tr>
-          <tr>
-            <td><strong><code>?preset=fintech-monograph</code></strong></td>
-            <td>Institutional SecOps &amp; FinTech Regulatory Monograph + Multi-Channel Distribution Pack</td>
-            <td><span class="badge-pass">100% Provenance Span Verified</span></td>
-            <td><a href="../content-studio/?preset=fintech-monograph" style="color:var(--cf-accent-primary); text-decoration:none; font-weight:600;">Launch Preset &rarr;</a></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2 class="panel-title" id="presets-matrix-heading">Choose a template</h2>
+      <ul class="template-links">
+        <li><a href="../content-studio/?preset=n8n-pipeline">Workflow payload</a><span>Free · Preview JSON from a source document</span></li>
+        <li><a href="../content-studio/?preset=eval-harness">Document evaluation</a><span>Free · Review source excerpts and claims</span></li>
+        <li><a href="../content-studio/?preset=edtech-courseware">Course materials</a><span>Pro · Explore the courseware example</span></li>
+        <li><a href="../content-studio/?preset=fintech-monograph">Financial brief</a><span>Pro · Explore the financial report example</span></li>
+      </ul>
     </section>
   </main>
 

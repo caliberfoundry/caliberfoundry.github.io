@@ -55,6 +55,12 @@
   <!-- =====================================================================
        2. WORKBENCH ACTION & INGESTION TOOLBAR
        ===================================================================== -->
+  <section class="ds-start" aria-label="Check document accessibility">
+    <h1>Check document accessibility</h1>
+    <p id="dsAssessmentSummary" role="status" tabindex="-1"></p>
+    <button type="button" id="dsReviewResults" class="ds-tool-btn">Review findings</button>
+    <button type="button" id="dsOpenReport" class="ds-tool-btn">Open assessment report</button>
+  </section>
   <section class="ds-workbench-toolbar" aria-label="Document Ingestion and Remediation Controls">
     <div class="ds-toolbar-left">
       <!-- Local PDF / HTML Client-Side Byte Inspector -->
@@ -62,7 +68,7 @@
         <input type="file" id="fileUploadInput" accept=".pdf,.html,.htm" class="hidden" />
         <button type="button" class="ds-tool-btn" id="btnTriggerFileUpload">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/></svg>
-          <span>Inspect Local PDF / HTML</span>
+          <span>Inspect a local PDF or HTML file</span>
         </button>
         <span class="ds-drop-hint" id="uploadQuotaHint">1 Free Local File Audit</span>
       </div>
@@ -77,19 +83,17 @@
           aria-label="Scan Domain or PDF URL"
         />
         <button type="button" class="ds-tool-btn" id="domainScanBtn">
-          Scan Domain / URL
+          Preview domain example
         </button>
       </div>
     </div>
 
     <div class="ds-toolbar-right">
       <!-- Primary Deterministic Remediation Trigger -->
-      <button type="button" class="ds-tool-btn ds-btn-remediate" id="runRemediationBtn">
-        Run PDF/UA &amp; WCAG 2.2 Auto-Remediation →
-      </button>
+      <button type="button" class="ds-tool-btn ds-btn-remediate" id="runRemediationBtn">Prepare tag-tree draft</button>
 
       <button type="button" class="ds-tool-btn" id="revertRemediationBtn" title="Revert document to original unremediated COS stream">
-        Revert to Original Unremediated Stream
+        View source assessment
       </button>
 
       <button type="button" class="ds-tool-btn ds-btn-pro-gate" id="btnBatchArchiveMode" title="Batch remediate up to 1,000 PDFs via ZIP archive (Pro)">
@@ -105,9 +109,9 @@
   <!-- =====================================================================
        3. "TROJAN-HORSE" PERSONALIZED B2B AUDIT DEEP-LINK BANNER (?domain=...&file=...)
        ===================================================================== -->
-  <section class="ds-trojan-banner hidden" id="trojanHorseBanner" aria-label="Pre-Scanned Domain Compliance Dossier">
+  <section class="ds-trojan-banner hidden" id="trojanHorseBanner" aria-label="Illustrative domain example">
     <div class="ds-trojan-left">
-      <div class="ds-trojan-kicker">Pre-Scanned EAA / ADA Title III &amp; ISO 14289-1 (PDF/UA) Compliance Dossier</div>
+      <div class="ds-trojan-kicker">Illustrative domain example</div>
       <div class="ds-trojan-headline">
         Target Domain: <strong id="thTargetDomain">client-domain.com</strong> · Asset: <code id="thTargetFile">publication-packet.pdf</code>
       </div>
@@ -180,7 +184,7 @@
           </div>
 
           <!-- Selected Bounding-Box Node Diff Card -->
-          <div class="ds-node-inspector-card" id="selectedRegionInspector">
+          <div class="ds-node-inspector-card" id="selectedRegionInspector" tabindex="-1">
             <div class="ds-node-card-header">
               <div>
                 <span class="ds-node-kicker">SELECTED BOUNDING-BOX NODE</span>
@@ -322,9 +326,7 @@
         <button type="button" class="ds-export-btn ds-export-secondary" id="exportTagTreeBtn">
           Export Remediated PDF/UA Tag Tree &amp; XMP (.json / .xml)
         </button>
-        <button type="button" class="ds-export-btn ds-export-primary" id="openCertificateBtn">
-          Generate Printable EU EAA &amp; VPAT 2.5 Certificate →
-        </button>
+        <button type="button" class="ds-export-btn ds-export-primary" id="openCertificateBtn">Open document assessment</button>
       </div>
     </aside>
 
@@ -338,7 +340,7 @@
       <div class="ds-modal-header">
         <div class="ds-modal-title-group">
           <span class="ds-modal-icon">§</span>
-          <h2 id="certModalTitle">Official ISO 14289-1 (PDF/UA-1), WCAG 2.2 AA &amp; EU EAA Conformance Certificate (VPAT 2.5)</h2>
+          <h2 id="certModalTitle">Document accessibility assessment</h2>
         </div>
         <button type="button" class="ds-modal-close" id="btnCloseCertificateModal" aria-label="Close Certificate">×</button>
       </div>
@@ -349,7 +351,7 @@
 
       <div class="ds-modal-footer">
         <button type="button" class="ds-btn-secondary" id="btnDownloadAuditBundle">Download JSON/XML Audit Bundle</button>
-        <button type="button" class="ds-btn-primary" id="btnPrintCertificate">Print / Save PDF Certificate</button>
+        <button type="button" class="ds-btn-primary" id="btnPrintCertificate">Print / Save report as PDF</button>
       </div>
     </div>
   </div>

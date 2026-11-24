@@ -598,6 +598,7 @@
     .tech-drawer summary:hover {
       color: var(--cf-ink-primary);
     }
+    [hidden] { display:none !important; }
   </style>
 </head>
 <body>
@@ -609,26 +610,23 @@
         <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
         <div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">StealthFlow&trade; Web Scraper &amp; Clean Data Hub</h1>
-            <span class="status-tag">GDPR / CCPA PII ANONYMIZED</span>
+            <h1 class="app-title">StealthFlow&trade; Catalog Data Explorer</h1>
+            <span class="status-tag">50 SAMPLE RECORDS</span>
           </div>
           <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Turn blocked websites and messy HTML catalogs into clean Excel (.CSV) and automated Make.com / n8n webhooks in 1 click.
+            Filter 50 sample records, inspect the cleaned fields and download your selection.
           </div>
         </div>
       </div>
 
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button type="button" onclick="exportCleanCSV()" id="btnDownloadCsvTop" class="btn-tactile btn-tactile-forest">
-          <span>Download Excel (.CSV)</span>
-          <span>&darr;</span>
-        </button>
+        <a class="btn-tactile" href="#filters">Filter records</a>
         <button type="button" onclick="exportCleanJSON()" id="btnDownloadJsonTop" class="btn-tactile">
-          <span>Download JSON (50)</span>
+          <span>Download all 50 as JSON</span>
           <span>&darr;</span>
         </button>
         <button type="button" onclick="scrollToWebhookTester()" class="btn-tactile btn-tactile-vermilion">
-          <span>Send Test Data to Webhook</span>
+          <span>Preview payload</span>
           <span>&rarr;</span>
         </button>
         <a href="mailto:engineering@caliberfoundry.com?subject=StealthFlow%20Custom%20Web%20Scraper%20Inquiry" class="btn-tactile">
@@ -642,18 +640,18 @@
   <main class="shell">
 
     <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
-    <div class="how-it-works-strip" aria-label="Click any step to test StealthFlow live">
-      <button type="button" class="hiw-step-btn" onclick="runLiveUrlExtraction()">
+    <div class="how-it-works-strip" aria-label="Catalog workflow">
+      <button type="button" class="hiw-step-btn" onclick="document.getElementById('liveScrapeUrlInput').focus()">
         <span class="hiw-num">STEP 1 &rarr;</span>
-        <span><strong>Click to Run Live Website Scraper</strong> (or enter any URL below to see anti-bot extraction).</span>
+        <span><strong>Choose a sample record</strong></span>
       </button>
       <button type="button" class="hiw-step-btn" onclick="triggerStep2Demo()">
         <span class="hiw-num">STEP 2 &rarr;</span>
-        <span><strong>Click any row in the table</strong> to compare <em>Raw Blocked HTML vs. Cleaned Data</em> on the right.</span>
+        <span><strong>Compare the selected record</strong></span>
       </button>
       <button type="button" class="hiw-step-btn" onclick="scrollToWebhookTester()">
         <span class="hiw-num">STEP 3 &rarr;</span>
-        <span><strong>Click to Send Clean Data to Webhook</strong> (or download as an Excel .CSV file).</span>
+        <span><strong>Preview a JSON payload</strong> (or download as an Excel .CSV file).</span>
       </button>
     </div>
 
@@ -661,26 +659,26 @@
     <div class="live-scraper-bar">
       <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
         <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; font-size:11.5px;">
-          STEP 1 &mdash; TRY LIVE EXTRACTION ON ANY WEBSITE URL (BYPASSES CLOUDFLARE / DATADOME &amp; CLEANS DATA):
+          1. Select a sample record
         </span>
         <span class="mono" style="font-size:11px; color:var(--cf-forest-pass); font-weight:600;">
-          &check; All personal contacts automatically anonymized (GDPR / CCPA safe)
+          Local sample dataset
         </span>
       </div>
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <input id="liveScrapeUrlInput" type="text" value="https://velocecarbon.com/products/aero-wheelset-v4" placeholder="Paste any website or catalog URL (e.g. https://store.example.com/catalog)..." class="input-mechanical" style="flex:1; min-width:260px; font-weight:600;" />
+        <label for="liveScrapeUrlInput">Sample</label>
+        <select id="liveScrapeUrlInput" class="input-mechanical" style="flex:1;min-width:0;"></select>
         <button type="button" onclick="runLiveUrlExtraction()" id="btnRunLiveExtraction" class="btn-tactile btn-tactile-vermilion" style="padding:8px 16px;">
-          <span>&#9654; Run Live Extraction &amp; Clean Data (1.1s)</span>
+          <span>Inspect sample</span>
         </button>
       </div>
       <div id="liveExtractionStatusBanner" class="live-status-banner">
-        <span id="liveExtractionStatusText">&check; READY: Click "&#9654; Run Live Extraction &amp; Clean Data" above (or click any row below) to see raw messy HTML turn into clean CRM/Excel data.</span>
-        <span id="liveExtractionLatencyBadge" class="mono" style="background:#FFFFFF; padding:2px 8px; border:1px solid var(--cf-forest-pass);">50/50 CLEANED</span>
+        <span role="status" id="liveExtractionStatusText">Choose a sample record to inspect.</span>
       </div>
     </div>
 
     <!-- Step 1 Quick Industry Filter Strip -->
-    <div class="quick-filter-strip">
+    <div class="quick-filter-strip" id="filters">
       <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
         <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; margin-right:4px;">FILTER BY INDUSTRY:</span>
         <button type="button" onclick="selectSource('ALL')" id="btnResetSources" class="btn-tactile btn-tactile-ink" style="padding:5px 10px; font-size:11px;">
@@ -699,8 +697,12 @@
           Healthcare &amp; MedTech (4)
         </button>
       </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" aria-label="CSV downloads">
+        <button type="button" id="btnDownloadCsvTop" onclick="exportCleanCSV()" class="btn-tactile">Export filtered rows</button>
+        <button type="button" id="exportAllCsv" onclick="exportCleanCSV('all')" class="btn-tactile">Export all 50 (CSV)</button>
+      </div>
       <div class="mono" style="font-size:11.5px; color:var(--cf-ink-secondary);">
-        SHOWING: <strong id="matchingCount" style="color:var(--cf-accent-primary);">50</strong> / 50 RECORDS
+        SHOWING: <strong aria-live="polite" id="matchingCount" style="color:var(--cf-accent-primary);">50</strong> / 50 RECORDS
       </div>
     </div>
 
@@ -711,7 +713,7 @@
       <div class="ledger-pane">
         <div class="filter-toolbar">
           <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:240px; flex-wrap:wrap;">
-            <input id="searchInput" type="text" oninput="renderLeadsTable()" placeholder="Search 50 companies by name, website, city, or industry..." class="input-mechanical" style="flex:1; min-width:200px;" />
+            <input id="searchInput" type="text" oninput="onSearchChange()" placeholder="Search 50 companies by name, website, city, or industry..." class="input-mechanical" style="flex:1; min-width:200px;" />
             <select id="categoryFilter" onchange="onCategoryFilterChange()" class="input-mechanical">
               <option value="ALL">All Industries (50 Records)</option>
             </select>
@@ -748,7 +750,7 @@
             <div>
               <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 2 &mdash; BEFORE vs. AFTER DATA CLEANING</div>
               <h3 style="font-family:var(--font-display); font-size:21px; font-weight:400;">
-                Why StealthFlow&trade; Beats Raw Scrapers: <span id="inspectedLeadId" class="mono" style="font-size:15px; color:var(--cf-accent-primary); font-weight:700;">SF-1001</span>
+                Sample record &middot; <span id="inspectedLeadId" class="mono" style="font-size:15px; color:var(--cf-accent-primary); font-weight:700;">SF-1001</span>
               </h3>
             </div>
             <div style="display:flex; gap:6px;">
@@ -798,40 +800,32 @@
         <div id="webhookTesterCard" class="inspector-block" style="background-color:var(--cf-bg-stone); flex:1;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--cf-rule-mid);">
             <div>
-              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 3 &mdash; SEND TO WEBHOOK OR EXCEL</div>
-              <h3 style="font-family:var(--font-display); font-size:20px; font-weight:400;">Instant Make.com / n8n Webhook Delivery</h3>
+              <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">3. Preview or export</div>
+              <h3 style="font-family:var(--font-display); font-size:20px; font-weight:400;">JSON payload preview</h3>
             </div>
-            <span class="status-tag">200 OK READY</span>
+            <span class="status-tag">LOCAL PREVIEW</span>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:8px;">
-              <div>
-                <label class="spec-label" style="display:block; margin-bottom:3px;">TARGET WEBHOOK URL:</label>
-                <input id="webhookUrlInput" type="text" value="https://hook.us1.make.com/stealthflow-12sources-ingest" class="input-mechanical" style="width:100%;" />
-              </div>
-              <div>
-                <label class="spec-label" style="display:block; margin-bottom:3px;">BATCH SIZE:</label>
+            <div>
+                <label for="dispatchModeSelect" class="spec-label">Preview scope</label>
                 <select id="dispatchModeSelect" class="input-mechanical" style="width:100%;">
                   <option value="selected">Selected Record (1)</option>
-                  <option value="batch_50">All 50 Clean Records</option>
+                  <option value="batch_50">All 50 sample records</option>
                 </select>
-              </div>
             </div>
 
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
               <button type="button" onclick="fireMakeWebhook()" id="btnFireWebhook" class="btn-tactile btn-tactile-vermilion" style="flex:1; padding:9px;">
-                <span>&#9654; Send Test Data to Webhook Now</span>
+                <span>&#9654; Preview payload</span>
               </button>
               <button type="button" onclick="exportCleanCSV()" class="btn-tactile btn-tactile-forest" style="padding:9px 12px;">
-                <span>Download Excel (.CSV) &darr;</span>
+                <span>Download filtered CSV &darr;</span>
               </button>
             </div>
 
-            <div class="terminal-box" id="webhookTerminal" style="max-height:130px;">
-              <div style="color:#A39E93;">// Click "Send Test Data to Webhook Now" to see live signed JSON delivery...</div>
-              <div>Signature: <span style="color:#FCE588;">X-StealthFlow-Signature: v1=8f92a6c4...</span></div>
-            </div>
+            <p role="status" id="payloadStatus">The preview is generated in your browser.</p>
+            <pre class="terminal-box" id="webhookTerminal" style="max-height:220px;white-space:pre-wrap;overflow-wrap:anywhere;"></pre>
           </div>
         </div>
 
@@ -840,37 +834,7 @@
 
     <!-- Collapsible Drawer: All 12 Scraper Templates & Anti-Bot Technical Specs -->
     <details class="tech-drawer">
-      <summary>
-        <span>View All 12 Website Scraper Templates &amp; Anti-Bot Technical Specs (Playwright, Cloudflare, DataDome, GraphQL)</span>
-        <span>Show / Hide 12 Scraper Specs &darr;</span>
-      </summary>
-      <section class="kpi-strip">
-        <div class="kpi-cell">
-          <div class="spec-label">01 // ACTIVE SCRAPERS</div>
-          <div class="kpi-val">12 / 12 <span style="font-size:12px; color:var(--cf-forest-pass);">ONLINE</span></div>
-          <div class="kpi-sub">Isolated Browser Workers + Proxy Rotation</div>
-        </div>
-        <div class="kpi-cell">
-          <div class="spec-label">02 // EXTRACTED RECORDS</div>
-          <div class="kpi-val">50 <span style="font-size:12px; color:var(--cf-navy-authority);">100% COMPLETE</span></div>
-          <div class="kpi-sub">18 Standardized Columns &bull; Zero Missing Emails</div>
-        </div>
-        <div class="kpi-cell">
-          <div class="spec-label">03 // DATA VALIDATION</div>
-          <div class="kpi-val" style="color:var(--cf-forest-pass);">100.0%</div>
-          <div class="kpi-sub">Verified Schema + Cleaned URLs</div>
-        </div>
-        <div class="kpi-cell">
-          <div class="spec-label">04 // EXTRACTION SPEED</div>
-          <div class="kpi-val">16.4 <span style="font-size:12px; color:var(--cf-accent-primary);">ROWS/SEC</span></div>
-          <div class="kpi-sub">Direct API/JSON Capture (Doesn't break on UI changes)</div>
-        </div>
-        <div class="kpi-cell">
-          <div class="spec-label">05 // WEBHOOK RELIABILITY</div>
-          <div class="kpi-val">99.98% <span style="font-size:12px; color:var(--cf-forest-pass);">200 OK</span></div>
-          <div class="kpi-sub">Signed Delivery + Automatic Retries</div>
-        </div>
-      </section>
+      <summary>Browse all 12 sample source categories</summary>
       <section id="sourcesGrid" class="sources-grid">
         <!-- Populated dynamically by JS -->
       </section>
@@ -880,7 +844,7 @@
 
   <footer class="site-footer">
     <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
-      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; STEALTHFLOW&trade; 12-SOURCE PLAYWRIGHT &amp; MAKE.COM EXTRACTION ENGINE</span>
+      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; STEALTHFLOW&trade; CATALOG DATA EXPLORER</span>
       <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
     </div>
   </footer>
@@ -967,6 +931,8 @@
     }
 
     function initDashboard() {
+      const sample = document.getElementById('liveScrapeUrlInput');
+      for (const row of LEADS_DATA) sample.add(new Option(row.company_name, row.canonical_url));
       const categories = [...new Set(LEADS_DATA.map(d => d.category))].sort();
       const catSelect = document.getElementById('categoryFilter');
       categories.forEach(c => {
@@ -989,16 +955,7 @@
         const isSelected = activeSourceId === s.id;
         return `
           <button onclick="selectSource('${s.id}')" class="source-card ${isSelected ? 'active' : ''}">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-              <span class="mono" style="font-size:11px; font-weight:600; color:${isSelected ? 'var(--cf-accent-primary)' : 'var(--cf-ink-primary)'};">[${s.code}] &bull; ${count} RECS</span>
-              <span class="tag-rect" style="color:var(--cf-forest-pass); background:var(--cf-forest-tint);">${s.pass}</span>
-            </div>
-            <div style="font-size:12.5px; font-weight:700; color:var(--cf-ink-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</div>
-            <div style="font-size:11px; color:var(--cf-ink-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">${s.bypass}</div>
-            <div class="mono" style="display:flex; align-items:center; justify-content:space-between; margin-top:8px; padding-top:6px; border-top:1px dashed var(--cf-rule-subtle); font-size:10.5px; color:var(--cf-navy-authority);">
-              <span>${s.method}</span>
-              <span style="color:var(--cf-ink-muted);">${s.latency}</span>
-            </div>
+            <strong>${escapeHtml(s.name)}</strong><span> · ${count} sample records</span>
           </button>
         `;
       }).join('');
@@ -1028,11 +985,12 @@
       });
     }
 
-    function selectSource(sourceId) {
+    function selectSource(sourceId, userSelected = true) {
       activeSourceId = (activeSourceId === sourceId && sourceId !== 'ALL') ? 'ALL' : sourceId;
       const catSelect = document.getElementById('categoryFilter');
       if (catSelect) catSelect.value = 'ALL';
       updateSourceButtonHighlights();
+      if (userSelected) window.dispatchEvent(new CustomEvent('cf:workflow',{detail:{stage:'sample_selected'}}));
 
       renderSourcesGrid();
       renderLeadsTable();
@@ -1041,7 +999,7 @@
         inspectLead(filtered[0].lead_id);
         const statusText = document.getElementById('liveExtractionStatusText');
         if (statusText) {
-          statusText.innerHTML = `&check; FILTERED TO <strong>${filtered.length} RECORDS</strong> &mdash; Showing Before vs. After cleaning for <strong>${escapeHtml(filtered[0].company_name)}</strong> on the right &rarr;`;
+          statusText.innerHTML = `&check; FILTERED TO <strong>${filtered.length} RECORDS</strong> &mdash; Showing the comparison for <strong>${escapeHtml(filtered[0].company_name)}</strong>.`;
         }
       }
     }
@@ -1056,7 +1014,7 @@
         inspectLead(filtered[0].lead_id);
         const statusText = document.getElementById('liveExtractionStatusText');
         if (statusText) {
-          statusText.innerHTML = `&check; INDUSTRY FILTER: <strong>${filtered.length} RECORDS</strong> &mdash; Inspecting <strong>${escapeHtml(filtered[0].company_name)}</strong> on the right &rarr;`;
+          statusText.innerHTML = `&check; INDUSTRY FILTER: <strong>${filtered.length} RECORDS</strong> &mdash; Inspecting <strong>${escapeHtml(filtered[0].company_name)}</strong>.`;
         }
       }
     }
@@ -1075,9 +1033,25 @@
       });
     }
 
+    function onSearchChange() {
+      renderLeadsTable();
+      const rows = getFilteredLeads();
+      if (rows.length && !rows.includes(selectedLead)) inspectLead(rows[0].lead_id);
+    }
+
     function renderLeadsTable() {
       const filtered = getFilteredLeads();
       document.getElementById('matchingCount').textContent = filtered.length;
+      const csv = document.getElementById('btnDownloadCsvTop');
+      csv.textContent = `Export ${filtered.length} filtered rows (CSV)`;
+      csv.disabled = filtered.length === 0;
+      document.getElementById('beforeAfterCard').hidden = !filtered.length;
+      if (!filtered.length) {
+        document.getElementById('liveExtractionStatusText').textContent = 'No records match these filters.';
+        document.getElementById('webhookTerminal').textContent = '';
+        document.getElementById('payloadStatus').textContent = 'No selected record. Change the filters or preview the full catalog.';
+      }
+      document.getElementById('btnFireWebhook').disabled = !filtered.length && document.getElementById('dispatchModeSelect').value !== 'batch_50';
       const tbody = document.getElementById('leadsTableBody');
 
       tbody.innerHTML = filtered.map(item => {
@@ -1085,7 +1059,7 @@
         return `
           <tr onclick="inspectLead('${escapeHtml(item.lead_id)}')" class="${isSelected ? 'selected-row' : ''}">
             <td>
-              <div class="mono" style="font-weight:700; color:var(--cf-accent-primary);">${escapeHtml(item.lead_id)}</div>
+              <button type="button" class="btn-tactile" onclick="event.stopPropagation(); inspectLead('${escapeHtml(item.lead_id)}')" aria-label="Inspect ${escapeHtml(item.company_name)}">${escapeHtml(item.lead_id)}</button>
               <div style="font-size:10.5px; color:var(--cf-ink-muted); max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.source_name)}</div>
             </td>
             <td>
@@ -1104,7 +1078,7 @@
             </td>
             <td style="text-align:center;">
               <span class="tag-rect" style="color:var(--cf-forest-pass); background:var(--cf-forest-tint);">
-                &check; CLEAN ${(Number(item.entity_match_score) * 100).toFixed(1)}%
+                &check; Sample
               </span>
               <div class="mono" style="font-size:10px; color:var(--cf-accent-primary); margin-top:3px; font-weight:600;">
                 ${isSelected ? '&#9654; INSPECTING' : 'Click to Inspect'}
@@ -1119,6 +1093,8 @@
       const found = LEADS_DATA.find(l => l.lead_id === leadId);
       if (!found) return;
       selectedLead = found;
+      document.getElementById('webhookTerminal').textContent = '';
+      document.getElementById('payloadStatus').textContent = 'Preview the JSON for the current selection.';
       document.getElementById('inspectedLeadId').textContent = `${found.lead_id} · ${found.company_name}`;
       document.getElementById('inspectedMatchScore').textContent = `MATCH: ${(found.entity_match_score * 100).toFixed(1)}%`;
 
@@ -1143,7 +1119,7 @@
 
       const statusText = document.getElementById('liveExtractionStatusText');
       if (statusText) {
-        statusText.innerHTML = `&check; INSPECTING <strong>${escapeHtml(found.lead_id)} (${escapeHtml(found.company_name)})</strong> &mdash; See Before vs. After cleaning on the right &rarr;`;
+        statusText.innerHTML = `&check; INSPECTING <strong>${escapeHtml(found.lead_id)} (${escapeHtml(found.company_name)})</strong> &mdash; Compare the original and cleaned fields below.`;
       }
 
       document.getElementById('jsonInspectorPre').textContent = JSON.stringify(found, null, 2);
@@ -1154,81 +1130,31 @@
     function triggerStep2Demo() {
       const filtered = getFilteredLeads();
       if (!filtered.length) return;
-      const curIdx = filtered.findIndex(l => selectedLead && l.lead_id === selectedLead.lead_id);
-      const next = filtered[(curIdx + 1) % filtered.length];
-      inspectLead(next.lead_id);
+      const row = filtered.includes(selectedLead) ? selectedLead : filtered[0];
+      inspectLead(row.lead_id);
+      document.getElementById('beforeAfterCard').scrollIntoView({block:'nearest'});
     }
 
     function runLiveUrlExtraction() {
-      const urlInput = document.getElementById('liveScrapeUrlInput');
-      const rawUrl = (urlInput ? urlInput.value : '').trim() || 'https://velocecarbon.com/products/aero-wheelset-v4';
-      const btn = document.getElementById('btnRunLiveExtraction');
-      const statusText = document.getElementById('liveExtractionStatusText');
-      const badge = document.getElementById('liveExtractionLatencyBadge');
-
-      if (btn) btn.innerHTML = `<span>&#9203; [1/3] Bypassing Anti-Bot &amp; Capturing API...</span>`;
-      if (statusText) statusText.innerHTML = `&#9203; <strong>[STAGE 1/3]</strong> Launching stealth Playwright worker for <code>${escapeHtml(rawUrl)}</code>...`;
-      if (badge) badge.textContent = 'RUNNING...';
-
-      setTimeout(() => {
-        if (btn) btn.innerHTML = `<span>&#9203; [2/3] Cleaning Prices &amp; Anonymizing PII...</span>`;
-        if (statusText) statusText.innerHTML = `&#9203; <strong>[STAGE 2/3]</strong> Stripping tracking parameters, normalizing SKU prices, and masking GDPR personal data...`;
-      }, 360);
-
-      setTimeout(() => {
-        let matched = LEADS_DATA.find(l => l.canonical_url.toLowerCase() === rawUrl.toLowerCase());
-        if (!matched) {
-          let host = 'custom-target.com';
-          let cleanUrl = rawUrl;
-          try {
-            const u = new URL(rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl);
-            host = u.hostname.replace(/^www\./, '');
-            cleanUrl = `${u.protocol}//${host}${u.pathname === '/' ? '/catalog/products' : u.pathname}`;
-          } catch (_) {}
-          const compTitle = host.split('.')[0].replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + ' Catalog';
-          matched = {
-            lead_id: 'SF-LIVE',
-            source_id: 'src_02_shopify_plus',
-            source_name: 'Live Custom URL Extraction',
-            company_name: compTitle,
-            canonical_url: cleanUrl,
-            category: 'Live Extracted Catalog',
-            location: 'United States',
-            annual_revenue_est: '$15.0M Est.',
-            decision_maker: 'A. R*** (VP of eCommerce & Data)',
-            email: `a***@${host}`,
-            phone: '+1-415-***-8820',
-            sku_count: 248,
-            unit_price_avg: 495.0,
-            anti_bot_bypass: 'Cloudflare Turnstile + Stealth Context',
-            extraction_method: 'Direct JSON/XHR Capture',
-            entity_match_score: 0.998,
-            pydantic_valid: true,
-            scraped_at: new Date().toISOString()
-          };
-          const existingIdx = LEADS_DATA.findIndex(l => l.lead_id === 'SF-LIVE');
-          if (existingIdx !== -1) LEADS_DATA[existingIdx] = matched;
-          else LEADS_DATA.unshift(matched);
-          activeSourceId = 'ALL';
-        }
-
-        inspectLead(matched.lead_id);
-        if (btn) btn.innerHTML = `<span>&check; Extracted &amp; Cleaned in 1.1s! (Run Again)</span>`;
-        if (statusText) {
-          statusText.innerHTML = `&check; <strong>[STAGE 3/3 COMPLETE]</strong> Extracted <strong>${escapeHtml(matched.company_name)}</strong> (${matched.sku_count} SKUs, anonymized contact <code>${escapeHtml(matched.email)}</code>). Compare Before vs. After on the right &rarr;`;
-        }
-        if (badge) badge.textContent = '1.1s · 100% CLEAN';
-        setTimeout(() => {
-          if (btn) btn.innerHTML = `<span>&#9654; Run Live Extraction &amp; Clean Data (1.1s)</span>`;
-        }, 2400);
-      }, 780);
+      const url = document.getElementById('liveScrapeUrlInput').value;
+      const sample = LEADS_DATA.find(row => row.canonical_url === url);
+      if (!sample) return;
+      document.getElementById('searchInput').value = '';
+      selectSource('ALL', false);
+      inspectLead(sample.lead_id);
+      window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
+      document.getElementById('beforeAfterCard').scrollIntoView({block:'nearest'});
     }
 
-    function copySelectedJson() {
-      navigator.clipboard.writeText(JSON.stringify(selectedLead, null, 2));
-      const btn = document.getElementById('btnCopyJson');
-      btn.textContent = '✓ COPIED JSON';
-      setTimeout(() => { btn.textContent = 'Copy Clean JSON'; }, 1400);
+    async function copySelectedJson() {
+      const status = document.getElementById('liveExtractionStatusText');
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(selectedLead, null, 2));
+        status.textContent = `Copied JSON for ${selectedLead.company_name}.`;
+      } catch {
+        status.textContent = 'Copy unavailable. Open the JSON panel and select its text.';
+        document.getElementById('jsonInspectorPre').closest('details').open = true;
+      }
     }
 
     function exportCleanJSON() {
@@ -1246,9 +1172,11 @@
       if (statusText) statusText.innerHTML = `&check; <strong>DOWNLOADED JSON:</strong> Saved <code>stealthflow_extracted_leads_50.json</code> (${LEADS_DATA.length} GDPR-anonymized records).`;
     }
 
-    function exportCleanCSV() {
-      const headers = Object.keys(LEADS_DATA[0]);
-      const rows = LEADS_DATA.map(obj =>
+    function exportCleanCSV(scope = 'filtered') {
+      const records = scope === 'all' ? LEADS_DATA : getFilteredLeads();
+      if (!records.length) return;
+      const headers = Object.keys(records[0]);
+      const rows = records.map(obj =>
         headers.map(h => `"${String(obj[h] ?? '').replace(/"/g, '""')}"`).join(',')
       );
       const csvContent = [headers.join(','), ...rows].join('\n');
@@ -1256,47 +1184,38 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'stealthflow_extracted_leads_50.csv';
+      a.download = `stealthflow_${scope}_${records.length}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       const statusText = document.getElementById('liveExtractionStatusText');
-      if (statusText) statusText.innerHTML = `&check; <strong>DOWNLOADED EXCEL (.CSV):</strong> Saved <code>stealthflow_extracted_leads_50.csv</code> (${LEADS_DATA.length} GDPR-anonymized records).`;
+      if (statusText) statusText.textContent = `Downloaded ${records.length} ${scope} sample rows as CSV.`;
+      window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'export_ready'}}));
     }
 
     function scrollToWebhookTester() {
+      document.getElementById('btnFireWebhook').focus();
       fireMakeWebhook();
-      flashElement('webhookTesterCard');
     }
 
-    async function fireMakeWebhook() {
-      const url = document.getElementById('webhookUrlInput').value.trim();
+    function fireMakeWebhook() {
       const mode = document.getElementById('dispatchModeSelect').value;
-      const terminal = document.getElementById('webhookTerminal');
-      const recordsToSend = mode === 'batch_50' ? LEADS_DATA : [selectedLead];
-      const batchId = 'BATCH-' + Date.now();
-      const fakeHmac = 'v1=' + Array.from({length: 32}, () => Math.floor(Math.random()*16).toString(16)).join('');
-
-      terminal.innerHTML = `
-        <div style="color:#FCE588;">[${escapeHtml(new Date().toISOString())}] Sending ${recordsToSend.length} cleaned record${recordsToSend.length > 1 ? 's' : ''} to Make.com / n8n...</div>
-        <div>POST <span style="color:#93C5FD;">${escapeHtml(url)}</span></div>
-        <div>X-StealthFlow-Signature: <span style="color:#86EFAC;">${escapeHtml(fakeHmac)}</span></div>
-      `;
-
-      setTimeout(() => {
-        terminal.innerHTML += `
-          <div style="color:#86EFAC; font-weight:700; margin-top:4px;">&check; [HTTP/2 200 OK] Delivered to Make.com Webhook in 118ms!</div>
-          <div style="color:#E7E5DF;">Response: {"accepted": true, "batch_id": "${escapeHtml(batchId)}", "records_ingested": ${recordsToSend.length}, "pii_anonymized": true}</div>
-        `;
-        terminal.scrollTop = terminal.scrollHeight;
-        const statusText = document.getElementById('liveExtractionStatusText');
-        if (statusText) {
-          statusText.innerHTML = `&check; <strong>WEBHOOK DELIVERED (HTTP 200 OK):</strong> Sent ${recordsToSend.length} clean record${recordsToSend.length > 1 ? 's' : ''} to <code>${escapeHtml(url)}</code> in 118ms!`;
-        }
-      }, 260);
+      const hasSelection = getFilteredLeads().includes(selectedLead);
+      document.getElementById('btnFireWebhook').disabled = mode !== 'batch_50' && !hasSelection;
+      if (mode !== 'batch_50' && !hasSelection) return;
+      const records = mode === 'batch_50' ? LEADS_DATA : [selectedLead];
+      document.getElementById('webhookTerminal').textContent = JSON.stringify({ records }, null, 2);
+      document.getElementById('payloadStatus').textContent = `Preview ready · ${records.length} sample record(s) · local only.`;
+      window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
     }
 
+    document.getElementById('dispatchModeSelect').addEventListener('change', fireMakeWebhook);
+    window.addEventListener('cf:open-step', ({detail}) => {
+      if (detail.step === 1) document.getElementById('liveScrapeUrlInput').focus();
+      if (detail.step === 2) runLiveUrlExtraction();
+      if (detail.step === 3) scrollToWebhookTester();
+    });
     window.addEventListener('DOMContentLoaded', initDashboard);
   </script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>

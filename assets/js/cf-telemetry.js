@@ -17,6 +17,8 @@
   var CLOUD_ENDPOINT = "https://ntfy.sh/" + CLOUD_TOPIC;
   var LOCAL_ENDPOINT = "http://localhost:4173/api/web-telemetry";
 
+  var localWorkspace = ["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1;
+
   var STORAGE_VISITOR = "cf_tele_visitor_id_v1";
   var STORAGE_SESSION = "cf_tele_session_id_v1";
   var STORAGE_GEO = "cf_tele_geo_cache_v1";
@@ -100,7 +102,11 @@
     org: ""
   };
 
+  var isPublicSite = ["caliberfoundry.com", "www.caliberfoundry.com"].includes(location.hostname);
+  var isTestSession = navigator.webdriver || new URLSearchParams(location.search).get("qa") === "1";
+
   function resolveGeo(callback) {
+    if (!isPublicSite || isTestSession) return callback(geoData);
     try {
       var cached = sessionStorage.getItem(STORAGE_GEO);
       if (cached) {
@@ -173,11 +179,14 @@
   window.addEventListener("scroll", updateDwellAndScroll, { passive: true });
 
   function dispatchEvent(eventType, detailObj) {
+    var explicitMessage = eventType === "product_feedback" || eventType === "direct_contact_message";
+    if ((!isPublicSite || isTestSession) && !explicitMessage && !window.__CF_FORCE_CLOUD_TELEMETRY__) return;
     updateDwellAndScroll();
     var params = new URLSearchParams(window.location.search || "");
     var payload = {
       v: 1,
       ev: eventType,
+      qa: isTestSession,
       ts: new Date().toISOString(),
       visitorId: visitorId,
       sessionId: sessionId,
@@ -202,25 +211,17 @@
 
     var jsonStr = JSON.stringify(payload);
 
-    // 1. Send to local Command Center dashboard if reachable or testing locally
-    var isLocal =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.protocol === "file:";
-    if (isLocal) {
-      try {
-        fetch(LOCAL_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: jsonStr,
-          keepalive: true,
-          mode: "cors"
-        }).catch(function () {});
-      } catch (_) {}
+    if (explicitMessage) {
+      if (!localWorkspace) return Promise.resolve(false);
+      return fetch(LOCAL_ENDPOINT, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: jsonStr, mode: "cors"
+      }).then(async function (response) {
+        return response.ok && (await response.json()).ok === true;
+      }).catch(function () { return false; });
     }
 
     // 2. Send to cloud relay (ntfy.sh) so remote production visitors on caliberfoundry.com stream to Founder dashboard
-    if (!navigator.webdriver || window.__CF_FORCE_CLOUD_TELEMETRY__) {
+    if ((isPublicSite && !isTestSession) || window.__CF_FORCE_CLOUD_TELEMETRY__) {
       try {
         fetch(CLOUD_ENDPOINT, {
           method: "POST",
@@ -300,6 +301,14 @@
     true
   );
 
+  window.addEventListener("cf:workflow", function (event) {
+    var stage = event.detail && event.detail.stage;
+    if (["sample_selected", "result_ready", "export_ready"].includes(stage)) dispatchEvent(stage, {});
+  });
+  document.addEventListener("click", function (event) {
+    if (event.target.closest && event.target.closest('[data-cf-stage="sample_selected"]')) dispatchEvent("sample_selected", {});
+  });
+
   // Track preset / dropdown / file input changes
   document.addEventListener(
     "change",
@@ -365,36 +374,36 @@
       "@media print { #cfFeedbackDockRoot, #cfFeedbackModalBackdrop, #cfContactModalBackdrop { display: none !important; } }",
       "#cfFeedbackDockRoot { position: fixed; bottom: 14px; right: 14px; z-index: 9990; font-family: 'IBM Plex Mono', monospace; }",
       "#cfFeedbackDockRoot.cf-fb-in-header { position: static; display: inline-flex; align-items: center; }",
-      ".cf-fb-trigger-btn { background: #111113; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; border-radius: 5px; padding: 6px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; box-shadow: 0 1px 2px rgba(17,17,19,0.12); transition: all 0.14s ease; }",
-      "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
-      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn, .top-bar #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #FAF9F6; border: 1px solid #3F3F46; border-left: 3px solid #4F46E5; padding: 4px 9px; }",
-      ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #4F46E5 !important; border-color: #4338CA !important; color: #FFFFFF !important; }",
+      ".cf-fb-trigger-btn { background: #141413; color: #F6F4EF; border: 1px solid #3F3F46; border-left: 3px solid #C8431F; border-radius: 5px; padding: 6px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; cursor: pointer; box-shadow: 0 1px 2px rgba(17,17,19,0.12); transition: all 0.14s ease; }",
+      "#cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #F6F4EF; border: 1px solid #3F3F46; border-left: 3px solid #C8431F; padding: 4px 9px; font-size: 10.5px; box-shadow: none; white-space: nowrap; }",
+      ".masthead-inner #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn, .top-bar #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn { background: #1E1E22; color: #F6F4EF; border: 1px solid #3F3F46; border-left: 3px solid #C8431F; padding: 4px 9px; }",
+      ".cf-fb-trigger-btn:hover, #cfFeedbackDockRoot.cf-fb-in-header .cf-fb-trigger-btn:hover { background: #C8431F !important; border-color: #A33418 !important; color: #FFFFFF !important; }",
       "#cfFeedbackModalBackdrop, #cfContactModalBackdrop { position: fixed; inset: 0; background: rgba(17,17,19,0.55); backdrop-filter: blur(2px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }",
       "#cfFeedbackModalBackdrop.cf-fb-hidden, #cfContactModalBackdrop.cf-fb-hidden { display: none !important; }",
-      ".cf-fb-modal { background: #FAF9F6; color: #111113; border: 1px solid #D4D1C8; border-radius: 8px; box-shadow: 0 20px 44px -8px rgba(17,17,19,0.22); width: 100%; max-width: 540px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; max-height: 92vh; overflow-y: auto; }",
-      ".cf-fb-header { background: #111113; color: #FAF9F6; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; border-radius: 7px 7px 0 0; }",
+      ".cf-fb-modal { background: #F6F4EF; color: #141413; border: 1px solid #D4D1C8; border-radius: 8px; box-shadow: 0 20px 44px -8px rgba(17,17,19,0.22); width: 100%; max-width: 540px; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; max-height: 92vh; overflow-y: auto; }",
+      ".cf-fb-header { background: #141413; color: #F6F4EF; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; border-radius: 7px 7px 0 0; }",
       ".cf-fb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: #818CF8; text-transform: uppercase; letter-spacing: 0.08em; display: block; }",
-      ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #FAF9F6; }",
-      ".cf-fb-close { background: transparent; border: 1px solid #3F3F46; border-radius: 4px; color: #FAF9F6; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
-      ".cf-fb-close:hover { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }",
+      ".cf-fb-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; margin: 2px 0 0; color: #F6F4EF; }",
+      ".cf-fb-close { background: transparent; border: 1px solid #3F3F46; border-radius: 4px; color: #F6F4EF; width: 28px; height: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; flex-shrink: 0; }",
+      ".cf-fb-close:hover { background: #C8431F; border-color: #C8431F; color: #FFFFFF; }",
       ".cf-fb-body { padding: 18px; }",
-      ".cf-fb-context-bar { background: #F3F2EE; border: 1px solid #E4E2DD; border-radius: 5px; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #52514E; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
+      ".cf-fb-context-bar { background: #ECE9E1; border: 1px solid #E4E2DD; border-radius: 5px; padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #52514E; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }",
       ".cf-contact-copy-banner { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }",
-      ".cf-contact-copy-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #15803D; font-weight: 600; }",
+      ".cf-contact-copy-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #1A5638; font-weight: 600; }",
       ".cf-contact-quick-btns { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }",
-      ".cf-contact-quick-btn { background: #FFFFFF; color: #111113; border: 1px solid #D4D1C8; border-radius: 4px; padding: 5px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
-      ".cf-contact-quick-btn:hover { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }",
+      ".cf-contact-quick-btn { background: #FFFFFF; color: #141413; border: 1px solid #D4D1C8; border-radius: 4px; padding: 5px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }",
+      ".cf-contact-quick-btn:hover { background: #C8431F; border-color: #C8431F; color: #FFFFFF; }",
       ".cf-fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }",
       "@media (max-width: 520px) { .cf-fb-row { grid-template-columns: 1fr; } }",
       ".cf-fb-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }",
-      ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #111113; }",
-      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1px solid #D4D1C8; border-radius: 5px; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #111113; width: 100%; box-sizing: border-box; }",
-      ".cf-fb-input:focus, .cf-fb-select:focus, .cf-fb-textarea:focus { outline: 2px solid #4F46E5; border-color: #4F46E5; }",
+      ".cf-fb-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: #141413; }",
+      ".cf-fb-input, .cf-fb-select, .cf-fb-textarea { background: #FFFFFF; border: 1px solid #D4D1C8; border-radius: 5px; padding: 8px 10px; font-family: inherit; font-size: 12.5px; color: #141413; width: 100%; box-sizing: border-box; }",
+      ".cf-fb-input:focus, .cf-fb-select:focus, .cf-fb-textarea:focus { outline: 2px solid #C8431F; border-color: #C8431F; }",
       ".cf-fb-textarea { min-height: 88px; resize: vertical; line-height: 1.45; }",
       ".cf-fb-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }",
-      ".cf-fb-submit { background: #4F46E5; color: #FFFFFF; border: 1px solid #4338CA; border-radius: 5px; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
-      ".cf-fb-submit:hover { background: #4338CA; }",
-      ".cf-fb-success { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; color: #111113; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
+      ".cf-fb-submit { background: #C8431F; color: #FFFFFF; border: 1px solid #A33418; border-radius: 5px; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; cursor: pointer; flex: 1; }",
+      ".cf-fb-submit:hover { background: #A33418; }",
+      ".cf-fb-success { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; color: #141413; padding: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; }",
       ".cf-fb-success.cf-fb-hidden { display: none !important; }"
     ].join("\n");
     document.head.appendChild(styleEl);
@@ -471,7 +480,7 @@
       '<input type="email" class="cf-fb-input" id="cfFbEmailInput" placeholder="engineer@company.com" />' +
       "</div>" +
       '<div class="cf-fb-actions">' +
-      '<button type="submit" class="cf-fb-submit" id="cfFbSubmitBtn">Send to Caliber Foundry Engineering &rarr;</button>' +
+      '<button type="submit" class="cf-fb-submit" id="cfFbSubmitBtn">' + (localWorkspace ? "Save feedback to local queue" : "Prepare feedback email") + '</button>' +
       "</div>" +
       "</form>" +
       '<div class="cf-fb-success cf-fb-hidden" id="cfFbSuccessBox" role="status"></div>' +
@@ -479,7 +488,11 @@
       "</div>";
     document.body.appendChild(modalBackdrop);
 
+    var feedbackOpener;
+    var contactOpener;
+
     function openFbModal(defaultType) {
+      feedbackOpener = document.activeElement;
       var catEl = document.getElementById("cfFbCategorySelect");
       if (catEl && defaultType) catEl.value = defaultType;
       var sucEl = document.getElementById("cfFbSuccessBox");
@@ -491,6 +504,7 @@
 
     function closeFbModal() {
       modalBackdrop.classList.add("cf-fb-hidden");
+      if (feedbackOpener && feedbackOpener.isConnected) feedbackOpener.focus();
     }
 
     document.getElementById("cfFeedbackDockBtn").addEventListener("click", function () {
@@ -511,6 +525,54 @@
       }
     });
 
+    function messageReference(form, prefix) {
+      var signature = Array.from(form.elements).map(function (element) { return element.value; }).join("\n");
+      if (form.cfMessageSignature !== signature) {
+        form.cfMessageSignature = signature;
+        form.cfMessageId = randomId(prefix);
+      }
+      return form.cfMessageId;
+    }
+
+    function setMessageResult(box, text, subject, body) {
+      box.style.backgroundColor = "";
+      box.style.borderColor = "";
+      box.textContent = text;
+      if (subject) {
+        var link = document.createElement("a");
+        link.href = "mailto:engineering@caliberfoundry.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        link.setAttribute("data-native-mailto", "1");
+        link.textContent = "Open email draft";
+        box.append(" ", link);
+      }
+      box.classList.remove("cf-fb-hidden");
+    }
+
+    async function submitMessage(eventType, payload, button, box, input, subject, body, ref) {
+      if (!localWorkspace) {
+        setMessageResult(box, "Your draft is ready. Send it from your mail app.", subject, body);
+        return;
+      }
+      if (button.disabled) return;
+      button.disabled = true;
+      input.readOnly = true;
+      setMessageResult(box, "Saving to the local engineering queue…");
+      try {
+        if (await dispatchEvent(eventType, payload)) {
+          setMessageResult(box, "Saved to the local engineering queue · " + ref);
+          input.form.cfMessageSignature = null;
+          input.value = "";
+        } else {
+          setMessageResult(box, "Could not save. Retry or send the draft by email.", subject, body);
+          box.style.backgroundColor = "#fff7ed";
+          box.style.borderColor = "#bb762c";
+        }
+      } finally {
+        input.readOnly = false;
+        button.disabled = false;
+      }
+    }
+
     document.getElementById("cfFeedbackForm").addEventListener("submit", function (ev) {
       ev.preventDefault();
       var cat = document.getElementById("cfFbCategorySelect").value;
@@ -519,7 +581,7 @@
       var email = document.getElementById("cfFbEmailInput").value.trim();
       if (!msg) return;
 
-      var ticketId = "FB-2026-" + Math.floor(1000 + Math.random() * 9000);
+      var ticketId = messageReference(ev.currentTarget, "FB");
       var fbPayload = {
         feedbackId: ticketId,
         category: cat,
@@ -530,38 +592,10 @@
         pageUrl: window.location.href.slice(0, 220)
       };
 
-      dispatchEvent("product_feedback", fbPayload);
-
-      try {
-        var hist = JSON.parse(localStorage.getItem("cf_user_feedback_history_v1") || "[]");
-        hist.unshift(Object.assign({ submittedAt: new Date().toISOString() }, fbPayload));
-        localStorage.setItem("cf_user_feedback_history_v1", JSON.stringify(hist.slice(0, 20)));
-      } catch (_) {}
-
-      var mailSubj = encodeURIComponent("[" + ticketId + "] " + cat + " — " + prodName);
-      var mailBody = encodeURIComponent(
-        "Ticket ID: " + ticketId + "\n" +
-        "Product: " + prodName + " (" + window.location.href + ")\n" +
-        "Category: " + cat + " (" + sev + ")\n" +
-        "Reporter Email: " + (email || "Not provided") + "\n\n" +
-        "Report Details:\n" + msg + "\n"
-      );
-
-      var sucBox = document.getElementById("cfFbSuccessBox");
-      if (sucBox) {
-        sucBox.innerHTML =
-          "<strong>Logged in Engineering Queue · Reference <code>" +
-          escapeHtmlSafe(ticketId) +
-          "</code></strong><br/>" +
-          "Thank you! Your report has been streamed directly to our engineering dashboard. " +
-          '<a href="mailto:engineering@caliberfoundry.com?subject=' +
-          mailSubj +
-          "&body=" +
-          mailBody +
-          '" style="color:#1A5638;font-weight:700;text-decoration:underline;">Click here if you also want to email a screenshot or file attachment &rarr;</a>';
-        sucBox.classList.remove("cf-fb-hidden");
-      }
-      document.getElementById("cfFbMessageInput").value = "";
+      var subject = "[" + ticketId + "] " + cat + " · " + prodName;
+      var body = "Page: " + window.location.href + "\nPriority: " + sev + (email ? "\nReply to: " + email : "") + "\n\n" + msg;
+      submitMessage("product_feedback", fbPayload, document.getElementById("cfFbSubmitBtn"),
+        document.getElementById("cfFbSuccessBox"), document.getElementById("cfFbMessageInput"), subject, body, ticketId);
     });
 
     // =========================================================================
@@ -586,7 +620,7 @@
       '<div class="cf-fb-body">' +
       '<div class="cf-contact-copy-banner">' +
       '<div class="cf-contact-copy-top">' +
-      '<span id="cfContactCopyStatusText">&check; Email copied to clipboard: <strong>engineering@caliberfoundry.com</strong></span>' +
+      '<span id="cfContactCopyStatusText">Email: <strong>engineering@caliberfoundry.com</strong></span>' +
       "</div>" +
       '<div class="cf-contact-quick-btns">' +
       '<button type="button" class="cf-contact-quick-btn" id="cfContactCopyAgainBtn">Copy Email Address</button>' +
@@ -596,7 +630,7 @@
       "</div>" +
       '<form id="cfDirectContactForm">' +
       '<div style="font-size:12px;color:#4A4842;margin-bottom:10px;line-height:1.45;">' +
-      "<strong>Or send your message directly right here</strong> (no email client required — delivered immediately to our engineering desk):" +
+      (localWorkspace ? "Write a message for your local engineering queue." : "Prepare an email for engineering@caliberfoundry.com.") +
       "</div>" +
       '<div class="cf-fb-row">' +
       '<div class="cf-fb-field" style="margin-bottom:0;">' +
@@ -619,7 +653,7 @@
       '<textarea class="cf-fb-textarea" id="cfContactMessageInput" required placeholder="Tell us what you want built, customized, or licensed (e.g., custom document pipeline, scraper target, SCORM courseware, or enterprise license)..."></textarea>' +
       "</div>" +
       '<div class="cf-fb-actions">' +
-      '<button type="submit" class="cf-fb-submit" id="cfContactSubmitBtn">Send Message Directly to Caliber Foundry &rarr;</button>' +
+      '<button type="submit" class="cf-fb-submit" id="cfContactSubmitBtn">' + (localWorkspace ? "Save message to local queue" : "Prepare email") + '</button>' +
       "</div>" +
       "</form>" +
       '<div class="cf-fb-success cf-fb-hidden" id="cfContactSuccessBox" role="status"></div>' +
@@ -647,9 +681,9 @@
         ta.style.left = "-9999px";
         document.body.appendChild(ta);
         ta.select();
-        document.execCommand("copy");
+        var copied = document.execCommand("copy");
         document.body.removeChild(ta);
-        if (cb) cb(true);
+        if (cb) cb(copied);
       } catch (_) {
         if (cb) cb(false);
       }
@@ -672,6 +706,7 @@
     }
 
     function openContactModal(mailtoHref) {
+      contactOpener = document.activeElement;
       var parsed = parseMailtoHref(mailtoHref || "mailto:engineering@caliberfoundry.com");
       var subjEl = document.getElementById("cfContactSubjectInput");
       var msgEl = document.getElementById("cfContactMessageInput");
@@ -707,14 +742,7 @@
           (encBody ? "&body=" + encBody : "");
       }
 
-      copyTextToClipboard(parsed.email, function () {
-        if (statusEl) {
-          statusEl.innerHTML =
-            "&check; Email copied to clipboard: <strong>" +
-            escapeHtmlSafe(parsed.email) +
-            "</strong>";
-        }
-      });
+      if (statusEl) statusEl.textContent = "Email: " + parsed.email;
 
       contactModal.classList.remove("cf-fb-hidden");
       var emailInp = document.getElementById("cfContactEmailInput");
@@ -723,7 +751,22 @@
 
     function closeContactModal() {
       contactModal.classList.add("cf-fb-hidden");
+      if (contactOpener && contactOpener.isConnected) contactOpener.focus();
     }
+
+    window.addEventListener("keydown", function (event) {
+      var dialog = !contactModal.classList.contains("cf-fb-hidden") ? contactModal :
+        !modalBackdrop.classList.contains("cf-fb-hidden") ? modalBackdrop : null;
+      if (!dialog) return;
+      if (event.key === "Escape" && dialog === contactModal) { closeContactModal(); return; }
+      if (event.key !== "Tab") return;
+      var elements = Array.from(dialog.querySelectorAll("button, a[href], input, textarea, select")).filter(function (element) {
+        return !element.disabled && element.getClientRects().length > 0;
+      });
+      var first = elements[0], last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
 
     document.getElementById("cfContactCloseBtn").addEventListener("click", closeContactModal);
     contactModal.addEventListener("click", function (ev) {
@@ -732,10 +775,10 @@
 
     document.getElementById("cfContactCopyAgainBtn").addEventListener("click", function () {
       var btn = document.getElementById("cfContactCopyAgainBtn");
-      copyTextToClipboard("engineering@caliberfoundry.com", function () {
+      copyTextToClipboard("engineering@caliberfoundry.com", function (copied) {
         if (btn) {
           var orig = btn.textContent;
-          btn.textContent = "✓ Copied: engineering@caliberfoundry.com";
+          btn.textContent = copied ? "Email address copied" : "Could not copy · select the address above";
           setTimeout(function () { btn.textContent = orig; }, 2200);
         }
       });
@@ -749,7 +792,7 @@
       var msgVal = document.getElementById("cfContactMessageInput").value.trim();
       if (!emailVal || !msgVal) return;
 
-      var refId = "MSG-2026-" + Math.floor(1000 + Math.random() * 9000);
+      var refId = messageReference(ev.currentTarget, "MSG");
       var msgPayload = {
         messageId: refId,
         senderName: nameVal.slice(0, 120),
@@ -765,28 +808,10 @@
         }
       };
 
-      dispatchEvent("direct_contact_message", msgPayload);
-
-      try {
-        var cHist = JSON.parse(localStorage.getItem("cf_direct_contact_history_v1") || "[]");
-        cHist.unshift(Object.assign({ submittedAt: new Date().toISOString() }, msgPayload));
-        localStorage.setItem("cf_direct_contact_history_v1", JSON.stringify(cHist.slice(0, 20)));
-      } catch (_) {}
-
-      var cSuc = document.getElementById("cfContactSuccessBox");
-      if (cSuc) {
-        cSuc.innerHTML =
-          "<strong>&check; Message Delivered to Caliber Foundry Engineering · Ref <code>" +
-          escapeHtmlSafe(refId) +
-          "</code></strong><br/>" +
-          "We received your message for <strong>" +
-          escapeHtmlSafe(subjVal) +
-          "</strong> and will reply asynchronously to <strong>" +
-          escapeHtmlSafe(emailVal) +
-          "</strong> within 4 business hours.";
-        cSuc.classList.remove("cf-fb-hidden");
-      }
-      document.getElementById("cfContactMessageInput").value = "";
+      var body = (nameVal ? nameVal + "\n" : "") + "Reply to: " + emailVal + "\n\n" + msgVal;
+      submitMessage("direct_contact_message", msgPayload, document.getElementById("cfContactSubmitBtn"),
+        document.getElementById("cfContactSuccessBox"), document.getElementById("cfContactMessageInput"),
+        subjVal || "Engineering inquiry", body, refId);
     });
 
     // Global capture listener for any <a href="mailto:...">, [data-mailto], or [data-cf-proxy-click] button on the page
@@ -833,361 +858,42 @@
       closeContact: closeContactModal
     };
 
-    mountVisualValueShowcase();
+    mountWorkbenchTheme();
   }
 
-  // =========================================================================
-  // DESIGN SYSTEM v2.0: EXECUTIVE EDITORIAL & PRECISION WORKBENCH
-  // (Linear Light · Attio · Stripe · Anthropic Standard)
-  // - Warm Alabaster (#FAF9F6) + Pure Elevated White (#FFFFFF) + Deep Zinc (#111113)
-  // - Single Primary Interactive Accent: Executive Indigo (#4F46E5)
-  // - Lucide 1.75px Geometric Stroke SVG Iconography
-  // - 42px Compact Value & 3-Click Proof Ribbon + 0px-Footprint Floating Popover
-  // - Universal Scroll-Trap Prevention (>= 82% Viewport Height for Reading)
-  // =========================================================================
-  var SVG_ICONS = {
-    alert: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-    shield: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
-    bolt: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
-    search: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
-    magic: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>',
-    cert: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>',
-    check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-    doc: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
-    cpu: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>',
-    award: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
-    info: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
-    chevronDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
-  };
-
-  function getProductShowcaseConfig(pathname) {
-    var p = String(pathname || "/").toLowerCase();
-    if (p.indexOf("docushield") !== -1) {
-      return {
-        key: "docushield",
-        appUrl: "../docushield/index.html",
-        problemMetric: "€50,000+ Fines & $25/Page Cost",
-        problemTitle: "Untagged PDFs Violate EU EAA & US ADA Title II",
-        problemDesc: "Manual PDF accessibility tagging in Adobe Acrobat takes 40+ hours per manual ($15–$25/page), and untagged public PDFs face strict EU EAA & Section 508 enforcement.",
-        whyMetric: "1.4s Auto-Fix · 100% ISO 14289-1",
-        whyTitle: "Rebuilds PDF Tag Trees & VPAT 2.5 in 1 Click",
-        whyDesc: "Parses raw PDF binary streams client-side, auto-reconstructs /StructTreeRoot XML tags, table <TH scope> headers, and alt-text across 48 Matterhorn checkpoints.",
-        flow: ["Broken PDF (38%)", "Auto-Tag Engine (1.4s)", "100% PDF/UA + VPAT 2.5"],
-        clicks: [
-          {
-            label: "1. Scan Broken PDF",
-            outcome: "✓ CLICK 1 PROVEN: Scanned 28-page manual and pinpointed 14 critical ISO 14289-1 / WCAG 2.2 accessibility failures (38% score). Now click Button 2 →",
-            run: function () {
-              var rev = document.getElementById("revertRemediationBtn");
-              if (rev) rev.click();
-              var sheet = document.querySelector(".ds-page-sheet-frame");
-              if (sheet) sheet.classList.add("cf-v-pulse");
-            }
-          },
-          {
-            label: "2. Auto-Fix Tags (100%)",
-            outcome: "✓ CLICK 2 PROVEN: All 14 PDF/UA & WCAG 2.2 failures auto-fixed in 1.4s! Score jumped from 38% FAIL to 100% PASS. Now click Button 3 →",
-            run: function () {
-              var rem = document.getElementById("runRemediationBtn");
-              if (rem) rem.click();
-            }
-          },
-          {
-            label: "3. VPAT 2.5 Certificate",
-            outcome: "✓ CLICK 3 PROVEN: Generated Printable ISO 14289-1 & ITI VPAT® 2.5 Conformance Certificate ready for legal sign-off!",
-            run: function () {
-              var rem = document.getElementById("runRemediationBtn");
-              if (rem) rem.click();
-              setTimeout(function () {
-                var cert = document.getElementById("btnPreviewCertificate");
-                if (cert) cert.click();
-              }, 120);
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("codedrill") !== -1 && p.indexOf("/seo-pages") === -1) {
-      return {
-        key: "codedrill",
-        appUrl: "../codedrill-cbt/index.html",
-        problemMetric: "84.8% National Exam Fail Rate",
-        problemTitle: "Candidates Fail Because PDF Lookups Take 3+ Mins",
-        problemDesc: "The U.S. Customs Broker Exam (CBLE) is open-book across 1,200 pages of 19 CFR & HTSUS laws. Flipping through static PDFs takes 180s/question, so time runs out.",
-        whyMetric: "14s Lookup Speed · 84% Pass Rate",
-        whyTitle: "1:1 Pearson VUE Screen + eCFR Speed-Citation Trainer",
-        whyDesc: "Trains brokers to locate and cite the exact 19 CFR / HTSUS clause in under 20 seconds on an authentic split-screen testing console.",
-        flow: ["Exam Scenario", "14s eCFR Locator", "84% Pass Team PDF"],
-        clicks: [
-          {
-            label: "1. Locate 19 CFR Law",
-            outcome: "✓ CLICK 1 PROVEN: Located the matching 19 CFR section in the right-hand Reference Library in 1.2s (vs. 180s manual binder search)! Now click Button 2 →",
-            run: function () {
-              var cbtTab = document.getElementById("tabModeCbt");
-              if (cbtTab) cbtTab.click();
-              var regBody = document.querySelector(".pvue-right-pane");
-              if (regBody) regBody.classList.add("cf-v-pulse");
-            }
-          },
-          {
-            label: "2. Cite & Grade (100%)",
-            outcome: "✓ CLICK 2 PROVEN: Cited 19 CFR regulation as legal proof (+38.8s faster than CBP 40s target) and verified the winning answer! Now click Button 3 →",
-            run: function () {
-              var cbtTab = document.getElementById("tabModeCbt");
-              if (cbtTab) cbtTab.click();
-              var citeBtn = document.getElementById("btnCiteCurrentSection");
-              if (citeBtn) citeBtn.click();
-              var optEl = document.querySelector('#qOptionsList [data-option="D"], #qOptionsList [data-letter="D"], #qOptionsList > *:nth-child(4)');
-              if (optEl) optEl.click();
-              var checkBtn = document.getElementById("btnCheckCurrentAnswer") || document.getElementById("btnVerifyAnswerMain");
-              if (checkBtn) checkBtn.click();
-            }
-          },
-          {
-            label: "3. Team Readiness PDF",
-            outcome: "✓ CLICK 3 PROVEN: Opened Printable 12-Seat Customs Brokerage Readiness PDF Dossier (84% Pass Readiness & 18.4s Citation Speed)!",
-            run: function () {
-              var repBtn = document.getElementById("btnOpenTeamReadinessReport");
-              if (repBtn) {
-                repBtn.click();
-              } else {
-                var modal = document.getElementById("modalTeamReadinessReport");
-                if (modal) modal.classList.remove("hidden");
-              }
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("stealthflow") !== -1) {
-      return {
-        key: "stealthflow",
-        appUrl: "../stealthflow/index.html",
-        problemMetric: "HTTP 403 Blocks & Dirty HTML",
-        problemTitle: "Standard Scrapers Get Blocked & Break on UI Changes",
-        problemDesc: "Cloudflare Turnstile and DataDome block regular Python scrapers (HTTP 403), while raw HTML scraping produces dirty tracking URLs, unparsed prices, and GDPR PII risk.",
-        whyMetric: "12 Protected Sources · 100% Clean",
-        whyTitle: "Direct API Capture + GDPR Contact Anonymization",
-        whyDesc: "Intercepts clean GraphQL/XHR JSON via stealth Playwright workers, normalizes prices into strict floats, strips tracking params, and masks personal contact PII.",
-        flow: ["Protected Website", "Playwright API Capture", "Clean CSV + Webhook"],
-        clicks: [
-          {
-            label: "1. Extract Protected Site",
-            outcome: "✓ CLICK 1 PROVEN: Bypassed Cloudflare Turnstile, captured 412 SKUs via GraphQL XHR, and anonymized personal contact PII (M. V***)! Now click Button 2 →",
-            run: function () {
-              if (typeof window.runLiveUrlExtraction === "function") window.runLiveUrlExtraction();
-            }
-          },
-          {
-            label: "2. Raw vs. Clean Diff",
-            outcome: "✓ CLICK 2 PROVEN: Look at the Before vs. After card on the right — HTTP 403 & messy tracking URLs are transformed into 18 GDPR-safe columns! Now click Button 3 →",
-            run: function () {
-              if (typeof window.triggerStep2Demo === "function") window.triggerStep2Demo();
-            }
-          },
-          {
-            label: "3. Send to Make.com",
-            outcome: "✓ CLICK 3 PROVEN: Dispatched HMAC-signed JSON payload to Make.com / n8n Webhook and confirmed HTTP/2 200 OK delivery in 118ms!",
-            run: function () {
-              if (typeof window.scrollToWebhookTester === "function") window.scrollToWebhookTester();
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("omnirag") !== -1) {
-      return {
-        key: "omnirag",
-        appUrl: "../omnirag/index.html",
-        problemMetric: "$42k–$500k+ Hidden Mismatches",
-        problemTitle: "Costly Number Conflicts Hide Across PDFs & Excel",
-        problemDesc: "Finance, Legal, and Engineering teams miss expensive discrepancies when an Excel invoice or BOM has a different number than a 90-page PDF contract or permit.",
-        whyMetric: "0% Hallucination · Page & Cell Lock",
-        whyTitle: "Cross-Checks PDF + Word + Excel Simultaneously",
-        whyDesc: "Compares numbers, caps, and dates across all 3 file formats at once and locks every finding to a 1-click highlight of the exact Page Number and Excel Row.",
-        flow: ["PDF + Word + Excel", "Cross-File Number Diff", "Exact Page & Cell Proof"],
-        clicks: [
-          {
-            label: "1. Catch $18.5k Diff",
-            outcome: "✓ CLICK 1 PROVEN: Cross-checked Contract PDF ($50,000 cap) against Invoice Excel ($68,500 billed) and caught the $18,500 overbilling conflict! Now click Button 2 →",
-            run: function () {
-              if (typeof window.runCustomTextDiff === "function") window.runCustomTextDiff();
-            }
-          },
-          {
-            label: "2. Highlight Cell Proof",
-            outcome: "✓ CLICK 2 PROVEN: Jumped directly to the exact source row in the right-hand Document Viewer with 100% coordinate lock! Now click Button 3 →",
-            run: function () {
-              if (typeof window.triggerStep2HighlightDemo === "function") window.triggerStep2HighlightDemo();
-            }
-          },
-          {
-            label: "3. Audit Report PDF",
-            outcome: "✓ CLICK 3 PROVEN: Generated Printable Cross-Document Verification Summary listing every verified file, page number, and cell!",
-            run: function () {
-              if (typeof window.openAuditPreviewModal === "function") window.openAuditPreviewModal();
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("edtech-studio") !== -1) {
-      return {
-        key: "edtech",
-        appUrl: "../edtech-studio/index.html",
-        problemMetric: "$5,000+ & 3 Weeks per Module",
-        problemTitle: "Manual Quiz & SCORM Authoring Is Slow & Costly",
-        problemDesc: "Course publishers and training teams spend weeks manually writing certification questions, wrong-answer explanations, and packaging SCORM 1.2 for Canvas or Moodle.",
-        whyMetric: "Instant SCORM 1.2 + FERPA AES-256",
-        whyTitle: "Turns Any Rule Into an Auto-Graded LMS Course",
-        whyDesc: "Converts any technical rule or rubric into a 3-option scenario quiz with targeted wrong-answer feedback, a non-spoiling Study Coach, and 1-click SCORM 1.2 export.",
-        flow: ["Training Paragraph", "Graded Quiz + Coach", "Canvas/Moodle SCORM 1.2"],
-        clicks: [
-          {
-            label: "1. Generate Quiz",
-            outcome: "✓ CLICK 1 PROVEN: Converted the raw 90-day API key & mTLS security rule into an interactive 3-option certification scenario question! Now click Button 2 →",
-            run: function () {
-              if (typeof window.generateCustomScormQuestion === "function") window.generateCustomScormQuestion();
-            }
-          },
-          {
-            label: "2. Grade & Sync LMS",
-            outcome: "✓ CLICK 2 PROVEN: Graded Option B (100/100 Passed) and recorded LMSSetValue('cmi.core.score.raw', '95') in the SCORM gradebook! Now click Button 3 →",
-            run: function () {
-              if (typeof window.selectQuizOption === "function") window.selectQuizOption("B");
-            }
-          },
-          {
-            label: "3. Export SCORM 1.2",
-            outcome: "✓ CLICK 3 PROVEN: Exported ready-to-upload ADL SCORM 1.2 imsmanifest.xml package for Canvas, Moodle, and Docebo!",
-            run: function () {
-              if (typeof window.downloadScormManifest === "function") window.downloadScormManifest();
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("dealshield") !== -1) {
-      return {
-        key: "dealshield",
-        appUrl: "../dealshield/index.html",
-        problemMetric: "30+ Hours per 250-Row Buyer DDQ",
-        problemTitle: "Security Questionnaires Stall Enterprise Deals",
-        problemDesc: "Enterprise B2B deals stall for 3–6 weeks while engineering and security leads manually copy-paste SOC 2 clauses into 250-row Excel questionnaires (CAIQ, HECVAT, VPAT).",
-        whyMetric: "0.0% Unanchored Claims · Instant VPAT",
-        whyTitle: "100% SOC 2 Citation-Locked DDQ Auto-Responder",
-        whyDesc: "Auto-answers buyer security and accessibility questionnaires using only cryptographically cited clauses from your SOC 2 Type II & ISO 27001 policies.",
-        flow: ["Buyer Excel DDQ", "SOC 2 Clause Matcher", "Signed VPAT 2.5 Dossier"],
-        clicks: [
-          {
-            label: "1. Auto-Answer DDQ",
-            outcome: "✓ CLICK 1 PROVEN: Matched buyer security questionnaire controls against verified SOC 2 Type II & ISO 27001 clauses (0.0% unanchored claims)! Now click Button 2 →",
-            run: function () {
-              var btn = document.getElementById("btnRunAutoMatch") || document.querySelector("[data-preset-card]");
-              if (btn) btn.click();
-            }
-          },
-          {
-            label: "2. CISO Gap & VPAT",
-            outcome: "✓ CLICK 2 PROVEN: Flagged partial controls and auto-drafted CISO compensating control language + ITI VPAT® 2.5 matrix! Now click Button 3 →",
-            run: function () {
-              var tab = document.querySelector('[data-tab="vpat"], [data-tab="gaps"], .js-ddq-row');
-              if (tab) tab.click();
-            }
-          },
-          {
-            label: "3. Security Dossier PDF",
-            outcome: "✓ CLICK 3 PROVEN: Opened Printable Enterprise Security & ITI VPAT® 2.5 Attestation Dossier ready for procurement!",
-            run: function () {
-              var dos = document.getElementById("btnOpenEvalDossier");
-              if (dos) dos.click();
-            }
-          }
-        ]
-      };
-    }
-
-    if (p.indexOf("content-studio") !== -1) {
-      return {
-        key: "contentstudio",
-        appUrl: "../content-studio/index.html",
-        problemMetric: "40+ Hours & LLM Hallucination Risk",
-        problemTitle: "Naive AI Scripts Hallucinate Specs & Break JSON",
-        problemDesc: "Engineering & EdTech teams waste 40+ hours turning technical specs into verified documentation, n8n workflows, and SCORM modules because standard prompts hallucinate.",
-        whyMetric: "6 Formats at Once · 0.0% Hallucination",
-        whyTitle: "5-Stage Deterministic DAG & Claim Eval Harness",
-        whyDesc: "Synthesizes Monograph, JSON Schema, n8n Workflow, SCORM Quiz, and 60fps Video Storyboard simultaneously while verifying every number against ground truth.",
-        flow: ["Raw Technical Spec", "5-Stage Eval Harness", "6 Formats + n8n Webhook"],
-        clicks: [
-          {
-            label: "1. Run 5-Stage Eval",
-            outcome: "✓ CLICK 1 PROVEN: Executed 5-stage synthesis pipeline with 100% Ground-Truth Claim Concordance (0.0% hallucinated metrics)! Now click Button 2 →",
-            run: function () {
-              var runBtn = document.getElementById("btnRunPipeline");
-              if (runBtn) runBtn.click();
-            }
-          },
-          {
-            label: "2. Multi-Format & n8n",
-            outcome: "✓ CLICK 2 PROVEN: Synthesized validated JSON Schema, n8n Webhook DAG, and Graded SCORM 1.2 Quiz from one specification! Now click Button 3 →",
-            run: function () {
-              var tab = document.querySelector('[data-tab="eval"], [data-tab="webhook"], [data-preset-card="eval-harness"]');
-              if (tab) tab.click();
-            }
-          },
-          {
-            label: "3. Eval Dossier PDF",
-            outcome: "✓ CLICK 3 PROVEN: Opened Printable Ground-Truth Evaluation & Content Architecture Dossier ready for client review!",
-            run: function () {
-              var dos = document.getElementById("btnOpenEvalDossier");
-              if (dos) dos.click();
-            }
-          }
-        ]
-      };
-    }
-
-    return null;
-  }
-
-  function mountVisualValueShowcase() {
+  function mountWorkbenchTheme() {
     if (!document.getElementById("cfVisualThemeUpgrade")) {
       var themeStyle = document.createElement("style");
       themeStyle.id = "cfVisualThemeUpgrade";
       themeStyle.textContent = [
-      "/* Design System v2.0 — Executive Editorial & Precision Workbench (Linear Light / Attio / Stripe / Anthropic Standard) */",
+      "/* Caliber Foundry shared reading surfaces and controls */",
       ":root {",
-      "  --cf-bg-paper: #FAF9F6 !important;",
-      "  --cf-bg-stone: #F3F2EE !important;",
+      "  --cf-bg-paper: #F6F4EF !important;",
+      "  --cf-bg-stone: #ECE9E1 !important;",
       "  --cf-bg-surface: #FFFFFF !important;",
-      "  --cf-bg-ink-panel: #111113 !important;",
-      "  --cf-ink-primary: #111113 !important;",
+      "  --cf-bg-ink-panel: #141413 !important;",
+      "  --cf-ink-primary: #141413 !important;",
       "  --cf-ink-secondary: #52514E !important;",
-      "  --cf-ink-muted: #8A8884 !important;",
-      "  --cf-ink-on-dark: #FAF9F6 !important;",
+      "  --cf-ink-muted: #65625D !important;",
+      "  --cf-ink-on-dark: #F6F4EF !important;",
       "  --cf-rule-strong: #D4D1C8 !important;",
       "  --cf-rule-mid: #E4E2DD !important;",
       "  --cf-rule-subtle: #EFECE6 !important;",
-      "  --cf-accent-primary: #4F46E5 !important;",
-      "  --cf-accent-hover: #4338CA !important;",
-      "  --cf-accent-tint: #EEF2FF !important;",
+      "  --cf-accent-primary: #C8431F !important;",
+      "  --cf-accent-hover: #A33418 !important;",
+      "  --cf-accent-tint: #FBEBE4 !important;",
       "  --cf-navy-authority: #1E293B !important;",
       "  --cf-navy-tint: #F1F5F9 !important;",
-      "  --cf-forest-pass: #15803D !important;",
+      "  --cf-forest-pass: #1A5638 !important;",
       "  --cf-forest-tint: #F0FDF4 !important;",
       "  --cf-brass-warn: #B45309 !important;",
       "  --cf-brass-tint: #FFFBEB !important;",
       "  --cf-highlight-mark: #FEF08A !important;",
       "}",
-      "/* 1. Never lock html/body or reading panes into tiny scroll cages (>= 82% reading viewport law) */",
+      "/* 1. Never lock html/body or reading panes into tiny scroll cages */",
       "html, body {",
-      "  background-color: #FAF9F6 !important;",
-      "  color: #111113 !important;",
+      "  background-color: #F6F4EF !important;",
+      "  color: #141413 !important;",
       "  min-height: 100vh !important;",
       "  height: auto !important;",
       "  overflow-x: hidden !important;",
@@ -1202,649 +908,58 @@
       "@media (min-width: 861px) {",
       "  .ds-split-workbench { display: grid !important; grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.76fr) !important; align-items: start !important; }",
       "}",
-      "/* 2. Cohesive Deep Zinc Top Header (42px Compact) & Quiet Hairline Cards */",
+      "/* 2. Compact product headers and card dividers */",
       ".masthead, .ds-global-header, .codedrill-global-bar, .cf-global-header {",
       "  flex-shrink: 0 !important;",
       "  z-index: 450 !important;",
-      "  background: #111113 !important;",
-      "  color: #FAF9F6 !important;",
+      "  background: #141413 !important;",
+      "  color: #F6F4EF !important;",
       "  border-bottom: 1px solid #27272A !important;",
       "  box-shadow: 0 1px 2px rgba(17,17,19,0.08) !important;",
       "}",
       ".masthead-inner { padding: 8px 16px !important; gap: 10px !important; }",
-      ".masthead .app-title { color: #FAF9F6 !important; font-size: 20px !important; margin-top: 2px !important; }",
+      ".masthead .app-title { color: #F6F4EF !important; font-size: 20px !important; margin-top: 2px !important; }",
       ".masthead div[style*='max-width:740px'] { font-size: 11.5px !important; line-height: 1.3 !important; margin-top: 2px !important; }",
       ".masthead .spec-label, .masthead .status-tag { background: #1E1E22 !important; border: 1px solid #3F3F46 !important; color: #E4E4E7 !important; border-radius: 4px !important; }",
       ".masthead div[style*='color:var(--cf-ink-secondary)'] { color: #A1A1AA !important; }",
       ".masthead .back-link, .ds-back-link, .cd-back-link { background: #1E1E22 !important; border: 1px solid #3F3F46 !important; color: #F4F4F5 !important; border-radius: 4px !important; }",
       ".masthead .back-link:hover, .ds-back-link:hover, .cd-back-link:hover { background: #27272A !important; border-color: #71717A !important; }",
-      ".ds-logo-mark, .cd-logo-mark { background: #4F46E5 !important; border-color: #6366F1 !important; border-radius: 5px !important; color: #FFFFFF !important; }",
-      "/* Soften harsh 2px black cartoon shadows into crisp Linear/Attio tactile elevation */",
+      ".ds-logo-mark, .cd-logo-mark { background: #C8431F !important; border-color: #C8431F !important; border-radius: 5px !important; color: #FFFFFF !important; }",
+      "/* Keep control elevation subtle */",
       ".tactile-btn, .ds-tool-btn, .pvue-tool-btn, .ds-export-btn, .q-nav-btn, .q-action-primary, .q-action-secondary, .drill-ctrl-btn {",
       "  border-radius: 5px !important;",
       "  box-shadow: 0 1px 2px rgba(17,17,19,0.06) !important;",
       "}",
       ".tactile-btn-vermilion, .ds-btn-accent, .pvue-btn-grade-exam, #runRemediationBtn, .ds-btn-remediate, #btnCheckCurrentAnswer, .pvue-btn-check {",
-      "  background: #4F46E5 !important;",
+      "  background: #C8431F !important;",
       "  color: #FFFFFF !important;",
-      "  border: 1px solid #4338CA !important;",
+      "  border: 1px solid #A33418 !important;",
       "  border-radius: 5px !important;",
-      "  box-shadow: 0 1px 2px rgba(79,70,229,0.25) !important;",
+      "  box-shadow: 0 1px 2px rgba(120,48,28,0.15) !important;",
       "}",
       ".tactile-btn-vermilion:hover, .ds-btn-accent:hover, .pvue-btn-grade-exam:hover, #runRemediationBtn:hover, .ds-btn-remediate:hover, #btnCheckCurrentAnswer:hover, .pvue-btn-check:hover {",
-      "  background: #4338CA !important;",
+      "  background: #A33418 !important;",
       "}",
       ".ds-page-sheet-frame, .ds-node-inspector-card, .ds-editor-section, .ds-tree-col, .ds-ledger-box, .q-stem-card, .an-panel-card, .an-hero-banner {",
       "  border: 1px solid #E4E2DD !important;",
       "  border-radius: 6px !important;",
       "  box-shadow: 0 1px 3px rgba(17,17,19,0.04) !important;",
       "}",
-      ".how-it-works-strip, .cf-journey-bar, .dsh-journey-bar { display: none !important; }",
-      "@keyframes cfVCardPulse { 0% { box-shadow: 0 0 0 3px rgba(79,70,229,0.28); } 100% { box-shadow: 0 1px 3px rgba(17,17,19,0.04); } }",
-      ".cf-v-pulse { animation: cfVCardPulse 0.8s ease; }",
-      "/* 3. Always-Visible 3-Card Design System v2.0 Value & 3-Click Proof Showcase (#cfVisualValueShowcase) */",
-      "/* Openly visible at the top of every Product Workbench AND every /work/*.html Product Description Page (0 hidden menus!) */",
-      "#cfVisualValueShowcase {",
-      "  position: relative;",
-      "  flex-shrink: 0 !important;",
-      "  background: #F3F2EE;",
-      "  border-bottom: 1px solid #E4E2DD;",
-      "  padding: 12px 16px;",
-      "  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;",
-      "  z-index: 90;",
-      "}",
-      "#cfVisualValueShowcase.cf-vvs-in-work-page {",
-      "  background: transparent;",
-      "  border-bottom: none;",
-      "  padding: 0;",
-      "  margin: 28px 0 32px 0;",
-      "}",
-      ".cf-vvs-inner {",
-      "  max-width: 1580px;",
-      "  margin: 0 auto;",
-      "}",
-      "#cfVisualValueShowcase.cf-vvs-in-work-page .cf-vvs-inner {",
-      "  max-width: 100%;",
-      "}",
-      ".cf-vvs-grid {",
-      "  display: grid;",
-      "  grid-template-columns: 0.95fr 1.08fr 1.25fr;",
-      "  gap: 12px;",
-      "  align-items: stretch;",
-      "}",
-      "@media (max-width: 960px) {",
-      "  .cf-vvs-grid { grid-template-columns: 1fr; }",
-      "}",
-      ".cf-vvs-card {",
-      "  background: #FFFFFF;",
-      "  border: 1px solid #E4E2DD;",
-      "  border-radius: 8px;",
-      "  padding: 13px 15px;",
-      "  box-shadow: 0 1px 3px rgba(17,17,19,0.05), 0 1px 2px rgba(17,17,19,0.03);",
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  justify-content: space-between;",
-      "  gap: 8px;",
-      "}",
-      ".cf-vvs-card-prove {",
-      "  border-color: #C7D2FE;",
-      "  background: linear-gradient(180deg, #FFFFFF 0%, #FAF9FF 100%);",
-      "}",
-      ".cf-vvs-top {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  justify-content: space-between;",
-      "  gap: 8px;",
-      "  flex-wrap: wrap;",
-      "}",
-      ".cf-vvs-icon-group {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  gap: 8px;",
-      "}",
-      ".cf-vvs-icon-box {",
-      "  width: 28px;",
-      "  height: 28px;",
-      "  border-radius: 6px;",
-      "  display: flex;",
-      "  align-items: center;",
-      "  justify-content: center;",
-      "  flex-shrink: 0;",
-      "  background: #EEF2FF;",
-      "  color: #4F46E5;",
-      "  border: 1px solid #C7D2FE;",
-      "}",
-      ".cf-vvs-kicker {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10.5px;",
-      "  font-weight: 700;",
-      "  letter-spacing: 0.05em;",
-      "  text-transform: uppercase;",
-      "  color: #4F46E5;",
-      "}",
-      ".cf-vvs-pill {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10.5px;",
-      "  font-weight: 600;",
-      "  padding: 2px 8px;",
-      "  border-radius: 5px;",
-      "  background: #FAF9F6;",
-      "  color: #111113;",
-      "  border: 1px solid #D4D1C8;",
-      "  white-space: nowrap;",
-      "}",
-      ".cf-vvs-pill-prove {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10.5px;",
-      "  font-weight: 600;",
-      "  padding: 2px 9px;",
-      "  border-radius: 999px;",
-      "  background: #EEF2FF;",
-      "  color: #4F46E5;",
-      "  border: 1px solid #C7D2FE;",
-      "  white-space: nowrap;",
-      "}",
-      ".cf-vvs-title {",
-      "  font-size: 15px;",
-      "  font-weight: 700;",
-      "  color: #111113;",
-      "  line-height: 1.28;",
-      "  margin: 2px 0;",
-      "}",
-      ".cf-vvs-desc {",
-      "  font-size: 12.5px;",
-      "  color: #52514E;",
-      "  line-height: 1.46;",
-      "  margin: 0;",
-      "}",
-      ".cf-vvs-flow {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  gap: 6px;",
-      "  flex-wrap: wrap;",
-      "  margin-top: 2px;",
-      "  padding-top: 8px;",
-      "  border-top: 1px solid #E4E2DD;",
-      "}",
-      ".cf-vvs-node {",
-      "  display: inline-flex;",
-      "  align-items: center;",
-      "  gap: 5px;",
-      "  background: #FAF9F6;",
-      "  border: 1px solid #D4D1C8;",
-      "  color: #111113;",
-      "  padding: 3px 8px;",
-      "  border-radius: 5px;",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10.5px;",
-      "  font-weight: 600;",
-      "}",
-      ".cf-vvs-node-mid {",
-      "  background: #EEF2FF;",
-      "  border-color: #C7D2FE;",
-      "  color: #4F46E5;",
-      "}",
-      ".cf-vvs-node-end {",
-      "  background: #F0FDF4;",
-      "  border-color: #BBF7D0;",
-      "  color: #15803D;",
-      "}",
-      ".cf-vvs-arrow {",
-      "  color: #8A8884;",
-      "  font-weight: 600;",
-      "  font-size: 11px;",
-      "}",
-      ".cf-vvs-btn-grid {",
-      "  display: grid;",
-      "  grid-template-columns: repeat(3, 1fr);",
-      "  gap: 7px;",
-      "  margin-top: 4px;",
-      "}",
-      "@media (max-width: 680px) {",
-      "  .cf-vvs-btn-grid { grid-template-columns: 1fr; }",
-      "}",
-      ".cf-vvs-proof-btn {",
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  align-items: flex-start;",
-      "  justify-content: space-between;",
-      "  gap: 4px;",
-      "  padding: 7px 9px;",
-      "  border-radius: 6px;",
-      "  border: 1px solid #C7D2FE;",
-      "  background: #FFFFFF;",
-      "  color: #111113;",
-      "  cursor: pointer;",
-      "  text-align: left;",
-      "  box-shadow: 0 1px 2px rgba(79,70,229,0.08);",
-      "  transition: all 0.14s ease;",
-      "}",
-      ".cf-vvs-proof-btn:hover {",
-      "  background: #EEF2FF;",
-      "  border-color: #4F46E5;",
-      "  transform: translateY(-1px);",
-      "}",
-      ".cf-vvs-proof-btn.cf-proof-done {",
-      "  background: #F0FDF4;",
-      "  border-color: #15803D;",
-      "  color: #15803D;",
-      "}",
-      ".cf-vvs-btn-top {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  justify-content: space-between;",
-      "  width: 100%;",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 600;",
-      "}",
-      ".cf-vvs-btn-badge {",
-      "  background: #4F46E5;",
-      "  color: #FFFFFF;",
-      "  padding: 1px 6px;",
-      "  border-radius: 4px;",
-      "}",
-      ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-badge {",
-      "  background: #15803D;",
-      "  color: #FFFFFF;",
-      "}",
-      ".cf-vvs-btn-icon {",
-      "  display: inline-flex;",
-      "  align-items: center;",
-      "  color: #4F46E5;",
-      "}",
-      ".cf-vvs-proof-btn.cf-proof-done .cf-vvs-btn-icon {",
-      "  color: #15803D;",
-      "}",
-      ".cf-vvs-btn-label {",
-      "  font-size: 11.5px;",
-      "  font-weight: 700;",
-      "  line-height: 1.25;",
-      "}",
-      ".cf-vvs-outcome {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  gap: 8px;",
-      "  font-size: 11.5px;",
-      "  color: #52514E;",
-      "  background: #FAF9F6;",
-      "  border: 1px solid #E4E2DD;",
-      "  border-radius: 6px;",
-      "  padding: 7px 10px;",
-      "  line-height: 1.38;",
-      "}",
-      ".cf-vvs-outcome.cf-outcome-active {",
-      "  background: #F0FDF4;",
-      "  border-color: #BBF7D0;",
-      "  color: #15803D;",
-      "  font-weight: 600;",
-      "}",
-      ".cf-vvs-outcome-icon {",
-      "  color: #4F46E5;",
-      "  display: inline-flex;",
-      "  flex-shrink: 0;",
-      "}",
-      ".cf-vvs-outcome.cf-outcome-active .cf-vvs-outcome-icon {",
-      "  color: #15803D;",
-      "}",
-      "/* 4. Main Landing Page (index.html) Open 3-Pillar Product Card Breakdown */",
-      ".cf-home-card-pillars {",
-      "  margin-top: 16px;",
-      "  padding-top: 14px;",
-      "  border-top: 1px solid #E4E2DD;",
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  gap: 10px;",
-      "}",
-      ".cf-home-pillar-box {",
-      "  background: #FAF9F6;",
-      "  border: 1px solid #E4E2DD;",
-      "  border-radius: 6px;",
-      "  padding: 10px 12px;",
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  gap: 4px;",
-      "}",
-      ".cf-home-pillar-head {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  justify-content: space-between;",
-      "  gap: 6px;",
-      "  flex-wrap: wrap;",
-      "}",
-      ".cf-home-pillar-kicker {",
-      "  display: inline-flex;",
-      "  align-items: center;",
-      "  gap: 5px;",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 700;",
-      "  letter-spacing: 0.05em;",
-      "  text-transform: uppercase;",
-      "  color: #4F46E5;",
-      "}",
-      ".cf-home-pillar-metric {",
-      "  font-family: 'IBM Plex Mono', monospace;",
-      "  font-size: 10px;",
-      "  font-weight: 600;",
-      "  padding: 1px 6px;",
-      "  border-radius: 4px;",
-      "  background: #FFFFFF;",
-      "  border: 1px solid #D4D1C8;",
-      "  color: #111113;",
-      "}",
-      ".cf-home-pillar-title {",
-      "  font-size: 13.5px;",
-      "  font-weight: 700;",
-      "  color: #111113;",
-      "  line-height: 1.3;",
-      "}",
-      ".cf-home-pillar-desc {",
-      "  font-size: 12px;",
-      "  color: #52514E;",
-      "  line-height: 1.45;",
-      "}",
-      ".cf-home-proof-btns {",
-      "  display: grid;",
-      "  grid-template-columns: repeat(3, 1fr);",
-      "  gap: 6px;",
-      "  margin-top: 4px;",
-      "}",
-      "@media (max-width: 640px) {",
-      "  .cf-home-proof-btns { grid-template-columns: 1fr; }",
-      "}",
-      ".cf-home-proof-link {",
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  gap: 3px;",
-      "  padding: 7px 9px;",
-      "  border-radius: 5px;",
-      "  border: 1px solid #C7D2FE;",
-      "  background: #FFFFFF;",
-      "  color: #111113;",
-      "  text-decoration: none;",
-      "  font-size: 11px;",
-      "  font-weight: 600;",
-      "  transition: all 0.12s ease;",
-      "}",
-      ".cf-home-proof-link:hover {",
-      "  background: #EEF2FF;",
-      "  border-color: #4F46E5;",
-      "  color: #4F46E5;",
-      "}"
-    ].join("\n");
+      ":focus-visible { outline: 3px solid #C8431F; outline-offset: 3px; }"
+      ].join("\n");
       document.head.appendChild(themeStyle);
     }
+  }
 
-    // Enhance all product cards on the Main Landing Page (index.html) with open 1. Problem, 2. Why It Wins, 3. 3-Click Proof
-    var homeCards = document.querySelectorAll(".work-card");
-    if (homeCards && homeCards.length > 0) {
-      Array.prototype.forEach.call(homeCards, function (card) {
-        if (card.querySelector(".cf-home-card-pillars")) return;
-        var launchLink = card.querySelector('a[href*="stealthflow"], a[href*="omnirag"], a[href*="edtech-studio"], a[href*="codedrill"], a[href*="docushield"], a[href*="content-studio"], a[href*="dealshield"]');
-        if (!launchLink) return;
-        var href = launchLink.getAttribute("href") || "";
-        var cardCfg = getProductShowcaseConfig(href);
-        if (!cardCfg) return;
-        var baseAppHref = href.split("?")[0];
-        var btnIconsHome = [SVG_ICONS.search, SVG_ICONS.magic, SVG_ICONS.cert];
-        var proofLinksHtml = cardCfg.clicks.map(function (c, idx) {
-          var cleanLbl = String(c.label || "").replace(/^[123]\.\s*/, "");
-          return (
-            '<a class="cf-home-proof-link" href="' +
-            escapeHtmlSafe(baseAppHref + "?autoProof=" + (idx + 1)) +
-            '">' +
-            '<span style="display:flex;align-items:center;justify-content:space-between;font-family:\'IBM Plex Mono\',monospace;font-size:9.5px;color:#4F46E5;font-weight:700;">' +
-            "<span>CLICK " + (idx + 1) + "</span>" +
-            "<span>" + btnIconsHome[idx] + "</span>" +
-            "</span>" +
-            "<span>" + escapeHtmlSafe(cleanLbl) + "</span>" +
-            "</a>"
-          );
-        }).join("");
-
-        var pillarsWrap = document.createElement("div");
-        pillarsWrap.className = "cf-home-card-pillars";
-        pillarsWrap.innerHTML =
-          '<div class="cf-home-pillar-box">' +
-          '<div class="cf-home-pillar-head">' +
-          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.alert + " 1. The Problem It Solves</span>" +
-          '<span class="cf-home-pillar-metric">' + escapeHtmlSafe(cardCfg.problemMetric) + "</span>" +
-          "</div>" +
-          '<div class="cf-home-pillar-title">' + escapeHtmlSafe(cardCfg.problemTitle) + "</div>" +
-          '<div class="cf-home-pillar-desc">' + escapeHtmlSafe(cardCfg.problemDesc) + "</div>" +
-          "</div>" +
-          '<div class="cf-home-pillar-box">' +
-          '<div class="cf-home-pillar-head">' +
-          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.shield + " 2. Why This Product Wins</span>" +
-          '<span class="cf-home-pillar-metric">' + escapeHtmlSafe(cardCfg.whyMetric) + "</span>" +
-          "</div>" +
-          '<div class="cf-home-pillar-title">' + escapeHtmlSafe(cardCfg.whyTitle) + "</div>" +
-          '<div class="cf-vvs-flow" style="margin-top:4px;padding-top:6px;">' +
-          '<span class="cf-vvs-node">' + SVG_ICONS.doc + " " + escapeHtmlSafe(cardCfg.flow[0]) + "</span>" +
-          '<span class="cf-vvs-arrow">&rarr;</span>' +
-          '<span class="cf-vvs-node cf-vvs-node-mid">' + SVG_ICONS.cpu + " " + escapeHtmlSafe(cardCfg.flow[1]) + "</span>" +
-          '<span class="cf-vvs-arrow">&rarr;</span>' +
-          '<span class="cf-vvs-node cf-vvs-node-end">' + SVG_ICONS.award + " " + escapeHtmlSafe(cardCfg.flow[2]) + "</span>" +
-          "</div>" +
-          "</div>" +
-          '<div class="cf-home-pillar-box" style="background:#FAF9FF;border-color:#C7D2FE;">' +
-          '<div class="cf-home-pillar-head">' +
-          '<span class="cf-home-pillar-kicker">' + SVG_ICONS.bolt + " 3. Prove Value in 3 Clicks (Live Demo)</span>" +
-          "</div>" +
-          '<div class="cf-home-proof-btns">' + proofLinksHtml + "</div>" +
-          "</div>";
-
-        var topDiv = card.querySelector("div");
-        if (topDiv) {
-          topDiv.appendChild(pillarsWrap);
-        }
-      });
-    }
-
-    var cfg = getProductShowcaseConfig(window.location.pathname);
-    if (!cfg || document.getElementById("cfVisualValueShowcase")) return;
-
-    var isWorkDescPage = String(window.location.pathname || "").toLowerCase().indexOf("/work/") !== -1;
-
-    var showcase = document.createElement("section");
-    showcase.id = "cfVisualValueShowcase";
-    if (isWorkDescPage) {
-      showcase.className = "cf-vvs-in-work-page";
-    }
-    showcase.setAttribute("aria-label", "Product Value Proposition and 3-Click Interactive Proof");
-
-    var btnIcons = [SVG_ICONS.search, SVG_ICONS.magic, SVG_ICONS.cert];
-    var btnsHtml = cfg.clicks
-      .map(function (c, idx) {
-        var cleanLabel = String(c.label || "").replace(/^[123]\.\s*/, "");
-        return (
-          '<button type="button" class="cf-vvs-proof-btn" id="cfProofClick' +
-          (idx + 1) +
-          '" data-proof-idx="' +
-          idx +
-          '" title="' +
-          escapeHtmlSafe(c.outcome) +
-          '">' +
-          '<div class="cf-vvs-btn-top">' +
-          '<span class="cf-vvs-btn-badge" id="cfProofBadge' +
-          (idx + 1) +
-          '">CLICK ' +
-          (idx + 1) +
-          "</span>" +
-          '<span class="cf-vvs-btn-icon">' +
-          btnIcons[idx] +
-          "</span>" +
-          "</div>" +
-          '<div class="cf-vvs-btn-label">' +
-          escapeHtmlSafe(cleanLabel) +
-          "</div>" +
-          "</button>"
-        );
-      })
-      .join("");
-
-    showcase.innerHTML =
-      '<div class="cf-vvs-inner">' +
-      '<div class="cf-vvs-grid">' +
-      // Card 1: 1. THE PROBLEM IT SOLVES
-      '<div class="cf-vvs-card">' +
-      "<div>" +
-      '<div class="cf-vvs-top">' +
-      '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box">' +
-      SVG_ICONS.alert +
-      "</div>" +
-      '<span class="cf-vvs-kicker">1. The Problem It Solves</span>' +
-      "</div>" +
-      '<span class="cf-vvs-pill">' +
-      escapeHtmlSafe(cfg.problemMetric) +
-      "</span>" +
-      "</div>" +
-      '<h2 class="cf-vvs-title" style="margin-top:6px;">' +
-      escapeHtmlSafe(cfg.problemTitle) +
-      "</h2>" +
-      '<p class="cf-vvs-desc">' +
-      escapeHtmlSafe(cfg.problemDesc) +
-      "</p>" +
-      "</div>" +
-      "</div>" +
-      // Card 2: 2. WHY THIS PRODUCT WINS + VISUAL 3-ICON FLOW
-      '<div class="cf-vvs-card">' +
-      "<div>" +
-      '<div class="cf-vvs-top">' +
-      '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box">' +
-      SVG_ICONS.shield +
-      "</div>" +
-      '<span class="cf-vvs-kicker">2. Why This Product Wins</span>' +
-      "</div>" +
-      '<span class="cf-vvs-pill">' +
-      escapeHtmlSafe(cfg.whyMetric) +
-      "</span>" +
-      "</div>" +
-      '<h2 class="cf-vvs-title" style="margin-top:6px;">' +
-      escapeHtmlSafe(cfg.whyTitle) +
-      "</h2>" +
-      '<p class="cf-vvs-desc">' +
-      escapeHtmlSafe(cfg.whyDesc) +
-      "</p>" +
-      "</div>" +
-      '<div class="cf-vvs-flow">' +
-      '<span class="cf-vvs-node">' +
-      SVG_ICONS.doc +
-      " " +
-      escapeHtmlSafe(cfg.flow[0]) +
-      "</span>" +
-      '<span class="cf-vvs-arrow">&rarr;</span>' +
-      '<span class="cf-vvs-node cf-vvs-node-mid">' +
-      SVG_ICONS.cpu +
-      " " +
-      escapeHtmlSafe(cfg.flow[1]) +
-      "</span>" +
-      '<span class="cf-vvs-arrow">&rarr;</span>' +
-      '<span class="cf-vvs-node cf-vvs-node-end">' +
-      SVG_ICONS.award +
-      " " +
-      escapeHtmlSafe(cfg.flow[2]) +
-      "</span>" +
-      "</div>" +
-      "</div>" +
-      // Card 3: 3. PROVE VALUE IN 3 CLICKS (LIVE DEMO)
-      '<div class="cf-vvs-card cf-vvs-card-prove">' +
-      "<div>" +
-      '<div class="cf-vvs-top">' +
-      '<div class="cf-vvs-icon-group">' +
-      '<div class="cf-vvs-icon-box">' +
-      SVG_ICONS.bolt +
-      "</div>" +
-      '<span class="cf-vvs-kicker">3. Prove Value in 3 Clicks</span>' +
-      "</div>" +
-      '<span class="cf-vvs-pill-prove" id="cfProofProgressBadge">0 / 3 Proven</span>' +
-      "</div>" +
-      '<div class="cf-vvs-btn-grid">' +
-      btnsHtml +
-      "</div>" +
-      "</div>" +
-      '<div class="cf-vvs-outcome" id="cfLiveProofOutcome">' +
-      '<span class="cf-vvs-outcome-icon">' +
-      SVG_ICONS.check +
-      "</span>" +
-      '<span id="cfLiveProofOutcomeText">' +
-      (isWorkDescPage
-        ? "Click <strong>CLICK 1</strong>, <strong>CLICK 2</strong>, or <strong>CLICK 3</strong> above to launch the live product and verify that step immediately."
-        : "Click <strong>CLICK 1</strong> &rarr; <strong>CLICK 2</strong> &rarr; <strong>CLICK 3</strong> above to watch this product solve the problem live.") +
-      "</span>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      "</div>";
-
-    if (isWorkDescPage) {
-      var grid2 = document.querySelector("main .grid-2, main .panel, main section");
-      var mainEl = document.querySelector("main");
-      if (grid2 && grid2.parentNode) {
-        grid2.parentNode.insertBefore(showcase, grid2);
-      } else if (mainEl) {
-        mainEl.insertBefore(showcase, mainEl.firstChild);
-      }
-    } else {
-      var headerEl = document.querySelector(
-        "header.masthead, header.ds-global-header, header.codedrill-global-bar, header.cf-global-header, header"
-      );
-      if (!headerEl || !headerEl.parentNode) return;
-      headerEl.parentNode.insertBefore(showcase, headerEl.nextSibling);
-    }
-
-    var provenMap = {};
-    [0, 1, 2].forEach(function (idx) {
-      var btn = document.getElementById("cfProofClick" + (idx + 1));
-      if (!btn) return;
-      btn.addEventListener("click", function () {
-        if (isWorkDescPage && cfg.appUrl) {
-          window.location.href = cfg.appUrl + "?autoProof=" + (idx + 1);
-          return;
-        }
-        provenMap[idx] = true;
-        btn.classList.add("cf-proof-done");
-        var bdg = document.getElementById("cfProofBadge" + (idx + 1));
-        if (bdg) bdg.textContent = "✓ PROVEN";
-        var doneCount = Object.keys(provenMap).length;
-        var prog = document.getElementById("cfProofProgressBadge");
-        if (prog) prog.textContent = doneCount + " / 3 Proven";
-
-        var outText = document.getElementById("cfLiveProofOutcomeText");
-        var outBox = document.getElementById("cfLiveProofOutcome");
-        if (outText) {
-          outText.textContent = cfg.clicks[idx].outcome;
-        }
-        if (outBox) {
-          outBox.classList.add("cf-outcome-active");
-          outBox.classList.remove("cf-v-pulse");
-          void outBox.offsetWidth;
-          outBox.classList.add("cf-v-pulse");
-        }
-
-        try {
-          cfg.clicks[idx].run();
-        } catch (_) {}
-      });
-    });
-
-    // If navigated from a /work/*.html description page with ?autoProof=1..3, auto-trigger that proof click!
-    if (!isWorkDescPage) {
-      try {
-        var qParams = new URLSearchParams(window.location.search || "");
-        var autoStep = parseInt(qParams.get("autoProof") || "0", 10);
-        if (autoStep >= 1 && autoStep <= 3) {
-          setTimeout(function () {
-            var targetBtn = document.getElementById("cfProofClick" + autoStep);
-            if (targetBtn) targetBtn.click();
-          }, 260);
-        }
-      } catch (_) {}
+  // Preserve existing inbound links. Each product owns its current view and result.
+  function openRequestedStep() {
+    var step = new URLSearchParams(window.location.search).get("autoProof");
+    if (/^[123]$/.test(step || "")) {
+      window.dispatchEvent(new CustomEvent("cf:open-step", { detail: { step: Number(step) } }));
     }
   }
+  if (document.readyState === "complete") openRequestedStep();
+  else window.addEventListener("load", openRequestedStep, { once: true });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", mountFeedbackWidget);

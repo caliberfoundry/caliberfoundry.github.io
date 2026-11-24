@@ -61,6 +61,19 @@
     .site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 28px 0; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); }
     .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
     .footer-inner a { color: var(--cf-ink-primary); text-decoration: none; }
+      .grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr)); align-items:start; }
+    .card { justify-content:flex-start; min-width:0; }
+    .card-title { font-size:32px; }.desc {font-size:15px;}
+    .trial-link,.offer a,.product-jumps a { color:#933019;text-underline-offset:3px;font-weight:600; }
+    .trial-link { margin:0 0 16px;align-self:flex-start; }
+    .product-jumps { display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px; }
+    .product-jumps a { padding:4px 0; }
+    .offer { border-top:1px solid var(--cf-rule-mid);padding:12px 0; }
+    .offer summary { cursor:pointer;color:#242321;font-size:16px; }
+    .offer summary strong { float:right;color:#211f31; }
+    .offer p { margin:8px 0 4px;color:#4c4a47; } .offer a {display:inline-block;padding:4px 0;}
+    article[id] {scroll-margin-top:80px;}
+    @media (max-width:600px) { .header-inner {padding:10px 16px;display:block}.nav-links {margin-top:8px;gap:6px 14px;flex-wrap:wrap}.nav-links a{padding:3px 0}.hero{padding:24px 0 18px}.grid{padding:18px 0}.card{padding:16px}.container{padding-inline:16px} }
   </style>
 </head>
 <body>
@@ -84,95 +97,74 @@
   <main class="container">
     <section class="hero">
       <span class="eyebrow">Commercial SaaS &amp; Enterprise Software Licensing</span>
-      <h1>Transparent Software &amp; Team Licensing</h1>
-      <p class="subtitle">
-        Every Caliber Foundry product includes an interactive free diagnostic tier in your browser, instant online activation via license key, and a 30-day money-back guarantee. Supplied by Caliber Foundry (<code>CaliberFoundry</code> · <code>engineering@caliberfoundry.com</code>).
-      </p>
+      <h1>Product licenses and services</h1>
+      <p class="subtitle">Choose a product and an offer. Each price is in USD. The purchase link opens the named provider.</p>
+      <nav class="product-jumps" aria-label="Jump to a product"><a href="#price-dealshield">DealShield</a><a href="#price-docushield">DocuShield</a><a href="#price-codedrill-cbt">CodeDrill</a><a href="#price-content-studio">ContentForge</a></nav>
     </section>
-
-    <section class="grid" aria-label="Commercial Software Products">
-      <!-- Product 1: DealShield -->
-      <article class="card">
-        <div>
-          <span class="card-kicker">01 // Enterprise Procurement &amp; VPAT</span>
-          <h2 class="card-title">DealShield&trade; DDQ &amp; VPAT 2.5 Studio</h2>
-          <div class="price">$199 <span>USD / Single Deal Pack ($399/mo Team)</span></div>
-          <p class="desc">Zero-library security questionnaire (CSA CAIQ v4, EDUCAUSE HECVAT v3, SIG-Lite) and ITI VPAT&reg; 2.5 conformance generator.</p>
-          <ul class="features">
-            <li>Full 250-row CSV / Excel DDQ auto-fill with policy anchors</li>
-            <li>Printable ITI VPAT&reg; 2.5 (WCAG 2.2 AA + Section 508 + EU EAA) PDF</li>
-            <li>All 4 frameworks unlocked + CISO Gap Detector</li>
-            <li>Instant license key activation &amp; corporate tax invoice</li>
-          </ul>
-        </div>
-        <div class="btn-stack">
-          <a href="https://caliberfoundry.gumroad.com/l/dealshield-pro" target="_blank" rel="noopener" class="btn btn-primary">Buy Instant License ($199 · Card / Apple Pay) &nearr;</a>
-          <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener" class="btn btn-dark">Purchase via Contra B2B (0% Fee · $299) &nearr;</a>
-          <a href="./dealshield/" class="btn btn-outline">Launch Free Diagnostic Workbench &rarr;</a>
-        </div>
+    <section class="grid" aria-label="Product pricing">
+      <article class="card" id="price-dealshield">
+        <h2 class="card-title">DealShield</h2>
+        <p class="desc">Review a customer security questionnaire and its supporting evidence.</p>
+        <a class="trial-link" href="./dealshield/">Try the free example &rarr;</a>
+        <details class="offer" name="offers-dealshield" open>
+          <summary><span>Single deal pack</span> <strong>$199 once</strong></summary>
+          <p>One questionnaire deal pack</p><a href="https://caliberfoundry.gumroad.com/l/dealshield-pro" target="_blank" rel="noopener noreferrer">View license on Gumroad &nearr;</a>
+        </details>
+        <details class="offer" name="offers-dealshield">
+          <summary><span>Team plan</span> <strong>$399 / month</strong></summary>
+          <p>Recurring team access</p><a href="mailto:engineering@caliberfoundry.com?subject=DealShield%20team%20billing" data-native-mailto="1">Ask about team billing &nearr;</a>
+        </details>
+        <details class="offer" name="offers-dealshield">
+          <summary><span>Procurement service</span> <strong>From $299</strong></summary>
+          <p>Combined DealShield and DocuShield service</p><a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener noreferrer">View service scope on Contra &nearr;</a>
+        </details>
       </article>
-
-      <!-- Product 2: DocuShield -->
-      <article class="card">
-        <div>
-          <span class="card-kicker">02 // PDF/UA &amp; EU EAA Accessibility</span>
-          <h2 class="card-title">DocuShield&trade; PDF/UA Remediation Studio</h2>
-          <div class="price">$299 <span>USD / Growth B2B License ($199 Single Pack)</span></div>
-          <p class="desc">Automated ISO 14289-1 (PDF/UA-1), Matterhorn Protocol 1.1, and WCAG 2.2 AA structural tag tree remediation and VPAT 2.5 certification.</p>
-          <ul class="features">
-            <li>All 6 industry &amp; EdTech compliance profiles (48 checkpoints)</li>
-            <li>Client-side binary PDF structure &amp; /StructTreeRoot XML diff</li>
-            <li>Complex Table &lt;TH Scope&gt; &amp; Figure /Alt remediation editor</li>
-            <li>Printable VPAT 2.5 &amp; EU EAA 2019/882 Conformance Certificate</li>
-          </ul>
-        </div>
-        <div class="btn-stack">
-          <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener" class="btn btn-primary">Buy Instant License ($299 · Card / Apple Pay) &nearr;</a>
-          <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener" class="btn btn-dark">Purchase via Contra B2B (0% Fee · $299) &nearr;</a>
-          <a href="./docushield/" class="btn btn-outline">Launch Free Diagnostic Workbench &rarr;</a>
-        </div>
+      <article class="card" id="price-docushield">
+        <h2 class="card-title">DocuShield</h2>
+        <p class="desc">Inspect a PDF, review structural issues and prepare an accessibility report.</p>
+        <a class="trial-link" href="./docushield/">Try the free example &rarr;</a>
+        <details class="offer" name="offers-docushield" open>
+          <summary><span>PDF accessibility license</span> <strong>$299 once</strong></summary>
+          <p>PDF accessibility software license</p><a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener noreferrer">View license on Gumroad &nearr;</a>
+        </details>
+        <details class="offer" name="offers-docushield">
+          <summary><span>Single pack</span> <strong>$199</strong></summary>
+          <p>One document pack</p><a href="mailto:engineering@caliberfoundry.com?subject=DocuShield%20single%20pack" data-native-mailto="1">Request the single pack &nearr;</a>
+        </details>
+        <details class="offer" name="offers-docushield">
+          <summary><span>Procurement service</span> <strong>From $299</strong></summary>
+          <p>Combined DealShield and DocuShield service</p><a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener noreferrer">View service scope on Contra &nearr;</a>
+        </details>
       </article>
-
-      <!-- Product 3: CodeDrill CBT -->
-      <article class="card">
-        <div>
-          <span class="card-kicker">03 // Federal Licensing &amp; EdTech CBT</span>
-          <h2 class="card-title">CodeDrill&trade; CBT Exam Simulator</h2>
-          <div class="price">$399 <span>USD / Corporate Team License ($79/mo Candidate Pro)</span></div>
-          <p class="desc">1:1 Pearson VUE split-screen open-book exam simulator for the U.S. Customs Broker License Exam (19 CFR &amp; HTSUS) and IRS Enrolled Agent exam (31 CFR Part 10).</p>
-          <ul class="features">
-            <li>Up to 15 candidate seats + all 30 exam cases &amp; 7 topic suites</li>
-            <li>Synchronized 19 CFR, HTSUS GRI 1–6 &amp; Circular 230 eCFR reader</li>
-            <li>90-second Citation-Speed Drill &amp; Customs Valuation Calculator</li>
-            <li>Printable B2B Team Readiness &amp; Citation Latency PDF Dossier</li>
-          </ul>
-        </div>
-        <div class="btn-stack">
-          <a href="https://caliberfoundry.gumroad.com/l/codedrill-pro" target="_blank" rel="noopener" class="btn btn-primary">Buy Team / Pro License ($399 · Card / Apple Pay) &nearr;</a>
-          <a href="https://contra.com/s/qAZQN6OW-code-drilltm-cbt-and-interactive-exam-courseware-team-license" target="_blank" rel="noopener" class="btn btn-dark">Purchase via Contra B2B (0% Fee · $399) &nearr;</a>
-          <a href="./codedrill-cbt/" class="btn btn-outline">Launch Free Diagnostic Simulator &rarr;</a>
-        </div>
+      <article class="card" id="price-codedrill-cbt">
+        <h2 class="card-title">CodeDrill</h2>
+        <p class="desc">Practise exam questions, cite regulations and review team readiness.</p>
+        <a class="trial-link" href="./codedrill-cbt/">Try the free example &rarr;</a>
+        <details class="offer" name="offers-codedrill-cbt" open>
+          <summary><span>Corporate license</span> <strong>$399 once</strong></summary>
+          <p>Team software offer on Gumroad</p><a href="https://caliberfoundry.gumroad.com/l/codedrill-pro" target="_blank" rel="noopener noreferrer">View license on Gumroad &nearr;</a>
+        </details>
+        <details class="offer" name="offers-codedrill-cbt">
+          <summary><span>Candidate Pro</span> <strong>$79 / month</strong></summary>
+          <p>Individual exam practice subscription</p><a href="mailto:engineering@caliberfoundry.com?subject=CodeDrill%20Candidate%20Pro%20billing" data-native-mailto="1">Ask about candidate billing &nearr;</a>
+        </details>
+        <details class="offer" name="offers-codedrill-cbt">
+          <summary><span>Team courseware</span> <strong>From $399</strong></summary>
+          <p>Team-license and interactive courseware offer</p><a href="https://contra.com/s/qAZQN6OW-code-drilltm-cbt-and-interactive-exam-courseware-team-license" target="_blank" rel="noopener noreferrer">View offer on Contra &nearr;</a>
+        </details>
       </article>
-
-      <!-- Product 4: ContentForge -->
-      <article class="card">
-        <div>
-          <span class="card-kicker">04 // Verification &amp; Courseware Studio</span>
-          <h2 class="card-title">ContentForge&trade; Evaluation &amp; SCORM Studio</h2>
-          <div class="price">$299 <span>USD / Studio Pro License ($2,500 Turnkey Sprint)</span></div>
-          <p class="desc">5-stage deterministic document synthesis, 0.0% hallucination evaluation harness, n8n/Make.com webhook dispatcher, and SCORM 1.2 quiz compiler.</p>
-          <ul class="features">
-            <li>All 4 industry presets (n8n Pipeline, Eval Harness, EdTech SCORM, FinTech)</li>
-            <li>Ground-Truth Span vs. Extracted Claim F1 evaluation matrix</li>
-            <li>5-Option (A–E) psychometric quiz &amp; 60fps video storyboard generator</li>
-            <li>Printable Ground-Truth Evaluation &amp; Content Dossier PDF</li>
-          </ul>
-        </div>
-        <div class="btn-stack">
-          <a href="https://caliberfoundry.gumroad.com/l/contentforge-pro" target="_blank" rel="noopener" class="btn btn-primary">Buy Studio Pro License ($299 · Card / Apple Pay) &nearr;</a>
-          <a href="https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio" target="_blank" rel="noopener" class="btn btn-dark">Commission Turnkey Sprint via Contra ($2,500) &nearr;</a>
-          <a href="./content-studio/" class="btn btn-outline">Launch Free Diagnostic Studio &rarr;</a>
-        </div>
+      <article class="card" id="price-content-studio">
+        <h2 class="card-title">ContentForge</h2>
+        <p class="desc">Build and review a content dossier from a source document.</p>
+        <a class="trial-link" href="./content-studio/">Try the free example &rarr;</a>
+        <details class="offer" name="offers-content-studio" open>
+          <summary><span>Studio Pro license</span> <strong>$299 once</strong></summary>
+          <p>Software for content and evaluation workflows</p><a href="https://caliberfoundry.gumroad.com/l/contentforge-pro" target="_blank" rel="noopener noreferrer">View license on Gumroad &nearr;</a>
+        </details>
+        <details class="offer" name="offers-content-studio">
+          <summary><span>Turnkey content sprint</span> <strong>From $2,500</strong></summary>
+          <p>Commission a scoped curriculum project</p><a href="https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio" target="_blank" rel="noopener noreferrer">View project scope on Contra &nearr;</a>
+        </details>
       </article>
     </section>
 

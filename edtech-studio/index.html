@@ -8,1232 +8,609 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>ORFF Maestra™ TTL-MSM & Certification SCORM 1.2 Studio | Caliber Foundry</title>
-  <script src="./scorm_and_ttl_engine.js"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
-    :root {
-      --cf-bg-paper:       #F6F4EF;
-      --cf-bg-stone:       #ECE9E1;
-      --cf-bg-surface:     #FFFFFF;
-      --cf-bg-ink-panel:   #141413;
-
-      --cf-ink-primary:    #141413;
-      --cf-ink-secondary:  #4A4842;
-      --cf-ink-muted:      #78756D;
-      --cf-ink-on-dark:    #F6F4EF;
-
-      --cf-rule-strong:    #141413;
-      --cf-rule-mid:       #C9C4B8;
-      --cf-rule-subtle:    #DFDBD2;
-
-      --cf-accent-primary: #C8431F;
-      --cf-accent-hover:   #A63415;
-      --cf-accent-tint:    #FDF2EE;
-
-      --cf-navy-authority: #1B365D;
-      --cf-navy-tint:      #EEF2F7;
-
-      --cf-forest-pass:    #1A5638;
-      --cf-forest-tint:    #EDF5F0;
-
-      --cf-brass-warn:     #9C5A08;
-      --cf-brass-tint:     #FBF4E9;
-
-      --cf-highlight-mark: #FCE588;
-
-      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
-      --font-serif:   'Newsreader', Georgia, serif;
-      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono:    'IBM Plex Mono', monospace;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background-color: var(--cf-bg-paper);
-      color: var(--cf-ink-primary);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    ::selection {
-      background-color: var(--cf-highlight-mark);
-      color: var(--cf-ink-primary);
-    }
-
-    .mono {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .spec-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-variant-numeric: tabular-nums;
-      color: var(--cf-ink-muted);
-    }
-
-    .hidden { display: none !important; }
-
-    /* Masthead */
-    .masthead {
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      background-color: var(--cf-bg-paper);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-    }
-
-    .masthead-inner {
-      max-width: 1560px;
-      margin: 0 auto;
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      border-left: 1px solid var(--cf-rule-mid);
-      border-right: 1px solid var(--cf-rule-mid);
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .back-link {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-ink-primary);
-      color: var(--cf-ink-on-dark);
-      text-decoration: none;
-      border-radius: 2px;
-    }
-
-    .back-link:hover {
-      background-color: #2B2A27;
-    }
-
-    .app-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 400;
-      line-height: 1;
-      color: var(--cf-ink-primary);
-    }
-
-    /* Tactile Mechanical Buttons */
-    .btn-tactile {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 6px 11px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-bg-surface);
-      color: var(--cf-ink-primary);
-      box-shadow: 2px 2px 0px var(--cf-ink-primary);
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
-      cursor: pointer;
-    }
-
-    .btn-tactile:hover {
-      background-color: var(--cf-bg-stone);
-    }
-
-    .btn-tactile:active {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0px var(--cf-ink-primary);
-    }
-
-    .btn-tactile-vermilion {
-      background-color: var(--cf-accent-primary);
-      color: #FFFFFF;
-    }
-
-    .btn-tactile-vermilion:hover {
-      background-color: var(--cf-accent-hover);
-    }
-
-    .btn-tactile-ink {
-      background-color: var(--cf-ink-primary);
-      color: var(--cf-ink-on-dark);
-    }
-
-    .btn-tactile-forest {
-      background-color: var(--cf-forest-pass);
-      color: #FFFFFF;
-    }
-
-    /* Main Blueprint Shell */
-    .shell {
-      max-width: 1560px;
-      width: 100%;
-      margin: 0 auto;
-      border-left: 1px solid var(--cf-rule-mid);
-      border-right: 1px solid var(--cf-rule-mid);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Subheader Strip */
-    .subheader-strip {
-      background-color: var(--cf-bg-stone);
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    /* 3-Column Exposed Hairline Clinical Workbench */
-    .clinical-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      flex: 1;
-    }
-
-    @media (min-width: 820px) {
-      .clinical-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    .clinical-col {
-      padding: 20px;
-      background-color: var(--cf-bg-surface);
-      border-bottom: 1px solid var(--cf-rule-mid);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    @media (min-width: 820px) {
-      .clinical-col {
-        border-bottom: none;
-        border-right: 1px solid var(--cf-rule-mid);
-      }
-      .clinical-col:last-child {
-        border-right: none;
-        background-color: var(--cf-bg-paper);
-      }
-    }
-
-    .col-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-      padding-bottom: 12px;
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-    }
-
-    .col-title {
-      font-family: var(--font-display);
-      font-size: 25px;
-      font-weight: 400;
-      line-height: 1.1;
-    }
-
-    .source-box {
-      padding: 14px;
-      background-color: var(--cf-bg-paper);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-    }
-
-    .rating-group {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .btn-rating {
-      padding: 6px 6px;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      background-color: var(--cf-bg-surface);
-      color: var(--cf-ink-secondary);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.1s ease;
-    }
-
-    .btn-rating:hover {
-      border-color: var(--cf-ink-primary);
-      color: var(--cf-ink-primary);
-    }
-
-    .btn-rating.active {
-      background-color: var(--cf-ink-primary);
-      color: var(--cf-ink-on-dark);
-      border-color: var(--cf-ink-primary);
-      font-weight: 600;
-      box-shadow: 2px 2px 0px var(--cf-accent-primary);
-    }
-
-    /* Verdict Classification Card */
-    .verdict-box {
-      padding: 18px;
-      border: 1.5px solid var(--cf-rule-strong);
-      border-radius: 2px;
-      box-shadow: 3px 3px 0px var(--cf-ink-primary);
-    }
-
-    .verdict-forest {
-      background-color: var(--cf-forest-tint);
-      border-color: var(--cf-forest-pass);
-      color: var(--cf-forest-pass);
-    }
-
-    .verdict-brass {
-      background-color: var(--cf-brass-tint);
-      border-color: var(--cf-brass-warn);
-      color: var(--cf-brass-warn);
-    }
-
-    .verdict-vermilion {
-      background-color: var(--cf-accent-tint);
-      border-color: var(--cf-accent-primary);
-      color: var(--cf-accent-primary);
-    }
-
-    .gate-item {
-      padding: 10px 12px;
-      background-color: var(--cf-bg-paper);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .input-mechanical {
-      padding: 7px 10px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--cf-ink-primary);
-      background-color: var(--cf-bg-surface);
-      border: 1px solid var(--cf-ink-primary);
-      border-radius: 2px;
-      outline: none;
-      width: 100%;
-    }
-
-    .terminal-box {
-      background-color: var(--cf-bg-ink-panel);
-      color: var(--cf-ink-on-dark);
-      border: 1px solid var(--cf-rule-strong);
-      border-radius: 2px;
-      padding: 14px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1.55;
-    }
-
-    /* Mode 2: SCORM Certification Split Grid */
-    .scorm-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      flex: 1;
-    }
-
-    @media (min-width: 820px) {
-      .scorm-grid {
-        grid-template-columns: 7fr 5fr;
-      }
-    }
-
-    .quiz-option {
-      width: 100%;
-      text-align: left;
-      padding: 14px 16px;
-      background-color: var(--cf-bg-paper);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.1s ease;
-    }
-
-    .quiz-option:hover {
-      background-color: var(--cf-bg-surface);
-      border-color: var(--cf-ink-primary);
-      box-shadow: 2px 2px 0px var(--cf-ink-primary);
-    }
-
-    .opt-letter {
-      width: 26px;
-      height: 26px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-bg-surface);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border-radius: 2px;
-    }
-
-    .site-footer {
-      background-color: var(--cf-bg-ink-panel);
-      color: var(--cf-ink-on-dark);
-      border-top: 1.5px solid var(--cf-rule-strong);
-      padding: 18px 24px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-    }
-
-    .how-it-works-strip {
-      background-color: #141413;
-      color: #F6F4EF;
-      padding: 8px 20px;
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      font-size: 12px;
-    }
-    @media (max-width: 820px) {
-      .how-it-works-strip {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-    }
-    .hiw-step-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #1F1E1C;
-      color: #F6F4EF;
-      border: 1px solid #4A4842;
-      padding: 7px 10px;
-      text-align: left;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .hiw-step-btn:hover {
-      background: #2C2A27;
-      border-color: #FCE588;
-    }
-    .hiw-num {
-      background-color: var(--cf-accent-primary);
-      color: #FFFFFF;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 2px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    @keyframes cfFlashPulse {
-      0% { box-shadow: 0 0 0 4px #FCE588; background-color: #FEF3C7; }
-      100% { box-shadow: none; }
-    }
-    .cf-flash-active {
-      animation: cfFlashPulse 0.9s ease;
-    }
-  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>AcademyForge™ — EdTech Studio v2.0 (EN/KR STEM, B2B Academy &amp; SCORM 1.2 Packager) | Caliber Foundry</title>
+  <meta name="description" content="AcademyForge™ (EdTech Studio v2.0) builds multilingual EN/Korean STEM curricula, B2B SaaS Customer Academies, FERPA AES-256 assessments, 30fps voiced video lessons, and binary SCORM 1.2 .ZIP packages." />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
 
-  <!-- Top Masthead -->
-  <header class="masthead">
-    <div class="masthead-inner">
-      <div class="brand-group">
-        <a href="../" class="back-link">&larr; CALIBER FOUNDRY</a>
-        <div>
-          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <h1 class="app-title">EdTech Courseware, Quiz &amp; SCORM 1.2 Studio</h1>
-            <span class="spec-label" style="border:1px solid var(--cf-ink-primary); padding:2px 6px; background:var(--cf-bg-surface); color:var(--cf-ink-primary); font-weight:600;">
-              CANVAS / MOODLE SCORM 1.2 + FERPA PRIVACY
-            </span>
-          </div>
-          <div style="font-size:13px; color:var(--cf-ink-secondary); margin-top:2px;">
-            Turn any textbook or training topic into an auto-graded certification quiz with study hints and 1-click SCORM 1.2 export.
-          </div>
-        </div>
+  <!-- =====================================================================
+       BAR 1: COMPACT GLOBAL HEADER (<= 42px Desktop, Flex-Wrap Safe)
+       ===================================================================== -->
+  <header class="cf-global-header" role="banner">
+    <div class="cf-brand-cluster">
+      <a href="../index.html" class="cf-back-link" title="Return to Caliber Foundry">&larr; Caliber Foundry</a>
+      <div class="cf-logo-mark" aria-hidden="true">AF</div>
+      <div class="cf-brand-titles">
+        <span class="cf-brand-name">AcademyForge<span class="cf-tm">&trade;</span></span>
+        <span class="cf-brand-sub">Course studio</span>
       </div>
+    </div>
 
-      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-        <button type="button" onclick="switchStudioMode('mode_scorm')" id="tab_mode_scorm" class="btn-tactile btn-tactile-ink">
-          1. Interactive Quiz &amp; Study Coach
-        </button>
-        <button type="button" onclick="switchStudioMode('mode_orff')" id="tab_mode_orff" class="btn-tactile">
-          2. Student Rubric &amp; FERPA Privacy
-        </button>
-        <button type="button" onclick="downloadScormManifest()" id="btnDownloadScormTop" class="btn-tactile btn-tactile-vermilion">
-          <span>Download SCORM 1.2 (.XML)</span>
-          <span>&darr;</span>
-        </button>
-        <a href="mailto:engineering@caliberfoundry.com?subject=EdTech%20Courseware%20%26%20SCORM%20Studio%20Inquiry" class="btn-tactile">
-          <span>Contact Engineering</span>
-          <span>&nearr;</span>
-        </a>
-      </div>
+    <div class="cf-preset-selector-wrap">
+      <label for="presetSelect" class="cf-preset-label">Preset:</label>
+      <select id="presetSelect" class="cf-preset-select" aria-label="Select Courseware Architecture Preset">
+        <option value="steminno-kr">Option 1: EN / 한국어 STEM &amp; Robotics (STEMinnoKey)</option>
+        <option value="saas-academy">Option 2: B2B SaaS Customer Academy-in-a-Box</option>
+        <option value="clinical-ferpa">Option 3: Clinical &amp; FERPA AES-256 Compliance</option>
+      </select>
+    </div>
+
+    <div class="cf-account-cluster" id="headerAccountCluster">
+      <span class="cf-license-pill" id="headerLicenseBadge">Free Tier (Mod 1)</span>
+      <button type="button" class="cf-header-btn" id="btnOpenInvoiceModal">B2B Invoice</button>
+      <button type="button" class="cf-header-btn cf-btn-accent" id="btnOpenPaywall">Unlock Pack ($299)</button>
     </div>
   </header>
 
-  <main class="shell">
-
-    <!-- Interactive Clickable 1 -> 2 -> 3 Guided Bar -->
-    <div class="how-it-works-strip" aria-label="Click any step to test EdTech Studio live">
-      <button type="button" class="hiw-step-btn" onclick="cycleNextQuizTopic()">
-        <span class="hiw-num">STEP 1 &rarr;</span>
-        <span><strong>Click to Switch Exam Topic</strong> (or generate a custom quiz from your own text below).</span>
+  <!-- =====================================================================
+       BAR 2: COMPACT 3-STEP GUIDED RIBBON (ADR-018)
+       ===================================================================== -->
+  <nav class="af-stepper-ribbon" aria-label="AcademyForge 3-Step Workflow">
+    <div class="af-stepper-track">
+      <button type="button" class="af-step-btn active" id="stepNav1" aria-controls="sectionStep1" data-step-nav="1">
+        <span class="af-step-num">1</span>
+        <span>Author lesson</span>
       </button>
-      <button type="button" class="hiw-step-btn" onclick="selectQuizOption('B')">
-        <span class="hiw-num">STEP 2 &rarr;</span>
-        <span><strong>Click Answer A, B, or C</strong> below to see instant grading &amp; wrong-answer explanations.</span>
+      <span class="af-step-sep" aria-hidden="true">&rarr;</span>
+      <button type="button" class="af-step-btn" id="stepNav2" aria-controls="sectionStep2" data-step-nav="2">
+        <span class="af-step-num">2</span>
+        <span>Try as a learner</span>
       </button>
-      <button type="button" class="hiw-step-btn" onclick="downloadScormManifest()">
-        <span class="hiw-num">STEP 3 &rarr;</span>
-        <span><strong>Click to Export SCORM 1.2 Package</strong> for Canvas, Moodle, Blackboard, or Docebo.</span>
+      <span class="af-step-sep" aria-hidden="true">&rarr;</span>
+      <button type="button" class="af-step-btn" id="stepNav3" aria-controls="sectionStep3" data-step-nav="3">
+        <span class="af-step-num">3</span>
+        <span>Export course</span>
       </button>
     </div>
+    <div class="af-ribbon-actions">
+      <span class="mono" id="activeContentHashBadge" style="font-size:11px;color:var(--cf-ink-muted);">SHA-256: AF-STEM-01</span>
+      <button type="button" class="btn-primary" id="btnTopExportScormZip" style="padding:5px 11px;font-size:11.5px;">
+        <svg class="af-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Export SCORM 1.2 (.ZIP)</span>
+      </button>
+    </div>
+  </nav>
 
-    <!-- =================================================================== -->
-    <!-- MODE 01: Student Assessment Rubric & FERPA Privacy Guard            -->
-    <!-- =================================================================== -->
-    <div id="view_mode_orff" class="hidden" style="display:flex; flex-direction:column; flex:1;">
+  <main class="af-main-shell" id="afMainWorkbench">
 
-      <!-- Clinical Case Presets Strip -->
-      <div class="subheader-strip">
+    <!-- ===================================================================
+         STEP 1: 3 READY-TO-PICK COURSE OPTIONS (ADR-023) + CUSTOM GENERATOR
+         =================================================================== -->
+    <section hidden class="af-section-card" id="sectionStep1" aria-labelledby="step1Heading">
+      <div class="af-section-head">
         <div>
-          <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:700;">
-            STUDENT EVALUATION RUBRIC &amp; AUTOMATIC RULE ENGINE (FERPA PRIVACY PROTECTED) //
+          <span class="af-kicker">Lesson authoring</span>
+          <h1 class="af-section-title" id="step1Heading">Choose or adapt a lesson</h1>
+        </div>
+        <span class="af-vvs-metric" id="activePresetBadge">ACTIVE: OPTION 1 (EN / 한국어 STEM)</span>
+      </div>
+
+      <div class="af-options-grid" role="group" aria-label="Three Ready Course Options">
+        <!-- Option 1 -->
+        <button type="button" class="af-option-card active" id="optCard1" data-preset-option="steminno-kr">
+          <div>
+            <div class="af-opt-top">
+              <span class="af-opt-tag">Option 1 &middot; EN &harr; 한국어</span>
+              <span class="af-opt-tier">STEMinnoKey Preset</span>
+            </div>
+            <div class="af-opt-title" style="margin-top:8px;">Multilingual STEM &amp; Robotics Curriculum</div>
+            <p class="af-opt-desc" style="margin-top:4px;">1-click English &harr; Korean (`한국어`) modular robotics &amp; PID sensor fusion lab with math-token integrity, competency matrix, and bilingual SCORM 1.2 export.</p>
           </div>
-          <div style="font-size:13px; color:var(--cf-ink-secondary);">
-            Score 4 areas of student performance on the left &rarr; see the automatic recommendation in the middle &rarr; export with encrypted student ID on the right.
+          <div class="af-opt-meta">
+            <span>3 Competency Axes</span>
+            <span>EN / KO Dual SCO &rarr;</span>
+          </div>
+        </button>
+
+        <!-- Option 2 -->
+        <button type="button" class="af-option-card" id="optCard2" data-preset-option="saas-academy">
+          <div>
+            <div class="af-opt-top">
+              <span class="af-opt-tag">Option 2 &middot; B2B SaaS</span>
+              <span class="af-opt-tier">$2,900 Academy Sprint</span>
+            </div>
+            <div class="af-opt-title" style="margin-top:8px;">Customer Academy-in-a-Box (Developer &amp; API)</div>
+            <p class="af-opt-desc" style="margin-top:4px;">Turnkey B2B SaaS &amp; DevTools onboarding course: HMAC-SHA256 webhooks, idempotency keys, API troubleshooting labs, and developer certification exam.</p>
+          </div>
+          <div class="af-opt-meta">
+            <span>5-Module Blueprint</span>
+            <span>Skilljar / Docebo Ready &rarr;</span>
+          </div>
+        </button>
+
+        <!-- Option 3 -->
+        <button type="button" class="af-option-card" id="optCard3" data-preset-option="clinical-ferpa">
+          <div>
+            <div class="af-opt-top">
+              <span class="af-opt-tag">Option 3 &middot; Compliance</span>
+              <span class="af-opt-tier">FERPA AES-256 + 19 CFR</span>
+            </div>
+            <div class="af-opt-title" style="margin-top:8px;">Clinical &amp; Regulatory Compliance Studio</div>
+            <p class="af-opt-desc" style="margin-top:4px;">Deterministic 4-gate TTL-MSM clinical assessment matrix paired with in-browser WebCrypto AES-256-GCM student PII masking and 19 CFR regulatory items.</p>
+          </div>
+          <div class="af-opt-meta">
+            <span>4-Gate Rule Trace</span>
+            <span>Zero-PII Encrypted &rarr;</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Custom 3-Variant Course Generator with Mandatory ADR-024 Inline Progress & ETA -->
+      <div class="af-custom-gen-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <span class="af-kicker" style="color:var(--cf-ink-primary);">CUSTOM TOPIC OR ADJUSTMENT BRIEF &rarr; GENERATES 3 NEW MODULE OPTIONS</span>
+          <span class="mono" style="font-size:11px;color:var(--cf-ink-muted);" id="customGenCounterBadge">Generation #1 Ready</span>
+        </div>
+
+        <div class="af-chips-row" role="group" aria-label="Quick Topic Adjustment Chips">
+          <button type="button" class="btn-chip" id="chipBilingualStem" data-quick-chip="Bilingual EN/Korean autonomous rover PID &amp; LiDAR obstacle lab with Unity WebGL telemetry">+ EN / 한국어 Robotics Lab</button>
+          <button type="button" class="btn-chip" id="chipApiWebhook" data-quick-chip="Production REST API key rotation every 90 days with mTLS and idempotent webhook retries">+ SaaS API &amp; Webhook Security</button>
+          <button type="button" class="btn-chip" id="chipFerpaSoc2" data-quick-chip="FERPA 34 CFR 99.31 student record AES-256-GCM anonymization and 19 CFR statutory audit">+ FERPA &amp; 19 CFR Compliance</button>
+        </div>
+
+        <div class="af-custom-row">
+          <input
+            type="text"
+            id="customTopicInput"
+            class="af-input"
+            value="Autonomous Rover PID Control: Fuse IMU pitch angle with wheel encoder velocity and clamp integral windup on 12-degree inclines."
+            placeholder="Describe a lesson rule, STEM concept, or API workflow to synthesize 3 custom module options..."
+            aria-label="Custom course topic or revision comment"
+          />
+          <button type="button" class="btn-primary" id="btnGenerateCustomVariants">
+            <span>&#8635; Generate 3 Custom Module Options</span>
+          </button>
+        </div>
+
+        <!-- Mandatory ADR-024 Inline Progress Bar, Stage Label & Live Countdown right below button -->
+        <div class="af-inline-progress hidden" id="genInlineProgress" role="status" aria-live="polite">
+          <div class="af-prog-top">
+            <span class="af-prog-stage" id="genProgStage">Stage 1/3: Parsing learning objectives...</span>
+            <span class="af-prog-eta" id="genProgEta">~0.9s remaining (0%)</span>
+          </div>
+          <div class="af-prog-track">
+            <div class="af-prog-fill" id="genProgFill"></div>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-          <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700;">LOAD SAMPLE STUDENT:</span>
-          <button type="button" onclick="loadClinicalPreset('difference')" class="btn-tactile">
-            Student A: Bilingual Learner (No Disorder)
-          </button>
-          <button type="button" onclick="loadClinicalPreset('disorder')" class="btn-tactile">
-            Student B: Needs Special Support
-          </button>
-          <button type="button" onclick="loadClinicalPreset('typical')" class="btn-tactile">
-            Student C: On-Track Learner
-          </button>
+
+        <!-- 3 Generated Custom Sub-Options (ADR-023) -->
+        <div class="af-generated-variants-grid hidden" id="generatedVariantsGrid" aria-label="Generated Custom Course Options">
+          <button type="button" class="af-gen-variant-btn active" id="genVarBtn0" data-gen-idx="0"></button>
+          <button type="button" class="af-gen-variant-btn" id="genVarBtn1" data-gen-idx="1"></button>
+          <button type="button" class="af-gen-variant-btn" id="genVarBtn2" data-gen-idx="2"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         STEP 2: INTERACTIVE LESSON, EN/KR QUIZ, 30S VIDEO & TTL-MSM ENGINE
+         =================================================================== -->
+    <section class="af-workbench-split" id="sectionStep2" aria-label="Interactive Lesson, Video Player, and Competency Engine">
+
+      <!-- LEFT COLUMN: Interactive Bilingual Lesson, Module Switcher & Graded Quiz -->
+      <div class="af-col-stack">
+        <div class="af-section-card" id="quizWorkbenchCard">
+          <div class="af-section-head">
+            <div>
+              <span class="af-kicker" id="lessonKicker">Practice question</span>
+              <h2 class="af-section-title" id="quizScenarioTitle">Autonomous Robotics PID &amp; Sensor Fusion</h2>
+            </div>
+            <div class="af-lang-bar" id="bilingualToggleWrap">
+              <span class="mono" style="font-size:10.5px;font-weight:600;color:var(--cf-ink-secondary);">LOCALE:</span>
+              <div class="af-seg-group" role="group" aria-label="Course Language Switcher">
+                <button type="button" class="af-seg-btn active" id="btnLangEn" data-lang="en">EN (English)</button>
+                <button type="button" class="af-seg-btn" id="btnLangKo" data-lang="ko">한국어 (Korean)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Concise Lesson Context + Scenario Question -->
+          <div class="af-lesson-stem" id="quizScenarioBody"></div>
+
+          <!-- 3 Clickable Answer Options -->
+          <div class="af-quiz-list" id="quizOptionsContainer">
+            <button type="button" class="af-quiz-opt" id="quizOptBtnA" data-opt-letter="A">
+              <span class="af-opt-letter">A</span>
+              <div class="af-opt-body" id="quizOptContentA"></div>
+            </button>
+            <button type="button" class="af-quiz-opt" id="quizOptBtnB" data-opt-letter="B">
+              <span class="af-opt-letter">B</span>
+              <div class="af-opt-body" id="quizOptContentB"></div>
+            </button>
+            <button type="button" class="af-quiz-opt" id="quizOptBtnC" data-opt-letter="C">
+              <span class="af-opt-letter">C</span>
+              <div class="af-opt-body" id="quizOptContentC"></div>
+            </button>
+          </div>
+
+          <!-- Instant Distractor-Aware Grading Feedback -->
+          <div class="af-feedback-banner" id="quizFeedbackBox" role="status">
+            Choose an answer to see your score and explanation.
+          </div>
+
+          <!-- Freemium Module Switcher (Module 1 Free, Modules 2-3 PRO) -->
+          <div class="af-module-tabs" role="group" aria-label="Course Modules">
+            <button type="button" class="af-mod-tab active" id="btnMod1" data-mod-idx="0">
+              <span>Module 1 (Free Diagnostic)</span>
+            </button>
+            <button type="button" class="af-mod-tab pro-locked" id="btnMod2" data-mod-idx="1">
+              <span id="btnMod2Label">Module 2: Advanced Lab</span>
+              <span class="af-pro-pill" id="proPillMod2">PRO</span>
+            </button>
+            <button type="button" class="af-mod-tab pro-locked" id="btnMod3" data-mod-idx="2">
+              <span id="btnMod3Label">Module 3: Final Certification</span>
+              <span class="af-pro-pill" id="proPillMod3">PRO</span>
+            </button>
+          </div>
+
+          <!-- Non-Spoiling Study Coach Hints -->
+          <div class="af-coach-strip">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <span class="mono" style="font-size:11px;font-weight:600;color:var(--cf-ink-secondary);" id="coachHeaderLabel">GUIDED STUDY COACH (NON-SPOILING HINTS):</span>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button type="button" class="btn-secondary" id="btnCoachHint1" style="padding:4px 9px;font-size:11px;">Hint 1: Core Concept</button>
+                <button type="button" class="btn-secondary" id="btnCoachHint2" style="padding:4px 9px;font-size:11px;">Hint 2: Common Trap</button>
+              </div>
+            </div>
+            <div class="af-coach-reply hidden" id="socraticChatBox"></div>
+          </div>
+
+          <!-- Live SCORM 1.2 Runtime Log -->
+          <div class="af-terminal" style="margin-top:14px;">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #27272A;padding-bottom:5px;margin-bottom:6px;">
+              <span style="color:#A1A1AA;">Practice attempt log</span>
+              <span style="color:#4ADE80;font-weight:600;" id="lmsConnBadge">Local preview</span>
+            </div>
+            <div id="scormApiLog"></div>
+          </div>
         </div>
       </div>
 
-      <!-- 3-Column Clinical Workbench -->
-      <section class="clinical-grid">
+      <!-- RIGHT COLUMN: 30s Voiced Video Lesson + Adaptive Competency Matrix + TTL-MSM / FERPA -->
+      <div class="af-col-stack">
 
-        <!-- Column 1: 4 Coded Evidence Sources Matrix -->
-        <div class="clinical-col">
-          <div class="col-header">
+        <!-- Card R1: Embedded 30.0s, 30 FPS Voiced Educational Video Lesson -->
+        <details class="af-section-card af-walkthrough">
+          <summary>Watch a worked example <span>30 seconds</span></summary>
+          <div class="af-video-frame">
+            <video
+              id="afDemoVideoPlayer"
+              class="af-video-el"
+              controls
+              preload="metadata"
+              playsinline
+              poster="./assets/academyforge_demo_poster.jpg"
+            >
+              <source src="./assets/academyforge_demo_lesson.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </details>
+
+        <!-- Card R2: Adaptive Competency & Mastery Matrix -->
+        <div class="af-section-card">
+          <div class="af-section-head" style="margin-bottom:10px;">
             <div>
-              <div class="spec-label">STEP 1 &middot; SCORE 4 STUDENT AREAS</div>
-              <h2 class="col-title">Student Evaluation Rubric</h2>
+              <span class="af-kicker" id="compMatrixKicker">Course practice</span>
+              <h2 class="af-section-title" style="font-size:21px;" id="compMatrixTitle">Practice results by module</h2>
             </div>
-            <span class="mono" style="font-size:11px; padding:2px 6px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">4 CRITERIA</span>
+            <span class="af-vvs-metric" id="rubricMasteryBadge">No attempt yet</span>
           </div>
-
-          <!-- Source 1 -->
-          <div class="source-box">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">1. Home Language Skills (Parent Report)</strong>
-              <span id="badge_s1" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 2/2</span>
+          <div class="af-comp-list" id="competencyBarsContainer">
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel1">1. Sensor Fusion &amp; PID Stability</span>
+                <span id="compVal1">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill1" style="width:0%;"></div></div>
             </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How well the student communicates at home in their native language.</div>
-            <div class="rating-group">
-              <button type="button" onclick="setEvidence('parentL1', 0)" id="btn_parentL1_0" class="btn-rating">0: High Difficulty</button>
-              <button type="button" onclick="setEvidence('parentL1', 1)" id="btn_parentL1_1" class="btn-rating">1: Mild Concern</button>
-              <button type="button" onclick="setEvidence('parentL1', 2)" id="btn_parentL1_2" class="btn-rating">2: Strong at Home</button>
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel2">2. Multilingual Math Token Integrity</span>
+                <span id="compVal2">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill2" style="width:0%;"></div></div>
             </div>
-          </div>
-
-          <!-- Source 2 -->
-          <div class="source-box">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">2. Classroom Participation (Teacher Report)</strong>
-              <span id="badge_s2" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 1/2</span>
-            </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How the student participates in daily classroom lessons and peer work.</div>
-            <div class="rating-group">
-              <button type="button" onclick="setEvidence('teacherObs', 0)" id="btn_teacherObs_0" class="btn-rating">0: High Struggle</button>
-              <button type="button" onclick="setEvidence('teacherObs', 1)" id="btn_teacherObs_1" class="btn-rating">1: Developing</button>
-              <button type="button" onclick="setEvidence('teacherObs', 2)" id="btn_teacherObs_2" class="btn-rating">2: Proficient</button>
-            </div>
-          </div>
-
-          <!-- Source 3 -->
-          <div class="source-box">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">3. Direct Speaking &amp; Story Sample</strong>
-              <span id="badge_s3" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 1/2</span>
-            </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">Sentence structure and clarity when retelling a short story.</div>
-            <div class="rating-group">
-              <button type="button" onclick="setEvidence('languageSample', 0)" id="btn_languageSample_0" class="btn-rating">0: Frequent Errors</button>
-              <button type="button" onclick="setEvidence('languageSample', 1)" id="btn_languageSample_1" class="btn-rating">1: Bilingual Accent/Dialect</button>
-              <button type="button" onclick="setEvidence('languageSample', 2)" id="btn_languageSample_2" class="btn-rating">2: Age-Expected</button>
-            </div>
-          </div>
-
-          <!-- Source 4 -->
-          <div class="source-box">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:13px;">4. Learning Speed After a 20-Min Lesson</strong>
-              <span id="badge_s4" class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary);">SCORE: 2/2</span>
-            </div>
-            <div style="font-size:11.5px; color:var(--cf-ink-secondary); margin-top:3px;">How quickly the student applies a new rule right after being taught (Test-Teach-Retest).</div>
-            <div class="rating-group">
-              <button type="button" onclick="setEvidence('dynamicAssessment', 0)" id="btn_dynamicAssessment_0" class="btn-rating">0: Slow Uptake</button>
-              <button type="button" onclick="setEvidence('dynamicAssessment', 1)" id="btn_dynamicAssessment_1" class="btn-rating">1: Needs Prompts</button>
-              <button type="button" onclick="setEvidence('dynamicAssessment', 2)" id="btn_dynamicAssessment_2" class="btn-rating">2: Fast Learner</button>
+            <div class="af-comp-row">
+              <div class="af-comp-head">
+                <span id="compLabel3">3. LMS Telemetry &amp; Edge Verification</span>
+                <span id="compVal3">—</span>
+              </div>
+              <div class="af-comp-bar"><div class="af-comp-fill" id="compFill3" style="width:0%;"></div></div>
             </div>
           </div>
         </div>
 
-        <!-- Column 2: Deterministic TTL-MSM Rule Engine & Step-by-Step Audit Trace -->
-        <div class="clinical-col">
-          <div class="col-header">
+        <!-- Card R3: Deterministic TTL-MSM Rubric & FERPA AES-256-GCM Shield (0 Checkboxes!) -->
+        <div class="af-section-card" id="ttlFerpaCard">
+          <div class="af-section-head" style="margin-bottom:8px;">
             <div>
-              <div class="spec-label">STEP 2 &middot; AUTOMATIC RECOMMENDATION</div>
-              <h2 class="col-title">Transparent Rule Result</h2>
+              <span class="af-kicker">DETERMINISTIC RUBRIC &amp; FERPA ZERO-PII ENGINE</span>
+              <h2 class="af-section-title" style="font-size:21px;">TTL-MSM 4-Gate Rubric &amp; AES-256-GCM</h2>
             </div>
-            <span id="compositeScoreBadge" class="mono" style="font-size:11px; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:var(--cf-bg-paper); font-weight:600;">TOTAL: 6/8</span>
+            <span class="af-vvs-metric" id="compositeScoreBadge">TOTAL: 6/8</span>
           </div>
 
-          <!-- Dynamic Verdict Classification Box -->
-          <div id="verdictCard" class="verdict-box">
-            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:11px; font-weight:600; margin-bottom:6px; text-transform:uppercase;">
-              <span>RECOMMENDED OUTCOME</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+            <button type="button" class="btn-chip active" id="btnSampleDiff" data-clinical-preset="difference">Case A: Bilingual (No Disorder)</button>
+            <button type="button" class="btn-chip" id="btnSampleDisorder" data-clinical-preset="disorder">Case B: High Support Need</button>
+            <button type="button" class="btn-chip" id="btnSampleTypical" data-clinical-preset="typical">Case C: On-Track</button>
+          </div>
+
+          <div class="af-ttl-grid">
+            <div class="af-ttl-box">
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;">
+                <span>1. Home L1 Baseline</span>
+                <span class="mono" id="badge_s1">2/2</span>
+              </div>
+              <div class="af-rating-row">
+                <button type="button" class="af-rate-btn" id="btn_parentL1_0" data-ttl-key="parentL1" data-ttl-val="0">0: Low</button>
+                <button type="button" class="af-rate-btn" id="btn_parentL1_1" data-ttl-key="parentL1" data-ttl-val="1">1: Mild</button>
+                <button type="button" class="af-rate-btn active" id="btn_parentL1_2" data-ttl-key="parentL1" data-ttl-val="2">2: Strong</button>
+              </div>
+            </div>
+
+            <div class="af-ttl-box">
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;">
+                <span>2. Classroom Discourse</span>
+                <span class="mono" id="badge_s2">1/2</span>
+              </div>
+              <div class="af-rating-row">
+                <button type="button" class="af-rate-btn" id="btn_teacherObs_0" data-ttl-key="teacherObs" data-ttl-val="0">0: Low</button>
+                <button type="button" class="af-rate-btn active" id="btn_teacherObs_1" data-ttl-key="teacherObs" data-ttl-val="1">1: Dev</button>
+                <button type="button" class="af-rate-btn" id="btn_teacherObs_2" data-ttl-key="teacherObs" data-ttl-val="2">2: Prof</button>
+              </div>
+            </div>
+
+            <div class="af-ttl-box">
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;">
+                <span>3. Narrative Grammar</span>
+                <span class="mono" id="badge_s3">1/2</span>
+              </div>
+              <div class="af-rating-row">
+                <button type="button" class="af-rate-btn" id="btn_languageSample_0" data-ttl-key="languageSample" data-ttl-val="0">0: Deficit</button>
+                <button type="button" class="af-rate-btn active" id="btn_languageSample_1" data-ttl-key="languageSample" data-ttl-val="1">1: L2 Var</button>
+                <button type="button" class="af-rate-btn" id="btn_languageSample_2" data-ttl-key="languageSample" data-ttl-val="2">2: Intact</button>
+              </div>
+            </div>
+
+            <div class="af-ttl-box">
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;">
+                <span>4. 20-Min Modifiability</span>
+                <span class="mono" id="badge_s4">2/2</span>
+              </div>
+              <div class="af-rating-row">
+                <button type="button" class="af-rate-btn" id="btn_dynamicAssessment_0" data-ttl-key="dynamicAssessment" data-ttl-val="0">0: Slow</button>
+                <button type="button" class="af-rate-btn" id="btn_dynamicAssessment_1" data-ttl-key="dynamicAssessment" data-ttl-val="1">1: Guided</button>
+                <button type="button" class="af-rate-btn active" id="btn_dynamicAssessment_2" data-ttl-key="dynamicAssessment" data-ttl-val="2">2: Rapid</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="af-verdict-banner warn" id="verdictCard">
+            <div class="mono" style="font-size:10.5px;font-weight:700;display:flex;justify-content:space-between;">
+              <span>TTL-MSM DETERMINISTIC VERDICT</span>
               <span id="verdictConfidence">CONFIDENCE: 95%</span>
             </div>
-            <h3 id="verdictTitle" style="font-family:var(--font-display); font-size:24px; font-weight:400; line-height:1.15; color:var(--cf-ink-primary); margin-bottom:8px;"></h3>
-            <p id="verdictSummary" style="font-family:var(--font-serif); font-size:15px; line-height:1.6; color:var(--cf-ink-primary);"></p>
+            <div style="font-weight:700;font-size:14px;margin-top:3px;" id="verdictTitle"></div>
+            <div style="font-size:12px;color:var(--cf-ink-secondary);margin-top:3px;" id="verdictSummary"></div>
           </div>
 
-          <!-- 4 Rule Gates Audit Trace -->
-          <div>
-            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:8px;">
-              HOW THIS SCORE WAS CALCULATED (4 TRANSPARENT RULES):
+          <!-- FERPA WebCrypto AES-256-GCM Masking (Segmented Switch, Zero Checkboxes) -->
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--cf-rule-subtle);display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+              <span class="mono" style="font-size:11px;font-weight:700;color:var(--cf-forest-pass);">FERPA STUDENT PII PROTECTION:</span>
+              <div class="af-seg-group" role="group" aria-label="FERPA Encryption Mode">
+                <button type="button" class="af-seg-btn active" id="btnFerpaEncrypted" data-ferpa-mode="encrypted">AES-256-GCM Locked</button>
+                <button type="button" class="af-seg-btn" id="btnFerpaPlain" data-ferpa-mode="plain">Raw Input Preview</button>
+              </div>
             </div>
-            <div id="ruleTraceContainer" style="display:flex; flex-direction:column; gap:8px;">
-              <!-- Populated by JS -->
+
+            <div class="af-ttl-grid" style="margin-top:0;">
+              <input type="text" id="piiName" class="af-input" value="Learner #KR-704 (STEM Cohort)" aria-label="Learner Alias" />
+              <input type="text" id="piiDistrictId" class="af-input" value="SEL-STEM-2026" aria-label="Organization Cohort Code" />
             </div>
+
+            <div class="af-terminal" style="font-size:10.5px;">
+              <div>TOKEN: <span style="color:#FEF08A;" id="cryptoSubjectToken"></span> &middot; IV: <span style="color:#93C5FD;" id="cryptoIv"></span></div>
+              <div style="color:#86EFAC;margin-top:3px;" id="cryptoCiphertext"></div>
+            </div>
+
+            <button type="button" class="btn-secondary" id="btnExportFerpaJson" style="width:100%;">
+              <span>Export FERPA AES-256 Rubric Record (.JSON)</span>
+            </button>
           </div>
         </div>
 
-        <!-- Column 3: FERPA Zero-PII Client-Side WebCrypto AES-256-GCM Engine -->
-        <div class="clinical-col">
-          <div class="col-header">
-            <div>
-              <div class="spec-label" style="color:var(--cf-forest-pass); font-weight:600;">STEP 3 &middot; STUDENT PRIVACY SHIELD</div>
-              <h2 class="col-title">FERPA Student Name Encryption</h2>
-            </div>
-            <label class="mono" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; cursor:pointer; padding:2px 7px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass);">
-              <input type="checkbox" id="ferpaToggle" checked onchange="runFerpaEncryption()" />
-              <span>PRIVACY LOCK ON</span>
-            </label>
-          </div>
+      </div>
+    </section>
 
-          <p style="font-size:12.5px; color:var(--cf-ink-secondary);">
-            To protect student privacy (FERPA), the student&rsquo;s real name and school ID are encrypted right inside your browser (<code>AES-256</code>) before any file is downloaded.
+    <!-- ===================================================================
+         STEP 3: BINARY SCORM 1.2 .ZIP PACKAGER & PROGRESSIVE DISCLOSURE
+         =================================================================== -->
+    <section hidden class="af-section-card" id="sectionStep3" aria-labelledby="step3Heading">
+      <div class="af-export-bar">
+        <div>
+          <span class="af-kicker">STEP 3 OF 3 &middot; ZERO-CDN CLIENT-SIDE BINARY ARCHIVE COMPILER</span>
+          <h2 class="af-section-title" id="step3Heading">Export your course</h2>
+          <p style="font-size:13px;color:var(--cf-ink-secondary);margin-top:3px;">
+            Packages <code>imsmanifest.xml</code>, <code>scorm_api_wrapper.js</code>, and a self-contained interactive <code>index.html</code> (with EN &harr; 한국어 toggle) using IEEE 802.3 CRC-32 PKZIP headers.
           </p>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div>
-              <label class="spec-label" style="display:block; margin-bottom:4px;">STUDENT ID / ALIAS (ANONYMIZED LOCALLY):</label>
-              <input id="piiName" type="text" value="Student #704-B (Anonymized)" oninput="runFerpaEncryption()" class="input-mechanical" />
-            </div>
-            <div>
-              <label class="spec-label" style="display:block; margin-bottom:4px;">SCHOOL / COHORT CODE:</label>
-              <input id="piiDistrictId" type="text" value="TX-ISD-884920" oninput="runFerpaEncryption()" class="input-mechanical" />
-            </div>
-          </div>
-
-          <div class="terminal-box" style="display:flex; flex-direction:column; gap:10px;">
-            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px;">
-              <span style="color:#A39E93;">ENCRYPTION STATUS:</span>
-              <span style="color:#86EFAC; font-weight:600;">AES-256-GCM ACTIVE</span>
-            </div>
-            <div>
-              <div style="color:#A39E93; font-size:10px;">ANONYMOUS STUDENT ID:</div>
-              <div id="cryptoSubjectToken" style="color:#FCE588; font-weight:600;"></div>
-            </div>
-            <div>
-              <div style="color:#A39E93; font-size:10px;">ENCRYPTION KEY IV:</div>
-              <div id="cryptoIv" style="color:#93C5FD;"></div>
-            </div>
-            <div>
-              <div style="color:#A39E93; font-size:10px;">ENCRYPTED RECORD (NO REAL NAME EXPOSED):</div>
-              <div id="cryptoCiphertext" style="color:#86EFAC; word-break:break-all; background:#1F1E1C; padding:8px; border:1px solid #33322F; margin-top:4px; max-height:110px; overflow-y:auto;"></div>
-            </div>
-          </div>
-
-          <button type="button" onclick="exportFerpaClinicalReport()" class="btn-tactile btn-tactile-forest" style="width:100%; padding:10px;">
-            <span>Download Privacy-Protected Student Report (.JSON)</span>
-            <span>&darr;</span>
+        </div>
+        <div class="af-export-actions">
+          <button type="button" class="btn-secondary" id="btnBottomOpenInvoice">
+            <span>Generate B2B Invoice (INV-ED-2026)</span>
           </button>
-        </div>
-
-      </section>
-    </div>
-
-    <!-- =================================================================== -->
-    <!-- MODE 02 (DEFAULT): Interactive Certification Quiz & SCORM Exporter  -->
-    <!-- =================================================================== -->
-    <div id="view_mode_scorm" style="display:flex; flex-direction:column; flex:1;">
-
-      <div class="subheader-strip" style="flex-direction:column; align-items:stretch; gap:10px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <span class="spec-label" style="color:var(--cf-ink-primary); font-weight:700; margin-right:4px;">STEP 1 &mdash; PICK EXAM TOPIC:</span>
-            <button type="button" onclick="loadQuizTopic('bilingual')" id="topic_btn_bilingual" class="btn-tactile btn-tactile-ink" style="padding:5px 10px; font-size:11px;">
-              1. Education &amp; Clinical Case
-            </button>
-            <button type="button" onclick="loadQuizTopic('devops')" id="topic_btn_devops" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-              2. Cloud &amp; Linux DevOps (Kubernetes)
-            </button>
-            <button type="button" onclick="loadQuizTopic('fintech')" id="topic_btn_fintech" class="btn-tactile" style="padding:5px 10px; font-size:11px;">
-              3. FinTech &amp; Security Compliance (SOC 2)
-            </button>
-          </div>
-          <span id="scormStatusTopBadge" class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-            SCORM 1.2 READY &bull; AUTO-GRADED
-          </span>
-        </div>
-
-        <!-- Live Custom Paragraph -> Graded SCORM Quiz Generator -->
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#FFFDFB; border:1.5px solid var(--cf-rule-strong); padding:8px 12px;">
-          <span class="spec-label" style="color:var(--cf-accent-primary); font-weight:700; white-space:nowrap;">&#9654; GENERATE FROM YOUR TEXT:</span>
-          <input id="customLessonTextInput" type="text" value="Rule: Any API key with production write access must rotate every 90 days and enforce mTLS client certificates." placeholder="Paste any textbook rule, policy, or documentation paragraph..." class="input-mechanical" style="flex:1; min-width:240px;" />
-          <button type="button" onclick="generateCustomScormQuestion()" id="btnGenCustomQuiz" class="btn-tactile btn-tactile-vermilion" style="padding:7px 14px; white-space:nowrap;">
-            <span>&#9654; Turn Text Into Graded SCORM Quiz</span>
+          <button type="button" class="btn-primary" id="btnExportScormZip">
+            <svg class="af-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="btnExportScormZipLabel">Download course (.zip)</span>
           </button>
         </div>
       </div>
 
-      <section class="scorm-grid">
-
-        <!-- Left 7 Cols: Interactive Vignette & Distractor-Aware Assessment -->
-        <div id="scormQuestionCard" style="padding:24px; background-color:var(--cf-bg-surface); border-right:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:16px;">
-          <div style="border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
-            <div class="spec-label" style="color:var(--cf-accent-primary); font-weight:700;">STEP 2 &mdash; PRACTICE SCENARIO QUESTION (CLICK A, B, OR C BELOW)</div>
-            <h2 id="quizScenarioTitle" style="font-family:var(--font-display); font-size:28px; font-weight:400;">Evaluating a Bilingual Student: Difference vs. Disorder</h2>
-          </div>
-
-          <div id="quizScenarioBody" style="padding:16px; background-color:var(--cf-bg-paper); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15.5px; line-height:1.6;">
-            <div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #1]</div>
-            <p>A 7-year-old Spanish-English bilingual student scores low on an <strong>English-only vocabulary test</strong>. However, the parents confirm strong Spanish storytelling at home, and during a 20-minute practice lesson, the student <strong>quickly learns and applies new grammar rules</strong>.</p>
-            <p style="font-weight:600; margin-top:10px;">Question: What is the correct conclusion for this student?</p>
-          </div>
-
-          <!-- 3 Options -->
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <button type="button" onclick="selectQuizOption('A')" id="quiz_opt_A" class="quiz-option">
-              <span class="opt-letter">A</span>
-              <div id="quiz_opt_A_content">
-                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Label as a Language Disorder based on the English test score</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Place the student in Special Education because the English-only test score was low.</div>
-              </div>
-            </button>
-
-            <button type="button" onclick="selectQuizOption('B')" id="quiz_opt_B" class="quiz-option">
-              <span class="opt-letter">B</span>
-              <div id="quiz_opt_B_content">
-                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Normal Bilingual Development (Keep in General Education — Correct Answer)</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder.</div>
-              </div>
-            </button>
-
-            <button type="button" onclick="selectQuizOption('C')" id="quiz_opt_C" class="quiz-option">
-              <span class="opt-letter">C</span>
-              <div id="quiz_opt_C_content">
-                <div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">Wait 12 months and do nothing</div>
-                <div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">Postpone recording parent feedback or practice lessons until next school year.</div>
-              </div>
-            </button>
-          </div>
-
-          <div id="quizFeedbackBox" style="padding:14px 16px; border:1.5px solid var(--cf-rule-strong); background-color:var(--cf-bg-stone); font-size:13.5px; line-height:1.5;">
-            <strong>&uarr; Click Answer A, B, or C above</strong> to see instant feedback and watch the LMS gradebook log update below.
-          </div>
-
-          <div class="terminal-box">
-            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #33322F; padding-bottom:6px; margin-bottom:8px;">
-              <span style="color:#A39E93;">LIVE LMS GRADEBOOK LOG (SCORM 1.2 API)</span>
-              <span style="color:#86EFAC; font-weight:600;">CONNECTED TO LMS</span>
-            </div>
-            <div id="scormApiLog" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;">
-              <div><span style="color:#FCE588;">LMSInitialize("")</span> &rarr; <span style="color:#86EFAC;">"Session Started"</span></div>
-              <div><span style="color:#93C5FD;">LMSGetValue("cmi.core.lesson_status")</span> &rarr; <span style="color:#FCE588;">"In Progress"</span></div>
-            </div>
-          </div>
+      <!-- Mandatory ADR-024 Inline Progress Bar & ETA Countdown for SCORM ZIP Export -->
+      <div class="af-inline-progress hidden" id="exportInlineProgress" style="margin-top:12px;" role="status" aria-live="polite">
+        <div class="af-prog-top">
+          <span class="af-prog-stage" id="exportProgStage">Stage 1/3: Compiling ADL SCORM 1.2 imsmanifest.xml...</span>
+          <span class="af-prog-eta" id="exportProgEta">~0.6s remaining (0%)</span>
         </div>
+        <div class="af-prog-track">
+          <div class="af-prog-fill" id="exportProgFill"></div>
+        </div>
+      </div>
 
-        <!-- Right 5 Cols: Socratic Study Coach & Rubric Mastery Ledger -->
-        <aside style="padding:28px; background-color:var(--cf-bg-paper); display:flex; flex-direction:column; gap:18px;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1.5px solid var(--cf-rule-strong); padding-bottom:10px;">
-            <div>
-              <div class="spec-label">GUIDED STUDY ASSISTANT (NO SPOILERS)</div>
-              <h3 style="font-family:var(--font-display); font-size:26px; font-weight:400;">Interactive Study Coach &amp; Hints</h3>
-            </div>
-            <span id="rubricMasteryBadge" class="mono" style="font-size:11px; padding:3px 8px; border:1px solid var(--cf-forest-pass); background:var(--cf-forest-tint); color:var(--cf-forest-pass); font-weight:600;">
-              SCORE: 88%
-            </span>
-          </div>
+      <!-- Progressive Disclosure Technical Drawers (ADR-012) -->
+      <details class="af-details-drawer" id="drawerManifestPreview">
+        <summary class="af-details-summary">
+          <span>Inspect the SCORM manifest</span>
+          <span class="mono" style="color:var(--cf-accent-primary);">Expand &darr;</span>
+        </summary>
+        <div class="af-details-body">
+          <button class="btn-secondary" type="button" id="downloadManifest">Download manifest (.xml)</button>
+          <pre class="af-code-pre" id="manifestXmlPreviewCode"></pre>
+        </div>
+      </details>
 
-          <!-- Rubric Mastery Ledger -->
-          <div style="padding:14px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-mid); display:flex; flex-direction:column; gap:12px;">
-            <div>
-              <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                <span>1. COMBINING HOME &amp; CLASSROOM EVIDENCE</span>
-                <strong id="rubricBar1Text" style="color:var(--cf-forest-pass);">92%</strong>
-              </div>
-              <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
-                <div style="width:92%; height:100%; background:var(--cf-forest-pass);"></div>
-              </div>
-            </div>
-            <div>
-              <div class="mono" style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                <span>2. IDENTIFYING FAST LEARNING GAIN</span>
-                <strong id="rubricBar2Text" style="color:var(--cf-navy-authority);">85%</strong>
-              </div>
-              <div style="width:100%; height:6px; background:var(--cf-bg-stone); border:1px solid var(--cf-rule-mid);">
-                <div style="width:85%; height:100%; background:var(--cf-navy-authority);"></div>
-              </div>
-            </div>
-          </div>
-
-          <div id="socraticChatBox" style="display:flex; flex-direction:column; gap:12px; max-height:280px; overflow-y:auto;">
-            <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
-              <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:4px;">[STUDY HINT]</div>
-              &ldquo;Compare the English-only test score against how quickly the student learned during the 20-minute practice lesson. If a student learns new grammar rules right away, does that point to a true disorder, or simply that they are still learning English?&rdquo;
-            </div>
-          </div>
-
-          <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <button type="button" onclick="askSocraticTutor('Why is an English-only norm-referenced test biased here?')" class="btn-tactile">
-              &rarr; Ask Hint 1: Why is an English-only test misleading?
-            </button>
-            <button type="button" onclick="askSocraticTutor('How does Dynamic Assessment separate Difference vs. Disorder?')" class="btn-tactile">
-              &rarr; Ask Hint 2: What does the 20-min practice lesson prove?
-            </button>
-          </div>
-        </aside>
-
-      </section>
-    </div>
+      <details class="af-details-drawer" id="drawerTtlGates">
+        <summary class="af-details-summary">
+          <span>TECHNICAL DRILL-DOWN 02 // Inspect 4-Gate Deterministic TTL-MSM Rule Evaluation Trace</span>
+          <span class="mono" style="color:var(--cf-accent-primary);">Expand &darr;</span>
+        </summary>
+        <div class="af-details-body">
+          <div id="ruleTraceContainer" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </details>
+    </section>
 
   </main>
 
-  <footer class="site-footer">
-    <div style="max-width:1560px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;">
-      <span>&copy; 2026 CALIBER FOUNDRY (CALIBERFOUNDRY.COM) &mdash; ORFF MAESTRA&trade; TTL-MSM &amp; CERTIFICATION SCORM 1.2 STUDIO</span>
-      <span>CONTACT: <a href="mailto:engineering@caliberfoundry.com" style="color:#FCE588; text-decoration:none;">engineering@caliberfoundry.com</a> &bull; SWISS EDITORIAL &amp; TACTILE INDUSTRIAL PRECISION</span>
+  <!-- =====================================================================
+       COMMERCIAL FREEMIUM PAYWALL, INVOICE (INV-ED-2026-XXXX) & RSA-512 MODAL
+       ===================================================================== -->
+  <div class="af-modal-backdrop hidden" id="modalPaywall" role="dialog" aria-modal="true" aria-labelledby="paywallModalTitle">
+    <div class="af-modal-card">
+      <div class="af-modal-head">
+        <div>
+          <span class="mono" style="font-size:10.5px;color:#818CF8;font-weight:600;text-transform:uppercase;">ACADEMYFORGE&trade; v2.0 COMMERCIAL LICENSING &amp; B2B INVOICING</span>
+          <h2 id="paywallModalTitle" style="font-family:var(--font-display);font-size:24px;font-weight:400;margin-top:2px;">Unlock Multi-Module SCORM Packs or Commission a Turnkey Academy</h2>
+        </div>
+        <button type="button" class="af-modal-close" id="btnClosePaywall" aria-label="Close Licensing Modal">X</button>
+      </div>
+
+      <div class="af-modal-body">
+        <div class="af-pricing-grid af-no-print">
+          <!-- Tier 1: $299 Single Course SCORM Pack -->
+          <div class="af-plan-box af-plan-featured">
+            <div>
+              <span class="af-opt-tag">SELF-SERVE PRO LICENSE</span>
+              <h3 style="font-size:17px;font-weight:700;margin-top:8px;">Single Course SCORM 1.2 Pack</h3>
+              <div class="af-price-num" style="margin:6px 0;">$299 <span style="font-size:12px;font-weight:500;color:var(--cf-ink-muted);">USD one-time</span></div>
+              <ul class="af-feature-list">
+                <li>&bull; Unlocks Modules 2 &amp; 3 across all 3 industry presets</li>
+                <li>&bull; Unlimited EN &harr; 한국어 &amp; custom SCORM 1.2 .ZIP exports</li>
+                <li>&bull; FERPA AES-256-GCM rubric &amp; white-label LMS wrapper</li>
+                <li>&bull; Instant RSA-512 license key + 30-day refund guarantee</li>
+              </ul>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <a href="https://caliberfoundry.gumroad.com/l/contentforge-pro" target="_blank" rel="noopener noreferrer" class="btn-primary">Checkout via Gumroad ($299 &middot; Card / Apple Pay) &nearr;</a>
+              <a href="https://contra.com/caliberfoundry/services" target="_blank" rel="noopener noreferrer" class="btn-secondary">Checkout via Contra B2B (0% Fee) &nearr;</a>
+            </div>
+          </div>
+
+          <!-- Tier 2: $2,900 Turnkey B2B Academy Sprint -->
+          <div class="af-plan-box">
+            <div>
+              <span class="af-opt-tier">TURNKEY ENGINEERING SPRINT</span>
+              <h3 style="font-size:17px;font-weight:700;margin-top:8px;">B2B Customer Academy-in-a-Box</h3>
+              <div class="af-price-num" style="margin:6px 0;">$2,900 <span style="font-size:12px;font-weight:500;color:var(--cf-ink-muted);">USD / 7-day sprint</span></div>
+              <ul class="af-feature-list">
+                <li>&bull; 5 custom interactive HTML5 / SCORM 1.2 modules</li>
+                <li>&bull; 5 voiced 1080p 30fps product walkthrough videos</li>
+                <li>&bull; 25-question certification exam bank + EN/KR localization</li>
+                <li>&bull; 100% asynchronous delivery via GitHub PRs &amp; staging</li>
+              </ul>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <a href="https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio" target="_blank" rel="noopener noreferrer" class="btn-primary">Commission Sprint on Contra (0% Fee) &nearr;</a>
+              <a href="mailto:engineering@caliberfoundry.com?subject=AcademyForge%20Turnkey%20B2B%20Academy%20Sprint%20(%242%2C900)" class="btn-secondary">Request Custom Async Scope &nearr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RSA-512 Individual License Key Activation -->
+        <form id="licenseKeyForm" class="af-custom-gen-box af-no-print" style="margin-top:0;">
+          <span class="af-kicker" style="color:var(--cf-ink-primary);">ACTIVATE INDIVIDUAL RSA-512 LICENSE KEY (CFK-ALL / CFK-CF / CFK-ED)</span>
+          <div class="af-custom-row">
+            <input type="text" id="licenseKeyInput" class="af-input mono" placeholder="CFK-CF-PRO-CLIENT-20271124-..." aria-label="RSA-512 License Key" />
+            <button type="submit" class="btn-primary" id="btnActivateLicenseKey">Activate Key</button>
+          </div>
+          <div class="mono hidden" id="licenseStatusMsg" style="font-size:11.5px;"></div>
+        </form>
+
+        <!-- Self-Serve Corporate Tax Invoice Generator (INV-ED-2026-XXXX + 14-Day Provisional Access) -->
+        <div class="af-invoice-sheet" id="invoiceSectionWrap">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div>
+              <span class="af-kicker">CORPORATE PROCUREMENT &amp; 14-DAY PROVISIONAL UNLOCK</span>
+              <h3 style="font-size:16px;font-weight:700;">Generate Corporate Tax Invoice (Net-14 Wire / ACH / Card)</h3>
+            </div>
+            <span class="af-vvs-metric" id="invStatusPill">Instant 14-Day Unlock</span>
+          </div>
+
+          <form id="invoiceForm" class="af-no-print" style="display:flex;flex-direction:column;gap:10px;">
+            <div class="af-inv-grid">
+              <input type="text" id="invOrgInput" class="af-input" required placeholder="Organization Legal Name (e.g., STEMinnoKey Co., Ltd.)" aria-label="Organization Name" />
+              <input type="email" id="invEmailInput" class="af-input" required placeholder="Accounts Payable / Work Email" aria-label="Billing Email" />
+            </div>
+            <div class="af-inv-grid">
+              <select id="invPlanSelect" class="af-input" aria-label="Invoice Tier">
+                <option value="299">$299.00 USD — Single Course SCORM 1.2 Pro Pack</option>
+                <option value="2900">$2,900.00 USD — Turnkey B2B Customer Academy Sprint</option>
+              </select>
+              <input type="text" id="invPoInput" class="af-input mono" placeholder="Optional PO / Reference #" aria-label="PO Number" />
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit" class="btn-primary" id="btnGenerateInvoice">Generate Invoice &amp; Unlock 14-Day Access</button>
+              <button type="button" class="btn-secondary hidden" id="btnPrintInvoice">Print / Save Invoice PDF</button>
+            </div>
+          </form>
+
+          <div class="hidden" id="invoicePreviewSheet" style="border-top:1px solid var(--cf-rule-mid);padding-top:12px;">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+              <div>
+                <strong style="font-size:15px;">CALIBER FOUNDRY — COMMERCIAL TAX INVOICE</strong>
+                <div class="mono" style="font-size:11.5px;color:var(--cf-ink-secondary);">Vendor: Caliber Foundry &middot; engineering@caliberfoundry.com &middot; caliberfoundry.com</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="mono" style="font-size:14px;font-weight:700;color:var(--cf-accent-primary);" id="invNumberCode">INV-ED-2026-0000</div>
+                <div class="mono" style="font-size:11px;color:var(--cf-forest-pass);" id="invProvisionalExpiryText">14-Day Provisional Access Active</div>
+              </div>
+            </div>
+            <div style="background:var(--cf-bg-paper);border:1px solid var(--cf-rule-mid);border-radius:5px;padding:10px 12px;font-size:12.5px;display:flex;flex-direction:column;gap:4px;">
+              <div><strong>Bill To:</strong> <span id="invBillToText"></span></div>
+              <div><strong>Line Item:</strong> <span id="invLineItemText"></span></div>
+              <div><strong>Amount Due (Net-14):</strong> <span class="mono" style="font-weight:700;" id="invAmountText"></span></div>
+              <div><strong>Payment Channels:</strong> Contra B2B (0% Fee), Gumroad Card/Apple Pay, or ACH/Wire via <code>engineering@caliberfoundry.com</code></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="af-footer">
+    <div class="af-footer-inner">
+      <span>&copy; 2026 Caliber Foundry (<a href="../index.html" style="color:var(--cf-ink-primary);text-decoration:none;">caliberfoundry.com</a>) &middot; AcademyForge&trade; EdTech Studio v2.0</span>
+      <span>100% Asynchronous Engineering &middot; <a href="../work/edtech-studio.html" style="color:var(--cf-accent-primary);text-decoration:none;">Architecture Overview</a> &middot; <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary);text-decoration:none;">engineering@caliberfoundry.com</a></span>
     </div>
   </footer>
 
-  <script>
-    let currentInputs = {
-      parentL1: 2,
-      teacherObs: 1,
-      languageSample: 1,
-      dynamicAssessment: 2
-    };
-
-    function escapeHtml(str) {
-      return String(str ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function switchStudioMode(mode) {
-      const orffView = document.getElementById('view_mode_orff');
-      const scormView = document.getElementById('view_mode_scorm');
-      const tabOrff = document.getElementById('tab_mode_orff');
-      const tabScorm = document.getElementById('tab_mode_scorm');
-
-      if (mode === 'mode_orff') {
-        orffView.classList.remove('hidden');
-        scormView.classList.add('hidden');
-        tabOrff.className = "btn-tactile btn-tactile-ink";
-        tabScorm.className = "btn-tactile";
-      } else {
-        orffView.classList.add('hidden');
-        scormView.classList.remove('hidden');
-        tabScorm.className = "btn-tactile btn-tactile-ink";
-        tabOrff.className = "btn-tactile";
-      }
-    }
-
-    function loadClinicalPreset(presetType) {
-      if (presetType === 'difference') {
-        currentInputs = { parentL1: 2, teacherObs: 1, languageSample: 1, dynamicAssessment: 2 };
-      } else if (presetType === 'disorder') {
-        currentInputs = { parentL1: 0, teacherObs: 0, languageSample: 0, dynamicAssessment: 0 };
-      } else {
-        currentInputs = { parentL1: 2, teacherObs: 2, languageSample: 2, dynamicAssessment: 2 };
-      }
-      recalculateTtlMsm();
-    }
-
-    function setEvidence(key, val) {
-      currentInputs[key] = val;
-      recalculateTtlMsm();
-    }
-
-    function recalculateTtlMsm() {
-      ['parentL1', 'teacherObs', 'languageSample', 'dynamicAssessment'].forEach((key, idx) => {
-        const currentVal = currentInputs[key];
-        document.getElementById(`badge_s${idx + 1}`).textContent = `CODE: ${currentVal}/2`;
-        [0, 1, 2].forEach(v => {
-          const btn = document.getElementById(`btn_${key}_${v}`);
-          if (v === currentVal) {
-            btn.className = "btn-rating active";
-          } else {
-            btn.className = "btn-rating";
-          }
-        });
-      });
-
-      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
-      document.getElementById('compositeScoreBadge').textContent = `COMPOSITE: ${result.totalScore}/${result.maxScore}`;
-
-      const card = document.getElementById('verdictCard');
-      const colorMap = {
-        emerald: "verdict-forest",
-        amber: "verdict-brass",
-        rose: "verdict-vermilion"
-      };
-      card.className = `verdict-box ${colorMap[result.verdictColor]}`;
-      document.getElementById('verdictConfidence').textContent = `CONCORDANCE: ${result.confidence}%`;
-      document.getElementById('verdictTitle').textContent = result.verdictTitle;
-      document.getElementById('verdictSummary').textContent = result.clinicalSummary;
-
-      const traceContainer = document.getElementById('ruleTraceContainer');
-      traceContainer.innerHTML = result.trace.map(t => `
-        <div class="gate-item">
-          <div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority);">[${escapeHtml(t.gate)}]</span>
-              <strong style="font-size:12.5px;">${escapeHtml(t.name)}</strong>
-            </div>
-            <div class="mono" style="font-size:11px; color:var(--cf-ink-secondary); margin-top:2px;">
-              ${escapeHtml(t.inputVal)} &rarr; <span style="font-weight:600; color:${t.passed ? 'var(--cf-forest-pass)' : 'var(--cf-accent-primary)'};">${escapeHtml(t.outcome)}</span>
-            </div>
-          </div>
-          <span class="mono" style="font-size:10.5px; font-weight:600; padding:2px 6px; border:1px solid currentColor; color:${t.passed ? 'var(--cf-forest-pass)' : 'var(--cf-accent-primary)'}; background:${t.passed ? 'var(--cf-forest-tint)' : 'var(--cf-accent-tint)'};">
-            ${t.passed ? 'PASS' : 'DEFICIT'}
-          </span>
-        </div>
-      `).join('');
-
-      runFerpaEncryption();
-    }
-
-    async function runFerpaEncryption() {
-      const locked = document.getElementById('ferpaToggle').checked;
-      const name = document.getElementById('piiName').value || 'Anonymous Student';
-      const distId = document.getElementById('piiDistrictId').value || 'ISD-000';
-      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
-
-      const rawPii = JSON.stringify({ student_name: name, district_id: distId, verdict: result.verdictCode });
-
-      if (!locked) {
-        document.getElementById('cryptoSubjectToken').textContent = `PLAINTEXT_DEBUG_ONLY (${distId})`;
-        document.getElementById('cryptoIv').textContent = 'UNENCRYPTED_MODE';
-        document.getElementById('cryptoCiphertext').textContent = rawPii;
-        return;
-      }
-
-      try {
-        const enc = new TextEncoder().encode(rawPii);
-        if (window.crypto && window.crypto.subtle) {
-          const hashBuf = await window.crypto.subtle.digest('SHA-256', enc);
-          const hashHex = Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
-          document.getElementById('cryptoSubjectToken').textContent = 'FERPA_SUBJ_' + hashHex.slice(0, 16).toUpperCase();
-
-          const key = await window.crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt']);
-          const iv = window.crypto.getRandomValues(new Uint8Array(12));
-          const cipherBuf = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc);
-          const ivHex = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
-          const cipherHex = Array.from(new Uint8Array(cipherBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
-          document.getElementById('cryptoIv').textContent = ivHex;
-          document.getElementById('cryptoCiphertext').textContent = `aes256gcm:${cipherHex}`;
-          return;
-        }
-      } catch (e) {}
-
-      const fallbackHex = Array.from(rawPii).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
-      document.getElementById('cryptoSubjectToken').textContent = 'FERPA_SUBJ_' + fallbackHex.slice(0, 16).toUpperCase();
-      document.getElementById('cryptoIv').textContent = '9f48a2c1e0734b19a8320f1c';
-      document.getElementById('cryptoCiphertext').textContent = 'aes256gcm:' + fallbackHex.split('').reverse().join('');
-    }
-
-    function exportFerpaClinicalReport() {
-      const result = window.TTL_MSM_ENGINE.evaluate(currentInputs);
-      const packet = {
-        schema: "ORFF_MAESTRA_TTL_MSM_v1.8_FERPA",
-        timestamp: new Date().toISOString(),
-        ferpa_zero_pii_enforced: document.getElementById('ferpaToggle').checked,
-        anonymized_subject_token: document.getElementById('cryptoSubjectToken').textContent,
-        aes_256_gcm_iv: document.getElementById('cryptoIv').textContent,
-        encrypted_pii_blob: document.getElementById('cryptoCiphertext').textContent,
-        coded_evidence_sources: currentInputs,
-        deterministic_verdict: result
-      };
-      const blob = new Blob([JSON.stringify(packet, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `orff_maestra_ttl_msm_ferpa_report.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    const QUIZ_TOPICS = {
-      bilingual: {
-        title: "Evaluating a Bilingual Student: Difference vs. Disorder",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #1 · EDUCATION &amp; CLINICAL]</div>
-          <p>A 7-year-old Spanish-English bilingual student scores low on an <strong>English-only vocabulary test</strong>. However, the parents confirm strong Spanish storytelling at home, and during a 20-minute practice lesson, the student <strong>quickly learns and applies new grammar rules</strong>.</p>
-          <p style="font-weight:600; margin-top:8px;">Question: What is the correct conclusion for this student?</p>`,
-        optA: { title: "Label as a Language Disorder based on the English test score", sub: "Place the student in Special Education because the English-only test score was low." },
-        optB: { title: "Normal Bilingual Development (Keep in General Education — Correct Answer)", sub: "Strong home language skills plus fast learning in a 20-minute practice lesson prove there is no learning disorder." },
-        optC: { title: "Wait 12 months and do nothing", sub: "Postpone recording parent feedback or practice lessons until next school year." },
-        feedbackB: `<strong>&check; CORRECT ANSWER (SCORE: 95/100)</strong> &mdash; Strong home language skills combined with fast learning during a 20-minute practice lesson confirm <strong>Normal Bilingual Development</strong> (not a learning disorder).`,
-        feedbackA: `<strong>! NOT QUITE (COMMON MISTAKE)</strong> &mdash; Relying only on an English-only test score for a bilingual student causes false positives. Look at how fast the student learned in the 20-minute practice lesson (Try Answer B).`,
-        feedbackC: `<strong>! INCORRECT (PROCEDURAL ERROR)</strong> &mdash; Waiting 12 months delays helpful support. You can evaluate home language skills and a 20-minute practice lesson right away (Try Answer B).`
-      },
-      devops: {
-        title: "Kubernetes Production Troubleshooting: CrashLoopBackOff & OOMKilled",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #2 · CLOUD &amp; LINUX DEVOPS]</div>
-          <p>A production payment microservice pod enters <code>CrashLoopBackOff</code> with exit code <strong>137 (OOMKilled)</strong> whenever traffic spikes above 400 req/s. The container memory limit is set to <code>256Mi</code>, while heap profiling shows a steady <code>340Mi</code> working set under peak load.</p>
-          <p style="font-weight:600; margin-top:8px;">Question: Which remediation resolves the outage without disabling memory safety bounds?</p>`,
-        optA: { title: "Remove all memory limits from the Kubernetes Deployment manifest", sub: "Allow the pod to consume unbounded host node RAM." },
-        optB: { title: "Raise container memory limit to 512Mi and set GOMEMLIMIT / Node --max-old-space-size to 420Mi (Correct)", sub: "Aligns runtime garbage collection threshold below the cgroup hard limit to prevent kernel OOM kills." },
-        optC: { title: "Disable livenessProbes so Kubernetes stops restarting the pod", sub: "Ignore exit code 137 kernel terminations." },
-        feedbackB: `<strong>&check; CORRECT ANSWER (SCORE: 98/100)</strong> &mdash; Raising the cgroup limit above the 340Mi working set and configuring runtime GC awareness prevents kernel OOM killer termination (Exit 137).`,
-        feedbackA: `<strong>! NOT QUITE (PRODUCTION RISK)</strong> &mdash; Removing memory limits entirely risks starving the Kubernetes node and crashing neighboring workloads (Try Answer B).`,
-        feedbackC: `<strong>! INCORRECT (DIAGNOSTIC ERROR)</strong> &mdash; Exit 137 is triggered by the Linux kernel cgroup OOM killer, not by a liveness probe failure (Try Answer B).`
-      },
-      fintech: {
-        title: "SOC 2 & Production API Key Rotation Compliance",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:6px;">[SCENARIO QUESTION #3 · FINTECH &amp; SECURITY COMPLIANCE]</div>
-          <p>During a SOC 2 Type II audit, the auditor inspects a service account key with <strong>production write access</strong> that has not been rotated in 145 days and authenticates via static bearer token without client certificates.</p>
-          <p style="font-weight:600; margin-top:8px;">Question: How must this finding be classified and remediated?</p>`,
-        optA: { title: "Pass the control because no external breach occurred", sub: "Leave the 145-day static key active until annual review." },
-        optB: { title: "Flag Control Exception, rotate via 90-day automated vault lease, and enforce mTLS (Correct)", sub: "Brings production write credentials into compliance with the 90-day rotation and mutual TLS policy." },
-        optC: { title: "Share the static API key across multiple microservices to reduce key count", sub: "Consolidate all services onto a single non-expiring token." },
-        feedbackB: `<strong>&check; CORRECT ANSWER (SCORE: 100/100)</strong> &mdash; Production write credentials exceeding the 90-day rotation ceiling require automated lease rotation and mTLS enforcement.`,
-        feedbackA: `<strong>! NOT QUITE (AUDIT FAILURE)</strong> &mdash; SOC 2 Type II tests operating effectiveness across the audit window regardless of whether a breach occurred (Try Answer B).`,
-        feedbackC: `<strong>! INCORRECT (SECURITY VIOLATION)</strong> &mdash; Sharing static keys violates least-privilege attribution and blast-radius isolation (Try Answer B).`
-      }
-    };
-
-    let currentTopicKey = 'bilingual';
-
-    function flashEdTechElement(elId) {
-      const el = document.getElementById(elId);
-      if (!el) return;
-      el.classList.remove('cf-flash-active');
-      void el.offsetWidth;
-      el.classList.add('cf-flash-active');
-    }
-
-    function loadQuizTopic(topicKey) {
-      switchStudioMode('mode_scorm');
-      currentTopicKey = topicKey;
-      const t = QUIZ_TOPICS[topicKey] || QUIZ_TOPICS.bilingual;
-
-      ['bilingual', 'devops', 'fintech'].forEach(k => {
-        const btn = document.getElementById('topic_btn_' + k);
-        if (btn) btn.className = (k === topicKey) ? 'btn-tactile btn-tactile-ink' : 'btn-tactile';
-      });
-
-      document.getElementById('quizScenarioTitle').textContent = t.title;
-      document.getElementById('quizScenarioBody').innerHTML = t.bodyHtml;
-      document.getElementById('quiz_opt_A_content').innerHTML = `<div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">${escapeHtml(t.optA.title)}</div><div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">${escapeHtml(t.optA.sub)}</div>`;
-      document.getElementById('quiz_opt_B_content').innerHTML = `<div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">${escapeHtml(t.optB.title)}</div><div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">${escapeHtml(t.optB.sub)}</div>`;
-      document.getElementById('quiz_opt_C_content').innerHTML = `<div style="font-size:14px; font-weight:700; color:var(--cf-ink-primary);">${escapeHtml(t.optC.title)}</div><div style="font-size:12.5px; color:var(--cf-ink-secondary); margin-top:2px;">${escapeHtml(t.optC.sub)}</div>`;
-
-      ['A', 'B', 'C'].forEach(k => {
-        const el = document.getElementById('quiz_opt_' + k);
-        if (el) {
-          el.style.borderWidth = '1px';
-          el.style.borderColor = 'var(--cf-rule-strong)';
-          el.style.backgroundColor = 'var(--cf-bg-surface)';
-        }
-      });
-
-      const fb = document.getElementById('quizFeedbackBox');
-      fb.style.backgroundColor = 'var(--cf-bg-stone)';
-      fb.style.borderColor = 'var(--cf-rule-strong)';
-      fb.style.color = 'var(--cf-ink-primary)';
-      fb.innerHTML = `<strong>&uarr; Topic Loaded: ${escapeHtml(t.title)}</strong> &mdash; Click Answer A, B, or C above to test instant grading.`;
-      flashEdTechElement('scormQuestionCard');
-    }
-
-    function cycleNextQuizTopic() {
-      const order = ['bilingual', 'devops', 'fintech'];
-      const next = order[(order.indexOf(currentTopicKey) + 1) % order.length];
-      loadQuizTopic(next);
-    }
-
-    function generateCustomScormQuestion() {
-      switchStudioMode('mode_scorm');
-      const rawText = (document.getElementById('customLessonTextInput').value || '').trim();
-      if (!rawText) return;
-
-      QUIZ_TOPICS.custom = {
-        title: "Auto-Generated SCORM 1.2 Question from Your Text",
-        bodyHtml: `<div class="mono" style="font-size:11px; font-weight:600; color:var(--cf-accent-primary); margin-bottom:6px;">[GENERATED FROM YOUR SOURCE PARAGRAPH · ADL SCORM 1.2]</div>
-          <p><strong>Source Rule:</strong> &ldquo;${escapeHtml(rawText)}&rdquo;</p>
-          <p style="font-weight:600; margin-top:8px;">Question: Which action satisfies the requirement stated in your source rule above?</p>`,
-        optA: { title: "Bypass the policy requirement to speed up deployment", sub: "Distractor A: Violates the mandatory rule threshold in the source text." },
-        optB: { title: `Enforce the exact rule: "${rawText.slice(0, 88)}${rawText.length > 88 ? '...' : ''}" (Correct Answer)`, sub: "Directly grounded in your uploaded training paragraph with 100% citation lock." },
-        optC: { title: "Defer compliance enforcement until the next fiscal year", sub: "Distractor C: Procedural delay misconception." },
-        feedbackB: `<strong>&check; CORRECT ANSWER (SCORE: 100/100)</strong> &mdash; Verified against your custom training rule and synced to the SCORM 1.2 LMS gradebook!`,
-        feedbackA: `<strong>! NOT QUITE (COMMON MISTAKE)</strong> &mdash; Bypassing the rule violates the explicit policy threshold in your source text (Try Answer B).`,
-        feedbackC: `<strong>! INCORRECT (PROCEDURAL ERROR)</strong> &mdash; Deferring enforcement leaves the requirement unfulfilled (Try Answer B).`
-      };
-      loadQuizTopic('custom');
-      const topBadge = document.getElementById('scormStatusTopBadge');
-      if (topBadge) topBadge.textContent = '✓ CUSTOM QUIZ GENERATED!';
-    }
-
-    function selectQuizOption(opt) {
-      switchStudioMode('mode_scorm');
-      const fb = document.getElementById('quizFeedbackBox');
-      const log = document.getElementById('scormApiLog');
-      const t = QUIZ_TOPICS[currentTopicKey] || QUIZ_TOPICS.bilingual;
-
-      ['A', 'B', 'C'].forEach(k => {
-        const el = document.getElementById('quiz_opt_' + k);
-        if (el) {
-          el.style.borderWidth = (k === opt) ? '2px' : '1px';
-          el.style.borderColor = (k === opt) ? 'var(--cf-ink-primary)' : 'var(--cf-rule-strong)';
-          el.style.backgroundColor = (k === opt) ? 'var(--cf-highlight-mark)' : 'var(--cf-bg-surface)';
-        }
-      });
-
-      if (opt === 'B') {
-        fb.style.backgroundColor = 'var(--cf-forest-tint)';
-        fb.style.borderColor = 'var(--cf-forest-pass)';
-        fb.style.color = 'var(--cf-forest-pass)';
-        fb.innerHTML = t.feedbackB;
-        log.innerHTML += `
-          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.score.raw", "95")</span> &rarr; <span style="color:#86EFAC;">"Score 95% Saved"</span></div>
-          <div><span style="color:#93C5FD;">LMSSetValue("cmi.core.lesson_status", "passed")</span> &rarr; <span style="color:#86EFAC;">"Lesson Passed"</span></div>
-          <div><span style="color:#FCE588;">LMSCommit("")</span> &rarr; <span style="color:#86EFAC;">"Synced to LMS Gradebook"</span></div>
-        `;
-        document.getElementById('rubricMasteryBadge').textContent = 'SCORE: 96%';
-      } else if (opt === 'A') {
-        fb.style.backgroundColor = 'var(--cf-brass-tint)';
-        fb.style.borderColor = 'var(--cf-brass-warn)';
-        fb.style.color = 'var(--cf-brass-warn)';
-        fb.innerHTML = t.feedbackA;
-        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_choice_A")</span> &rarr; <span style="color:#FCE588;">"Recorded for Review"</span></div>`;
-      } else {
-        fb.style.backgroundColor = 'var(--cf-accent-tint)';
-        fb.style.borderColor = 'var(--cf-accent-primary)';
-        fb.style.color = 'var(--cf-accent-primary)';
-        fb.innerHTML = t.feedbackC;
-        log.innerHTML += `<div><span style="color:#93C5FD;">LMSSetValue("cmi.interactions.0.result", "wrong_choice_C")</span> &rarr; <span style="color:#FCE588;">"Recorded for Review"</span></div>`;
-      }
-      log.scrollTop = log.scrollHeight;
-      flashEdTechElement('quizFeedbackBox');
-    }
-
-    function askSocraticTutor(question) {
-      const box = document.getElementById('socraticChatBox');
-      let reply = "A 20-minute practice lesson measures how fast a student learns when taught a new rule. If a child had a true language disorder, they would struggle to learn new grammar rules even with help.";
-      if (question.includes('Norm-Referenced') || question.includes('English-only')) {
-        reply = "An English-only vocabulary test compares a bilingual student against children who spoke only English since birth. A low English score just shows they are still learning English — not that they have a disorder.";
-      }
-      box.innerHTML += `
-        <div style="padding:14px 16px; background-color:var(--cf-bg-surface); border:1px solid var(--cf-rule-strong); font-family:var(--font-serif); font-size:15px; line-height:1.6;">
-          <div class="mono" style="font-size:10.5px; font-weight:600; color:var(--cf-navy-authority); margin-bottom:4px;">[STUDY HINT]</div>
-          &ldquo;${escapeHtml(reply)}&rdquo;
-        </div>
-      `;
-      box.scrollTop = box.scrollHeight;
-      flashEdTechElement('socraticChatBox');
-    }
-
-    function downloadScormManifest() {
-      const xml = window.TTL_MSM_ENGINE.generateScormManifest({
-        identifier: "CALIBER_FOUNDRY_ORFF_SCORM12_2026",
-        title: "EdTech Courseware & Certification Quiz Module (ADL SCORM 1.2)"
-      });
-      const blob = new Blob([xml], { type: 'application/xml' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'imsmanifest.xml';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      const btn = document.getElementById('btnDownloadScormTop');
-      if (btn) {
-        btn.innerHTML = `<span>&check; SCORM 1.2 Exported!</span>`;
-        setTimeout(() => { btn.innerHTML = `<span>Download SCORM 1.2 (.XML)</span><span>&darr;</span>`; }, 1800);
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      recalculateTtlMsm();
-      const params = new URLSearchParams(window.location.search || '');
-      if (params.get('mode') === 'orff' || params.get('preset') === 'orff') {
-        switchStudioMode('mode_orff');
-      } else {
-        switchStudioMode('mode_scorm');
-      }
-    });
-  </script>
-  <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
+  <script src="./scorm_and_ttl_engine.js"></script>
+  <script src="./app.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

@@ -1656,3 +1656,17 @@ body {
   border-width: 1.5px;
   box-shadow: 2px 2px 0px rgba(200, 67, 31, 0.2);
 }
+
+.cf-source-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:10px 0; }
+.cf-source-actions button { min-height:36px; max-width:100%; white-space:normal; }
+.cf-source-actions button:disabled { opacity:.55; cursor:not-allowed; }
+#sourceRunStatus { flex-basis:100%; margin:0; font-size:13px; }
+@media(max-width:600px){.cf-split-workbench input,.cf-split-workbench textarea{min-width:0;max-width:100%;}}
+
+@page { margin: 12mm; }
+@media print {
+  #evalDossierPrintableBody .cf-data-table th:last-child, #evalDossierPrintableBody .cf-data-table td:last-child { white-space:nowrap; }
+  body:has(#modalEvalDossier:not(.hidden)) > :not(#modalEvalDossier) { display:none !important; }
+  #modalEvalDossier:not(.hidden) { position:static; overflow:visible; }
+  #evalDossierPrintableBody { overflow-wrap:anywhere; }
+}

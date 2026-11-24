@@ -810,6 +810,15 @@
         flex-wrap: wrap;
       }
     }
+      .brand-title small {font:600 12px var(--font-sans);color:#933019;background:#f9ece5;padding:3px 6px;border-radius:3px;}
+    .workbench-grid {grid-template-columns:minmax(0,2fr) minmax(240px,1fr);align-items:start;align-content:start;}
+    .simulation-results {min-width:0;}
+    .simulation-tools {display:grid;gap:12px;min-width:0;}
+    .simulation-tools > details > summary {cursor:pointer;min-height:44px;justify-content:flex-start;gap:10px;}
+    .simulation-tools > details > summary::before {content:"▸";} .simulation-tools > details[open] > summary::before {content:"▾";}
+    .simulation-results .verdict-banner {margin-bottom:12px;font:500 15px/1.5 var(--font-sans);}
+    .spec-label,.kpi-sub {color:#575450;font-size:12px;}
+    @media(max-width:900px){ .workbench-grid {display:flex;flex-direction:column;} .workbench-grid>.pane,.simulation-tools{width:100%;} .simulation-results{order:0;} .settings-pane{order:1}.receipt-pane{order:2} .scenario-tab,.mini-pill,.back-btn {min-height:30px;} .brand-subtitle {display:none;} }
   </style>
 </head>
 <body>
@@ -817,40 +826,143 @@
   <header class="app-bar">
     <div class="brand-cluster">
       <a href="../index.html" class="back-btn">← Foundry</a>
-      <h1 class="brand-title">OOBE Sentinel</h1>
-      <span class="brand-subtitle">Autonomous Solana Capital Agent &amp; SAP MCP Telemetry Workbench</span>
+      <h1 class="brand-title">OOBE Sentinel <small>Simulation</small></h1>
+      <span class="brand-subtitle">Explore how a model allocates a simulated vault.</span>
     </div>
     <div class="app-bar-right">
-      <span class="badge badge-navy">OOBE Protocol · Steve Capital</span>
-      <span class="badge badge-pass" id="globalRuntimeBadge">SAP MCP · MultiHopper Active</span>
       <button type="button" class="btn-secondary" id="downloadAuditBtn">Export Audit JSON</button>
     </div>
   </header>
 
   <!-- BAR 2: SCENARIO PRESET & EXECUTION CONTROL BAR -->
   <nav class="context-bar" aria-label="Market Regime Scenario Controls">
-    <div class="scenario-strip" role="tablist">
-      <button type="button" class="scenario-tab active" data-scenario="0" id="tabScenario0">01 Genesis Deploy</button>
-      <button type="button" class="scenario-tab" data-scenario="1" id="tabScenario1">02 Anti-Churn Hold</button>
-      <button type="button" class="scenario-tab" data-scenario="2" id="tabScenario2">03 MultiHopper Rotation</button>
-      <button type="button" class="scenario-tab" data-scenario="3" id="tabScenario3">04 Oracle &amp; Gas Block</button>
-      <button type="button" class="scenario-tab" data-scenario="4" id="tabScenario4">05 Black-Swan Unwind</button>
+    <div class="scenario-strip" role="group" aria-label="Market scenario">
+      <button type="button" class="scenario-tab active" data-scenario="0" id="tabScenario0">Initial allocation</button>
+      <button type="button" class="scenario-tab" data-scenario="1" id="tabScenario1">Hold positions</button>
+      <button type="button" class="scenario-tab" data-scenario="2" id="tabScenario2">Rotate positions</button>
+      <button type="button" class="scenario-tab" data-scenario="3" id="tabScenario3">Price or fee shock</button>
+      <button type="button" class="scenario-tab" data-scenario="4" id="tabScenario4">Emergency exit</button>
     </div>
     <div class="action-cluster">
-      <button type="button" class="btn-ghost" id="resetVaultBtn">Reset Vault</button>
-      <button type="button" class="btn-secondary" id="runBacktestBtn">Run 5-Epoch Backtest</button>
-      <button type="button" class="btn-primary" id="executeTickBtn">Execute Single Tick →</button>
+      <button type="button" class="btn-ghost" id="resetVaultBtn">Reset simulation</button>
+      <button type="button" class="btn-secondary" id="runBacktestBtn">Compare five periods</button>
+      <button type="button" class="btn-primary" id="executeTickBtn">Simulate next period →</button>
     </div>
   </nav>
 
   <!-- MAIN 3-COLUMN WORKBENCH -->
   <main class="workbench-grid">
-    <!-- LEFT COLUMN: OOBE EXECUTION MANDATE & RISK CONTROLS -->
-    <section class="pane" aria-label="Execution Mandate and Risk Controls">
+    <!-- CENTER COLUMN: SOLANA VENUE MATRIX & BREAK-EVEN ECONOMICS -->
+    <section class="pane simulation-results" aria-label="Solana Venue Allocation Matrix and Rebalance Economics">
       <div class="pane-header">
-        <span class="pane-title">01 // OOBE Execution Mandate</span>
-        <span class="spec-label" id="mandateEpochTag">EPOCH #1</span>
+        <span class="pane-title">Simulation result</span>
+        <span class="spec-label" id="activeRegimeLabel">Period 1 · Initial allocation</span>
       </div>
+      <div class="pane-body">
+        <div class="verdict-banner" id="proposalReasonBanner" role="status" aria-live="polite"></div>
+        <!-- 4-KPI Summary Strip (Concise Above-The-Fold Verdict) -->
+        <div class="kpi-grid">
+          <div class="kpi-cell">
+            <span class="spec-label">Vault Equity / Reserve</span>
+            <div class="kpi-value" id="kpiEquityValue">$100,000.00</div>
+            <div class="kpi-sub" id="kpiReserveSub">Reserve: $10,000.00 (10.0%)</div>
+          </div>
+          <div class="kpi-cell">
+            <span class="spec-label">Weighted Net APY</span>
+            <div class="kpi-value" id="kpiApyValue">13.18%</div>
+            <div class="kpi-sub" id="kpiApyDeltaSub">Delta: +1318 bps</div>
+          </div>
+          <div class="kpi-cell">
+            <span class="spec-label">Payback Horizon</span>
+            <div class="kpi-value" id="kpiPaybackValue">36.1h</div>
+            <div class="kpi-sub" id="kpiCostSub">Exec Cost: $54.26</div>
+          </div>
+          <div class="kpi-cell">
+            <span class="spec-label">Mandate Verdict</span>
+            <div class="kpi-value" id="kpiVerdictValue">REBALANCE</div>
+            <div class="kpi-sub" id="kpiRegimeVolSub">VaR95: 76 bps (NORMAL)</div>
+          </div>
+        </div>
+
+        <!-- Venue Allocation Matrix -->
+        <div class="section-box">
+          <div class="section-box-header">
+            <span class="pane-title">Solana Protocol Allocations (Sharpe / Sortino Water-Filling)</span>
+            <span class="spec-label">Ace Data Cloud MCP Enriched</span>
+          </div>
+          <div class="table-wrap">
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>Solana Protocol</th>
+                  <th>Net APY</th>
+                  <th>Sharpe / Sortino</th>
+                  <th>Pyth Oracle</th>
+                  <th>Current → Target</th>
+                  <th>Rebalance Leg</th>
+                </tr>
+              </thead>
+              <tbody id="venueMatrixBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div class="economics-strip">
+            <div class="econ-item">
+              <span class="spec-label">Hourly Yield Gain</span>
+              <span class="mono" id="econHourlyGain">+$1.5046 / hr</span>
+            </div>
+            <div class="econ-item">
+              <span class="spec-label">Rebalance Turnover</span>
+              <span class="mono" id="econTurnover">$90,000.00</span>
+            </div>
+            <div class="econ-item">
+              <span class="spec-label">Slippage + Gas Drag</span>
+              <span class="mono" id="econTotalCost">$54.2574</span>
+            </div>
+            <div class="econ-item">
+              <span class="spec-label">MultiHopper Settlement</span>
+              <span class="mono" id="econMultiHopperStatus">Routed (5 Legs)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Drill-Down: 5-Epoch Multi-Regime Backtest Ledger -->
+        <details class="drilldown-box">
+          <summary>
+            <span class="pane-title">+ 5-Epoch Deterministic Backtest Ledger (Click to Expand)</span>
+            <span class="spec-label" id="backtestSummaryTag">5 Regimes Verified</span>
+          </summary>
+          <div class="table-wrap">
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>Epoch &amp; Market Regime</th>
+                  <th>Action Verdict</th>
+                  <th>Post-Tick Equity</th>
+                  <th>Portfolio APY</th>
+                  <th>Turnover</th>
+                  <th>Payback</th>
+                  <th>Decision Hash</th>
+                </tr>
+              </thead>
+              <tbody id="backtestLedgerBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- LEFT COLUMN: OOBE EXECUTION MANDATE & RISK CONTROLS -->
+    <aside class="simulation-tools" aria-label="Simulation settings and technical receipt">
+    <details class="pane settings-pane">
+      <summary class="pane-header">
+        <span class="pane-title">Simulation parameters</span>
+        <span class="spec-label" id="mandateEpochTag">EPOCH #1</span>
+      </summary>
       <div class="pane-body">
         <div class="control-group">
           <div class="slider-item">
@@ -930,120 +1042,16 @@
           </div>
         </details>
       </div>
-    </section>
-
-    <!-- CENTER COLUMN: SOLANA VENUE MATRIX & BREAK-EVEN ECONOMICS -->
-    <section class="pane" aria-label="Solana Venue Allocation Matrix and Rebalance Economics">
-      <div class="pane-header">
-        <span class="pane-title">02 // Executive Summary &amp; Solana Venue Allocations</span>
-        <span class="spec-label" id="activeRegimeLabel">REGIME: 01_NORMAL_GENESIS_DEPLOYMENT</span>
-      </div>
-      <div class="pane-body">
-        <!-- 4-KPI Summary Strip (Concise Above-The-Fold Verdict) -->
-        <div class="kpi-grid">
-          <div class="kpi-cell">
-            <span class="spec-label">Vault Equity / Reserve</span>
-            <div class="kpi-value" id="kpiEquityValue">$100,000.00</div>
-            <div class="kpi-sub" id="kpiReserveSub">Reserve: $10,000.00 (10.0%)</div>
-          </div>
-          <div class="kpi-cell">
-            <span class="spec-label">Weighted Net APY</span>
-            <div class="kpi-value" id="kpiApyValue">13.18%</div>
-            <div class="kpi-sub" id="kpiApyDeltaSub">Delta: +1318 bps</div>
-          </div>
-          <div class="kpi-cell">
-            <span class="spec-label">Payback Horizon</span>
-            <div class="kpi-value" id="kpiPaybackValue">36.1h</div>
-            <div class="kpi-sub" id="kpiCostSub">Exec Cost: $54.26</div>
-          </div>
-          <div class="kpi-cell">
-            <span class="spec-label">Mandate Verdict</span>
-            <div class="kpi-value" id="kpiVerdictValue">REBALANCE</div>
-            <div class="kpi-sub" id="kpiRegimeVolSub">VaR95: 76 bps (NORMAL)</div>
-          </div>
-        </div>
-
-        <!-- Venue Allocation Matrix -->
-        <div class="section-box">
-          <div class="section-box-header">
-            <span class="pane-title">Solana Protocol Allocations (Sharpe / Sortino Water-Filling)</span>
-            <span class="spec-label">Ace Data Cloud MCP Enriched</span>
-          </div>
-          <div class="table-wrap">
-            <table class="ledger-table">
-              <thead>
-                <tr>
-                  <th>Solana Protocol</th>
-                  <th>Net APY</th>
-                  <th>Sharpe / Sortino</th>
-                  <th>Pyth Oracle</th>
-                  <th>Current → Target</th>
-                  <th>Rebalance Leg</th>
-                </tr>
-              </thead>
-              <tbody id="venueMatrixBody">
-                <!-- Populated dynamically -->
-              </tbody>
-            </table>
-          </div>
-          <div class="economics-strip">
-            <div class="econ-item">
-              <span class="spec-label">Hourly Yield Gain</span>
-              <span class="mono" id="econHourlyGain">+$1.5046 / hr</span>
-            </div>
-            <div class="econ-item">
-              <span class="spec-label">Rebalance Turnover</span>
-              <span class="mono" id="econTurnover">$90,000.00</span>
-            </div>
-            <div class="econ-item">
-              <span class="spec-label">Slippage + Gas Drag</span>
-              <span class="mono" id="econTotalCost">$54.2574</span>
-            </div>
-            <div class="econ-item">
-              <span class="spec-label">MultiHopper Settlement</span>
-              <span class="mono" id="econMultiHopperStatus">Routed (5 Legs)</span>
-            </div>
-          </div>
-          <div class="verdict-banner" id="proposalReasonBanner">
-            <!-- Populated dynamically -->
-          </div>
-        </div>
-
-        <!-- Drill-Down: 5-Epoch Multi-Regime Backtest Ledger -->
-        <details class="drilldown-box">
-          <summary>
-            <span class="pane-title">+ 5-Epoch Deterministic Backtest Ledger (Click to Expand)</span>
-            <span class="spec-label" id="backtestSummaryTag">5 Regimes Verified</span>
-          </summary>
-          <div class="table-wrap">
-            <table class="ledger-table">
-              <thead>
-                <tr>
-                  <th>Epoch &amp; Market Regime</th>
-                  <th>Action Verdict</th>
-                  <th>Post-Tick Equity</th>
-                  <th>Portfolio APY</th>
-                  <th>Turnover</th>
-                  <th>Payback</th>
-                  <th>Decision Hash</th>
-                </tr>
-              </thead>
-              <tbody id="backtestLedgerBody">
-                <!-- Populated dynamically -->
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </div>
-    </section>
+    </details>
 
     <!-- RIGHT COLUMN: OOBE SAP MCP INSTRUCTION BUNDLE & CRYPTOGRAPHIC RECEIPT -->
-    <section class="pane" aria-label="SAP MCP Instruction Bundle and Cryptographic Receipt">
-      <div class="pane-header">
-        <span class="pane-title">03 // SAP MCP Cryptographic Receipt</span>
-        <button type="button" class="btn-secondary" id="copyReceiptBtn">Copy Receipt JSON</button>
-      </div>
+    <details class="pane receipt-pane" aria-label="SAP MCP Instruction Bundle and Cryptographic Receipt">
+      <summary class="pane-header">
+        <span class="pane-title">Technical receipt</span>
+      </summary>
       <div class="pane-body">
+        <button type="button" class="btn-secondary" id="copyReceiptBtn">Copy receipt JSON</button>
+        <span id="copyFeedbackLabel" role="status"></span>
         <div class="receipt-meta-grid">
           <div class="meta-cell full-span">
             <span class="spec-label">Decision State SHA-256 Digest (Steve Arena Audit Proof)</span>
@@ -1076,14 +1084,14 @@
         <details class="drilldown-box">
           <summary>
             <span class="pane-title">+ Raw SAP MCP Execution Receipt JSON</span>
-            <span class="spec-label" id="copyFeedbackLabel">EXPAND JSON</span>
           </summary>
           <div class="terminal-panel">
             <pre class="terminal-pre" id="receiptJsonPreview"></pre>
           </div>
         </details>
       </div>
-    </section>
+    </details>
+    </aside>
   </main>
 
   <script>
@@ -2026,12 +2034,13 @@
         // Update scenario tabs active state
         var tabs = document.querySelectorAll('.scenario-tab');
         tabs.forEach(function (tab, idx) {
+          tab.setAttribute('aria-pressed', String(idx === stepIdx));
           if (idx === stepIdx) tab.classList.add('active');
           else tab.classList.remove('active');
         });
 
         document.getElementById('mandateEpochTag').textContent = 'EPOCH #' + step.stepIndex;
-        document.getElementById('activeRegimeLabel').textContent = 'REGIME: ' + step.regimeLabel;
+        document.getElementById('activeRegimeLabel').textContent = 'Period ' + step.stepIndex + ' · ' + document.getElementById('tabScenario' + state.selectedStepIdx).textContent;
         document.getElementById('primaryVaultPdaDisplay').textContent = step.receipt.vaultPda;
         document.getElementById('subAgentVaultPdaDisplay').textContent = step.receipt.subAgentVaultPda;
 
@@ -2245,6 +2254,7 @@
         }
 
         document.getElementById('receiptJsonPreview').textContent = JSON.stringify(step.receipt, null, 2);
+        document.getElementById('copyFeedbackLabel').textContent = '';
       }
 
       // Wire Sliders & Buttons
@@ -2276,10 +2286,15 @@
         });
       });
 
+      function recordWorkflowStage(stage) {
+        window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: stage } }));
+      }
+
       document.querySelectorAll('.scenario-tab').forEach(function (tab) {
         tab.addEventListener('click', function () {
           var idx = Number(tab.getAttribute('data-scenario'));
           state.activeScenarioIdx = idx;
+          recordWorkflowStage('sample_selected');
           if (idx === 4) {
             document.getElementById('drawdownSlider').value = '640';
             document.getElementById('priorityFeeSlider').value = '65000';
@@ -2292,6 +2307,7 @@
           }
           syncSliderLabels();
           runFull5EpochSimulation();
+          recordWorkflowStage('result_ready');
         });
       });
 
@@ -2299,11 +2315,14 @@
         var nextIdx = (state.selectedStepIdx + 1) % 5;
         state.activeScenarioIdx = nextIdx;
         renderStep(nextIdx);
+        recordWorkflowStage('result_ready');
       });
 
       document.getElementById('runBacktestBtn').addEventListener('click', function () {
         runFull5EpochSimulation();
-        renderStep(2); // Highlight Epoch 3 MultiHopper Yield Rotation after full backtest run
+        renderStep(2);
+        document.getElementById("backtestLedgerBody").closest("details").open = true;
+        recordWorkflowStage('result_ready');
       });
 
       document.getElementById('resetVaultBtn').addEventListener('click', function () {
@@ -2318,16 +2337,18 @@
         runFull5EpochSimulation();
       });
 
-      document.getElementById('copyReceiptBtn').addEventListener('click', function () {
+      document.getElementById('copyReceiptBtn').addEventListener('click', async function () {
         var step = state.backtestSteps[state.selectedStepIdx];
         if (!step) return;
-        var jsonStr = JSON.stringify(step.receipt, null, 2);
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(jsonStr);
+        var feedback = document.getElementById('copyFeedbackLabel');
+        try {
+          await navigator.clipboard.writeText(JSON.stringify(step.receipt, null, 2));
+          feedback.textContent = 'Receipt copied';
+        } catch (error) {
+          var preview = document.getElementById('receiptJsonPreview');
+          preview.closest('details').open = true;
+          feedback.textContent = 'Could not copy. Select the JSON below and copy it manually.';
         }
-        var fb = document.getElementById('copyFeedbackLabel');
-        fb.textContent = 'COPIED SHA-256 RECEIPT';
-        setTimeout(function () { fb.textContent = 'READY'; }, 2000);
       });
 
       document.getElementById('downloadAuditBtn').addEventListener('click', function () {
@@ -2354,7 +2375,8 @@
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        recordWorkflowStage('export_ready');
       });
 
       // Initial render

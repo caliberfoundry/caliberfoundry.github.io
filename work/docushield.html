@@ -26,6 +26,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
+    .header-inner .breadcrumb { margin: 0; }
     .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
     .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
@@ -65,107 +66,21 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
-      <div style="display:flex; gap:12px;">
-        <a href="../docushield/" class="btn btn-primary"><span>Launch Remediation Studio</span><span>&rarr;</span></a>
-      </div>
+      <a href="../#work" class="breadcrumb">← All products</a>
     </div>
   </header>
 
   <main class="container">
-    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <div class="kicker">02 // REGULATORY DOCUMENT ENGINEERING &amp; PDF/UA COMPLIANCE</div>
-    <h1 class="title">DocuShield&trade; &mdash; ISO 14289-1 (PDF/UA) &amp; European Accessibility Act Remediation Studio</h1>
-    <p class="lede">
-      A deterministic structural tagging and verification workstation built for universities, financial institutions, healthcare networks, and European e-commerce enterprises to remediate untagged PDF archives and courseware to 100% Matterhorn Protocol, WCAG 2.2 AA, Section 508, and EU Directive 2019/882 compliance.
-    </p>
-    <div style="display:flex; flex-wrap:wrap; gap:14px;">
-      <a href="../docushield/" class="btn btn-primary"><span>Launch Remediation Studio</span><span>&rarr;</span></a>
-      <a href="mailto:engineering@caliberfoundry.com?subject=DocuShield%20Enterprise%20PDF/UA%20Remediation%20Inquiry" class="btn"><span>Request Enterprise Archive Audit</span><span>&nearr;</span></a>
-    </div>
-
-    <div class="grid-2">
-      <div class="panel">
-        <h2 class="panel-title">Product Architecture &amp; Remediation Pipeline</h2>
-        <ul class="spec-list">
-          <li><strong>01. Deterministic <code>/StructTreeRoot</code> AST Tagging &amp; XMP <code>pdfuaid:part=1</code> Synthesis:</strong> Transforms untagged multi-column PDF byte streams into hierarchical ISO 14289-1 logical structure trees (<code>/Document</code>, <code>/Sect</code>, <code>/H1</code>–<code>/H4</code>, <code>/P</code>, <code>/L</code>) while isolating running headers, footers, and decorative rules inside <code>/Artifact</code> containers and injecting <code>/MarkInfo &lt;&lt; /Marked true &gt;&gt;</code>, <code>/ViewerPreferences &lt;&lt; /DisplayDocTitle true &gt;&gt;</code>, and <code>/Lang</code> dictionary attributes.</li>
-          <li><strong>02. Complex Table <code>&lt;TH scope&gt;</code> / <code>Headers</code> Array Binding &amp; Technical <code>&lt;Figure Alt&gt;</code> Injection:</strong> Reconstructs merged financial fee schedules, clinical dosage rubrics, and multi-tier university grading tables with explicit <code>/Scope (Column|Row)</code> and deterministic <code>Headers [...]</code> ID arrays, while binding semantic alternative text descriptions and MathML structural expressions to STEM and engineering diagrams.</li>
-          <li><strong>03. Matterhorn Protocol 31-Checkpoint Verification &amp; VPAT 2.5 / EU EAA Certification:</strong> Executes automated failure-condition audits across clauses <code>01-006</code>, <code>06-001</code>, <code>09-003</code>, <code>11-001</code>, <code>13-004</code>, <code>14-003</code>, <code>15-002</code>, and <code>28-001</code>, exporting remediated PDF/UA-1 packages, JSON structure manifests, and executive VPAT 2.5 / EU Directive 2019/882 / ADA Title II compliance certificates.</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h2 class="panel-title">Product Specifications</h2>
-        <table class="spec-table">
-          <tr><td>COMPLIANCE STANDARDS</td><td>ISO 14289-1 (PDF/UA-1) / EU EAA 2019/882 / WCAG 2.2 AA / Section 508</td></tr>
-          <tr><td>MATTERHORN COVERAGE</td><td>31 Checkpoints / 87 Machine-Testable Failure Conditions</td></tr>
-          <tr><td>CLIENT-SIDE PARSER</td><td>Zero-Egress Local Binary PDF <code>%PDF-1.x</code> Dictionary &amp; XMP Inspector</td></tr>
-          <tr><td>EXPORT ARTIFACTS</td><td>Tagged PDF/UA-1 + JSON AST + VPAT 2.5 / EAA Certificate</td></tr>
-          <tr><td>COMMERCIAL TIERS</td><td>$199 Single Archive / $299 Growth / $799 Enterprise</td></tr>
-          <tr><td>LIVE WORKSTATION</td><td><a href="../docushield/" style="color:var(--cf-accent-primary); text-decoration:none;">Open DocuShield Studio &rarr;</a></td></tr>
-        </table>
-      </div>
-    </div>
-
-    <section class="matrix-section" aria-labelledby="matterhorn-matrix-heading">
-      <h2 class="panel-title" id="matterhorn-matrix-heading">Matterhorn Protocol Deterministic Remediation Ledger</h2>
-      <p style="font-size:14px; color:var(--cf-ink-secondary); margin-bottom:14px;">
-        Every document processed in DocuShield&trade; is audited and remediated against the PDF Association Matterhorn Protocol 1.1 failure conditions required by screen readers (JAWS, NVDA, VoiceOver) and regulatory enforcement audits:
-      </p>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th>Clause ID</th>
-            <th>ISO 14289-1 / WCAG 2.2 Rule</th>
-            <th>Untagged Failure Condition</th>
-            <th>Deterministic AST Remediation</th>
-            <th>Verification</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>01-006</strong></td>
-            <td>Real Content vs. Artifacts</td>
-            <td>Running headers, page numbers, and decorative watermarks read inline mid-sentence</td>
-            <td>Wraps non-semantic Furniture in <code>/Artifact &lt;&lt; /Type /Pagination &gt;&gt; BDC ... EMC</code></td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-          <tr>
-            <td><strong>06-001</strong></td>
-            <td>XMP Metadata Conformance</td>
-            <td>Missing <code>pdfuaid:part=1</code> declaration and <code>dc:title</code> stream in catalog</td>
-            <td>Synthesizes ISO 14289-1 XMP packet and sets <code>/DisplayDocTitle true</code></td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-          <tr>
-            <td><strong>09-003</strong></td>
-            <td>Logical Reading Order</td>
-            <td>Multi-column academic, clinical, or legal layouts interleaved across columns</td>
-            <td>Reorders <code>/K</code> structure kids into strict topological column-first sequence</td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-          <tr>
-            <td><strong>11-001</strong></td>
-            <td>Natural Language Specification</td>
-            <td>Missing catalog <code>/Lang</code> tag causing screen readers to mispronounce terminology</td>
-            <td>Binds BCP-47 primary document language (<code>en-US</code>, <code>de-DE</code>) and span overrides</td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-          <tr>
-            <td><strong>13-004</strong></td>
-            <td>Graphic &amp; Diagram Semantics</td>
-            <td><code>&lt;Figure&gt;</code> objects lacking <code>/Alt</code> or <code>/ActualText</code> attributes</td>
-            <td>Injects technical alternative descriptions and bounding-box coordinates</td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-          <tr>
-            <td><strong>15-002</strong></td>
-            <td>Tabular Header Association</td>
-            <td>Data cells (<code>&lt;TD&gt;</code>) unlinked to row/column headers (<code>&lt;TH&gt;</code>)</td>
-            <td>Assigns explicit <code>/Scope</code> and multi-level <code>Headers [...]</code> ID arrays</td>
-            <td><span class="badge-pass">PASS 100%</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <h1 class="title">DocuShield · Check a document for accessibility</h1>
+    <p class="lede">Inspect a local PDF or HTML file, or explore a sample. Review structural findings and take the assessment into a manual accessibility review.</p>
+    <a href="../docushield/" class="btn btn-primary">Inspect a document →</a>
+    <section class="grid-2" style="margin-top:32px">
+      <div class="panel"><h2 class="panel-title">Try the workflow</h2><ol class="spec-list">
+        <li><a href="../docushield/?autoProof=1">Review the sample</a></li>
+        <li><a href="../docushield/?autoProof=2">Prepare a tag-tree draft</a></li>
+        <li><a href="../docushield/?autoProof=3">Open an assessment report</a></li>
+      </ol></div>
+      <div class="panel"><h2 class="panel-title">What the report covers</h2><p>The report lists the checked structural signals, the source filename, and the number that passed. Review reading order, descriptions and table semantics manually. JSON and XML downloads accompany the printable report.</p><p style="margin-top:12px"><a href="mailto:engineering@caliberfoundry.com?subject=Document%20accessibility%20review">Request an archive review</a></p></div>
     </section>
   </main>
 

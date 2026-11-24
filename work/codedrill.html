@@ -24,6 +24,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     .site-header { border-bottom: 1px solid var(--cf-rule-mid); background-color: var(--cf-bg-paper); position: sticky; top: 0; z-index: 50; }
+    .header-inner .breadcrumb { margin: 0; }
     .header-inner { max-width: 1080px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--cf-ink-primary); }
     .brand-mark { width: 28px; height: 28px; background-color: var(--cf-ink-primary); color: var(--cf-ink-on-dark); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; }
@@ -53,44 +54,22 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="../" class="brand"><span class="brand-mark">CF</span><span class="brand-name">Caliber Foundry</span></a>
-      <div style="display:flex; gap:12px;">
-        <a href="../codedrill-cbt/" class="btn btn-primary"><span>Launch Simulator</span><span>&rarr;</span></a>
-      </div>
+      <a href="../#work" class="breadcrumb">← All products</a>
     </div>
   </header>
 
   <main class="container">
-    <a href="../#work" class="breadcrumb">&larr; Back to All Systems</a>
-    <h1 class="title">CodeDrill&trade; CBT &mdash; 1:1 Federal Licensing Exam Simulator</h1>
-    <p class="lede">
-      An authentic split-screen open-book testing workstation built for the U.S. Customs Broker License Exam (CBLE) and IRS Enrolled Agent exam, training candidates to locate exact statutory citations under time pressure.
-    </p>
-    <div style="display:flex; flex-wrap:wrap; gap:14px;">
-      <a href="../codedrill-cbt/" class="btn btn-primary"><span>Launch 1:1 Pearson VUE Simulator</span><span>&rarr;</span></a>
-      <a href="../codedrill-cbt/seo-pages/" class="btn"><span>Explore 19 CFR &amp; HTSUS Knowledge Hub</span><span>&nearr;</span></a>
-    </div>
-
-    <div class="grid-2">
-      <div class="panel">
-        <h2 class="panel-title">Product Architecture &amp; Training Modes</h2>
-        <ul class="spec-list">
-          <li><strong>01. Authentic Split-Screen CBT Interface:</strong> Mirrors the official exam layout with a synchronized electronic reference library (Title 19 CFR, HTSUS &amp; GRI 1–6, and 31 CFR Part 10) on the right and exam vignettes with strikethrough and highlight tools on the left.</li>
-          <li><strong>02. 90-Second Citation-Speed Drills:</strong> Requires candidates to locate and lock in the exact verifying regulation paragraph before answering, tracking lookup speed against exam benchmarks.</li>
-          <li><strong>03. Built-In Customs Valuation Calculator &amp; Study Coach:</strong> Includes a dedicated Transaction Value / MPF / HMF calculator and a 3-tier Socratic Code-Path Examiner that guides candidates to the right chapter without spoiling answers.</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h2 class="panel-title">Product Specifications</h2>
-        <table class="spec-table">
-          <tr><td>STATUTORY CORPORA</td><td>19 CFR / HTSUS / 31 CFR Part 10</td></tr>
-          <tr><td>EXAM FORMAT</td><td>4.5-Hr CBT / 5-Option (A–E)</td></tr>
-          <tr><td>VERIFYING MECHANISM</td><td>Citation Lock-In + Golden Quote</td></tr>
-          <tr><td>KNOWLEDGE HUB</td><td><a href="../codedrill-cbt/seo-pages/">8 Statutory Drill Pages &rarr;</a></td></tr>
-          <tr><td>XML SITEMAP</td><td><a href="../codedrill-cbt/seo-pages/sitemap.xml" rel="noopener noreferrer" target="_blank">sitemap.xml &nearr;</a></td></tr>
-        </table>
-      </div>
-    </div>
+    <h1 class="title">CodeDrill · Practice an exam question with its source</h1>
+    <p class="lede">Choose an answer, find the governing section, and attach your citation. Practice with the reference library beside the question or switch between them on a phone.</p>
+    <a href="../codedrill-cbt/" class="btn btn-primary">Start a practice question →</a>
+    <section class="grid-2" style="margin-top:32px">
+      <div class="panel"><h2 class="panel-title">Try the workflow</h2><ol class="spec-list">
+        <li><a href="../codedrill-cbt/?autoProof=1">Find the governing section</a></li>
+        <li><a href="../codedrill-cbt/?autoProof=2">Attach the example citation</a></li>
+        <li><a href="../codedrill-cbt/?autoProof=3">Preview a team report</a></li>
+      </ol></div>
+      <div class="panel"><h2 class="panel-title">Explore the study library</h2><p>Read a topic, try its timed question, then open the same section in the simulator. The team report identifies its sample cohort separately from session results.</p><p style="margin-top:12px"><a href="../codedrill-cbt/seo-pages/">Browse the 19 CFR and HTSUS guides</a></p></div>
+    </section>
   </main>
 
   <footer class="site-footer">

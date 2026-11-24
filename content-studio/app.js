@@ -9,7 +9,7 @@
   'use strict';
 
   /* ==========================================================================
-     1. SECURITY & XSS SANITIZATION UTILITIES
+     1. TEXT ENCODING AND SOURCE VERSION UTILITIES
      ========================================================================== */
   function escapeHtml(str) {
     return String(str == null ? '' : str)
@@ -20,7 +20,7 @@
       .replace(/'/g, '&#39;');
   }
 
-  function computeDeterministicSha256Hex(inputStr) {
+  function sourceVersion(inputStr) {
     const str = String(inputStr || '');
     const seeds = [
       0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
@@ -56,7 +56,7 @@
       {
         id: 'n8n-pipeline',
         code: 'PIPE-N8N-01',
-        badge: 'UPWORK DEAL PLAN-25 · $3,000 FIXED',
+        badge: 'Workflow payload example',
         title: 'n8n & Multi-Model Document Extraction -> Multi-Channel Content Pipeline',
         sector: 'B2B Revenue & Content Operations (n8n / Make.com / REST Webhooks)',
         hallucinationRate: '0.0%',
@@ -247,6 +247,27 @@
 
   let STATE = loadState();
 
+  function workflow(stage) {
+    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage}}));
+  }
+
+  function sourceNeedsRun() {
+    const draft = STATE.sourceDraft;
+    return Boolean(STATE.needsRun || (draft && (draft.title !== STATE.customSourceTitle || draft.text !== STATE.customSourceText)));
+  }
+
+  function updateSourceStatus(message) {
+    const stale = sourceNeedsRun();
+    const status = document.getElementById('sourceRunStatus');
+    if (status) status.textContent = message || (stale ? 'Source or scenario changed. Run it to update the dossier.' :
+      `Current source: ${STATE.customSourceTitle}. The dossier is ready to preview.`);
+    document.querySelector('[data-step-action="step3"]').disabled = stale;
+    for (const id of ['btnOpenEvalDossier','btnPrintEvalDossier','btnExportJsonPayload','btnCopyWebhookJson','btnCopySocialThread','btnCopyMonographMarkdown','btnFireWebhook','btnDispatchFromTab']) {
+      const action = document.getElementById(id);
+      if (action) action.disabled = stale;
+    }
+  }
+
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -379,7 +400,7 @@
   function parseSourceExcerptClaims(sourceTitle, sourceText, basePreset) {
     const rawText = String(sourceText || '').trim();
     const rawTitle = String(sourceTitle || basePreset.sourceTitle || 'Technical Dossier').trim();
-    const sha256 = computeDeterministicSha256Hex(`${rawTitle}::${rawText}`);
+    const sha256 = sourceVersion(`${rawTitle}::${rawText}`);
 
     // Extract [Clause ...] or [Section ...] or [Table ...] anchors and their following statements
     const anchorRegex = /\[([^\]]+)\]\s*([^\[]+)/g;
@@ -388,17 +409,17 @@
     while ((match = anchorRegex.exec(rawText)) !== null) {
       const anchor = match[1].trim();
       const statement = match[2].trim().replace(/\s+/g, ' ');
-      if (statement.length > 8) {
+      if (statement.length) {
         extractedSegments.push({ anchor, statement });
       }
     }
 
     // If user typed custom text without brackets, segment by sentences
     if (extractedSegments.length === 0 && rawText.length > 0) {
-      const sentences = rawText.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10);
-      sentences.slice(0, 6).forEach((s, idx) => {
+      const sentences = rawText.split(/(?<=[.!?])\s+/).filter(s => s.trim().length);
+      sentences.forEach((s, idx) => {
         extractedSegments.push({
-          anchor: `Span ${idx + 1}.1 (p. ${idx + 1})`,
+          anchor: `Passage ${idx + 1}`,
           statement: s.trim()
         });
       });
@@ -418,7 +439,7 @@
         monograph: basePreset.monograph,
         evalCases: basePreset.evalCases,
         webhookPayload: Object.assign({}, basePreset.webhookPayload, {
-          checksumSha256: sha256
+          sourceVersion: sha256
         }),
         courseModule: basePreset.courseModule,
         socialAndVideo: basePreset.socialAndVideo
@@ -435,13 +456,12 @@
       return {
         id: `EVAL-0${idx + 1}`,
         sourceRef: seg.anchor,
-        groundTruth: seg.statement.length > 115 ? `${seg.statement.slice(0, 112)}...` : seg.statement,
+        groundTruth: seg.statement,
         generatedClaim: `${seg.statement} (Verified against [${seg.anchor}])`,
-        exactMatch: '100.0%',
-        hallucination: '0.0%',
-        latency: `${36 + (idx * 4)}ms`,
-        cost: '$0.002',
-        status: 'PASS',
+        exactMatch: 'Verbatim',
+        latency: 'Local',
+        cost: '—',
+        status: 'Quoted',
         hasNumeric: Boolean(numMatches && numMatches.length > 0),
         metricSummary
       };
@@ -466,9 +486,9 @@
 
     const dynamicMonograph = {
       headline: `${rawTitle} — Citation-Gated Multi-Channel Synthesis`,
-      subtitle: `Deterministic AST Extraction Across ${extractedSegments.length} Anchored Source Spans (SHA-256: ${sha256.slice(0, 16)}...)`,
+      subtitle: `Extracted ${extractedSegments.length} source passages (Version: ${sha256.slice(0, 16)}...)`,
       executiveSummary: extractedSegments[0]
-        ? `${extractedSegments[0].statement} Synthesized across ${extractedSegments.length} verified ground-truth spans with 0.0% hallucination rate.`
+        ? `${extractedSegments[0].statement} Source contains ${extractedSegments.length} excerpt(s).`
         : basePreset.monograph.executiveSummary,
       sections: dynamicSections.length > 0 ? dynamicSections : basePreset.monograph.sections,
       svgDiagramTitle: basePreset.monograph.svgDiagramTitle,
@@ -477,14 +497,12 @@
 
     const dynamicWebhookPayload = {
       workflowId: (basePreset.webhookPayload && basePreset.webhookPayload.workflowId) || `wf_${basePreset.id}_v2`,
-      executionId: `exec_${Date.now()}`,
-      timestampUtc: new Date().toISOString(),
+      sourceRevision: sha256,
       sourceDocumentTitle: rawTitle,
       webhookDestination: STATE.webhookUrl || basePreset.webhookEndpoint,
       citationGatePassed: true,
-      hallucinationScore: 0.0,
-      citationPrecisionScore: 1.0,
-      checksumSha256: sha256,
+      mode: 'local_preview',
+      sourceVersion: sha256,
       verifiedSpanCount: extractedSegments.length,
       extractedClaims: dynamicEvalCases.map(c => ({
         claimId: c.id,
@@ -495,8 +513,8 @@
       synthesizedAssets: {
         monographSections: dynamicMonograph.sections.length,
         evalCasesVerified: dynamicEvalCases.length,
-        xThreadCardCount: Math.max(4, Math.min(6, extractedSegments.length)),
-        scormQuizReady: true
+        xThreadCardCount: Math.min(6, extractedSegments.length),
+        scormQuizReady: false
       }
     };
 
@@ -504,7 +522,7 @@
       index: `0${idx + 1}/0${Math.min(6, extractedSegments.length)}`,
       hook: `Verified Finding #${idx + 1} from ${rawTitle} [${seg.anchor}]:`,
       body: seg.statement,
-      metricTag: `ANCHOR: [${seg.anchor}] // 0.0% HALLUCINATION`
+      metricTag: `Source: [${seg.anchor}]`
     }));
 
     return {
@@ -515,10 +533,10 @@
       monograph: dynamicMonograph,
       evalCases: dynamicEvalCases.length > 0 ? dynamicEvalCases : basePreset.evalCases,
       webhookPayload: dynamicWebhookPayload,
-      courseModule: basePreset.courseModule,
+      courseModule: null,
       socialAndVideo: {
         threadCards: dynamicThreadCards.length > 0 ? dynamicThreadCards : basePreset.socialAndVideo.threadCards,
-        storyboard: basePreset.socialAndVideo.storyboard
+        storyboard: []
       }
     };
   }
@@ -538,7 +556,7 @@
   function buildPipelineVectorSvg(preset, bundle) {
     const code = escapeHtml(preset.code || 'PIPE-01');
     const latency = escapeHtml(`${preset.avgLatencyMs}ms E2E`);
-    const spanCount = Number(bundle.anchorCount) || 6;
+    const spanCount = bundle.anchorCount;
     const shaShort = escapeHtml((bundle.sha256 || '').slice(0, 12));
 
     return `
@@ -547,7 +565,7 @@
         <!-- Grid lines -->
         <line x1="0" y1="32" x2="860" y2="32" stroke="#DFDBD2" stroke-width="1"/>
         <text x="14" y="21" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#141413">
-          ${code} // DETERMINISTIC AST &amp; CITATION GATE TOPOLOGY // SHA-256: ${shaShort} // ${latency}
+          ${code} // DETERMINISTIC AST &amp; CITATION GATE TOPOLOGY // Example architecture · version: ${shaShort} // ${latency}
         </text>
 
         <!-- Stage 1 -->
@@ -654,24 +672,6 @@
       }
     }
 
-    // Bar 2 Telemetry
-    const codeBadge = document.getElementById('activePresetCodeBadge');
-    if (codeBadge) codeBadge.textContent = preset.code || 'PIPE-01';
-
-    const titleBar = document.getElementById('activePresetTitleBar');
-    if (titleBar) titleBar.textContent = preset.title;
-
-    const mHall = document.getElementById('metricHallucination');
-    if (mHall) mHall.textContent = preset.hallucinationRate || '0.0%';
-
-    const mPrec = document.getElementById('metricPrecision');
-    if (mPrec) mPrec.textContent = preset.citationPrecision || '100.0%';
-
-    const mLat = document.getElementById('metricLatency');
-    if (mLat) mLat.textContent = `${preset.avgLatencyMs}ms`;
-
-    const mCost = document.getElementById('metricCost');
-    if (mCost) mCost.textContent = `${preset.costPerRunUsd}/run`;
   }
 
   function renderLeftPane() {
@@ -698,18 +698,18 @@
 
     const runBadge = document.getElementById('pipelineRunStatusBadge');
     if (runBadge) {
-      runBadge.textContent = `5/5 VERIFIED · ${bundle.anchorCount} SPANS`;
+      runBadge.textContent = `${bundle.anchorCount} source excerpts`;
     }
 
     // 2. Source Title & Text Inputs
     const titleInput = document.getElementById('sourceTitleInput');
     if (titleInput && document.activeElement !== titleInput) {
-      titleInput.value = STATE.customSourceTitle || preset.sourceTitle;
+      titleInput.value = STATE.sourceDraft?.title ?? STATE.customSourceTitle;
     }
 
     const textInput = document.getElementById('sourceTextInput');
     if (textInput && document.activeElement !== textInput) {
-      textInput.value = STATE.customSourceText || preset.sourceText;
+      textInput.value = STATE.sourceDraft?.text ?? STATE.customSourceText;
     }
 
     const charBadge = document.getElementById('sourceCharCountBadge');
@@ -757,7 +757,7 @@
     // TAB 1: Monograph & Vector SVG Brief
     const mono = bundle.monograph;
     const kickerEl = document.getElementById('monographKicker');
-    if (kickerEl) kickerEl.textContent = `${preset.badge} · ${preset.sector}`;
+    if (kickerEl) kickerEl.textContent = bundle.isCustomSynthesized ? 'Edited source summary' : 'Sample source summary';
 
     const titleEl = document.getElementById('monographTitle');
     if (titleEl) titleEl.textContent = mono.headline;
@@ -765,19 +765,22 @@
     const metaStrip = document.getElementById('monographMetaStrip');
     if (metaStrip) {
       metaStrip.innerHTML = `
-        <span class="cf-meta-chip">Corpus SHA-256: ${escapeHtml(bundle.sha256.slice(0, 16))}...</span>
+        <span class="cf-meta-chip">Source version: ${escapeHtml(bundle.sha256.slice(0, 16))}...</span>
         <span class="cf-meta-chip">Verified Spans: ${bundle.anchorCount}</span>
-        <span class="cf-meta-chip">Hallucination Rate: ${escapeHtml(preset.hallucinationRate)}</span>
-        <span class="cf-meta-chip">Latency: ${preset.avgLatencyMs}ms</span>
+
       `;
     }
 
     const svgLabel = document.getElementById('svgBlueprintCodeLabel');
-    if (svgLabel) svgLabel.textContent = `FIG. ${preset.code} · SHA-256 VERIFIED`;
+    if (svgLabel) svgLabel.textContent = `Example architecture · ${preset.code}`;
 
     const svgContainer = document.getElementById('svgArchitectureContainer');
     if (svgContainer) {
-      svgContainer.innerHTML = buildPipelineVectorSvg(preset, bundle);
+      if (bundle.isCustomSynthesized) {
+        svgContainer.textContent = `${STATE.customSourceTitle} → ${bundle.anchorCount} source excerpts → dossier and JSON preview.`;
+      } else {
+        svgContainer.innerHTML = buildPipelineVectorSvg(preset, bundle);
+      }
     }
 
     const bodyContainer = document.getElementById('monographBodyContainer');
@@ -827,24 +830,7 @@
 
     const summaryStrip = document.getElementById('evalSummaryStrip');
     if (summaryStrip) {
-      summaryStrip.innerHTML = `
-        <div class="cf-eval-kpi">
-          <span>Evaluated Claims</span>
-          <strong>${filteredCases.length} / ${allCases.length} Verified</strong>
-        </div>
-        <div class="cf-eval-kpi">
-          <span>Hallucination Rate</span>
-          <strong style="color:var(--cf-forest-pass);">${escapeHtml(preset.hallucinationRate)} (0 Unanchored)</strong>
-        </div>
-        <div class="cf-eval-kpi">
-          <span>Span Match / F1</span>
-          <strong>${escapeHtml(preset.citationPrecision)}</strong>
-        </div>
-        <div class="cf-eval-kpi">
-          <span>Mean Eval Latency</span>
-          <strong>${preset.avgLatencyMs}ms (${escapeHtml(preset.costPerRunUsd)})</strong>
-        </div>
-      `;
+      summaryStrip.textContent = `${filteredCases.length} of ${allCases.length} items · ${bundle.isCustomSynthesized ? 'Quoted from the edited source' : 'Sample evaluation data'}`;
     }
 
     const tbody = document.getElementById('evalMatrixTableBody');
@@ -871,6 +857,10 @@
 
     const quizBox = document.getElementById('edtechQuizContainer');
     if (!quizBox) return;
+    if (bundle.isCustomSynthesized) {
+      quizBox.textContent = 'The example quiz belongs to the sample source. Your edited passages are available in the JSON preview.';
+      return;
+    }
 
     const cm = bundle.courseModule || preset.courseModule;
     if (!cm) return;
@@ -999,6 +989,7 @@
     renderTopBars();
     renderLeftPane();
     renderRightPaneTabs();
+    updateSourceStatus();
   }
 
   /* ==========================================================================
@@ -1018,7 +1009,13 @@
       return false;
     }
 
+    if (STATE.activePresetId === target.id) return true;
+    STATE.sourceDraft = null;
+    STATE.needsRun = true;
+    STATE.lastWebhookReceipt = null;
+    document.getElementById('webhookStatusBox').textContent = 'Preview the JSON for this scenario.';
     STATE.activePresetId = target.id;
+    workflow('sample_selected');
     STATE.customSourceTitle = target.sourceTitle;
     STATE.customSourceText = target.sourceText;
     STATE.customSchemaText = target.schemaTemplate;
@@ -1036,66 +1033,48 @@
     const textEl = document.getElementById('sourceTextInput');
     const schemaEl = document.getElementById('schemaTemplateInput');
 
-    if (customInputs && typeof customInputs === 'object') {
-      if (typeof customInputs.sourceTitle === 'string') {
-        STATE.customSourceTitle = customInputs.sourceTitle;
-        if (titleEl) titleEl.value = customInputs.sourceTitle;
-      }
-      if (typeof customInputs.sourceText === 'string') {
-        STATE.customSourceText = customInputs.sourceText;
-        if (textEl) textEl.value = customInputs.sourceText;
-      }
-      if (typeof customInputs.schemaTemplate === 'string') {
-        STATE.customSchemaText = customInputs.schemaTemplate;
-        if (schemaEl) schemaEl.value = customInputs.schemaTemplate;
-      }
-    } else {
-      if (titleEl) STATE.customSourceTitle = titleEl.value;
-      if (textEl) STATE.customSourceText = textEl.value;
-      if (schemaEl) STATE.customSchemaText = schemaEl.value;
+    const title = String(customInputs?.sourceTitle ?? titleEl?.value ?? '').trim();
+    const text = String(customInputs?.sourceText ?? textEl?.value ?? '').trim();
+    const schema = customInputs?.schemaTemplate ?? schemaEl?.value;
+    if (!title || !text) {
+      STATE.sourceDraft = {title, text};
+      STATE.needsRun = true;
+      saveState();
+      document.getElementById('detailsSourceExcerpt').open = true;
+      updateSourceStatus('Enter a document title and source text, then run again.');
+      (!title ? titleEl : textEl)?.focus();
+      return null;
     }
-
+    STATE.customSourceTitle = title;
+    STATE.customSourceText = text;
+    STATE.customSchemaText = schema;
+    STATE.needsRun = false;
+    STATE.sourceDraft = null;
+    STATE.lastWebhookReceipt = null;
+    document.getElementById('webhookStatusBox').textContent = 'Preview the updated payload.';
     STATE.pipelineRunsCount = (STATE.pipelineRunsCount || 1) + 1;
     saveState();
 
     const bundle = getActiveSynthesizedBundle();
     refreshAllViews();
-    showToast(`Synthesized & Verified ${bundle.anchorCount} Ground-Truth Spans (0.0% Hallucination · SHA-256: ${bundle.sha256.slice(0, 10)})`);
+    updateSourceStatus(`Dossier ready for ${title}. ${bundle.anchorCount} source excerpt(s).`);
+    workflow('result_ready');
     return bundle;
   }
 
   function fireWebhookTest(customEndpoint) {
-    const preset = getActivePreset();
-    const webhookInput = document.getElementById('webhookUrlInput');
-    const endpoint = String(customEndpoint || (webhookInput && webhookInput.value) || STATE.webhookUrl || preset.webhookEndpoint).trim();
-    STATE.webhookUrl = endpoint;
-
+    if (sourceNeedsRun()) return null;
     const bundle = getActiveSynthesizedBundle();
-    const receipt = {
-      status: 'HTTP 200 OK',
-      verified: true,
-      endpoint,
-      executionId: `wh_exec_${Date.now()}`,
-      timestampUtc: new Date().toISOString(),
-      sha256Signature: bundle.sha256,
-      verifiedClaimsDispatched: bundle.evalCases.length,
-      latencyMs: preset.avgLatencyMs
-    };
-
-    STATE.lastWebhookReceipt = receipt;
+    const endpoint = String(customEndpoint ?? document.getElementById('webhookUrlInput').value).trim();
+    const preview = {mode:'local_preview', endpoint, payload:bundle.webhookPayload};
+    STATE.webhookUrl = endpoint;
+    STATE.lastWebhookReceipt = null;
     saveState();
-
     const box = document.getElementById('webhookStatusBox');
-    if (box) {
-      box.classList.add('dispatched-ok');
-      box.innerHTML = `
-        <div><strong>HTTP 200 OK · SHA-256 Verified</strong> · Dispatched to <code>${escapeHtml(endpoint)}</code></div>
-        <div>Execution ID: <code>${escapeHtml(receipt.executionId)}</code> · Claims Verified: <strong>${receipt.verifiedClaimsDispatched}</strong> · Digest: <code>${escapeHtml(receipt.sha256Signature.slice(0, 24))}...</code></div>
-      `;
-    }
-
-    showToast(`Webhook POST Dispatched (HTTP 200 OK · SHA-256 Verified)`);
-    return receipt;
+    box.textContent = `Local preview for ${endpoint || 'an unspecified endpoint'} · ${bundle.evalCases.length} source items.
+${JSON.stringify(preview.payload, null, 2)}`;
+    workflow('result_ready');
+    return preview;
   }
 
   /* ==========================================================================
@@ -1105,6 +1084,11 @@
     const modal = document.getElementById('modalEvalDossier');
     const body = document.getElementById('evalDossierPrintableBody');
     if (!modal || !body) return null;
+    if (sourceNeedsRun()) {
+      updateSourceStatus();
+      document.getElementById('runPipelineBtn').focus();
+      return null;
+    }
 
     const preset = getActivePreset();
     const bundle = getActiveSynthesizedBundle();
@@ -1120,34 +1104,34 @@
         </h3>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;font-family:var(--font-mono);font-size:11px;border-top:1px solid #C9C4B8;padding-top:8px;">
           <div>Dossier ID: <strong>${escapeHtml(dossierId)}</strong></div>
-          <div>Source Corpus SHA-256: <strong>${escapeHtml(bundle.sha256.slice(0, 24))}...</strong></div>
-          <div>Hallucination Gate: <strong style="color:#1A5638;">0.0% (100.0% Span Precision)</strong></div>
-          <div>Pipeline Latency &amp; Cost: <strong>${preset.avgLatencyMs}ms · ${escapeHtml(preset.costPerRunUsd)}/run</strong></div>
+          <div>Scenario: <strong>${escapeHtml(preset.shortTitle || preset.title)}</strong></div>
+          <div>Source: <strong>${escapeHtml(STATE.customSourceTitle)}</strong></div>
+          <div>Source version: <strong>${escapeHtml(bundle.sha256.slice(0, 16))}</strong></div>
+          <div>Source excerpts: <strong>${bundle.anchorCount}</strong></div>
+        </div>
+        <div style="margin-top:8px"><strong>Source excerpt</strong>
+          <p>${escapeHtml(STATE.customSourceText.slice(0, 420))}</p>
         </div>
       </div>
 
       <h4 style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;border-bottom:1.5px solid #141413;padding-bottom:4px;margin-bottom:8px;">
-        SECTION 01 // GROUND-TRUTH DOCUMENT SPAN VS. EXTRACTED CLAIM MATRIX
+        Source passages and claims
       </h4>
       <table class="cf-data-table" style="border:1px solid #141413;margin-bottom:14px;">
         <thead>
           <tr>
-            <th>Case ID</th>
-            <th>Source Anchor</th>
-            <th>Ground-Truth Span</th>
-            <th>Extracted Claim</th>
-            <th>Match / F1</th>
-            <th>Verdict</th>
+            <th>Source</th>
+            <th>Passage</th>
+            <th>Claim</th>
+            <th>Result</th>
           </tr>
         </thead>
         <tbody>
           ${bundle.evalCases.map(c => `
             <tr>
-              <td class="cf-mono-col">${escapeHtml(c.id)}</td>
               <td class="cf-mono-col">${escapeHtml(c.sourceRef)}</td>
               <td>${escapeHtml(c.groundTruth)}</td>
               <td>${escapeHtml(c.generatedClaim)}</td>
-              <td class="cf-mono-col">${escapeHtml(c.exactMatch || '100.0%')}</td>
               <td class="cf-mono-col" style="color:#1A5638;">${escapeHtml(c.status || 'PASS')}</td>
             </tr>
           `).join('')}
@@ -1155,7 +1139,7 @@
       </table>
 
       <h4 style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;border-bottom:1.5px solid #141413;padding-bottom:4px;margin-bottom:8px;">
-        SECTION 02 // EXECUTIVE TAKEAWAYS &amp; N8N WEBHOOK AUDIT
+        Source takeaways
       </h4>
       <ul style="padding-left:18px;font-size:12.5px;line-height:1.55;">
         ${(bundle.monograph.keyTakeaways || []).map(t => `<li>${escapeHtml(t)}</li>`).join('')}
@@ -1163,6 +1147,8 @@
     `;
 
     modal.classList.remove('hidden');
+    document.getElementById('btnCloseEvalDossierModal')?.focus();
+    workflow('export_ready');
     return {
       dossierId,
       presetId: preset.id,
@@ -1321,11 +1307,13 @@
   /* ==========================================================================
      10. CLIPBOARD & TOAST HELPERS
      ========================================================================== */
-  function copyTextToClipboard(text, label) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).catch(() => {});
+  async function copyTextToClipboard(text, label) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`Copied ${label} to clipboard`);
+    } catch {
+      showToast('Clipboard unavailable. Select and copy the text in the result.');
     }
-    showToast(`Copied ${label} to clipboard`);
   }
 
   function showToast(message) {
@@ -1366,6 +1354,22 @@
   }
 
   function initEventListeners() {
+    for (const id of ['sourceTextInput','sourceTitleInput']) {
+      document.getElementById(id).addEventListener('input', () => {
+        STATE.sourceDraft = {title:document.getElementById('sourceTitleInput').value, text:document.getElementById('sourceTextInput').value};
+        saveState();
+        updateSourceStatus();
+      });
+    }
+    window.addEventListener('cf:open-step', ({detail}) => {
+      if (detail.step === 1) runPipelineSynthesis();
+      if (detail.step === 2) {
+        if (sourceNeedsRun() && !runPipelineSynthesis()) return;
+        switchRightTab('webhook');
+        document.getElementById('tabRightWebhook').focus();
+      }
+      if (detail.step === 3) openEvalDossierModal();
+    });
     const presetSelect = document.getElementById('presetSelect');
     if (presetSelect) {
       presetSelect.addEventListener('change', () => {
@@ -1388,7 +1392,9 @@
           const sel = document.getElementById('presetSelect');
           if (sel) sel.focus();
         } else if (act === 'step2') {
+          if (sourceNeedsRun() && !runPipelineSynthesis()) return;
           switchRightTab('eval');
+          document.getElementById('tabRightEval').focus();
         } else if (act === 'step3') {
           openEvalDossierModal();
         }
@@ -1413,6 +1419,8 @@
     if (loadSampleBtn) {
       loadSampleBtn.addEventListener('click', () => {
         const preset = getActivePreset();
+        STATE.sourceDraft = null;
+        STATE.needsRun = true;
         STATE.customSourceTitle = preset.sourceTitle;
         STATE.customSourceText = preset.sourceText;
         STATE.customSchemaText = preset.schemaTemplate;
@@ -1493,7 +1501,13 @@
       btnPrintEvalTab.addEventListener('click', openEvalDossierModal);
     }
 
-    const closeDossier = () => document.getElementById('modalEvalDossier').classList.add('hidden');
+    const closeDossier = () => {
+      document.getElementById('modalEvalDossier').classList.add('hidden');
+      document.getElementById('btnOpenEvalDossier').focus();
+    };
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !document.getElementById('modalEvalDossier').classList.contains('hidden')) closeDossier();
+    });
     const btnCloseDossier = document.getElementById('btnCloseEvalDossierModal');
     if (btnCloseDossier) btnCloseDossier.addEventListener('click', closeDossier);
     const btnCloseDossierFooter = document.getElementById('btnCloseEvalDossierFooter');
@@ -1674,7 +1688,7 @@
       openPaywallModal,
       switchRightTab,
       escapeHtml,
-      computeDeterministicSha256Hex
+      computeDeterministicSha256Hex: sourceVersion
     };
   }
 
