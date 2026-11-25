@@ -135,7 +135,7 @@
       }
 
       function roundCents(num) {
-        return Math.round((Number(num) + Number.EPSILON) * 100) / 100;
+        return Math.sign(num) * Math.round((Math.abs(num) + Number.EPSILON) * 100) / 100;
       }
 
       function formatUsd(num) {
@@ -176,27 +176,23 @@
       function parseNumericValue(raw) {
         if (raw == null) return NaN;
         let s = String(raw).trim();
-        if (!s) return NaN;
-        let negative = false;
-        if (s.startsWith('(') && s.endsWith(')')) {
-          negative = true;
-          s = s.slice(1, -1);
+        const accountingCredit = s.startsWith('(') && s.endsWith(')');
+        if (accountingCredit) s = s.slice(1, -1).trim();
+        s = s.replace(/^([+-]?)\$\s*/, '$1');
+        if (accountingCredit && /^[+-]/.test(s)) return NaN;
+        if (/\s/.test(s)) {
+          if (!/^[+-]?\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d+)?$/.test(s)) return NaN;
+          s = s.replace(/\s/g, '');
         }
-        s = s.replace(/[$€£¥\s]/g, '');
-        // Handle US thousands separator vs single comma decimal
-        if (s.includes(',') && s.includes('.')) {
-          s = s.replace(/,/g, '');
-        } else if (s.includes(',') && !s.includes('.')) {
-          const parts = s.split(',');
-          if (parts.length === 2 && parts[1].length <= 2) {
-            s = parts[0] + '.' + parts[1];
-          } else {
-            s = s.replace(/,/g, '');
-          }
+        if (s.includes(',')) {
+          if (/^[+-]?[1-9]\d{0,2}(?:,\d{3})+(?:\.\d+)?$/.test(s)) s = s.replace(/,/g, '');
+          else if (/^[+-]?(?:\d+|\d{1,3}(?:\.\d{3})+),\d+$/.test(s)) s = s.replace(/\./g, '').replace(',', '.');
+          else return NaN;
         }
+        if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(s)) return NaN;
         const n = Number(s);
         if (!Number.isFinite(n)) return NaN;
-        return negative ? -n : n;
+        return accountingCredit ? -n : n;
       }
 
       function detectDelimiter(firstLine) {
@@ -219,7 +215,7 @@
         if (!cleaned.trim()) {
           return { headers: [], rows: [], delimiter: ',', error: 'The CSV is empty. Select a file or enter a header and at least one data row.' };
         }
-        const firstNewline = cleaned.search(/\r?\n/);
+        const firstNewline = cleaned.search(/[\r\n]/);
         const firstLine = firstNewline >= 0 ? cleaned.slice(0, firstNewline) : cleaned;
         const delimiter = detectDelimiter(firstLine);
 
@@ -272,9 +268,16 @@
         }
 
         const headers = matrix[0];
+        const names = headers.map(field => field.trim().toLowerCase());
+        if (names.includes('') || new Set(names).size !== names.length) {
+          return {headers, rows: [], delimiter, error: 'Each CSV column needs a unique, nonempty header.'};
+        }
         const rows = [];
         for (let r = 1; r < matrix.length; r++) {
           const values = matrix[r];
+          if (values.length !== headers.length) {
+            return {headers, rows: [], delimiter, error: 'Row ' + (r + 1) + ' has ' + values.length + ' fields for ' + headers.length + ' headers. Quote values containing the delimiter and include empty fields.'};
+          }
           const obj = Object.create(null);
           for (let c = 0; c < headers.length; c++) {
             obj[headers[c]] = values[c] !== undefined ? values[c] : '';
@@ -437,9 +440,9 @@
         const currencyColumn = pickCol(buildHeaderLookup(parsed.headers),
           ['BillingCurrency', 'lineItem/CurrencyCode', 'line_item_currency_code', 'currency', 'currency_code', 'amount_currency']);
         const costs = [map.cost, map.effectiveCost, map.billedCost].filter(Boolean);
-        if (parsed.rows.some(row => (currencyColumn && row[currencyColumn] && row[currencyColumn].toUpperCase() !== 'USD') ||
+        if (parsed.rows.some(row => (currencyColumn && row[currencyColumn].toUpperCase() !== 'USD') ||
             costs.some(column => /[€£¥]/.test(row[column])))) {
-          return { error: 'This audit uses USD. Convert the export to a single USD billing currency before importing.', fingerprint, filename };
+          return { error: 'This audit uses USD. Confirm every listed currency is USD and convert any other currency before importing.', fingerprint, filename };
         }
         const normalizedRows = [];
         const skippedRows = [];
@@ -462,7 +465,7 @@
         let estLlmRouteSavings = 0;
         const llmCacheTargetRatio = (Number(assumptions.llmCacheTargetPct) || 0) / 100;
         const llmRouteShareRatio = (Number(assumptions.llmBatchRoutePct) || 0) / 100;
-        const llmRowNotes = [];
+        let eligibleLlmSpend = 0;
 
         const serviceAgg = Object.create(null);
 
@@ -527,14 +530,12 @@
           } else if (schema.id === 'FOCUS_1_0') {
             const eff = map.effectiveCost ? parseNumericValue(raw[map.effectiveCost]) : NaN;
             const bill = map.billedCost ? parseNumericValue(raw[map.billedCost]) : NaN;
-            cost = Number.isFinite(eff) ? eff : bill;
-            billedCost = Number.isFinite(bill) ? bill : eff;
-            if (!Number.isFinite(cost) && !Number.isFinite(billedCost)) {
-              skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid EffectiveCost and BilledCost' });
+            if ((map.effectiveCost && !Number.isFinite(eff)) || (map.billedCost && !Number.isFinite(bill))) {
+              skippedRows.push({ row: raw.__rowIndex, reason: 'Missing or invalid EffectiveCost or BilledCost' });
               continue;
             }
-            if (!Number.isFinite(cost)) cost = 0;
-            if (!Number.isFinite(billedCost)) billedCost = cost;
+            cost = map.effectiveCost ? eff : bill;
+            billedCost = map.billedCost ? bill : eff;
 
             provider = raw[map.provider] || 'Cloud';
             service = provider + ' · ' + (raw[map.service] || 'Unknown Service');
@@ -619,16 +620,16 @@
               estLlmCacheSavings += rowCacheSav;
             }
 
-            let rowRouteSav = 0;
             if (cost > 0 && isFlagship && !isBatch) {
               baseLlmRouteEligible += cost;
               const residualCost = Math.max(0, cost - rowCacheSav);
-              rowRouteSav = residualCost * llmRouteShareRatio * 0.50;
-              estLlmRouteSavings += rowRouteSav;
+              estLlmRouteSavings += residualCost * llmRouteShareRatio * 0.50;
             }
 
             detailNote = 'Cached input: ' + (cacheRatio * 100).toFixed(0) + '% · ' + (isBatch ? 'Batch' : 'Sync') + (isFlagship ? ' · Flagship' : ' · Compact');
-            llmRowNotes.push({ model, project: resource, cost, cacheRatio, isBatch, isFlagship, rowCacheSav, rowRouteSav });
+            if (cost > 0 && ((totalInput > 0 && cacheRatio < llmCacheTargetRatio) || (isFlagship && !isBatch))) {
+              eligibleLlmSpend += cost;
+            }
           } else {
             // GENERIC_CSV
             cost = parseNumericValue(raw[map.cost]);
@@ -689,8 +690,8 @@
             region,
             rowClass,
             detailNote,
-            effectiveCost: roundCents(cost),
-            billedCost: roundCents(billedCost)
+            effectiveCost: cost,
+            billedCost
           });
         }
 
@@ -795,15 +796,7 @@
         ];
 
         // Confirmed unique eligible base (avoiding double-counting overlapping LLM rows)
-        let confirmedEligibleUniqueBase = roundCents(baseOnDemandCompute + baseIdleAndUnused + baseNetworkAndLogs);
-        if (schema.id === 'LLM_USAGE') {
-          const llmUnique = llmRowNotes.reduce((acc, r) => {
-            const eligCache = r.cacheRatio < llmCacheTargetRatio;
-            const eligRoute = r.isFlagship && !r.isBatch;
-            return acc + ((r.cost > 0 && (eligCache || eligRoute)) ? r.cost : 0);
-          }, 0);
-          confirmedEligibleUniqueBase = roundCents(confirmedEligibleUniqueBase + llmUnique);
-        }
+        const confirmedEligibleUniqueBase = roundCents(baseOnDemandCompute + baseIdleAndUnused + baseNetworkAndLogs + eligibleLlmSpend);
 
         const totalEstMonthly = roundCents(levers.reduce((sum, l) => sum + l.monthlyEstimate, 0));
         const totalEstAnnual = roundCents(levers.reduce((sum, l) => sum + l.annualEstimate, 0));
@@ -1015,7 +1008,7 @@
         syncControls();setValid(true);render(result);
         text('editStatus','');
         $('exportProgressStrip').hidden=true;
-        if(notify) progress('import',result.meta.validRowCount+' rows analyzed'+(result.meta.skippedRowCount?' · '+result.meta.skippedRowCount+' skipped':'')+'.',result.meta.elapsedMs+' ms');
+        if(notify) progress('import',result.meta.validRowCount+(result.meta.validRowCount===1?' row analyzed':' rows analyzed')+(result.meta.skippedRowCount?' · '+result.meta.skippedRowCount+' skipped':'')+'.',result.meta.elapsedMs+' ms');
         else $('importProgressStrip').hidden=true;
       }
       function loadSample(key,notify=true) {
@@ -1051,7 +1044,7 @@
         } else {
           const lines=['window,lever_id,title,confirmed_base_usd_fact,formula,monthly_savings_estimate_usd,annual_savings_estimate_usd,required_engineering_check'];
           const quote=v=>'"'+String(v).replace(/"/g,'""')+'"';
-          for(const l of r.estimated.levers) lines.push([quote(l.window),quote(l.id),quote(l.title),l.confirmedBase.toFixed(2),quote(l.formula),l.monthlyEstimate.toFixed(2),l.annualEstimate.toFixed(2),quote(l.verificationCheck)].join(','));
+          for(const l of r.estimated.levers.filter(lever=>lever.active)) lines.push([quote(l.window),quote(l.id),quote(l.title),l.confirmedBase.toFixed(2),quote(l.formula),l.monthlyEstimate.toFixed(2),l.annualEstimate.toFixed(2),quote(l.verificationCheck)].join(','));
           download('finopsguard-plan-'+fp+'.csv','text/csv;charset=utf-8',lines.join('\n'));
           progress('export','Action CSV prepared for download.');
         }
