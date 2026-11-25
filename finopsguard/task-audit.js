@@ -203,13 +203,17 @@
     const label=r.metric==='estimated'?'Estimated API cost':r.metric==='tokens'?'Tokens':r.metric==='unpriced'?'Cost':'Billed LLM cost';
     show('taskMetricTitle',label+' per accepted task');
     show('taskSourceName',(r.example?'Illustrative data':'Imported ledger')+' · '+state.name);
+    const stepLabel = r.example ? 'call' : 'step';
+    const counted = (n,label)=>n+' '+label+(n===1?'':'s');
+    const stepNote = $('taskStepNote');
+    if (stepNote) stepNote.hidden = r.example;
     const max=Math.max(r.baseline||0,r.current||0);
     for(const v of variants) {
       const s=r[v], prefix=v==='before'?'taskBefore':'taskAfter';
       const value=v==='before'?r.baseline:r.current;
       show(prefix+'Unit',displayUnit(r.metric,value));
       $(prefix+'Bar').style.width=(value!==null && max>0?Math.min(100,100*value/max):0)+'%';
-      show(prefix+'Note',s.accepted+' of '+s.tasks+' tasks accepted · '+s.calls+' calls');
+      show(prefix+'Note',s.accepted+' of '+s.tasks+' tasks accepted · '+counted(s.calls, r.example ? 'call' : 'recorded step'));
     }
     if(r.issues.length) {
       show('taskVerdict',r.lostAcceptances.length?'Quality regression':'Comparison on hold');
@@ -222,10 +226,13 @@
       const percent=r.changedPct!==null && r.changedPct!==0 ? Math.abs(r.changedPct).toLocaleString('en-US',{maximumFractionDigits:1})+'% ' : '';
       const unit={billed:'unit cost',estimated:'estimated API cost',tokens:'token use'}[r.metric];
       show('taskVerdict',r.difference===0?'Same '+unit:percent+direction+' '+unit);
-      let note=r.metric==='tokens'?'Actual USD per call is unavailable. Token usage is compared for the supplied cohort.':r.metric==='estimated'?'Both runs are priced using reported rate-card estimates. Actual billed savings are unverified.':
-        'The comparison includes every listed attempt and review, including work on rejected tasks.';
-      if(r.example) note='Illustrative comparison. '+note;
-      show('taskDecision',note);
+      const usageQualifier = r.example ? 'Actual USD per call is unavailable.' : 'Complete billed amounts are unavailable.';
+      const explanations = {
+        billed: 'The comparison includes every listed attempt and review, including work on rejected tasks.',
+        estimated: 'API equivalents use the supplied rate-card estimates and count steps reported at zero LLM cost as $0. Actual billed savings are unverified.',
+        tokens: usageQualifier+' Token usage is compared for the supplied cohort.'
+      };
+      show('taskDecision',(r.example ? 'Illustrative comparison. ' : '')+explanations[r.metric]);
     }
     show('taskQuality',r.qualityGate?'Every previously accepted task passed the same rubric in this cohort.':'Paired tasks: '+r.matchedTasks+'. The quality check is incomplete or has a regression.');
     $('taskBreakdown').replaceChildren();
@@ -235,7 +242,7 @@
     row('API-equivalent spend',s=>currency(s.estimated));
     for(const [stage,label] of [['execute','Execution'],['retry','Retries'],['review','Independent review']]) {
       row(label,s=>{const part=s.byStage[stage]; const money=r.metric==='estimated'?part.estimate:part.billed;
-        return part.calls+(part.calls===1?' call':' calls')+(money!==null?' · '+currency(money):'');});
+        return counted(part.calls,stepLabel)+(money!==null?' · '+currency(money):'');});
     }
     row('Fresh input tokens',s=>count(s.freshInput));
     row('Cached input tokens',s=>count(s.cachedInput));
