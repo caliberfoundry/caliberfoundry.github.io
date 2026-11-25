@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://caliberfoundry.com/work/docushield.html" />
   <style>
 *{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.55 "Plus Jakarta Sans",Arial,sans-serif}a{color:var(--link);text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid var(--link);outline-offset:3px}header,footer{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px clamp(18px,5vw,70px)}header .brand{font-weight:750;letter-spacing:-.04em;text-decoration:none;color:inherit}header .brand-mark{display:none}.breadcrumb,footer{font-size:13px}.header-inner{display:contents}h1,h2,p{margin:0 0 14px}.title{font:500 clamp(42px,5.5vw,76px)/1.05 Georgia,serif;letter-spacing:-.065em}.lede{font-size:clamp(16px,1.4vw,20px);max-width:50ch}.btn-primary{display:inline-flex;padding:12px 18px;color:var(--inverse);background:var(--link);border-radius:5px;font-weight:700;text-decoration:none}.panel-title{font-size:22px;letter-spacing:-.035em}.spec-list{padding-left:22px;margin:0}.spec-list li{padding:8px 0}.panel{min-width:0}footer{margin-top:28px;border-top:1px solid var(--line)}@media(max-width:700px){.title{font-size:43px}header{padding-block:12px}.panel{padding:16px}}
-body{--ink:#172f4c;--paper:#e8eff6;--link:#174d8b;--inverse:#fff;--line:#aec2d2}header{border-bottom:1px solid var(--line)}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.83fr);column-gap:clamp(30px,7vw,100px);align-content:start;max-width:1200px;margin:clamp(30px,7vw,96px) auto;padding:0 30px}main>.title,main>.lede,main>.btn{grid-column:1}.btn{justify-self:start;align-self:start}.grid-2{grid-column:2;grid-row:1/span 3;margin:0!important;background:white;border:1px solid var(--line);padding:30px;box-shadow:7px 7px 0 #f8fbff}.panel+.panel{border-top:1px solid var(--line);padding-top:15px;margin-top:14px}.panel-title{font-family:Georgia,serif}@media(max-width:700px){main{display:block;margin:26px auto;padding:0 18px}.grid-2{margin:24px 4px 0 0!important;padding:7px}.panel+.panel{margin-top:0}}
+body{--ink:#172f4c;--paper:#e8eff6;--link:#174d8b;--inverse:#fff;--line:#aec2d2;--cf-ink-primary:#172f4c}header{border-bottom:1px solid var(--line)}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.83fr);column-gap:clamp(30px,7vw,100px);align-content:start;max-width:1200px;margin:clamp(30px,7vw,96px) auto;padding:0 30px}main>.title,main>.lede,main>.btn{grid-column:1}.btn{justify-self:start;align-self:start}.grid-2{grid-column:2;grid-row:1/span 3;margin:0!important;background:white;border:1px solid var(--line);padding:30px;box-shadow:7px 7px 0 #f8fbff}.panel+.panel{border-top:1px solid var(--line);padding-top:15px;margin-top:14px}.panel-title{font-family:Georgia,serif}.doc-sample-bar{grid-column:1/-1;margin-top:34px;background:#ffffff;border:1px solid var(--line);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px}.doc-sample-actions{display:flex;flex-wrap:wrap;gap:10px}.btn-sample-dl{display:inline-flex;align-items:center;padding:10px 14px;border-radius:4px;border:1px solid var(--link);background:#f3f8fd;color:var(--link);font-weight:700;font-size:14px;text-decoration:none}.btn-sample-dl:hover{background:#e1eefb}@media(max-width:700px){main{display:block;margin:26px auto;padding:0 18px}.grid-2{margin:24px 4px 0 0!important;padding:14px}.panel+.panel{margin-top:0}.doc-sample-bar{margin-top:20px;padding:16px}.doc-sample-actions a{width:100%;justify-content:center}}
   </style>
 </head>
 <body>
@@ -36,6 +36,16 @@ body{--ink:#172f4c;--paper:#e8eff6;--link:#174d8b;--inverse:#fff;--line:#aec2d2}
         <li><a href="../docushield/?autoProof=3">Open an assessment report</a></li>
       </ol></div>
       <div class="panel"><h2 class="panel-title">What the report covers</h2><p>The report lists the checked structural signals, the source filename, and the number that passed. Review reading order, descriptions and table semantics manually. JSON and XML downloads accompany the printable report.</p><p style="margin-top:12px"><a href="mailto:engineering@caliberfoundry.com?subject=Document%20accessibility%20review">Request an archive review</a></p></div>
+    </section>
+    <section class="doc-sample-bar" aria-labelledby="doc-sample-heading">
+      <div>
+        <h2 class="panel-title" id="doc-sample-heading" style="margin:0 0 4px;">Inspect sample PDF/UA &amp; Matterhorn 1.1 output files</h2>
+        <p style="margin:0;font-size:14.5px;color:#334e6b;">Download a synthetic syllabus accessibility audit PDF and its machine-readable checkpoint manifest before uploading a file.</p>
+      </div>
+      <div class="doc-sample-actions">
+        <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf" download class="btn-sample-dl">Download Sample PDF/UA Audit (PDF) &darr;</a>
+        <a href="../assets/samples/docushield-remediation-manifest-sample.json" download class="btn-sample-dl">Download Remediation Manifest (JSON) &darr;</a>
+      </div>
     </section>
   </main>
 

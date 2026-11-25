@@ -1,0 +1,68 @@
+{
+  "schema": "caliberfoundry.docushield.audit.v1",
+  "generatedBy": "DocuShield PDF/UA & EU EAA Studio (https://caliberfoundry.com/docushield/)",
+  "syntheticSample": true,
+  "sourceDocument": {
+    "filename": "BIO-101_Course_Syllabus_Fall2026.pdf",
+    "pages": 14,
+    "byteLength": 1488912,
+    "sha256": "8f4b2e91c704d3a6b51e92a0f441c8d7723e90a1b6c5d4e3f2a19087654321ef"
+  },
+  "standards": [
+    "ISO 14289-1:2014 (PDF/UA-1)",
+    "Matterhorn Protocol 1.1",
+    "WCAG 2.2 Level AA",
+    "Revised Section 508",
+    "EU Directive 2019/882 (EAA)"
+  ],
+  "summary": {
+    "machineCheckpointsEvaluated": 26,
+    "beforePassCount": 9,
+    "afterDraftPassCount": 25,
+    "manualHumanSignOffRequired": 1
+  },
+  "checkpoints": [
+    {
+      "id": "MP-01-003",
+      "clause": "ISO 14289-1 7.1",
+      "statusBefore": "FAIL",
+      "statusAfter": "PASS",
+      "action": "Set /MarkInfo << /Marked true >> on Catalog object 1 0 R"
+    },
+    {
+      "id": "MP-06-001",
+      "clause": "ISO 14289-1 7.2",
+      "statusBefore": "FAIL",
+      "statusAfter": "PASS",
+      "action": "Set /Lang (en-US) on Catalog and span overrides for Latin binomials"
+    },
+    {
+      "id": "MP-07-001",
+      "clause": "ISO 14289-1 7.1",
+      "statusBefore": "FAIL",
+      "statusAfter": "PASS",
+      "action": "Set /ViewerPreferences << /DisplayDocTitle true >> and dc:title XMP stream"
+    },
+    {
+      "id": "MP-09-004",
+      "clause": "ISO 14289-1 7.4.2",
+      "statusBefore": "FAIL",
+      "statusAfter": "PASS",
+      "action": "Normalized 6 skipped <H4> syllabus section titles to sequential <H2>"
+    },
+    {
+      "id": "MP-15-002",
+      "clause": "ISO 14289-1 7.5",
+      "statusBefore": "FAIL",
+      "statusAfter": "PASS",
+      "action": "Promoted 9 header cells in Grading & Lab Schedule tables to <TH /Scope /Column>"
+    },
+    {
+      "id": "MP-13-004",
+      "clause": "ISO 14289-1 7.3",
+      "statusBefore": "FAIL",
+      "statusAfter": "NEEDS_HUMAN_REVIEW",
+      "action": "Attached candidate /Alt text on Figure 3 (p.8); instructor verification required"
+    }
+  ]
+}

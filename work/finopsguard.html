@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en" data-product-design="finopsguard">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>FinOpsGuard&trade; — Multi-Cloud FOCUS 1.0 &amp; LLM Token Cost Auditor | Caliber Foundry</title>
+  <meta name="description" content="FinOpsGuard™ audits AWS CUR, FinOps FOCUS 1.0 (AWS/GCP/Azure), and OpenAI/Anthropic billing CSVs 100% locally in the browser—separating confirmed invoice facts from Batch API, prompt-cache, and Savings Plan estimates." />
+  <link rel="canonical" href="https://caliberfoundry.com/work/finopsguard.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="FinOpsGuard™ — Multi-Cloud FOCUS 1.0 &amp; Token Cost Remediation Studio" />
+  <meta property="og:description" content="Drop in AWS CUR, FOCUS 1.0, or OpenAI/Anthropic CSVs locally. Separate confirmed spend from 50% Batch API, 90% prompt-cache, and Savings Plan estimates—and export a board-ready A4 PDF plan." />
+  <meta property="og:url" content="https://caliberfoundry.com/work/finopsguard.html" />
+  <meta property="og:image" content="https://caliberfoundry.com/assets/banners/finopsguard_cover_1600x1200.png" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="1200" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CaliberFoundry" />
+  <meta name="twitter:title" content="FinOpsGuard™ — Multi-Cloud FOCUS 1.0 &amp; Token Cost Auditor" />
+  <meta name="twitter:description" content="Browser-local FinOps auditor for AWS CUR, FOCUS 1.0, and OpenAI/Anthropic token CSVs with printable 30/60/90-day remediation plans." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/finopsguard_cover_1600x1200.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "FinOpsGuard™ Cloud & Token Cost Auditor",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser",
+    "url": "https://caliberfoundry.com/finopsguard/",
+    "image": "https://caliberfoundry.com/assets/banners/finopsguard_cover_1600x1200.png",
+    "description": "Zero-upload browser workbench that parses AWS CUR, FinOps FOCUS 1.0 (AWS, GCP, Azure), and OpenAI/Anthropic token usage CSVs locally, separating confirmed invoice spend from modeled Batch API, prompt-cache, and Compute Savings Plan savings.",
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "149.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://caliberfoundry.com/pricing.html#price-finopsguard"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #52514E;
+      --cf-ink-muted:      #65625D;
+      --cf-ink-on-dark:    #F6F4EF;
+
+      --cf-rule-strong:    #D4D1C8;
+      --cf-rule-mid:       #E4E2DD;
+      --cf-rule-subtle:    #EFECE6;
+      --cf-shadow-card:    0 1px 3px rgba(17, 17, 19, 0.05), 0 1px 2px rgba(17, 17, 19, 0.03);
+
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A33418;
+      --cf-accent-tint:    #FBEBE4;
+      --cf-accent-border:  #DFA995;
+
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #F0FDF4;
+      --cf-forest-border:  #B7DFC7;
+
+      --cf-brass-warn:     #92400E;
+      --cf-brass-tint:     #FFFBEB;
+      --cf-brass-border:   #E9C988;
+
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font: 16px/1.58 var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :where(a:any-link, button, summary, [tabindex="0"]):focus-visible {
+      outline: 3px solid var(--cf-accent-primary);
+      outline-offset: 3px;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Header */
+    .site-header {
+      background: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-bottom: 1px solid #2C2B28;
+    }
+
+    .header-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      min-height: 52px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #FFFFFF;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font: 600 12px/1 var(--font-mono);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font: 600 17px/1.2 var(--font-sans);
+      letter-spacing: -0.02em;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-size: 13.5px;
+    }
+
+    .header-nav a {
+      color: #E5E1D8;
+      text-decoration: none;
+      padding: 4px 0;
+    }
+
+    .header-nav a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .header-nav a.header-cta {
+      padding: 6px 12px;
+      background: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-weight: 600;
+      border-radius: 3px;
+    }
+
+    .header-nav a.header-cta:hover {
+      background: var(--cf-accent-hover);
+      text-decoration: none;
+    }
+
+    /* Main Layout */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: clamp(28px, 4vw, 52px) 24px 56px;
+    }
+
+    /* Hero */
+    .hero {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--cf-rule-strong);
+    }
+
+    .eyebrow {
+      display: block;
+      font: 600 12px/1.3 var(--font-mono);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--cf-accent-primary);
+      margin-bottom: 12px;
+    }
+
+    h1.title {
+      margin: 0 0 14px;
+      font: 400 clamp(38px, 5vw, 62px)/1.05 var(--font-display);
+      letter-spacing: -0.02em;
+      max-width: 19ch;
+      color: var(--cf-ink-primary);
+    }
+
+    .lede {
+      margin: 0 0 22px;
+      font: 400 clamp(17px, 1.6vw, 20px)/1.55 var(--font-serif);
+      color: var(--cf-ink-secondary);
+      max-width: 62ch;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 16px;
+      font: 600 14px/1.2 var(--font-sans);
+      text-decoration: none;
+      border-radius: 3px;
+      border: 1px solid var(--cf-ink-primary);
+      background: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      transition: background-color 0.14s ease, border-color 0.14s ease;
+    }
+
+    .btn:hover {
+      background: var(--cf-bg-stone);
+    }
+
+    .btn-primary {
+      background: var(--cf-accent-primary);
+      border-color: var(--cf-ink-primary);
+      color: #FFFFFF;
+      box-shadow: 2px 2px 0 var(--cf-ink-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--cf-accent-hover);
+    }
+
+    .btn-pine {
+      background: var(--cf-forest-pass);
+      border-color: var(--cf-forest-pass);
+      color: #FFFFFF;
+    }
+
+    .btn-pine:hover {
+      background: #14442C;
+    }
+
+    .btn-secondary {
+      border-color: var(--cf-rule-strong);
+      background: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+    }
+
+    /* 4-KPI Executive Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .kpi-card {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+      box-shadow: var(--cf-shadow-card);
+      padding: 15px 16px;
+      min-width: 0;
+    }
+
+    .kpi-card.is-fact { border-top: 3px solid var(--cf-forest-pass); }
+    .kpi-card.is-est  { border-top: 3px solid var(--cf-brass-warn); }
+    .kpi-card.is-run  { border-top: 3px solid var(--cf-accent-primary); }
+
+    .kpi-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .kpi-label {
+      font: 600 12px/1.3 var(--font-sans);
+      color: var(--cf-ink-secondary);
+    }
+
+    .pill {
+      display: inline-block;
+      font: 600 10.5px/1.2 var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 6px;
+      border-radius: 2px;
+      border: 1px solid transparent;
+    }
+
+    .pill-fact {
+      background: var(--cf-forest-tint);
+      color: var(--cf-forest-pass);
+      border-color: var(--cf-forest-border);
+    }
+
+    .pill-est {
+      background: var(--cf-brass-tint);
+      color: var(--cf-brass-warn);
+      border-color: var(--cf-brass-border);
+    }
+
+    .kpi-value {
+      font: 600 clamp(22px, 2.3vw, 28px)/1.15 var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--cf-ink-primary);
+      margin-bottom: 4px;
+    }
+
+    .kpi-sub {
+      font-size: 12.5px;
+      color: var(--cf-ink-muted);
+    }
+
+    /* Section Headings */
+    .section-block {
+      margin-top: 38px;
+      padding-top: 30px;
+      border-top: 1px solid var(--cf-rule-mid);
+    }
+
+    .section-kicker {
+      display: block;
+      font: 600 11.5px/1.3 var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cf-ink-muted);
+      margin-bottom: 6px;
+    }
+
+    h2.section-title {
+      margin: 0 0 8px;
+      font: 400 clamp(28px, 3.2vw, 38px)/1.12 var(--font-display);
+      color: var(--cf-ink-primary);
+    }
+
+    .section-sub {
+      margin: 0 0 20px;
+      font-size: 15.5px;
+      color: var(--cf-ink-secondary);
+      max-width: 66ch;
+    }
+
+    /* 3-Card Value Showcase */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 16px;
+    }
+
+    .value-card {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .value-num {
+      font: 600 11.5px/1.2 var(--font-mono);
+      color: var(--cf-accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .value-card h3 {
+      margin: 0;
+      font: 400 24px/1.18 var(--font-display);
+      color: var(--cf-ink-primary);
+    }
+
+    .value-card p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--cf-ink-secondary);
+    }
+
+    .value-card a.card-link {
+      margin-top: auto;
+      padding-top: 8px;
+      font: 600 13px/1.3 var(--font-mono);
+      color: var(--cf-accent-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Worked Billing Proof Responsive Table (@container) */
+    .table-wrapper {
+      overflow-x: auto;
+      max-inline-size: 100%;
+      container-type: inline-size;
+      border: 1px solid var(--cf-rule-strong);
+      background: var(--cf-bg-surface);
+    }
+
+    table.proof-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 14px;
+      --label-2: "Source CSV Line Items";
+      --label-3: "Confirmed Spend";
+      --label-4: "Modeled Savings";
+      --label-5: "Remediation & Gate";
+    }
+
+    table.proof-table caption {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-strong);
+      font: 600 12.5px/1.4 var(--font-mono);
+      color: var(--cf-ink-primary);
+    }
+
+    table.proof-table thead {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 1;
+    }
+
+    table.proof-table thead th {
+      background: #F2EFE8;
+      color: var(--cf-ink-primary);
+      font: 600 11.5px/1.35 var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 11px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--cf-rule-strong);
+    }
+
+    table.proof-table tbody th,
+    table.proof-table tbody td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    table.proof-table tbody tr:last-child th,
+    table.proof-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.proof-table tbody th {
+      background: var(--cf-bg-surface);
+      font-weight: 600;
+      color: var(--cf-ink-primary);
+      min-width: 195px;
+    }
+
+    .lever-tag {
+      display: block;
+      font: 600 11px/1.3 var(--font-mono);
+      color: var(--cf-accent-primary);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .num-cell {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .save-strong {
+      display: block;
+      font-weight: 700;
+      color: var(--cf-forest-pass);
+    }
+
+    .save-sub {
+      display: block;
+      font-size: 12px;
+      color: var(--cf-ink-muted);
+    }
+
+    @container (width < 720px) {
+      table.proof-table,
+      table.proof-table thead,
+      table.proof-table tbody,
+      table.proof-table tr,
+      table.proof-table th,
+      table.proof-table td {
+        display: block;
+      }
+
+      table.proof-table caption {
+        display: block;
+      }
+
+      table.proof-table thead {
+        display: none;
+      }
+
+      table.proof-table tbody tr {
+        border-bottom: 2px solid var(--cf-rule-strong);
+        padding-bottom: 6px;
+      }
+
+      table.proof-table tbody th {
+        background: #FAF8F3;
+        border-bottom: 1px solid var(--cf-rule-mid);
+        min-width: 0;
+      }
+
+      table.proof-table tbody td {
+        padding: 9px 14px;
+      }
+
+      .num-cell {
+        white-space: normal;
+      }
+
+      table.proof-table tbody td:nth-child(2)::before {
+        content: var(--label-2) ": ";
+        font: 600 11px/1.3 var(--font-mono);
+        color: var(--cf-ink-muted);
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      table.proof-table tbody td:nth-child(3)::before {
+        content: var(--label-3) ": ";
+        font: 600 11px/1.3 var(--font-mono);
+        color: var(--cf-ink-muted);
+      }
+
+      table.proof-table tbody td:nth-child(4)::before {
+        content: var(--label-4) ": ";
+        font: 600 11px/1.3 var(--font-mono);
+        color: var(--cf-ink-muted);
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      table.proof-table tbody td:nth-child(5)::before {
+        content: var(--label-5) ": ";
+        font: 600 11px/1.3 var(--font-mono);
+        color: var(--cf-ink-muted);
+        display: block;
+        margin-bottom: 2px;
+      }
+    }
+
+    /* Sample Deliverable Strip */
+    .sample-pack-bar {
+      margin-top: 16px;
+      padding: 16px 18px;
+      background: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-strong);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+    }
+
+    .sample-pack-copy strong {
+      display: block;
+      font-size: 15px;
+      color: var(--cf-ink-primary);
+    }
+
+    .sample-pack-copy span {
+      font-size: 13.5px;
+      color: var(--cf-ink-secondary);
+    }
+
+    .sample-pack-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Commercial Licensing & Async Sprint Strip */
+    .commerce-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .commerce-card {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .commerce-card.is-sprint {
+      background: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-color: var(--cf-bg-ink-panel);
+    }
+
+    .commerce-price {
+      font: 600 28px/1.1 var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .commerce-price small {
+      font: 400 13px/1.2 var(--font-sans);
+      color: var(--cf-ink-muted);
+    }
+
+    .commerce-card.is-sprint .commerce-price small,
+    .commerce-card.is-sprint p,
+    .commerce-card.is-sprint li {
+      color: #D8D4C9;
+    }
+
+    .commerce-card h3 {
+      margin: 0;
+      font: 400 25px/1.15 var(--font-display);
+    }
+
+    .commerce-card p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--cf-ink-secondary);
+    }
+
+    .commerce-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: var(--cf-ink-secondary);
+      display: grid;
+      gap: 5px;
+    }
+
+    .commerce-actions {
+      margin-top: auto;
+      padding-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Progressive Disclosure Accordions (<details>) */
+    .drilldown-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    details.drilldown {
+      border: 1px solid var(--cf-rule-strong);
+      background: var(--cf-bg-surface);
+    }
+
+    details.drilldown > summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font: 600 15px/1.4 var(--font-sans);
+      color: var(--cf-ink-primary);
+    }
+
+    details.drilldown > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.drilldown > summary::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      flex-shrink: 0;
+      border-right: 2px solid var(--cf-accent-primary);
+      border-bottom: 2px solid var(--cf-accent-primary);
+      transform: rotate(-45deg);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      details.drilldown > summary::before {
+        transition: transform 0.18s ease;
+      }
+    }
+
+    details.drilldown[open] > summary::before {
+      transform: rotate(45deg);
+    }
+
+    details.drilldown[open] > summary {
+      background: var(--cf-bg-stone);
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    .drill-tag {
+      font: 600 11px/1.2 var(--font-mono);
+      color: var(--cf-accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: 4px;
+    }
+
+    .drill-body {
+      padding: 16px 18px;
+      font-size: 14.5px;
+      color: var(--cf-ink-secondary);
+      display: grid;
+      gap: 10px;
+    }
+
+    .drill-body p { margin: 0; }
+    .drill-body code {
+      font: 500 12.5px/1.3 var(--font-mono);
+      background: var(--cf-bg-stone);
+      padding: 1px 5px;
+      color: var(--cf-ink-primary);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--cf-rule-mid);
+      padding: 22px 24px;
+      font: 400 12.5px/1.5 var(--font-mono);
+      color: var(--cf-ink-muted);
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    .footer-links a {
+      color: var(--cf-ink-primary);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .container { padding: 22px 16px 40px; }
+      .header-inner { padding: 10px 16px; }
+      .cta-row .btn, .sample-pack-actions .btn, .commerce-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../finopsguard/" class="brand">
+        <span class="brand-mark" aria-hidden="true">FG</span>
+        <span class="brand-name">FinOpsGuard</span>
+      </a>
+      <nav class="header-nav" aria-label="Product navigation">
+        <a href="../#work">&larr; All products</a>
+        <a href="#worked-proof">Worked sample</a>
+        <a href="../pricing.html#price-finopsguard">Pricing</a>
+        <a href="../finopsguard/" class="header-cta">Open Workbench &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-labelledby="hero-heading">
+      <span class="eyebrow">Multi-Cloud FOCUS 1.0 &amp; LLM Token Cost Remediation</span>
+      <h1 class="title" id="hero-heading">Audit cloud and token billing CSVs without uploading credentials.</h1>
+      <p class="lede">Drop in an AWS Cost &amp; Usage Report, FinOps FOCUS 1.0 export, or OpenAI and Anthropic token invoice CSV. FinOpsGuard runs 100% locally in browser memory, separating confirmed invoice facts from Batch API, prompt-cache, and Savings Plan estimates.</p>
+      <div class="cta-row">
+        <a href="../finopsguard/" class="btn btn-primary">Open FinOpsGuard Workbench &rarr;</a>
+        <a href="../assets/samples/finopsguard-focus10-audit-sample.pdf" download class="btn btn-pine">Download Sample A4 PDF Plan &darr;</a>
+        <a href="https://contra.com/products/7sKkgk7O-fin-ops-guard-cloud-and-llm-billing-audit-pack" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Buy $149 Pack on Contra (0% fee) &nearr;</a>
+      </div>
+
+      <div class="kpi-grid" aria-label="Worked benchmark summary">
+        <article class="kpi-card is-fact">
+          <div class="kpi-head">
+            <span class="kpi-label">Confirmed CSV Spend</span>
+            <span class="pill pill-fact">CSV Fact</span>
+          </div>
+          <div class="kpi-value">$18,440.00/mo</div>
+          <div class="kpi-sub">19 verified rows (AWS CUR + FOCUS 1.0 + Token API)</div>
+        </article>
+        <article class="kpi-card is-fact">
+          <div class="kpi-head">
+            <span class="kpi-label">Addressable Waste Base</span>
+            <span class="pill pill-fact">CSV Fact</span>
+          </div>
+          <div class="kpi-value">$14,892.50/mo</div>
+          <div class="kpi-sub">80.8% of monthly bill eligible for remediation</div>
+        </article>
+        <article class="kpi-card is-est">
+          <div class="kpi-head">
+            <span class="kpi-label">Modeled Monthly Savings</span>
+            <span class="pill pill-est">Base Estimate</span>
+          </div>
+          <div class="kpi-value">$5,246.50/mo</div>
+          <div class="kpi-sub">28.5% reduction under Base assumption preset</div>
+        </article>
+        <article class="kpi-card is-run">
+          <div class="kpi-head">
+            <span class="kpi-label">Annualized Run-Rate</span>
+            <span class="pill pill-est">12x Modeled</span>
+          </div>
+          <div class="kpi-value">$62,958.00/yr</div>
+          <div class="kpi-sub">Zero IAM keys, zero server uploads, SHA-256 verified</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="pillars-heading">
+      <span class="section-kicker">Core Capabilities</span>
+      <h2 class="section-title" id="pillars-heading">Three deterministic FinOps workflows in one local sheet</h2>
+      <p class="section-sub">Every calculation distinguishes hard invoice arithmetic from assumption-driven engineering estimates so finance and infrastructure leads can sign off on the same numbers.</p>
+
+      <div class="value-grid">
+        <article class="value-card">
+          <span class="value-num">Option 1 &middot; Multi-Cloud Ingestion</span>
+          <h3>FOCUS 1.0 AWS/GCP/Azure CSV Ingestion</h3>
+          <p>Parses native AWS CUR (<code>lineItem/UnblendedCost</code>), FinOps FOCUS 1.0 (<code>BilledCost</code> vs. <code>EffectiveCost</code>, unused commitments), and GCP/Azure billing exports entirely in local browser memory.</p>
+          <a href="../finopsguard/" class="card-link">Inspect FOCUS 1.0 sample in workbench &rarr;</a>
+        </article>
+
+        <article class="value-card">
+          <span class="value-num">Option 2 &middot; Token Cost Levers</span>
+          <h3>Anthropic/OpenAI Batch &amp; Prompt-Cache Savings Calculator</h3>
+          <p>Identifies synchronous non-interactive API queues eligible for the 50% asynchronous Batch API discount and high-volume uncached system prompts eligible for up to 90% prompt-cache read discounts.</p>
+          <a href="../finopsguard/" class="card-link">Model token cache &amp; Batch sliders &rarr;</a>
+        </article>
+
+        <article class="value-card">
+          <span class="value-num">Option 3 &middot; Executive Sign-Off</span>
+          <h3>Board-Ready A4 FinOps Remediation Dossier</h3>
+          <p>Compiles a printable A4 30/60/90-day engineering plan with explicit assumption disclosures, pre-implementation verification checks, and an auditable FNV-1a / SHA-256 source checksum.</p>
+          <a href="../assets/samples/finopsguard-focus10-audit-sample.pdf" download class="card-link">Download sample A4 PDF dossier &darr;</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" id="worked-proof" aria-labelledby="worked-proof-heading">
+      <span class="section-kicker">Worked Multi-Cloud + Token Billing Proof</span>
+      <h2 class="section-title" id="worked-proof-heading">Three line-item findings from a synthetic $18,440/mo run</h2>
+      <p class="section-sub">Inspect how FinOpsGuard maps raw billing CSV rows to concrete engineering actions, separating confirmed monthly spend from modeled monthly and annual savings.</p>
+
+      <div tabindex="0" role="region" aria-labelledby="finops-worked-caption" class="table-wrapper">
+        <table class="proof-table">
+          <caption id="finops-worked-caption">Synthetic Multi-Cloud + Token API Audit Excerpt (Checksum #F0C510A9E4 &middot; Base Preset)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Optimization Lever</th>
+              <th scope="col">Source CSV Line Items</th>
+              <th scope="col">Confirmed Spend</th>
+              <th scope="col">Modeled Savings</th>
+              <th scope="col">Remediation &amp; Engineering Gate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <span class="lever-tag">Finding 01 &middot; AWS Infrastructure</span>
+                Unattached EBS gp2/gp3 &amp; NAT Gateway Hairpins
+              </th>
+              <td><code>vol-0dead8821-unattached</code> ($312.50), <code>snap-0old2024archive</code> ($240.00), <code>USE1-NatGateway-Bytes</code> 18,500 GB ($832.50)</td>
+              <td class="num-cell">$1,385.00/mo</td>
+              <td class="num-cell">
+                <span class="save-strong">-$1,145.00/mo</span>
+                <span class="save-sub">-$13,740.00/yr</span>
+              </td>
+              <td>Provision free S3 Gateway VPC Endpoint to eliminate regional NAT data-processing hairpins; snapshot and delete EBS volumes detached &ge;14 days.</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="lever-tag">Finding 02 &middot; Batch API (50% Off)</span>
+                Synchronous Token Calls on Non-Interactive Queues
+              </th>
+              <td><code>proj_doc_extract</code> (<code>gpt-4o</code>, <code>batch=false</code>) + <code>proj_legal_review</code> (<code>claude-3-7-sonnet</code>, <code>batch=false</code>) + nightly evals</td>
+              <td class="num-cell">$3,900.00/mo</td>
+              <td class="num-cell">
+                <span class="save-strong">-$1,950.00/mo</span>
+                <span class="save-sub">-$23,400.00/yr</span>
+              </td>
+              <td>Route offline document extraction and nightly regression suites to OpenAI / Anthropic 24-hour Batch APIs for a flat 50% per-token discount after confirming queue SLA &le;24h.</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="lever-tag">Finding 03 &middot; Prompt Cache (90% Off)</span>
+                Repeated System-Prompt Prefix Without Cache Breakpoints
+              </th>
+              <td><code>proj_support_rag</code> (420M input tokens across 185,000 requests; only 21M tokens / 5.0% cached)</td>
+              <td class="num-cell">$2,860.00/mo</td>
+              <td class="num-cell">
+                <span class="save-strong">-$1,184.00/mo</span>
+                <span class="save-sub">-$14,208.00/yr</span>
+              </td>
+              <td>Pin static 6,400-token policy and JSON-schema prefix ahead of dynamic context with <code>cache_control</code> breakpoints (90% Anthropic / 50% OpenAI cached-read discount).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sample-pack-bar">
+        <div class="sample-pack-copy">
+          <strong>Inspect the exact sample deliverables before opening the workbench</strong>
+          <span>Standards-valid A4 PDF audit dossier and UTF-8 30/60/90-day remediation CSV generated from the synthetic dataset above.</span>
+        </div>
+        <div class="sample-pack-actions">
+          <a href="../assets/samples/finopsguard-focus10-audit-sample.pdf" download class="btn btn-pine">Sample Audit PDF (7 KB) &darr;</a>
+          <a href="../assets/samples/finopsguard-remediation-plan-sample.csv" download class="btn btn-secondary">Sample Remediation CSV &darr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="licensing" aria-labelledby="licensing-heading">
+      <span class="section-kicker">Self-Serve License &amp; Turnkey Engineering</span>
+      <h2 class="section-title" id="licensing-heading">Start in the browser or commission a 5-day cost audit sprint</h2>
+      <p class="section-sub">Purchase the standalone audit pack immediately or send an asynchronous brief for a deeper multi-account infrastructure and token-pipeline engagement.</p>
+
+      <div class="commerce-grid">
+        <article class="commerce-card">
+          <span class="value-num">Self-Serve Software Pack</span>
+          <h3>FinOpsGuard Pro Audit Pack</h3>
+          <div class="commerce-price">$149 <small>one-time license</small></div>
+          <p>Unlimited local browser audits across AWS CUR, FinOps FOCUS 1.0, and OpenAI/Anthropic billing CSVs with unredacted A4 PDF and CSV remediation exports.</p>
+          <ul class="commerce-list">
+            <li>Conservative, Base, and Aggressive slider presets</li>
+            <li>Delta comparison across before/after billing months</li>
+            <li>30-day money-back guarantee &amp; instant key delivery</li>
+          </ul>
+          <div class="commerce-actions">
+            <a href="https://caliberfoundry.gumroad.com/l/finopsguard-pro" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Buy on Gumroad ($149) &nearr;</a>
+            <a href="https://contra.com/products/7sKkgk7O-fin-ops-guard-cloud-and-llm-billing-audit-pack" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Contra ($149 &middot; 0% fee) &nearr;</a>
+          </div>
+        </article>
+
+        <article class="commerce-card is-sprint">
+          <span class="value-num" style="color:#FF9E80;">100% Asynchronous Engineering Sprint</span>
+          <h3>Cloud &amp; Token Cost Audit Sprint</h3>
+          <div class="commerce-price">$3,500 <small>fixed-scope 5-day delivery</small></div>
+          <p>Hands-on engineering audit of your AWS/GCP/Azure CUR exports, Terraform networking, and production OpenAI/Anthropic prompt &amp; batch pipelines—delivered asynchronously via written dossier and PRs with zero meeting overhead.</p>
+          <ul class="commerce-list">
+            <li>VPC Endpoint, EBS/snapshot, and Savings Plan sizing PRs</li>
+            <li>Drop-in Batch API queue &amp; prompt-cache prefix patches</li>
+            <li>100% async delivery via email, Slack, or GitHub PRs</li>
+          </ul>
+          <div class="commerce-actions">
+            <a data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Turnkey%20%243%2C500%20Cloud%20%26%20Token%20Cost%20Audit%20Sprint%20Inquiry" class="btn btn-primary">Email Async Sprint Brief ($3,500) &nearr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="drilldowns-heading">
+      <span class="section-kicker">Architecture &amp; Methodology</span>
+      <h2 class="section-title" id="drilldowns-heading">Technical drill-downs</h2>
+
+      <div class="drilldown-list">
+        <details class="drilldown">
+          <summary><span class="drill-tag">Technical Drill-Down 01</span>Supported CSV Schemas &amp; Zero-Upload Browser Isolation</summary>
+          <div class="drill-body">
+            <p>FinOpsGuard ingests files through the local HTML5 <code>FileReader</code> API with strict <code>Content-Security-Policy</code> enforcement. Billing line items, account IDs, and internal resource ARNs never leave the analyst&rsquo;s workstation.</p>
+            <p>Out of the box, the schema detector maps AWS Cost &amp; Usage Report columns (<code>lineItem/ProductCode</code>, <code>lineItem/UsageType</code>, <code>lineItem/UnblendedCost</code>, <code>pricing/term</code>), FinOps Foundation FOCUS 1.0 columns (<code>ProviderName</code>, <code>ServiceName</code>, <code>ChargeCategory</code>, <code>CommitmentDiscountStatus</code>, <code>BilledCost</code>, <code>EffectiveCost</code>), and OpenAI / Anthropic usage exports (<code>input_tokens</code>, <code>input_cached_tokens</code>, <code>output_tokens</code>, <code>batch</code>, <code>cost_usd</code>).</p>
+          </div>
+        </details>
+
+        <details class="drilldown">
+          <summary><span class="drill-tag">Technical Drill-Down 02</span>Fact-vs-Estimate Separation &amp; Explicit Formula Disclosures</summary>
+          <div class="drill-body">
+            <p>Traditional FinOps dashboards blend historical invoice totals with speculative vendor savings, eroding credibility with CFOs and staff engineers. FinOpsGuard enforces a hard two-column separation:</p>
+            <p><strong>Confirmed CSV Facts</strong> represent exact floating-point cent-rounded sums of imported rows. <strong>Modeled Savings Estimates</strong> apply transparent user-editable coefficients (e.g., 24% 1-year No-Upfront Compute Savings Plan net discount on steady-state On-Demand instances, 50% Batch API discount on eligible non-interactive token workloads, and cached-token read delta) paired with a mandatory pre-implementation engineering check.</p>
+          </div>
+        </details>
+
+        <details class="drilldown">
+          <summary><span class="drill-tag">Technical Drill-Down 03</span>100% Asynchronous $3,500 Sprint Workflow (Zero Live Calls)</summary>
+          <div class="drill-body">
+            <p>All Caliber Foundry engagements operate 100% asynchronously via <code>engineering@caliberfoundry.com</code>, Slack, or GitHub Issues. Share a sanitized CUR / FOCUS 1.0 / token usage CSV export and repository context; within 24 hours we return a preliminary waste breakdown before formal sprint kickoff, followed by merged Terraform / application PRs and a board-ready A4 verification dossier within 5 business days.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner" data-product-feedback>
+      <span>&copy; 2026 Caliber Foundry &middot; 100% Asynchronous Engineering Delivery</span>
+      <div class="footer-links">
+        <a href="../">Home</a>
+        <a href="../finopsguard/">FinOpsGuard Workbench</a>
+        <a href="../pricing.html#price-finopsguard">Pricing ($149)</a>
+        <a href="../assets/samples/finopsguard-focus10-audit-sample.pdf" download>Sample PDF</a>
+        <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

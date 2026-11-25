@@ -35,7 +35,9 @@
 - [ContentForge™ Multi-Format Content, Evaluation Harness & n8n Pipeline Studio](https://caliberfoundry.com/content-studio/): 5-stage citation-locked content synthesis, 0.0% hallucination evaluation harness, and signed n8n/Make.com webhook orchestration studio.
 - [ContentForge™ Technical Specifications](https://caliberfoundry.com/work/content-studio.html): Ground-truth evaluation matrix and multi-channel asset compilation specs.
 - [DealShield™ Zero-Library Security Questionnaire (DDQ / CAIQ / HECVAT) & VPAT 2.5 Auto-Responder](https://caliberfoundry.com/dealshield/): Zero-library B2B security questionnaire (CSA CAIQ v4.0.3, EDUCAUSE HECVAT v3.04, SIG-Lite 2026) and ITI VPAT 2.5 International (Section 508 + EU EN 301 549 + WCAG 2.2 AA) citation-locked auto-responder ($199 Pay-Per-Deal).
-- [DealShield™ Technical Specifications](https://caliberfoundry.com/work/dealshield.html): Zero-library procurement clearance architecture and citation-locked CSV/Excel exporter.
+- [DealShield™ Technical Specifications](https://caliberfoundry.com/work/dealshield.html): Zero-library procurement clearance architecture, worked CAIQ/HECVAT/VPAT proof rows, and sample VPAT 2.5 ACR PDF & CSV exports.
+- [FinOpsGuard™ Multi-Cloud FOCUS 1.0 & LLM Token Cost Auditor](https://caliberfoundry.com/finopsguard/): Zero-upload client-side billing CSV auditor for AWS CUR, FinOps FOCUS 1.0 (AWS/GCP/Azure), and OpenAI/Anthropic token usage—separating confirmed invoice facts from 50% Batch API, 90% prompt-cache, and Savings Plan estimates ($149 Audit Pack / $3,500 Turnkey Sprint).
+- [FinOpsGuard™ Product Overview, Worked Savings Proof & Sample A4 PDF](https://caliberfoundry.com/work/finopsguard.html): Worked multi-cloud + LLM remediation breakdown and 1-click sample FOCUS 1.0 PDF and CSV deliverables.
 
 ## Engineering & Regulatory Insights (`/insights/`)
 

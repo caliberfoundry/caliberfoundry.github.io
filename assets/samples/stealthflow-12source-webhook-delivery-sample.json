@@ -1,0 +1,70 @@
+{
+  "schema": "caliberfoundry.stealthflow.webhook.v1",
+  "deliveryId": "wh_sf_20261125_0194a8c2",
+  "idempotencyKey": "sf-batch-shopify-plus-2026-11-25-v1",
+  "hmacSha256Header": "sha256=6f94e2c18a3b70d541e29c8b4f6023a1d9e8c7b6a5f43210fedcba9876543210",
+  "generatedBy": "StealthFlow Multi-Source Data Hub (https://caliberfoundry.com/stealthflow/)",
+  "syntheticSample": true,
+  "pipelineTelemetry": {
+    "interceptionLayer": "network_xhr_json",
+    "sourcesQueried": 12,
+    "rawRecordsCaptured": 54,
+    "deduplicatedValidRecords": 50,
+    "quarantinedInvalidRecords": 4,
+    "segmentFilterApplied": "src_02_shopify_plus"
+  },
+  "records": [
+    {
+      "lead_id": "SF-1001",
+      "source_id": "src_02_shopify_plus",
+      "company_name": "Kestrel Outdoor Gear Co.",
+      "canonical_domain": "kestrelgear.example.com",
+      "commerce_stack": "Shopify Plus",
+      "sku_count_verified": 1420,
+      "hq_region": "US-CO",
+      "schema_validation": "PASS",
+      "normalized_fields": {
+        "raw_revenue_band": "$25M - $50M est.",
+        "min_arr_usd": 25000000,
+        "max_arr_usd": 50000000
+      }
+    },
+    {
+      "lead_id": "SF-1004",
+      "source_id": "src_02_shopify_plus",
+      "company_name": "Meridian Labware Supply",
+      "canonical_domain": "meridianlabware.example.com",
+      "commerce_stack": "Shopify Plus",
+      "sku_count_verified": 3890,
+      "hq_region": "US-MA",
+      "schema_validation": "PASS",
+      "normalized_fields": {
+        "raw_revenue_band": "$50M - $100M est.",
+        "min_arr_usd": 50000000,
+        "max_arr_usd": 100000000
+      }
+    },
+    {
+      "lead_id": "SF-1009",
+      "source_id": "src_02_shopify_plus",
+      "company_name": "Alder & Pine Home Goods",
+      "canonical_domain": "alderpinehome.example.com",
+      "commerce_stack": "Shopify Plus",
+      "sku_count_verified": 940,
+      "hq_region": "US-WA",
+      "schema_validation": "PASS",
+      "normalized_fields": {
+        "raw_revenue_band": "$10M - $25M est.",
+        "min_arr_usd": 10000000,
+        "max_arr_usd": 25000000
+      }
+    }
+  ],
+  "quarantineSample": [
+    {
+      "raw_id": "RAW-0049",
+      "reason": "MISSING_CANONICAL_DOMAIN",
+      "action": "routed_to_dead_letter_queue"
+    }
+  ]
+}

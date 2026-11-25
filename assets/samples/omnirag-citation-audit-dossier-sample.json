@@ -1,0 +1,69 @@
+{
+  "schema": "caliberfoundry.omnirag.dossier.v1",
+  "generatedBy": "OmniRAG Multi-Document Citation Verifier (https://caliberfoundry.com/omnirag/)",
+  "syntheticSample": true,
+  "corpus": [
+    {
+      "docId": "DOC-01",
+      "filename": "Board_Audit_Report.pdf",
+      "sha256": "4a19c08e2d7f6315b8c9a01234ef56789abc0123def4567890abcdef12345678"
+    },
+    {
+      "docId": "DOC-02",
+      "filename": "Q3_Financial_Schedule.csv",
+      "sha256": "9c81f240b3e5d7a1062849c7e2f1a3b5d7c9e0f21436587a9bcdef0123456789"
+    },
+    {
+      "docId": "DOC-03",
+      "filename": "Vendor_SLA_Addendum.pdf",
+      "sha256": "7e23d41a8b90c1f2e3d4c5b6a7980123456789abcdef0123456789abcdef0123"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q-01",
+      "query": "What is the minimum trailing net-profit covenant in the board audit report?",
+      "result": "verified",
+      "answer": "Consolidated trailing 12-month Net Profit must remain at least $3.50M, tested at the close of each fiscal quarter.",
+      "evidence": [
+        {
+          "docId": "DOC-01",
+          "locator": "Page 4, Section 3.2",
+          "charSpan": [
+            1412,
+            1538
+          ],
+          "quote": "Borrower shall maintain trailing twelve-month consolidated Net Profit of no less than $3.50M tested quarterly.",
+          "numericLocks": [
+            "$3.50M"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q-02",
+      "query": "Does the Q3 financial schedule match the Vendor SLA Addendum hosting commitment?",
+      "result": "discrepancy_detected",
+      "comparison": {
+        "status": "different_numbers",
+        "left": {
+          "docId": "DOC-02",
+          "locator": "Row 7, Cell D7",
+          "valueUsd": 412000
+        },
+        "right": {
+          "docId": "DOC-03",
+          "locator": "Page 2, Clause 4.1",
+          "valueUsd": 485000
+        },
+        "deltaUsd": 73000
+      }
+    },
+    {
+      "id": "Q-03",
+      "query": "What is the post-closing executive earnout acceleration cap?",
+      "result": "no_answer",
+      "evidence": []
+    }
+  ]
+}

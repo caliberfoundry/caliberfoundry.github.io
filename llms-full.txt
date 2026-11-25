@@ -57,6 +57,17 @@
   - **Zero-PII Ephemeral Session Vault**: Strips personally identifiable student/patient telemetry and enforces TTL session expiration for FERPA/HIPAA-conscious environments.
   - **One-Click SCORM 1.2 Archive Compiler**: Generates standards-compliant `imsmanifest.xml` and JavaScript SCORM Runtime API wrappers (`LMSInitialize`, `LMSSetValue('cmi.core.score.raw')`, `LMSCommit`, `LMSFinish`) compatible with Canvas, Moodle, Blackboard, Cornerstone, and Docebo.
 
+### Pillar V: Multi-Cloud FOCUS 1.0 & LLM Token Cost Auditing (`FinOpsGuard™`)
+- **Live Application**: https://caliberfoundry.com/finopsguard/
+- **Technical Case Study & Worked Sample**: https://caliberfoundry.com/work/finopsguard.html
+- **Sample A4 PDF Dossier**: https://caliberfoundry.com/assets/samples/finopsguard-focus10-audit-sample.pdf
+- **Sample Remediation CSV**: https://caliberfoundry.com/assets/samples/finopsguard-remediation-plan-sample.csv
+- **Problem Solved**: Cloud and infrastructure teams hesitate to connect IAM roles to third-party SaaS FinOps vendors, while vendor dashboards conflate confirmed invoice spend with speculative savings.
+- **Technical Architecture**:
+  - **100% Browser-Local CSV Ingestion**: Parses AWS CUR (`lineItem/UnblendedCost`), FinOps Foundation FOCUS 1.0 (`BilledCost`, `EffectiveCost`, `CommitmentDiscountStatus`), and OpenAI / Anthropic token billing CSVs in local memory with zero server uploads.
+  - **Hard Fact-vs-Estimate Separation**: Distinguishes exact confirmed CSV invoice spend from modeled 50% Batch API, 90% prompt-cache read, S3 Gateway VPC Endpoint, detached EBS, and 1-year Compute Savings Plan estimates.
+  - **Board-Ready A4 PDF & CSV Export**: Produces a 30/60/90-day remediation plan with explicit assumption disclosures, verification gates, and source checksums ($149 standalone license on Gumroad & 0%-fee Contra, or $3,500 5-day 100% async Cloud & Token Cost Audit Sprint).
+
 ---
 
 ## 3. Flagship Commercial Product: CodeDrill™ CBT Simulator

@@ -1,0 +1,181 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R /F3 6 0 R >> >> /Contents 7 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+7 0 obj
+<< /Length 5561 >>
+stream
+0.965 0.957 0.937 rg
+0 0 595 842 re f
+0.078 0.078 0.075 rg
+0 774 595 68 re f
+0.784 0.263 0.122 rg
+0 771 595 3 re f
+0.965 0.957 0.937 rg
+BT /F2 11 Tf 42 814 Td (DEALSHIELD\(TM\) STUDIO  |  ITI VPAT\(R\) 2.5 INTERNATIONAL ACR SAMPLE) Tj ET
+0.780 0.765 0.730 rg
+BT /F3 8.5 Tf 42 796 Td (DS-VPAT25-2026-SAMPLE  |  Caliber Foundry \(caliberfoundry.com\)  |  Synthetic Sample Deliverable) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 17 Tf 42 742 Td (Accessibility Conformance Report \(VPAT 2.5 Rev. WCAG 2.2 AA\)) Tj ET
+0.322 0.318 0.306 rg
+BT /F1 9.5 Tf 42 725 Td (Citation-locked procurement conformance report covering Revised Section 508, WCAG 2.2 Level) Tj ET
+BT /F1 9.5 Tf 42 712 Td (A/AA, and European Accessibility Act EN 301 549.) Tj ET
+1 1 1 rg
+42.0 645.0 121.8 48 re f
+0.831 0.820 0.784 RG 0.75 w
+42.0 645.0 121.8 48 re S
+0.102 0.337 0.220 rg
+42.0 690.5 121.8 2.5 re f
+0.396 0.384 0.365 rg
+BT /F2 7.2 Tf 49.0 679.0 Td (STANDARD VERSION) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 11.5 Tf 49.0 664.0 Td (VPAT 2.5 Intl) Tj ET
+0.396 0.384 0.365 rg
+BT /F1 7.2 Tf 49.0 652.0 Td (WCAG 2.2 + Sec. 508) Tj ET
+1 1 1 rg
+171.8 645.0 121.8 48 re f
+0.831 0.820 0.784 RG 0.75 w
+171.8 645.0 121.8 48 re S
+0.102 0.337 0.220 rg
+171.8 690.5 121.8 2.5 re f
+0.396 0.384 0.365 rg
+BT /F2 7.2 Tf 178.8 679.0 Td (EVALUATED CRITERIA) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 11.5 Tf 178.8 664.0 Td (50 Criteria) Tj ET
+0.396 0.384 0.365 rg
+BT /F1 7.2 Tf 178.8 652.0 Td (Level A & Level AA) Tj ET
+1 1 1 rg
+301.5 645.0 121.8 48 re f
+0.831 0.820 0.784 RG 0.75 w
+301.5 645.0 121.8 48 re S
+0.102 0.337 0.220 rg
+301.5 690.5 121.8 2.5 re f
+0.396 0.384 0.365 rg
+BT /F2 7.2 Tf 308.5 679.0 Td (SUPPORTS) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 11.5 Tf 308.5 664.0 Td (47 / 50 \(94%\)) Tj ET
+0.396 0.384 0.365 rg
+BT /F1 7.2 Tf 308.5 652.0 Td (Automated + Keyboard QA) Tj ET
+1 1 1 rg
+431.3 645.0 121.8 48 re f
+0.831 0.820 0.784 RG 0.75 w
+431.3 645.0 121.8 48 re S
+0.706 0.325 0.035 rg
+431.3 690.5 121.8 2.5 re f
+0.396 0.384 0.365 rg
+BT /F2 7.2 Tf 438.3 679.0 Td (HONEST EXCEPTIONS) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 11.5 Tf 438.3 664.0 Td (3 Documented) Tj ET
+0.396 0.384 0.365 rg
+BT /F1 7.2 Tf 438.3 652.0 Td (Partially Supports w/ ETA) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 11 Tf 42 627 Td (1. Representative WCAG 2.2 AA & Section 508 Conformance Table) Tj ET
+0.784 0.263 0.122 RG 1 w
+42 622 m 553 622 l S
+1 1 1 rg
+42 571 511 46 re f
+0.894 0.886 0.867 RG 0.6 w
+42 571 511 46 re S
+0.102 0.337 0.220 rg
+BT /F3 8 Tf 50 606 Td (1.4.3 | LEVEL AA) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 9.2 Tf 162 606 Td (Contrast \(Minimum\) - Supports) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 8.5 Tf 445.1 606 Td (Verified \(>= 7.4:1\)) Tj ET
+0.322 0.318 0.306 rg
+BT /F1 8.4 Tf 50 593 Td (Primary carbon ink \(#141413\) on archival paper \(#F6F4EF\) achieves 15.8:1 contrast; muted) Tj ET
+BT /F1 8.4 Tf 50 582 Td (metadata \(#65625D\) maintains >= 5.1:1 across all views.) Tj ET
+1 1 1 rg
+42 526 511 46 re f
+0.894 0.886 0.867 RG 0.6 w
+42 526 511 46 re S
+0.102 0.337 0.220 rg
+BT /F3 8 Tf 50 561 Td (2.1.1 | LEVEL A) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 9.2 Tf 162 561 Td (Keyboard Operation & No Trap - Supports) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 8.5 Tf 434.9 561 Td (Verified \(Playwright\)) Tj ET
+0.322 0.318 0.306 rg
+BT /F1 8.4 Tf 50 548 Td (All questionnaire filters, citation drawers \(<details>\), and native <dialog> modals operate) Tj ET
+BT /F1 8.4 Tf 50 537 Td (via Tab, Enter, Space, and Escape with focus restoration.) Tj ET
+1 1 1 rg
+42 481 511 46 re f
+0.894 0.886 0.867 RG 0.6 w
+42 481 511 46 re S
+0.102 0.337 0.220 rg
+BT /F3 8 Tf 50 516 Td (2.4.7 / 2.5.8 | AA) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 9.2 Tf 162 516 Td (Focus Visible & Target Size \(Minimum\) - Supports) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 8.5 Tf 434.9 516 Td (Verified \(>= 24x24px\)) Tj ET
+0.322 0.318 0.306 rg
+BT /F1 8.4 Tf 50 503 Td (Explicit 3px :focus-visible outline with 3px offset on all links, summary triggers, and) Tj ET
+BT /F1 8.4 Tf 50 492 Td (toolbar buttons; coarse-pointer targets >= 42px.) Tj ET
+1 1 1 rg
+42 436 511 46 re f
+0.894 0.886 0.867 RG 0.6 w
+42 436 511 46 re S
+0.102 0.337 0.220 rg
+0.706 0.325 0.035 rg
+BT /F3 8 Tf 50 471 Td (1.2.5 | LEVEL AA) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 9.2 Tf 162 471 Td (Audio Description \(Prerecorded\) - Partially Supports) Tj ET
+0.078 0.078 0.075 rg
+BT /F3 8.5 Tf 460.6 471 Td (Exception Logged) Tj ET
+0.322 0.318 0.306 rg
+BT /F1 8.4 Tf 50 458 Td (Synchronized WebVTT captions and full text transcripts accompany all 30s walkthrough videos;) Tj ET
+BT /F1 8.4 Tf 50 447 Td (separate secondary audio-description track scheduled for Q1.) Tj ET
+0.078 0.078 0.075 rg
+BT /F2 11 Tf 42 424 Td (2. Procurement Honesty & Evidence-Lock Methodology) Tj ET
+0.784 0.263 0.122 RG 1 w
+42 419 m 553 419 l S
+0.200 0.196 0.188 rg
+BT /F1 8.6 Tf 46 406 Td (* Every conformance claim references a concrete automated test suite or manual) Tj ET
+0.200 0.196 0.188 rg
+BT /F1 8.6 Tf 46 394.5 Td (  assistive-technology check rather than blanket "100% compliant" marketing boilerplate.) Tj ET
+0.200 0.196 0.188 rg
+BT /F1 8.6 Tf 46 383 Td (* Generated locally via DealShield Studio \(https://caliberfoundry.com/dealshield/\) with zero) Tj ET
+0.200 0.196 0.188 rg
+BT /F1 8.6 Tf 46 371.5 Td (  external data transmission.) Tj ET
+0.831 0.820 0.784 RG 0.75 w
+42 42 m 553 42 l S
+0.396 0.384 0.365 rg
+BT /F3 7.8 Tf 42 29 Td (Caliber Foundry  |  https://caliberfoundry.com  |  100% Async Engineering: engineering@caliberfoundry.com) Tj ET
+BT /F3 7.5 Tf 42 18 Td (Sample ACR prepared for Northstar Cloud Workspace v4.2 \(Synthetic Enterprise Evaluation Target\).) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Title (Accessibility Conformance Report \(VPAT 2.5 Rev. WCAG 2.2 AA\)) /Author (Caliber Foundry) /Creator (Caliber Foundry Deterministic PDF Engine) /Producer (Caliber Foundry) /CreationDate (D:20261125120000Z) >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000267 00000 n 
+0000000364 00000 n 
+0000000466 00000 n 
+0000000561 00000 n 
+0000006173 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R /Info 8 0 R >>
+startxref
+6406
+%%EOF
