@@ -167,3 +167,21 @@ textarea {display:block;width:100%;min-height:155px;resize:vertical;margin:6px 0
   .col-window {width:9%}.col-action {width:26%}.col-money {width:13%}.col-check {width:26%}
   tr,.print-pair>div {break-inside:avoid}.print-sheet section {margin-top:13px}.print-meta,.print-pair {grid-template-columns:1fr 1fr}
 }
+
+.mast-links {display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#licenseLink {color:#fff;text-decoration:underline;text-underline-offset:4px}
+.license-panel,.plan-license {padding:20px 24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);margin-bottom:18px}
+.license-panel h2,.plan-license h2 {font:500 28px/1.2 var(--display);letter-spacing:-.03em;margin:0}
+.license-panel>p,.plan-license p,#gumroadPrivacy {margin:6px 0 12px;color:var(--muted);font-size:14px}
+.license-panel label {display:block;font-size:14px;font-weight:600}
+.license-controls,.plan-license {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.license-controls {margin:4px 0 8px}
+.license-controls input {width:min(100%,32em);min-width:0;min-height:42px;border:1px solid #819ba9;border-radius:5px;padding:8px 12px;font:15px var(--mono)}
+#licenseFeedback {margin:8px 0 0;color:var(--ink)}
+#licenseFeedback[data-error] {color:#9c301d}
+#activate>.actions {margin-top:10px}
+.container:has(#activate:not([hidden])) #planLicense {display:none}
+#gumroadPrivacy label {font-weight:400}
+.plan-license {justify-content:space-between;background:var(--warm);border-color:#e1cdbb}
+.plan-license a.btn {text-decoration:none}
+@media(max-width:680px){.mast-links {gap:10px}.license-panel,.plan-license {padding:16px}.license-controls input {flex:1 1 100%}}

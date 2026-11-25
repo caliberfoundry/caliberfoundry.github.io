@@ -1,0 +1,10 @@
+{
+  "kty": "EC",
+  "x": "jO5-nSAEGLsRy82rQPYdbb5s5qKynbftH7xKo8YZxfU",
+  "y": "uadJ6Za_Boy05ZZTRl8gWmUzGzIrvDCnYyzzD5VeU1E",
+  "crv": "P-256",
+  "ext": true,
+  "key_ops": [
+    "verify"
+  ]
+}

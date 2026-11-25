@@ -882,16 +882,101 @@
       ];
       const state = {preset:null, scenario:'base', assumptions:{...SCENARIO_PRESETS.base}, csv:'', filename:'',
         report:null, previous:null, sourceVersion:0};
+      const licenseStorage = 'finopsguard.license.v2';
+      let licenseUntil = 0;
+      let activationAttempt = 0;
+      let expiryTimer;
       const buttons = selector => Array.from(document.querySelectorAll(selector));
       const usd = value => escapeHtml(formatUsd(value));
       const numberCell = value => '<td class="num">'+usd(value)+'</td>';
       function text(id,value) { $(id).textContent=value; }
+
+      function licensed() { return licenseUntil >= Date.now(); }
+      function canExport() { return Boolean(state.report && (state.preset || licensed())); }
+      function clearLicense(message) {
+        ++activationAttempt;
+        licenseUntil=0;
+        clearTimeout(expiryTimer);
+        try { localStorage.removeItem(licenseStorage); } catch {}
+        $('licenseForm').hidden=false;
+        $('returnToAudit').hidden=$('removeLicense').hidden=true;
+        $('activateCode').disabled=false;
+        $('licenseProgress').hidden=true;
+        text('licenseLink','Activate license');
+        text('activationTitle','Activate FinOpsGuard');
+        $('activationHelp').hidden=false;
+        licenseStatus(message);
+        if (state.report) render(state.report);
+      }
+      function checkExpiry() {
+        clearTimeout(expiryTimer);
+        if (licenseUntil===Infinity || !licenseUntil) return;
+        if (!licensed()) { clearLicense('Your license has expired. Enter a current license code.'); return; }
+        expiryTimer=setTimeout(checkExpiry,Math.min(licenseUntil-Date.now()+1,2147483647));
+      }
+      function licenseStatus(message, error=false) {
+        text('licenseFeedback',message);
+        $('licenseFeedback').toggleAttribute('data-error',error);
+      }
+      function showLicense() {
+        $('activate').hidden=false;
+        const active=licensed();
+        $('licenseForm').hidden=active;
+        $('returnToAudit').hidden=$('removeLicense').hidden=!active;
+        if (active) licenseStatus('License active. Full reports are available for your billing files.');
+        (active ? $('returnToAudit') : $('licenseInput')).focus({preventScroll:true});
+        $('activate').scrollIntoView({block:'start'});
+      }
+      async function activateLicense(code, restore=false) {
+        const attempt=++activationAttempt;
+        const native=window.FinOpsGuardGumroad?.matches(code);
+        $('activateCode').disabled=true;
+        const started=performance.now();
+        $('licenseProgress').hidden=false;
+        licenseStatus('Verifying license…');
+        let expires;
+        try {
+          if (native) {
+            if (!await window.FinOpsGuardGumroad.verify(code)) throw Error('Gumroad could not confirm this FinOpsGuard purchase. Check the code in your receipt.');
+            expires=Infinity;
+          } else {
+            expires=await window.FinOpsGuardSignedLicense.verify(code);
+          }
+          if (attempt!==activationAttempt) return;
+          licenseUntil=expires;
+          let remembered=true;
+          if (!restore) {
+            try {
+              if (!native || $('rememberGumroad').checked) localStorage.setItem(licenseStorage,code);
+              else { localStorage.removeItem(licenseStorage); remembered=false; }
+            } catch { remembered=false; }
+          }
+          $('licenseInput').value='';
+          $('licenseForm').hidden=true;
+          $('returnToAudit').hidden=$('removeLicense').hidden=false;
+          checkExpiry();
+          text('licenseLink','License active');
+          text('activationTitle','FinOpsGuard Pro is active');
+          $('activationHelp').hidden=true;
+          const duration=performance.now()-started;
+          const elapsed=duration<100?'under 0.1 s':(duration/1000).toFixed(1)+' s';
+          licenseStatus((remembered?'Full reports are available.':'Full reports are available in this tab.')+' Verified in '+elapsed+'.');
+          if (!restore) $('returnToAudit').focus();
+          if (state.report) render(state.report);
+        } catch (error) {
+          if (attempt!==activationAttempt) return;
+          licenseStatus(error.message || 'License verification failed. Try again.',true);
+        } finally {
+          if (attempt===activationAttempt) { $('activateCode').disabled=false; $('licenseProgress').hidden=true; }
+        }
+      }
 
       function setStep(step, moveFocus=true) {
         if (!state.report && step !== 1) step=1;
         [1,2,3].forEach(n=>$('stepBtn'+n).setAttribute('aria-current', n===step?'step':'false'));
         $('viewWorkbench').classList.toggle('is-hidden-view',step===3);
         $('viewPrintPlan').classList.toggle('is-hidden-view',step!==3);
+        $('activate').hidden=true;
         if (moveFocus) {
           const target=step===3?$('viewPrintPlan'):$(step===2?'sectionAnalysis':'sectionImport');
           target.focus({preventScroll:true});
@@ -933,21 +1018,35 @@
         }
       }
       function renderPlan(r) {
+        const full=canExport();
+        $('planExports').hidden=!full;
+        $('planLicense').hidden=full;
+        text('planTitle',full?'Cloud savings plan':'Billing summary');
         text('printSyncStatus',r.meta.filename+' · '+r.assumptions.name+' scenario');
         text('printGeneratedAt','Calculated '+r.meta.generatedAtIso.slice(0,19).replace('T',' ')+' UTC');
         const meta=[['Format',r.meta.schemaLabel],['Input dates',r.meta.periodLabel]];
         $('printMetaGrid').innerHTML=meta.map(([a,b])=>'<div><dt>'+a+'</dt><dd>'+escapeHtml(b)+'</dd></div>').join('');
         text('printConfirmedTotal',formatUsd(r.confirmed.effectiveTotal));
-        text('printConfirmedDetail',r.meta.validRowCount+' rows · '+formatUsd(r.confirmed.eligibleBaseTotal)+' eligible');
+        text('printConfirmedDetail',r.meta.validRowCount+(r.meta.validRowCount===1?' row':' rows')+' · '+formatUsd(r.confirmed.eligibleBaseTotal)+' eligible');
         text('printEstimatedTotal',formatUsd(r.estimated.monthlyTotal));
         text('printEstimatedDetail',formatUsd(r.estimated.annualTotal)+' over 12 equivalent billing months');
         $('printServicesBody').innerHTML=r.confirmed.services.map(s=>'<tr><td>'+escapeHtml(s.service)+'</td><td class="num">'+s.count+'</td><td class="num">'+formatPct(s.sharePct)+'</td>'+numberCell(s.effectiveCost)+'</tr>').join('');
         $('printServicesFoot').innerHTML='<tr><td>Total</td><td class="num">'+r.meta.validRowCount+'</td><td></td>'+numberCell(r.confirmed.effectiveTotal)+'</tr>';
         text('printScenarioBadge',r.assumptions.name+' scenario. Estimates assume that the export represents one billing month.');
-        $('printAssumptionsBody').innerHTML=inputs.map(([,key,label,,usage])=>'<tr><td>'+label+'</td><td class="num">'+r.assumptions[key]+'%</td><td>'+usage+'</td></tr>').join('');
-        $('printPlanBody').innerHTML=r.estimated.levers.filter(l=>l.active).map(l=>'<tr><td>'+escapeHtml(l.window)+'</td><td><strong>'+escapeHtml(l.title)+'</strong><small>'+escapeHtml(l.formula)+'</small></td>'+numberCell(l.confirmedBase)+numberCell(l.monthlyEstimate)+numberCell(l.annualEstimate)+'<td>'+escapeHtml(l.verificationCheck)+'</td></tr>').join('') ||
-          '<tr><td colspan="6">No eligible costs found for the current model.</td></tr>';
-        $('printPlanFoot').innerHTML='<tr><td colspan="2">Total</td>'+numberCell(r.confirmed.eligibleBaseTotal)+numberCell(r.estimated.monthlyTotal)+numberCell(r.estimated.annualTotal)+'<td></td></tr>';
+        if (!full) {
+          $('printAssumptionsBody').closest('section').hidden=true;
+          $('printAssumptionsBody').replaceChildren();
+          $('printPlanBody').closest('section').hidden=true;
+          $('printPlanBody').replaceChildren();
+          $('printPlanFoot').replaceChildren();
+        } else {
+          $('printPlanBody').closest('section').hidden=false;
+          $('printAssumptionsBody').closest('section').hidden=false;
+          $('printAssumptionsBody').innerHTML=inputs.map(([,key,label,,usage])=>'<tr><td>'+label+'</td><td class="num">'+r.assumptions[key]+'%</td><td>'+usage+'</td></tr>').join('');
+          $('printPlanBody').innerHTML=r.estimated.levers.filter(l=>l.active).map(l=>'<tr><td>'+escapeHtml(l.window)+'</td><td><strong>'+escapeHtml(l.title)+'</strong><small>'+escapeHtml(l.formula)+'</small></td>'+numberCell(l.confirmedBase)+numberCell(l.monthlyEstimate)+numberCell(l.annualEstimate)+'<td>'+escapeHtml(l.verificationCheck)+'</td></tr>').join('') ||
+            '<tr><td colspan="6">No eligible costs found for the current model.</td></tr>';
+          $('printPlanFoot').innerHTML='<tr><td colspan="2">Total</td>'+numberCell(r.confirmed.eligibleBaseTotal)+numberCell(r.estimated.monthlyTotal)+numberCell(r.estimated.annualTotal)+'<td></td></tr>';
+        }
         text('printIntegrityBox',r.meta.validRowCount+' valid rows · '+r.meta.skippedRowCount+' skipped. '+(r.confirmed.hasSeparateBilledCost?'Total billed cost '+formatUsd(r.confirmed.billedTotal)+'. ':'')+'The report was calculated locally.');
         text('printFooterChecksum','Input fingerprint '+r.meta.fingerprint+' · '+r.meta.filename);
       }
@@ -978,7 +1077,10 @@
         $('leversTableBody').innerHTML=estimated.levers.map(l=>'<tr><td><strong>'+escapeHtml(l.title)+'</strong><small>'+escapeHtml(l.formula)+'</small><small>'+escapeHtml(l.verificationCheck)+'</small></td>'+numberCell(l.confirmedBase)+numberCell(l.monthlyEstimate)+numberCell(l.annualEstimate)+'</tr>').join('');
         $('leversTableFoot').innerHTML='<tr><td>Total · unique eligible costs</td>'+numberCell(confirmed.eligibleBaseTotal)+numberCell(estimated.monthlyTotal)+numberCell(estimated.annualTotal)+'</tr>';
         text('rowsDrawerCount',meta.validRowCount);
-        $('rawRowsTableBody').innerHTML=confirmed.rows.map(row=>'<tr><td>'+escapeHtml(row.service)+'<small>'+escapeHtml(row.region)+' · '+escapeHtml(row.date)+'</small></td><td>'+escapeHtml(row.resource)+'<small>'+escapeHtml(row.detailNote)+'</small></td><td>'+escapeHtml(CLASS_LABELS[row.rowClass]?.text || row.rowClass)+'</td>'+numberCell(row.effectiveCost)+'</tr>').join('');
+        const full=canExport();
+        $('ledgerLicense').hidden=full;
+        $('rawRowsTableBody').closest('.table-scroll').hidden=!full;
+        $('rawRowsTableBody').innerHTML=full ? confirmed.rows.map(row=>'<tr><td>'+escapeHtml(row.service)+'<small>'+escapeHtml(row.region)+' · '+escapeHtml(row.date)+'</small></td><td>'+escapeHtml(row.resource)+'<small>'+escapeHtml(row.detailNote)+'</small></td><td>'+escapeHtml(CLASS_LABELS[row.rowClass]?.text || row.rowClass)+'</td>'+numberCell(row.effectiveCost)+'</tr>').join('') : '';
         const cols=Object.entries(meta.columnMap).filter(([,column])=>column);
         $('diagnosticsBody').innerHTML='<p>'+escapeHtml(meta.schemaLabel)+' · '+meta.validRowCount+' valid rows · '+meta.skippedRowCount+' skipped · '+meta.elapsedMs+' ms</p><p>Input fingerprint <code>'+escapeHtml(meta.fingerprint)+'</code></p><ul>'+cols.map(([field,column])=>'<li>'+escapeHtml(field)+' ← '+escapeHtml(column)+'</li>').join('')+'</ul>';
         $('deltaBar').hidden=!state.previous;
@@ -1036,7 +1138,7 @@
       }
       function downloadPlan(type) {
         const r=state.report;
-        if(!r)return;
+        if(!r || !canExport())return;
         const fp=r.meta.fingerprint.slice(0,8).toLowerCase();
         if(type==='json') {
           download('finopsguard-audit-'+fp+'.json','application/json;charset=utf-8',JSON.stringify(r,null,2));
@@ -1091,11 +1193,35 @@
       ['stepBtn1','stepBtn2','stepBtn3'].forEach((id,index)=>$(id).addEventListener('click',()=>navigate(index+1)));
       $('btnGoToPrintTop').addEventListener('click',()=>navigate(3));
       $('btnBackToAnalysis').addEventListener('click',()=>navigate(2));
-      $('btnTriggerPrint').addEventListener('click',()=>{if(state.report){progress('export','Print preview requested. Choose Save as PDF to keep a copy.');window.print();}});
+      $('btnTriggerPrint').addEventListener('click',()=>{if(canExport()){progress('export','Print preview requested. Choose Save as PDF to keep a copy.');window.print();}});
       $('btnExportJson').addEventListener('click',()=>downloadPlan('json'));
       $('btnExportActionCsv').addEventListener('click',()=>downloadPlan('csv'));
-      window.addEventListener('hashchange',()=>setStep(linkStep()));
+      window.addEventListener('beforeprint',()=>{if(state.report) renderPlan(state.report);});
+      const followHash=()=>location.hash==='#activate'?showLicense():setStep(linkStep());
+      window.addEventListener('hashchange',followHash);
+      $('licenseInput').addEventListener('input',()=>{
+        $('gumroadPrivacy').hidden=!window.FinOpsGuardGumroad?.matches($('licenseInput').value.trim());
+      });
+      $('licenseForm').addEventListener('submit',event=>{
+        event.preventDefault();
+        activateLicense($('licenseInput').value.trim());
+      });
+      $('returnToAudit').addEventListener('click',()=>navigate(state.report && !state.preset?3:1));
+      $('removeLicense').addEventListener('click',()=>{
+        clearLicense('License removed from this browser. You can activate it again with the same code.');
+        $('licenseInput').focus();
+      });
       const requested=new URLSearchParams(location.search).get('sample');
       loadSample(Object.hasOwn(aliases,requested)?aliases[requested]:'aws_cur',false);
-      setStep(linkStep(),Boolean(location.hash));
+      if (location.hash==='#activate') {
+        showLicense();
+        // Initial fragment navigation can move focus to the document after deferred scripts.
+        window.addEventListener('load',()=>requestAnimationFrame(()=>{
+          if (location.hash==='#activate' && document.activeElement===document.body) showLicense();
+        }),{once:true});
+      }
+      else setStep(linkStep(),Boolean(location.hash));
+      let saved;
+      try { saved=localStorage.getItem(licenseStorage); } catch {}
+      if (saved) activateLicense(saved,true);
     })();

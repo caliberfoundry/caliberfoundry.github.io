@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="description" content="Audit a local AWS CUR, FOCUS or model usage CSV. Review actual costs, test savings assumptions and export a 30/60/90-day action plan.">
   <title>FinOpsGuard · Cloud spend audit | Caliber Foundry</title>
@@ -22,6 +22,8 @@
   <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/finopsguard-social.jpg">
   <link rel="canonical" href="https://caliberfoundry.com/finopsguard/">
   <link rel="stylesheet" href="./workbench.css">
+  <script src="./gumroad-license.js" defer></script>
+  <script src="./license.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </head>
@@ -35,10 +37,22 @@
         <button id="stepBtn2" type="button" aria-current="false"><span>2</span> Analysis</button>
         <button id="stepBtn3" type="button" aria-current="false"><span>3</span> Plan</button>
       </nav>
-      <a href="../#work" class="portal-link">All products <span aria-hidden="true">↗</span></a>
+      <div class="mast-links"><a href="#activate" id="licenseLink" class="portal-link">Activate license</a><a href="../#work" class="portal-link">All products <span aria-hidden="true">↗</span></a></div>
     </div>
   </header>
   <main id="mainApp" class="container">
+    <section id="activate" class="license-panel no-print" aria-labelledby="activationTitle" hidden>
+      <h2 id="activationTitle">Activate FinOpsGuard</h2>
+      <p id="activationHelp">Enter your FinOpsGuard license code to unlock the source ledger and full reports for your own bills.</p>
+      <form id="licenseForm">
+        <label for="licenseInput">License code</label>
+        <div class="license-controls"><input id="licenseInput" type="password" required maxlength="200" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="activationHelp licenseFeedback"><button type="submit" class="btn primary" id="activateCode">Activate license</button></div>
+        <div id="gumroadPrivacy" hidden><p>FinOpsGuard sends this code to Gumroad to verify your purchase.</p><label><input id="rememberGumroad" type="checkbox"> Remember the code and verify it with Gumroad when I reopen this browser</label></div>
+      </form>
+      <progress id="licenseProgress" aria-label="Verifying license" hidden></progress>
+      <p id="licenseFeedback" role="status" aria-live="polite"></p>
+      <div class="actions"><button hidden type="button" id="returnToAudit" class="btn">Continue to audit</button><button hidden type="button" id="removeLicense" class="text-btn">Remove license from this browser</button></div>
+    </section>
     <div id="viewWorkbench" class="no-print">
       <section id="sectionImport" tabindex="-1" aria-labelledby="auditTitle">
         <div class="intro">
@@ -111,6 +125,7 @@
           <div class="table-scroll"><table><thead><tr><th>Opportunity and assumptions</th><th>Eligible spend</th><th>Monthly estimate</th><th>Annual estimate</th></tr></thead><tbody id="leversTableBody"></tbody><tfoot id="leversTableFoot"></tfoot></table></div>
         </details>
         <details id="rowsDrawer"><summary aria-label="Source ledger">Source ledger <span id="rowsDrawerCount"></span></summary>
+          <p id="ledgerLicense" hidden><a href="#activate">Activate your license</a> to review individual resources and their costs.</p>
           <div class="table-scroll"><table><thead><tr><th>Service</th><th>Resource</th><th>Classification</th><th>Cost</th></tr></thead><tbody id="rawRowsTableBody"></tbody></table></div>
         </details>
         <details id="rawCsvDrawer"><summary>Edit or download the source CSV</summary>
@@ -120,15 +135,16 @@
           <p id="editStatus" class="sheet-note" role="status"></p>
         </details>
         <details id="diagnosticsDrawer"><summary>Import details</summary><div id="diagnosticsBody"></div></details>
-        <details id="commercialLicenseDrawer"><summary>Commercial license</summary><p>This browser audit and its exports are free. A $149 purchase gives you a downloadable copy of the workbench to run offline, billing examples and a commercial license. Open the download from your order receipt.</p>
-          <div class="actions"><a href="https://caliberfoundry.gumroad.com/l/finopsguard-pro" target="_blank" rel="noopener noreferrer">Gumroad</a><a href="https://contra.com/products/7sKkgk7O-fin-ops-guard-cloud-and-llm-billing-audit-pack" target="_blank" rel="noopener noreferrer">Contra</a><a href="mailto:engineering@caliberfoundry.com?subject=FinOpsGuard%20Team%20License%20(%24299%20Net-14)" data-native-mailto="1">Request a team invoice</a></div>
+        <details id="commercialLicenseDrawer"><summary>Commercial license</summary><p>A single-user license costs $149 once. It unlocks the resource ledger, complete audit JSON, action CSV and printable plan for your billing files. Try all outputs with the built-in samples.</p>
+          <div class="actions"><a href="#activate">Enter a license code</a><a href="https://caliberfoundry.gumroad.com/l/finopsguard-pro" target="_blank" rel="noopener noreferrer">Gumroad</a><a href="https://contra.com/products/7sKkgk7O-fin-ops-guard-cloud-and-llm-billing-audit-pack" target="_blank" rel="noopener noreferrer">Contra</a><a href="mailto:engineering@caliberfoundry.com?subject=FinOpsGuard%20Team%20License%20(%24299%20Net-14)" data-native-mailto="1">Request a team invoice</a></div>
         </details>
       </section>
     </div>
     <section id="viewPrintPlan" class="is-hidden-view" tabindex="-1" aria-labelledby="planTitle">
       <div class="plan-toolbar no-print"><button id="btnBackToAnalysis" type="button" class="text-btn">← Back to analysis</button>
-        <div class="actions"><button type="button" class="btn" id="btnExportJson">Download JSON</button><button type="button" class="btn" id="btnExportActionCsv">Download action CSV</button><button type="button" class="btn primary" id="btnTriggerPrint">Print / save PDF</button></div>
+        <div class="actions" id="planExports"><button type="button" class="btn" id="btnExportJson">Download JSON</button><button type="button" class="btn" id="btnExportActionCsv">Download action CSV</button><button type="button" class="btn primary" id="btnTriggerPrint">Print / save PDF</button></div>
       </div>
+      <div class="plan-license no-print" id="planLicense" hidden><div><h2>Get the full plan for this bill</h2><p>Your totals are ready. A license unlocks the action plan, printable report and data exports.</p></div><div class="actions"><a class="btn primary" href="#activate">Enter license code</a><a href="../work/finopsguard.html#licensing">Get a license</a></div></div>
       <div id="exportProgressStrip" class="operation no-print" role="status" hidden><span id="exportProgressLabel"></span> <small id="exportProgressTiming"></small><div class="progress-track"><i id="exportProgressFill"></i></div></div>
       <article class="print-sheet" id="printablePlanSheet">
         <header class="print-header"><div class="section-label">FinOpsGuard · Caliber Foundry</div><h1 id="planTitle">Cloud savings plan</h1><p id="printSyncStatus"></p><small id="printGeneratedAt"></small></header>
