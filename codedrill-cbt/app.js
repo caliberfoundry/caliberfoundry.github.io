@@ -1137,12 +1137,21 @@
      2. DATASET NORMALIZATION, SUITE CLASSIFICATION & 24-QUESTION GUARANTEE
      ========================================================================== */
   function classifyQuestionSuite(q) {
-    if (q.suite && ['CBLE_111_113', 'CBLE_141_142', 'CBLE_152_177_190', 'CBLE_HTSUS', 'EA'].includes(q.suite)) {
+    if (q.suite && ['CBLE_111_113', 'CBLE_141_142', 'CBLE_152_177_190', 'CBLE_HTSUS', 'EA_SEE1', 'EA_SEE2', 'EA_SEE3'].includes(q.suite)) {
       return q.suite;
     }
-    const combined = `${q.track || ''} ${q.category || ''} ${q.targetSectionId || ''} ${q.targetCitation || ''}`;
-    if (/31-cfr|31\s*cfr|circular\s*230|enrolled\s*agent|\bea\b|irs/i.test(combined)) {
-      return 'EA';
+    if (q.suite === 'EA') {
+      return 'EA_SEE3';
+    }
+    const combined = `${q.track || ''} ${q.seePart || ''} ${q.category || ''} ${q.targetSectionId || ''} ${q.targetCitation || ''}`;
+    if (/see\s*part\s*1|ea_see1/i.test(combined)) {
+      return 'EA_SEE1';
+    }
+    if (/see\s*part\s*2|ea_see2/i.test(combined)) {
+      return 'EA_SEE2';
+    }
+    if (/see\s*part\s*3|31-cfr|31\s*cfr|circular\s*230|enrolled\s*agent|\bea\b|irs/i.test(combined)) {
+      return 'EA_SEE3';
     }
     if (/htsus|gri/i.test(combined)) {
       return 'CBLE_HTSUS';
@@ -1212,7 +1221,7 @@
       CBLE_141_142: 5,
       CBLE_152_177_190: 8,
       CBLE_HTSUS: 6,
-      EA: 6
+      EA_SEE3: 6
     };
 
     Object.keys(suiteTargets).forEach(suiteKey => {
@@ -1221,18 +1230,20 @@
       if (existingInSuite.length < targetCount) {
         const needed = targetCount - existingInSuite.length;
         const fallbackCandidates = FALLBACK_CODEDRILL_DATA.questions.filter(fq =>
-          fq.suite === suiteKey &&
+          classifyQuestionSuite(fq) === suiteKey &&
           !existingInSuite.some(eq => eq.id === fq.id || eq.stem.slice(0, 45) === fq.stem.slice(0, 45))
         );
         fallbackCandidates.slice(0, needed).forEach(fc => {
-          rawQuestions.push(JSON.parse(JSON.stringify(fc)));
+          const cloned = JSON.parse(JSON.stringify(fc));
+          cloned.suite = suiteKey;
+          rawQuestions.push(cloned);
         });
       }
     });
 
     const questions = rawQuestions.map((q, index) => {
       const suite = classifyQuestionSuite(q);
-      const trackCode = (suite === 'EA') ? 'EA' : 'CBLE';
+      const trackCode = /^EA/.test(suite) ? 'EA' : 'CBLE';
 
       let normOptions = [];
       if (Array.isArray(q.options)) {
@@ -1267,9 +1278,10 @@
         id: q.id || `q-${index + 1}`,
         number: q.number || index + 1,
         suite,
+        seePart: q.seePart || (suite === 'EA_SEE1' ? 'SEE Part 1' : suite === 'EA_SEE2' ? 'SEE Part 2' : suite === 'EA_SEE3' ? 'SEE Part 3' : ''),
         track: q.track || (trackCode === 'EA' ? 'IRS-EA' : 'CBLE'),
         trackCode,
-        category: q.category || (trackCode === 'EA' ? '31 CFR Part 10 — Circular 230' : '19 CFR — Customs Regulations'),
+        category: q.category || (trackCode === 'EA' ? 'IRS SEE — Federal Tax & Circular 230' : '19 CFR — Customs Regulations'),
         difficulty: q.difficulty || 'Hard',
         targetLookupSeconds: Number(q.targetLookupSeconds) || 45,
         stem: q.stem || '',
@@ -1277,6 +1289,10 @@
         correctOption: String(q.correctOption || 'A').toUpperCase(),
         targetSectionId: q.targetSectionId || '',
         targetCitation: q.targetCitation || '',
+        officialSourceUrl: q.officialSourceUrl || '',
+        officialSourceLabel: q.officialSourceLabel || '',
+        officialGuideUrl: q.officialGuideUrl || '',
+        officialGuideLabel: q.officialGuideLabel || '',
         goldenQuote: q.goldenQuote || '',
         shortestPathHint: q.shortestPathHint || `Navigate to ${q.targetCitation || 'the governing section'} in the Electronic Reference Library.`,
         socraticHints: [
@@ -1500,10 +1516,12 @@
     return verifyCodeDrillLicenseKey(STATE.licenseKey).valid;
   }
 
+  const FREE_DIAGNOSTIC_SUITES = ['CBLE', 'CBLE_111_113', 'EA', 'EA_SEE1', 'EA_SEE2', 'EA_SEE3'];
+
   function isSuiteLockedForCurrentTier(suiteKey) {
     if (isProOrTeamActive()) return false;
-    // On FREE tier, only 'CBLE' and 'CBLE_111_113' are unlocked (for their first 3 diagnostic questions)
-    return !['CBLE', 'CBLE_111_113'].includes(suiteKey);
+    // On FREE tier, CBLE + IRS SEE Parts 1-3 suites open their first 3 diagnostic questions free
+    return !FREE_DIAGNOSTIC_SUITES.includes(suiteKey);
   }
 
   function isQuestionIndexLockedForCurrentTier(zeroBasedIdx) {
@@ -1539,7 +1557,11 @@
       return pool.length > 0 ? pool : DATASET.questions;
     }
     if (key === 'EA') {
-      const pool = DATASET.questions.filter(q => q.suite === 'EA' || q.trackCode === 'EA');
+      const partOrder = { EA_SEE1: 1, EA_SEE2: 2, EA_SEE3: 3 };
+      const pool = DATASET.questions
+        .filter(q => q.trackCode === 'EA' || /^EA/.test(q.suite))
+        .slice()
+        .sort((a, b) => (partOrder[a.suite] || 9) - (partOrder[b.suite] || 9) || (a.number || 0) - (b.number || 0));
       return pool.length > 0 ? pool : DATASET.questions;
     }
     const suitePool = DATASET.questions.filter(q => q.suite === key);
@@ -1580,7 +1602,11 @@
       const htsusCorpus = DATASET.corpora.find(c => /htsus|gri/i.test(`${c.id} ${c.code} ${c.title}`));
       if (htsusCorpus) targetCorpus = htsusCorpus;
       targetPartRegex = /gri/i;
-    } else if (suiteKey === 'EA') {
+    } else if (suiteKey === 'EA' || suiteKey === 'EA_SEE1' || suiteKey === 'EA_SEE2') {
+      const see26Corpus = DATASET.corpora.find(c => c.id === '26-cfr-see' || /26-cfr|26\s*cfr/i.test(`${c.id} ${c.code} ${c.title}`));
+      if (see26Corpus) targetCorpus = see26Corpus;
+      targetPartRegex = suiteKey === 'EA_SEE2' ? /part-2|part\s*2/i : /part-1|part\s*1/i;
+    } else if (suiteKey === 'EA_SEE3') {
       const eaCorpus = DATASET.corpora.find(c => /31-cfr|31\s*cfr|circular|ea/i.test(`${c.id} ${c.code} ${c.title}`));
       if (eaCorpus) targetCorpus = eaCorpus;
       targetPartRegex = /10|subpart/i;
@@ -1680,14 +1706,15 @@
   /* ==========================================================================
      6. HONEST SESSION ANALYTICS (NO FAKE DEFAULTS WHEN 0 GRADED)
      ========================================================================== */
-  function getSessionStats() {
+  function getSessionStats(poolOverride) {
+    const scopePool = Array.isArray(poolOverride) ? poolOverride : getFilteredQuestions();
     let gradedCount = 0;
     let correctCount = 0;
     let answeredCount = 0;
     let verifiedProofCount = 0;
     const lookupTimes = [];
 
-    DATASET.questions.forEach(q => {
+    scopePool.forEach(q => {
       const w = STATE.questionWork[q.id];
       if (!w) return;
       if (w.selectedOption) answeredCount++;
@@ -1947,7 +1974,7 @@
       const proUnlocked = isProOrTeamActive();
       Array.from(trackSelect.options).forEach(opt => {
         const baseText = opt.text.replace(/\s*·\s*PRO$/i, '');
-        const locked = !proUnlocked && !['CBLE', 'CBLE_111_113'].includes(opt.value);
+        const locked = !proUnlocked && !FREE_DIAGNOSTIC_SUITES.includes(opt.value);
         opt.text = locked ? `${baseText} · PRO` : baseText;
       });
       if (trackSelect.value !== STATE.selectedTrack) {
@@ -2089,9 +2116,15 @@
     // 1. Update Pearson VUE Header Info (Using unified posNum everywhere!)
     const examTitleEl = document.getElementById('pvueExamTitle');
     if (examTitleEl) {
-      examTitleEl.textContent = q.trackCode === 'EA'
-        ? 'IRS Special Enrollment Examination (31 CFR Part 10 — Circular 230)'
-        : 'U.S. Customs Broker License Examination (19 CFR & HTSUS)';
+      if (q.suite === 'EA_SEE1') {
+        examTitleEl.textContent = 'IRS Special Enrollment Examination — SEE Part 1 (Individuals)';
+      } else if (q.suite === 'EA_SEE2') {
+        examTitleEl.textContent = 'IRS Special Enrollment Examination — SEE Part 2 (Businesses)';
+      } else if (q.suite === 'EA_SEE3' || q.trackCode === 'EA') {
+        examTitleEl.textContent = 'IRS Special Enrollment Examination — SEE Part 3 (Representation, Practices & Procedures)';
+      } else {
+        examTitleEl.textContent = 'U.S. Customs Broker License Examination (19 CFR & HTSUS)';
+      }
     }
 
     const posEl = document.getElementById('pvueQuestionPosition');
@@ -2124,7 +2157,9 @@
 
     // 2. Question Metadata Strip (Unified Q1..QN)
     document.getElementById('qMetaNumberBadge').textContent = `Q${posNum}`;
-    document.getElementById('qMetaTrackBadge').textContent = q.trackCode === 'EA' ? 'IRS EA · 31 CFR' : 'CBLE · 19 CFR & HTSUS';
+    document.getElementById('qMetaTrackBadge').textContent = q.trackCode === 'EA'
+      ? (q.seePart ? `IRS ${q.seePart}` : 'IRS EA · SEE')
+      : 'CBLE · 19 CFR & HTSUS';
     document.getElementById('qMetaCategoryBadge').textContent = q.category;
     document.getElementById('qMetaDifficultyBadge').textContent = q.difficulty;
     document.getElementById('qMetaTargetTimeBadge').textContent = `Target: <= ${q.targetLookupSeconds}s`;
@@ -2384,6 +2419,44 @@
     document.getElementById('expShortestPathVal').textContent = q.shortestPathHint;
     document.getElementById('expGoldenQuoteText').textContent = q.goldenQuote || `See ${q.targetCitation} in the Reference Library.`;
     document.getElementById('expCorrectReasoningText').textContent = q.explanation.correctReasoning;
+
+    // Render clickable active official source links (eCFR + IRS Publication/Form when available)
+    const officialRow = document.getElementById('expOfficialSourceRow');
+    const officialPrimary = document.getElementById('expOfficialSourceLink');
+    const officialGuide = document.getElementById('expOfficialGuideLink');
+    if (officialRow && officialPrimary) {
+      const targetSec = resolveSectionByRef(q.targetSectionId) || resolveSectionByRef(q.targetCitation);
+      let primaryUrl = q.officialSourceUrl || (targetSec && targetSec.officialSourceUrl) || '';
+      let primaryLabel = q.officialSourceLabel || (targetSec && targetSec.officialSourceLabel) || '';
+      if (!primaryUrl && q.targetCitation) {
+        const fedMatch = q.targetCitation.match(/(19|26|31)\s*CFR\s*§\s*(\d+\.\d+[a-z]?(?:-\d+)?)/i);
+        if (fedMatch) {
+          primaryUrl = `https://www.ecfr.gov/current/title-${fedMatch[1]}/section-${fedMatch[2]}`;
+          primaryLabel = `eCFR: ${fedMatch[1]} CFR § ${fedMatch[2]}`;
+        }
+      }
+      const guideUrl = q.officialGuideUrl || (targetSec && targetSec.officialGuideUrl) || '';
+      const guideLabel = q.officialGuideLabel || (targetSec && targetSec.officialGuideLabel) || 'IRS Official Guidance';
+
+      if (primaryUrl) {
+        officialRow.classList.remove('hidden');
+        officialPrimary.href = primaryUrl;
+        officialPrimary.textContent = `${primaryLabel || 'Official eCFR Source'} ↗`;
+        officialPrimary.classList.remove('hidden');
+        if (officialGuide) {
+          if (guideUrl) {
+            officialGuide.href = guideUrl;
+            officialGuide.textContent = `${guideLabel} ↗`;
+            officialGuide.classList.remove('hidden');
+          } else {
+            officialGuide.removeAttribute('href');
+            officialGuide.classList.add('hidden');
+          }
+        }
+      } else {
+        officialRow.classList.add('hidden');
+      }
+    }
 
     const distList = document.getElementById('expDistractorsList');
     distList.innerHTML = '';
@@ -2810,11 +2883,28 @@
     document.getElementById('refDocFreqBadge').textContent = cleanFreq;
     document.getElementById('refDocCitationCode').innerHTML = highlightTextWithSearchQuery(activeSection.citation, query);
     const official = document.getElementById('refOfficialSource');
-    const federal = activeSection.citation.match(/^(19|31) CFR\s*§\s*(\d+\.\d+[a-z]?)/i);
-    official.hidden = !federal;
-    if (federal) {
-      official.href = 'https://www.ecfr.gov/current/title-' + federal[1] + '/section-' + federal[2];
-      official.textContent = 'Read the current ' + activeSection.citation + ' in the eCFR';
+    const officialGuide = document.getElementById('refOfficialGuide');
+    const federal = activeSection.citation.match(/^(19|26|31) CFR\s*§\s*(\d+\.\d+[a-z]?(?:-\d+)?)/i);
+    const officialUrl = activeSection.officialSourceUrl || (federal ? `https://www.ecfr.gov/current/title-${federal[1]}/section-${federal[2]}` : '');
+    const officialLabel = activeSection.officialSourceLabel || (federal ? `Read the current ${activeSection.citation} in the eCFR` : '');
+    if (official) {
+      official.hidden = !officialUrl;
+      if (officialUrl) {
+        official.href = officialUrl;
+        official.textContent = `${officialLabel} ↗`;
+      } else {
+        official.removeAttribute('href');
+      }
+    }
+    if (officialGuide) {
+      const guideUrl = activeSection.officialGuideUrl || '';
+      officialGuide.hidden = !guideUrl;
+      if (guideUrl) {
+        officialGuide.href = guideUrl;
+        officialGuide.textContent = `${activeSection.officialGuideLabel || 'Read official IRS guidance'} ↗`;
+      } else {
+        officialGuide.removeAttribute('href');
+      }
     }
     document.getElementById('refDocSectionTitle').innerHTML = highlightTextWithSearchQuery(activeSection.title, query);
 
@@ -3191,13 +3281,20 @@
       document.getElementById('anKpiTimeSaved').textContent = '--';
     }
 
-    const domainSpecs = [
+    const cbleDomainSpecs = [
       { suite: 'CBLE_111_113', label: '19 CFR Parts 111 & 113 — Broker Compliance & Customs Bonds', color: '#1A5638' },
       { suite: 'CBLE_141_142', label: '19 CFR Parts 141 & 142 — Entry, Invoices & Release Deadlines', color: '#1A5638' },
       { suite: 'CBLE_152_177_190', label: '19 CFR Parts 152, 177 & 190 — Valuation, Rulings & Drawback', color: '#1B365D' },
-      { suite: 'CBLE_HTSUS', label: 'HTSUS & GRI 1–6 — Tariff Classification & Essential Character', color: '#1B365D' },
-      { suite: 'EA', label: '31 CFR Part 10 — IRS Circular 230 Ethics (Enrolled Agent Track)', color: '#1A5638' }
+      { suite: 'CBLE_HTSUS', label: 'HTSUS & GRI 1–6 — Tariff Classification & Essential Character', color: '#1B365D' }
     ];
+    const seeDomainSpecs = [
+      { suite: 'EA_SEE1', label: 'IRS SEE Part 1 — Individuals (Filing, Dependents, Capital Gains, QBI & Gifts)', color: '#1A5638' },
+      { suite: 'EA_SEE2', label: 'IRS SEE Part 2 — Businesses (S-Corps, Partnerships, § 179, Methods, E&P & § 1031)', color: '#1B365D' },
+      { suite: 'EA_SEE3', label: 'IRS SEE Part 3 — Representation, Practices & Procedures (Circular 230 & 26 CFR)', color: '#A15D00' }
+    ];
+    const domainSpecs = /^EA/.test(STATE.selectedTrack || '')
+      ? [...seeDomainSpecs, ...cbleDomainSpecs]
+      : [...cbleDomainSpecs, ...seeDomainSpecs];
 
     const heatmapContainer = document.getElementById('anDomainHeatmapList');
     heatmapContainer.innerHTML = '';
@@ -3286,7 +3383,7 @@
       item.addEventListener('click', () => {
         if (isLocked) {
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }
@@ -3373,7 +3470,7 @@
         if (isLocked) {
           backdrop.classList.add('hidden');
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }
@@ -3479,12 +3576,28 @@
         trapNote: 'GRI 3(b) retail set essential character vs. GRI 3(c) last in numerical order & GRI 5(a)/(b) fitted cases'
       },
       {
-        id: 'DOM_EA_230',
-        label: '31 CFR Part 10 — IRS Circular 230 Ethics',
-        filterFn: (q) => q.suite === 'EA',
+        id: 'DOM_EA_SEE1',
+        label: 'IRS SEE Part 1 — Individuals (26 CFR / IRC)',
+        filterFn: (q) => q.suite === 'EA_SEE1',
+        cohortAcc: 85,
+        cohortLookup: 30.8,
+        trapNote: 'IRC § 121(d)(6) home-office depreciation recapture, § 1091 wash sale basis adjustment & § 199A SSTB/W-2 limits'
+      },
+      {
+        id: 'DOM_EA_SEE2',
+        label: 'IRS SEE Part 2 — Businesses (26 CFR / IRC)',
+        filterFn: (q) => q.suite === 'EA_SEE2',
+        cohortAcc: 82,
+        cohortLookup: 33.4,
+        trapNote: 'IRC § 1367 S-Corp stock basis ordering (distributions before losses), § 752 recourse vs. nonrecourse debt & § 316 nimble dividends'
+      },
+      {
+        id: 'DOM_EA_SEE3',
+        label: 'IRS SEE Part 3 — Representation, Practices & Procedures (Circular 230 & 26 CFR)',
+        filterFn: (q) => q.suite === 'EA_SEE3' || q.suite === 'EA',
         cohortAcc: 88,
         cohortLookup: 28.5,
-        trapNote: '31 CFR § 10.21 client omission advisory duty, § 10.22(b) reliance due diligence & § 10.29 36-month conflict consent retention'
+        trapNote: '31 CFR § 10.6 72-hr/16-hr annual CE floor, Form 2848 vs. 8821 (§ 601.504), 30-day CDP hearing (§ 6330) & § 6695(g) Form 8867 stacking'
       }
     ];
 
@@ -3729,7 +3842,7 @@
     // Enforce Freemium Paywall on full Submit & Score Exam when on FREE tier
     if (!isProOrTeamActive()) {
       openAccountPaywallModal({
-        paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and full Official Exam Scoring.'
+        paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases (CBLE + IRS SEE Parts 1–3) and full Official Exam Scoring.'
       });
       return;
     }
@@ -3759,19 +3872,26 @@
     renderQuestionWorkspace();
     renderGlobalBarTelemetry();
 
-    const stats = getSessionStats();
+    const stats = getSessionStats(pool);
     const scorePct = pool.length > 0 ? Math.round((correct / pool.length) * 100) : 0;
     const passed = scorePct >= (DATASET.meta.passingScorePercent || 75);
     const avgLookupStr = stats.avgLookupSeconds !== null ? `${stats.avgLookupSeconds.toFixed(1)}s` : '--s';
+    const isSeeTrack = /^EA/.test(STATE.selectedTrack || '');
+    const examTrackHeading = isSeeTrack
+      ? 'IRS SPECIAL ENROLLMENT EXAMINATION (SEE) DETERMINATION (75% BENCHMARK)'
+      : 'OFFICIAL EXAMINATION DETERMINATION (75% PASSING THRESHOLD)';
+    const corpusAuditLabel = isSeeTrack
+      ? 'Exact 26 CFR / IRC / Circular 230 Cited'
+      : 'Exact eCFR / HTSUS Section Cited';
 
     body.innerHTML = `
       <div style="padding:16px;border-radius:0px;margin-bottom:16px;background:${passed ? '#EDF5F0' : '#FDF2EE'};border:1.5px solid ${passed ? '#1A5638' : '#C8431F'};display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div>
           <div style="font-family:var(--font-mono);font-size:11px;font-weight:600;color:${passed ? '#1A5638' : '#C8431F'};">
-            OFFICIAL EXAMINATION DETERMINATION (75% PASSING THRESHOLD)
+            ${examTrackHeading}
           </div>
           <h3 style="font-family:var(--font-display);font-size:26px;font-weight:400;color:#141413;margin-top:4px;">
-            ${passed ? 'PASS — Qualified for License Application' : 'BELOW 75% THRESHOLD — Additional Citation-Speed Drills Needed'}
+            ${passed ? 'PASS — Ready for Licensing Examination' : 'BELOW 75% THRESHOLD — Additional Citation-Speed Drills Needed'}
           </h3>
           <p style="font-size:13px;color:#4A4842;margin-top:4px;">
             You answered <strong>${correct} of ${pool.length}</strong> questions correctly (${answered} attempted) with <strong>${verifiedProofs}</strong> verified statutory citation proofs.
@@ -3779,7 +3899,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-family:var(--font-mono);font-size:36px;font-weight:600;color:${passed ? '#1A5638' : '#C8431F'};">${scorePct}%</div>
-          <div style="font-family:var(--font-mono);font-size:11px;color:#4A4842;">Required: >= 75% (National Avg: 15.2%)</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:#4A4842;">Required: >= 75%</div>
         </div>
       </div>
 
@@ -3792,7 +3912,7 @@
         <div style="background:#F6F4EF;border:1px solid #C9C4B8;padding:12px;border-radius:0px;">
           <div style="font-family:var(--font-mono);font-size:10.5px;color:#78756D;font-weight:600;">VERIFIED CITATION PROOFS</div>
           <div style="font-family:var(--font-mono);font-size:20px;font-weight:600;color:#141413;">${verifiedProofs} / ${pool.length}</div>
-          <div style="font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">Exact eCFR / HTSUS Section Cited</div>
+          <div style="font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">${corpusAuditLabel}</div>
         </div>
         <div style="background:#F6F4EF;border:1px solid #C9C4B8;padding:12px;border-radius:0px;">
           <div style="font-family:var(--font-mono);font-size:10.5px;color:#78756D;font-weight:600;">REMAINING EXAM CLOCK</div>
@@ -3849,7 +3969,7 @@
         if (isSuiteLockedForCurrentTier(requestedSuite)) {
           trackSelect.value = STATE.selectedTrack;
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
+            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }

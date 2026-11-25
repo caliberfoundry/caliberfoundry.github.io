@@ -1,4 +1,4 @@
-/* Document review desk */
+/* Document review desk + Batch Course PDF Check (PLAN-34) */
 :root {
   --cf-bg-paper:#e8eff6; --cf-bg-stone:#d9e5f1; --cf-ink-primary:#142d49; --cf-ink-secondary:#446078;
   --cf-ink-muted:#51677a; --cf-accent-primary:#174d8b; --cf-accent-hover:#103961;
@@ -12,17 +12,20 @@ body {background:#e8eff6;color:#142d49;}
 .ds-brand-sub,.ds-brand-sep {display:none;}
 .ds-back-link {order:2;background:transparent;color:#365a77;border:0;font:500 12px var(--font-sans);box-shadow:none;text-decoration:underline;text-underline-offset:3px;}
 .ds-account-menu {position:relative;}
-.ds-account-menu summary,.doc-samples summary,.doc-advanced>summary {cursor:pointer;font:600 14px var(--font-sans);padding:10px 0;}
+.ds-account-menu summary,.doc-samples summary,.doc-advanced>summary,.doc-batch-disclosure>summary {cursor:pointer;font:600 14px var(--font-sans);padding:10px 0;}
 .ds-account-menu .ds-account-cluster {position:absolute;right:0;z-index:22;top:100%;width:max-content;max-width:calc(100vw - 32px);padding:12px;background:#183650;border-radius:5px;box-shadow:0 8px 18px #173d6030;}
 .ds-account-menu:not([open]) .ds-account-cluster,.doc-samples:not([open]) .ds-packet-selector-wrap {display:none;}
-.doc-opening {max-width:1220px;margin:0 auto;padding:clamp(40px,7vw,100px) clamp(22px,4vw,60px) 52px;display:grid;grid-template-columns:minmax(0,.87fr) minmax(0,1.13fr);align-items:center;gap:clamp(28px,7vw,96px);}
+.doc-opening {max-width:1220px;margin:0 auto;padding:clamp(36px,6vw,88px) clamp(22px,4vw,60px) 44px;display:grid;grid-template-columns:minmax(0,.87fr) minmax(0,1.13fr);align-items:center;gap:clamp(28px,7vw,96px);}
 .doc-intro h1 {font:500 clamp(48px,5.4vw,78px)/.97 var(--font-display);letter-spacing:-.055em;margin:0 0 22px;}
 .doc-intro h1 span {color:#3980b4;}
-.doc-intro>p {max-width:36ch;margin:0 0 22px;font:400 17px/1.55 var(--font-sans);color:#385066;}
+.doc-intro>p {max-width:38ch;margin:0 0 22px;font:400 17px/1.55 var(--font-sans);color:#385066;}
 .doc-intro .ds-upload-dropzone {display:flex;align-items:flex-start;flex-direction:column;gap:8px;background:none;border:0;padding:0;}
-#btnTriggerFileUpload,#dsOpenReport {font:650 15px var(--font-sans);padding:12px 18px;min-height:44px;border:1px solid #174d8b;border-radius:4px;background:#174d8b;color:#fff;cursor:pointer;box-shadow:none;}
-#btnTriggerFileUpload:hover,#dsOpenReport:hover {background:#103961;}
-.doc-intro .ds-drop-hint {color:#4b6479;font:12px var(--font-sans);}
+.doc-upload-actions {display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;}
+#btnTriggerFileUpload,#dsOpenReport,.ds-batch-primary-btn {font:650 15px var(--font-sans);padding:12px 18px;min-height:44px;border:1px solid #174d8b;border-radius:4px;background:#174d8b;color:#fff;cursor:pointer;box-shadow:none;}
+#btnTriggerFileUpload:hover,#dsOpenReport:hover,.ds-batch-primary-btn:hover {background:#103961;}
+.doc-batch-link-btn {min-height:42px;color:#174d8b;background:transparent;border:0;padding:4px 0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:600 14px var(--font-sans);}
+.doc-batch-link-btn:hover {color:#103961;}
+.doc-intro .ds-drop-hint {color:#415b70;font:12px/1.45 var(--font-sans);white-space:normal;}
 .doc-samples summary {color:#214f78;text-decoration:underline;text-underline-offset:3px;}
 .doc-samples .ds-packet-selector-wrap {display:grid;gap:6px;max-width:100%;margin:0;}
 .doc-samples select {width:100%;max-width:100%;color:#173650;background:#fff;border:1px solid #97aebf;}
@@ -30,13 +33,95 @@ body {background:#e8eff6;color:#142d49;}
 .doc-sheet-rule {display:flex;justify-content:space-between;gap:8px;border-bottom:2px solid #22476d;padding-bottom:12px;color:#375b7a;font:600 11px var(--font-mono);letter-spacing:.055em;text-transform:uppercase;}
 .doc-sheet h2 {margin:20px 0 14px;font:500 clamp(22px,2.4vw,35px)/1.15 var(--font-display);overflow-wrap:anywhere;}
 .doc-count {display:flex;align-items:baseline;gap:12px;}
-.doc-count strong {font:500 clamp(50px,6vw,82px)/1.12 var(--font-display);color:#174d8b;}
+.doc-count strong {font:500 clamp(50px,6vw,82px)/1.12 var(--font-display);color:#174d8b;font-variant-numeric:tabular-nums;}
 .doc-count span {font:600 16px var(--font-sans);}
-.doc-sheet p {margin:6px 0 22px;font:14px/1.55 var(--font-sans);color:#3b5470;overflow-wrap:anywhere;}
+.doc-sheet p {margin:6px 0 16px;font:14px/1.55 var(--font-sans);color:#3b5470;overflow-wrap:anywhere;}
+.doc-sheet-caveat {margin:0 0 20px;padding:8px 11px;background:#f4f8fc;border-left:3px solid #174d8b;font:12px/1.45 var(--font-sans);color:#2b4762;}
 .doc-actions {display:flex;flex-wrap:wrap;gap:6px 13px;align-items:center;}
 #dsOpenReport {background:#fff;color:#174d8b;}
 #dsOpenReport:hover {color:white;}
 #dsReviewResults {min-height:42px;color:#214f78;background:none;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:600 14px var(--font-sans);}
+
+/* Batch Course PDF Check Disclosure & Workbench (PLAN-34) */
+.doc-batch-disclosure {max-width:1280px;margin:0 auto 18px;border-top:1px solid #adbfce;border-bottom:1px solid #adbfce;background:#f5f9fc;}
+.doc-batch-disclosure>summary {padding:16px clamp(18px,4vw,48px);color:#173e65;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.doc-batch-disclosure>summary .doc-batch-summary-meta {font:500 12px var(--font-mono);color:#3b5470;font-variant-numeric:tabular-nums;}
+.doc-batch-disclosure:not([open])>:not(summary) {display:none;}
+.ds-batch-body {padding:0 clamp(18px,4vw,48px) 28px;display:flex;flex-direction:column;gap:18px;}
+.ds-batch-top-grid {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px;align-items:start;}
+.ds-batch-dropzone {background:#fff;border:1.5px dashed #7f9fb8;border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+.ds-batch-dropzone.drag-over {background:#e1eefb;border-color:#174d8b;border-style:solid;}
+.ds-batch-drop-title {font:600 15px var(--font-sans);color:#142d49;}
+.ds-batch-drop-desc {font:13px/1.5 var(--font-sans);color:#3b5470;}
+.ds-batch-presets-wrap {background:#fff;border:1px solid #bed0de;border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.ds-batch-presets-kicker {font:600 11px var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:#375b7a;}
+.ds-batch-presets-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.ds-batch-preset-btn {text-align:left;background:#f7fafd;border:1px solid #bed0de;border-radius:4px;padding:11px 12px;cursor:pointer;display:flex;flex-direction:column;gap:4px;color:#142d49;transition:border-color .12s ease,background-color .12s ease;}
+.ds-batch-preset-btn:hover {border-color:#174d8b;background:#edf4fc;}
+.ds-batch-preset-btn.active {border-color:#174d8b;box-shadow:inset 3px 0 0 #174d8b;background:#edf4fc;}
+.ds-preset-opt-tag {font:600 10.5px var(--font-mono);color:#174d8b;text-transform:uppercase;}
+.ds-preset-opt-title {font:700 12.5px/1.3 var(--font-sans);color:#142d49;}
+.ds-preset-opt-sub {font:11.5px/1.35 var(--font-sans);color:#446078;}
+
+/* Inline Progress Bar & Telemetry (ADR-024) */
+.ds-batch-progress {background:#fff;border:1px solid #9ab4c9;border-left:4px solid #174d8b;border-radius:4px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;}
+.ds-batch-progress.is-done {border-left-color:#15803d;background:#f4fbf6;}
+.ds-batch-progress-head {display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font:600 12.5px var(--font-sans);color:#142d49;}
+.ds-batch-progress-eta {font:600 11.5px var(--font-mono);color:#375b7a;font-variant-numeric:tabular-nums;}
+.ds-batch-progress-track {width:100%;height:8px;background:#dce8f2;border-radius:2px;overflow:hidden;}
+.ds-batch-progress-fill {height:100%;width:0%;background:#174d8b;transition:width .15s ease;}
+.ds-batch-progress.is-done .ds-batch-progress-fill {background:#15803d;}
+.ds-batch-progress-note {font:12px/1.45 var(--font-sans);color:#3b5470;}
+
+/* Batch KPI Strip */
+.ds-batch-kpi-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.ds-batch-kpi-card {background:#fff;border:1px solid #bed0de;border-radius:4px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;}
+.ds-batch-kpi-label {font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;color:#446078;}
+.ds-batch-kpi-val {font:600 24px/1.15 var(--font-mono);font-variant-numeric:tabular-nums;color:#142d49;}
+.ds-batch-kpi-val.kpi-warn {color:#9a3412;}
+.ds-batch-kpi-val.kpi-ok {color:#15803d;}
+.ds-batch-kpi-sub {font:11.5px/1.35 var(--font-sans);color:#446078;}
+
+/* Batch Results Table & Export Bar */
+.ds-batch-results-card {background:#fff;border:1px solid #bed0de;border-radius:4px;overflow:hidden;}
+.ds-batch-results-bar {padding:12px 14px;background:#edf4fc;border-bottom:1px solid #bed0de;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.ds-batch-results-title {font:700 14px var(--font-sans);color:#142d49;}
+.ds-batch-export-actions {display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.ds-batch-secondary-btn {padding:8px 12px;min-height:36px;background:#fff;color:#142d49;border:1px solid #8da8be;border-radius:4px;font:600 12.5px var(--font-sans);cursor:pointer;}
+.ds-batch-secondary-btn:hover {border-color:#174d8b;color:#174d8b;background:#f5f9fc;}
+.ds-batch-secondary-btn:disabled {opacity:.45;cursor:not-allowed;}
+.ds-batch-table-wrap {width:100%;overflow-x:auto;}
+.ds-batch-table {width:100%;border-collapse:collapse;font:12.5px/1.45 var(--font-sans);}
+.ds-batch-table th,.ds-batch-table td {padding:10px 12px;border-bottom:1px solid #dce6ef;text-align:left;vertical-align:top;}
+.ds-batch-table th {background:#f7fafd;font:600 11px var(--font-mono);text-transform:uppercase;color:#375b7a;white-space:nowrap;}
+.ds-batch-table tr.batch-row-active {background:#edf4fc;}
+.ds-batch-fname {font:600 13px var(--font-sans);color:#142d49;overflow-wrap:anywhere;}
+.ds-batch-fmeta {font:11px var(--font-mono);color:#4b6479;margin-top:2px;font-variant-numeric:tabular-nums;}
+.ds-batch-pill {display:inline-block;padding:2px 7px;border-radius:3px;font:600 11px var(--font-mono);border:1px solid currentColor;white-space:nowrap;}
+.ds-batch-pill.pill-fail {color:#9a3412;background:#fff7ed;}
+.ds-batch-pill.pill-warn {color:#92400e;background:#fffbeb;}
+.ds-batch-pill.pill-signals {color:#166534;background:#f0fdf4;}
+.ds-batch-pill.pill-invalid {color:#991b1b;background:#fef2f2;}
+.ds-batch-missing-list {font:11.5px/1.4 var(--font-mono);color:#446078;margin-top:4px;overflow-wrap:anywhere;}
+.ds-batch-manual-list {margin:0;padding-left:16px;font:12px/1.4 var(--font-sans);color:#2c465f;}
+.ds-batch-manual-list li {margin-bottom:3px;}
+.ds-batch-inspect-btn {padding:6px 10px;min-height:34px;background:#fff;color:#174d8b;border:1px solid #174d8b;border-radius:4px;font:600 12px var(--font-sans);cursor:pointer;white-space:nowrap;}
+.ds-batch-inspect-btn:hover {background:#174d8b;color:#fff;}
+.ds-batch-empty {padding:20px 16px;font:13px/1.5 var(--font-sans);color:#446078;}
+
+/* Automated vs. Manual Verification Matrix */
+.ds-scope-matrix {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;}
+.ds-scope-card {background:#fff;border:1px solid #bed0de;border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.ds-scope-card.scope-manual {border-left:4px solid #b45309;}
+.ds-scope-card.scope-auto {border-left:4px solid #174d8b;}
+.ds-scope-kicker {font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;color:#375b7a;}
+.ds-scope-card.scope-manual .ds-scope-kicker {color:#92400e;}
+.ds-scope-card h3 {font:600 16px/1.25 var(--font-sans);color:#142d49;margin:0;}
+.ds-scope-list {margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font:12.5px/1.45 var(--font-sans);color:#2c465f;}
+.ds-scope-list strong {color:#142d49;}
+.ds-conformance-disclaimer {background:#fffbeb;border:1px solid #d97706;border-left:4px solid #b45309;border-radius:4px;padding:12px 14px;font:12.5px/1.5 var(--font-sans);color:#451a03;}
+.ds-conformance-disclaimer strong {color:#78350f;}
+
 .doc-advanced {max-width:1280px;margin:0 auto 24px;border-block:1px solid #adbfce;}
 .doc-advanced>summary {padding:16px clamp(18px,4vw,48px);color:#264d70;}
 .doc-advanced:not([open])>:not(summary) {display:none;}
@@ -47,6 +132,12 @@ body {background:#e8eff6;color:#142d49;}
 .product-utilities {max-width:1220px;margin:24px auto;padding:0 24px;display:flex;align-items:center;gap:16px;font:13px var(--font-sans);}
 .product-utilities a {color:#365a77;}
 :focus-visible {outline:3px solid #1769ac;outline-offset:3px;}
+
+@media(max-width:960px) {
+  .ds-batch-top-grid,.ds-scope-matrix {grid-template-columns:1fr;}
+  .ds-batch-presets-grid {grid-template-columns:1fr;}
+  .ds-batch-kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 @media(max-width:760px) {
   .ds-global-header {min-height:54px;padding:8px 16px;}
   .ds-back-link {font-size:11px;}
@@ -58,5 +149,12 @@ body {background:#e8eff6;color:#142d49;}
   .doc-sheet h2 {margin:13px 0 7px;}
   .doc-sheet p {margin-bottom:10px;}
   .doc-intro .ds-upload-dropzone {align-items:flex-start;}
-  .doc-advanced {margin-inline:12px;}
+  .doc-batch-disclosure,.doc-advanced {margin-inline:12px;}
+  .ds-batch-body {padding:0 14px 20px;}
+  .ds-batch-kpi-grid {grid-template-columns:1fr;}
+  .ds-batch-table thead {display:none;}
+  .ds-batch-table,.ds-batch-table tbody,.ds-batch-table tr,.ds-batch-table td {display:block;width:100%;}
+  .ds-batch-table tr {border-bottom:2px solid #bed0de;padding:8px 0;}
+  .ds-batch-table td {border-bottom:0;padding:5px 12px;}
+  .ds-batch-table td::before {content:attr(data-label);display:block;font:600 10px var(--font-mono);text-transform:uppercase;color:#446078;margin-bottom:2px;}
 }

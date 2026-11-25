@@ -1,0 +1,30 @@
+%PDF-1.7
+% Educational Fixture 1: Untagged University Biology Syllabus (3 pages, 1 untagged image)
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /ViewerPreferences << /DisplayDocTitle false >> >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R 5 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /R /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /R /Resources << /XObject << /Im1 7 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /R >>
+endobj
+6 0 obj
+<< /Length 98 >>
+stream
+BT /F1 18 Tf 48 720 Td (BIO-101 General Biology Syllabus - Fall 2026) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /XObject /Subtype /Image /Width 640 /Height 420 /BitsPerComponent 8 >>
+stream
+placeholder-image-bytes
+endstream
+endobj
+%%EOF

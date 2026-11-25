@@ -1,0 +1,6 @@
+Metric_ID,Category,Document_Metric,Reported_Value,Unit_Or_Terms,Audit_Note
+FIN-01,Revenue,"Enterprise Tier Annual Recurring Revenue",$14820000,"USD / year","Gross margin 81.4%, YoY growth +34.2%"
+FIN-02,Profitability,"Q3 Operating Profit (Adjusted EBITDA)",$4190000,"USD","Exceeds $3,500,000 debt covenant floor by +19.7%"
+FIN-03,SLA Reserve,"Maximum SLA Penalty Cap",$285000,"USD / quarter","Matches 12.0% quarterly billing cap in Section 4.2"
+FIN-04,Vendor Billing,"Annual Fee Cap (Billed Schedule)",$68500,"15-day payment terms","Check against Vendor_SLA_Addendum.pdf ($50,000 / 30-day)"
+FIN-05,Cloud Spend,"Q3 Cloud Compute Spend",$142500,"USD / quarter","Dedicated single-tenant VPC cluster"

@@ -1,0 +1,12 @@
+lineItem/UsageStartDate,lineItem/ProductCode,lineItem/UsageType,lineItem/Operation,lineItem/LineItemType,lineItem/ResourceId,product/region,pricing/term,lineItem/UsageAmount,lineItem/UnblendedCost
+2026-11-01T00:00:00Z,AmazonEC2,USE1-BoxUsage:m6i.4xlarge,RunInstances,SavingsPlanCoveredUsage,i-0a91prodapi01,us-east-1,SavingsPlans,720,3108.00
+2026-11-01T00:00:00Z,AmazonEC2,USE1-BoxUsage:c6i.2xlarge,RunInstances,Usage,i-0b44worker02,us-east-1,OnDemand,720,1650.00
+2026-11-01T00:00:00Z,AmazonEC2,USE1-BoxUsage:m6i.2xlarge,RunInstances,SavingsPlanCoveredUsage,i-0c12core03,us-east-1,SavingsPlans,720,1480.00
+2026-11-01T00:00:00Z,AmazonRDS,USE1-InstanceUsage:db.r6g.2xlarge,CreateDBInstance:0014,Usage,arn:aws:rds:us-east-1:111122223333:db:prod-pg-01,us-east-1,OnDemand,720,2150.00
+2026-11-01T00:00:00Z,AmazonEC2,USE1-EBS:SnapshotUsage,CreateSnapshot,Usage,snap-0old2024archive,us-east-1,OnDemand,4800,240.00
+2026-11-01T00:00:00Z,AmazonEC2,USE1-EBS:VolumeUsage.gp3,CreateVolume-Gp3,Usage,vol-0prod9910-active,us-east-1,OnDemand,4000,320.00
+2026-11-01T00:00:00Z,AmazonVPC,USE1-NatGateway-Bytes,NatGateway,Usage,nat-0prod7712,us-east-1,OnDemand,18500,832.50
+2026-11-01T00:00:00Z,AmazonVPC,USE1-NatGateway-Hours,NatGateway,Usage,nat-0prod7712,us-east-1,OnDemand,720,32.40
+2026-11-01T00:00:00Z,AmazonCloudWatch,USE1-DataProcessing-Bytes,PutLogEvents,Usage,log-group:/aws/eks/prod-verbose,us-east-1,OnDemand,1135,567.50
+2026-11-01T00:00:00Z,AmazonS3,USE1-TimedStorage-ByteHrs,StandardStorage,Usage,arn:aws:s3:::prod-analytics-lake,us-east-1,OnDemand,29352,675.10
+2026-11-01T00:00:00Z,ComputeSavingsPlans,USE1-SP-Unused,SavingsPlanRecurringFee,SavingsPlanRecurringFee,sp-0unused991,us-east-1,Unused,720,380.00

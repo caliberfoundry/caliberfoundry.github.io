@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>DOJ ADA Title II University Courseware Deadline &amp; Velocity Calculator | Caliber Foundry</title>
+  <meta name="description" content="Model weekly PDF syllabus tagging and instructional video captioning velocity for public universities and colleges under the US DOJ ADA Title II WCAG 2.1 Level AA Web Accessibility Rule (April 26, 2027 &amp; April 26, 2028 IFR deadlines)." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/ada-title-ii-wcag-courseware-deadline-calculator.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="DOJ ADA Title II University Courseware Remediation Velocity Calculator" />
+  <meta property="og:description" content="Calculate weekly remediation hours required before the April 26, 2027 and April 26, 2028 ADA Title II WCAG 2.1 AA compliance deadlines." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/ada-title-ii-wcag-courseware-deadline-calculator.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "DOJ ADA Title II University Courseware Deadline & Velocity Calculator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/ada-title-ii-wcag-courseware-deadline-calculator.html",
+    "educationalUse": ["Interactive Calculator", "Compliance Planning"],
+    "citation": [
+      "https://www.ada.gov/resources/2024-03-28-web-rule/",
+      "https://www.ada.gov/resources/web-rule-first-steps/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="ada-title-ii">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">07 · DOJ ADA Title II</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./qti-3-0-item-bank-migration-estimator.html" class="eg-nav-link">← Prev: QTI 3.0</a>
+        <a href="./pdf-ua-iso-14289-matterhorn-syllabus-checker.html" class="eg-nav-link">Next: PDF/UA Checker →</a>
+        <a href="../../docushield/index.html" class="eg-nav-cta">Batch-Audit PDFs in DocuShield →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Model Weekly Velocity</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item Title II Rule Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Review 28 CFR Part 35 Exceptions</a></li>
+      </ol>
+      <span class="eg-std-pill">DOJ 28 CFR Part 35 · WCAG 2.1 Level AA</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 07 of 10 · Public Higher-Ed &amp; District Accessibility Planning</span>
+      <h1 class="eg-title">DOJ ADA Title II University Courseware Remediation Velocity Calculator</h1>
+      <p class="eg-subtitle">Under the U.S. Department of Justice ADA Title II rule (28 CFR Part 35, as updated by the April 2026 Interim Final Rule), public universities, community colleges, and K-12 districts must bring active digital courseware—including LMS content, PDFs, and third-party EdTech tools—to WCAG 2.1 Level AA.</p>
+
+      <div class="eg-kpi-strip" aria-label="ADA Title II velocity metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Time Remaining</span>
+          <span class="eg-kpi-value" id="kpiVal1">22 weeks</span>
+          <span class="eg-kpi-note" id="kpiNote1">Until April 26, 2027 (&gt;=50k pop. IFR)</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Total Backlog Effort</span>
+          <span class="eg-kpi-value" id="kpiVal2">175 hrs</span>
+          <span class="eg-kpi-note" id="kpiNote2">Total WCAG 2.1 AA courseware work</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Required Weekly Burn</span>
+          <span class="eg-kpi-value" id="kpiVal3">8.0 hrs/wk</span>
+          <span class="eg-kpi-note" id="kpiNote3">Required velocity vs 18h/wk</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Staffing Balance</span>
+          <span class="eg-kpi-value" id="kpiVal4">0h deficit</span>
+          <span class="eg-kpi-note" id="kpiNote4">Team capacity sufficient</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="adaPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="adaPresetHeading">Step 1 — Pick 1 of 3 Academic Department Backlogs (or Enter Counts)</h2>
+        <span class="eg-section-hint">Compares required weekly hours against internal instructional design capacity</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="ADA Title II presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Single Academic Department</span>
+          <span class="eg-option-title">180 PDFs · 45 Videos · Apr 2027 Tier</span>
+          <span class="eg-option-desc">Manageable within an 18 hr/week instructional design allocation ahead of April 26, 2027.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Multi-College Backlog Risk</span>
+          <span class="eg-option-title">850 PDFs · 220 Videos · 12h/wk Staff</span>
+          <span class="eg-option-desc">Requires 33.7 hrs/week—exceeds internal team capacity by +21.7 hrs/week without batch PDF/UA tooling.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Small District (&lt;50k Tier)</span>
+          <span class="eg-option-title">140 PDFs · 30 Videos · Apr 2028 Tier</span>
+          <span class="eg-option-desc">74-week runway to April 26, 2028 enables steady 2.0 hr/week remediation without emergency overtime.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="ADA Title II calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Courseware Inventory &amp; Team Capacity</h2>
+            <p class="eg-panel-sub">Enter active (non-archived) course files and weekly instructional tech hours.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selEntityTier"><span>Public Entity Jurisdiction Tier (DOJ 2026 IFR)</span><span class="eg-unit">Deadline</span></label>
+            <select class="eg-select" id="selEntityTier" data-calc-input>
+              <option value="large-2027" selected>State University / Jurisdiction &gt;= 50,000 Pop. (April 26, 2027)</option>
+              <option value="small-2028">Small Public Entity &lt; 50,000 Pop. / Special District (April 26, 2028)</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpPdfDocs"><span>Active Course PDFs &amp; Syllabi</span><span class="eg-unit">0–20,000</span></label>
+            <input class="eg-input" type="number" id="inpPdfDocs" min="0" max="20000" value="180" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpVideos"><span>Uncaptioned Lecture Videos</span><span class="eg-unit">0–5,000</span></label>
+            <input class="eg-input" type="number" id="inpVideos" min="0" max="5000" value="45" data-calc-input />
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="inpWeeklyCapacity"><span>Internal Team Weekly Remediation Capacity</span><span class="eg-unit">hrs/week</span></label>
+            <input class="eg-input" type="number" id="inpWeeklyCapacity" min="2" max="400" value="18" data-calc-input />
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Compute Velocity Plan →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download Title II Plan JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">DOJ Title II Schedule Forecast</h2>
+            <p class="eg-panel-sub">Calculated from November 2026 to the applicable federal compliance date.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">ON SCHEDULE FOR DOJ TITLE II DEADLINE</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">8.0 hrs/wk Required (22 Wks Left)</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="ADA Title II effort breakdown">
+          <thead><tr><th>Remediation Stream</th><th style="text-align:right;">Hours / Date</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../../docushield/index.html" class="eg-btn-secondary">Open DocuShield Syllabus Remediator →</a>
+          <a href="../../work/docushield.html" class="eg-btn-ghost">DocuShield Case Study</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="adaTakeaways">
+      <h2 class="eg-section-heading" id="adaTakeaways">Three Strategic Facts About the DOJ ADA Title II Rule for Higher Ed &amp; Vendors</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Password-Protected LMS Courses Are Covered:</strong> Unlike older misconceptions, the 2024/2026 DOJ rule covers password-protected Canvas/Moodle/Blackboard course materials used in active classes—not just public marketing pages.</li>
+        <li><strong>Third-Party Vendor Content Counts:</strong> Public universities remain legally responsible when contracted EdTech platforms or publisher labs fail WCAG 2.1 AA, driving strict VPAT 2.5 gates in RFPs.</li>
+        <li><strong>Archived Course Exception Has 4 Strict Conditions:</strong> Legacy courses only qualify for the archive exception if created before the compliance date, kept solely for reference, stored in a dedicated archive area, and unaltered since archiving.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="adaQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="adaQuizHeading">Step 2 — 3-Question DOJ ADA Title II Compliance Check</h2>
+          <p class="eg-panel-sub">Test LMS scope, archived content rules, and third-party vendor obligations.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. A state university professor copies a 2022 scanned, untagged PDF reading into their Spring 2027 Canvas course shell behind campus SSO login. Does the DOJ ADA Title II Web Rule require that PDF to meet WCAG 2.1 Level AA?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="The 2024 rulemaking explicitly removed the proposed password-protected course exception; active LMS course materials must conform.">A. No — password-protected LMS courses are exempt unless a student with a documented disability enrolls first.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Once placed into an active course to apply for, gain access to, or participate in a public university's educational program, the PDF is active content—not archived—and must meet WCAG 2.1 Level AA.">B. Yes — copying an old PDF into an active semester course removes it from the archived-content exception and requires WCAG 2.1 Level AA conformance.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Title II applies to all public state and local colleges regardless of course subject.">C. Only if the course is funded by a federal STEM grant.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. What minimum technical standard did the U.S. Department of Justice codify in 28 CFR Part 35 for state and local government (including public university) web content and mobile apps?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="28 CFR Part 35 adopts WCAG 2.1 Level AA as the baseline legal standard (entities may also satisfy equivalent or stricter WCAG 2.2 AA).">A. WCAG 2.1 Level AA (with WCAG 2.2 AA accepted where it provides equivalent or greater accessibility).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="WCAG 2.0 Level A omits contrast, reflow, non-text contrast, and orientation requirements.">B. WCAG 2.0 Level A only.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="WCAG Level AAA is explicitly not required across entire sites by W3C or DOJ.">C. WCAG 2.2 Level AAA across 100% of archived and live pages.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. How does the DOJ ADA Title II rule treat an external SaaS homework tool embedded inside a public college's curriculum under contract?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="28 CFR § 35.200 covers web content and mobile apps a public entity provides or makes available directly OR through contractual, licensing, or other arrangements.">A. Contractual third-party SaaS tools are completely outside Title II scope.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Public entities must ensure web content and apps provided through contractual or licensing arrangements meet WCAG 2.1 Level AA, which is why universities demand verified VPATs and remediation SLAs from EdTech vendors.">B. Content provided through contractual or licensing arrangements is covered, so universities enforce WCAG 2.1/2.2 AA obligations directly on EdTech vendors.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Overlay widgets do not remediate keyboard traps, PDF tag trees, or missing captions and do not confer legal immunity.">C. Installing a third-party JavaScript accessibility overlay widget satisfies Title II automatically.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="DOJ ADA Title II official sources">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Five Narrow Exceptions in 28 CFR § 35.201</span></summary>
+        <div class="eg-drawer-body">
+          <ol style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+            <li><strong>Archived web content</strong> (all 4 archival conditions met and never edited).</li>
+            <li><strong>Preexisting conventional electronic documents</strong> (PDF/Word/PPT posted before compliance date <em>unless</em> currently used to apply for, access, or participate in services/courses).</li>
+            <li><strong>Content posted by unaffiliated third parties</strong> (not under contractual/licensing arrangement).</li>
+            <li><strong>Individualized, password-protected conventional documents</strong> about a specific person (e.g., a single student's PDF financial statement—still subject to on-request accessible format duties).</li>
+            <li><strong>Preexisting social media posts</strong> published prior to the compliance deadline.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public U.S. DOJ ADA.gov Guidance</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.ada.gov/resources/2024-03-28-web-rule/" target="_blank" rel="noopener noreferrer">ADA.gov Fact Sheet — Rule on the Accessibility of Web Content and Mobile Apps Provided by State and Local Governments</a></li>
+            <li><a href="https://www.ada.gov/resources/web-rule-first-steps/" target="_blank" rel="noopener noreferrer">ADA.gov — First Steps Toward Complying with the ADA Title II Web &amp; Mobile App Accessibility Rule</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 07/10 · DOJ ADA Title II Courseware Calculator</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./pdf-ua-iso-14289-matterhorn-syllabus-checker.html">Next: ISO 14289-1 PDF/UA Checker →</a>
+      <a href="../../work/docushield.html">DocuShield Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

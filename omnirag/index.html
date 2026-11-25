@@ -8,1292 +8,302 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>OmniRAG™ — Enterprise Document Citation & Workflow Studio | Caliber Foundry</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
-    :root {
-      --cf-bg-paper:       #F6F4EF;
-      --cf-bg-stone:       #ECE9E1;
-      --cf-bg-surface:     #FFFFFF;
-      --cf-bg-ink-panel:   #141413;
-
-      --cf-ink-primary:    #141413;
-      --cf-ink-secondary:  #4A4842;
-      --cf-ink-muted:      #78756D;
-      --cf-ink-on-dark:    #F6F4EF;
-
-      --cf-rule-strong:    #141413;
-      --cf-rule-mid:       #C9C4B8;
-      --cf-rule-subtle:    #DFDBD2;
-
-      --cf-accent-primary: #C8431F;
-      --cf-accent-hover:   #A63415;
-      --cf-accent-tint:    #FDF2EE;
-
-      --cf-navy-authority: #1B365D;
-      --cf-navy-tint:      #EEF2F7;
-
-      --cf-forest-pass:    #1A5638;
-      --cf-forest-tint:    #EDF5F0;
-
-      --cf-brass-warn:     #9C5A08;
-      --cf-brass-tint:     #FBF4E9;
-
-      --cf-highlight-mark: #FCE588;
-
-      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
-      --font-serif:   'Newsreader', Georgia, serif;
-      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono:    'IBM Plex Mono', monospace;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background-color: var(--cf-bg-paper);
-      color: var(--cf-ink-primary);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    ::selection {
-      background-color: var(--cf-highlight-mark);
-      color: var(--cf-ink-primary);
-    }
-
-    .mono {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .spec-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-variant-numeric: tabular-nums;
-      color: var(--cf-ink-muted);
-    }
-
-    /* Masthead */
-    .masthead {
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      background-color: var(--cf-bg-paper);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-    }
-
-    .masthead-inner {
-      max-width: 1560px;
-      margin: 0 auto;
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      border-left: 1px solid var(--cf-rule-mid);
-      border-right: 1px solid var(--cf-rule-mid);
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .back-link {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-ink-primary);
-      color: var(--cf-ink-on-dark);
-      text-decoration: none;
-      border-radius: 2px;
-    }
-
-    .back-link:hover {
-      background-color: #2B2A27;
-    }
-
-    .app-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 400;
-      line-height: 1;
-      color: var(--cf-ink-primary);
-    }
-
-    /* Tactile Mechanical Buttons */
-    .btn-tactile {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 6px 11px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-bg-surface);
-      color: var(--cf-ink-primary);
-      box-shadow: 2px 2px 0px var(--cf-ink-primary);
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
-      cursor: pointer;
-    }
-
-    .btn-tactile:hover {
-      background-color: var(--cf-bg-stone);
-    }
-
-    .btn-tactile:active {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0px var(--cf-ink-primary);
-    }
-
-    .btn-tactile-vermilion {
-      background-color: var(--cf-accent-primary);
-      color: #FFFFFF;
-    }
-
-    .btn-tactile-vermilion:hover {
-      background-color: var(--cf-accent-hover);
-    }
-
-    .btn-tactile-ink {
-      background-color: var(--cf-ink-primary);
-      color: var(--cf-ink-on-dark);
-    }
-
-    .btn-tactile-forest {
-      background-color: var(--cf-forest-pass);
-      color: #FFFFFF;
-    }
-
-    /* Main Blueprint Shell */
-    .shell {
-      max-width: 1560px;
-      width: 100%;
-      margin: 0 auto;
-      border-left: 1px solid var(--cf-rule-mid);
-      border-right: 1px solid var(--cf-rule-mid);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Top StateGraph Pipeline Telemetry Bar */
-    .pipeline-bar {
-      background-color: var(--cf-bg-stone);
-      border-bottom: 1px solid var(--cf-rule-mid);
-      padding: 10px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .nodes-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      background-color: var(--cf-bg-surface);
-    }
-
-    @media (min-width: 640px) {
-      .nodes-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .nodes-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .node-cell {
-      padding: 12px 16px;
-      border-right: 1px solid var(--cf-rule-mid);
-      border-bottom: 1px solid var(--cf-rule-mid);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      transition: background-color 0.18s ease;
-    }
-
-    @media (min-width: 1024px) {
-      .node-cell {
-        border-bottom: none;
-      }
-      .node-cell:last-child {
-        border-right: none;
-      }
-    }
-
-    .node-cell.pulsing {
-      background-color: var(--cf-highlight-mark);
-    }
-
-    .node-index {
-      width: 26px;
-      height: 26px;
-      border: 1px solid var(--cf-ink-primary);
-      background-color: var(--cf-bg-paper);
-      color: var(--cf-ink-primary);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    /* Split-Screen Workbench (Left 6 Cols: Citation Stream | Right 6 Cols: Source Document Inspector) */
-    .split-workbench {
-      display: grid;
-      grid-template-columns: 1fr;
-      flex: 1;
-    }
-
-    @media (min-width: 820px) {
-      .split-workbench {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
-    }
-
-    .left-pane {
-      background-color: var(--cf-bg-paper);
-      border-bottom: 1px solid var(--cf-rule-mid);
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    @media (min-width: 820px) {
-      .left-pane {
-        border-bottom: none;
-        border-right: 1.5px solid var(--cf-rule-strong);
-      }
-    }
-
-    .right-pane {
-      background-color: var(--cf-bg-surface);
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .pane-toolbar {
-      padding: 12px 20px;
-      background-color: var(--cf-bg-stone);
-      border-bottom: 1px solid var(--cf-rule-mid);
-    }
-
-    /* Clickable Citation Badges (Westlaw / Editorial Legal Reference Style) */
-    .citation-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 1px 7px;
-      margin: 2px 2px;
-      border-radius: 2px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      background-color: var(--cf-accent-tint);
-      color: var(--cf-accent-primary);
-      border: 1px solid var(--cf-accent-primary);
-      cursor: pointer;
-      box-shadow: 1px 1px 0px var(--cf-ink-primary);
-      transition: transform 0.08s ease, background-color 0.12s ease;
-    }
-
-    .citation-badge:hover {
-      background-color: var(--cf-accent-primary);
-      color: #FFFFFF;
-    }
-
-    .citation-badge:active {
-      transform: translate(1px, 1px);
-    }
-
-    /* Prompt Chips */
-    .prompt-chip {
-      padding: 5px 10px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      background-color: var(--cf-bg-surface);
-      color: var(--cf-ink-primary);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-      cursor: pointer;
-      transition: border-color 0.12s ease, background-color 0.12s ease;
-    }
-
-    .prompt-chip:hover {
-      border-color: var(--cf-ink-primary);
-      background-color: var(--cf-highlight-mark);
-    }
-
-    /* Chat & Verification Stream */
-    .stream-viewport {
-      padding: 20px;
-      overflow-y: auto;
-      max-height: 540px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .msg-user {
-      align-self: flex-end;
-      max-width: 88%;
-      background-color: var(--cf-bg-stone);
-      border: 1px solid var(--cf-rule-strong);
-      padding: 12px 16px;
-      border-radius: 2px;
-    }
-
-    .msg-system {
-      width: 100%;
-      background-color: var(--cf-bg-surface);
-      border: 1px solid var(--cf-rule-strong);
-      box-shadow: 3px 3px 0px var(--cf-rule-mid);
-      padding: 16px 20px;
-      border-radius: 2px;
-      font-family: var(--font-serif);
-      font-size: 15.5px;
-      line-height: 1.65;
-      color: var(--cf-ink-primary);
-    }
-
-    .msg-system ul {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    .msg-system li {
-      margin-bottom: 10px;
-    }
-
-    /* Document Source Chunks */
-    .doc-viewport {
-      padding: 20px;
-      overflow-y: auto;
-      max-height: 540px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background-color: var(--cf-bg-paper);
-    }
-
-    .doc-chunk {
-      padding: 16px 18px;
-      background-color: var(--cf-bg-surface);
-      border: 1px solid var(--cf-rule-mid);
-      border-radius: 2px;
-      cursor: pointer;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .doc-chunk:hover {
-      border-color: var(--cf-ink-primary);
-    }
-
-    .doc-chunk.source-highlighted {
-      background-color: var(--cf-highlight-mark);
-      border: 1.5px solid var(--cf-ink-primary);
-      box-shadow: 3px 3px 0px var(--cf-ink-primary);
-    }
-
-    .chunk-body-text {
-      font-family: var(--font-serif);
-      font-size: 15.5px;
-      line-height: 1.65;
-      color: var(--cf-ink-primary);
-      margin-top: 8px;
-    }
-
-    .input-mechanical {
-      padding: 8px 12px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--cf-ink-primary);
-      background-color: var(--cf-bg-surface);
-      border: 1px solid var(--cf-ink-primary);
-      border-radius: 2px;
-      outline: none;
-    }
-
-    .input-mechanical:focus {
-      border-color: var(--cf-accent-primary);
-    }
-
-    .site-footer {
-      background-color: var(--cf-bg-ink-panel);
-      color: var(--cf-ink-on-dark);
-      border-top: 1.5px solid var(--cf-rule-strong);
-      padding: 18px 24px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-    }
-
-    /* Plain-English Guided 3-Step Bar & Scenario Cards */
-    .how-it-works-strip {
-      background-color: #141413;
-      color: #F6F4EF;
-      padding: 8px 20px;
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      font-size: 12px;
-    }
-    @media (max-width: 820px) {
-      .how-it-works-strip {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-    }
-    .hiw-step-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #1F1E1C;
-      color: #F6F4EF;
-      border: 1px solid #4A4842;
-      padding: 7px 10px;
-      text-align: left;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .hiw-step-btn:hover {
-      background: #2C2A27;
-      border-color: #FCE588;
-    }
-    .hiw-num {
-      background-color: var(--cf-accent-primary);
-      color: #FFFFFF;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 2px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    @keyframes cfFlashPulse {
-      0% { box-shadow: 0 0 0 4px #FCE588; background-color: #FEF3C7; }
-      100% { box-shadow: none; }
-    }
-    .cf-flash-active {
-      animation: cfFlashPulse 0.9s ease;
-    }
-    .diff-compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 8px 0;
-      font-size: 12px;
-    }
-    .diff-col-a {
-      background: var(--cf-bg-paper);
-      border: 1px solid var(--cf-rule-mid);
-      padding: 7px 9px;
-    }
-    .diff-col-b {
-      background: var(--cf-bg-paper);
-      border: 1px solid var(--cf-rule-mid);
-      padding: 7px 9px;
-    }
-    .diff-col-mismatch {
-      background: #FDF2EF;
-      border: 1px solid var(--cf-accent-primary);
-      padding: 7px 9px;
-    }
-
-    .pack-picker-bar {
-      background-color: var(--cf-bg-stone);
-      border-bottom: 1.5px solid var(--cf-rule-strong);
-      padding: 14px 24px;
-    }
-    .pack-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 8px;
-    }
-    @media (max-width: 960px) {
-      .pack-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .pack-card {
-      text-align: left;
-      background-color: var(--cf-bg-surface);
-      border: 1.5px solid var(--cf-rule-mid);
-      padding: 12px 14px;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .pack-card:hover {
-      border-color: var(--cf-ink-primary);
-    }
-    .pack-card.active-pack {
-      border: 2px solid var(--cf-ink-primary);
-      box-shadow: 3px 3px 0px var(--cf-ink-primary);
-      background-color: #FFFFFF;
-    }
-    .pack-card-title {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--cf-ink-primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .pack-card-desc {
-      font-size: 12px;
-      color: var(--cf-ink-secondary);
-      line-height: 1.4;
-    }
-    .pack-status-pill {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 2px;
-      display: inline-block;
-      margin-top: 4px;
-      width: fit-content;
-    }
-    .pack-status-ok {
-      background-color: var(--cf-forest-tint);
-      color: var(--cf-forest-pass);
-      border: 1px solid var(--cf-forest-pass);
-    }
-    .pack-status-warn {
-      background-color: var(--cf-accent-tint);
-      color: var(--cf-accent-primary);
-      border: 1px solid var(--cf-accent-primary);
-    }
-
-    .finding-card {
-      border: 1px solid var(--cf-rule-mid);
-      background-color: #FFFFFF;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      border-left: 4px solid var(--cf-forest-pass);
-    }
-    .finding-card.finding-alert {
-      border-left-color: var(--cf-accent-primary);
-      background-color: #FFFDFB;
-    }
-    .finding-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
-    .finding-title {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--cf-ink-primary);
-    }
-    .finding-desc {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--cf-ink-secondary);
-      margin-bottom: 8px;
-    }
-    .finding-proof-btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tech-drawer {
-      border-top: 1.5px solid var(--cf-rule-strong);
-      background-color: var(--cf-bg-stone);
-    }
-    .tech-drawer summary {
-      padding: 12px 24px;
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--cf-ink-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .tech-drawer summary:hover {
-      color: var(--cf-ink-primary);
-    }
-
-    /* Audit Report Preview Modal */
-    .om-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 20, 19, 0.62);
-      z-index: 9500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .om-modal-backdrop.om-hidden {
-      display: none !important;
-    }
-    .om-modal-window {
-      background: #FFFFFF;
-      border: 2px solid #141413;
-      box-shadow: 6px 6px 0 #141413;
-      max-width: 720px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .om-modal-header {
-      background: #141413;
-      color: #F6F4EF;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .om-modal-body {
-      padding: 20px;
-      font-size: 13.5px;
-      line-height: 1.55;
-    }
-    @media (max-width: 600px) {
-      .comparison-fields { grid-template-columns: 1fr !important; }
-      .how-it-works-strip { gap: 4px; }
-      .masthead-inner { gap: 6px; }
-    }
-    [hidden] { display: none !important; }
-  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>OmniRAG™ — Document Evidence Verifier &amp; Due Diligence Pack | Caliber Foundry</title>
   <link rel="stylesheet" href="./reader.css" />
 </head>
 <body>
 
   <header class="om-search-head">
     <nav class="om-bound om-brand-line" aria-label="Product navigation">
-      <a class="om-wordmark" href="./">OmniRAG</a>
-      <a href="../#work">All products ↗</a>
+      <div class="om-brand-left">
+        <a class="om-wordmark" href="./">OmniRAG</a>
+        <a href="../#work">All products ↗</a>
+      </div>
+      <div class="om-brand-right">
+        <span id="omLicenseStatusPill" class="om-license-pill">Free · 2 local files</span>
+        <button type="button" id="btnOpenPaywall" class="om-header-cta">Due Diligence Pack ($249)</button>
+      </div>
     </nav>
     <div class="om-bound om-intro">
       <h1>Find the passage<br>behind the answer.</h1>
-      <p>Check the figures and clauses in a sample document pack.</p>
-      <form class="om-search" onsubmit="handleCustomQuery(event)">
-        <input id="customQueryInput" aria-label="Question or exact phrase" type="search" required placeholder="Question or phrase" />
-        <button type="submit">Find evidence <span aria-hidden="true">↗</span></button>
+      <p>Check figures and clauses in a sample pack or upload local PDF, CSV, TSV, and text files for a printable evidence dossier.</p>
+      <form class="om-search" id="omQueryForm">
+        <input id="customQueryInput" aria-label="Question or exact phrase" type="search" required placeholder="Question, metric, or exact phrase" />
+        <button type="submit" id="btnSubmitQuery">Find evidence <span aria-hidden="true">↗</span></button>
       </form>
     </div>
   </header>
 
   <main class="om-bound om-work">
+    <!-- Compact Guided 3-Step Workflow Bar (ADR-018) -->
+    <nav class="om-stepper" aria-label="Verification workflow steps">
+      <button type="button" class="om-step-btn is-active" id="stepBtn1" data-workflow-step="1">
+        <span class="om-step-num">1</span>
+        <span>Upload or pick pack</span>
+      </button>
+      <button type="button" class="om-step-btn" id="stepBtn2" data-workflow-step="2">
+        <span class="om-step-num">2</span>
+        <span>Ask &amp; cross-check</span>
+      </button>
+      <button type="button" class="om-step-btn" id="stepBtn3" data-workflow-step="3">
+        <span class="om-step-num">3</span>
+        <span>Print dossier &amp; invoice</span>
+      </button>
+    </nav>
+
+    <!-- Primary First-Screen Action: 3 Ready-to-Pick Questions (ADR-023) -->
     <section class="om-questions" aria-labelledby="omQuestionsHeading">
-      <div class="om-choice-head"><h2 id="omQuestionsHeading">Try a question</h2><span id="omPackName">Financial audit</span></div>
+      <div class="om-choice-head">
+        <h2 id="omQuestionsHeading">Try a question</h2>
+        <span id="omPackName">Financial audit</span>
+      </div>
       <div id="promptChipsContainer"></div>
     </section>
+
+    <!-- Live Answers, Citations & Cross-Document Findings -->
     <section id="chatMessages" class="om-answer-list" aria-label="Answers with evidence" aria-live="polite"></section>
+
+    <!-- Step 1 Commercial Workbench: Local PDF / CSV / TSV / TXT Batch Upload & Cross-Check -->
+    <details id="omUpload" class="om-tool">
+      <summary>
+        <span>Upload local PDF &amp; spreadsheet pack</span>
+        <span class="om-summary-meta" id="omUploadSummaryMeta">0 uploaded · Free limit: 2 files ($249: up to 12)</span>
+      </summary>
+      <div class="om-upload-panel">
+        <div id="omUploadDropzone" class="om-upload-dropzone">
+          <input type="file" id="omFileInput" accept=".pdf,.csv,.tsv,.txt,.md" multiple hidden />
+          <div class="om-upload-actions">
+            <button type="button" id="btnTriggerFileUpload" class="btn-tactile btn-tactile-primary">Select PDF / CSV / TSV / TXT files</button>
+            <button type="button" id="btnLoadBundledSamples" class="btn-tactile">Load 2 sample files (PDF + CSV)</button>
+            <button type="button" id="btnClearUploads" class="btn-tactile" hidden>Clear uploaded pack</button>
+          </div>
+          <p class="om-upload-note">
+            Parsed locally in your browser (zero server upload): uncompressed or Flate-encoded <code>.pdf</code> text streams, <code>.csv</code>, <code>.tsv</code>, and <code>.txt</code>.
+            Free tier inspects up to <strong>2 local files</strong>; Due Diligence Pack (<strong>$249 one-time</strong>) unlocks up to <strong>12 local files</strong> per session and unredacted PDF dossiers.
+            For Excel <code>.xlsx</code> workbooks, export sheets to <code>.csv</code> or <code>.tsv</code> first.
+          </p>
+        </div>
+
+        <!-- Inline Real-Time Progress & Stage Transparency (ADR-024) -->
+        <div id="omUploadProgressWrap" class="om-progress-wrap om-hidden" role="status" aria-live="polite">
+          <div class="om-progress-head">
+            <span id="omUploadStageText">Ready</span>
+            <span id="omUploadEtaText" class="mono"></span>
+          </div>
+          <div class="om-progress-track">
+            <div id="omUploadProgressFill" class="om-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Parsed Local Document Inventory -->
+        <div id="omUploadedFilesList" class="om-file-grid"></div>
+
+        <!-- Automated Cross-Document Numeric & Clause Verification Findings -->
+        <div id="omCrossCheckPanel" class="om-crosscheck-box om-hidden"></div>
+      </div>
+    </details>
+
+    <!-- Source Documents Viewer -->
     <details id="omSources" class="om-tool right-pane">
-      <summary>Read source documents</summary>
-      <div class="pane-toolbar"><span class="spec-label">Source documents and excerpts</span><div id="docTabsContainer"></div></div>
-      <div id="activeCitationBanner"><span id="activeCitationText" role="status"></span><button type="button" id="backToAnswer" class="btn-tactile" hidden>Back to answer</button></div>
+      <summary>
+        <span>Read source documents</span>
+        <span class="om-summary-meta" id="omSourcesSummaryMeta">3 documents indexed</span>
+      </summary>
+      <div class="pane-toolbar">
+        <span class="spec-label">Source documents and excerpts</span>
+        <div id="docTabsContainer"></div>
+      </div>
+      <div id="activeCitationBanner">
+        <span id="activeCitationText" role="status"></span>
+        <button type="button" id="backToAnswer" class="btn-tactile" hidden>Back to answer</button>
+      </div>
       <div id="documentViewport" class="doc-viewport"></div>
     </details>
+
+    <!-- Built-In Sample Packs (3 Options) & 2-Passage Comparator -->
     <div class="om-extras">
       <details class="om-tool" id="omPacks">
-        <summary>Change document pack</summary>
+        <summary><span>Change sample document pack</span></summary>
         <div class="om-pack-list" aria-label="Sample document packs">
-          <button type="button" onclick="switchPreset('enterprise_rag')" id="preset_enterprise_rag" class="pack-card active-pack">Financial audit</button>
-          <button type="button" onclick="switchPreset('agentpress_mcp')" id="preset_agentpress_mcp" class="pack-card">Sales order</button>
-          <button type="button" onclick="switchPreset('buildq_solar')" id="preset_buildq_solar" class="pack-card">Engineering permit</button>
+          <button type="button" data-preset-key="enterprise_rag" id="preset_enterprise_rag" class="pack-card active-pack">1. Financial audit</button>
+          <button type="button" data-preset-key="agentpress_mcp" id="preset_agentpress_mcp" class="pack-card">2. Sales order</button>
+          <button type="button" data-preset-key="buildq_solar" id="preset_buildq_solar" class="pack-card">3. Engineering permit</button>
         </div>
       </details>
+
       <details class="om-tool" id="omCompare">
-        <summary>Compare two passages</summary>
+        <summary><span>Compare two passages</span></summary>
         <div class="om-compare-fields">
           <label>First passage<input id="customDocAInput" value="Maximum annual fee is $50,000 with 30-day payment terms." /></label>
           <label>Second passage<input id="customDocBInput" value="Billed annual fee is $68,500 with 15-day payment terms." /></label>
-          <button type="button" onclick="runCustomTextDiff()" id="btnRunCustomDiff" class="btn-tactile">Compare numbers</button>
+          <button type="button" id="btnRunCustomDiff" class="btn-tactile">Compare numbers</button>
           <p id="customDiffStatusBadge" role="status">Ready to compare.</p>
         </div>
       </details>
     </div>
-    <div class="om-report-actions" aria-label="Export evidence">
-      <button type="button" onclick="openAuditPreviewModal()" id="btnOpenAuditModal">Preview evidence report</button>
-      <button type="button" onclick="triggerExpertSignOff()" id="btnSignOff">Download JSON ↓</button>
+
+    <!-- Step 3: Export & Commercial Licensing Bar -->
+    <div class="om-report-actions" aria-label="Export evidence and commercial pack">
+      <button type="button" id="btnOpenAuditModal">Preview printable dossier</button>
+      <button type="button" id="btnDownloadCsvQuick">Download CSV ↓</button>
+      <button type="button" id="btnSignOff">Download JSON ↓</button>
+      <button type="button" id="btnOpenPaywallFooter" class="om-btn-commercial">Unlock $249 Pack &amp; Corporate Invoice</button>
     </div>
   </main>
 
-  <!-- Printable Audit Report Preview Modal -->
+  <!-- MODAL 1: PRINT-READY DUE DILIGENCE EVIDENCE DOSSIER -->
   <div id="auditReportModalBackdrop" class="om-modal-backdrop om-hidden" role="dialog" aria-modal="true" aria-labelledby="auditReportModalTitle">
     <div class="om-modal-window">
       <div class="om-modal-header">
         <div>
-          <div class="mono" style="font-size:10px; color:#C8431F; text-transform:uppercase; letter-spacing:0.08em;">Evidence report</div>
-          <h2 id="auditReportModalTitle" style="font-family:var(--font-display); font-size:22px; font-weight:400; margin:2px 0 0; color:#F6F4EF;">Document evidence</h2>
+          <div class="om-modal-kicker">OmniRAG™ Due Diligence Evidence Dossier · Caliber Foundry</div>
+          <h2 id="auditReportModalTitle" class="om-modal-title">Citation-Verified Document Evidence Report</h2>
         </div>
-        <button type="button" onclick="closeAuditPreviewModal()" class="btn-tactile" style="background:transparent; color:#F6F4EF; border-color:#78756D;">Close</button>
+        <button type="button" id="btnCloseAuditModal" class="om-modal-close no-print">Close</button>
       </div>
       <div class="om-modal-body">
         <div id="auditReportModalContent"></div>
-        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px; padding-top:12px; border-top:1px solid var(--cf-rule-mid); flex-wrap:wrap;">
-          <button type="button" onclick="window.print()" class="btn-tactile">Print / Save as PDF</button>
-          <button type="button" onclick="triggerExpertSignOff()" class="btn-tactile btn-tactile-forest">Download JSON Audit File &darr;</button>
+        <div class="om-modal-footer no-print">
+          <button type="button" id="btnOpenPaywallFromReport" class="btn-tactile">$249 Pack &amp; Corporate Invoice</button>
+          <button type="button" id="btnDownloadCsvModal" class="btn-tactile">Download CSV Evidence ↓</button>
+          <button type="button" id="btnDownloadJsonModal" class="btn-tactile btn-tactile-forest">Download JSON Audit File ↓</button>
+          <button type="button" id="btnPrintDossier" class="btn-tactile btn-tactile-primary">Print / Save as PDF</button>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="om-bound om-footer"><span>OmniRAG · Caliber Foundry</span><a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20inquiry">Contact engineering</a></footer>
-  <script>
-    const PRESETS = {
-      enterprise_rag: {
-        title: "1. Financial & Contract Audit",
-        badge: "PDF + WORD + EXCEL FINANCIAL & CONTRACT AUDIT",
-        docs: [
-          {
-            id: "doc_xlsx",
-            name: "Q3_Financials.xlsx",
-            format: "Excel",
-            chunks: [
-              { id: "cit_xlsx_r12", coord: "Sheet 2, Row 12 (Cell D12)", title: "Annual Recurring Revenue & Gross Margin", text: "Row 12 | Enterprise Tier Revenue: $14,820,000 | Gross Margin: 81.4% | Year-over-Year Growth: +34.2%." },
-              { id: "cit_xlsx_r14", coord: "Sheet 2, Row 14 (Cell F14)", title: "Quarterly SLA Penalty Reserve Limit", text: "Row 14 | Maximum SLA Penalty Cap: $285,000 per quarter (strictly capped at 12.0% of quarterly contract billings)." },
-              { id: "cit_xlsx_r19", coord: "Sheet 2, Row 19 (Cell E19)", title: "Q3 Operating Profit (Adjusted EBITDA)", text: "Row 19 | Q3 Operating Profit (EBITDA): $4,190,000 (28.2% margin) | Cloud Compute Spend: $142,500." }
-            ]
-          },
-          {
-            id: "doc_docx",
-            name: "Master_Service_Agreement.docx",
-            format: "Word",
-            chunks: [
-              { id: "cit_docx_s42", coord: "Page 7, Section §4.2", title: "Contractual Penalty Cap (12% / $285,000)", text: "§4.2 Service Credits: In no event shall Provider's cumulative SLA credit obligation exceed twelve percent (12.0%) of Customer's quarterly recurring fees ($285,000 cap)." },
-              { id: "cit_docx_s61", coord: "Page 11, Section §6.1", title: "Customer Data Privacy & Zero Retention", text: "§6.1 Data Governance: All customer documents are isolated per account with zero third-party model training retention." }
-            ]
-          },
-          {
-            id: "doc_pdf",
-            name: "Board_Audit_Report_2026.pdf",
-            format: "PDF",
-            chunks: [
-              { id: "cit_pdf_p4", coord: "Page 4, Table 2.1", title: "Auditor Sign-Off on Q3 Profit Minimum", text: "Page 4, Table 2.1: Independent auditor confirms Q3 profit of $4.19M exceeds the $3.50M minimum requirement by +19.7%." },
-              { id: "cit_pdf_p9", coord: "Page 9, Paragraph 3", title: "100% Source Citation Verification Rule", text: "Page 9, Para 3: Every automated check links directly to the exact page number and spreadsheet row before approval." }
-            ]
-          }
-        ]
-      },
-
-      agentpress_mcp: {
-        title: "2. Sales Order & Discount Approval",
-        badge: "SALES ORDER PDF vs. PRICING RULES EXCEL",
-        docs: [
-          {
-            id: "ap_pdf",
-            name: "Acme_Enterprise_OrderForm.pdf",
-            format: "PDF",
-            chunks: [
-              { id: "ap_cit_p3", coord: "Page 3, Section 2 (Order Schedule)", title: "Acme Corp 3-Year Order ($240,000/yr, 18.5% Discount)", text: "Page 3, Section 2: 250 Seats @ $80/seat/mo ($240,000 Annual Contract Value). Requested Discount: 18.5% off list price." },
-              { id: "ap_cit_p5", coord: "Page 5, Rider B", title: "Requested Salesforce & Slack Integration Add-On", text: "Page 5, Rider B: Customer requests bi-directional Salesforce CRM, Slack, and Stripe integration bundle included at $0." }
-            ]
-          },
-          {
-            id: "ap_xlsx",
-            name: "RevOps_DealDesk_Matrix.xlsx",
-            format: "Excel",
-            chunks: [
-              { id: "ap_cit_r8", coord: "Sheet 1, Row 8 (Approval Tier 2)", title: "Maximum Allowed Discount (Up to 20.0%)", text: "Row 8 | Deal Size: $200k–$500k | Max Auto-Approved Discount: 20.0% on 3-Year Contracts | Minimum Margin: 78.0%." },
-              { id: "ap_cit_r15", coord: "Sheet 1, Row 15 (Add-On Rules)", title: "Free Integration Bundle Rule (Orders >= $200k)", text: "Row 15 | Integration Bundle SKU: Included free of charge ($0) for any contract >= $200,000/year." }
-            ]
-          },
-          {
-            id: "ap_docx",
-            name: "Security_DPA_Addendum.docx",
-            format: "Word",
-            chunks: [
-              { id: "ap_cit_s31", coord: "Page 4, Clause §3.1", title: "Pre-Approved Security Terms", text: "§3.1 Data Protection: Standard zero-retention security terms are pre-approved by Legal." }
-            ]
-          }
-        ]
-      },
-
-      buildq_solar: {
-        title: "3. Engineering Permit vs. Excel BOM",
-        badge: "ENGINEERING PERMIT PDF vs. EQUIPMENT EXCEL BOM",
-        docs: [
-          {
-            id: "bq_grid_pdf",
-            name: "Grid_Interconnection_Study.pdf",
-            format: "PDF",
-            chunks: [
-              { id: "bq_cit_p18", coord: "Page 18, Table 3 (Grid Limit)", title: "Permit Limit: Maximum 42.5 MW Allowed", text: "Page 18, Table 3 | Official Grid Limit: Maximum continuous power injection at the substation is strictly capped at 42.5 MW AC unless an $11.4M transformer upgrade is paid." }
-            ]
-          },
-          {
-            id: "bq_epc_xlsx",
-            name: "EPC_Engineering_Spec.xlsx",
-            format: "Excel",
-            chunks: [
-              { id: "bq_cit_r9", coord: "Sheet 1, Row 9 (Equipment List)", title: "MISMATCH: Excel Orders 50.0 MW of Inverters", text: "Row 9 | Scheduled Inverter Equipment: 20 x 2.5 MW = 50.0 MW AC capacity (Exceeds the 42.5 MW PDF permit limit by +7.5 MW!)." },
-              { id: "bq_cit_r22", coord: "Sheet 1, Row 22 (Project Timeline)", title: "35-Year Financial Horizon (Ends Dec 31, 2061)", text: "Row 22 | Project Finance Timeline: 35 Years aligned with December 31, 2061 land lease expiration." }
-            ]
-          },
-          {
-            id: "bq_lease_pdf",
-            name: "Solar_Land_Lease.pdf",
-            format: "PDF",
-            chunks: [
-              { id: "bq_cit_p4", coord: "Page 4, Section §3.2", title: "35-Year Land Lease Term (Ends Dec 31, 2061)", text: "Page 4, §3.2: Landowner grants 480 contiguous acres in Travis County, TX for 35 years (expiring December 31, 2061)." }
-            ]
-          }
-        ]
-      }
-    };
-
-    // Sample answers list only passages that contain the quoted evidence.
-    const QUESTIONS = {
-      enterprise_rag: [
-        ['What is the Q3 debt floor?', ['Compare Q3 profit vs. contract debt floor','What is the Q3 profit minimum?'], ['cit_pdf_p4','cit_xlsx_r19']],
-        ['What is the penalty cap?', ['Check if the $285,000 penalty cap matches across Excel and Word'], ['cit_xlsx_r14','cit_docx_s42']],
-        ['What is the data retention policy?', [], ['cit_docx_s61']]
-      ],
-      agentpress_mcp: [
-        ["Is Acme Corp's 18.5% discount allowed under our pricing rules?", ['What discount is allowed?'], ['ap_cit_p3','ap_cit_r8']],
-        ['Does the $240k order qualify for the free integration bundle?', [], ['ap_cit_p3','ap_cit_r15']],
-        ['Which security terms are pre-approved?', [], ['ap_cit_s31']]
-      ],
-      buildq_solar: [
-        ['Show the exact MW power mismatch between the PDF permit and Excel', ['What is the power limit?'], ['bq_cit_p18','bq_cit_r9']],
-        ['Verify if the 35-year land lease date matches the financial model', [], ['bq_cit_r22','bq_cit_p4']],
-        ['How many acres does the lease cover?', [], ['bq_cit_p4']]
-      ]
-    };
-    let answers = [];
-    const workflow = stage => window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage}}));
-    let returnToAnswer = null;
-    let comparison = null;
-    function availableDocs() {
-      const docs = PRESETS[currentPresetKey].docs;
-      if (!comparison) return docs;
-      return docs.concat(['a','b'].map(key => ({
-        id:'pasted_' + key, name:'Pasted passage ' + key.toUpperCase(), format:'Text',
-        chunks:[{id:'cit_custom_' + key, coord:'User input', title:'Compared passage', text:comparison['source_' + key]}]
-      })));
-    }
-    const normalized = value => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-    let currentPresetKey = 'enterprise_rag';
-    let currentDocId = 'doc_xlsx';
-    let highlightedChunkId = 'cit_xlsx_r14';
-
-    function escapeHtml(str) {
-      return String(str ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function switchPreset(presetKey, selectedByUser = true) {
-      if (!PRESETS[presetKey]) return;
-      if (selectedByUser) workflow('sample_selected');
-      answers = [];
-      comparison = null;
-      returnToAnswer = null;
-      document.getElementById('backToAnswer').hidden = true;
-      document.getElementById('customDiffStatusBadge').textContent = 'Ready to compare two passages.';
-      currentPresetKey = presetKey;
-      const preset = PRESETS[presetKey];
-
-      ['enterprise_rag', 'agentpress_mcp', 'buildq_solar'].forEach(k => {
-        const btn = document.getElementById('preset_' + k);
-        if (!btn) return;
-        if (k === presetKey) {
-          btn.className = "pack-card active-pack";
-        } else {
-          btn.className = "pack-card";
-        }
-      });
-
-      document.getElementById('omPackName').textContent = document.querySelector('.active-pack').textContent;
-      document.getElementById('omSources').open = false;
-      document.getElementById('omPacks').open = false;
-      if (selectedByUser) document.getElementById('customQueryInput').focus();
-      const subBadge = document.getElementById('presetSubBadge');
-      if (subBadge) subBadge.textContent = preset.badge;
-
-      const chipsDiv = document.getElementById('promptChipsContainer');
-      chipsDiv.replaceChildren(...QUESTIONS[presetKey].map(([question]) => {
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'prompt-chip';
-        chip.textContent = question;
-        chip.addEventListener('click', () => runPromptChip(question));
-        return chip;
-      }));
-      document.getElementById('chatMessages').replaceChildren();
-      currentDocId = preset.docs[0].id;
-      highlightedChunkId = preset.docs[0].chunks[0].id;
-      renderDocumentTabs();
-      renderDocumentViewport();
-
-      const firstDoc = preset.docs[0];
-      const firstChunk = firstDoc.chunks[0];
-      document.getElementById('activeCitationText').textContent = `${firstDoc.name} (${firstChunk.coord}) — "${firstChunk.title}"`;
-    }
-
-    function renderChatMessageHTML(msg) {
-      if (msg.role === 'user') {
-        return `
-          <div class="msg-user">
-            <div class="spec-label" style="color:var(--cf-ink-primary); font-weight:600; margin-bottom:2px;">YOUR QUESTION</div>
-            <div style="font-size:13px;">${escapeHtml(msg.text)}</div>
-          </div>
-        `;
-      }
-      return `
-        <div class="msg-system">
-          <p class="om-receipt-label">Evidence from this pack</p>
-          <div>${msg.html}</div>
+  <!-- MODAL 2: COMMERCIAL $249 LICENSING & NET-15 CORPORATE TAX INVOICE -->
+  <div id="omPaywallModal" class="om-modal-backdrop om-hidden" role="dialog" aria-modal="true" aria-labelledby="omPaywallTitle">
+    <div class="om-modal-window">
+      <div class="om-modal-header no-print">
+        <div>
+          <div class="om-modal-kicker">Commercial Licensing &amp; Net-15 Corporate Tax Invoice</div>
+          <h2 id="omPaywallTitle" class="om-modal-title">OmniRAG™ Due Diligence Pack ($249)</h2>
         </div>
-      `;
-    }
+        <button type="button" id="btnClosePaywallModal" class="om-modal-close">Close</button>
+      </div>
+      <div class="om-modal-body">
+        <div id="omPaywallReason" class="om-paywall-alert om-hidden" role="status"></div>
 
-    function renderDocumentTabs() {
-      const preset = PRESETS[currentPresetKey];
-      const container = document.getElementById('docTabsContainer');
-      container.innerHTML = availableDocs().map(doc => {
-        const active = doc.id === currentDocId;
-        return `
-          <button type="button" onclick="selectDocTab('${doc.id}')" class="btn-tactile ${active ? 'btn-tactile-ink' : ''}">
-            <span>${doc.format}:</span>
-            <span>${doc.name}</span>
-          </button>
-        `;
-      }).join('');
-    }
-
-    function selectDocTab(docId) {
-      currentDocId = docId;
-      const preset = PRESETS[currentPresetKey];
-      const doc = availableDocs().find(d => d.id === docId);
-      if (doc && doc.chunks[0]) {
-        highlightedChunkId = doc.chunks[0].id;
-        document.getElementById('activeCitationText').textContent = `${doc.name} (${doc.chunks[0].coord}) — "${doc.chunks[0].title}"`;
-      }
-      renderDocumentTabs();
-      renderDocumentViewport();
-    }
-
-    function renderDocumentViewport() {
-      const preset = PRESETS[currentPresetKey];
-      const doc = availableDocs().find(d => d.id === currentDocId) || preset.docs[0];
-      const viewport = document.getElementById('documentViewport');
-
-      viewport.innerHTML = doc.chunks.map(chunk => {
-        const isHighlighted = chunk.id === highlightedChunkId;
-        return `
-          <div id="chunk_${chunk.id}" onclick="jumpToCitation('${doc.id}','${chunk.id}')" class="doc-chunk ${isHighlighted ? 'source-highlighted' : ''}">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--cf-rule-subtle); padding-bottom:6px;">
-              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <span class="mono" style="font-size:10.5px; font-weight:600; padding:2px 7px; border:1px solid var(--cf-ink-primary); background:${isHighlighted ? 'var(--cf-ink-primary)' : 'var(--cf-bg-paper)'}; color:${isHighlighted ? 'var(--cf-ink-on-dark)' : 'var(--cf-ink-primary)'};">
-                  ${doc.name} &mdash; ${chunk.coord}
-                </span>
-                <span style="font-size:13.5px; font-weight:700; color:var(--cf-ink-primary);">${escapeHtml(chunk.title)}</span>
-              </div>
-              <span class="mono" style="font-size:10.5px; font-weight:700; color:${isHighlighted ? 'var(--cf-accent-primary)' : 'var(--cf-ink-muted)'};">
-                ${isHighlighted ? 'Selected passage' : 'Select passage'}
-              </span>
+        <!-- 3 Commercial Options (ADR-023 Mandatory 3-Option Rule) -->
+        <div class="om-plan-grid" role="group" aria-label="Licensing options">
+          <div class="om-plan-card is-selected" data-plan-card="DD_PACK_249">
+            <div>
+              <span class="om-plan-kicker">Option 1 · Recommended</span>
+              <div class="om-plan-name">Due Diligence Pack</div>
+              <div class="om-plan-price">$249 <span>one-time</span></div>
+              <ul class="om-plan-list">
+                <li>Up to 12 local PDF, CSV, TSV, or TXT files per verification session</li>
+                <li>Full unredacted printable PDF Evidence Dossier + CSV/JSON exports</li>
+                <li>Automated cross-document numeric &amp; clause discrepancy checks</li>
+                <li>Instant Net-15 Corporate Tax Invoice (<code>INV-OMNI-2026-XXXX</code>)</li>
+              </ul>
             </div>
-            <p class="chunk-body-text">
-              &ldquo;${escapeHtml(chunk.text)}&rdquo;
+            <button type="button" class="btn-tactile btn-tactile-primary" id="btnSelectPlan249" data-plan-select="DD_PACK_249">Selected: $249 Pack</button>
+          </div>
+
+          <div class="om-plan-card" data-plan-card="TEAM_499">
+            <div>
+              <span class="om-plan-kicker">Option 2 · Recurring Team</span>
+              <div class="om-plan-name">Audit Team License</div>
+              <div class="om-plan-price">$499 <span>/ month</span></div>
+              <ul class="om-plan-list">
+                <li>Up to 5 team reviewers with unlimited local verification sessions</li>
+                <li>Custom organization entity header on printed PDF dossiers</li>
+                <li>Signed RSA-512 team activation key + Net-15 invoice billing</li>
+                <li>100% async support via <code>engineering@caliberfoundry.com</code></li>
+              </ul>
+            </div>
+            <button type="button" class="btn-tactile" id="btnSelectPlan499" data-plan-select="TEAM_499">Select $499 / mo</button>
+          </div>
+
+          <div class="om-plan-card" data-plan-card="SPRINT_2500">
+            <div>
+              <span class="om-plan-kicker">Option 3 · Turnkey Sprint</span>
+              <div class="om-plan-name">Custom Pipeline Sprint</div>
+              <div class="om-plan-price">$2,500 <span>fixed</span></div>
+              <ul class="om-plan-list">
+                <li>Private self-hosted parser tailored to your legal/financial templates</li>
+                <li>Custom OCR / Excel workbook / ERP connectors scoped asynchronously</li>
+                <li>Delivered via private GitHub repository + automated test harness</li>
+                <li>Zero live calls — full written specification and staging review</li>
+              </ul>
+            </div>
+            <button type="button" class="btn-tactile" id="btnSelectPlan2500" data-plan-select="SPRINT_2500">Select $2,500 Sprint</button>
+          </div>
+        </div>
+
+        <div class="om-billing-split">
+          <!-- Left: Local Net-15 Corporate Tax Invoice Generator -->
+          <div class="om-billing-box om-invoice-form-col">
+            <h3>1. Generate Net-15 Corporate Tax Invoice</h3>
+            <p class="om-upload-note" style="margin-bottom:10px;">
+              Generate a printable invoice locally for accounts payable or corporate expense approval. No external payment charge is triggered from this form.
             </p>
+            <form id="omInvoiceForm" class="om-form-grid">
+              <div class="om-field">
+                <label for="invCompanyInput">Legal Entity / Company Name *</label>
+                <input type="text" id="invCompanyInput" class="om-form-input" required placeholder="Northbridge Capital Partners LLP" />
+              </div>
+              <div class="om-field">
+                <label for="invEmailInput">Billing / Work Email *</label>
+                <input type="email" id="invEmailInput" class="om-form-input" required placeholder="finance@northbridge.example" />
+              </div>
+              <div class="om-field">
+                <label for="invPoInput">Purchase Order Reference (Optional)</label>
+                <input type="text" id="invPoInput" class="om-form-input" placeholder="PO-DD-2026-0419" />
+              </div>
+              <button type="submit" id="btnGenerateInvoice" class="btn-tactile btn-tactile-primary">Generate Corporate Tax Invoice ($249)</button>
+            </form>
           </div>
-        `;
-      }).join('');
-    }
 
-    function flashOmniElement(elId) {
-      const el = document.getElementById(elId);
-      if (!el) return;
-      el.classList.remove('cf-flash-active');
-      void el.offsetWidth;
-      el.classList.add('cf-flash-active');
-    }
-
-    function runCustomTextDiff() {
-      const textA = (document.getElementById('customDocAInput').value || '').trim();
-      const textB = (document.getElementById('customDocBInput').value || '').trim();
-      if (!textA || !textB) {
-        document.getElementById('customDiffStatusBadge').textContent = 'Enter both passages to compare their numbers.';
-        return;
-      }
-
-      const numsA = textA.match(/\$?\d[\d,.]*/g) || [];
-      const numsB = textB.match(/\$?\d[\d,.]*/g) || [];
-      if (!numsA.length || !numsB.length) {
-        document.getElementById('customDiffStatusBadge').textContent = 'Both passages need a number for comparison.';
-        return;
-      }
-      const hasMismatch = JSON.stringify(numsA) !== JSON.stringify(numsB);
-      comparison = { source_a: textA, source_b: textB, numbers_a: numsA, numbers_b: numsB, status: hasMismatch ? 'different_numbers' : 'matching_numbers' };
-      document.getElementById('latestComparison')?.remove();
-      const badge = document.getElementById('customDiffStatusBadge');
-      if (badge) {
-        badge.textContent = hasMismatch
-          ? `! CAUGHT NUMBER MISMATCH (${numsA.join(', ') || 'Text A'} vs. ${numsB.join(', ') || 'Text B'})`
-          : '✓ NUMBERS MATCH ACROSS BOTH FILES';
-        badge.style.color = hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)';
-      }
-
-      const cardHtml = `
-        <div id="latestComparison" class="finding-card ${hasMismatch ? 'finding-alert' : ''}">
-          <div class="finding-header">
-            <span class="finding-title" style="color:${hasMismatch ? 'var(--cf-accent-primary)' : 'var(--cf-forest-pass)'};">
-              ${hasMismatch ? '! Live Custom Check: Number Mismatch Caught!' : '&check; The numbers in both passages match'}
-            </span>
-            <span class="pack-status-pill ${hasMismatch ? 'pack-status-warn' : 'pack-status-ok'}" style="margin:0;">
-              ${hasMismatch ? '! MISMATCH DETECTED' : '&check; VERIFIED MATCH'}
-            </span>
-          </div>
-          <div class="diff-compare-grid">
-            <div class="diff-col-a">
-              <div class="mono" style="font-size:10px; font-weight:700;">FILE A EXTRACTED NUMBERS: ${escapeHtml(numsA.join(' · ') || 'None')}</div>
-              <div>${escapeHtml(textA)}</div>
+          <!-- Right: License Key Activation & Local Review Controls -->
+          <div class="om-billing-box om-license-col">
+            <h3>2. Activate Signed License Key</h3>
+            <p class="om-upload-note" style="margin-bottom:10px;">
+              Paste your Caliber Foundry RSA-512 activation key (<code>CFK-OMNI-...</code>) issued after invoice settlement to unlock up to 12 local files per pack.
+            </p>
+            <div class="om-form-grid">
+              <div class="om-field">
+                <label for="omLicenseKeyInput">License Key</label>
+                <input type="text" id="omLicenseKeyInput" class="om-form-input mono" placeholder="CFK-OMNI-PRO-..." autocomplete="off" />
+              </div>
+              <button type="button" id="btnActivateKey" class="btn-tactile">Activate License Key</button>
             </div>
-            <div class="${hasMismatch ? 'diff-col-mismatch' : 'diff-col-b'}">
-              <div class="mono" style="font-size:10px; font-weight:700;">FILE B EXTRACTED NUMBERS: ${escapeHtml(numsB.join(' · ') || 'None')}</div>
-              <div>${escapeHtml(textB)}</div>
+            <div id="omLicenseFeedback" class="om-status-msg om-hidden" role="status"></div>
+
+            <!-- Explicitly labeled local-review unlock control (hidden on public production domains) -->
+            <div id="omLocalReviewBox" class="om-local-review-box om-hidden">
+              <p style="margin:0 0 8px;">
+                <strong>Local review environment:</strong> Test the unlocked $249 multi-file pack (up to 12 files) locally without initiating an external payment.
+              </p>
+              <div class="om-upload-actions">
+                <button type="button" id="btnLocalReviewUnlock" class="btn-tactile btn-tactile-forest">Enable Local Review Unlock ($249)</button>
+                <button type="button" id="btnResetLocalLicense" class="btn-tactile">Reset to Free Tier (2 files)</button>
+              </div>
             </div>
           </div>
-          <div class="finding-proof-btns">
-            <button type="button" onclick="jumpToCitation('pasted_a','cit_custom_a')" class="citation-badge">Open passage A</button>
-            <button type="button" onclick="jumpToCitation('pasted_b','cit_custom_b')" class="citation-badge">Open passage B</button>
-          </div>
         </div>
-      `;
 
-      const chatDiv = document.getElementById('chatMessages');
-      chatDiv.insertAdjacentHTML('afterbegin', renderChatMessageHTML({ role: 'assistant', html: cardHtml }));
-      jumpToCitation('pasted_a', 'cit_custom_a');
-      workflow('result_ready');
-      flashOmniElement('chatMessages');
-    }
-
-    function jumpToCitation(docId, chunkId) {
-      document.getElementById('omSources').open = true;
-      currentDocId = docId;
-      highlightedChunkId = chunkId;
-      renderDocumentTabs();
-      renderDocumentViewport();
-
-      const preset = PRESETS[currentPresetKey];
-      const doc = availableDocs().find(d => d.id === docId);
-      const chunk = doc ? doc.chunks.find(c => c.id === chunkId) : null;
-
-      if (doc && chunk) {
-        document.getElementById('activeCitationText').textContent = `${doc.name} (${chunk.coord}) — "${chunk.title}"`;
-      }
-
-      const trigger = document.activeElement;
-      if (trigger?.closest('#chatMessages')) {
-        returnToAnswer = trigger;
-        document.getElementById('backToAnswer').hidden = false;
-        const target = document.getElementById('activeCitationBanner');
-        target.tabIndex = -1;
-        target.focus();
-      }
-      flashOmniElement('activeCitationBanner');
-      flashOmniElement('chunk_' + chunkId);
-
-      const el = document.getElementById('chunk_' + chunkId);
-      const vp = document.getElementById('documentViewport');
-      if (el && vp) {
-        vp.scrollTo({ top: Math.max(0, el.offsetTop - vp.offsetTop - 20), behavior: 'smooth' });
-      }
-    }
-
-    function runPromptChip(promptText) {
-      document.getElementById('customQueryInput').value = promptText;
-      handleCustomQuery(new Event('submit'));
-    }
-
-    function handleCustomQuery(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      const input = document.getElementById('customQueryInput');
-      const query = (input.value || '').trim();
-      if (!query) return;
-
-      const preset = PRESETS[currentPresetKey];
-      const passages = preset.docs.flatMap(doc => doc.chunks.map(chunk => ({doc, chunk})));
-      const phrase = normalized(query);
-      const known = QUESTIONS[currentPresetKey].find(([question, aliases]) => [question, ...aliases].some(value => normalized(value) === phrase));
-      const matches = known
-        ? known[2].map(id => passages.find(({chunk}) => chunk.id === id)).filter(Boolean)
-        : passages.filter(({chunk}) => phrase.length >= 4 && normalized(chunk.text).includes(phrase));
-      const evidence = matches.map(({doc, chunk}) => ({document: doc.name, location: chunk.coord, text: chunk.text, id: chunk.id}));
-      answers.push({question: query, result: matches.length ? 'source_found' : 'no_answer', evidence});
-      const body = matches.length ? matches.map(({doc, chunk}) =>
-        `<p>${escapeHtml(chunk.text)}</p><button class="citation-badge" type="button" onclick="jumpToCitation('${doc.id}','${chunk.id}')">Open ${escapeHtml(doc.name)} · ${escapeHtml(chunk.coord)}</button>`
-      ).join('') : 'No answer found in this document pack. Choose a sample question or enter a phrase from a source.';
-      const chat = document.getElementById('chatMessages');
-      if (answers.length === 1 && !comparison) chat.replaceChildren();
-      chat.insertAdjacentHTML('beforeend', renderChatMessageHTML({role:'assistant', html:`<div class="finding-card"><strong>${escapeHtml(query)}</strong><div>${body}</div></div>`}));
-      workflow('result_ready');
-      chat.lastElementChild?.scrollIntoView({block:'start'});
-      input.value = '';
-    }
-
-    function openAuditPreviewModal() {
-      const preset = PRESETS[currentPresetKey];
-      const modal = document.getElementById('auditReportModalBackdrop');
-      const content = document.getElementById('auditReportModalContent');
-      if (!modal || !content) return;
-      const opener = document.activeElement;
-      modal._opener = opener;
-
-
-      const rowsHtml = preset.docs.map(d =>
-        d.chunks.map(c => `
-          <tr>
-            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); font-weight:600;">${escapeHtml(d.name)}</td>
-            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);" class="mono">${escapeHtml(c.coord)}</td>
-            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle);">${escapeHtml(c.title)}</td>
-            <td style="padding:8px; border-bottom:1px solid var(--cf-rule-subtle); color:var(--cf-forest-pass); font-weight:700;" class="mono">Source excerpt</td>
-          </tr>
-        `).join('')
-      ).join('');
-
-      content.innerHTML = `
-        <div style="background:var(--cf-bg-paper); border:1px solid var(--cf-rule-mid); padding:12px 14px; margin-bottom:14px;">
-          <div><strong>Document Pack:</strong> ${escapeHtml(preset.title)}</div>
-          <div><strong>Sample files:</strong> ${preset.docs.map(d => escapeHtml(d.name)).join(', ')}</div>
-          <div><strong>Report created:</strong> ${new Date().toISOString().slice(0, 19).replace('T', ' ')} UTC</div>
+        <!-- Generated Printable Corporate Tax Invoice Sheet -->
+        <div id="omInvoicePrintSheet" class="om-invoice-sheet om-hidden" aria-live="polite"></div>
+        <div id="omInvoiceActions" class="om-modal-footer om-invoice-actions om-hidden no-print">
+          <a id="omInvoiceMailtoLink" href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Corporate%20Invoice" class="btn-tactile">Prepare PO Email Draft</a>
+          <button type="button" id="btnDownloadInvoiceJson" class="btn-tactile">Download Invoice (.json) ↓</button>
+          <button type="button" id="btnPrintInvoice" class="btn-tactile btn-tactile-primary">Print / Save Invoice PDF</button>
         </div>
-        <h3>Questions and evidence</h3>
-        ${answers.map(answer => `<p><strong>${escapeHtml(answer.question)}</strong> · ${answer.result === 'no_answer' ? 'No answer in this pack' : answer.evidence.map(c => escapeHtml(c.document + ' · ' + c.location + ' · ' + c.text)).join('<br>')}</p>`).join('') || '<p>No questions asked yet.</p>'}
-        ${comparison ? `<p><strong>Pasted passages</strong> · ${escapeHtml(comparison.status)}<br>${escapeHtml(comparison.source_a)}<br>${escapeHtml(comparison.source_b)}</p>` : ''}
-        <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
-          <thead>
-            <tr style="background:var(--cf-bg-stone); text-align:left; font-family:var(--font-mono); font-size:11px;">
-              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">FILE</th>
-              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">PAGE / EXCEL CELL</th>
-              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">CLAUSE / ITEM</th>
-              <th style="padding:8px; border-bottom:1.5px solid var(--cf-rule-strong);">STATUS</th>
-            </tr>
-          </thead>
-          <tbody>${rowsHtml}</tbody>
-        </table>
-      `;
-      modal.classList.remove('om-hidden');
-      modal.querySelector('button')?.focus();
-    }
+      </div>
+    </div>
+  </div>
 
-    function closeAuditPreviewModal() {
-      const modal = document.getElementById('auditReportModalBackdrop');
-      if (modal) {
-        modal.classList.add('om-hidden');
-        modal._opener?.focus();
-      }
-    }
+  <footer class="om-bound om-footer" data-product-feedback>
+    <span>OmniRAG™ · Caliber Foundry</span>
+    <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Due%20Diligence%20Pack%20inquiry">Contact engineering</a>
+  </footer>
 
-    function triggerExpertSignOff() {
-      const preset = PRESETS[currentPresetKey];
-      const auditPayload = {
-        studio_version: "caliberfoundry-omnirag-v3.2.0",
-        preset: currentPresetKey,
-        pack_title: preset.title,
-        timestamp: new Date().toISOString(),
-        documents: preset.docs.map(d => ({ name: d.name, format: d.format, passages: d.chunks.map(c => ({location:c.coord, text:c.text})) })),
-        selected_excerpt: highlightedChunkId,
-        questions: answers,
-        comparison
-      };
-      const blob = new Blob([JSON.stringify(auditPayload, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `omnirag_audit_report_${currentPresetKey}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      workflow('export_ready');
-      const btn = document.getElementById('btnSignOff');
-      if (btn) {
-        btn.innerHTML = `<span>&check; REPORT DOWNLOADED (.JSON)</span>`;
-        setTimeout(() => {
-          btn.innerHTML = `<span>Download Report (.JSON)</span><span>&darr;</span>`;
-        }, 1800);
-      }
-    }
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !document.getElementById('auditReportModalBackdrop').classList.contains('om-hidden')) closeAuditPreviewModal();
-    });
-    window.addEventListener('cf:open-step', ({detail}) => {
-      if (detail.step === 1) {
-        document.getElementById('omPacks').open = true;
-        document.querySelector('.pack-card.active-pack').focus();
-      }
-      if (detail.step === 2) runPromptChip(QUESTIONS[currentPresetKey][0][0]);
-      if (detail.step === 3) openAuditPreviewModal();
-    });
-    document.getElementById('backToAnswer').addEventListener('click', () => returnToAnswer?.focus());
-    for (const id of ['customDocAInput', 'customDocBInput']) {
-      document.getElementById(id).addEventListener('input', () => {
-        if (!comparison) return;
-        comparison = null;
-        document.getElementById('latestComparison')?.remove();
-        selectDocTab(PRESETS[currentPresetKey].docs[0].id);
-        document.getElementById('customDiffStatusBadge').textContent = 'Passage changed. Run the comparison again.';
-      });
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-      switchPreset('enterprise_rag', false);
-    });
-  </script>
-  <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
+  <script src="./app.js" defer></script>
+  <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

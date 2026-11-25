@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>EdTech Engineering &amp; Procurement Guides — Calculators &amp; Mini-Tests | Caliber Foundry</title>
+  <meta name="description" content="Ten interactive EdTech engineering and campus procurement guides with live calculators and practice mini-tests: SCORM 1.2 runtime budgets, psychometric item writing, EDUCAUSE HECVAT, ITI VPAT 2.5Rev, LTI 1.3 Advantage, QTI 3.0, ADA Title II, PDF/UA, FERPA, and xAPI." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="EdTech Engineering &amp; Procurement Guides — Interactive Calculators &amp; Mini-Tests" />
+  <meta property="og:description" content="Hands-on SCORM 1.2, psychometric item analysis, HECVAT, VPAT 2.5Rev, LTI 1.3, QTI 3.0, ADA Title II, PDF/UA, and FERPA calculators for L&amp;D and EdTech engineering teams." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Caliber Foundry EdTech Engineering & Procurement Guides",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/",
+    "description": "Ten standalone EdTech technical guides featuring deterministic calculators and scored mini-tests across SCORM 1.2, psychometric item design, EDUCAUSE HECVAT, ITI VPAT 2.5Rev, 1EdTech LTI 1.3, QTI 3.0, DOJ ADA Title II, ISO 14289-1 PDF/UA, FERPA 34 CFR Part 99, and xAPI/cmi5.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "url": "https://caliberfoundry.com/edtech-studio/guides/scorm-1-2-runtime-packaging-calculator.html", "name": "SCORM 1.2 Run-Time Environment & cmi.suspend_data Budget Calculator" },
+        { "@type": "ListItem", "position": 2, "url": "https://caliberfoundry.com/edtech-studio/guides/psychometric-item-writing-distractor-analyzer.html", "name": "Psychometric Item Writing & Distractor Discrimination Analyzer" },
+        { "@type": "ListItem", "position": 3, "url": "https://caliberfoundry.com/edtech-studio/guides/educause-hecvat-vendor-readiness-scorer.html", "name": "EDUCAUSE HECVAT Vendor Security Readiness Scorer" },
+        { "@type": "ListItem", "position": 4, "url": "https://caliberfoundry.com/edtech-studio/guides/iti-vpat-2-5-acr-conformance-estimator.html", "name": "ITI VPAT 2.5Rev Accessibility Conformance Report (ACR) Estimator" },
+        { "@type": "ListItem", "position": 5, "url": "https://caliberfoundry.com/edtech-studio/guides/lti-1-3-advantage-ags-nrps-integration-planner.html", "name": "1EdTech LTI 1.3 Advantage (OIDC, AGS 2.0 & Deep Linking) Planner" },
+        { "@type": "ListItem", "position": 6, "url": "https://caliberfoundry.com/edtech-studio/guides/qti-3-0-item-bank-migration-estimator.html", "name": "1EdTech QTI 3.0 Assessment Item Bank Migration Estimator" },
+        { "@type": "ListItem", "position": 7, "url": "https://caliberfoundry.com/edtech-studio/guides/ada-title-ii-wcag-courseware-deadline-calculator.html", "name": "DOJ ADA Title II University Courseware Remediation Velocity Calculator" },
+        { "@type": "ListItem", "position": 8, "url": "https://caliberfoundry.com/edtech-studio/guides/pdf-ua-iso-14289-matterhorn-syllabus-checker.html", "name": "ISO 14289-1 (PDF/UA-1) & Matterhorn Protocol 1.1 Syllabus Estimator" },
+        { "@type": "ListItem", "position": 9, "url": "https://caliberfoundry.com/edtech-studio/guides/ferpa-34-cfr-99-student-data-architecture-test.html", "name": "FERPA 34 CFR § 99.31 School Official & Zero-PII Architecture Evaluator" },
+        { "@type": "ListItem", "position": 10, "url": "https://caliberfoundry.com/edtech-studio/guides/xapi-cmi5-vs-scorm-lms-telemetry-selector.html", "name": "SCORM 1.2 vs. cmi5 vs. xAPI (IEEE 9274.1.1) Telemetry & LRS Calculator" }
+      ]
+    }
+  }
+  </script>
+</head>
+<body data-page-id="hub-index">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="../../work/edtech-studio.html" class="eg-hub-link">AcademyForge</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">EdTech Guides</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="../../work/dealshield.html" class="eg-nav-link">HECVAT &amp; VPAT Studio</a>
+        <a href="../../work/docushield.html" class="eg-nav-link">PDF/UA Studio</a>
+        <a href="../index.html" class="eg-nav-cta">Open AcademyForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Hub workflow steps">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#scope-estimator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Estimate Course &amp; Compliance Scope</a></li>
+        <li><a href="#guide-directory" class="eg-step-link"><span class="eg-step-num">2.</span> Choose a Standard Calculator (10)</a></li>
+        <li><a href="#studio-routes" class="eg-step-link"><span class="eg-step-num">3.</span> Launch Live Workbench</a></li>
+      </ol>
+      <span class="eg-std-pill">10 Interactive Tools · 0 Registration Walls</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">EdTech Engineering, Psychometrics &amp; University Procurement</span>
+      <h1 class="eg-title">Interactive calculators and verification drills for courseware and EdTech teams.</h1>
+      <p class="eg-subtitle">Scope SCORM 1.2 packages, audit exam distractors, score EDUCAUSE HECVAT and ITI VPAT 2.5Rev readiness, and model ADA Title II and PDF/UA remediation timelines directly in your browser.</p>
+
+      <div class="eg-kpi-strip" aria-label="Calculated scope summary">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Estimated Project Scope</span>
+          <span class="eg-kpi-value" id="kpiVal1">$2,900</span>
+          <span class="eg-kpi-note" id="kpiNote1">Or $299 self-serve pack</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Staging Turnaround</span>
+          <span class="eg-kpi-value" id="kpiVal2">10 business days</span>
+          <span class="eg-kpi-note" id="kpiNote2">100% async staging delivery</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Calibrated Item Volume</span>
+          <span class="eg-kpi-value" id="kpiVal3">25 items</span>
+          <span class="eg-kpi-note" id="kpiNote3">1 locale(s) · 4-choice stems</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Deliverable Standard</span>
+          <span class="eg-kpi-value" id="kpiVal4">SCORM 1.2 ZIP</span>
+          <span class="eg-kpi-note" id="kpiNote4">Verified LMS &amp; procurement pack</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="scope-estimator" aria-labelledby="presetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="presetHeading">Step 1 — Select 1 of 3 Typical EdTech Scopes (or Adjust Inputs Below)</h2>
+        <span class="eg-section-hint">Updates cost, timeline, and downloadable JSON brief immediately</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="Courseware scope presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Customer Academy</span>
+          <span class="eg-option-title">5 Modules · 25 Items · SCORM 1.2</span>
+          <span class="eg-option-desc">Single-language SaaS onboarding course with 5 voiced 30s walkthroughs and LMS gradebook reporting.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Higher-Ed Vendor Pack</span>
+          <span class="eg-option-title">8 Modules · Bilingual + HECVAT/VPAT</span>
+          <span class="eg-option-desc">Bilingual STEM/clinical curriculum paired with EDUCAUSE HECVAT and ITI VPAT 2.5Rev procurement dossiers.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · University ADA Suite</span>
+          <span class="eg-option-title">14 Modules · 3 Locales + PDF/UA</span>
+          <span class="eg-option-desc">Full certification bank, trilingual localization, DOJ ADA Title II WCAG 2.1 AA audit, and ISO 14289-1 syllabi.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="EdTech scope calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Courseware &amp; Vendor Compliance Estimator</h2>
+            <p class="eg-panel-sub">Change any quantity or standard tier to recompute budget and schedule.</p>
+          </div>
+        </div>
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpModules"><span>Interactive Modules</span><span class="eg-unit">1–60</span></label>
+            <input class="eg-input" type="number" id="inpModules" min="1" max="60" value="5" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpQuestions"><span>Calibrated Quiz Items</span><span class="eg-unit">5–400</span></label>
+            <input class="eg-input" type="number" id="inpQuestions" min="5" max="400" value="25" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpVideos"><span>30s Voiced Video Lessons</span><span class="eg-unit">0–60</span></label>
+            <input class="eg-input" type="number" id="inpVideos" min="0" max="60" value="5" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selLocales"><span>Target Languages</span><span class="eg-unit">Locales</span></label>
+            <select class="eg-select" id="selLocales" data-calc-input>
+              <option value="1" selected>1 Language (English)</option>
+              <option value="2">2 Languages (e.g., EN + KO / ES)</option>
+              <option value="3">3 Languages (Multilingual Pack)</option>
+            </select>
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selCompliance"><span>Procurement &amp; Accessibility Deliverable Tier</span><span class="eg-unit">Standard</span></label>
+            <select class="eg-select" id="selCompliance" data-calc-input>
+              <option value="scorm" selected>SCORM 1.2 ZIP Package + LMS Manifest Verification</option>
+              <option value="hecvat-vpat">SCORM 1.2 + EDUCAUSE HECVAT &amp; ITI VPAT 2.5Rev Dossier</option>
+              <option value="full-ada-pdfua">Full University Suite (SCORM 1.2 + HECVAT/VPAT + ADA Title II + PDF/UA)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Recalculate Scope →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download Scope JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Live Estimate &amp; Deliverable Breakdown</h2>
+            <p class="eg-panel-sub">Deterministic engineering scope with 100% asynchronous milestone delivery.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">FITS $2,900 ACADEMY SPRINT</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">$3,200 · 10 Days</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="Cost breakdown">
+          <thead><tr><th>Workstream Component</th><th style="text-align:right;">Computed Value</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+      </div>
+    </section>
+
+    <section id="guide-directory" class="eg-panel" aria-labelledby="dirHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="dirHeading">Step 2 — Explore All 10 Standalone EdTech Calculators &amp; Mini-Tests</h2>
+          <p class="eg-panel-sub" id="hubVisibleCount">10 of 10 guides shown</p>
+        </div>
+        <div class="eg-filter-bar" role="group" aria-label="Filter guides by domain">
+          <button type="button" class="eg-filter-btn is-active" data-hub-filter="all" aria-pressed="true">All 10 Guides</button>
+          <button type="button" class="eg-filter-btn" data-hub-filter="courseware" aria-pressed="false">Courseware &amp; LMS (4)</button>
+          <button type="button" class="eg-filter-btn" data-hub-filter="psychometrics" aria-pressed="false">Assessment &amp; QTI (2)</button>
+          <button type="button" class="eg-filter-btn" data-hub-filter="compliance" aria-pressed="false">HECVAT, VPAT &amp; ADA (4)</button>
+        </div>
+      </div>
+
+      <div class="eg-catalog-grid">
+        <article class="eg-guide-card" data-guide-cat="courseware">
+          <div>
+            <span class="eg-kicker">01 · ADL SCORM 1.2 RTE</span>
+            <h3>SCORM 1.2 Run-Time &amp; cmi.suspend_data Calculator</h3>
+            <p>Verify your slide and quiz state payload against the 4,096-character Smallest Permitted Maximum before Moodle or Cornerstone throws Error 405.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Calculator + 3-Item Quiz</span>
+            <a class="eg-card-link" href="./scorm-1-2-runtime-packaging-calculator.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="psychometrics">
+          <div>
+            <span class="eg-kicker">02 · Psychometrics &amp; NBME</span>
+            <h3>Psychometric Item Writing &amp; Distractor Analyzer</h3>
+            <p>Compute item difficulty (p-value), upper-lower discrimination (D), and stem cueing penalties to eliminate non-functioning distractors.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">p / D Calculator + Quiz</span>
+            <a class="eg-card-link" href="./psychometric-item-writing-distractor-analyzer.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="compliance">
+          <div>
+            <span class="eg-kicker">03 · EDUCAUSE HECVAT</span>
+            <h3>HECVAT Vendor Security Readiness Scorer</h3>
+            <p>Determine whether your EdTech product requires HECVAT Lite or Full (300+ controls) and audit SAML/OIDC, encryption, and SOC 2 evidence gaps.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Readiness Scorer + Quiz</span>
+            <a class="eg-card-link" href="./educause-hecvat-vendor-readiness-scorer.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="compliance">
+          <div>
+            <span class="eg-kicker">04 · ITI VPAT 2.5Rev</span>
+            <h3>ITI VPAT 2.5Rev Accessibility Conformance Estimator</h3>
+            <p>Score WCAG 2.2 AA, Revised Section 508, and EN 301 549 criteria to estimate engineering remediation hours before signing an ACR.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">ACR Estimator + Quiz</span>
+            <a class="eg-card-link" href="./iti-vpat-2-5-acr-conformance-estimator.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="courseware">
+          <div>
+            <span class="eg-kicker">05 · 1EdTech LTI 1.3</span>
+            <h3>LTI 1.3 Advantage, AGS 2.0 &amp; Deep Linking Planner</h3>
+            <p>Scope OIDC third-party login, RS256 JWKS key rotation, gradebook passback, and roster sync across Canvas, Moodle, Blackboard, and Brightspace.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Integration Planner + Quiz</span>
+            <a class="eg-card-link" href="./lti-1-3-advantage-ags-nrps-integration-planner.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="psychometrics">
+          <div>
+            <span class="eg-kicker">06 · 1EdTech QTI 3.0</span>
+            <h3>QTI 3.0 Assessment Item Bank Migration Estimator</h3>
+            <p>Estimate effort to migrate legacy CSV, QTI 1.2, or QTI 2.1 banks into XSD-valid QTI 3.0 packages with native MathML accessibility.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Migration Calculator + Quiz</span>
+            <a class="eg-card-link" href="./qti-3-0-item-bank-migration-estimator.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="compliance">
+          <div>
+            <span class="eg-kicker">07 · DOJ ADA Title II</span>
+            <h3>ADA Title II University Courseware Deadline Calculator</h3>
+            <p>Model weekly PDF and video captioning velocity against the April 26, 2027 and April 26, 2028 public-entity WCAG 2.1 AA deadlines.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Velocity Calculator + Quiz</span>
+            <a class="eg-card-link" href="./ada-title-ii-wcag-courseware-deadline-calculator.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="courseware">
+          <div>
+            <span class="eg-kicker">08 · ISO 14289-1 PDF/UA</span>
+            <h3>PDF/UA &amp; Matterhorn Protocol 1.1 Syllabus Checker</h3>
+            <p>Calculate `/StructTreeRoot` tagging, table header scope, and figure alt-text effort across the 31 Matterhorn checkpoints.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Tagging Estimator + Quiz</span>
+            <a class="eg-card-link" href="./pdf-ua-iso-14289-matterhorn-syllabus-checker.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="compliance">
+          <div>
+            <span class="eg-kicker">09 · FERPA 34 CFR § 99.31</span>
+            <h3>FERPA School Official &amp; Zero-PII Architecture Test</h3>
+            <p>Audit EdTech vendor data flows against the 4-prong School Official exception, 34 CFR § 99.33 redisclosure bans, and purge SLAs.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">Posture Evaluator + Quiz</span>
+            <a class="eg-card-link" href="./ferpa-34-cfr-99-student-data-architecture-test.html">Open tool →</a>
+          </div>
+        </article>
+
+        <article class="eg-guide-card" data-guide-cat="courseware">
+          <div>
+            <span class="eg-kicker">10 · SCORM vs. cmi5 vs. xAPI</span>
+            <h3>Learning Telemetry &amp; LRS Storage Selector</h3>
+            <p>Compare SCORM 1.2, cmi5, and IEEE 9274.1.1 xAPI statement volumes, annual LRS storage in GB, and offline/simulation trade-offs.</p>
+          </div>
+          <div class="eg-card-meta">
+            <span class="mono">LRS Calculator + Quiz</span>
+            <a class="eg-card-link" href="./xapi-cmi5-vs-scorm-lms-telemetry-selector.html">Open tool →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="studio-routes" class="eg-takeaways" aria-labelledby="routesHeading">
+      <h2 class="eg-section-heading" id="routesHeading">Step 3 — Move Directly Into a Live Caliber Foundry Workbench</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>AcademyForge Course Studio:</strong> Practice bilingual STEM/API/clinical lessons and download a working binary SCORM 1.2 ZIP in <a href="../index.html">AcademyForge</a> or review <a href="../../work/edtech-studio.html">case specs</a>.</li>
+        <li><strong>DealShield HECVAT &amp; VPAT Studio:</strong> Auto-populate EDUCAUSE HECVAT v3 and ITI VPAT 2.5Rev spreadsheets with citation-locked SOC 2 evidence in <a href="../../dealshield/index.html">DealShield</a> (<a href="../../work/dealshield.html">overview</a>).</li>
+        <li><strong>DocuShield PDF/UA Studio:</strong> Inspect raw PDF `/StructTreeRoot` tags, table scopes, and Matterhorn checkpoints locally in <a href="../../docushield/index.html">DocuShield</a> (<a href="../../work/docushield.html">overview</a>).</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Asynchronous EdTech, Assessment &amp; Compliance Engineering</span>
+    <div class="eg-footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+      <a href="../../pricing.html">Pricing</a>
+      <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

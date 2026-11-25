@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>SCORM 1.2 vs. cmi5 vs. xAPI (IEEE 9274.1.1) Telemetry &amp; LRS Calculator | Caliber Foundry</title>
+  <meta name="description" content="Choose deterministically between SCORM 1.2, cmi5, and xAPI (IEEE 9274.1.1-2023). Calculate annual Actor-Verb-Object statement volume, Learning Record Store (LRS) storage in GB, and infrastructure cost." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/xapi-cmi5-vs-scorm-lms-telemetry-selector.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="SCORM 1.2 vs. cmi5 vs. xAPI Telemetry &amp; LRS Storage Calculator" />
+  <meta property="og:description" content="Calculate annual xAPI statement volumes, LRS disk footprint, and select the right LMS/simulation specification." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/xapi-cmi5-vs-scorm-lms-telemetry-selector.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "SCORM 1.2 vs. cmi5 vs. xAPI (IEEE 9274.1.1) Telemetry & LRS Calculator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/xapi-cmi5-vs-scorm-lms-telemetry-selector.html",
+    "educationalUse": ["Interactive Calculator", "Architecture Selection"],
+    "citation": [
+      "https://adlnet.gov/projects/xapi/",
+      "https://adlnet.gov/projects/cmi5/",
+      "https://adlnet.gov/projects/scorm/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="xapi-cmi5">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">10 · SCORM vs. cmi5 vs. xAPI</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./ferpa-34-cfr-99-student-data-architecture-test.html" class="eg-nav-link">← Prev: FERPA</a>
+        <a href="./index.html" class="eg-nav-link">All 10 Guides</a>
+        <a href="../index.html" class="eg-nav-cta">Open AcademyForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Select Standard &amp; Size LRS</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item Telemetry Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Compare Protocol Capabilities</a></li>
+      </ol>
+      <span class="eg-std-pill">SCORM 1.2 · cmi5 · IEEE 9274.1.1 xAPI</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 10 of 10 · Learning Record Store (LRS) &amp; Simulation Telemetry</span>
+      <h1 class="eg-title">SCORM 1.2 vs. cmi5 vs. xAPI (IEEE 9274.1.1) Telemetry &amp; LRS Selector</h1>
+      <p class="eg-subtitle">Teams often over-engineer LRS infrastructure when SCORM 1.2 suffices—or hit same-origin iframe walls trying to force Unity/VR/mobile offline simulations into SCORM 1.2. Model your annual telemetry volume, storage footprint, and optimal standard.</p>
+
+      <div class="eg-kpi-strip" aria-label="Telemetry selector metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Optimal Standard</span>
+          <span class="eg-kpi-value" id="kpiVal1">SCORM 1.2</span>
+          <span class="eg-kpi-note" id="kpiNote1">Recommended specification</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Annual Event Volume</span>
+          <span class="eg-kpi-value" id="kpiVal2">112,500</span>
+          <span class="eg-kpi-note" id="kpiNote2">Annual telemetry events</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">LRS Disk Footprint</span>
+          <span class="eg-kpi-value" id="kpiVal3">0.26 GB/yr</span>
+          <span class="eg-kpi-note" id="kpiNote3">Indexed LRS JSON volume</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Extra LRS Infra Cost</span>
+          <span class="eg-kpi-value" id="kpiVal4">$0/yr</span>
+          <span class="eg-kpi-note" id="kpiNote4">Zero external LRS needed</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="xapiPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="xapiPresetHeading">Step 1 — Pick 1 of 3 Learning Delivery Environments (or Adjust Volume)</h2>
+        <span class="eg-section-hint">Computes JSON statement storage (~2.4 KB indexed/event) and LRS requirement</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="Telemetry presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Browser LMS Course</span>
+          <span class="eg-option-title">2,500 Learners · Standard Web LMS</span>
+          <span class="eg-option-desc">Zero external LRS cost—ships as a universal SCORM 1.2 ZIP accepted by Canvas, Moodle, and Docebo.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Unity / Offline Field Lab</span>
+          <span class="eg-option-title">15,000 Learners · Mobile/VR Offline</span>
+          <span class="eg-option-desc">2.7M statements/year (~6.18 GB/yr); requires stateless IEEE 9274.1.1 xAPI + LRS batch sync.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · LMS Launch + Deep Analytics</span>
+          <span class="eg-option-title">6,000 Learners · cmi5 Hybrid</span>
+          <span class="eg-option-desc">Combines structured LMS package launch and "MoveOn" completion rules with rich xAPI telemetry.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="Telemetry selector calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Learner Scale &amp; Runtime Environment Inputs</h2>
+            <p class="eg-panel-sub">Change learner count, events per learner, or delivery surface to recompute.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpLearners"><span>Active Annual Learners</span><span class="eg-unit">50–500,000</span></label>
+            <input class="eg-input" type="number" id="inpLearners" min="50" max="500000" value="2500" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpStatementsPerLearner"><span>Telemetry Events / Learner</span><span class="eg-unit">5–2,000</span></label>
+            <input class="eg-input" type="number" id="inpStatementsPerLearner" min="5" max="2000" value="45" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selEnvironment"><span>Primary Execution Surface</span><span class="eg-unit">Runtime</span></label>
+            <select class="eg-select" id="selEnvironment" data-calc-input>
+              <option value="lms-browser" selected>Browser Course Inside Corporate/Campus LMS</option>
+              <option value="lms-plus-analytics">LMS Launch + Cross-Domain Lab Analytics</option>
+              <option value="sim-vr-mobile">External Unity / VR / CLI / Native Mobile App</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selOfflineMobile"><span>Disconnected Offline Queuing?</span><span class="eg-unit">Network</span></label>
+            <select class="eg-select" id="selOfflineMobile" data-calc-input>
+              <option value="no" selected>No — Always-online browser session</option>
+              <option value="yes">Yes — Field tablet / aircraft / offline sync</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Select Telemetry Standard →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download Telemetry Plan JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Architecture Recommendation &amp; LRS Sizing</h2>
+            <p class="eg-panel-sub">Balances buyer LMS compatibility against telemetry granularity.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">RECOMMENDED: SCORM 1.2</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">SCORM 1.2 · 112,500 Events/Yr</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="LRS sizing breakdown">
+          <thead><tr><th>Telemetry / Storage Metric</th><th style="text-align:right;">Projected Value</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../index.html" class="eg-btn-secondary">Export SCORM 1.2 Package in AcademyForge →</a>
+          <a href="./scorm-1-2-runtime-packaging-calculator.html" class="eg-btn-ghost">SCORM 1.2 Budget Tool</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="xapiTakeaways">
+      <h2 class="eg-section-heading" id="xapiTakeaways">Three Architectural Differences Between SCORM 1.2, xAPI, and cmi5</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>SCORM 1.2 = Universal Zero-Infra Baseline:</strong> Runs inside a same-origin LMS frameset via <span class="mono">window.API</span>; zero LRS servers or OAuth tokens required.</li>
+        <li><strong>Pure xAPI (IEEE 9274.1.1) Lacks LMS Packaging Rules:</strong> Raw xAPI defines JSON statements (<span class="mono">actor, verb, object, result</span>) over REST, but does not define how an LMS launches a course or marks an assignment complete.</li>
+        <li><strong>cmi5 Bridges LMS Launch + xAPI:</strong> ADL's cmi5 profile adds an XML course structure (<span class="mono">cmi5.xml</span>), launch URL token handoff, and deterministic <span class="mono">moveOn</span> completion rules on top of xAPI.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="xapiQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="xapiQuizHeading">Step 2 — 3-Question SCORM vs. cmi5 vs. xAPI Check</h2>
+          <p class="eg-panel-sub">Test cross-domain restrictions, statement immutability, and cmi5 launch rules.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. Why does a standalone iOS/Android field-maintenance app with 8-hour offline shifts fail when architected around pure SCORM 1.2 <span class="mono">window.API</span>?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="SCORM 1.2 relies on synchronous JavaScript DOM calls to a live parent/opener LMS browser window (window.API) on the same origin—impossible inside a disconnected native mobile app.">A. SCORM 1.2 requires a live same-origin parent/opener browser window exposing window.API, whereas xAPI queues signed REST JSON statements locally and syncs to an LRS when connectivity returns.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Mobile WebKit/Chromium engines execute JavaScript normally; the barrier is the synchronous same-origin LMS frame requirement and offline state.">B. Mobile browsers cannot parse XML files such as imsmanifest.xml.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="SCORM 1.2 scores are strings '0' to '100', which work on any CPU architecture.">C. SCORM 1.2 requires 64-bit desktop x86 floating-point instructions.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. In an IEEE 9274.1.1 (xAPI) Learning Record Store, how do you correct an erroneously recorded statement once it has been accepted by the LRS?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="xAPI statements are append-only/immutable; the LRS specification forbids HTTP DELETE or in-place mutation of stored statements.">A. Send an HTTP DELETE /xapi/statements?statementId=... request to overwrite the row.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="xAPI statements are immutable; corrections are recorded by posting a new voiding statement (verb http://adlnet.gov/expapi/verbs/voided) targeting the original statement UUID via StatementRef.">B. Post a new voiding statement (using verb .../verbs/voided and objectType: "StatementRef" pointing to the original UUID), followed by the corrected statement.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="LMSCommit('') is a SCORM 1.2 method, not an xAPI LRS endpoint.">C. Call window.API.LMSCommit("rollback").</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. What specific problem did ADL solve by introducing the <span class="mono">cmi5</span> specification on top of xAPI?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="cmi5 uses standard JSON xAPI statements over HTTPS, not SOAP XML.">A. Replacing JSON statements with SOAP 1.1 XML envelopes.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Pure xAPI left packaging, launch authentication handoff, and LMS completion criteria ('cmi5 defined' verbs: Launched, Initialized, Completed, Passed, Failed, Terminated + moveOn) undefined; cmi5 standardized them.">B. Defining standardized LMS course packaging (cmi5.xml), launch credential handoff, and deterministic gradebook satisfaction rules (moveOn) using xAPI as the transport.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="cmi5 removes the 4,096-character suspend_data limit by storing state via xAPI State/Agent Profile APIs.">C. Enforcing a stricter 1,024-character limit on suspend_data.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="ADL telemetry specifications">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Minimal IEEE 9274.1.1 (xAPI) Statement Example</span></summary>
+        <div class="eg-drawer-body">
+          <pre class="eg-code">{
+  "id": "8f4b2e10-9c41-4d7a-b8a2-3109f4c82011",
+  "actor": { "account": { "homePage": "https://lms.example.edu", "name": "uuid-learner-9481" } },
+  "verb": { "id": "http://adlnet.gov/expapi/verbs/passed", "display": { "en-US": "passed" } },
+  "object": { "id": "https://caliberfoundry.com/edtech-studio/activities/rover-pid-lab" },
+  "result": { "score": { "scaled": 0.92, "raw": 92, "min": 0, "max": 100 }, "success": true, "completion": true, "duration": "PT8M24S" }
+}</pre>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public ADL &amp; IEEE References</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://adlnet.gov/projects/xapi/" target="_blank" rel="noopener noreferrer">ADL Initiative — Official Experience API (xAPI / IEEE 9274.1.1-2023) Specification Hub</a></li>
+            <li><a href="https://adlnet.gov/projects/cmi5/" target="_blank" rel="noopener noreferrer">ADL Initiative — Official cmi5 (xAPI Profile for LMS Launch &amp; Packaging)</a></li>
+            <li><a href="https://adlnet.gov/projects/scorm/" target="_blank" rel="noopener noreferrer">ADL Initiative — SCORM 1.2 &amp; SCORM 2004 Reference Archive</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 10/10 · SCORM 1.2 vs. cmi5 vs. xAPI Selector</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./scorm-1-2-runtime-packaging-calculator.html">Guide 01: SCORM 1.2 Budget →</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

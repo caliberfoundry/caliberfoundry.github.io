@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>ITI VPAT 2.5Rev Accessibility Conformance Report (ACR) Estimator | Caliber Foundry</title>
+  <meta name="description" content="Calculate ITI VPAT 2.5Rev Accessibility Conformance Report readiness across WCAG 2.2 AA, US Revised Section 508, and EU EN 301 549 for EdTech platforms, and estimate remediation hours." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/iti-vpat-2-5-acr-conformance-estimator.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="ITI VPAT 2.5Rev ACR Conformance &amp; Remediation Estimator" />
+  <meta property="og:description" content="Model Supports / Partially Supports / Does Not Support counts across WCAG 2.2 AA, Section 508, and EN 301 549 before submitting an EdTech ACR." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/iti-vpat-2-5-acr-conformance-estimator.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "ITI VPAT 2.5Rev Accessibility Conformance Report (ACR) Estimator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/iti-vpat-2-5-acr-conformance-estimator.html",
+    "educationalUse": ["Interactive Calculator", "Accessibility Audit"],
+    "citation": [
+      "https://www.itic.org/policy/accessibility/vpat",
+      "https://www.section508.gov/sell/acr/",
+      "https://www.w3.org/TR/WCAG22/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="vpat-2-5">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">04 · ITI VPAT 2.5Rev</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./educause-hecvat-vendor-readiness-scorer.html" class="eg-nav-link">← Prev: HECVAT Scorer</a>
+        <a href="./lti-1-3-advantage-ags-nrps-integration-planner.html" class="eg-nav-link">Next: LTI 1.3 Planner →</a>
+        <a href="../../dealshield/index.html" class="eg-nav-cta">Generate VPAT 2.5 Dossier →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Estimate VPAT 2.5Rev Posture</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item ACR Audit Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Compare 4 ITI VPAT Editions</a></li>
+      </ol>
+      <span class="eg-std-pill">ITI VPAT 2.5Rev · WCAG 2.2 AA · 508 · EN 301 549</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 04 of 10 · Digital Accessibility Procurement (US &amp; EU)</span>
+      <h1 class="eg-title">ITI VPAT 2.5Rev Accessibility Conformance Report (ACR) Estimator</h1>
+      <p class="eg-subtitle">When you complete the Information Technology Industry Council's Voluntary Product Accessibility Template (VPAT 2.5Rev), the resulting document is an Accessibility Conformance Report (ACR). Model your WCAG 2.2 Level A/AA criteria counts, spot procurement holds, and calculate engineering fix hours.</p>
+
+      <div class="eg-kpi-strip" aria-label="VPAT 2.5 conformance metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Conformance Index</span>
+          <span class="eg-kpi-value" id="kpiVal1">93%</span>
+          <span class="eg-kpi-note" id="kpiNote1">ACR Conformance Readiness</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Full 'Supports' Criteria</span>
+          <span class="eg-kpi-value" id="kpiVal2">44 / 50</span>
+          <span class="eg-kpi-note" id="kpiNote2">'Supports' criteria count</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Remediation Effort</span>
+          <span class="eg-kpi-value" id="kpiVal3">39 hrs</span>
+          <span class="eg-kpi-note" id="kpiNote3">Est. engineering remediation</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Template Edition</span>
+          <span class="eg-kpi-value" id="kpiVal4">INT 2.5Rev</span>
+          <span class="eg-kpi-note" id="kpiNote4">Selected ITI VPAT template</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="vpatPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="vpatPresetHeading">Step 1 — Choose 1 of 3 Accessibility Audit States (or Enter Counts)</h2>
+        <span class="eg-section-hint">Maps WCAG 2.2 A/AA criteria across US Section 508 and EU EN 301 549</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="VPAT 2.5 presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Typical SaaS ACR</span>
+          <span class="eg-option-title">44 Supports · 5 Partial · 1 DNS</span>
+          <span class="eg-option-desc">Passes campus review when paired with an Equally Effective Alternate Access Plan (EEAAP) roadmap.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Keyboard Trap Blocker</span>
+          <span class="eg-option-title">31 Supports · 14 Partial · Modal Trap</span>
+          <span class="eg-option-desc">Triggers immediate university accessibility hold due to WCAG 2.1.2 keyboard focus trap inside quiz player.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Clean Remediated Release</span>
+          <span class="eg-option-title">48 Supports · 2 Partial · 0 DNS</span>
+          <span class="eg-option-desc">Remediated UI with full keyboard focus rings, >=4.5:1 contrast, captions, and explicit remarks.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="VPAT 2.5 calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">VPAT 2.5Rev Criteria &amp; Defect Inputs</h2>
+            <p class="eg-panel-sub">Adjust conformance counts across the ~50 WCAG 2.2 Level A &amp; AA success criteria.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpSupports"><span>'Supports' Criteria</span><span class="eg-unit">0–55</span></label>
+            <input class="eg-input" type="number" id="inpSupports" min="0" max="55" value="44" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpPartial"><span>'Partially Supports'</span><span class="eg-unit">0–55</span></label>
+            <input class="eg-input" type="number" id="inpPartial" min="0" max="55" value="5" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpDoesNotSupport"><span>'Does Not Support'</span><span class="eg-unit">0–55</span></label>
+            <input class="eg-input" type="number" id="inpDoesNotSupport" min="0" max="55" value="1" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selEdition"><span>ITI VPAT 2.5Rev Edition</span><span class="eg-unit">Template</span></label>
+            <select class="eg-select" id="selEdition" data-calc-input>
+              <option value="int" selected>INT (WCAG 2.2 + 508 + EN 301 549)</option>
+              <option value="508">Revised Section 508 (US Federal/Edu)</option>
+              <option value="eu">EN 301 549 (EU EAA 2019/882)</option>
+              <option value="wcag">WCAG 2.2 Edition Only</option>
+            </select>
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selBlockerTrap"><span>Critical Showstopper Defect Check</span><span class="eg-unit">Gate</span></label>
+            <select class="eg-select" id="selBlockerTrap" data-calc-input>
+              <option value="none" selected>None — No keyboard traps, flashing, or uncaptioned core lessons</option>
+              <option value="keyboard-trap">WCAG 2.1.2 Keyboard Trap in custom drag-and-drop / modal</option>
+              <option value="uncaptioned-video">WCAG 1.2.2 Prerecorded Instructional Video Missing Captions</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Calculate ACR Readiness →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download ACR Backlog JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">ACR Procurement Verdict &amp; Fix Effort</h2>
+            <p class="eg-panel-sub">Reflects university Disability Services and Section 508 review rules.</p>
+          </div>
+          <span class="eg-status-pill status-warn" id="resultStatusPill">REQUIRES EEA / ROADMAP ADDENDUM</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">93% Conformance · 39h Backlog</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="VPAT 2.5 breakdown">
+          <thead><tr><th>ACR Evaluation Metric</th><th style="text-align:right;">Computed Value</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../../dealshield/index.html" class="eg-btn-secondary">Export Printable VPAT 2.5 Report in DealShield →</a>
+          <a href="../../docushield/index.html" class="eg-btn-ghost">Remediate Course PDFs in DocuShield</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="vpatTakeaways">
+      <h2 class="eg-section-heading" id="vpatTakeaways">Three Rules That Separate Credible ACRs From Rejected Vendor Templates</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Honest 'Partially Supports' Beats Blanket 'Supports':</strong> University accessibility engineers run live keyboard and NVDA/VoiceOver spot checks; claiming 100% "Supports" when a modal lacks focus return destroys vendor credibility.</li>
+        <li><strong>Use VPAT 2.5Rev INT for Global EdTech:</strong> One International Edition report satisfies US Higher-Ed (Section 508 + WCAG 2.2) and European Accessibility Act (EN 301 549) buyers simultaneously.</li>
+        <li><strong>Name Evaluation Methods Explicitly:</strong> Always specify automated + assistive technology testing tools (e.g., Playwright axe-core, VoiceOver, NVDA, keyboard-only traversal) on page 1 of the ACR.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="vpatQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="vpatQuizHeading">Step 2 — 3-Question ITI VPAT 2.5Rev Audit Check</h2>
+          <p class="eg-panel-sub">Verify conformance terminology and WCAG 2.2 additions.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. Under official ITI VPAT 2.5Rev instructions, which conformance term must be entered when most functionality of a Criterion works, except one secondary chart export lacks screen-reader labels?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="'Supports' is only valid when the functionality of the product has at least one method that meets the criterion without known defects.">A. Supports (because &gt;90% of the application passes).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="ITI defines 'Partially Supports' for cases where some functionality of the product does not meet the criterion, paired with a specific explanation in Remarks.">B. Partially Supports — with a concrete note in "Remarks and Explanations" naming the chart component and CSV table fallback.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="'Not Applicable' is only permitted when the product contains zero content relevant to the criterion (e.g., prerecorded audio rules when the app has zero audio).">C. Not Applicable — because the chart is optional for instructors.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. Which new WCAG 2.2 Level AA criterion included in VPAT 2.5Rev directly impacts dense EdTech quiz toolbars and mobile answer buttons?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="WCAG 2.2 added 2.5.8 Target Size (Minimum) (24x24 CSS px or sufficient spacing), 2.4.11 Focus Not Obscured (Minimum), and 2.5.7 Dragging Movements at Level AA.">A. 2.5.8 Target Size (Minimum — at least 24 by 24 CSS pixels or equivalent spacing) and 2.5.7 Dragging Movements (single-pointer alternative for drag-and-drop items).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Sign language interpretation (1.2.6) is a Level AAA criterion from WCAG 2.0, not a new WCAG 2.2 AA rule.">B. 1.2.6 Sign Language (Prerecorded) mandatory on all Level AA videos.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="WCAG 4.1.1 Parsing was actually obsoleted in WCAG 2.2, not added.">C. 4.1.1 Strict XML DTD Validation on HTML5 documents.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. An EdTech vendor sells the same LMS plugin to public universities in California and technical universities in Germany. Which ITI VPAT 2.5Rev edition avoids maintaining two separate reports?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="The 508 Edition omits European EN 301 549 chapter mappings required by EU public buyers.">A. VPAT 2.5Rev 508 Edition only.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="VPAT 2.5Rev INT (International Edition) consolidates WCAG 2.0/2.1/2.2, Revised Section 508, and EU EN 301 549 into one unified ACR.">B. VPAT 2.5Rev INT (International Edition), covering WCAG 2.2, Revised Section 508, and EN 301 549 in one report.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="VPAT 1.3 was retired years ago before WCAG 2.1/2.2 and Revised Section 508.">C. Legacy VPAT 1.3 two-column checklist.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="VPAT 2.5 technical sources">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Four Official ITI VPAT 2.5Rev Editions</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><strong>VPAT 2.5Rev WCAG:</strong> Web Content Accessibility Guidelines 2.0, 2.1, and 2.2 (Levels A, AA, AAA).</li>
+            <li><strong>VPAT 2.5Rev 508:</strong> U.S. Revised Section 508 (Chapters 3 Functional Performance, 4 Hardware, 5 Software, 6 Support Docs &amp; Services).</li>
+            <li><strong>VPAT 2.5Rev EU:</strong> European Union EN 301 549 (aligned with EU Web Accessibility Directive &amp; European Accessibility Act 2019/882).</li>
+            <li><strong>VPAT 2.5Rev INT:</strong> Combined International template uniting all three regulatory standards.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public Accessibility Authorities</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.itic.org/policy/accessibility/vpat" target="_blank" rel="noopener noreferrer">Information Technology Industry Council (ITI) — Official VPAT 2.5Rev Templates &amp; Instructions</a></li>
+            <li><a href="https://www.section508.gov/sell/acr/" target="_blank" rel="noopener noreferrer">Section508.gov — How to Create an Accessibility Conformance Report (ACR)</a></li>
+            <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">W3C Recommendation — Web Content Accessibility Guidelines (WCAG) 2.2</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 04/10 · ITI VPAT 2.5Rev ACR Conformance</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./lti-1-3-advantage-ags-nrps-integration-planner.html">Next: 1EdTech LTI 1.3 Planner →</a>
+      <a href="../../work/dealshield.html">DealShield Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

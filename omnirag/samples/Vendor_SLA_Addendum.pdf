@@ -1,0 +1,61 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /Lang (en-US) >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R >> >> /Contents 7 0 R >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Length 382 >>
+stream
+BT
+/F1 12 Tf
+50 740 Td
+(Vendor SLA Addendum - Section 4.2 Service Credits and Fee Caps) Tj
+0 -22 Td
+(Maximum SLA Penalty Cap: $285,000 per quarter, strictly capped at 12.0% of billings.) Tj
+0 -22 Td
+(Annual Fee Cap: $50,000 maximum annual platform fee with 30-day payment terms.) Tj
+0 -22 Td
+(Minimum Q3 Operating Profit Covenant: $3,500,000 verified by independent auditor.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Length 318 >>
+stream
+BT
+/F1 12 Tf
+50 740 Td
+(Page 2 - Section 6.1 Data Governance and Grid Interconnection Limit) Tj
+0 -22 Td
+(Data Retention Policy: Zero third-party model training retention; tenant isolation enforced.) Tj
+0 -22 Td
+(Substation Interconnection Permit Limit: Maximum continuous output strictly capped at 42.5 MW AC.) Tj
+ET
+endstream
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000072 00000 n 
+0000000135 00000 n 
+0000000261 00000 n 
+0000000387 00000 n 
+0000000457 00000 n 
+0000000889 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+1257
+%%EOF

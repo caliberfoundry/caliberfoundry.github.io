@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>Psychometric Item Writing &amp; Distractor Discrimination Calculator | Caliber Foundry</title>
+  <meta name="description" content="Calculate Classical Test Theory item difficulty (p-value), upper-lower discrimination index (D), non-functioning distractor penalties, and stem writing flaws for certification and EdTech item banks." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/psychometric-item-writing-distractor-analyzer.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="Psychometric Item Writing &amp; Distractor Analyzer (p-Value &amp; Discrimination D)" />
+  <meta property="og:description" content="Audit multiple-choice item difficulty, discrimination, and stem flaws using Classical Test Theory and NBME item-writing standards." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/psychometric-item-writing-distractor-analyzer.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Psychometric Item Writing & Distractor Discrimination Analyzer",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/psychometric-item-writing-distractor-analyzer.html",
+    "educationalUse": ["Interactive Calculator", "Self-Assessment"],
+    "citation": [
+      "https://www.nbme.org/educators/item-writing-guide",
+      "https://www.1edtech.org/standards/qti"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="psychometric-items">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">02 · Item Psychometrics</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./scorm-1-2-runtime-packaging-calculator.html" class="eg-nav-link">← Prev: SCORM 1.2</a>
+        <a href="./educause-hecvat-vendor-readiness-scorer.html" class="eg-nav-link">Next: HECVAT Scorer →</a>
+        <a href="../index.html" class="eg-nav-cta">Author Items in AcademyForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Compute p-Value &amp; Discrimination D</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Spot 3 Item-Writing Flaws</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Review CTT Formulas &amp; NBME Rules</a></li>
+      </ol>
+      <span class="eg-std-pill">Classical Test Theory · NBME Item Standards</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 02 of 10 · Assessment Engineering &amp; Psychometric QA</span>
+      <h1 class="eg-title">Psychometric Item Writing &amp; Distractor Discrimination Analyzer</h1>
+      <p class="eg-subtitle">High-stakes certification and course exams fail when implausible distractors or cueing flaws let test-wise learners guess the key. Calculate Classical Test Theory difficulty (<span class="mono">p</span>), upper-lower discrimination (<span class="mono">D</span>), and NBME item quality in real time.</p>
+
+      <div class="eg-kpi-strip" aria-label="Psychometric item metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Item Difficulty (p)</span>
+          <span class="eg-kpi-value" id="kpiVal1">0.60</span>
+          <span class="eg-kpi-note" id="kpiNote1">Optimal Target (0.30–0.85)</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Discrimination Index (D)</span>
+          <span class="eg-kpi-value" id="kpiVal2">+0.36</span>
+          <span class="eg-kpi-note" id="kpiNote2">Discrimination D (target &gt;= +0.30)</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Functioning Distractors</span>
+          <span class="eg-kpi-value" id="kpiVal3">3 / 3 active</span>
+          <span class="eg-kpi-note" id="kpiNote3">Distractors selected by &gt;= 5%</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Item Quality Score</span>
+          <span class="eg-kpi-value" id="kpiVal4">100 / 100</span>
+          <span class="eg-kpi-note" id="kpiNote4">NBME Item Quality Index</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="psychPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="psychPresetHeading">Step 1 — Select 1 of 3 Cohort Pilot Outcomes (or Enter Your Item Counts)</h2>
+        <span class="eg-section-hint">Uses Kelley's 27% upper and lower criterion groups</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="Item analysis presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Calibrated Certification Item</span>
+          <span class="eg-option-title">U = 78/100 · L = 42/100 · 0 Flaws</span>
+          <span class="eg-option-desc">Balanced p = 0.60 and strong D = +0.36 with all three distractors attracting misconception errors.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Easy Cueing Item</span>
+          <span class="eg-option-title">U = 94/100 · L = 88/100 · "All of Above"</span>
+          <span class="eg-option-desc">Ceiling effect (p = 0.91, D = +0.06) caused by two dead distractors and an "All of the above" cue.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Negative Discrimination</span>
+          <span class="eg-option-title">U = 36/100 · L = 48/100 · Negative Stem</span>
+          <span class="eg-option-desc">D = -0.12: top examinees miss the item more than low scorers due to a tricky "NOT/EXCEPT" stem or miskey.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="Psychometric item calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Pilot Cohort &amp; Stem Audit Inputs</h2>
+            <p class="eg-panel-sub">Modify upper/lower group counts or stem defects to inspect item bank readiness.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpGroupSize"><span>Examinees per 27% Group (N)</span><span class="eg-unit">20–2,000</span></label>
+            <input class="eg-input" type="number" id="inpGroupSize" min="20" max="2000" value="100" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpUpperCorrect"><span>Upper 27% Correct (U)</span><span class="eg-unit">0–N</span></label>
+            <input class="eg-input" type="number" id="inpUpperCorrect" min="0" max="2000" value="78" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpLowerCorrect"><span>Lower 27% Correct (L)</span><span class="eg-unit">0–N</span></label>
+            <input class="eg-input" type="number" id="inpLowerCorrect" min="0" max="2000" value="42" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpNonFuncDistractors"><span>Distractors Below 5% Pick Rate</span><span class="eg-unit">0–3</span></label>
+            <input class="eg-input" type="number" id="inpNonFuncDistractors" min="0" max="3" value="0" data-calc-input />
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selStemFlaw"><span>Observed Item-Writing Flaw (NBME Taxonomy)</span><span class="eg-unit">Audit</span></label>
+            <select class="eg-select" id="selStemFlaw" data-calc-input>
+              <option value="none" selected>None — Lead-in passes closed-stem cover-the-options test</option>
+              <option value="negative">Unfocused negative stem ("Which of the following is NOT...")</option>
+              <option value="all-above">"All of the above" / "None of the above" / longest-option cue</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Run Psychometric Audit →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download Item Audit JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Classical Test Theory Decision</h2>
+            <p class="eg-panel-sub">Retention, revision, or rejection guidance for certification banks.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">RETAIN ITEM · PSYCHOMETRICALLY SOUND</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">p = 0.60 · D = +0.36</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="Psychometric calculation breakdown">
+          <thead><tr><th>Psychometric Parameter</th><th style="text-align:right;">Computed Metric</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../index.html" class="eg-btn-secondary">Test Scenario Items in AcademyForge →</a>
+          <a href="./qti-3-0-item-bank-migration-estimator.html" class="eg-btn-ghost">QTI 3.0 Migration Tool</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="psychTakeaways">
+      <h2 class="eg-section-heading" id="psychTakeaways">Three Empirical Rules for High-Discrimination EdTech Items</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Cover-the-Options Test:</strong> A domain-competent learner should be able to formulate the correct answer from the stem and scenario before reading Options A–D.</li>
+        <li><strong>3 Functional Options Beat 5 Padded Options:</strong> Meta-analyses by Rodriguez &amp; Haladyna confirm 3–4 plausible options outperform 5-option items padded with joke distractors (&lt;5% endorsement).</li>
+        <li><strong>Eliminate Convergence &amp; Length Cues:</strong> Keep all options parallel in grammar, length, and specificity, and never use <span class="mono">All of the above</span> (recognizing two true statements reveals the key).</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="psychQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="psychQuizHeading">Step 2 — 3-Question Item-Writing Quality Check</h2>
+          <p class="eg-panel-sub">Diagnose real psychometric defects in assessment items.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. On a 200-candidate pilot test, an item shows difficulty <span class="mono">p = 0.52</span> and point-biserial correlation <span class="mono">r_pbis = -0.19</span>. What is the first editorial action an assessment engineer should take?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="A p-value of 0.52 is near the middle of the optimal difficulty range; the defect is the negative discrimination (-0.19), not difficulty.">A. Keep the item unchanged because p = 0.52 is close to the ideal 0.50 midpoint.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Negative discrimination means top-scoring examinees chose a distractor while low-scoring examinees chose the key—classic evidence of a miskeyed answer or a subtle exception noticed only by experts.">B. Verify the answer key and check whether top performers selected a distractor that is technically accurate under an unstated edge case.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Adding fifth options rarely fixes negative discrimination and usually introduces non-functioning distractors.">C. Add a fifth option ("None of the above") to increase item difficulty.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. Why does the NBME Item-Writing Guide classify <span class="mono">"Which of the following is true regarding OAuth 2.0?"</span> as an unfocused stem flaw?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Unfocused true/false collections fail the cover-the-options test, forcing learners to evaluate four unrelated statements rather than solving one coherent clinical or engineering problem.">A. It fails the cover-the-options test and turns a single question into four disconnected true/false judgments instead of testing one specific decision.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Technical acronyms are appropriate when standard to the target examinee audience.">B. Technical standards like OAuth 2.0 cannot be tested with multiple-choice items.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Positive lead-ins are preferred over negative lead-ins, provided they pose a single focused problem.">C. Stems must always use negative phrasing ("Which is NOT true") to test recall.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. Distractor C on a 4-option certification item was chosen by only 1 of 300 test-takers (0.3%), while Options A, B (correct), and D received 18%, 64%, and 17.7%. How does Distractor C affect measurement?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Near-zero selection reduces the effective number of choices and raises the chance guessing floor from 25% to 33%.">A. It lowers the random guessing floor from 25% to 10%.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Any distractor selected by fewer than 5% of examinees contributes negligible psychometric information and effectively inflates the guessing probability to 1 in 3 (33.3%).">B. It is a non-functioning distractor (&lt;5% selection), raising the effective guessing floor to 33.3% without adding diagnostic signal; replace it with a real domain misconception or use 3 strong options.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="A dead distractor does not boost KR-20 / Cronbach's alpha reliability.">C. It increases test reliability (Cronbach's alpha) by rewarding careful reading.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="Psychometric formulas and references">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Kelley (1939) 27% Criterion Group Formulas</span></summary>
+        <div class="eg-drawer-body">
+          <p>Rank examinees by total test score and isolate the top 27% (<span class="mono">U</span> correct out of <span class="mono">N</span>) and bottom 27% (<span class="mono">L</span> correct out of <span class="mono">N</span>):</p>
+          <pre class="eg-code">Difficulty Index:      p = (U + L) / (2 * N)      // Target: 0.30 to 0.85 for norm/mastery discrimination
+Discrimination Index:  D = (U - L) / N            // Target: D >= +0.30 (0.20–0.29 marginal; &lt; 0.00 defective)
+Active Distractor Rule: Selection rate >= 5.0% of total examinees and negative distractor point-biserial</pre>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public Assessment Standards</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.nbme.org/educators/item-writing-guide" target="_blank" rel="noopener noreferrer">NBME — Constructing Written Test Questions for the Health &amp; Applied Sciences (Official Item-Writing Guide)</a></li>
+            <li><a href="https://www.1edtech.org/standards/qti" target="_blank" rel="noopener noreferrer">1EdTech QTI 3.0 — Portable Assessment Item &amp; Scoring Specification</a></li>
+            <li>Explore <a href="../../work/codedrill.html">CodeDrill Assessment Simulator Architecture</a> and <a href="../../work/edtech-studio.html">AcademyForge Bilingual Course Studio</a>.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 02/10 · Psychometric Item Writing &amp; Distractor Analysis</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./educause-hecvat-vendor-readiness-scorer.html">Next: EDUCAUSE HECVAT Scorer →</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

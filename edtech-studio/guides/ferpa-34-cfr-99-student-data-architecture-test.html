@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>FERPA 34 CFR § 99.31 School Official &amp; Zero-PII Architecture Evaluator | Caliber Foundry</title>
+  <meta name="description" content="Evaluate EdTech vendor data architectures against the 4-prong FERPA 34 CFR § 99.31(a)(1) School Official exception, 34 CFR § 99.33 redisclosure and model-training prohibitions, and post-contract deletion SLAs." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/ferpa-34-cfr-99-student-data-architecture-test.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="FERPA 34 CFR § 99.31 EdTech Vendor Data Architecture Evaluator" />
+  <meta property="og:description" content="Audit DPA legal basis, model-training prohibitions, client-side PII tokenization, and retention SLAs under 34 CFR Part 99." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/ferpa-34-cfr-99-student-data-architecture-test.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "FERPA 34 CFR § 99.31 School Official & Zero-PII Architecture Evaluator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/ferpa-34-cfr-99-student-data-architecture-test.html",
+    "educationalUse": ["Interactive Calculator", "Privacy Architecture Check"],
+    "citation": [
+      "https://www.ecfr.gov/current/title-34/part-99/section-99.31",
+      "https://studentprivacy.ed.gov/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="ferpa-34-cfr-99">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">09 · FERPA 34 CFR § 99.31</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./pdf-ua-iso-14289-matterhorn-syllabus-checker.html" class="eg-nav-link">← Prev: PDF/UA</a>
+        <a href="./xapi-cmi5-vs-scorm-lms-telemetry-selector.html" class="eg-nav-link">Next: xAPI vs. SCORM →</a>
+        <a href="../index.html" class="eg-nav-cta">Inspect AES-256-GCM Rubric →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Score FERPA Data Posture</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item 34 CFR Part 99 Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Review 4-Prong Statutory Text</a></li>
+      </ol>
+      <span class="eg-std-pill">34 CFR § 99.31(a)(1) &amp; § 99.33</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 09 of 10 · Student Privacy &amp; Zero-PII Cloud Engineering</span>
+      <h1 class="eg-title">FERPA 34 CFR § 99.31 "School Official" &amp; Zero-PII Architecture Evaluator</h1>
+      <p class="eg-subtitle">U.S. school districts and universities disclose student education records to EdTech vendors without individual parental/student consent only when the vendor satisfies all four prongs of the <span class="mono">34 CFR § 99.31(a)(1)(i)(B)</span> School Official exception and <span class="mono">34 CFR § 99.33</span> redisclosure limits.</p>
+
+      <div class="eg-kpi-strip" aria-label="FERPA compliance metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">FERPA Posture Score</span>
+          <span class="eg-kpi-value" id="kpiVal1">100 / 100</span>
+          <span class="eg-kpi-note" id="kpiNote1">FERPA Architecture Score</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Authorization Basis</span>
+          <span class="eg-kpi-value" id="kpiVal2">Valid Legal Basis</span>
+          <span class="eg-kpi-note" id="kpiNote2">34 CFR § 99.30 / § 99.31</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Secondary Use Gate</span>
+          <span class="eg-kpi-value" id="kpiVal3">Zero Model Training</span>
+          <span class="eg-kpi-note" id="kpiNote3">34 CFR § 99.33(a) limit</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Termination Purge SLA</span>
+          <span class="eg-kpi-value" id="kpiVal4">30 days</span>
+          <span class="eg-kpi-note" id="kpiNote4">Post-termination purge SLA</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="ferpaPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="ferpaPresetHeading">Step 1 — Select 1 of 3 Vendor Data Governance Designs (or Edit Controls)</h2>
+        <span class="eg-section-hint">Tests DPA direct-control clauses, model training bans, and PII tokenization</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="FERPA presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · District-Ready Zero-PII</span>
+          <span class="eg-option-title">Signed DPA · No Training · 30d Purge</span>
+          <span class="eg-option-desc">Tokenizes identifiers, encrypts records with AES-256-GCM, and prohibits cross-tenant model training.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Clickwrap ToS Violation</span>
+          <span class="eg-option-title">Clickwrap ToS · Opt-Out Training · 365d</span>
+          <span class="eg-option-desc">Fails direct institutional control and violates 34 CFR § 99.33 secondary use prohibitions.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Direct Consent Clinic Flow</span>
+          <span class="eg-option-title">34 CFR § 99.30 Written Consent · 60d</span>
+          <span class="eg-option-desc">Parent/eligible-student signed consent workflow with isolated per-case encryption.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="FERPA evaluator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Contractual &amp; Technical Privacy Controls</h2>
+            <p class="eg-panel-sub">Modify legal basis, secondary use policy, or purge window to inspect score.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selRoleBasis"><span>Institutional Authorization Basis</span><span class="eg-unit">34 CFR Part 99</span></label>
+            <select class="eg-select" id="selRoleBasis" data-calc-input>
+              <option value="school-official-dpa" selected>Signed District/University DPA ("School Official" § 99.31(a)(1))</option>
+              <option value="written-consent">Signed Parent / Eligible Student Consent (§ 99.30)</option>
+              <option value="clickwrap-tos">Unilateral Teacher Clickwrap Terms of Service Only</option>
+            </select>
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selModelTraining"><span>Identifiable Student Data Secondary Use / Training Policy</span><span class="eg-unit">§ 99.33</span></label>
+            <select class="eg-select" id="selModelTraining" data-calc-input>
+              <option value="prohibited" selected>Strictly Prohibited — Used Solely for Authorized Educational Service</option>
+              <option value="opt-out-default">Used to Train Shared Commercial Models Unless Student Opts Out</option>
+              <option value="ad-profiling">Used for Cross-Product Behavioral Profiling / Upsell</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selPiiCrypto"><span>Student Identifier Handling</span><span class="eg-unit">Storage</span></label>
+            <select class="eg-select" id="selPiiCrypto" data-calc-input>
+              <option value="tokenized-aes" selected>Pseudonymized UUID + AES-256-GCM</option>
+              <option value="encrypted-pii">Direct Names/Emails in Encrypted DB</option>
+              <option value="raw-db">Plaintext PII in Application Logs / DB</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpRetentionDays"><span>Post-Contract Purge Window</span><span class="eg-unit">1–1,825 days</span></label>
+            <input class="eg-input" type="number" id="inpRetentionDays" min="1" max="1825" value="30" data-calc-input />
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Evaluate FERPA Posture →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download FERPA Audit JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">34 CFR Part 99 Conformance Verdict</h2>
+            <p class="eg-panel-sub">Aligned with U.S. Dept. of Education Student Privacy Policy Office (SPPO) guidance.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">COMPLIANT · 34 CFR § 99.31(a)(1) ALIGNED</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">100/100 FERPA Posture · 30-Day Purge</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="FERPA scoring breakdown">
+          <thead><tr><th>Statutory Safeguard</th><th style="text-align:right;">Score</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../index.html" class="eg-btn-secondary">Test Client-Side AES-256-GCM Rubric in AcademyForge →</a>
+          <a href="./educause-hecvat-vendor-readiness-scorer.html" class="eg-btn-ghost">HECVAT Security Scorer</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="ferpaTakeaways">
+      <h2 class="eg-section-heading" id="ferpaTakeaways">Three Engineering Design Patterns for Zero-Friction District &amp; Campus Privacy Reviews</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Separate Roster Identity From Rubric Scores:</strong> Keep opaque LTI <span class="mono">sub</span> UUIDs in your assessment service so grading logs never store student names, emails, or SSNs.</li>
+        <li><strong>Zero Retention on External Inference Calls:</strong> If an EdTech tool invokes language or speech APIs, route through zero-data-retention enterprise endpoints with PII scrubbed beforehand.</li>
+        <li><strong>Deterministic Destruction Certificates:</strong> Automate tenant-scoped cryptographic key destruction within 30–60 days of contract non-renewal to satisfy National Student Data Privacy Agreement (NDPA) Exhibit E.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="ferpaQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="ferpaQuizHeading">Step 2 — 3-Question FERPA 34 CFR Part 99 Architecture Check</h2>
+          <p class="eg-panel-sub">Verify the School Official exception, clickwrap limits, and de-identification.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. Under <span class="mono">34 CFR § 99.31(a)(1)(i)(B)</span>, which four conditions must ALL hold for an outside EdTech contractor to receive PII from education records without prior written consent?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="34 CFR § 99.31(a)(1)(i)(B)(1)-(3) + annual notice criteria require: institutional service otherwise performed by employees, direct institutional control over use/maintenance, compliance with § 99.33 use/redisclosure limits, and alignment with the school's annual FERPA notice.">A. Performs an institutional service for which the school would otherwise use employees; remains under the school's direct control; obeys § 99.33 use/redisclosure limits; and meets the school's annual FERPA notice criteria.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="There is no federal 'FERPA certification seal' issued by the Department of Education.">B. Pays an annual federal FERPA registration fee to the U.S. Department of Education.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Hosting in a US region alone does not establish legal authorization or direct control.">C. Hosts servers in a U.S. cloud region and posts a public consumer privacy policy.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. Why does the U.S. Department of Education warn schools against relying on a free web app's standard clickwrap Terms of Service that reserve the right to "modify privacy terms at any time and use student submissions to market new products"?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="FERPA applies equally to free and paid services whenever PII from education records is disclosed.">A. FERPA only regulates paid enterprise contracts above $25,000.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Unilateral amendment rights and commercial marketing use strip the school of 'direct control' (§ 99.31(a)(1)(i)(B)(2)) and violate § 99.33(a), which restricts PII strictly to the authorized educational purpose.">B. Unilateral modification and commercial secondary use negate the school's "direct control" and violate 34 CFR § 99.33(a) purpose limitations.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Electronic signatures are valid in DPAs; the defect is the substantive lack of direct control and secondary commercial use.">C. FERPA requires wet-ink paper signatures mailed via USPS.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. Under <span class="mono">34 CFR § 99.31(b)(1)</span>, when may an EdTech research team use aggregated item-response statistics for psychometric calibration without student consent?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Simply hashing an email with unsalted MD5 or retaining student IDs + zip + birth date allows trivial re-identification.">A. Whenever student names are replaced by their school email addresses.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="34 CFR § 99.31(b)(1) permits release/use after the removal of all personally identifiable information provided a reasonable determination is made that a student's identity is not personally identifiable (taking into account multiple releases and quasi-identifiers).">B. Only after all direct and indirect PII is irreversibly removed and a reasonable determination confirms no individual student can be re-identified across combined releases.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Graduation does not extinguish FERPA protections over education records.">C. Immediately after the academic semester ends.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="FERPA statutory citations">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Official Public U.S. Government FERPA Sources</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.ecfr.gov/current/title-34/part-99/section-99.31" target="_blank" rel="noopener noreferrer">eCFR — 34 CFR § 99.31 (Conditions Under Which Prior Consent Is Not Required, Including School Officials)</a></li>
+            <li><a href="https://www.ecfr.gov/current/title-34/part-99/section-99.33" target="_blank" rel="noopener noreferrer">eCFR — 34 CFR § 99.33 (What Limitations Apply to the Redisclosure of Information?)</a></li>
+            <li><a href="https://studentprivacy.ed.gov/" target="_blank" rel="noopener noreferrer">U.S. Department of Education — Student Privacy Policy Office (SPPO) Official Guidance</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 09/10 · FERPA 34 CFR § 99.31 Data Architecture</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./xapi-cmi5-vs-scorm-lms-telemetry-selector.html">Next: SCORM vs. cmi5 vs. xAPI →</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

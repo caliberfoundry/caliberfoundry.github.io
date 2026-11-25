@@ -1,0 +1,8 @@
+start_datetime,provider,model,project_id,input_tokens,input_cached_tokens,output_tokens,num_model_requests,batch,cost_usd
+2026-11-01T00:00:00Z,OpenAI,gpt-4o,proj_support_rag,420000000,21000000,48000000,185000,false,1500.00
+2026-11-01T00:00:00Z,OpenAI,gpt-4o,proj_doc_extract,310000000,0,35000000,92000,false,1100.00
+2026-11-01T00:00:00Z,OpenAI,gpt-4o-mini,proj_classifier,650000000,195000000,90000000,1400000,true,140.00
+2026-11-01T00:00:00Z,Anthropic,claude-3-7-sonnet,proj_legal_review,280000000,14000000,32000000,64000,false,1300.00
+2026-11-01T00:00:00Z,Anthropic,claude-3-7-sonnet,proj_code_audit,220000000,132000000,26000000,48000,false,760.00
+2026-11-01T00:00:00Z,Anthropic,claude-3-5-haiku,proj_triage,500000000,250000000,60000000,820000,false,420.00
+2026-11-01T00:00:00Z,OpenAI,o3-mini,proj_sql_batch,180000000,36000000,45000000,41000,true,380.00

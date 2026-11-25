@@ -1,0 +1,58 @@
+%PDF-1.7
+% Educational Fixture 3: Tagged Physics Chapter (4 pages; all checked raw signals present; manual review still required)
+1 0 obj
+<<
+  /Type /Catalog
+  /Pages 2 0 R
+  /Lang (en-US)
+  /MarkInfo << /Marked true /Suspects false >>
+  /ViewerPreferences << /DisplayDocTitle true >>
+  /Metadata 8 0 R
+  /StructTreeRoot 10 0 R
+>>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R 5 0 R 6 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /S >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /S >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /S >>
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Tabs /S >>
+endobj
+8 0 obj
+<< /Type /Metadata /Subtype /XML /Length 292 >>
+stream
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/">
+      <pdfuaid:part>1</pdfuaid:part>
+    </rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+endstream
+endobj
+10 0 obj
+<<
+  /Type /StructTreeRoot
+  /K [
+    << /Type /StructElem /S /Document /K [
+      << /Type /StructElem /S /H1 /T (Chapter 8: Electromagnetic Induction) >>
+      << /Type /StructElem /S /H2 /T (8.1 Faraday Law of Induction) >>
+      << /Type /StructElem /S /Table /K [
+        << /Type /StructElem /S /TR /K [
+          << /Type /StructElem /S /TH /A << /O /Table /Scope /Column >> >>
+        ] >>
+      ] >>
+      << /Type /StructElem /S /Figure /Alt (Schematic of conducting bar moving across parallel rails inside a uniform magnetic field B directed into the page) >>
+    ] >>
+  ]
+>>
+endobj
+%%EOF

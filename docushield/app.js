@@ -1,16 +1,24 @@
 /**
- * DocuShield™ — ISO 14289-1 (PDF/UA-1), Matterhorn Protocol 1.1, WCAG 2.2 AA & EU EAA Remediation Studio
- * Deterministic AST Tagging, Client-Side PDF/HTML Byte Inspector, VPAT 2.5 Generator & B2B Freemium Engine
- * Swiss Editorial & Tactile Industrial Precision | Pure Vanilla ES6+ JavaScript
+ * DocuShield™ — Client-Side PDF/HTML Accessibility Pre-Check & Batch Course PDF Studio (PLAN-34)
+ * Preserves the 1-click DocuShield short user journey while replacing the old batch toast stub
+ * with real multi-PDF inspection, per-file drill-down, CSV/JSON/printable summary export,
+ * and explicit automated vs. manual verification scope.
  */
 
 (function () {
   'use strict';
 
+  const BATCH_ENGINE = (typeof window !== 'undefined' && window.DocuShieldBatchEngine)
+    ? window.DocuShieldBatchEngine
+    : null;
+
   /* ==========================================================================
      1. SECURITY & HTML ESCAPING UTILITY (DOM XSS PROTECTION)
      ========================================================================== */
   function escapeHtml(str) {
+    if (BATCH_ENGINE && typeof BATCH_ENGINE.escapeHtml === 'function') {
+      return BATCH_ENGINE.escapeHtml(str);
+    }
     return String(str === null || str === undefined ? '' : str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -18,6 +26,10 @@
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
   }
+
+  const CONFORMANCE_DISCLAIMER = BATCH_ENGINE
+    ? BATCH_ENGINE.CONFORMANCE_DISCLAIMER
+    : 'Automated structural checks inspect only a subset of technical signals and do not certify standard conformance without manual review.';
 
   /* ==========================================================================
      2. FALLBACK DATASET & NORMALIZATION WITH window.DOCUSHIELD_DATA
@@ -35,8 +47,8 @@
     pdfVersion: '%PDF-1.7',
     initialScore: 34,
     remediatedScore: 100,
-    riskLevel: 'UNREMEDIATED (NON-COMPLIANT — HIGH LITIGATION RISK)',
-    remediatedStatus: '100% ISO 14289-1 (PDF/UA-1) & WCAG 2.2 AA VERIFIED',
+    riskLevel: 'Sample document (source assessment)',
+    remediatedStatus: 'Tag-tree draft prepared (manual verification required)',
     summary: 'Untagged two-column PDF lacking /StructTreeRoot, /Lang (en-US), and XMP pdfuaid:part=1 metadata stream.',
     metadata: {
       before: {
@@ -46,16 +58,16 @@
         displayDocTitle: 'false (/ViewerPreferences displays raw filename)',
         structTreeRoot: 'NULL (0 tagged structure elements)',
         tabOrder: '/R (Row order — breaks multi-column reading sequence)',
-        contrastRatio: '2.8:1 FAIL (Below WCAG 2.2 AA 4.5:1 threshold)'
+        contrastRatio: 'Manual measurement required (sample note: 2.8:1 callout)'
       },
       after: {
-        pdfuaid: 'pdfuaid:part=1 (ISO 14289-1:2014 XMP packet verified)',
-        markInfo: '<< /Marked true /Suspects false >>',
-        lang: '(en-US) declared on /Catalog + inline BCP-47 spans',
-        displayDocTitle: 'true (dc:title synchronized with /Catalog)',
-        structTreeRoot: '412 semantic nodes (<Document>, <Sect>, <H1>-<H3>, <Table>, <Figure>)',
-        tabOrder: '/S (Structure order enforced across all Page dictionaries)',
-        contrastRatio: '7.4:1 PASS (Remediated to WCAG 2.2 AA/AAA)'
+        pdfuaid: 'Draft: pdfuaid:part=1 XMP packet template',
+        markInfo: 'Draft: << /Marked true /Suspects false >>',
+        lang: 'Draft: (en-US) declared on /Catalog',
+        displayDocTitle: 'Draft: true (dc:title synchronized with /Catalog)',
+        structTreeRoot: 'Draft structure nodes (requires manual reading-order & semantic QA)',
+        tabOrder: 'Draft: /S (Structure order across Page dictionaries)',
+        contrastRatio: 'Manual measurement required (>= 4.5:1 normal text)'
       }
     },
     visualRegions: [
@@ -67,207 +79,47 @@
         bbox: { top: 6, left: 6, width: 88, height: 14 },
         label: 'Document Main Title & Heading Hierarchy',
         previewText: 'Primary Document Heading & Section Banner',
-        issueSummary: 'Visual title rendered as raw text operator followed by skipped heading level <H4>, violating ISO 14289-1 Clause 7.4.2.',
+        issueSummary: 'Visual title rendered as raw text operator followed by skipped heading level <H4>.',
         beforeTag: 'Untagged BT /F1 22 Tf -> <H4> (Skipped <H1>, <H2>, <H3>)',
-        afterTag: '<H1 id="sec-title"> -> <H2 id="sec-overview"> (Strict Sequential Nesting)'
-      },
-      {
-        id: 'REG-2',
-        checkpointId: '09-003',
-        tagType: 'Sect',
-        page: 1,
-        bbox: { top: 23, left: 6, width: 42, height: 26 },
-        label: 'Multi-Column Reading Order & /Tabs /S Flow',
-        previewText: 'Section 1.1: Regulatory Compliance Scope & Operational Requirements...',
-        issueSummary: 'Two-column layout lacks logical structure tree reading order; keyboard focus defaults to /Tabs /R.',
-        beforeTag: 'Content Stream Order (Interleaved Col 1 / Col 2 lines; /Tabs /R)',
-        afterTag: '<Sect><H2><P>Col 1 Flow</P><P>Col 2 Flow</P></Sect> (/Tabs /S)'
-      },
-      {
-        id: 'REG-3',
-        checkpointId: '13-004',
-        tagType: 'Figure',
-        page: 4,
-        bbox: { top: 23, left: 52, width: 42, height: 26 },
-        label: 'Figure 1.2: Technical Vector Schematic Diagram',
-        previewText: '[Vector Diagram: System architecture and calibration curve with asymptotic threshold markers]',
-        issueSummary: 'Vector paths rendered inline without <Figure> structure enclosure, /BBox, or /Alt attribute.',
-        beforeTag: 'Untagged Vector Path Stream (No <Figure>, /Alt: NULL)',
-        afterTag: '<Figure BBox=[312 490 558 642] /Alt (Technical calibration curve and system schematic with labeled axes and thresholds.)>'
-      },
-      {
-        id: 'REG-4',
-        checkpointId: '15-002',
-        tagType: 'Table',
-        page: 7,
-        bbox: { top: 53, left: 6, width: 88, height: 24 },
-        label: 'Table 2.1: Multi-Column Schedule & Data Matrix',
-        previewText: 'Parameter | Specification | Threshold | Compliance Weight',
-        issueSummary: 'Data cells tagged as flat <P> paragraphs without <Table>, <TR>, <TH /Scope>, or /Headers bindings.',
-        beforeTag: 'Flat <P> Paragraphs + Raw Vector Grid Lines (No <Table> or <TH>)',
-        afterTag: '<Table><THead><TR><TH Scope="Column">...</TH></TR></THead><TBody>...</TBody></Table>'
-      },
-      {
-        id: 'REG-5',
-        checkpointId: '28-001',
-        tagType: 'Annot',
-        page: 12,
-        bbox: { top: 80, left: 6, width: 88, height: 14 },
-        label: 'Interactive AcroForm Field & Contrast Callout',
-        previewText: 'Notice & Digital Acknowledgment Signature / Input Field',
-        issueSummary: 'Callout fails WCAG 2.2 SC 1.4.3 contrast (2.8:1), and AcroForm widget lacks /TU accessible tooltip and <Form> OBJR.',
-        beforeTag: 'Contrast 2.8:1 FAIL + Unbound /Widget << /FT /Tx /TU null >>',
-        afterTag: 'Contrast 7.4:1 PASS + <Form><OBJR /TU (Authorized Signatory Identification Field) /></Form>'
+        afterTag: '<H1 id="sec-title"> -> <H2 id="sec-overview"> (Review semantic outline manually)'
       }
     ],
-    structTreeBefore: `%PDF-1.7\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R /ViewerPreferences << /DisplayDocTitle false >> >>\nendobj`,
-    structTreeAfter: `%PDF-1.7\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R /Lang (en-US) /MarkInfo << /Marked true >> /ViewerPreferences << /DisplayDocTitle true >> /Metadata 10 0 R /StructTreeRoot 20 0 R >>\nendobj`,
-    tables: [
-      {
-        id: 'TBL-1',
-        title: 'Table 2.1: Core Schedule & Compliance Matrix',
-        page: 7,
-        summaryIssue: 'Untagged visual grid converted to semantic <Table> with <THead>/<TBody> and explicit <TH Scope="Column"> and <TH Scope="Row"> attributes (Matterhorn 15-002).',
-        headers: ['Module / Item', 'Specification', 'Threshold Gate', 'Weight'],
-        rows: [
-          ['Primary Calibration & Verification', 'ISO 14289-1 Clause 7.1', '100% Tagged AST', '35%'],
-          ['Table Header & Scope Binding', 'ISO 14289-1 Clause 7.5', 'Explicit /Scope & /Headers', '35%'],
-          ['XMP Metadata & Language Tagging', 'ISO 14289-1 Clause 5', 'pdfuaid:part=1 + BCP-47', '30%']
-        ],
-        beforeMarkup: '<P>Module / Item Specification Threshold Gate Weight</P>',
-        afterMarkup: '<Table><THead><TR><TH Scope="Column" ID="th_1">Module / Item</TH><TH Scope="Column" ID="th_2">Specification</TH></TR></THead></Table>'
-      }
-    ],
-    figures: [
-      {
-        id: 'FIG-1',
-        title: 'Figure 1.2: Technical Architecture & Calibration Plot',
-        page: 4,
-        bboxLabel: 'Page 4 // BBox [312, 490, 558, 642]',
-        beforeAlt: 'MISSING (/Alt attribute absent on unenclosed vector path stream)',
-        afterAlt: 'Technical plot and schematic diagram illustrating primary response curve with labeled axes, reference thresholds, and asymptotic plateau.'
-      }
-    ],
+    structTreeBefore: '%PDF-1.7\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R /ViewerPreferences << /DisplayDocTitle false >> >>\nendobj',
+    structTreeAfter: '%PDF-1.7\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R /Lang (en-US) /MarkInfo << /Marked true >> /ViewerPreferences << /DisplayDocTitle true >> /Metadata 10 0 R /StructTreeRoot 20 0 R >>\nendobj',
+    tables: [],
+    figures: [],
     checkpoints: [
       {
         id: '01-006',
         clause: 'ISO 14289-1 Clause 7.1',
         wcag: 'WCAG 2.2 SC 1.3.1',
-        category: 'Artifact vs. Real Content Tagging',
-        title: 'All real content tagged in /StructTreeRoot; running headers & decorative rules marked as /Artifact',
+        category: 'Structure & Tagging',
+        title: 'Real content tagged in /StructTreeRoot; decorative rules marked as /Artifact',
         statusBefore: 'FAIL',
         statusAfter: 'PASS',
         severity: 'CRITICAL',
-        evidenceBefore: 'Running headers/footers and decorative rules emitted inside unmarked content streams; /MarkInfo is false.',
-        evidenceAfter: 'All real content objects enclosed in semantic structure elements; pagination headers/footers wrapped in /Artifact BDC.'
-      },
-      {
-        id: '06-001',
-        clause: 'ISO 14289-1 Clause 5 & 7.1',
-        wcag: 'EN 301 549 Clause 10.2',
-        category: 'XMP Metadata Stream',
-        title: 'Document XMP metadata stream contains pdfuaid:part=1 and dc:title with /DisplayDocTitle true',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'CRITICAL',
-        evidenceBefore: 'No XMP /Metadata stream with pdfuaid:part=1 attached to Catalog; /DisplayDocTitle is false.',
-        evidenceAfter: 'XMP packet injected declaring xmlns:pdfuaid with <pdfuaid:part>1</pdfuaid:part> and /DisplayDocTitle true.'
-      },
-      {
-        id: '09-003',
-        clause: 'ISO 14289-1 Clause 7.2 & 7.18.3',
-        wcag: 'WCAG 2.2 SC 1.3.2 & 2.4.3',
-        category: 'Logical Reading & Tab Order',
-        title: 'Structure tree reading order matches logical multi-column flow; every Page dictionary specifies /Tabs /S',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'CRITICAL',
-        evidenceBefore: 'Multi-column lines interleaved horizontally; page dictionaries default to /Tabs /R.',
-        evidenceAfter: 'Structure tree ordered into sequential column blocks; /Tabs /S enforced on all Page dictionaries.'
-      },
-      {
-        id: '11-001',
-        clause: 'ISO 14289-1 Clause 7.2',
-        wcag: 'WCAG 2.2 SC 3.1.1 & 3.1.2',
-        category: 'Natural Language Declaration',
-        title: 'Document /Catalog declares primary BCP-47 language /Lang (en-US) and inline multilingual spans',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'HIGH',
-        evidenceBefore: '/Catalog dictionary lacks /Lang entry; assistive technologies cannot determine pronunciation rules.',
-        evidenceAfter: '/Lang (en-US) declared on /Catalog and inline /Span /Lang attributes applied to foreign phrases.'
-      },
-      {
-        id: '13-004',
-        clause: 'ISO 14289-1 Clause 7.3',
-        wcag: 'WCAG 2.2 SC 1.1.1',
-        category: 'Graphics & Figure Alternative Text',
-        title: 'All informative figures and vector diagrams enclosed in <Figure> with descriptive /Alt and /BBox',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'CRITICAL',
-        evidenceBefore: 'Diagrams and images lack <Figure> tags, /BBox layout attributes, or /Alt strings.',
-        evidenceAfter: 'All informative figures enclosed in <Figure> tags with validated bounding boxes and domain-accurate /Alt descriptions.'
-      },
-      {
-        id: '14-003',
-        clause: 'ISO 14289-1 Clause 7.4.2',
-        wcag: 'WCAG 2.2 SC 1.3.1 & 2.4.6',
-        category: 'Numbered Heading Hierarchy',
-        title: 'Strictly nested heading hierarchy (<H1> through <H3>) with zero skipped heading levels',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'HIGH',
-        evidenceBefore: 'Document title is untagged text followed by skipped heading levels (<H1> jumping to <H4>).',
-        evidenceAfter: 'Normalized all headings into a strict <H1> -> <H2> -> <H3> hierarchy synchronized with /Outlines bookmarks.'
-      },
-      {
-        id: '15-002',
-        clause: 'ISO 14289-1 Clause 7.5',
-        wcag: 'WCAG 2.2 SC 1.3.1',
-        category: 'Table Headers & Scope Bindings',
-        title: 'All data tables contain <TH> header cells with explicit /Scope (/Column or /Row) or /Headers ID arrays',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'CRITICAL',
-        evidenceBefore: 'Data tables encoded as untagged text lines or <TD>-only grids with zero <TH> or /Scope attributes.',
-        evidenceAfter: 'All tables reconstructed with <THead>/<TBody>, explicit <TH Scope="Column|Row"> attributes, and /Headers arrays.'
-      },
-      {
-        id: '28-001',
-        clause: 'ISO 14289-1 Clause 7.18.1',
-        wcag: 'WCAG 2.2 SC 1.4.3 & 3.3.2',
-        category: 'Interactive AcroForms & Visual Contrast',
-        title: 'Interactive form fields bound to <Form> OBJR with /TU tooltips; callout contrast >= 4.5:1',
-        statusBefore: 'FAIL',
-        statusAfter: 'PASS',
-        severity: 'HIGH',
-        evidenceBefore: 'AcroForm widgets lack /TU tooltips and <Form> OBJR tags; callout text contrast is 2.8:1.',
-        evidenceAfter: 'All form widgets bound to <Form> OBJR with descriptive /TU tooltips; text contrast remediated to >= 7.4:1.'
+        evidenceBefore: 'Content streams unmarked; /MarkInfo is false.',
+        evidenceAfter: 'Draft structure tags prepared; verify real content vs. /Artifact manually.'
       }
     ]
   };
 
   function normalizePacket(rawPkt, index) {
     const p = Object.assign({}, FALLBACK_PACKET_TEMPLATE, rawPkt || {});
-    p.id = p.id || `PKT-0${index + 1}`;
+    p.id = p.id || ('PKT-0' + (index + 1));
     p.code = p.code || p.id;
     p.tier = p.tier || (['EDTECH-01', 'ECOM-02'].includes(p.id) ? 'FREE' : 'PRO');
-    p.pages = Number(p.pages) || 28;
+    p.pages = Number(p.pages) || 1;
     p.initialScore = Number(p.initialScore) || 34;
     p.remediatedScore = Number(p.remediatedScore) || 100;
     p.metadata = p.metadata && p.metadata.before && p.metadata.after
       ? p.metadata
       : JSON.parse(JSON.stringify(FALLBACK_PACKET_TEMPLATE.metadata));
-    p.visualRegions = Array.isArray(p.visualRegions) && p.visualRegions.length > 0
+    p.visualRegions = Array.isArray(p.visualRegions)
       ? p.visualRegions
       : JSON.parse(JSON.stringify(FALLBACK_PACKET_TEMPLATE.visualRegions));
-    p.tables = Array.isArray(p.tables) && p.tables.length > 0
-      ? p.tables
-      : JSON.parse(JSON.stringify(FALLBACK_PACKET_TEMPLATE.tables));
-    p.figures = Array.isArray(p.figures) && p.figures.length > 0
-      ? p.figures
-      : JSON.parse(JSON.stringify(FALLBACK_PACKET_TEMPLATE.figures));
+    p.tables = Array.isArray(p.tables) ? p.tables : [];
+    p.figures = Array.isArray(p.figures) ? p.figures : [];
     p.checkpoints = Array.isArray(p.checkpoints) && p.checkpoints.length > 0
       ? p.checkpoints
       : JSON.parse(JSON.stringify(FALLBACK_PACKET_TEMPLATE.checkpoints));
@@ -280,8 +132,8 @@
       : null;
 
     const defaultMeta = {
-      productName: 'DocuShield™ PDF/UA & EAA Remediation Studio',
-      version: '2026.11-ISO14289',
+      productName: 'DocuShield™ PDF/UA & Educational PDF Pre-Check Studio',
+      version: '2026.11-PLAN34',
       freePacketIds: ['EDTECH-01', 'ECOM-02'],
       validLicenseKeyDigests: [
         '5c05bd2d1eefa08f19b1e300aee51240b6cd33480b25f34e7011693e7bbc2e67',
@@ -290,77 +142,23 @@
     };
 
     const meta = Object.assign({}, defaultMeta, ext && ext.meta ? ext.meta : {});
-
-    let rawPackets = (ext && Array.isArray(ext.packets) && ext.packets.length > 0)
+    const rawPackets = (ext && Array.isArray(ext.packets) && ext.packets.length > 0)
       ? JSON.parse(JSON.stringify(ext.packets))
-      : [
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, { id: 'EDTECH-01', code: 'EDTECH-01', tier: 'FREE' }),
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, {
-            id: 'ECOM-02',
-            code: 'ECOM-02',
-            tier: 'FREE',
-            title: 'EU Consumer Electronics User Manual & GPSR Safety Dossier',
-            pages: 42,
-            regulation: 'EU Directive 2019/882 (EAA) & EN 301 549',
-            initialScore: 29
-          }),
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, {
-            id: 'FIN-03',
-            code: 'FIN-03',
-            tier: 'PRO',
-            title: 'Annual Retail Banking Fee Schedule & TILA Disclosure',
-            pages: 64,
-            regulation: 'EAA & ADA Title III',
-            initialScore: 31
-          }),
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, {
-            id: 'MED-04',
-            code: 'MED-04',
-            tier: 'PRO',
-            title: 'Patient Intake, Informed Consent & Clinical Discharge Packet',
-            pages: 18,
-            regulation: 'HHS Section 504 & WCAG 2.2 AA',
-            initialScore: 38
-          }),
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, {
-            id: 'EDTECH-05',
-            code: 'EDTECH-05',
-            tier: 'PRO',
-            title: 'K-12 & Professional Certification Digital Textbook Chapter',
-            pages: 96,
-            regulation: 'WCAG 2.2 AA & QTI/SCORM',
-            initialScore: 36
-          }),
-          Object.assign({}, FALLBACK_PACKET_TEMPLATE, {
-            id: 'GOV-06',
-            code: 'GOV-06',
-            tier: 'PRO',
-            title: 'Municipal Infrastructure RFP & Procurement Specification',
-            pages: 112,
-            regulation: 'EN 301 549 & Section 508',
-            initialScore: 27
-          })
-        ];
+      : [Object.assign({}, FALLBACK_PACKET_TEMPLATE)];
 
     const packets = rawPackets.map((pkt, idx) => normalizePacket(pkt, idx));
     const packetsById = {};
-    packets.forEach(p => {
-      packetsById[p.id] = p;
-    });
-
-    return {
-      meta,
-      packets,
-      packetsById
-    };
+    packets.forEach(p => { packetsById[p.id] = p; });
+    return { meta, packets, packetsById };
   }
 
   const DATASET = buildNormalizedDataset();
 
   /* ==========================================================================
-     3. PERSISTENT STATE & COMMERCIAL PLANS
+     3. PERSISTENT STATE, BATCH RUNTIME STATE & COMMERCIAL PLANS
      ========================================================================== */
-  const STORAGE_KEY = 'DOCUSHIELD_STUDIO_STATE_V2026';
+  const STORAGE_KEY = 'DOCUSHIELD_STUDIO_STATE_V2026_PLAN34';
+  const FREE_BATCH_FILE_LIMIT = 10;
 
   const PLAN_CATALOG = {
     ARCHIVE_PACK: {
@@ -374,14 +172,14 @@
       code: 'GROWTH_B2B',
       name: 'Growth B2B & EdTech — $299 / month',
       amountUsd: 299,
-      billingLabel: 'Monthly Subscription (Up to 1,000 Pages/mo + Domain Scanner)',
+      billingLabel: 'Monthly Subscription (Up to 1,000 Pages/mo + Unlimited Local Batch)',
       tier: 'PRO'
     },
     ENTERPRISE_UNI: {
       code: 'ENTERPRISE_UNI',
       name: 'Enterprise & University — $799 / month',
       amountUsd: 799,
-      billingLabel: 'Enterprise Unlimited License (CI/CD Webhook API + SLA)',
+      billingLabel: 'Enterprise Unlimited License (CI/CD Webhook API + Manual QA Support)',
       tier: 'ENTERPRISE'
     }
   };
@@ -389,17 +187,17 @@
   function getDefaultState() {
     return {
       activePacketId: DATASET.packets[0] ? DATASET.packets[0].id : 'EDTECH-01',
-      activeLeftTab: 'visual', // 'visual' | 'tagtree' | 'tables'
-      activeCheckpointFilter: 'ALL', // 'ALL' | 'FAIL' | 'STRUCTURE' | 'TABLES_FIGURES' | 'METADATA_FORMS'
+      activeLeftTab: 'visual',
+      activeCheckpointFilter: 'ALL',
       selectedRegionId: null,
-      activeExportFormat: 'json', // 'json' | 'xml'
-      licenseTier: 'FREE', // 'FREE' | 'PRO' | 'PRO_PROVISIONAL' | 'ENTERPRISE'
+      activeExportFormat: 'json',
+      licenseTier: 'FREE',
       licenseKey: null,
       selectedPlanCode: 'ARCHIVE_PACK',
-      accountUser: null, // { fullName, organization, email }
+      accountUser: null,
       customUploadsCount: 0,
-      remediatedPackets: {}, // { [packetId]: true }
-      customFigureAlts: {}, // { [figureId]: "custom alt text" }
+      remediatedPackets: {},
+      customFigureAlts: {},
       lastScannedDomain: null,
       lastScannedFile: null,
       lastGeneratedInvoice: null
@@ -407,6 +205,12 @@
   }
 
   let STATE = loadState();
+  let BATCH_STATE = {
+    summary: null,
+    activePresetId: null,
+    activeBatchFileIndex: -1,
+    rawEntries: [] // [{ name, data }]
+  };
 
   function loadState() {
     try {
@@ -518,13 +322,19 @@
     return { valid: false };
   }
 
+  function isLocalQaEnvironment() {
+    if (typeof window === 'undefined' || !window.location) return true;
+    const h = window.location.hostname;
+    return h === '127.0.0.1' || h === 'localhost' || !h;
+  }
+
   function isProUnlocked() {
     const hasTier =
       STATE.licenseTier === 'PRO' ||
       STATE.licenseTier === 'PRO_PROVISIONAL' ||
       STATE.licenseTier === 'ENTERPRISE';
     if (!hasTier) return false;
-    if (typeof isLocalQaEnvironment === 'function' && isLocalQaEnvironment()) return true;
+    if (isLocalQaEnvironment()) return true;
     return verifyDocuShieldLicenseKey(STATE.licenseKey).valid;
   }
 
@@ -567,128 +377,104 @@
   /* ==========================================================================
      4. REAL CLIENT-SIDE PDF & HTML BYTE INSPECTOR (`inspectCustomFileBuffer`)
      ========================================================================== */
-  function inspectCustomFileBuffer(fileName, uint8ArrayOrText, enforceQuota) {
-    if (enforceQuota && !isProUnlocked() && STATE.customUploadsCount >= 1) {
-      openPaywallModal({
-        reason: 'Free Diagnostic Tier includes 1 local PDF/HTML file inspection. Activate DocuShield™ PRO or generate a Corporate Invoice (with instant 14-day Provisional PRO Unlock) for unlimited local file and batch archive remediation.'
-      });
-      return null;
-    }
+  function buildPacketFromInspectionResult(res) {
+    const safeFileName = escapeHtml(res.fileName);
+    const findCheck = (id) => (res.checks || []).find(c => c.id === id);
+    const structCp = findCheck('01-006-struct');
+    const markedCp = findCheck('01-006-marked');
+    const langCp = findCheck('11-001-lang');
+    const titleCp = findCheck('06-001-title');
+    const pdfuaCp = findCheck('06-001-pdfua');
+    const tabsCp = findCheck('09-003-tabs');
 
-    const safeFileName = escapeHtml(String(fileName || 'uploaded-document.pdf').trim());
-    let rawText = '';
-
-    if (typeof uint8ArrayOrText === 'string') {
-      rawText = uint8ArrayOrText;
-    } else if (uint8ArrayOrText instanceof Uint8Array) {
-      try {
-        rawText = new TextDecoder('latin1').decode(uint8ArrayOrText);
-      } catch (e) {
-        rawText = String.fromCharCode.apply(null, Array.from(uint8ArrayOrText.slice(0, 32768)));
-      }
-    } else if (uint8ArrayOrText instanceof ArrayBuffer) {
-      const arr = new Uint8Array(uint8ArrayOrText);
-      try {
-        rawText = new TextDecoder('latin1').decode(arr);
-      } catch (e) {
-        rawText = String.fromCharCode.apply(null, Array.from(arr.slice(0, 32768)));
-      }
-    }
-
-    const isHtml = /\.html?$/i.test(fileName) || /<!DOCTYPE\s+html|<html\b/i.test(rawText.slice(0, 500));
-    const pdfVerMatch = rawText.match(/%PDF-(\d\.\d)/);
-    if (!rawText.trim() || (!pdfVerMatch && !(isHtml && /<[a-z][^>]*>/i.test(rawText)))) {
-      document.getElementById('dsAssessmentSummary').textContent = 'Could not inspect ' + fileName + '. Choose a readable PDF or HTML file. The previous assessment is still selected.';
-      return null;
-    }
-    const detectedVersion = isHtml ? 'HTML5 / XHTML' : (pdfVerMatch ? `%PDF-${pdfVerMatch[1]}` : '%PDF-1.7');
-
-    // Scan raw COS dictionary tokens
-    const pageMatches = rawText.match(/\/Type\s*\/Page\b(?!s)/g);
-    const detectedPages = isHtml ? 1 : (pageMatches && pageMatches.length > 0 ? pageMatches.length : 1);
-    const hasStructTreeRoot = isHtml
-      ? /<(main|article|section|nav)\b/i.test(rawText)
-      : /\/StructTreeRoot\b/.test(rawText);
-    const hasMarkedTrue = isHtml
-      ? /<(h1|h2|table)\b/i.test(rawText)
-      : /\/MarkInfo\s*<<[^>]*\/Marked\s+true/i.test(rawText);
-    const hasLang = isHtml
-      ? /<html[^>]+lang=["'][a-zA-Z-]+["']/i.test(rawText)
-      : /\/Lang\s*\([a-zA-Z-]+\)/i.test(rawText);
-    const hasDisplayDocTitle = isHtml
-      ? /<title>[^<]+<\/title>/i.test(rawText)
-      : /\/DisplayDocTitle\s+true/i.test(rawText);
-    const hasPdfUaId = /pdfuaid:part/i.test(rawText);
-    const imageCount = (rawText.match(/\/Subtype\s*\/Image\b|<img\b/gi) || []).length;
-    const tableCount = (rawText.match(/\/Table\b|<table\b/gi) || []).length;
-    const annotCount = (rawText.match(/\/Subtype\s*\/Widget\b|\/Annot\b|\/AcroForm\b|<input\b|<form\b/gi) || []).length;
-
-    let initialPassedCount = 0;
-    if (hasStructTreeRoot && hasMarkedTrue) initialPassedCount++;
-    if (hasPdfUaId && hasDisplayDocTitle) initialPassedCount++;
-    if (hasLang) initialPassedCount++;
-    const initialScore = Math.max(22, Math.min(85, 28 + initialPassedCount * 14));
+    const compressedNote = res.compressedStreamsDetected
+      ? ' Compressed streams (/FlateDecode or /ObjStm) detected — re-verify in a full parser such as veraPDF or PAC.'
+      : '';
 
     const customPacket = normalizePacket({
       id: 'CUSTOM-UPLOAD',
       tier: 'FREE',
       code: 'CUSTOM-UPLOAD',
-      title: `Local File Audit: ${String(fileName || 'uploaded-document.pdf')}`,
+      title: 'Local File Inspection: ' + res.fileName,
       sector: 'Client-Side Local Binary Stream Inspection',
-      pages: detectedPages,
-      regulation: 'ISO 14289-1 (PDF/UA-1) & WCAG 2.2 AA',
-      fileName: String(fileName || 'uploaded-document.pdf'),
-      fileSizeKB: Math.max(1, Math.round(rawText.length / 1024)),
-      pdfVersion: detectedVersion,
-      initialScore: initialScore,
-      remediatedScore: 100,
-      riskLevel: 'UNREMEDIATED STREAM (NON-COMPLIANT — MATTERHORN FAILURES DETECTED)',
-      remediatedStatus: '100% ISO 14289-1 (PDF/UA-1) & WCAG 2.2 AA VERIFIED',
-      summary: `Scanned ${rawText.length} bytes (${detectedVersion}, ${detectedPages} page(s), ${imageCount} image/figure object(s), ${tableCount} table object(s), ${annotCount} form/annotation object(s)). /StructTreeRoot: ${hasStructTreeRoot ? 'Present' : 'ABSENT'}; /Marked: ${hasMarkedTrue ? 'true' : 'false'}; /Lang: ${hasLang ? 'Present' : 'MISSING'}; XMP pdfuaid:part=1: ${hasPdfUaId ? 'Present' : 'MISSING'}.`,
+      pages: res.pages,
+      regulation: 'Automated structural signals (Manual review required)',
+      fileName: res.fileName,
+      fileSizeKB: res.fileSizeKB,
+      pdfVersion: res.pdfVersion,
+      initialScore: res.passRatePercent,
+      remediatedScore: res.passRatePercent,
+      riskLevel: res.statusLabel,
+      remediatedStatus: 'Tag-tree draft prepared (manual verification required)',
+      summary: res.summaryLine,
+      compressedStreamsDetected: !!res.compressedStreamsDetected,
+      encrypted: !!res.encrypted,
+      manualReviewReasons: res.manualReviewReasons || [],
       metadata: {
         before: {
-          pdfuaid: hasPdfUaId ? 'Detected pdfuaid in XMP' : 'MISSING (No pdfuaid:part=1 in XMP /Metadata)',
-          markInfo: hasMarkedTrue ? '<< /Marked true >>' : '<< /Marked false >> (Untagged stream)',
-          lang: hasLang ? 'Declared in stream' : 'MISSING (No /Lang BCP-47 tag on /Catalog)',
-          displayDocTitle: hasDisplayDocTitle ? 'true' : 'false (/ViewerPreferences /DisplayDocTitle absent)',
-          structTreeRoot: hasStructTreeRoot ? 'Partial /StructTreeRoot detected' : 'NULL (No /StructTreeRoot dictionary found)',
-          tabOrder: '/R (Default row order — /Tabs /S absent)',
-          contrastRatio: 'Manual measurement required'
+          pdfuaid: pdfuaCp ? pdfuaCp.evidence : 'N/A (HTML document)',
+          markInfo: markedCp ? markedCp.evidence : 'Not checked',
+          lang: langCp ? langCp.evidence : 'Not checked',
+          displayDocTitle: titleCp ? titleCp.evidence : 'Not checked',
+          structTreeRoot: structCp ? structCp.evidence : 'Not checked',
+          tabOrder: tabsCp ? tabsCp.evidence : 'N/A (HTML document)',
+          contrastRatio: 'Not measured automatically — manual visual/contrast check required'
         },
         after: {
-          pdfuaid: 'pdfuaid:part=1 (ISO 14289-1:2014 XMP packet injected)',
-          markInfo: '<< /Marked true /Suspects false >>',
-          lang: '(en-US) declared on /Catalog dictionary',
-          displayDocTitle: `true (dc:title = '${safeFileName}')`,
-          structTreeRoot: `Constructed /StructTreeRoot across ${detectedPages} page(s) (${imageCount} <Figure>, ${Math.max(1, tableCount)} <Table>)`,
-          tabOrder: `/S (Structure order enforced across ${detectedPages} Page object(s))`,
-          contrastRatio: 'Manual measurement required'
+          pdfuaid: 'Draft XMP template: pdfuaid:part=1 (verify full PDF/UA-1 compliance manually)',
+          markInfo: 'Draft: << /Marked true /Suspects false >>',
+          lang: 'Draft: declare /Lang (BCP-47) on /Catalog and inline language changes',
+          displayDocTitle: 'Draft: /DisplayDocTitle true + matching dc:title',
+          structTreeRoot: 'Draft: tag all real content across ' + res.pages + ' page(s); verify reading order manually',
+          tabOrder: 'Draft: /Tabs /S on all Page dictionaries',
+          contrastRatio: 'Manual measurement required (>= 4.5:1 normal text)'
         }
       },
-      structTreeBefore: `${detectedVersion}\n% [CLIENT-SIDE BYTE SCAN OF: ${safeFileName}]\n% Bytes Scanned: ${rawText.length} | Pages: ${detectedPages} | Images: ${imageCount} | Tables: ${tableCount} | Widgets: ${annotCount}\n1 0 obj\n<<\n  /Type /Catalog\n  /Pages 2 0 R\n  /MarkInfo << /Marked ${hasMarkedTrue ? 'true' : 'false'} >>\n  % /StructTreeRoot: ${hasStructTreeRoot ? 'Present' : 'ABSENT (Matterhorn 01-006 Failure)'}\n  % /Lang: ${hasLang ? 'Present' : 'ABSENT (Matterhorn 11-001 Failure)'}\n  % XMP pdfuaid:part=1: ${hasPdfUaId ? 'Present' : 'ABSENT (Matterhorn 06-001 Failure)'}\n>>\nendobj`,
-      structTreeAfter: `${detectedVersion}\n% [REMEDIATED ISO 14289-1 (PDF/UA-1) AST FOR: ${safeFileName}]\n1 0 obj\n<<\n  /Type /Catalog\n  /Pages 2 0 R\n  /Lang (en-US)\n  /MarkInfo << /Marked true /Suspects false >>\n  /ViewerPreferences << /DisplayDocTitle true >>\n  /Metadata 10 0 R\n  /StructTreeRoot 20 0 R\n>>\nendobj\n\n10 0 obj\n<< /Type /Metadata /Subtype /XML >>\nstream\n<x:xmpmeta xmlns:x="adobe:ns:meta/">\n  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n    <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">\n      <pdfuaid:part>1</pdfuaid:part>\n      <dc:title><rdf:Alt><rdf:li xml:lang="x-default">${safeFileName}</rdf:li></rdf:Alt></dc:title>\n    </rdf:Description>\n  </rdf:RDF>\n</x:xmpmeta>\nendstream\nendobj`
+      structTreeBefore:
+        res.pdfVersion + '\n' +
+        '% [CLIENT-SIDE RAW BYTE SCAN OF: ' + res.fileName + ']\n' +
+        '% Bytes Scanned: ' + res.byteLength + ' | Pages: ' + res.pages +
+        ' | Images: ' + res.objectCounts.images + ' | Tables: ' + res.objectCounts.tables +
+        ' | Widgets/Forms: ' + res.objectCounts.forms + '\n' +
+        '% Compressed Streams (/FlateDecode / /ObjStm): ' + (res.compressedStreamsDetected ? 'YES — verify in full decompressed parser' : 'Not detected') + '\n' +
+        (res.checks || []).map(c => '% [' + c.status + '] ' + c.title + ' — ' + c.evidence).join('\n'),
+      structTreeAfter:
+        res.pdfVersion + '\n' +
+        '% [PROPOSED ISO 14289-1 DRAFT TEMPLATE FOR: ' + res.fileName + ']\n' +
+        '% NOTE: Draft template only. Apply in a PDF/UA remediation tool and complete manual verification.\n' +
+        '1 0 obj\n<<\n  /Type /Catalog\n  /Pages 2 0 R\n  /Lang (' + (res.detectedLang || 'en-US') + ')\n  /MarkInfo << /Marked true /Suspects false >>\n  /ViewerPreferences << /DisplayDocTitle true >>\n  /Metadata 10 0 R\n  /StructTreeRoot 20 0 R\n>>\nendobj\n\n' +
+        '10 0 obj\n<< /Type /Metadata /Subtype /XML >>\nstream\n<x:xmpmeta xmlns:x="adobe:ns:meta/">\n  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n    <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">\n      <pdfuaid:part>1</pdfuaid:part>\n      <dc:title><rdf:Alt><rdf:li xml:lang="x-default">' + safeFileName + '</rdf:li></rdf:Alt></dc:title>\n    </rdf:Description>\n  </rdf:RDF>\n</x:xmpmeta>\nendstream\nendobj'
     }, 99);
 
-    const signals = [
-      ['structure', 'Document structure', hasStructTreeRoot, isHtml ? 'A main, article, section or nav element' : '/StructTreeRoot'],
-      ['headings', 'Structure markers', hasMarkedTrue, isHtml ? 'A heading or table element' : '/Marked true'],
-      ['language', 'Document language', hasLang, isHtml ? 'HTML lang attribute' : '/Lang'],
-      ['title', 'Document title', hasDisplayDocTitle, isHtml ? 'Nonempty title element' : '/DisplayDocTitle true']
-    ];
-    if (!isHtml) signals.push(['metadata', 'PDF/UA metadata marker', hasPdfUaId, 'pdfuaid:part']);
-    customPacket.checkpoints = signals.map(([id, title, present, marker]) => ({
-      id, title, clause: 'Local file inspection', wcag: '', category: 'Document structure',
-      statusBefore: present ? 'PASS' : 'FAIL', statusAfter: present ? 'PASS' : 'FAIL',
-      evidenceBefore: marker + (present ? ' found' : ' not found'),
-      evidenceAfter: marker + (present ? ' found' : ' not found')
+    customPacket.checkpoints = (res.checks || []).map(c => ({
+      id: c.id,
+      title: c.title,
+      clause: c.clause,
+      wcag: c.wcag || '',
+      category: c.category || 'Document structure',
+      statusBefore: c.status,
+      statusAfter: c.status,
+      evidenceBefore: c.evidence,
+      evidenceAfter: c.evidence + compressedNote
     }));
+
     customPacket.visualRegions = customPacket.checkpoints.map(cp => ({
-      id: cp.id, checkpointId: cp.id, label: cp.title, tagType: cp.id, page: null,
-      previewText: cp.evidenceBefore, beforeTag: cp.evidenceBefore,
-      issueSummary: 'Document-wide source inspection', afterTag: 'Review the source file to confirm its semantics.'
+      id: cp.id,
+      checkpointId: cp.id,
+      label: cp.title,
+      tagType: cp.id,
+      page: null,
+      previewText: cp.evidenceBefore,
+      beforeTag: cp.evidenceBefore,
+      issueSummary: 'Client-side raw stream inspection' + compressedNote,
+      afterTag: 'Manual verification required: confirm reading order, semantic meaning, and full parser validation.'
     }));
     customPacket.tables = [];
     customPacket.figures = [];
+    return customPacket;
+  }
+
+  function loadCustomPacketIntoWorkbench(customPacket) {
     DATASET.packetsById['CUSTOM-UPLOAD'] = customPacket;
     const existingIdx = DATASET.packets.findIndex(p => p.id === 'CUSTOM-UPLOAD');
     if (existingIdx >= 0) {
@@ -697,7 +483,6 @@
       DATASET.packets.push(customPacket);
     }
 
-    // Ensure option exists in #packetSelect
     const selectEl = document.getElementById('packetSelect');
     if (selectEl) {
       let opt = selectEl.querySelector('option[value="CUSTOM-UPLOAD"]');
@@ -706,29 +491,434 @@
         opt.value = 'CUSTOM-UPLOAD';
         selectEl.prepend(opt);
       }
-      opt.textContent = `[LOCAL UPLOAD] ${String(fileName || 'uploaded-document.pdf')} (${detectedPages} pp — ${detectedVersion})`;
+      opt.textContent = '[LOCAL FILE] ' + customPacket.fileName + ' (' + customPacket.pages + ' pp — ' + customPacket.pdfVersion + ')';
       selectEl.value = 'CUSTOM-UPLOAD';
     }
 
-    STATE.customUploadsCount = (STATE.customUploadsCount || 0) + 1;
     STATE.activePacketId = 'CUSTOM-UPLOAD';
-    window.dispatchEvent(new CustomEvent('cf:workflow',{detail:{stage:'result_ready'}}));
     STATE.remediatedPackets['CUSTOM-UPLOAD'] = false;
     STATE.selectedRegionId = customPacket.visualRegions[0] ? customPacket.visualRegions[0].id : null;
     saveState();
     renderAll();
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'result_ready' } }));
+  }
 
-    showToast(`Inspected ${String(fileName)} (${detectedPages} pp, ${detectedVersion})`);
+  function inspectCustomFileBuffer(fileName, uint8ArrayOrText, enforceQuota) {
+    if (!BATCH_ENGINE) return null;
+    const res = BATCH_ENGINE.inspectDocumentBuffer(fileName, uint8ArrayOrText);
+    if (!res.valid) {
+      const sumEl = document.getElementById('dsAssessmentSummary');
+      if (sumEl) {
+        sumEl.textContent = 'Could not inspect ' + String(fileName || 'file') + '. Choose a readable PDF or HTML file. The previous assessment is still selected.';
+      }
+      return null;
+    }
+
+    const customPacket = buildPacketFromInspectionResult(res);
+    STATE.customUploadsCount = (STATE.customUploadsCount || 0) + 1;
+    loadCustomPacketIntoWorkbench(customPacket);
+    showToast('Inspected ' + res.fileName + ' (' + res.pages + ' pp, ' + res.passedCount + '/' + res.totalChecks + ' automated signals)');
     return customPacket;
   }
 
   /* ==========================================================================
-     5. "TROJAN-HORSE" PERSONALIZED B2B AUDIT DEEP-LINK & DOMAIN SCANNER
+     5. REAL BATCH EDUCATIONAL PDF INSPECTOR (PLAN-34 — NO TOAST STUB)
+     ========================================================================== */
+  function openBatchWorkspace(shouldScroll) {
+    const detailsEl = document.getElementById('dsBatchWorkspace');
+    if (!detailsEl) return;
+    detailsEl.open = true;
+    if (shouldScroll !== false) {
+      detailsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    const uploadBtn = document.getElementById('btnBatchUploadFiles');
+    if (uploadBtn) uploadBtn.focus({ preventScroll: true });
+  }
+
+  function renderBatchScopeReference() {
+    if (!BATCH_ENGINE) return;
+    const autoList = document.getElementById('autoScopeList');
+    const manualList = document.getElementById('manualScopeList');
+    const presetsContainer = document.getElementById('batchPresetOptions');
+
+    if (autoList) {
+      autoList.innerHTML = BATCH_ENGINE.AUTOMATED_SCOPE_ITEMS.map(item =>
+        '<li><strong>' + escapeHtml(item.label) + '</strong>' +
+        (item.reference ? ' (' + escapeHtml(item.reference) + ')' : '') + ': ' +
+        escapeHtml(item.detail) + '</li>'
+      ).join('');
+    }
+
+    if (manualList) {
+      manualList.innerHTML = BATCH_ENGINE.MANUAL_REVIEW_CHECKLIST.map(item =>
+        '<li><strong>' + escapeHtml(item.title) + '</strong> (' + escapeHtml(item.reference) + '): ' +
+        escapeHtml(item.reason) + '</li>'
+      ).join('');
+    }
+
+    if (presetsContainer) {
+      const presets = BATCH_ENGINE.getEducationalBatchPresets();
+      presetsContainer.innerHTML = '';
+      presets.forEach(preset => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ds-batch-preset-btn' + (BATCH_STATE.activePresetId === preset.id ? ' active' : '');
+        btn.setAttribute('data-batch-preset', preset.id);
+        btn.innerHTML =
+          '<span class="ds-preset-opt-tag">' + escapeHtml(preset.optionLabel) + '</span>' +
+          '<span class="ds-preset-opt-title">' + escapeHtml(preset.title) + '</span>' +
+          '<span class="ds-preset-opt-sub">' + escapeHtml(preset.subtitle) + '</span>';
+        btn.addEventListener('click', () => {
+          runEducationalPresetBatch(preset.id);
+        });
+        presetsContainer.appendChild(btn);
+      });
+    }
+  }
+
+  function updateBatchProgress(pct, stageText, etaText, completionText, isDone) {
+    const wrap = document.getElementById('batchProgressWrap');
+    const bar = document.getElementById('batchProgressBar');
+    const stageEl = document.getElementById('batchProgressStage');
+    const etaEl = document.getElementById('batchProgressEta');
+    const noteEl = document.getElementById('batchCompletionStatus');
+    if (!wrap) return;
+
+    wrap.classList.remove('hidden');
+    wrap.classList.toggle('is-done', !!isDone);
+    if (bar) bar.style.width = Math.max(0, Math.min(100, Math.round(pct))) + '%';
+    if (stageEl) stageEl.textContent = stageText || '';
+    if (etaEl) etaEl.textContent = etaText || '';
+    if (noteEl) noteEl.textContent = completionText || '';
+  }
+
+  function getStatusPillClass(statusCode) {
+    if (statusCode === 'INVALID') return 'pill-invalid';
+    if (statusCode === 'SIGNALS_PRESENT_MANUAL_REQUIRED') return 'pill-signals';
+    if (statusCode === 'SIGNALS_WITH_CAVEAT' || statusCode === 'ENCRYPTED_LIMITED' || statusCode === 'FINDINGS_WITH_CAVEAT') {
+      return 'pill-warn';
+    }
+    return 'pill-fail';
+  }
+
+  function renderBatchResults() {
+    const summary = BATCH_STATE.summary;
+    const stripEl = document.getElementById('batchSummaryStrip');
+    const headingEl = document.getElementById('batchResultsHeading');
+    const headerMetaEl = document.getElementById('batchSummaryHeaderMeta');
+    const tbodyEl = document.getElementById('batchResultsTableBody');
+
+    const btnCsv = document.getElementById('btnExportBatchCsv');
+    const btnJson = document.getElementById('btnExportBatchJson');
+    const btnPrint = document.getElementById('btnPrintBatchSummary');
+    const btnClear = document.getElementById('btnClearBatch');
+
+    const hasBatch = !!(summary && Array.isArray(summary.files) && summary.files.length > 0);
+
+    if (btnCsv) btnCsv.disabled = !hasBatch;
+    if (btnJson) btnJson.disabled = !hasBatch;
+    if (btnPrint) btnPrint.disabled = !hasBatch;
+    if (btnClear) btnClear.disabled = !hasBatch;
+
+    document.querySelectorAll('[data-batch-preset]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-batch-preset') === BATCH_STATE.activePresetId);
+    });
+
+    if (!hasBatch) {
+      if (stripEl) stripEl.classList.add('hidden');
+      if (headingEl) headingEl.textContent = 'Batch inspection results (0 files)';
+      if (headerMetaEl) headerMetaEl.textContent = 'Upload multiple PDFs or run 1 of 3 course packs';
+      if (tbodyEl) {
+        tbodyEl.innerHTML =
+          '<tr><td colspan="5" class="ds-batch-empty">' +
+          'No batch run yet. Select multiple local course PDFs above or pick Option 1, Option 2, or Option 3 to inspect real PDF byte streams and export a summary.' +
+          '</td></tr>';
+      }
+      return;
+    }
+
+    const t = summary.totals;
+    if (stripEl) stripEl.classList.remove('hidden');
+    document.getElementById('batchKpiFiles').textContent = String(t.filesSubmitted);
+    document.getElementById('batchKpiPagesSub').textContent = t.totalPages + ' pages (' + t.validFiles + ' readable, ' + t.invalidFiles + ' invalid)';
+    document.getElementById('batchKpiFindings').textContent = String(t.filesWithAutomatedFindings);
+    document.getElementById('batchKpiSignalsSub').textContent = t.totalAutomatedFailed + ' missing signals across ' + t.totalAutomatedChecks + ' checks';
+    document.getElementById('batchKpiCompressed').textContent = String(t.filesWithCompressedStreams);
+    document.getElementById('batchKpiManual').textContent = t.filesRequiringManualReview + ' / ' + t.validFiles;
+
+    if (headingEl) {
+      headingEl.textContent = summary.batchLabel + ' — ' + t.filesSubmitted + ' file(s) inspected';
+    }
+    if (headerMetaEl) {
+      headerMetaEl.textContent = t.filesSubmitted + ' files · ' + t.filesWithAutomatedFindings + ' with findings · Manual review required';
+    }
+
+    if (!tbodyEl) return;
+    tbodyEl.innerHTML = '';
+
+    summary.files.forEach((item, idx) => {
+      const tr = document.createElement('tr');
+      if (idx === BATCH_STATE.activeBatchFileIndex) {
+        tr.className = 'batch-row-active';
+      }
+
+      const signalsSummary = item.valid
+        ? '<strong>' + item.passedCount + ' / ' + item.totalChecks + '</strong> raw signals found' +
+          (item.missingSignals.length > 0
+            ? '<div class="ds-batch-missing-list">Missing: ' + escapeHtml(item.missingSignals.join(', ')) + '</div>'
+            : '<div class="ds-batch-missing-list">All checked raw signals present (manual review still required)</div>') +
+          (item.compressedStreamsDetected
+            ? '<div class="ds-batch-missing-list">Warning: compressed streams detected (/FlateDecode or /ObjStm)</div>'
+            : '')
+        : '<div class="ds-batch-missing-list">' + escapeHtml(item.errorMessage || 'Unreadable file') + '</div>';
+
+      const manualListHtml =
+        '<ul class="ds-batch-manual-list">' +
+        (item.manualReviewReasons || []).slice(0, 3).map(r => '<li>' + escapeHtml(r) + '</li>').join('') +
+        '</ul>';
+
+      tr.innerHTML =
+        '<td data-label="Course PDF / File">' +
+          '<div class="ds-batch-fname">' + escapeHtml(item.fileName) + '</div>' +
+          '<div class="ds-batch-fmeta">' + escapeHtml(item.pdfVersion) + ' · ' + item.pages + ' pp · ' + item.byteLength + ' B</div>' +
+        '</td>' +
+        '<td data-label="Status">' +
+          '<span class="ds-batch-pill ' + getStatusPillClass(item.statusCode) + '">' + escapeHtml(item.statusLabel) + '</span>' +
+        '</td>' +
+        '<td data-label="Automated raw signals">' + signalsSummary + '</td>' +
+        '<td data-label="Priority manual checks">' + manualListHtml + '</td>' +
+        '<td data-label="Action">' +
+          (item.valid
+            ? '<button type="button" class="ds-batch-inspect-btn" data-inspect-batch-idx="' + idx + '">Inspect file</button>'
+            : '<span class="ds-batch-fmeta">Fix or re-export source</span>') +
+        '</td>';
+
+      const inspectBtn = tr.querySelector('[data-inspect-batch-idx]');
+      if (inspectBtn) {
+        inspectBtn.addEventListener('click', () => {
+          inspectBatchItem(idx, true);
+        });
+      }
+
+      tbodyEl.appendChild(tr);
+    });
+  }
+
+  function inspectBatchItem(index, shouldScrollToSheet) {
+    if (!BATCH_STATE.summary || !BATCH_STATE.summary.files[index]) return null;
+    const item = BATCH_STATE.summary.files[index];
+    if (!item.valid) return null;
+
+    BATCH_STATE.activeBatchFileIndex = index;
+    const customPacket = buildPacketFromInspectionResult(item);
+    loadCustomPacketIntoWorkbench(customPacket);
+    renderBatchResults();
+
+    if (shouldScrollToSheet) {
+      const sheet = document.querySelector('.doc-sheet');
+      if (sheet) sheet.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return customPacket;
+  }
+
+  /**
+   * Synchronous/programmatic batch runner (used by both file uploads, presets, and tests).
+   * entries: [{ name: string, data: Uint8Array | ArrayBuffer | string }]
+   */
+  function runBatchBuffers(entries, options) {
+    if (!BATCH_ENGINE || !Array.isArray(entries) || entries.length === 0) return null;
+    const opts = options || {};
+
+    if (!opts.skipLimit && !isProUnlocked() && entries.length > FREE_BATCH_FILE_LIMIT) {
+      openPaywallModal({
+        planCode: 'GROWTH_B2B',
+        reason: 'Free Diagnostic Tier supports up to ' + FREE_BATCH_FILE_LIMIT + ' local PDFs per batch (' + entries.length + ' selected). Activate DocuShield™ PRO for unlimited batch archive checks, or select up to ' + FREE_BATCH_FILE_LIMIT + ' files.'
+      });
+      return null;
+    }
+
+    const t0 = Date.now();
+    const results = [];
+    const total = entries.length;
+
+    updateBatchProgress(5, 'Stage 1/3: Scanning ' + total + ' file(s)...', '5%', 'Reading raw PDF/HTML bytes locally in browser.', false);
+
+    for (let i = 0; i < total; i++) {
+      const entry = entries[i];
+      const pct = Math.round(((i + 1) / total) * 90);
+      updateBatchProgress(
+        pct,
+        'Stage 2/3: Checking file ' + (i + 1) + ' of ' + total + ' (' + entry.name + ')',
+        pct + '%',
+        'Scanning structural dictionaries and object markers...',
+        false
+      );
+      results.push(BATCH_ENGINE.inspectDocumentBuffer(entry.name, entry.data));
+    }
+
+    const elapsedMs = Math.max(1, Date.now() - t0);
+    const summary = BATCH_ENGINE.summarizeBatchResults(results, {
+      batchLabel: opts.batchLabel || 'Uploaded Course PDF Batch',
+      sourceKind: opts.sourceKind || 'local-upload',
+      durationMs: elapsedMs
+    });
+
+    BATCH_STATE.summary = summary;
+    BATCH_STATE.activePresetId = opts.presetId || null;
+    BATCH_STATE.rawEntries = entries.slice();
+    const firstValidIdx = results.findIndex(r => r.valid);
+    BATCH_STATE.activeBatchFileIndex = firstValidIdx;
+
+    updateBatchProgress(
+      100,
+      'Completed in ' + (elapsedMs / 1000).toFixed(2) + ' s (' + total + ' file(s) scanned)',
+      '100%',
+      'Found automated findings in ' + summary.totals.filesWithAutomatedFindings + ' of ' + summary.totals.validFiles +
+      ' readable file(s) (' + summary.totals.invalidFiles + ' invalid). Manual review is required for all ' + summary.totals.validFiles + ' readable file(s).',
+      true
+    );
+
+    if (firstValidIdx >= 0) {
+      const firstPacket = buildPacketFromInspectionResult(results[firstValidIdx]);
+      loadCustomPacketIntoWorkbench(firstPacket);
+    }
+
+    renderBatchResults();
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'result_ready' } }));
+    return summary;
+  }
+
+  function runEducationalPresetBatch(presetId) {
+    if (!BATCH_ENGINE) return null;
+    const preset = BATCH_ENGINE.getEducationalBatchPresets().find(p => p.id === presetId);
+    if (!preset) return null;
+    openBatchWorkspace(false);
+    const entries = preset.files.map(f => ({ name: f.name, data: f.content }));
+    return runBatchBuffers(entries, {
+      batchLabel: preset.optionLabel + ': ' + preset.title,
+      sourceKind: 'educational-sample-batch',
+      presetId: preset.id,
+      skipLimit: true
+    });
+  }
+
+  function handleBatchFileObjects(fileList) {
+    const files = Array.from(fileList || []).filter(Boolean);
+    if (files.length === 0) return;
+
+    if (!isProUnlocked() && files.length > FREE_BATCH_FILE_LIMIT) {
+      openPaywallModal({
+        planCode: 'GROWTH_B2B',
+        reason: 'Free Diagnostic Tier supports up to ' + FREE_BATCH_FILE_LIMIT + ' local PDFs per batch (' + files.length + ' selected). Activate DocuShield™ PRO for unlimited batch archives, or upload up to ' + FREE_BATCH_FILE_LIMIT + ' files at a time.'
+      });
+      return;
+    }
+
+    openBatchWorkspace(true);
+    updateBatchProgress(
+      10,
+      'Stage 1/3: Reading ' + files.length + ' local file(s) from disk...',
+      '10%',
+      'Files are processed locally inside your browser and are not uploaded to a remote server.',
+      false
+    );
+
+    const readPromises = files.map((fileObj, idx) => new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const pct = Math.round(10 + ((idx + 1) / files.length) * 40);
+        updateBatchProgress(pct, 'Stage 1/3: Loaded ' + fileObj.name, pct + '%', 'Preparing structural inspection...', false);
+        resolve({ name: fileObj.name, data: new Uint8Array(e.target.result) });
+      };
+      reader.onerror = () => {
+        resolve({ name: fileObj.name, data: '' });
+      };
+      reader.readAsArrayBuffer(fileObj);
+    }));
+
+    Promise.all(readPromises).then(entries => {
+      runBatchBuffers(entries, {
+        batchLabel: 'Uploaded Course PDF Batch (' + entries.length + ' files)',
+        sourceKind: 'local-upload',
+        presetId: null
+      });
+    });
+  }
+
+  function triggerBlobDownload(filename, content, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function buildBatchSummaryCsv() {
+    if (!BATCH_ENGINE || !BATCH_STATE.summary) return '';
+    return BATCH_ENGINE.buildBatchCsv(BATCH_STATE.summary);
+  }
+
+  function buildBatchSummaryJson() {
+    if (!BATCH_ENGINE || !BATCH_STATE.summary) return '';
+    return BATCH_ENGINE.buildBatchJson(BATCH_STATE.summary);
+  }
+
+  function openBatchSummaryModal() {
+    const summary = BATCH_STATE.summary;
+    if (!summary) return;
+    const backdrop = document.getElementById('certificateModalBackdrop');
+    const body = document.getElementById('certificateModalBody');
+    const titleEl = document.getElementById('certModalTitle');
+    if (!backdrop || !body) return;
+
+    if (titleEl) titleEl.textContent = 'Batch course PDF accessibility summary';
+    const t = summary.totals;
+    body.innerHTML =
+      '<div class="ds-assessment-report">' +
+        '<h3>' + escapeHtml(summary.batchLabel) + '</h3>' +
+        '<p>Generated ' + escapeHtml(summary.generatedAt.slice(0, 10)) + ' · ' + t.filesSubmitted + ' file(s) submitted (' + t.validFiles + ' readable, ' + t.invalidFiles + ' invalid) · ' + t.totalPages + ' pages scanned.</p>' +
+        '<h4>Automated pre-check totals</h4>' +
+        '<p>' + t.totalAutomatedPassed + ' of ' + t.totalAutomatedChecks + ' automated raw checks passed across ' + t.validFiles + ' readable file(s). ' +
+        t.filesWithAutomatedFindings + ' file(s) have open automated findings. ' +
+        t.filesWithCompressedStreams + ' file(s) contain compressed streams requiring a full decompressed PDF parser.</p>' +
+        '<div class="ds-conformance-disclaimer" style="margin:10px 0 14px;">' +
+          '<strong>Manual verification required:</strong> ' + escapeHtml(summary.conformanceDisclaimer) +
+        '</div>' +
+        '<table class="ds-ledger-table" style="margin-bottom:14px;">' +
+          '<thead><tr><th>File</th><th>Status</th><th>Automated Signals</th><th>Priority Manual Review</th></tr></thead>' +
+          '<tbody>' +
+            summary.files.map(item =>
+              '<tr>' +
+                '<td><strong>' + escapeHtml(item.fileName) + '</strong><br/>' + escapeHtml(item.pdfVersion) + ' · ' + item.pages + ' pp</td>' +
+                '<td>' + escapeHtml(item.statusLabel) + '</td>' +
+                '<td>' + (item.valid ? (item.passedCount + ' / ' + item.totalChecks + (item.missingSignals.length ? '<br/>Missing: ' + escapeHtml(item.missingSignals.join(', ')) : '')) : escapeHtml(item.errorMessage || 'Invalid')) + '</td>' +
+                '<td>' + escapeHtml((item.manualReviewReasons || []).slice(0, 2).join(' ')) + '</td>' +
+              '</tr>'
+            ).join('') +
+          '</tbody>' +
+        '</table>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #141413;padding-top:10px;font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">' +
+          '<span>Prepared by Caliber Foundry · DocuShield™ batch pre-check</span>' +
+          '<span>Automated pre-check only · Manual review required</span>' +
+        '</div>' +
+      '</div>';
+
+    backdrop.classList.remove('hidden');
+    document.getElementById('btnCloseCertificateModal').focus();
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'export_ready' } }));
+  }
+
+  /* ==========================================================================
+     6. DOMAIN EXAMPLE SCANNER (PRESERVED)
      ========================================================================== */
   function scanDomainOrUrl(rawDomainOrUrl, rawFileParam) {
     const cleanInput = String(rawDomainOrUrl || '').trim();
     if (!cleanInput) {
-      showToast('Please enter a target domain or PDF URL to scan.');
+      showToast('Please enter a target domain or PDF URL to preview.');
       return null;
     }
 
@@ -754,9 +944,7 @@
       extractedDomain = cleanInput;
     }
 
-    if (!extractedFile) {
-      extractedFile = 'compliance-disclosure-packet.pdf';
-    }
+    if (!extractedFile) extractedFile = 'compliance-disclosure-packet.pdf';
 
     const safeDomain = escapeHtml(extractedDomain);
     const safeFile = escapeHtml(extractedFile);
@@ -764,7 +952,6 @@
     STATE.lastScannedDomain = extractedDomain;
     STATE.lastScannedFile = extractedFile;
 
-    // Populate and reveal #trojanHorseBanner (strictly XSS-safe via textContent / escapeHtml)
     const banner = document.getElementById('trojanHorseBanner');
     const domEl = document.getElementById('thTargetDomain');
     const fileEl = document.getElementById('thTargetFile');
@@ -775,19 +962,18 @@
     if (fileEl) fileEl.textContent = extractedFile;
     if (scanInput && !scanInput.value) scanInput.value = extractedDomain;
     if (findingsEl) {
-      findingsEl.textContent = 'This domain example uses a sample assessment. Upload a local document to inspect its structure.';
+      findingsEl.textContent = 'This domain example uses a sample assessment. Upload local PDF files to inspect their actual structure.';
     }
     if (banner) banner.classList.remove('hidden');
 
-    // Create/Update a live packet in the workbench for this scanned domain/file
     const baseTemplate = DATASET.packetsById['ECOM-02'] || DATASET.packets[0] || FALLBACK_PACKET_TEMPLATE;
     const domainPacket = normalizePacket(Object.assign({}, JSON.parse(JSON.stringify(baseTemplate)), {
       id: 'DOMAIN-SCAN',
       tier: 'FREE',
       code: 'DOMAIN-AUDIT',
-      title: `Illustrative domain example · ${extractedDomain} / ${extractedFile}`,
-      sector: 'Pre-Scanned Domain & Public PDF Asset Dossier',
-      regulation: 'EU Directive 2019/882 (EAA), WCAG 2.2 AA & ISO 14289-1',
+      title: 'Illustrative domain example · ' + extractedDomain + ' / ' + extractedFile,
+      sector: 'Sample Domain Example (Upload local PDFs for real inspection)',
+      regulation: 'Sample profile (Manual review required)',
       fileName: 'Sample: ' + extractedFile,
       initialScore: 31,
       remediatedScore: 100
@@ -795,11 +981,8 @@
 
     DATASET.packetsById['DOMAIN-SCAN'] = domainPacket;
     const existingIdx = DATASET.packets.findIndex(p => p.id === 'DOMAIN-SCAN');
-    if (existingIdx >= 0) {
-      DATASET.packets[existingIdx] = domainPacket;
-    } else {
-      DATASET.packets.push(domainPacket);
-    }
+    if (existingIdx >= 0) DATASET.packets[existingIdx] = domainPacket;
+    else DATASET.packets.push(domainPacket);
 
     const selectEl = document.getElementById('packetSelect');
     if (selectEl) {
@@ -809,7 +992,7 @@
         opt.value = 'DOMAIN-SCAN';
         selectEl.prepend(opt);
       }
-      opt.textContent = `[DOMAIN EXAMPLE] ${extractedDomain} / ${extractedFile} (EAA & PDF/UA-1)`;
+      opt.textContent = '[DOMAIN EXAMPLE] ' + extractedDomain + ' / ' + extractedFile;
       selectEl.value = 'DOMAIN-SCAN';
     }
 
@@ -819,17 +1002,11 @@
     saveState();
     renderAll();
 
-    return {
-      domain: extractedDomain,
-      file: extractedFile,
-      safeDomain,
-      safeFile,
-      packet: domainPacket
-    };
+    return { domain: extractedDomain, file: extractedFile, safeDomain, safeFile, packet: domainPacket };
   }
 
   /* ==========================================================================
-     6. DETERMINISTIC REMEDIATION PIPELINE (`runAutoRemediation` & `revertRemediation`)
+     7. DRAFT TAG-TREE PREP & PACKET SELECTION (PRESERVED)
      ========================================================================== */
   function runAutoRemediation() {
     const pkt = getActivePacket();
@@ -837,8 +1014,8 @@
     STATE.remediatedPackets[pkt.id] = true;
     saveState();
     renderAll();
-    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'result_ready'}}));
-    showToast('Prepared a tag-tree draft for ' + pkt.fileName + '. Review it before use.');
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'result_ready' } }));
+    showToast('Prepared a tag-tree draft for ' + pkt.fileName + '. Manual review is still required before use.');
     return true;
   }
 
@@ -848,7 +1025,7 @@
     STATE.remediatedPackets[pkt.id] = false;
     saveState();
     renderAll();
-    showToast(`Reverted ${pkt.code} to original unremediated COS stream`);
+    showToast('Switched ' + pkt.code + ' back to original source assessment');
     return true;
   }
 
@@ -857,7 +1034,7 @@
       const selectEl = document.getElementById('packetSelect');
       if (selectEl) selectEl.value = STATE.activePacketId;
       openPaywallModal({
-        reason: `Packet ${packetId} is an enterprise industry profile. Activate DocuShield™ PRO or generate a Corporate Invoice (with instant 14-day Provisional PRO Unlock) to remediate all 6 packets.`
+        reason: 'Packet ' + packetId + ' is an enterprise sample profile. Activate DocuShield™ PRO or generate a Corporate Invoice to unlock all 6 sample packets.'
       });
       return false;
     }
@@ -866,7 +1043,7 @@
     if (!pkt) return false;
 
     STATE.activePacketId = pkt.id;
-    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'sample_selected' } }));
     STATE.selectedRegionId = pkt.visualRegions[0] ? pkt.visualRegions[0].id : null;
     saveState();
     renderAll();
@@ -874,7 +1051,7 @@
   }
 
   /* ==========================================================================
-     7. RENDERING WORKBENCH: HEADER, LEFT 3-TAB INSPECTOR & RIGHT SCORECARD
+     8. RENDERING WORKBENCH: HEADER, LEFT 3-TAB INSPECTOR & RIGHT SCORECARD
      ========================================================================== */
   function renderHeaderAndLicenseBar() {
     const proActive = isProUnlocked();
@@ -884,16 +1061,17 @@
     const btnUnlock = document.getElementById('btnHeaderUnlockPro');
     const btnBilling = document.getElementById('btnHeaderAccountBilling');
     const quotaHint = document.getElementById('uploadQuotaHint');
+    const batchQuotaHint = document.getElementById('batchQuotaHint');
 
     if (badgeEl) {
       if (STATE.licenseTier === 'PRO_PROVISIONAL') {
         badgeEl.textContent = 'Provisional PRO Active (14-Day Invoice Unlock)';
         badgeEl.classList.add('pro-active');
       } else if (proActive) {
-        badgeEl.textContent = 'Pro License Active (All 6 Packets Unlocked)';
+        badgeEl.textContent = 'Pro License Active (All 6 Packets & Unlimited Batch)';
         badgeEl.classList.add('pro-active');
       } else {
-        badgeEl.textContent = 'Free Diagnostic Tier (2/6 Packets)';
+        badgeEl.textContent = 'Free Diagnostic Tier (2/6 Packets · Batch up to 10 PDFs)';
         badgeEl.classList.remove('pro-active');
       }
     }
@@ -911,16 +1089,16 @@
       if (btnSignIn) btnSignIn.classList.add('hidden');
       if (btnUnlock) btnUnlock.classList.add('hidden');
       if (btnBilling) btnBilling.classList.remove('hidden');
-      if (quotaHint) quotaHint.textContent = 'Unlimited PDF/HTML Audits Active';
+      if (quotaHint) quotaHint.textContent = 'Local browser inspection · Unlimited single & batch PDF checks active';
+      if (batchQuotaHint) batchQuotaHint.textContent = 'PRO active: unlimited local PDFs per batch';
     } else {
       if (btnSignIn) btnSignIn.classList.remove('hidden');
       if (btnUnlock) btnUnlock.classList.remove('hidden');
       if (btnBilling) btnBilling.classList.add('hidden');
-      const rem = Math.max(0, 1 - (STATE.customUploadsCount || 0));
-      if (quotaHint) quotaHint.textContent = `${rem} of 1 Free Local File Audit Remaining`;
+      if (quotaHint) quotaHint.textContent = 'Local browser inspection · Select 1 file or multiple course PDFs (up to ' + FREE_BATCH_FILE_LIMIT + ' in Free tier)';
+      if (batchQuotaHint) batchQuotaHint.textContent = 'Free tier: up to ' + FREE_BATCH_FILE_LIMIT + ' local files per batch · PRO: unlimited archive batches';
     }
 
-    // Update packetSelect option labels
     const selectEl = document.getElementById('packetSelect');
     if (selectEl) {
       Array.from(selectEl.options).forEach(opt => {
@@ -941,15 +1119,14 @@
     if (!pkt) return;
     const isRem = isActivePacketRemediated();
 
-    // Document Metadata Strip
     document.getElementById('docMetaCode').textContent = pkt.code;
     document.getElementById('docMetaTitle').textContent = pkt.title;
-    document.getElementById('docMetaPages').textContent = `${pkt.pages} pp · ${pkt.pdfVersion}`;
+    document.getElementById('docMetaPages').textContent = pkt.pages + ' pp · ' + pkt.pdfVersion;
     document.getElementById('docMetaStandard').textContent = pkt.regulation;
 
     const statusBadge = document.getElementById('docStatusBadge');
     if (isRem) {
-      statusBadge.textContent = 'Tag-tree draft prepared';
+      statusBadge.textContent = 'Tag-tree draft prepared (manual QA required)';
       statusBadge.classList.remove('status-fail');
       statusBadge.classList.add('status-pass');
     } else {
@@ -958,7 +1135,6 @@
       statusBadge.classList.add('status-fail');
     }
 
-    // Switch Active Inspector Tab
     document.querySelectorAll('.ds-insp-tab').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-left-tab') === STATE.activeLeftTab);
     });
@@ -966,11 +1142,10 @@
     document.getElementById('leftPanelTagTree').classList.toggle('hidden', STATE.activeLeftTab !== 'tagtree');
     document.getElementById('leftPanelTables').classList.toggle('hidden', STATE.activeLeftTab !== 'tables');
 
-    // TAB 1: Visual Page & Bounding-Box Inspector
     document.getElementById('visualPageHeaderLabel').textContent =
-      `PAGE 1 OF ${pkt.pages} // ${pkt.fileName} (${pkt.pdfVersion})`;
+      'PAGE 1 OF ' + pkt.pages + ' // ' + pkt.fileName + ' (' + pkt.pdfVersion + ')';
     document.getElementById('visualPageTagStateLabel').textContent = isRem
-      ? 'Proposed tag-tree view'
+      ? 'Proposed tag-tree draft view'
       : 'Original source view';
 
     const canvas = document.getElementById('visualPageCanvas');
@@ -984,18 +1159,24 @@
       const isSelected = reg.id === STATE.selectedRegionId;
       const box = document.createElement('button');
       box.type = 'button';
-      box.className = `ds-bbox-region ${isRem ? 'remediated' : ''} ${isSelected ? 'selected' : ''}`;
-      const stateTag = pkt.id === 'CUSTOM-UPLOAD' ? (pkt.checkpoints[idx].statusBefore + ': file signal') : isRem
-        ? `PASS: <${reg.tagType}> ISO 14289-1 Tagged`
-        : `FAIL: Untagged <${reg.tagType}>`;
+      const cp = pkt.checkpoints[idx];
+      const isSignalPass = pkt.id === 'CUSTOM-UPLOAD'
+        ? (cp && cp.statusBefore === 'PASS')
+        : isRem;
 
-      box.innerHTML = `
-        <div class="ds-bbox-tag-bar">
-          <span class="ds-bbox-tag-chip">${escapeHtml(stateTag)}</span>
-          <span class="ds-bbox-clause-ref">${reg.page ? `Page ${reg.page}` : 'Document-wide'} · ${escapeHtml(reg.checkpointId)} · ${escapeHtml(reg.label)}</span>
-        </div>
-        <div class="ds-bbox-preview-content">${escapeHtml(reg.previewText)}</div>
-      `;
+      box.className = 'ds-bbox-region ' + (isSignalPass ? 'remediated' : '') + ' ' + (isSelected ? 'selected' : '');
+      const stateTag = pkt.id === 'CUSTOM-UPLOAD'
+        ? ((cp ? cp.statusBefore : 'CHECK') + ': raw byte signal')
+        : isRem
+          ? 'DRAFT: <' + reg.tagType + '> tag proposed'
+          : 'OPEN: <' + reg.tagType + '> finding';
+
+      box.innerHTML =
+        '<div class="ds-bbox-tag-bar">' +
+          '<span class="ds-bbox-tag-chip">' + escapeHtml(stateTag) + '</span>' +
+          '<span class="ds-bbox-clause-ref">' + (reg.page ? 'Page ' + reg.page : 'Document-wide') + ' · ' + escapeHtml(reg.checkpointId) + ' · ' + escapeHtml(reg.label) + '</span>' +
+        '</div>' +
+        '<div class="ds-bbox-preview-content">' + escapeHtml(reg.previewText) + '</div>';
 
       box.addEventListener('click', () => {
         STATE.selectedRegionId = reg.id;
@@ -1006,16 +1187,14 @@
       canvas.appendChild(box);
     });
 
-    // Selected Region Diff Card
     const activeReg = pkt.visualRegions.find(r => r.id === STATE.selectedRegionId) || pkt.visualRegions[0];
     if (activeReg) {
-      document.getElementById('inspectorRegionTitle').textContent = `${activeReg.label} · ${activeReg.page ? `Page ${activeReg.page}` : 'Document-wide'}`;
-      document.getElementById('inspectorClauseBadge').textContent = `Matterhorn ${activeReg.checkpointId}`;
-      document.getElementById('inspectorBeforeTag').textContent = `${activeReg.beforeTag}\n// Issue: ${activeReg.issueSummary}`;
+      document.getElementById('inspectorRegionTitle').textContent = activeReg.label + ' · ' + (activeReg.page ? 'Page ' + activeReg.page : 'Document-wide');
+      document.getElementById('inspectorClauseBadge').textContent = 'Check ' + activeReg.checkpointId;
+      document.getElementById('inspectorBeforeTag').textContent = activeReg.beforeTag + '\n// Detail: ' + activeReg.issueSummary;
       document.getElementById('inspectorAfterTag').textContent = activeReg.afterTag;
     }
 
-    // TAB 2: ISO 14289-1 (/StructTreeRoot) Tag Tree Diff & Catalog Ledger
     document.getElementById('tagTreeBeforeCode').textContent = pkt.structTreeBefore || '';
     document.getElementById('tagTreeAfterCode').textContent = getEffectiveStructTreeAfter(pkt);
 
@@ -1028,113 +1207,92 @@
       { key: '/Lang (BCP-47)', clause: 'Matterhorn 11-001', field: 'lang' },
       { key: '/DisplayDocTitle', clause: 'Matterhorn 06-001', field: 'displayDocTitle' },
       { key: '/Tabs Focus Order', clause: 'Matterhorn 09-003', field: 'tabOrder' },
-      { key: 'WCAG 2.2 Contrast', clause: 'Matterhorn 28-001', field: 'contrastRatio' }
+      { key: 'WCAG 2.2 Contrast', clause: 'Manual Visual Check', field: 'contrastRatio' }
     ];
 
     metaRows.forEach(r => {
       const tr = document.createElement('tr');
-      const bVal = (pkt.metadata && pkt.metadata.before && pkt.metadata.before[r.field]) || 'MISSING';
-      const aVal = (pkt.metadata && pkt.metadata.after && pkt.metadata.after[r.field]) || 'VERIFIED';
-      const statusHtml = isRem
-        ? '<span class="ds-cp-status-tag tag-pass">PASS</span>'
-        : '<span class="ds-cp-status-tag tag-fail">FAIL</span>';
+      const bVal = (pkt.metadata && pkt.metadata.before && pkt.metadata.before[r.field]) || 'Not detected';
+      const aVal = (pkt.metadata && pkt.metadata.after && pkt.metadata.after[r.field]) || 'Manual verification required';
+      const isManualOnly = r.field === 'contrastRatio';
+      const statusHtml = isManualOnly
+        ? '<span class="ds-cp-status-tag tag-fail">MANUAL</span>'
+        : isRem
+          ? '<span class="ds-cp-status-tag tag-pass">DRAFT</span>'
+          : '<span class="ds-cp-status-tag tag-fail">SOURCE</span>';
 
-      tr.innerHTML = `
-        <td><strong>${escapeHtml(r.key)}</strong></td>
-        <td>${escapeHtml(r.clause)}</td>
-        <td>${escapeHtml(bVal)}</td>
-        <td>${escapeHtml(aVal)}</td>
-        <td>${statusHtml}</td>
-      `;
+      tr.innerHTML =
+        '<td><strong>' + escapeHtml(r.key) + '</strong></td>' +
+        '<td>' + escapeHtml(r.clause) + '</td>' +
+        '<td>' + escapeHtml(bVal) + '</td>' +
+        '<td>' + escapeHtml(aVal) + '</td>' +
+        '<td>' + statusHtml + '</td>';
       metaBody.appendChild(tr);
     });
 
-    // TAB 3: Table <TH>/<TD> Scope Matrix & Figure Alt-Text Editor
     const tablesContainer = document.getElementById('tableScopeMatrixContainer');
     tablesContainer.innerHTML = '';
+    if (!pkt.tables || pkt.tables.length === 0) {
+      tablesContainer.innerHTML = '<div style="font-size:12px;color:#446078;">For uploaded local PDFs, table cell layout and &lt;TH Scope&gt; / /Headers relationships require manual review in a PDF structure editor.</div>';
+    } else {
+      pkt.tables.forEach(tbl => {
+        const card = document.createElement('div');
+        card.className = 'ds-matrix-card';
+        const headersHtml = (tbl.headers || []).map((h, hIdx) =>
+          '<th>&lt;TH Scope="Column" ID="th_' + (hIdx + 1) + '"&gt;<br/><strong>' + escapeHtml(h) + '</strong></th>'
+        ).join('');
+        const rowsHtml = (tbl.rows || []).map((rowArr, rIdx) =>
+          '<tr>' + rowArr.map((cellVal, cIdx) => cIdx === 0
+            ? '<td><code>&lt;TH Scope="Row" ID="tr_' + (rIdx + 1) + '"&gt;</code> ' + escapeHtml(cellVal) + '</td>'
+            : '<td><code>&lt;TD Headers="tr_' + (rIdx + 1) + ' th_' + (cIdx + 1) + '"&gt;</code> ' + escapeHtml(cellVal) + '</td>'
+          ).join('') + '</tr>'
+        ).join('');
 
-    pkt.tables.forEach(tbl => {
-      const card = document.createElement('div');
-      card.className = 'ds-matrix-card';
-
-      const headersHtml = (tbl.headers || []).map((h, hIdx) =>
-        `<th>&lt;TH Scope="Column" ID="th_${hIdx + 1}"&gt;<br/><strong>${escapeHtml(h)}</strong></th>`
-      ).join('');
-
-      const rowsHtml = (tbl.rows || []).map((rowArr, rIdx) => `
-        <tr>
-          ${rowArr.map((cellVal, cIdx) => cIdx === 0
-            ? `<td><code>&lt;TH Scope="Row" ID="tr_${rIdx + 1}"&gt;</code> ${escapeHtml(cellVal)}</td>`
-            : `<td><code>&lt;TD Headers="tr_${rIdx + 1} th_${cIdx + 1}"&gt;</code> ${escapeHtml(cellVal)}</td>`
-          ).join('')}
-        </tr>
-      `).join('');
-
-      card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <strong>${escapeHtml(tbl.title)} (Page ${tbl.page || 1})</strong>
-          <span class="ds-cp-status-tag ${isRem ? 'tag-pass' : 'tag-fail'}">${isRem ? 'PASS: <TH Scope> Bound' : 'FAIL: Unbound Table Grid'}</span>
-        </div>
-        <div style="font-size:11.5px;color:#4A4842;">${escapeHtml(tbl.summaryIssue || '')}</div>
-        <div style="overflow-x:auto;">
-          <table class="ds-ledger-table">
-            <thead><tr>${headersHtml}</tr></thead>
-            <tbody>${rowsHtml}</tbody>
-          </table>
-        </div>
-        <div class="ds-node-diff-grid">
-          <div class="ds-diff-col ds-diff-before">
-            <div class="ds-diff-label">Before Markup (Untagged Flat Rows)</div>
-            <pre class="ds-diff-pre">${escapeHtml(tbl.beforeMarkup || '')}</pre>
-          </div>
-          <div class="ds-diff-col ds-diff-after">
-            <div class="ds-diff-label">After Markup (ISO 14289-1 &lt;TH Scope&gt; &amp; /Headers)</div>
-            <pre class="ds-diff-pre">${escapeHtml(tbl.afterMarkup || '')}</pre>
-          </div>
-        </div>
-      `;
-      tablesContainer.appendChild(card);
-    });
+        card.innerHTML =
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<strong>' + escapeHtml(tbl.title) + ' (Page ' + (tbl.page || 1) + ')</strong>' +
+            '<span class="ds-cp-status-tag ' + (isRem ? 'tag-pass' : 'tag-fail') + '">' + (isRem ? 'DRAFT: <TH Scope> Proposed' : 'OPEN: Unbound Table Grid') + '</span>' +
+          '</div>' +
+          '<div style="font-size:11.5px;color:#4A4842;">' + escapeHtml(tbl.summaryIssue || '') + '</div>' +
+          '<div style="overflow-x:auto;"><table class="ds-ledger-table"><thead><tr>' + headersHtml + '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div>';
+        tablesContainer.appendChild(card);
+      });
+    }
 
     const figuresContainer = document.getElementById('figureAltEditorContainer');
     figuresContainer.innerHTML = '';
+    if (!pkt.figures || pkt.figures.length === 0) {
+      figuresContainer.innerHTML = '<div style="font-size:12px;color:#446078;">For uploaded local PDFs, review every informative diagram, chart, and equation manually to verify accurate /Alt text and mark decorative visuals as /Artifact.</div>';
+    } else {
+      pkt.figures.forEach(fig => {
+        const savedAlt = STATE.customFigureAlts[fig.id] || fig.afterAlt || '';
+        const figCard = document.createElement('div');
+        figCard.className = 'ds-figure-card';
+        figCard.innerHTML =
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<strong>' + escapeHtml(fig.title) + ' (' + escapeHtml(fig.bboxLabel || ('Page ' + (fig.page || 1))) + ')</strong>' +
+            '<span class="ds-cp-status-tag ' + (isRem ? 'tag-pass' : 'tag-fail') + '">' + (isRem ? 'DRAFT: /Figure /Alt Ready' : 'OPEN: /Alt Missing') + '</span>' +
+          '</div>' +
+          '<div style="font-family:var(--font-mono);font-size:11px;color:#9a3412;">Before: ' + escapeHtml(fig.beforeAlt) + '</div>' +
+          '<label style="font-size:11px;font-weight:700;color:#4A4842;" for="altInput_' + escapeHtml(fig.id) + '">Draft Technical Alt-Text (/StructTreeRoot /Figure /Alt):</label>' +
+          '<textarea id="altInput_' + escapeHtml(fig.id) + '" class="ds-alt-textarea">' + escapeHtml(savedAlt) + '</textarea>' +
+          '<div style="display:flex;justify-content:flex-end;">' +
+            '<button type="button" class="ds-tool-btn" data-save-fig-id="' + escapeHtml(fig.id) + '">Save Alt-Text to Draft</button>' +
+          '</div>';
 
-    pkt.figures.forEach(fig => {
-      const savedAlt = STATE.customFigureAlts[fig.id] || fig.afterAlt || '';
-      const figCard = document.createElement('div');
-      figCard.className = 'ds-figure-card';
-      figCard.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <strong>${escapeHtml(fig.title)} (${escapeHtml(fig.bboxLabel || `Page ${fig.page || 1}`)})</strong>
-          <span class="ds-cp-status-tag ${isRem ? 'tag-pass' : 'tag-fail'}">${isRem ? 'PASS: /Figure /Alt Bound' : 'FAIL: /Alt Missing'}</span>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:#C8431F;">
-          Before: ${escapeHtml(fig.beforeAlt)}
-        </div>
-        <label style="font-size:11px;font-weight:700;color:#4A4842;" for="altInput_${escapeHtml(fig.id)}">
-          Remediated Technical Alt-Text (/StructTreeRoot /Figure /Alt):
-        </label>
-        <textarea id="altInput_${escapeHtml(fig.id)}" class="ds-alt-textarea">${escapeHtml(savedAlt)}</textarea>
-        <div style="display:flex;justify-content:flex-end;">
-          <button type="button" class="ds-tool-btn" data-save-fig-id="${escapeHtml(fig.id)}">
-            Save Alt-Text to /StructTreeRoot
-          </button>
-        </div>
-      `;
-
-      const saveBtn = figCard.querySelector('[data-save-fig-id]');
-      const textarea = figCard.querySelector('textarea');
-      if (saveBtn && textarea) {
-        saveBtn.addEventListener('click', () => {
-          STATE.customFigureAlts[fig.id] = textarea.value.trim();
-          saveState();
-          renderLeftPane();
-          showToast(`Saved technical /Alt attribute for ${fig.title}`);
-        });
-      }
-
-      figuresContainer.appendChild(figCard);
-    });
+        const saveBtn = figCard.querySelector('[data-save-fig-id]');
+        const textarea = figCard.querySelector('textarea');
+        if (saveBtn && textarea) {
+          saveBtn.addEventListener('click', () => {
+            STATE.customFigureAlts[fig.id] = textarea.value.trim();
+            saveState();
+            renderLeftPane();
+            showToast('Saved draft /Alt text for ' + fig.title);
+          });
+        }
+        figuresContainer.appendChild(figCard);
+      });
+    }
   }
 
   function getEffectiveStructTreeAfter(pkt) {
@@ -1149,8 +1307,8 @@
 
   function categorizeCheckpoint(cp) {
     const id = String(cp.id || '');
-    if (['01-006', '09-003', '14-003'].includes(id)) return 'STRUCTURE';
-    if (['13-004', '15-002'].includes(id)) return 'TABLES_FIGURES';
+    if (id.startsWith('01-006') || id.startsWith('09-003') || id.startsWith('14-003')) return 'STRUCTURE';
+    if (id.startsWith('13-004') || id.startsWith('15-002')) return 'TABLES_FIGURES';
     return 'METADATA_FORMS';
   }
 
@@ -1166,22 +1324,27 @@
     if (!pkt) return;
     const isRem = isActivePacketRemediated();
 
-    const {total:totalCp, passed:passedCp, failed:failedCp, percent:scorePct} = assessment(pkt, isRem);
+    const { total: totalCp, passed: passedCp, failed: failedCp, percent: scorePct } = assessment(pkt, isRem);
     document.getElementById('scorecardPacketHeading').textContent = pkt.fileName;
     const openChecks = pkt.checkpoints.filter(cp => (isRem ? cp.statusAfter : cp.statusBefore) !== 'PASS');
     const first = openChecks.find(cp => pkt.visualRegions.some(reg => reg.checkpointId === cp.id)) || openChecks[0];
+
     const fileTitle = document.getElementById('docCurrentFile');
     fileTitle.replaceChildren();
     for (const part of pkt.fileName.split(/(?<=[_-])/)) {
       if (fileTitle.childNodes.length) fileTitle.append(document.createElement('wbr'));
       fileTitle.append(part);
     }
+
     document.getElementById('docInputKind').textContent = pkt.id === 'CUSTOM-UPLOAD' ? 'Your document' : 'Sample document';
     document.getElementById('docFindingsCount').textContent = failedCp;
-    document.getElementById('docFindingsLabel').textContent = failedCp === 1 ? 'open finding' : 'open findings';
+    document.getElementById('docFindingsLabel').textContent = failedCp === 1 ? 'open automated finding' : 'open automated findings';
     document.getElementById('dsReviewResults').textContent = first ? 'Inspect first finding' : 'Inspect document';
     document.getElementById('dsAssessmentSummary').textContent =
-      passedCp + ' of ' + totalCp + ' checks passed. ' + (first ? 'First finding: ' + first.title : 'Review reading order, descriptions and table semantics manually.');
+      passedCp + ' of ' + totalCp + ' automated checks passed. ' +
+      (first
+        ? 'First finding: ' + first.title + '. Manual review still required.'
+        : 'All checked raw signals present; complete manual review of reading order, descriptions, contrast, and table semantics.');
 
     const riskPill = document.getElementById('scorecardRiskPill');
     const bigNum = document.getElementById('scorecardPercentVal');
@@ -1189,13 +1352,13 @@
     const subEl = document.getElementById('scorecardSummarySub');
     const barFill = document.getElementById('scorecardProgressBar');
 
-    bigNum.textContent = `${scorePct}%`;
-    bigNum.classList.toggle('score-pass', isRem);
+    bigNum.textContent = scorePct + '%';
+    bigNum.classList.toggle('score-pass', failedCp === 0);
 
-    ratioEl.textContent = `${passedCp} / ${totalCp} Core Checkpoints Passed`;
+    ratioEl.textContent = passedCp + ' / ' + totalCp + ' Automated Checks Passed';
     subEl.textContent = failedCp + ' open findings · Manual review required';
-    barFill.style.width = `${scorePct}%`;
-    barFill.classList.toggle('fill-pass', isRem);
+    barFill.style.width = scorePct + '%';
+    barFill.classList.toggle('fill-pass', failedCp === 0);
 
     if (isRem) {
       riskPill.textContent = 'Draft assessment';
@@ -1207,7 +1370,6 @@
       riskPill.classList.add('risk-high');
     }
 
-    // Filter Buttons
     document.querySelectorAll('#checkpointFilterBar .ds-cp-filter-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-cp-filter') === STATE.activeCheckpointFilter);
     });
@@ -1223,7 +1385,7 @@
     });
 
     if (filteredCps.length === 0) {
-      listEl.innerHTML = `<div style="padding:14px;font-size:12px;color:#1A5638;background:#EDF5F0;border:1px solid #1A5638;">All Matterhorn Protocol checkpoints in this filter passed verification (0 Failures).</div>`;
+      listEl.innerHTML = '<div style="padding:14px;font-size:12px;color:#142d49;background:#edf4fc;border:1px solid #8da8be;">No open automated findings in this filter. Manual verification of reading order, alt-text accuracy, contrast, and table semantics is still required.</div>';
       return;
     }
 
@@ -1234,31 +1396,24 @@
 
       const card = document.createElement('button');
       card.type = 'button';
-      card.className = `ds-cp-card ${isPass ? 'cp-pass' : ''}`;
-      card.innerHTML = `
-        <div class="ds-cp-top">
-          <span class="ds-cp-clause">Matterhorn ${escapeHtml(cp.id)} · ${escapeHtml(cp.clause)} · ${escapeHtml(cp.wcag)}</span>
-          <span class="ds-cp-status-tag ${isPass ? 'tag-pass' : 'tag-fail'}">${escapeHtml(curStatus)}</span>
-        </div>
-        <div class="ds-cp-title">${escapeHtml(cp.title)}</div>
-        <div class="ds-cp-evidence">
-          <strong>${isPass ? 'Verified PDF/UA Node:' : 'Detected Defect:'}</strong> ${escapeHtml(evidenceText)}
-        </div>
-      `;
+      card.className = 'ds-cp-card ' + (isPass ? 'cp-pass' : '');
+      card.innerHTML =
+        '<div class="ds-cp-top">' +
+          '<span class="ds-cp-clause">' + escapeHtml(cp.id) + ' · ' + escapeHtml(cp.clause) + (cp.wcag ? ' · ' + escapeHtml(cp.wcag) : '') + '</span>' +
+          '<span class="ds-cp-status-tag ' + (isPass ? 'tag-pass' : 'tag-fail') + '">' + escapeHtml(curStatus) + '</span>' +
+        '</div>' +
+        '<div class="ds-cp-title">' + escapeHtml(cp.title) + '</div>' +
+        '<div class="ds-cp-evidence"><strong>' + (isPass ? 'Signal / Draft:' : 'Finding:') + '</strong> ' + escapeHtml(evidenceText) + '</div>';
 
       card.addEventListener('click', () => {
-        // Focus matching visual region in Left Pane
         const matchingReg = pkt.visualRegions.find(r => r.checkpointId === cp.id);
         if (matchingReg) {
           STATE.selectedRegionId = matchingReg.id;
           STATE.activeLeftTab = 'visual';
         }
-        if (cp.id === '15-002' || cp.id === '13-004') {
-          // Optionally keep current tab or highlight in visual
-        }
         saveState();
         renderLeftPane();
-        if (matchingReg) document.getElementById('selectedRegionInspector').scrollIntoView({block:'center'});
+        if (matchingReg) document.getElementById('selectedRegionInspector').scrollIntoView({ block: 'center' });
       });
 
       listEl.appendChild(card);
@@ -1269,48 +1424,52 @@
     renderHeaderAndLicenseBar();
     renderLeftPane();
     renderRightScorecard();
+    renderBatchResults();
   }
 
   /* ==========================================================================
-     8. EXPORT TAG TREE (.JSON / .XML) & PRINTABLE EU EAA / VPAT 2.5 CERTIFICATE
+     9. EXPORT TAG TREE (.JSON / .XML) & PRINTABLE ASSESSMENT MODAL
      ========================================================================== */
   function buildExportPayloadString(format) {
     const pkt = getActivePacket();
     const isRem = isActivePacketRemediated();
+    const stats = assessment(pkt, isRem);
 
     if (format === 'xml') {
       return [
-        `<?xml version="1.0" encoding="UTF-8"?>`,
-        `<!-- DocuShield™ ISO 14289-1 (PDF/UA-1) & EU EAA 2019/882 XMP & StructTreeRoot Bundle -->`,
-        `<DocuShieldAuditPacket id="${escapeHtml(pkt.id)}" fileName="${escapeHtml(pkt.fileName)}" manualReviewRequired="true" checksPassed="${assessment(pkt,isRem).passed}" checksTotal="${pkt.checkpoints.length}" status="${isRem ? 'TAG_TREE_DRAFT' : 'SOURCE_ASSESSMENT'}">`,
-        `  <x:xmpmeta xmlns:x="adobe:ns:meta/">`,
-        `    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">`,
-        `      <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">`,
-        `        <pdfuaid:part>1</pdfuaid:part>`,
-        `        <dc:title><rdf:Alt><rdf:li xml:lang="x-default">${escapeHtml(pkt.title)}</rdf:li></rdf:Alt></dc:title>`,
-        `        <dc:language><rdf:Bag><rdf:li>en-US</rdf:li></rdf:Bag></dc:language>`,
-        `      </rdf:Description>`,
-        `    </rdf:RDF>`,
-        `  </x:xmpmeta>`,
-        `  <StructTreeRoot>`,
-        `    <![CDATA[\n${getEffectiveStructTreeAfter(pkt)}\n    ]]>`,
-        `  </StructTreeRoot>`,
-        `</DocuShieldAuditPacket>`
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<!-- DocuShield™ Automated Structural Pre-Check & Draft /StructTreeRoot Bundle (Manual Review Required) -->',
+        '<DocuShieldAuditPacket id="' + escapeHtml(pkt.id) + '" fileName="' + escapeHtml(pkt.fileName) + '" manualReviewRequired="true" checksPassed="' + stats.passed + '" checksTotal="' + pkt.checkpoints.length + '" status="' + (isRem ? 'TAG_TREE_DRAFT' : 'SOURCE_ASSESSMENT') + '">',
+        '  <ConformanceDisclaimer>' + escapeHtml(CONFORMANCE_DISCLAIMER) + '</ConformanceDisclaimer>',
+        '  <x:xmpmeta xmlns:x="adobe:ns:meta/">',
+        '    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
+        '      <rdf:Description rdf:about="" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+        '        <pdfuaid:part>1</pdfuaid:part>',
+        '        <dc:title><rdf:Alt><rdf:li xml:lang="x-default">' + escapeHtml(pkt.title) + '</rdf:li></rdf:Alt></dc:title>',
+        '        <dc:language><rdf:Bag><rdf:li>en-US</rdf:li></rdf:Bag></dc:language>',
+        '      </rdf:Description>',
+        '    </rdf:RDF>',
+        '  </x:xmpmeta>',
+        '  <StructTreeRoot><![CDATA[\n' + getEffectiveStructTreeAfter(pkt) + '\n  ]]></StructTreeRoot>',
+        '</DocuShieldAuditPacket>'
       ].join('\n');
     }
 
     const jsonObj = {
-      generator: 'Caliber Foundry — DocuShield™ PDF/UA & EAA Remediation Studio',
-      standard: 'ISO 14289-1:2014 (PDF/UA-1) / Matterhorn Protocol 1.1 / WCAG 2.2 Level AA / EU Directive 2019/882 (EAA)',
+      generator: 'Caliber Foundry — DocuShield™ PDF/UA & Educational PDF Pre-Check Studio',
       timestamp: new Date().toISOString(),
       packetId: pkt.id,
       fileName: pkt.fileName,
       pages: pkt.pages,
       pdfVersion: pkt.pdfVersion,
       remediationStatus: isRem ? 'TAG_TREE_DRAFT' : 'SOURCE_ASSESSMENT',
-      assessment: assessment(pkt, isRem),
-      manualReviewRequired: ['Reading order', 'Alternative descriptions', 'Table semantics'],
-      complianceScorePercent: assessment(pkt, isRem).percent,
+      assessment: stats,
+      compressedStreamsDetected: !!pkt.compressedStreamsDetected,
+      conformanceDisclaimer: CONFORMANCE_DISCLAIMER,
+      automatedChecksPerformed: pkt.checkpoints.map(cp => cp.title),
+      manualReviewRequired: (pkt.manualReviewReasons && pkt.manualReviewReasons.length > 0)
+        ? pkt.manualReviewReasons
+        : (BATCH_ENGINE ? BATCH_ENGINE.MANUAL_REVIEW_CHECKLIST.map(m => m.title) : ['Reading order', 'Alternative descriptions', 'Table semantics', 'Color contrast']),
       catalogMetadata: isRem && pkt.id !== 'CUSTOM-UPLOAD' ? pkt.metadata.after : pkt.metadata.before,
       matterhornCheckpoints: pkt.checkpoints.map(cp => ({
         id: cp.id,
@@ -1328,7 +1487,6 @@
     const backdrop = document.getElementById('exportModalBackdrop');
     const codeBox = document.getElementById('exportPayloadCodeBox');
     if (!backdrop || !codeBox) return;
-
     codeBox.textContent = buildExportPayloadString(STATE.activeExportFormat);
     backdrop.classList.remove('hidden');
   }
@@ -1339,55 +1497,58 @@
     const isRem = isActivePacketRemediated();
     const backdrop = document.getElementById('certificateModalBackdrop');
     const body = document.getElementById('certificateModalBody');
+    const titleEl = document.getElementById('certModalTitle');
     if (!backdrop || !body) return;
 
+    if (titleEl) titleEl.textContent = 'Document accessibility assessment';
     const issueDate = new Date().toISOString().slice(0, 10);
     const review = assessment(pkt, isRem);
-    body.innerHTML = `
-      <div class="ds-assessment-report">
-        <h3>${escapeHtml(pkt.fileName)}</h3>
-        <p>${escapeHtml(pkt.title)} · ${escapeHtml(issueDate)}</p>
-        <h4>${isRem ? 'Tag-tree draft assessment' : 'Source assessment'}</h4>
-        <p>${review.passed} / ${review.total} checks passed (${review.percent}%). ${review.failed} open findings.</p>
-        <p>Manual review required: reading order, the meaning of image descriptions and table relationships. This report covers the checks listed below.</p>
-        <table class="ds-ledger-table" style="margin-bottom:14px;">
-          <thead>
-            <tr>
-              <th>Matterhorn ID</th>
-              <th>ISO 14289-1 / WCAG 2.2 Clause</th>
-              <th>Checkpoint Requirement</th>
-              <th>Conformance Level</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${pkt.checkpoints.map(cp => {
-              const st = isRem ? cp.statusAfter : cp.statusBefore;
-              return `
-                <tr>
-                  <td><strong>${escapeHtml(cp.id)}</strong></td>
-                  <td>${escapeHtml(cp.clause)}<br/><span style="color:#78756D;">${escapeHtml(cp.wcag)}</span></td>
-                  <td>${escapeHtml(cp.title)}<br/><span style="color:#4A4842;">${escapeHtml(isRem ? cp.evidenceAfter : cp.evidenceBefore)}</span></td>
-                  <td><strong style="color:${st === 'PASS' ? '#1A5638' : '#C8431F'};">${st === 'PASS' ? 'Supports (PASS)' : 'Does Not Support (FAIL)'}</strong></td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
+    const manualItems = (pkt.manualReviewReasons && pkt.manualReviewReasons.length > 0)
+      ? pkt.manualReviewReasons
+      : (BATCH_ENGINE ? BATCH_ENGINE.MANUAL_REVIEW_CHECKLIST.map(m => m.title + ' (' + m.reference + ')') : ['Reading order', 'Alternative descriptions', 'Table semantics']);
 
-        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #141413;padding-top:10px;font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">
-          <span>Prepared by Caliber Foundry · document inspection</span>
-          <span>Standard: ISO 14289-1:2014 · EN 301 549 V3.2.1 · US Section 508</span>
-        </div>
-      </div>
-    `;
+    body.innerHTML =
+      '<div class="ds-assessment-report">' +
+        '<h3>' + escapeHtml(pkt.fileName) + '</h3>' +
+        '<p>' + escapeHtml(pkt.title) + ' · ' + escapeHtml(issueDate) + '</p>' +
+        '<h4>' + (isRem ? 'Tag-tree draft assessment' : 'Source assessment') + '</h4>' +
+        '<p>' + review.passed + ' / ' + review.total + ' checks passed (' + review.percent + '%). ' + review.failed + ' open findings.</p>' +
+        '<div class="ds-conformance-disclaimer" style="margin:10px 0 14px;">' +
+          '<strong>Important scope limit:</strong> ' + escapeHtml(CONFORMANCE_DISCLAIMER) +
+        '</div>' +
+        '<table class="ds-ledger-table" style="margin-bottom:14px;">' +
+          '<thead><tr><th>Check ID</th><th>Reference</th><th>Automated Check</th><th>Result</th></tr></thead>' +
+          '<tbody>' +
+            pkt.checkpoints.map(cp => {
+              const st = isRem ? cp.statusAfter : cp.statusBefore;
+              return '<tr>' +
+                '<td><strong>' + escapeHtml(cp.id) + '</strong></td>' +
+                '<td>' + escapeHtml(cp.clause) + (cp.wcag ? '<br/><span style="color:#78756D;">' + escapeHtml(cp.wcag) + '</span>' : '') + '</td>' +
+                '<td>' + escapeHtml(cp.title) + '<br/><span style="color:#4A4842;">' + escapeHtml(isRem ? cp.evidenceAfter : cp.evidenceBefore) + '</span></td>' +
+                '<td><strong style="color:' + (st === 'PASS' ? '#1A5638' : '#9a3412') + ';">' + (st === 'PASS' ? 'Signal found (PASS)' : 'Missing / open (FAIL)') + '</strong></td>' +
+              '</tr>';
+            }).join('') +
+          '</tbody>' +
+        '</table>' +
+        '<div style="background:#f5f9fc;border:1px solid #bed0de;padding:10px 12px;margin-bottom:14px;">' +
+          '<strong style="font-size:12px;">Required manual review items before conformance sign-off:</strong>' +
+          '<ul class="ds-batch-manual-list" style="margin-top:6px;">' +
+            manualItems.map(m => '<li>' + escapeHtml(m) + '</li>').join('') +
+          '</ul>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #141413;padding-top:10px;font-family:var(--font-mono);font-size:10.5px;color:#4A4842;">' +
+          '<span>Prepared by Caliber Foundry · automated document pre-check</span>' +
+          '<span>Manual verification required · Not a conformance certificate</span>' +
+        '</div>' +
+      '</div>';
 
     backdrop.classList.remove('hidden');
     document.getElementById('btnCloseCertificateModal').focus();
-    window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'export_ready'}}));
+    window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'export_ready' } }));
   }
 
   /* ==========================================================================
-     9. FREEMIUM PAYWALL, REGISTRATION & 3-METHOD PAYMENT / INVOICE ENGINE
+     10. FREEMIUM PAYWALL, REGISTRATION & 3-METHOD PAYMENT / INVOICE ENGINE
      ========================================================================== */
   function switchAuthTab(tabKey) {
     document.querySelectorAll('.ds-auth-tab').forEach(btn => {
@@ -1454,7 +1615,6 @@
     const successBox = document.getElementById('activationSuccessBox');
 
     if (successBox) successBox.classList.add('hidden');
-
     if (opts.reason) {
       alertBanner.classList.remove('hidden');
       if (alertText) alertText.textContent = opts.reason;
@@ -1462,21 +1622,9 @@
       alertBanner.classList.add('hidden');
     }
 
-    if (opts.planCode) {
-      selectPlanCode(opts.planCode);
-    } else {
-      selectPlanCode(STATE.selectedPlanCode || 'ARCHIVE_PACK');
-    }
-
-    const tab = opts.tab || (STATE.accountUser ? 'payment' : 'register');
-    switchAuthTab(tab);
+    selectPlanCode(opts.planCode || STATE.selectedPlanCode || 'ARCHIVE_PACK');
+    switchAuthTab(opts.tab || (STATE.accountUser ? 'payment' : 'register'));
     backdrop.classList.remove('hidden');
-  }
-
-  function isLocalQaEnvironment() {
-    if (typeof window === 'undefined' || !window.location) return true;
-    const h = window.location.hostname;
-    return h === '127.0.0.1' || h === 'localhost' || !h;
   }
 
   function validateAndActivateLicenseKey(rawKey) {
@@ -1496,11 +1644,11 @@
     const keyHeading = document.getElementById('activationSuccessKeyHeading');
 
     if (alertBanner) alertBanner.classList.add('hidden');
-    if (keyHeading) keyHeading.textContent = `Active License: ${ver.customerTag || 'PRO'}`;
+    if (keyHeading) keyHeading.textContent = 'Active License: ' + (ver.customerTag || 'PRO');
     if (successBox) successBox.classList.remove('hidden');
 
     renderAll();
-    showToast(`Activated License (${ver.customerTag || 'PRO'}) — All 6 Industry Packets Unlocked`);
+    showToast('Activated License (' + (ver.customerTag || 'PRO') + ') — All 6 Sample Packets & Unlimited Batch Unlocked');
     return true;
   }
 
@@ -1509,86 +1657,64 @@
     const safeComp = escapeHtml(companyName || 'Enterprise Compliance Client');
     const safeEmail = escapeHtml(workEmail || 'compliance@organization.edu');
     const safePo = escapeHtml(poNumber || 'PO-EAA-2026-881');
-    const invNum = `INV-DS-2026-${plan.amountUsd}4`;
+    const invNum = 'INV-DS-2026-' + plan.amountUsd + '4';
     const dateStr = new Date().toISOString().slice(0, 10);
 
     const box = document.getElementById('corporateInvoicePreviewBox');
     if (box) {
-      box.innerHTML = `
-        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:6px;margin-bottom:8px;">
-          <div>
-            <strong>CALIBER FOUNDRY — COMMERCIAL B2B INVOICE</strong><br/>
-            <span>Issuer: Caliber Foundry &lt;engineering@caliberfoundry.com&gt;</span>
-          </div>
-          <div style="text-align:right;">
-            <strong>${escapeHtml(invNum)}</strong><br/>
-            <span>Date: ${escapeHtml(dateStr)} · Net 15 (ACH / Wire / SEPA)</span>
-          </div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-          <div>
-            <strong>Bill To:</strong> ${safeComp}<br/>
-            <span>Contact: ${safeEmail}</span>
-          </div>
-          <div style="text-align:right;">
-            <strong>PO Reference:</strong> ${safePo}<br/>
-            <span style="color:#1A5638;font-weight:700;">Status: 14-Day Provisional PRO Active</span>
-          </div>
-        </div>
-        <div style="border-top:1px solid #C9C4B8;border-bottom:1px solid #C9C4B8;padding:6px 0;margin-bottom:8px;display:flex;justify-content:space-between;">
-          <span>1x DocuShield™ — ${escapeHtml(plan.name)} (${escapeHtml(plan.billingLabel)})</span>
-          <strong>$${plan.amountUsd}.00 USD</strong>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:#4A4842;">
-          <span>Pay Online: <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener">Gumroad Card</a> · <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener">Contra B2B (0% Fee)</a></span>
-          <strong>Total Due: $${plan.amountUsd}.00 USD</strong>
-        </div>
-      `;
+      box.innerHTML =
+        '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:6px;margin-bottom:8px;">' +
+          '<div><strong>CALIBER FOUNDRY — COMMERCIAL B2B INVOICE</strong><br/><span>Issuer: Caliber Foundry &lt;engineering@caliberfoundry.com&gt;</span></div>' +
+          '<div style="text-align:right;"><strong>' + escapeHtml(invNum) + '</strong><br/><span>Date: ' + escapeHtml(dateStr) + ' · Net 15 (ACH / Wire / SEPA)</span></div>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:8px;">' +
+          '<div><strong>Bill To:</strong> ' + safeComp + '<br/><span>Contact: ' + safeEmail + '</span></div>' +
+          '<div style="text-align:right;"><strong>PO Reference:</strong> ' + safePo + '<br/><span style="color:#1A5638;font-weight:700;">Commercial Invoice Draft</span></div>' +
+        '</div>' +
+        '<div style="border-top:1px solid #C9C4B8;border-bottom:1px solid #C9C4B8;padding:6px 0;margin-bottom:8px;display:flex;justify-content:space-between;">' +
+          '<span>1x DocuShield™ — ' + escapeHtml(plan.name) + ' (' + escapeHtml(plan.billingLabel) + ')</span>' +
+          '<strong>$' + plan.amountUsd + '.00 USD</strong>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:11px;color:#4A4842;">' +
+          '<span>Pay Online: <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener">Gumroad Card</a> · <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener">Contra B2B (0% Fee)</a></span>' +
+          '<strong>Total Due: $' + plan.amountUsd + '.00 USD</strong>' +
+        '</div>';
     }
 
     const mailtoBtn = document.getElementById('btnMailtoInvoice');
     if (mailtoBtn) {
-      const subj = encodeURIComponent(`DocuShield B2B Invoice & PO Confirmation — ${invNum} (${companyName})`);
+      const subj = encodeURIComponent('DocuShield B2B Invoice & PO Confirmation — ' + invNum + ' (' + companyName + ')');
       const body = encodeURIComponent(
-        `Caliber Foundry Billing Team,\n\nPlease process our Purchase Order for DocuShield PDF/UA & EAA Remediation Studio.\n\n` +
-        `Invoice Number: ${invNum}\n` +
-        `Organization: ${companyName}\n` +
-        `Billing Email: ${workEmail}\n` +
-        `Selected Plan: ${plan.name} ($${plan.amountUsd}.00 USD)\n` +
-        `PO Number: ${poNumber || 'PO-EAA-2026-881'}\n\nThank you.`
+        'Caliber Foundry Billing Team,\n\nPlease process our Purchase Order for DocuShield Studio.\n\n' +
+        'Invoice Number: ' + invNum + '\nOrganization: ' + companyName + '\nBilling Email: ' + workEmail +
+        '\nSelected Plan: ' + plan.name + ' ($' + plan.amountUsd + '.00 USD)\nPO Number: ' + (poNumber || 'PO-EAA-2026-881') + '\n\nThank you.'
       );
-      mailtoBtn.setAttribute('href', `mailto:engineering@caliberfoundry.com?subject=${subj}&body=${body}`);
+      mailtoBtn.setAttribute('href', 'mailto:engineering@caliberfoundry.com?subject=' + subj + '&body=' + body);
     }
 
     return {
       invoiceNumber: invNum,
       vendor: 'Caliber Foundry <engineering@caliberfoundry.com>',
-      companyName: companyName,
-      workEmail: workEmail,
+      companyName,
+      workEmail,
       planCode: plan.code,
       amountUsd: plan.amountUsd,
       provisionalLicenseKey: 'ISSUED_ON_PAYMENT'
     };
   }
 
-  /**
-   * Generates a corporate B2B invoice
-   */
   function generateCorporateInvoice(companyName, workEmail, planCode, poNumber) {
-    const comp = companyName
-      || (document.getElementById('invCompanyInput') && document.getElementById('invCompanyInput').value.trim())
-      || (STATE.accountUser && STATE.accountUser.organization)
-      || 'Northwestern University Accessibility Office';
-    const email = workEmail
-      || (STATE.accountUser && STATE.accountUser.email)
-      || 'c.vance@university.edu';
+    const comp = companyName ||
+      (document.getElementById('invCompanyInput') && document.getElementById('invCompanyInput').value.trim()) ||
+      (STATE.accountUser && STATE.accountUser.organization) ||
+      'Northwestern University Accessibility Office';
+    const email = workEmail || (STATE.accountUser && STATE.accountUser.email) || 'c.vance@university.edu';
     const pCode = planCode || STATE.selectedPlanCode || 'ARCHIVE_PACK';
-    const po = poNumber
-      || (document.getElementById('invPoNumberInput') && document.getElementById('invPoNumberInput').value.trim())
-      || 'PO-EAA-2026-881';
+    const po = poNumber ||
+      (document.getElementById('invPoNumberInput') && document.getElementById('invPoNumberInput').value.trim()) ||
+      'PO-EAA-2026-881';
 
     const invoiceObj = renderCorporateInvoiceBox(comp, email, pCode, po);
-
     if (isLocalQaEnvironment()) {
       STATE.licenseTier = 'PRO_PROVISIONAL';
     }
@@ -1598,58 +1724,55 @@
     const alertBanner = document.getElementById('paywallAlertBanner');
     const successBox = document.getElementById('activationSuccessBox');
     const keyHeading = document.getElementById('activationSuccessKeyHeading');
-
     if (alertBanner) alertBanner.classList.add('hidden');
-    if (keyHeading) keyHeading.textContent = `Commercial Invoice Issued (${invoiceObj.invoiceNumber})`;
+    if (keyHeading) keyHeading.textContent = 'Commercial Invoice Issued (' + invoiceObj.invoiceNumber + ')';
     if (successBox && isLocalQaEnvironment()) successBox.classList.remove('hidden');
 
     renderAll();
-    showToast(`Generated ${invoiceObj.invoiceNumber} — Complete payment or send PO to receive your license key`);
+    showToast('Generated ' + invoiceObj.invoiceNumber + ' — Complete payment or send PO to receive your license key');
     return invoiceObj;
   }
 
   /* ==========================================================================
-     10. EVENT LISTENERS & INITIALIZATION
+     11. EVENT LISTENERS & INITIALIZATION
      ========================================================================== */
   function initEventListeners() {
-    // 1. Packet Select
     const packetSelect = document.getElementById('packetSelect');
     if (packetSelect) {
-      packetSelect.addEventListener('change', () => {
-        selectPacket(packetSelect.value);
-      });
+      packetSelect.addEventListener('change', () => selectPacket(packetSelect.value));
     }
 
-    // 2. Header License & Account Controls
-    document.getElementById('btnHeaderSignIn').addEventListener('click', () => {
-      openPaywallModal({ tab: 'signin' });
-    });
-    document.getElementById('btnHeaderUnlockPro').addEventListener('click', () => {
-      openPaywallModal({ tab: 'register', planCode: 'GROWTH_B2B' });
-    });
-    document.getElementById('btnHeaderAccountBilling').addEventListener('click', () => {
-      openPaywallModal({ tab: 'payment' });
-    });
+    document.getElementById('btnHeaderSignIn').addEventListener('click', () => openPaywallModal({ tab: 'signin' }));
+    document.getElementById('btnHeaderUnlockPro').addEventListener('click', () => openPaywallModal({ tab: 'register', planCode: 'GROWTH_B2B' }));
+    document.getElementById('btnHeaderAccountBilling').addEventListener('click', () => openPaywallModal({ tab: 'payment' }));
     document.getElementById('btnResetStudio').addEventListener('click', () => {
       localStorage.removeItem(STORAGE_KEY);
       STATE = getDefaultState();
+      BATCH_STATE = { summary: null, activePresetId: null, activeBatchFileIndex: -1, rawEntries: [] };
+      const progressWrap = document.getElementById('batchProgressWrap');
+      if (progressWrap) progressWrap.classList.add('hidden');
       document.getElementById('trojanHorseBanner').classList.add('hidden');
       saveState();
       renderAll();
       showToast('Reset DocuShield™ Studio to fresh diagnostic state');
     });
 
-    // 3. Local File Upload & Drag-and-Drop Byte Inspector
+    // Main single-or-multi file upload & drag-drop
     const fileInput = document.getElementById('fileUploadInput');
     const btnTriggerUpload = document.getElementById('btnTriggerFileUpload');
     const dropZone = document.getElementById('fileDropZone');
 
-    const handleFileObject = (fileObj) => {
-      if (!fileObj) return;
+    const handleSingleOrMultipleFiles = (fileList) => {
+      const files = Array.from(fileList || []).filter(Boolean);
+      if (files.length === 0) return;
+      if (files.length > 1) {
+        handleBatchFileObjects(files);
+        return;
+      }
+      const fileObj = files[0];
       const reader = new FileReader();
       reader.onload = (e) => {
-        const buf = new Uint8Array(e.target.result);
-        inspectCustomFileBuffer(fileObj.name, buf, true);
+        inspectCustomFileBuffer(fileObj.name, new Uint8Array(e.target.result), false);
       };
       reader.onerror = () => {
         document.getElementById('dsAssessmentSummary').textContent = 'The file could not be read. Choose it again to retry.';
@@ -1658,53 +1781,93 @@
     };
 
     if (btnTriggerUpload && fileInput) {
-      btnTriggerUpload.addEventListener('click', () => {
-        if (!isProUnlocked() && STATE.customUploadsCount >= 1) {
-          openPaywallModal({
-            reason: 'Free Diagnostic Tier includes 1 local PDF/HTML file inspection. Activate DocuShield™ PRO for unlimited local file and batch archive remediation.'
-          });
-          return;
-        }
-        fileInput.click();
-      });
+      btnTriggerUpload.addEventListener('click', () => fileInput.click());
       fileInput.addEventListener('change', () => {
-        if (fileInput.files && fileInput.files[0]) {
-          handleFileObject(fileInput.files[0]);
+        if (fileInput.files && fileInput.files.length > 0) {
+          handleSingleOrMultipleFiles(fileInput.files);
           fileInput.value = '';
         }
       });
     }
 
     if (dropZone) {
-      dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('drag-over');
-      });
-      dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('drag-over');
-      });
+      dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+      dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
       dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
         dropZone.classList.remove('drag-over');
-        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-          handleFileObject(e.dataTransfer.files[0]);
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleSingleOrMultipleFiles(e.dataTransfer.files);
         }
       });
     }
 
-    // 4. Domain / PDF URL Scanner ("Trojan-Horse" Outreach Bar)
+    // Batch Course PDF Check controls (replaces old toast stub!)
+    const btnOpenBatch = document.getElementById('btnOpenBatchMode');
+    if (btnOpenBatch) {
+      btnOpenBatch.addEventListener('click', () => openBatchWorkspace(true));
+    }
+
+    const batchFileInput = document.getElementById('batchFileInput');
+    const btnBatchUpload = document.getElementById('btnBatchUploadFiles');
+    const batchDropZone = document.getElementById('batchDropZone');
+
+    if (btnBatchUpload && batchFileInput) {
+      btnBatchUpload.addEventListener('click', () => batchFileInput.click());
+      batchFileInput.addEventListener('change', () => {
+        if (batchFileInput.files && batchFileInput.files.length > 0) {
+          handleBatchFileObjects(batchFileInput.files);
+          batchFileInput.value = '';
+        }
+      });
+    }
+
+    if (batchDropZone) {
+      batchDropZone.addEventListener('dragover', (e) => { e.preventDefault(); batchDropZone.classList.add('drag-over'); });
+      batchDropZone.addEventListener('dragleave', () => batchDropZone.classList.remove('drag-over'));
+      batchDropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        batchDropZone.classList.remove('drag-over');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleBatchFileObjects(e.dataTransfer.files);
+        }
+      });
+    }
+
+    document.getElementById('btnExportBatchCsv').addEventListener('click', () => {
+      if (!BATCH_STATE.summary) return;
+      const csv = buildBatchSummaryCsv();
+      triggerBlobDownload('DocuShield_Batch_Course_PDF_Summary.csv', csv, 'text/csv;charset=utf-8');
+      window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'export_ready' } }));
+      showToast('Downloaded DocuShield_Batch_Course_PDF_Summary.csv');
+    });
+
+    document.getElementById('btnExportBatchJson').addEventListener('click', () => {
+      if (!BATCH_STATE.summary) return;
+      const json = buildBatchSummaryJson();
+      triggerBlobDownload('DocuShield_Batch_Course_PDF_Report.json', json, 'application/json;charset=utf-8');
+      window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: 'export_ready' } }));
+      showToast('Downloaded DocuShield_Batch_Course_PDF_Report.json');
+    });
+
+    document.getElementById('btnPrintBatchSummary').addEventListener('click', openBatchSummaryModal);
+
+    document.getElementById('btnClearBatch').addEventListener('click', () => {
+      BATCH_STATE = { summary: null, activePresetId: null, activeBatchFileIndex: -1, rawEntries: [] };
+      const progressWrap = document.getElementById('batchProgressWrap');
+      if (progressWrap) progressWrap.classList.add('hidden');
+      renderBatchResults();
+      showToast('Cleared current batch results');
+    });
+
+    // Domain scanner
     const domainScanBtn = document.getElementById('domainScanBtn');
     const domainScanInput = document.getElementById('domainScanInput');
     if (domainScanBtn && domainScanInput) {
-      const triggerScan = () => {
-        scanDomainOrUrl(domainScanInput.value, null);
-      };
+      const triggerScan = () => scanDomainOrUrl(domainScanInput.value, null);
       domainScanBtn.addEventListener('click', triggerScan);
       domainScanInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          triggerScan();
-        }
+        if (e.key === 'Enter') { e.preventDefault(); triggerScan(); }
       });
     }
 
@@ -1712,7 +1875,7 @@
       openPaywallModal({
         tab: STATE.accountUser ? 'payment' : 'register',
         planCode: 'GROWTH_B2B',
-        reason: `Unlock complete domain remediation & VPAT 2.5 certification for ${STATE.lastScannedDomain || 'your organization'}.`
+        reason: 'Unlock enterprise remediation profiles and unlimited batch archives for ' + (STATE.lastScannedDomain || 'your organization') + '.'
       });
     });
 
@@ -1720,20 +1883,11 @@
       document.getElementById('trojanHorseBanner').classList.add('hidden');
     });
 
-    // 5. Primary Remediation & Pro Gate Buttons
+    // Toolbar actions — #btnBatchArchiveMode now opens the REAL batch workspace instead of a toast!
     document.getElementById('runRemediationBtn').addEventListener('click', runAutoRemediation);
     document.getElementById('revertRemediationBtn').addEventListener('click', revertRemediation);
-
     document.getElementById('btnBatchArchiveMode').addEventListener('click', () => {
-      if (!isProUnlocked()) {
-        openPaywallModal({
-          planCode: 'GROWTH_B2B',
-          reason: 'Batch Archive Mode (ZIP ingestion up to 1,000 PDFs) requires a DocuShield™ PRO or Enterprise license.'
-        });
-        return;
-      }
-      runAutoRemediation();
-      showToast('Batch Archive Pipeline Ready — Upload ZIP or trigger CLI batch worker');
+      openBatchWorkspace(true);
     });
 
     document.getElementById('btnWebhookApiMode').addEventListener('click', () => {
@@ -1745,10 +1899,9 @@
         return;
       }
       openExportModal();
-      showToast('CI/CD Webhook Endpoint Active: POST /api/v1/remediate-pdfua');
+      showToast('Opened JSON/XML payload preview for CI/CD integration');
     });
 
-    // 6. Left 3 Inspector Tabs
     document.querySelectorAll('.ds-insp-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         STATE.activeLeftTab = btn.getAttribute('data-left-tab') || 'visual';
@@ -1757,7 +1910,6 @@
       });
     });
 
-    // 7. Right Checkpoint Filters
     document.querySelectorAll('#checkpointFilterBar .ds-cp-filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         STATE.activeCheckpointFilter = btn.getAttribute('data-cp-filter') || 'ALL';
@@ -1766,21 +1918,17 @@
       });
     });
 
-    // 8. Export & Printable Certificate Modals
     document.getElementById('exportTagTreeBtn').addEventListener('click', openExportModal);
     document.getElementById('openCertificateBtn').addEventListener('click', openCertificateModal);
 
     document.getElementById('btnCloseCertificateModal').addEventListener('click', () => {
       document.getElementById('certificateModalBackdrop').classList.add('hidden');
     });
-    document.getElementById('btnPrintCertificate').addEventListener('click', () => {
-      window.print();
-    });
+    document.getElementById('btnPrintCertificate').addEventListener('click', () => window.print());
     document.getElementById('btnDownloadAuditBundle').addEventListener('click', () => {
       document.getElementById('certificateModalBackdrop').classList.add('hidden');
       openExportModal();
     });
-
     document.getElementById('btnCloseExportModal').addEventListener('click', () => {
       document.getElementById('exportModalBackdrop').classList.add('hidden');
     });
@@ -1801,43 +1949,29 @@
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(() => {});
       }
-      showToast('Copied Remediated /StructTreeRoot & XMP Payload to Clipboard');
+      showToast('Copied payload to clipboard');
     });
 
     function downloadAssessment(format) {
       const pkt = getActivePacket();
       const ext = format === 'xml' ? 'xml' : 'json';
       const content = buildExportPayloadString(format);
-      const blob = new Blob([content], { type: ext === 'xml' ? 'application/xml' : 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${pkt.code}_PDFUA_StructTreeRoot.${ext}`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      showToast(`Downloaded ${pkt.code}_PDFUA_StructTreeRoot.${ext}`);
+      triggerBlobDownload(pkt.code + '_PDFUA_Assessment.' + ext, content, ext === 'xml' ? 'application/xml' : 'application/json');
+      showToast('Downloaded ' + pkt.code + '_PDFUA_Assessment.' + ext);
     }
 
     document.getElementById('btnDownloadExportFile').addEventListener('click', () => downloadAssessment(STATE.activeExportFormat));
     document.getElementById('dsDownloadAssessment').addEventListener('click', () => downloadAssessment('json'));
 
-    // 9. Paywall, Registration & 3 Payment Methods Modal
+    // Paywall & account modal
     document.getElementById('btnClosePaywallModal').addEventListener('click', () => {
       document.getElementById('paywallModalBackdrop').classList.add('hidden');
     });
-
     document.querySelectorAll('.ds-auth-tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchAuthTab(btn.getAttribute('data-auth-tab') || 'register');
-      });
+      btn.addEventListener('click', () => switchAuthTab(btn.getAttribute('data-auth-tab') || 'register'));
     });
-
     document.querySelectorAll('#planSelectorGrid .ds-plan-card').forEach(card => {
-      card.addEventListener('click', () => {
-        selectPlanCode(card.getAttribute('data-plan-code') || 'ARCHIVE_PACK');
-      });
+      card.addEventListener('click', () => selectPlanCode(card.getAttribute('data-plan-code') || 'ARCHIVE_PACK'));
     });
 
     document.getElementById('registerAccountForm').addEventListener('submit', (e) => {
@@ -1852,13 +1986,13 @@
       const cardHolder = document.getElementById('cardHolderName');
       const cardEmail = document.getElementById('cardBillingEmail');
       const invComp = document.getElementById('invCompanyInput');
-      if (cardHolder) cardHolder.value = `${fullName} / ${organization}`;
+      if (cardHolder) cardHolder.value = fullName + ' / ' + organization;
       if (cardEmail) cardEmail.value = email;
       if (invComp) invComp.value = organization;
 
       renderHeaderAndLicenseBar();
       switchAuthTab('payment');
-      showToast(`Account created for ${email}. Complete activation below.`);
+      showToast('Account created for ' + email + '. Complete activation below.');
     });
 
     document.getElementById('signInForm').addEventListener('submit', (e) => {
@@ -1875,17 +2009,15 @@
 
       if (isProUnlocked()) {
         document.getElementById('paywallModalBackdrop').classList.add('hidden');
-        showToast(`Signed in as ${email}`);
+        showToast('Signed in as ' + email);
       } else {
         switchAuthTab('payment');
-        showToast(`Signed in as ${email}. Activate your Pro plan below.`);
+        showToast('Signed in as ' + email + '. Activate your Pro plan below.');
       }
     });
 
     document.querySelectorAll('.ds-pay-method-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchPayMethodTab(btn.getAttribute('data-pay-method') || 'card');
-      });
+      btn.addEventListener('click', () => switchPayMethodTab(btn.getAttribute('data-pay-method') || 'card'));
     });
 
     document.getElementById('cardCheckoutForm').addEventListener('submit', (e) => {
@@ -1904,27 +2036,30 @@
       }
       const gwEl = document.querySelector('#cardCheckoutForm select');
       const gw = gwEl ? gwEl.value : 'gumroad';
-      const url =
-        gw === 'contra'
-          ? 'https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua'
-          : 'https://caliberfoundry.gumroad.com/l/docushield-pro';
+      const url = gw === 'contra'
+        ? 'https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua'
+        : 'https://caliberfoundry.gumroad.com/l/docushield-pro';
       window.open(url, '_blank', 'noopener');
       switchPayMethodTab('key');
       showToast('Opened secure checkout. Paste the license key from your receipt to unlock DocuShield Pro.');
     });
 
-    document.getElementById('btnGenerateCorporateInvoice').addEventListener('click', () => {
-      generateCorporateInvoice();
-    });
-
+    document.getElementById('btnGenerateCorporateInvoice').addEventListener('click', () => generateCorporateInvoice());
     document.getElementById('btnPrintCorporateInvoice').addEventListener('click', () => {
       generateCorporateInvoice();
       window.print();
     });
-
     document.getElementById('btnActivateLicenseKey').addEventListener('click', () => {
-      const keyVal = document.getElementById('licenseKeyInput').value;
-      validateAndActivateLicenseKey(keyVal);
+      validateAndActivateLicenseKey(document.getElementById('licenseKeyInput').value);
+    });
+
+    // Escape closes active modal
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Escape') return;
+      ['certificateModalBackdrop', 'exportModalBackdrop', 'paywallModalBackdrop'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.classList.contains('hidden')) el.classList.add('hidden');
+      });
     });
   }
 
@@ -1933,9 +2068,13 @@
       const params = new URLSearchParams(window.location.search || '');
       const domainParam = params.get('domain');
       const fileParam = params.get('file');
+      const batchParam = params.get('batch');
       if (domainParam) {
         document.getElementById('dsAdvancedWorkspace').open = true;
         scanDomainOrUrl(domainParam, fileParam);
+      }
+      if (batchParam === '1' || batchParam === 'true') {
+        openBatchWorkspace(true);
       }
     } catch (e) {
       // Ignore malformed query string
@@ -1947,33 +2086,46 @@
     if (pkt && !STATE.selectedRegionId && pkt.visualRegions[0]) {
       STATE.selectedRegionId = pkt.visualRegions[0].id;
     }
+    renderBatchScopeReference();
     initEventListeners();
+
     function openStep(step) {
       if (step === 1) {
         document.getElementById('dsAdvancedWorkspace').open = true;
         STATE.activeLeftTab = 'visual';
-        const pkt = getActivePacket();
+        const activePkt = getActivePacket();
         const phase = isActivePacketRemediated() ? 'statusAfter' : 'statusBefore';
-        const region = pkt.visualRegions.find(reg => pkt.checkpoints.some(cp => cp.id === reg.checkpointId && cp[phase] !== 'PASS')) || pkt.visualRegions[0];
-        STATE.selectedRegionId = region?.id || null;
+        const region = activePkt.visualRegions.find(reg =>
+          activePkt.checkpoints.some(cp => cp.id === reg.checkpointId && cp[phase] !== 'PASS')
+        ) || activePkt.visualRegions[0];
+        STATE.selectedRegionId = region ? region.id : null;
         renderAll();
         const target = document.getElementById('selectedRegionInspector');
         target.focus();
-        target.scrollIntoView({block:'center'});
+        target.scrollIntoView({ block: 'center' });
       } else if (step === 2) {
         runAutoRemediation();
         document.getElementById('dsAssessmentSummary').focus();
-      } else if (step === 3) openCertificateModal();
+      } else if (step === 3) {
+        openCertificateModal();
+      }
     }
-    window.addEventListener('cf:open-step', event => openStep(Number(event.detail?.step)));
+
+    window.addEventListener('cf:open-step', event => openStep(Number(event.detail && event.detail.step)));
     document.getElementById('dsReviewResults').addEventListener('click', () => openStep(1));
     document.getElementById('dsOpenReport').addEventListener('click', () => openStep(3));
     renderAll();
     checkDeepLinkUrlParams();
+    try {
+      const autoStep = new URLSearchParams(window.location.search || '').get('autoProof');
+      if (/^[123]$/.test(autoStep || '') && !window.__CF_TELEMETRY_ACTIVE__) {
+        openStep(Number(autoStep));
+      }
+    } catch (_) {}
   }
 
   /* ==========================================================================
-     11. PUBLIC PROGRAMMATIC API (`window.DocuShieldApp`) FOR E2E TEST HARNESS
+     12. PUBLIC PROGRAMMATIC API (`window.DocuShieldApp`) FOR E2E TEST HARNESS
      ========================================================================== */
   if (typeof window !== 'undefined') {
     window.DocuShieldApp = {
@@ -1989,6 +2141,14 @@
       openPaywallModal,
       openCertificateModal,
       openExportModal,
+      openBatchWorkspace,
+      runBatchBuffers,
+      runEducationalPresetBatch,
+      inspectBatchItem,
+      getLastBatchSummary: () => BATCH_STATE.summary,
+      buildBatchSummaryCsv,
+      buildBatchSummaryJson,
+      openBatchSummaryModal,
       escapeHtml
     };
   }

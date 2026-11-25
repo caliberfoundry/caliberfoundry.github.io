@@ -3,9 +3,11 @@
     "productName": "CodeDrill CBT Simulator",
     "examTrack": "US Customs Broker License Exam (CBLE)",
     "secondaryTracks": [
-      "IRS Enrolled Agent (SEE / 31 CFR Part 10 Circular 230)"
+      "IRS Enrolled Agent — SEE Part 1 (Individuals)",
+      "IRS Enrolled Agent — SEE Part 2 (Businesses)",
+      "IRS Enrolled Agent — SEE Part 3 (Representation, Practices & Procedures)"
     ],
-    "version": "2026.11-v2.1-eCFR",
+    "version": "2026.11-v3.0-SEE",
     "examDurationSeconds": 16200,
     "passingScorePercent": 75,
     "avgPassRateNational": 15.2
@@ -862,7 +864,7 @@
     {
       "id": "31-cfr-ea",
       "code": "31 CFR Part 10",
-      "title": "IRS Circular 230 — Enrolled Agent (EA) Practice Standards",
+      "title": "31 CFR Part 10 (Circular 230) — IRS Enrolled Agent Practice Standards",
       "parts": [
         {
           "id": "31-cfr-part-10-b",
@@ -887,7 +889,11 @@
                 "31-cfr-10-21",
                 "31-cfr-10-22"
               ],
-              "text": "§ 10.20 Information to be furnished.\n(a) To the Internal Revenue Service.\n(1) A practitioner must, on a proper and lawful request by a duly authorized officer or employee of the Internal Revenue Service, promptly submit records or information in any matter before the Internal Revenue Service unless the practitioner believes in good faith and on reasonable grounds that the records or information are privileged.\n(2) Where the requested records or information are not in the possession of, or subject to the control of, the practitioner or the practitioner's client, the practitioner must promptly notify the requesting Internal Revenue Service officer or employee and the practitioner must provide any information that the practitioner has regarding the identity of any person who the practitioner believes may have possession or control of the requested records or information. The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.\n\n(b) Interference with a proper and lawful request. A practitioner may not interfere, or attempt to interfere, with any proper and lawful effort by the Internal Revenue Service, its officers or employees, to obtain any record or information unless the practitioner believes in good faith and on reasonable grounds that the record or information is privileged."
+              "text": "§ 10.20 Information to be furnished.\n(a) To the Internal Revenue Service.\n(1) A practitioner must, on a proper and lawful request by a duly authorized officer or employee of the Internal Revenue Service, promptly submit records or information in any matter before the Internal Revenue Service unless the practitioner believes in good faith and on reasonable grounds that the records or information are privileged.\n(2) Where the requested records or information are not in the possession of, or subject to the control of, the practitioner or the practitioner's client, the practitioner must promptly notify the requesting Internal Revenue Service officer or employee and the practitioner must provide any information that the practitioner has regarding the identity of any person who the practitioner believes may have possession or control of the requested records or information. The practitioner must make reasonable inquiry of his or her client regarding the identity of any person who may have possession or control of the requested records or information, but the practitioner is not required to make inquiry of any other person or independently verify any information provided by the practitioner's client regarding the identity of such persons.\n\n(b) Interference with a proper and lawful request. A practitioner may not interfere, or attempt to interfere, with any proper and lawful effort by the Internal Revenue Service, its officers or employees, to obtain any record or information unless the practitioner believes in good faith and on reasonable grounds that the record or information is privileged.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.20",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.20 — Information to be furnished",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
             },
             {
               "id": "31-cfr-10-21",
@@ -909,7 +915,11 @@
                 "31-cfr-10-22",
                 "31-cfr-10-34"
               ],
-              "text": "§ 10.21 Knowledge of client's omission.\nA practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.\n\nIRS SEE Exam Doctrinal Notes on § 10.21:\n1. Two Mandatory Affirmative Duties: The practitioner must promptly advise the client of BOTH (a) the fact of the noncompliance, error, or omission, AND (b) the statutory/regulatory consequences under the Internal Revenue Code (e.g., accuracy-related penalties under IRC § 6662, civil fraud penalties under IRC § 6663, failure-to-pay interest under IRC § 6601, and extended statutes of limitations under IRC § 6501(e)).\n2. What § 10.21 Does NOT Require or Permit:\n   - The practitioner is NEVER permitted to unilaterally notify the IRS of the client's prior-year error or omission without the client's consent (doing so violates client confidentiality under IRC § 7216 / § 7525).\n   - The practitioner cannot force the client to file an amended return (Form 1040-X or 1120-X), nor does Circular 230 § 10.21 require the practitioner to advise the client in writing (though practitioners are strongly encouraged to document the advice), nor does § 10.21 mandate automatic withdrawal unless the prior-year omission carries forward and renders the current year's tax return false or fraudulent under § 10.22 and § 10.34."
+              "text": "§ 10.21 Knowledge of client's omission.\nA practitioner who, having been retained by a client with respect to a matter administered by the Internal Revenue Service, knows that the client has not complied with the revenue laws of the United States or has made an error in or omission from any return, document, affidavit, or other paper which the client submitted or executed under the revenue laws of the United States, must advise the client promptly of the fact of such noncompliance, error, or omission. The practitioner must advise the client of the consequences as provided under the Internal Revenue Code and regulations of such noncompliance, error, or omission.\n\nIRS SEE Exam Doctrinal Notes on § 10.21:\n1. Two Mandatory Affirmative Duties: The practitioner must promptly advise the client of BOTH (a) the fact of the noncompliance, error, or omission, AND (b) the statutory/regulatory consequences under the Internal Revenue Code (e.g., accuracy-related penalties under IRC § 6662, civil fraud penalties under IRC § 6663, failure-to-pay interest under IRC § 6601, and extended statutes of limitations under IRC § 6501(e)).\n2. What § 10.21 Does NOT Require or Permit:\n   - The practitioner is NEVER permitted to unilaterally notify the IRS of the client's prior-year error or omission without the client's consent (doing so violates client confidentiality under IRC § 7216 / § 7525).\n   - The practitioner cannot force the client to file an amended return (Form 1040-X or 1120-X), nor does Circular 230 § 10.21 require the practitioner to advise the client in writing (though practitioners are strongly encouraged to document the advice), nor does § 10.21 mandate automatic withdrawal unless the prior-year omission carries forward and renders the current year's tax return false or fraudulent under § 10.22 and § 10.34.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.21",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.21 — Knowledge of client omission",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
             },
             {
               "id": "31-cfr-10-22",
@@ -931,7 +941,11 @@
                 "31-cfr-10-34",
                 "31-cfr-10-35"
               ],
-              "text": "§ 10.22 Diligence as to accuracy.\n(a) In general. A practitioner must exercise due diligence—\n(1) In preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to Internal Revenue Service matters;\n(2) In determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and\n(3) In determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the Internal Revenue Service.\n\n(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person."
+              "text": "§ 10.22 Diligence as to accuracy.\n(a) In general. A practitioner must exercise due diligence—\n(1) In preparing or assisting in the preparation of, approving, and filing tax returns, documents, affidavits, and other papers relating to Internal Revenue Service matters;\n(2) In determining the correctness of oral or written representations made by the practitioner to the Department of the Treasury; and\n(3) In determining the correctness of oral or written representations made by the practitioner to clients with reference to any matter administered by the Internal Revenue Service.\n\n(b) Reliance on others. Except as modified by §§ 10.34 and 10.37, a practitioner will be presumed to have exercised due diligence for purposes of this section if the practitioner relies on the work product of another person and the practitioner used reasonable care in engaging, supervising, training, and evaluating the person, taking proper account of the nature of the relationship between the practitioner and the person.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.22",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.22 — Diligence as to accuracy",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
             },
             {
               "id": "31-cfr-10-27",
@@ -952,7 +966,11 @@
                 "31-cfr-10-29",
                 "31-cfr-10-34"
               ],
-              "text": "§ 10.27 Fees.\n(a) In general. A practitioner may not charge an unconscionable fee in connection with any matter before the Internal Revenue Service.\n\n(b) Contingent fees.\n(1) Except as provided in paragraphs (b)(2), (3), and (4) of this section, a practitioner may not charge a contingent fee for services rendered in connection with any matter before the Internal Revenue Service, including the preparation or filing of an original tax return or an amended tax return or claim for refund (other than as specified below).\n(2) Exception 1 — IRS Examination or Challenge: A practitioner may charge a contingent fee for services rendered in connection with the Service's examination of, or challenge to:\n(i) An original tax return; or\n(ii) An amended return or claim for refund or credit where the amended return or claim for refund or credit was filed within 120 days of the taxpayer receiving a written notice of the examination of, or a written challenge to, the original tax return.\n(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.\n(4) Exception 3 — Judicial Proceedings: A practitioner may charge a contingent fee for services rendered in connection with any judicial proceeding arising under the Internal Revenue Code.\n\n(c) Definitions. For purposes of this section, a \"contingent fee\" is any fee that is based, in whole or in part, on whether or not a position taken on a tax return or other filing avoids challenge by the Internal Revenue Service or is sustained either by the Internal Revenue Service or in litigation. A contingent fee includes a fee that is based on a percentage of the refund reported on a return, that is based on a percentage of the taxes saved, or that otherwise depends on the specific result attained."
+              "text": "§ 10.27 Fees.\n(a) In general. A practitioner may not charge an unconscionable fee in connection with any matter before the Internal Revenue Service.\n\n(b) Contingent fees.\n(1) Except as provided in paragraphs (b)(2), (3), and (4) of this section, a practitioner may not charge a contingent fee for services rendered in connection with any matter before the Internal Revenue Service, including the preparation or filing of an original tax return or an amended tax return or claim for refund (other than as specified below).\n(2) Exception 1 — IRS Examination or Challenge: A practitioner may charge a contingent fee for services rendered in connection with the Service's examination of, or challenge to:\n(i) An original tax return; or\n(ii) An amended return or claim for refund or credit where the amended return or claim for refund or credit was filed within 120 days of the taxpayer receiving a written notice of the examination of, or a written challenge to, the original tax return.\n(3) Exception 2 — Statutory Interest or Penalties: A practitioner may charge a contingent fee for services rendered in connection with a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the Internal Revenue Service.\n(4) Exception 3 — Judicial Proceedings: A practitioner may charge a contingent fee for services rendered in connection with any judicial proceeding arising under the Internal Revenue Code.\n\n(c) Definitions. For purposes of this section, a \"contingent fee\" is any fee that is based, in whole or in part, on whether or not a position taken on a tax return or other filing avoids challenge by the Internal Revenue Service or is sustained either by the Internal Revenue Service or in litigation. A contingent fee includes a fee that is based on a percentage of the refund reported on a return, that is based on a percentage of the taxes saved, or that otherwise depends on the specific result attained.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.27",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.27 — Fees (Contingent fee restrictions)",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
             },
             {
               "id": "31-cfr-10-29",
@@ -974,7 +992,11 @@
                 "31-cfr-10-27",
                 "31-cfr-10-35"
               ],
-              "text": "§ 10.29 Conflicting interests.\n(a) Except as provided by paragraph (b) of this section, a practitioner shall not represent a client before the Internal Revenue Service if the representation involves a conflict of interest. A conflict of interest exists if—\n(1) The representation of one client will be directly adverse to another client; or\n(2) There is a significant risk that the representation of one or more clients will be materially limited by the practitioner's responsibilities to another client, a former client or a third person, or by a personal interest of the practitioner.\n\n(b) Notwithstanding the existence of a conflict of interest under paragraph (a) of this section, the practitioner may represent a client if—\n(1) The practitioner reasonably believes that the practitioner will be able to provide competent and diligent representation to each affected client;\n(2) The representation is not prohibited by law; and\n(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.\n\n(c) Copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients, and the written consents must be provided to any officer or employee of the Internal Revenue Service on request."
+              "text": "§ 10.29 Conflicting interests.\n(a) Except as provided by paragraph (b) of this section, a practitioner shall not represent a client before the Internal Revenue Service if the representation involves a conflict of interest. A conflict of interest exists if—\n(1) The representation of one client will be directly adverse to another client; or\n(2) There is a significant risk that the representation of one or more clients will be materially limited by the practitioner's responsibilities to another client, a former client or a third person, or by a personal interest of the practitioner.\n\n(b) Notwithstanding the existence of a conflict of interest under paragraph (a) of this section, the practitioner may represent a client if—\n(1) The practitioner reasonably believes that the practitioner will be able to provide competent and diligent representation to each affected client;\n(2) The representation is not prohibited by law; and\n(3) Each affected client waives the conflict of interest and gives informed consent, confirmed in writing by each affected client, at the time the existence of the conflict of interest is known by the practitioner. The confirmation may be made within a reasonable period after the informed consent, but in no event later than 30 days.\n\n(c) Copies of the written consents must be retained by the practitioner for at least 36 months from the date of the conclusion of the representation of the affected clients, and the written consents must be provided to any officer or employee of the Internal Revenue Service on request.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.29",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.29 — Conflicting interests",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
             },
             {
               "id": "31-cfr-10-34",
@@ -998,7 +1020,11 @@
                 "31-cfr-10-22",
                 "31-cfr-10-35"
               ],
-              "text": "§ 10.34 Standards with respect to tax returns and documents, affidavits and other papers.\n(a) Tax returns.\n(1) A practitioner may not willfully, recklessly, or through gross incompetence—\n(i) Sign a tax return or claim for refund that the practitioner knows or reasonably should know contains a position that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code (including the related regulations and other published guidance); or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code (including the related regulations and other published guidance).\n(ii) Advise a client to take a position on a tax return or claim for refund, or prepare a portion of a tax return or claim for refund containing a position, that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code; or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code.\n\n(2) Summary of IRC § 6694(a)(2) Confidence Thresholds Referenced in § 10.34(a):\n- Undisclosed Tax Return Position (Non-Tax Shelter): Must be supported by \"Substantial Authority\" (approximately a 40% or greater likelihood of being sustained on its merits).\n- Adequately Disclosed Tax Return Position (Non-Tax Shelter, disclosed on Form 8275 or Form 8275-R): Must be supported by at least a \"Reasonable Basis\" (approximately a 20% or greater likelihood of being sustained on its merits; significantly higher than \"not frivolous\").\n- Tax Shelters and Reportable Transactions (IRC § 6662A): Must meet the \"More Likely Than Not\" standard (a greater than 50% likelihood of being sustained on its merits), regardless of whether disclosed.\n\n(c) Advising clients on potential penalties. A practitioner must inform a client of any penalties that are reasonably likely to apply to the client with respect to a position taken on a tax return if the practitioner advised the client with respect to the position, or prepared or signed the tax return, and must inform the client of any opportunity to avoid any such penalties by disclosure.\n\n(d) Relying on information furnished by clients. A practitioner advising a client to take a position on a tax return, document, affidavit or other paper submitted to the Internal Revenue Service, or preparing or signing a tax return as a preparer, generally may rely in good faith without verification upon information furnished by the client. The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete."
+              "text": "§ 10.34 Standards with respect to tax returns and documents, affidavits and other papers.\n(a) Tax returns.\n(1) A practitioner may not willfully, recklessly, or through gross incompetence—\n(i) Sign a tax return or claim for refund that the practitioner knows or reasonably should know contains a position that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code (including the related regulations and other published guidance); or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code (including the related regulations and other published guidance).\n(ii) Advise a client to take a position on a tax return or claim for refund, or prepare a portion of a tax return or claim for refund containing a position, that—\n(A) Lacks a reasonable basis;\n(B) Is an unreasonable position as described in section 6694(a)(2) of the Internal Revenue Code; or\n(C) Is a willful attempt by the practitioner to understate the liability for tax or a reckless or intentional disregard of rules or regulations by the practitioner as described in section 6694(b)(2) of the Internal Revenue Code.\n\n(2) Summary of IRC § 6694(a)(2) Confidence Thresholds Referenced in § 10.34(a):\n- Undisclosed Tax Return Position (Non-Tax Shelter): Must be supported by \"Substantial Authority\" (approximately a 40% or greater likelihood of being sustained on its merits).\n- Adequately Disclosed Tax Return Position (Non-Tax Shelter, disclosed on Form 8275 or Form 8275-R): Must be supported by at least a \"Reasonable Basis\" (approximately a 20% or greater likelihood of being sustained on its merits; significantly higher than \"not frivolous\").\n- Tax Shelters and Reportable Transactions (IRC § 6662A): Must meet the \"More Likely Than Not\" standard (a greater than 50% likelihood of being sustained on its merits), regardless of whether disclosed.\n\n(c) Advising clients on potential penalties. A practitioner must inform a client of any penalties that are reasonably likely to apply to the client with respect to a position taken on a tax return if the practitioner advised the client with respect to the position, or prepared or signed the tax return, and must inform the client of any opportunity to avoid any such penalties by disclosure.\n\n(d) Relying on information furnished by clients. A practitioner advising a client to take a position on a tax return, document, affidavit or other paper submitted to the Internal Revenue Service, or preparing or signing a tax return as a preparer, generally may rely in good faith without verification upon information furnished by the client. The practitioner may not, however, ignore the implications of information furnished to, or actually known by, the practitioner, and must make reasonable inquiries if the information as furnished appears to be incorrect, inconsistent with an important fact or another factual assumption, or incomplete.",
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.34",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.34 — Standards for tax returns and documents",
+              "officialGuideUrl": "https://www.ecfr.gov/current/title-26/section-1.6694-2",
+              "officialGuideLabel": "eCFR: 26 CFR § 1.6694-2 — Preparer understatement standards"
             },
             {
               "id": "31-cfr-10-35",
@@ -1020,6 +1046,518 @@
                 "31-cfr-10-34"
               ],
               "text": "§ 10.35 Competence.\n(a) A practitioner must possess the necessary competence to engage in practice before the Internal Revenue Service. Competent practice requires the appropriate level of knowledge, skill, thoroughness, and preparation necessary for the matter for which the practitioner is engaged.\n\n(b) A practitioner may become competent for the matter for which the practitioner has been engaged through various methods, such as consulting with experts in the relevant area or studying the relevant law."
+            }
+          ]
+        },
+        {
+          "id": "31-cfr-part-10-a-c",
+          "code": "Subparts A & C",
+          "title": "31 CFR Part 10 Subparts A & C — Renewal, Continuing Education & Sanctions",
+          "sections": [
+            {
+              "id": "31-cfr-10-6",
+              "citation": "31 CFR § 10.6",
+              "title": "Term and renewal of status as an enrolled agent (72-Hour CE Cycle)",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart A > § 10.6",
+              "examFrequency": "Critical",
+              "keywords": [
+                "enrolled agent renewal",
+                "72 hours",
+                "16 hours per year",
+                "2 hours ethics",
+                "Form 8554",
+                "continuing education",
+                "3-year enrollment cycle"
+              ],
+              "crossRefs": [
+                "31 CFR § 10.50",
+                "31 CFR § 10.22"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.6",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.6 — Term and renewal of enrolled agent status",
+              "officialGuideUrl": "https://www.irs.gov/tax-professionals/enrolled-agents/become-an-enrolled-agent",
+              "officialGuideLabel": "IRS.gov — Become an Enrolled Agent & Renewal Rules",
+              "text": "(d) Renewal of enrollment. To maintain active enrollment to practice before the Internal Revenue Service, each individual is required to have the enrollment renewed on a three-year enrollment cycle determined by the last digit of the individual's social security number or tax identification number using Form 8554.\n(e) Condition for renewal: continuing education. In order to qualify for renewal of enrollment, an individual must complete a minimum of 72 hours of continuing education credit during each three-year enrollment cycle. A minimum of 16 hours of continuing education credit, including 2 hours of ethics or professional conduct, must be completed during each year of an enrollment cycle.\n(f) Qualifying continuing education. Qualifying continuing education programs must be conducted by an IRS-approved continuing education provider and enhance professional knowledge in Federal taxation or Federal tax related matters."
+            },
+            {
+              "id": "31-cfr-10-50",
+              "citation": "31 CFR § 10.50",
+              "title": "Sanctions — Censure, Suspension, Disbarment & Monetary Penalties",
+              "breadcrumb": "31 CFR > Part 10 (Circular 230) > Subpart C > § 10.50",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "sanctions",
+                "censure",
+                "suspension",
+                "disbarment",
+                "monetary penalty",
+                "gross income derived",
+                "disreputable conduct"
+              ],
+              "crossRefs": [
+                "31 CFR § 10.6",
+                "31 CFR § 10.34"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.50",
+              "officialSourceLabel": "eCFR: 31 CFR § 10.50 — Sanctions for Circular 230 violations",
+              "officialGuideUrl": "https://www.irs.gov/publications/p947",
+              "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS",
+              "text": "(a) Authority to censure, suspend, or disbar. The Secretary of the Treasury, or delegate, after notice and an opportunity for a proceeding, may censure, suspend, or disbar any practitioner from practice before the Internal Revenue Service if the practitioner is shown to be incompetent or disreputable, fails to comply with any regulation in this part, or with intent to defraud, willfully and knowingly misleads or threatens a client or prospective client. Censure is a public reprimand.\n(c) Authority to impose a monetary penalty. (1) In general. The Secretary of the Treasury, or delegate, after notice and an opportunity for a proceeding, may impose a monetary penalty on any practitioner who engages in conduct subject to sanction under paragraph (a) of this section, and if the practitioner was acting on behalf of an employer or any firm or other entity in connection with such conduct, the Secretary may also impose a monetary penalty on such employer, firm, or entity if it knew, or reasonably should have known, of such conduct.\n(2) Amount of penalty. The amount of the monetary penalty shall not exceed the gross income derived (or to be derived) from the conduct giving rise to the penalty and may be in addition to, or in lieu of, any suspension, disbarment, or censure."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "26-cfr-see",
+      "code": "26 CFR / IRC (SEE)",
+      "title": "Title 26 CFR & IRC — IRS Special Enrollment Examination (SEE Parts 1–3)",
+      "parts": [
+        {
+          "id": "see-part-1-individuals",
+          "code": "SEE Part 1",
+          "title": "IRS SEE Part 1 — Individuals (Filing, Dependents, Assets, QBI & Gifts)",
+          "sections": [
+            {
+              "id": "26-cfr-1-2-2",
+              "citation": "26 CFR § 1.2-2",
+              "title": "Head of Household Filing Status & Abandoned Spouse Rules (IRC § 2(b))",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 1.2-2",
+              "examFrequency": "Critical",
+              "keywords": [
+                "Head of Household",
+                "unmarried",
+                "more than half the cost",
+                "qualifying person",
+                "parent exception",
+                "abandoned spouse",
+                "six months"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.152-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.2-2",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.2-2 — Definitions and special rules (Head of Household)",
+              "officialGuideUrl": "https://www.irs.gov/publications/p501",
+              "officialGuideLabel": "IRS Publication 501 — Filing Status & Dependents",
+              "text": "(b) Head of household (IRC § 2(b)). An individual is considered a head of a household only if the individual is unmarried (or considered unmarried under the abandoned spouse rule) at the close of the taxable year, is not a surviving spouse, and maintains as his or her home a household that constitutes for more than one-half of the taxable year the principal place of abode of a qualifying child or other qualifying dependent.\n(b)(2) Special rule for a dependent parent. A taxpayer may qualify as head of household by maintaining a household that constitutes the principal place of abode of the taxpayer's father or mother if the taxpayer is entitled to claim the parent as a dependent, even if the parent does not live in the taxpayer's own home, provided the taxpayer pays more than half the cost of keeping up the parent's separate household for the entire year.\n(c) Abandoned spouse exception. A married individual who lives apart from his or her spouse during the last 6 months of the taxable year, files a separate return, pays more than half the cost of maintaining a home that is the principal residence of a qualifying child for more than half the year, and can claim the child as a dependent is considered unmarried for Head of Household status."
+            },
+            {
+              "id": "26-cfr-1-152-1",
+              "citation": "26 CFR § 1.152-1",
+              "title": "Qualifying Child vs. Qualifying Relative Dependent Rules (IRC § 152)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 1.152-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "dependent",
+                "qualifying child",
+                "qualifying relative",
+                "support test",
+                "gross income test",
+                "member of household",
+                "student under 24"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.2-2"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.152-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.152-1 — General definition of a dependent",
+              "officialGuideUrl": "https://www.irs.gov/publications/p501",
+              "officialGuideLabel": "IRS Publication 501 — Dependents & Filing Information",
+              "text": "(a) Qualifying child tests (IRC § 152(c)). To be a taxpayer's qualifying child, an individual must meet the relationship test, age test (under age 19, or under age 24 if a full-time student for at least 5 calendar months, or permanently and totally disabled), residency test (same principal place of abode for more than half the year), joint return test, and support test: the child must not have provided more than one-half of his or her own support for the calendar year.\n(b) Qualifying relative tests (IRC § 152(d)). Unlike a qualifying child, a qualifying relative is subject to a strict gross income ceiling and requires the taxpayer to provide more than one-half of the individual's total support for the calendar year. A non-relative (such as an unrelated friend) can qualify as a qualifying relative only if the individual lived with the taxpayer as a member of the household for the entire taxable year (all 12 months) and the relationship does not violate local law."
+            },
+            {
+              "id": "26-cfr-1-121-1",
+              "citation": "26 CFR § 1.121-1",
+              "title": "Exclusion of Gain from Sale of Principal Residence (IRC § 121)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 1.121-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "principal residence",
+                "250,000",
+                "500,000",
+                "2 out of 5 years",
+                "ownership test",
+                "use test",
+                "unrecaptured section 1250 gain",
+                "nonqualified use"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.1091-1",
+                "26 CFR § 1.1031(a)-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.121-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.121-1 — Exclusion of gain on principal residence",
+              "officialGuideUrl": "https://www.irs.gov/publications/p523",
+              "officialGuideLabel": "IRS Publication 523 — Selling Your Home",
+              "text": "(a) In general (IRC § 121). A taxpayer may exclude up to $250,000 ($500,000 for certain married taxpayers filing jointly) of gain realized on the sale or exchange of property if, during the 5-year period ending on the date of the sale or exchange, the taxpayer owned and used the property as the taxpayer's principal residence for periods aggregating 2 years or more. The ownership and use periods need not be concurrent.\n(d) Depreciation recapture limitation. The Section 121 exclusion does not apply to so much of the gain from the sale of a principal residence as does not exceed the portion of the depreciation adjustments attributable to periods after May 6, 1997 (unrecaptured Section 1250 gain from home office or rental depreciation). That post-May 6, 1997 depreciation recapture remains taxable even when total gain is below $250,000 / $500,000."
+            },
+            {
+              "id": "26-cfr-1-1091-1",
+              "citation": "26 CFR § 1.1091-1",
+              "title": "Losses from Wash Sales of Stock or Securities (IRC § 1091)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 1.1091-1",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "wash sale",
+                "30 days before or after",
+                "61-day window",
+                "substantially identical",
+                "disallowed loss",
+                "basis adjustment",
+                "holding period tacking"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.121-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1091-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.1091-1 — Losses from wash sales of stock or securities",
+              "officialGuideUrl": "https://www.irs.gov/publications/p550",
+              "officialGuideLabel": "IRS Publication 550 — Investment Income and Expenses",
+              "text": "(a) Disallowance of loss (IRC § 1091). No deduction is allowed for any loss claimed to have been sustained from any sale or other disposition of shares of stock or securities where it appears that, within a period beginning 30 days before the date of such sale or disposition and ending 30 days after such date (a 61-day window), the taxpayer has acquired (by purchase or by an exchange on which the entire amount of gain or loss was recognized), or has entered into a contract or option so to acquire, substantially identical stock or securities.\n(f) Basis and holding period of replacement stock. The disallowed wash sale loss is not permanently forfeited in a taxable account; instead, it is added to the basis of the newly acquired replacement stock or securities (IRC § 1091(d)), and the holding period of the sold shares is tacked onto the holding period of the replacement shares (IRC § 1223(3)). Note: Wash sale rules apply only to losses, never to gains."
+            },
+            {
+              "id": "26-cfr-1-199a-1",
+              "citation": "26 CFR § 1.199A-1",
+              "title": "Qualified Business Income (QBI) 20% Deduction Operational Rules (IRC § 199A)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 1.199A-1",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "QBI",
+                "199A",
+                "20 percent deduction",
+                "SSTB",
+                "specified service trade or business",
+                "W-2 wages",
+                "UBIA",
+                "taxable income limitation",
+                "C corporation excluded"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.1367-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.199A-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.199A-1 — QBI deduction operational rules",
+              "officialGuideUrl": "https://www.irs.gov/publications/p17",
+              "officialGuideLabel": "IRS Publication 17 — Your Federal Income Tax",
+              "text": "(a) General operational rule (IRC § 199A). Non-corporate taxpayers (individuals, trusts, and estates) with qualified business income (QBI) from a domestic sole proprietorship, partnership, or S corporation may deduct up to 20 percent of QBI, limited overall to 20 percent of taxable income minus net capital gain. Income earned through a C corporation or by performing services as an employee (W-2 wages) does not qualify as QBI.\n(d) Threshold and SSTB phase-out. For taxpayers whose taxable income is at or below the statutory threshold amount, neither the W-2 wage / UBIA of qualified property limitation nor the Specified Service Trade or Business (SSTB) exclusion applies. Once taxable income exceeds the phase-in range above the threshold, QBI from an SSTB (such as law, accounting, consulting, health, or financial services — excluding engineering and architecture) is completely disallowed, while non-SSTB businesses are capped by the greater of 50% of W-2 wages or 25% of W-2 wages plus 2.5% of UBIA of qualified property."
+            },
+            {
+              "id": "26-cfr-25-2503-2",
+              "citation": "26 CFR § 25.2503-2",
+              "title": "Gift Tax Annual Exclusion, Present Interest & Direct Tuition/Medical Transfers (IRC § 2503)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 1 (Individuals) > § 25.2503-2",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "gift tax",
+                "annual exclusion",
+                "present interest",
+                "future interest",
+                "Form 709",
+                "gift splitting",
+                "direct medical payments",
+                "direct tuition payments"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.121-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-25.2503-2",
+              "officialSourceLabel": "eCFR: 26 CFR § 25.2503-2 — Exclusions from gifts",
+              "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-gift-taxes",
+              "officialGuideLabel": "IRS.gov — Frequently Asked Questions on Gift Taxes",
+              "text": "(a) Present interest requirement (IRC § 2503(b)). The federal gift tax annual exclusion applies per donee, per calendar year, ONLY to gifts of a present interest in property (an unrestricted right to the immediate use, possession, or enjoyment of property or the income from property). A gift of a future interest does not qualify for the annual exclusion and always requires filing Form 709 regardless of dollar amount.\n(b) Unlimited exclusions for educational and medical transfers (IRC § 2503(e)). Qualified transfers paid directly to an educational organization for tuition (excluding room, board, or books) or directly to a healthcare provider for medical care on behalf of any individual are completely excluded from taxable gifts without reducing the annual exclusion or lifetime exemption.\n(c) Gift splitting (IRC § 2513). Married spouses may elect to treat gifts made by one spouse to third parties as made one-half by each spouse, doubling the effective annual exclusion per donee, provided both spouses consent and file Form 709."
+            }
+          ]
+        },
+        {
+          "id": "see-part-2-businesses",
+          "code": "SEE Part 2",
+          "title": "IRS SEE Part 2 — Businesses (S-Corps, Partnerships, § 179, Methods, E&P & § 1031)",
+          "sections": [
+            {
+              "id": "26-cfr-1-1367-1",
+              "citation": "26 CFR § 1.1367-1",
+              "title": "S Corporation Shareholder Stock Basis Ordering Rules (IRC § 1367)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.1367-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "S corporation",
+                "stock basis",
+                "ordering rules",
+                "distributions before losses",
+                "nondeductible expenses",
+                "Form 7203",
+                "suspended loss"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.752-1",
+                "26 CFR § 1.316-2"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1367-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.1367-1 — S corporation stock basis adjustments",
+              "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/s-corporations",
+              "officialGuideLabel": "IRS.gov — S Corporations Stock & Debt Basis",
+              "text": "(f) Ordering rules for S corporation stock basis (IRC § 1367). For any taxable year of an S corporation, a shareholder's stock basis must be adjusted in the following strict statutory order (and never reduced below zero):\n(1) Increased for all income items (both separately stated and nonseparately computed) and tax-exempt income;\n(2) Decreased for non-dividend distributions made to the shareholder during the taxable year;\n(3) Decreased for nondeductible, noncapital expenses (such as nondeductible fines or 50% disallowed meals) and certain oil/gas depletion deductions; and\n(4) Decreased for items of deductible loss and deduction.\nBecause distributions reduce stock basis BEFORE deductible losses, a shareholder may receive tax-free distributions while having excess ordinary losses suspended and carried forward indefinitely until basis is restored."
+            },
+            {
+              "id": "26-cfr-1-752-1",
+              "citation": "26 CFR § 1.752-1",
+              "title": "Treatment of Partnership Liabilities — Recourse vs. Nonrecourse Basis (IRC § 752)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.752-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "partnership basis",
+                "outside basis",
+                "recourse liability",
+                "nonrecourse liability",
+                "economic risk of loss",
+                "deemed contribution",
+                "deemed distribution"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.1367-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.752-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.752-1 — Treatment of partnership liabilities",
+              "officialGuideUrl": "https://www.irs.gov/publications/p541",
+              "officialGuideLabel": "IRS Publication 541 — Partnerships",
+              "text": "(a) Definitions and outside basis impact (IRC § 752). Any increase in a partner's share of partnership liabilities is treated as a deemed contribution of money by the partner to the partnership, increasing outside basis. Conversely, any decrease in a partner's share of partnership liabilities is treated as a deemed distribution of money to the partner, reducing outside basis (and triggering capital gain if the deemed distribution exceeds outside basis).\n(a)(1) Recourse liability. A partnership liability is a recourse liability to the extent that any partner or related person bears the economic risk of loss for that liability (typically allocated to general partners, not limited partners unless personally guaranteed).\n(a)(2) Nonrecourse liability. A partnership liability is a nonrecourse liability to the extent that no partner or related person bears the economic risk of loss; nonrecourse liabilities are generally shared by both general and limited partners in accordance with their profit-sharing ratios, allowing limited partners to include a share of nonrecourse debt in outside basis."
+            },
+            {
+              "id": "26-cfr-1-179-1",
+              "citation": "26 CFR § 1.179-1",
+              "title": "Section 179 Expensing Election, Business Income Limitation & Recapture (IRC § 179)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.179-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "Section 179",
+                "taxable income limitation",
+                "indefinite carryforward",
+                "50 percent business use",
+                "recapture",
+                "Form 4562",
+                "tangible personal property"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.1031(a)-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.179-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.179-1 — Election to expense depreciable assets",
+              "officialGuideUrl": "https://www.irs.gov/publications/p946",
+              "officialGuideLabel": "IRS Publication 946 — How To Depreciate Property",
+              "text": "(b) Taxable income limitation and carryforward (IRC § 179(b)(3)). The Section 179 expense deduction for any taxable year cannot exceed the taxpayer's aggregate taxable income derived from the active conduct of any trade or business during the taxable year (including W-2 wages for an individual taxpayer, computed without regard to the Section 179 deduction). Any Section 179 amount disallowed solely by the taxable income limitation is carried forward indefinitely to succeeding taxable years (unlike a dollar phase-out reduction from excess property placed in service, which is permanently lost from Section 179 and recovered through MACRS depreciation).\n(e) Recapture upon drop to 50% or less business use. If Section 179 property is not used predominantly (more than 50 percent) in a trade or business at any time before the end of the property's recovery period, the taxpayer must recapture as ordinary income the excess of the Section 179 deduction claimed over the MACRS depreciation that would have been allowable."
+            },
+            {
+              "id": "26-cfr-1-448-2",
+              "citation": "26 CFR § 1.448-2",
+              "title": "Cash Method Accounting Limitation & Gross Receipts Test (IRC § 448)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.448-2",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "cash method",
+                "accrual method",
+                "IRC 448",
+                "gross receipts test",
+                "3-year average",
+                "tax shelter",
+                "C corporation",
+                "small business taxpayer"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.179-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.448-2",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.448-2 — Limitation on use of the cash method",
+              "officialGuideUrl": "https://www.irs.gov/publications/p538",
+              "officialGuideLabel": "IRS Publication 538 — Accounting Periods and Methods",
+              "text": "(a) General limitation (IRC § 448(a)). Except as otherwise provided, a C corporation, a partnership that has a C corporation as a partner, or a tax shelter may not compute taxable income under the cash receipts and disbursements method of accounting.\n(b) Small business taxpayer exception (IRC § 448(c)). A C corporation or partnership with a C corporation partner may use the cash method if it is not a tax shelter and meets the Section 448(c) gross receipts test: its average annual gross receipts for the 3-taxable-year period ending with the taxable year immediately preceding the current taxable year do not exceed the inflation-adjusted threshold ($25 million base indexed annually).\n(c) Absolute bar for tax shelters. A tax shelter (including a syndicate where more than 35% of losses are allocated to limited partners or limited entrepreneurs) is strictly prohibited from using the cash method regardless of how low its annual gross receipts are."
+            },
+            {
+              "id": "26-cfr-1-316-2",
+              "citation": "26 CFR § 1.316-2",
+              "title": "C Corporation Distributions — Current E&P, Accumulated E&P & Return of Capital (IRC § 301 / § 316)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.316-2",
+              "examFrequency": "Critical",
+              "keywords": [
+                "earnings and profits",
+                "current E&P",
+                "accumulated E&P",
+                "dividend",
+                "return of capital",
+                "capital gain",
+                "nimble dividend",
+                "C corporation"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.1367-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.316-2",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.316-2 — Sources of corporate distributions (E&P)",
+              "officialGuideUrl": "https://www.irs.gov/publications/p542",
+              "officialGuideLabel": "IRS Publication 542 — Corporations",
+              "text": "(a) Ordering of C corporation distributions (IRC § 301(c) & § 316). Every corporate distribution to shareholders with respect to stock is treated in the following strict statutory hierarchy:\n(1) First, as a taxable dividend to the extent of Current Earnings and Profits (CEP), allocated ratably across distributions made during the year — even if the corporation has a large negative Accumulated Earnings and Profits (AEP) deficit (the nimble dividend rule);\n(2) Second, as a taxable dividend to the extent of positive Accumulated Earnings and Profits (AEP), applied chronologically;\n(3) Third, as a nontaxable return of capital reducing the shareholder's adjusted stock basis down to zero; and\n(4) Fourth, any remaining excess above stock basis as capital gain from the sale or exchange of property."
+            },
+            {
+              "id": "26-cfr-1-1031a-1",
+              "citation": "26 CFR § 1.1031(a)-1",
+              "title": "Like-Kind Exchanges of Real Property — 45/180-Day & Boot Rules (IRC § 1031)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 2 (Businesses) > § 1.1031(a)-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "1031 exchange",
+                "real property only",
+                "45 days",
+                "180 days",
+                "boot",
+                "recognized gain",
+                "qualified intermediary",
+                "inventory excluded"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.121-1",
+                "26 CFR § 1.179-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1031(a)-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.1031(a)-1 — Like-kind exchanges of real property",
+              "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips",
+              "officialGuideLabel": "IRS.gov — Like-Kind Exchanges (Real Estate Tax Tips)",
+              "text": "(a) Real property limitation (Post-TCJA IRC § 1031). Nonrecognition of gain or loss under Section 1031 applies strictly to exchanges of real property held for productive use in a trade or business or for investment for like-kind real property. Personal property (such as machinery, vehicles, artwork, or cryptocurrency), inventory, stocks, bonds, and partnership interests do NOT qualify for Section 1031 deferral.\n(b) Deferred exchange deadlines (IRC § 1031(a)(3)). In a deferred exchange, replacement real property must be (1) identified in writing within 45 calendar days after the transfer of the relinquished property, and (2) received by the earlier of 180 calendar days after the transfer or the due date (including extensions) of the taxpayer's return for that year.\n(c) Boot recognition rule. If the taxpayer receives cash or other non-like-kind property (boot, including net mortgage relief), gain is recognized to the extent of the LESSER of realized gain or the fair market value of net boot received; losses are never recognized in a Section 1031 exchange."
+            }
+          ]
+        },
+        {
+          "id": "see-part-3-procedures",
+          "code": "SEE Part 3 (26 CFR)",
+          "title": "IRS SEE Part 3 — Representation, Statutes of Limitation, CDP & Penalties",
+          "sections": [
+            {
+              "id": "26-cfr-601-504",
+              "citation": "26 CFR § 601.504",
+              "title": "Power of Attorney (Form 2848) vs. Tax Information Authorization (Form 8821)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 3 (Representation) > § 601.504",
+              "examFrequency": "Critical",
+              "keywords": [
+                "Form 2848",
+                "Form 8821",
+                "power of attorney",
+                "representation",
+                "CAF",
+                "advocate",
+                "receive confidential tax information",
+                "enrolled agent"
+              ],
+              "crossRefs": [
+                "31 CFR § 10.20",
+                "31 CFR § 10.6"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-601.504",
+              "officialSourceLabel": "eCFR: 26 CFR § 601.504 — Requirements for filing power of attorney",
+              "officialGuideUrl": "https://www.irs.gov/forms-pubs/about-form-2848",
+              "officialGuideLabel": "IRS.gov — About Form 2848 (Power of Attorney)",
+              "text": "(a) Power of Attorney required for representation (Form 2848). A Form 2848 (Power of Attorney and Declaration of Representative) is required when a taxpayer authorizes a recognized representative (such as an attorney, CPA, or Enrolled Agent) to represent and advocate for the taxpayer before the IRS, execute waivers or closing agreements, receive notices, or sign a return when specifically authorized.\n(b) Tax Information Authorization distinction (Form 8821). By contrast, Form 8821 authorizes any designated individual, corporation, firm, or organization ONLY to inspect and receive confidential tax information for the specified tax matters and periods. Form 8821 does NOT authorize the appointee to advocate the taxpayer's position, execute waivers, or otherwise represent the taxpayer before the IRS."
+            },
+            {
+              "id": "26-cfr-301-6501e-1",
+              "citation": "26 CFR § 301.6501(e)-1",
+              "title": "Statute of Limitations on Assessment — 3-Year General vs. 6-Year >25% Omission (IRC § 6501)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 3 (Procedures) > § 301.6501(e)-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "statute of limitations",
+                "3 years",
+                "6 years",
+                "25 percent omission",
+                "gross income",
+                "fraud",
+                "no return filed",
+                "IRC 6501"
+              ],
+              "crossRefs": [
+                "26 CFR § 1.6662-3",
+                "26 CFR § 301.6330-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-301.6501(e)-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 301.6501(e)-1 — Omission from return (6-year period)",
+              "officialGuideUrl": "https://www.irs.gov/publications/p556",
+              "officialGuideLabel": "IRS Publication 556 — Examination of Returns & Limitations",
+              "text": "(a) General 3-year and extended 6-year assessment periods (IRC § 6501). Generally, the IRS must assess tax within 3 years after the later of the date the return was actually filed or the original due date of the return.\n(a)(1) Substantial omission of gross income (6-year statute). If a taxpayer omits from gross income an amount properly includible therein that is in excess of 25 percent of the amount of gross income stated in the return, the tax may be assessed at any time within 6 years after the return was filed. Overstating deductions (without omitting gross income >25%) does NOT trigger the 6-year statute.\n(c) Unlimited statute of limitations. In the case of a false or fraudulent return with the intent to evade tax, or failure to file a return, the tax may be assessed at any time (no statute of limitations runs)."
+            },
+            {
+              "id": "26-cfr-301-6330-1",
+              "citation": "26 CFR § 301.6330-1",
+              "title": "Collection Due Process (CDP) Hearing Request Within 30 Days of Final Levy Notice (IRC § 6330)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 3 (Collections) > § 301.6330-1",
+              "examFrequency": "Critical",
+              "keywords": [
+                "Collection Due Process",
+                "CDP hearing",
+                "Form 12153",
+                "30 days",
+                "Final Notice of Intent to Levy",
+                "Tax Court",
+                "equivalent hearing",
+                "levy suspended"
+              ],
+              "crossRefs": [
+                "26 CFR § 301.6501(e)-1",
+                "26 CFR § 601.504"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-301.6330-1",
+              "officialSourceLabel": "eCFR: 26 CFR § 301.6330-1 — Notice and hearing prior to levy (CDP)",
+              "officialGuideUrl": "https://www.ecfr.gov/current/title-26/section-301.6320-1",
+              "officialGuideLabel": "eCFR: 26 CFR § 301.6320-1 — Hearing upon Notice of Federal Tax Lien",
+              "text": "(b) Right to a CDP hearing (IRC § 6330). Before the IRS may levy on any property or right to property, the IRS must notify the taxpayer in writing of the right to request a Collection Due Process (CDP) hearing before the Independent Office of Appeals. The taxpayer must submit a written request (Form 12153) within 30 calendar days beginning on the day after the date of the Final Notice of Intent to Levy.\n(e) Suspension of levy and Tax Court appeal rights. A timely CDP hearing request generally suspends IRS levy action during the hearing and preserves the taxpayer's statutory right to petition the U.S. Tax Court within 30 days of an adverse Notice of Determination. A request filed after 30 days (within 1 year) qualifies only for an Equivalent Hearing, which does NOT preserve Tax Court judicial review rights."
+            },
+            {
+              "id": "26-cfr-1-6695-2",
+              "citation": "26 CFR § 1.6695-2",
+              "title": "Paid Preparer Due Diligence Requirements & Form 8867 (IRC § 6695(g))",
+              "breadcrumb": "26 CFR / IRC > SEE Part 3 (Penalties) > § 1.6695-2",
+              "examFrequency": "Critical",
+              "keywords": [
+                "Form 8867",
+                "due diligence",
+                "EITC",
+                "Child Tax Credit",
+                "AOTC",
+                "Head of Household",
+                "3 years retention",
+                "per failure penalty"
+              ],
+              "crossRefs": [
+                "31 CFR § 10.22",
+                "31 CFR § 10.34"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.6695-2",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.6695-2 — Paid preparer due diligence requirements",
+              "officialGuideUrl": "https://www.irs.gov/forms-pubs/about-form-8867",
+              "officialGuideLabel": "IRS.gov — About Form 8867 (Due Diligence Checklist)",
+              "text": "(a) Covered credits and filing status (IRC § 6695(g)). A paid tax return preparer must satisfy four strict due diligence requirements (completion and submission of Form 8867, computation of credit/status, knowledge requirement with reasonable inquiries, and 3-year record retention) for every return claiming any of four benefits: (1) Earned Income Tax Credit (EITC), (2) Child Tax Credit / Additional Child Tax Credit / Credit for Other Dependents (CTC/ACTC/ODC), (3) American Opportunity Tax Credit (AOTC), or (4) Head of Household (HOH) filing status.\n(b)(4) Record retention and per-failure penalty stacking. The preparer must retain Form 8867, worksheets, and copies of client-provided reliance documents for 3 years from the later of the return due date or filing date. Penalties under IRC § 6695(g) are assessed separately for EACH covered benefit on the same return (meaning up to four separate penalties on a single return)."
+            },
+            {
+              "id": "26-cfr-1-6662-3",
+              "citation": "26 CFR § 1.6662-3",
+              "title": "20% Accuracy-Related Penalty — Negligence & Substantial Understatement (IRC § 6662)",
+              "breadcrumb": "26 CFR / IRC > SEE Part 3 (Penalties) > § 1.6662-3",
+              "examFrequency": "High Yield",
+              "keywords": [
+                "accuracy-related penalty",
+                "20 percent",
+                "negligence",
+                "substantial understatement",
+                "10 percent or 5,000",
+                "reasonable cause",
+                "Form 8275"
+              ],
+              "crossRefs": [
+                "31 CFR § 10.34",
+                "26 CFR § 301.6501(e)-1"
+              ],
+              "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.6662-3",
+              "officialSourceLabel": "eCFR: 26 CFR § 1.6662-3 — Negligence or disregard of rules",
+              "officialGuideUrl": "https://www.irs.gov/payments/accuracy-related-penalty",
+              "officialGuideLabel": "IRS.gov — Accuracy-Related Penalty (IRC § 6662)",
+              "text": "(a) General 20% accuracy-related penalty (IRC § 6662). A 20 percent penalty applies to the portion of any underpayment of tax attributable to negligence or disregard of rules or regulations, or to any substantial understatement of income tax.\n(b) Substantial understatement threshold for individuals (IRC § 6662(d)). For an individual taxpayer, an understatement of income tax is substantial if it exceeds the GREATER of 10 percent of the tax required to be shown on the return or $5,000 (5 percent or $5,000 if claiming the Section 199A QBI deduction).\n(c) Defenses and non-stacking. Under IRC § 6664(c), no accuracy-related penalty applies to any portion of an underpayment where the taxpayer acted with reasonable cause and in good faith. In addition, an understatement is reduced by items supported by substantial authority or by reasonable basis coupled with adequate disclosure (Form 8275), and accuracy-related penalties under § 6662 do not stack on the same portion of an underpayment."
             }
           ]
         }
@@ -2278,9 +2816,9 @@
     {
       "id": "CBLE-Q25",
       "number": 25,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] During an IRS examination of client Horizon Logistics Inc., an IRS Revenue Agent makes a proper and lawful written request to Enrolled Agent Thomas Greene for Horizon's warehouse inventory ledgers from two years ago. Greene does not have the inventory ledgers in his possession, and Horizon's current president informs Greene that the ledgers were retained by Horizon's former outside bookkeeper, Carla Moss, after her contract ended. None of the records are legally privileged. Under Treasury Department Circular 230 (31 CFR § 10.20), what are Enrolled Agent Greene's exact obligations regarding the Revenue Agent's request?",
@@ -2325,14 +2863,19 @@
           "D": "Submitting fabricated or undisclosed reconstructions violates due diligence under § 10.22 and § 10.20.",
           "E": "Lack of possession of a third-party record does not require or justify withdrawal from representation."
         }
-      }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.20",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.20 — Information to be furnished",
+      "officialGuideUrl": "https://www.irs.gov/publications/p947",
+      "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
     },
     {
       "id": "CBLE-Q26",
       "number": 26,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Sarah Jenkins is retained by a new business client, Oakridge Landscaping LLC, to prepare its current-year federal income tax return. While reviewing the prior year's tax return (which was prepared by a different accountant) alongside Oakridge's general ledger, Jenkins discovers that the client omitted $140,000 of taxable cash landscaping receipts from the prior year's Schedule C. Under Treasury Department Circular 230 (31 CFR § 10.21), what are Jenkins' exact legal obligations upon discovering the client's prior-year omission?",
@@ -2377,14 +2920,19 @@
           "D": "31 CFR § 10.21 applies whenever a retained practitioner discovers a client's error or omission on any submitted return, even if another preparer signed the prior-year return.",
           "E": "Circular 230 § 10.21 does not mandate reporting the prior preparer within 15 days or impounding client records (in fact, § 10.28 requires returning client records promptly upon request)."
         }
-      }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.21",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.21 — Knowledge of client omission",
+      "officialGuideUrl": "https://www.irs.gov/publications/p947",
+      "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
     },
     {
       "id": "CBLE-Q27",
       "number": 27,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Elena Brooks manages a busy tax practice and delegates the depreciation schedule calculations for a commercial real estate client's Form 1065 partnership return to a junior staff accountant in her firm, resulting in an inadvertent computational misstatement on the return submitted to the IRS. Under 31 CFR § 10.22(a) and (b), in what three areas must a practitioner exercise due diligence, and under what exact circumstances will Brooks be presumed to have exercised due diligence when relying on the work product of another person?",
@@ -2429,14 +2977,19 @@
           "D": "Incorrect because blind delegation without reasonable care in engaging, supervising, training, and evaluating the person forfeits the § 10.22(b) safe harbor.",
           "E": "Incorrect because § 10.22(b) applies to reliance on the work product of 'another person' (including staff accountants or appraisers) when reasonable care is used, not solely co-signing attorneys or CPAs."
         }
-      }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.22",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.22 — Diligence as to accuracy",
+      "officialGuideUrl": "https://www.irs.gov/publications/p947",
+      "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
     },
     {
       "id": "CBLE-Q28",
       "number": 28,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Victor Alvarez proposes three fee arrangements to three different prospective clients:\n• Client A: A fee equal to 20% of the federal income tax refund shown on Client A's original Form 1040 individual income tax return that Alvarez will prepare and file;\n• Client B: A fee equal to 25% of any tax deficiency reduction achieved by Alvarez in representing Client B during an active IRS audit (examination) of Client B's prior-year original Form 1120 corporate return;\n• Client C: A fee equal to 30% of any abatement obtained on a claim for refund filed solely in connection with the determination of statutory interest and penalties assessed by the IRS.\n\nUnder Treasury Department Circular 230 (31 CFR § 10.27), which of these contingent fee arrangements are legally permissible and which are prohibited?",
@@ -2481,14 +3034,19 @@
           "D": "Reverses the rule and exceptions of 31 CFR § 10.27(b).",
           "E": "Incorrect because § 10.27(b)(2), (3), and (4) permit contingent fees in IRS examinations, penalty/interest claims, and any judicial proceeding under the IRC."
         }
-      }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.27",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.27 — Fees (Contingent fee restrictions)",
+      "officialGuideUrl": "https://www.irs.gov/publications/p947",
+      "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
     },
     {
       "id": "CBLE-Q29",
       "number": 29,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Diana Cho is asked to represent two former business partners, Alex and Jordan, in an IRS audit concerning the allocation of partnership losses between them—a matter in which Alex's tax position is directly adverse to Jordan's tax position. Cho reasonably believes that she can provide competent and diligent representation to both Alex and Jordan, and the dual representation is not prohibited by law. Both Alex and Jordan orally agree to waive the conflict of interest during a meeting on June 1. Under Treasury Department Circular 230 (31 CFR § 10.29), what written confirmation deadline and record-retention period must Cho satisfy to represent both clients legally?",
@@ -2533,14 +3091,19 @@
           "D": "Incorrect because § 10.29(b) explicitly permits waiving a conflict of interest when all three conditions in (b)(1)–(3) are satisfied.",
           "E": "Incorrect because the written confirmation deadline is 30 days (not 90 days) and the retention period is 36 months (3 years) from the conclusion of the representation."
         }
-      }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.29",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.29 — Conflicting interests",
+      "officialGuideUrl": "https://www.irs.gov/publications/p947",
+      "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
     },
     {
       "id": "CBLE-Q30",
       "number": 30,
-      "suite": "EA",
+      "suite": "EA_SEE3",
       "track": "IRS-EA",
-      "category": "IRS Circular 230 (31 CFR Part 10)",
+      "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
       "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Marcus Vance is preparing an individual federal income tax return for a client who wants to claim an aggressive business deduction that is NOT a tax shelter or reportable transaction. After researching the Internal Revenue Code, Treasury regulations, and Tax Court precedent, Vance concludes that the deduction has approximately a 25% likelihood of being sustained on its merits—meaning it satisfies the 'Reasonable Basis' standard (~20% or higher) but falls short of 'Substantial Authority' (~40% or higher). In addition, the client hands Vance a handwritten summary of travel expenses that directly contradicts the client's bank statements. Under 31 CFR § 10.34(a), (c), and (d), under what conditions may Vance sign the return containing the deduction, and how must Vance handle the contradictory travel expense summary?",
@@ -2584,6 +3147,1037 @@
           "C": "Incorrect because the 'More Likely Than Not' (>50%) standard applies only to tax shelters and reportable transactions, not ordinary business deductions.",
           "D": "Incorrect because a client waiver cannot override Circular 230 § 10.34 standards, and § 10.34(d) does not require auditing unimpeached client figures that appear consistent and complete.",
           "E": "Incorrect because neither a 75% certainty threshold nor reporting a client to OPR exists under Circular 230 § 10.34."
+        }
+      },
+      "seePart": "SEE Part 3",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.34",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.34 — Standards for tax returns and documents",
+      "officialGuideUrl": "https://www.ecfr.gov/current/title-26/section-1.6694-2",
+      "officialGuideLabel": "eCFR: 26 CFR § 1.6694-2 — Preparer understatement standards"
+    },
+    {
+      "id": "EA-SEE1-Q01",
+      "number": 31,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — Filing Status (IRC § 2(b))",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Maya is unmarried at year-end and lives alone in a rental apartment in Seattle. Her widowed mother lives independently in a separate assisted-living apartment in Portland. During the entire tax year, Maya pays 70% of the cost of maintaining her mother’s apartment and properly claims her mother as a qualifying relative dependent. Maya has no other dependents.\n\nUnder IRC § 2(b) and 26 CFR § 1.2-2, what is the most advantageous filing status Maya may claim?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Single, because a qualifying person must live in the taxpayer’s own home for more than half the year to claim Head of Household."
+        },
+        {
+          "letter": "B",
+          "text": "Head of Household, because a dependent parent does not have to live in the taxpayer’s own home when the taxpayer pays more than half the cost of maintaining the parent’s separate household for the entire year."
+        },
+        {
+          "letter": "C",
+          "text": "Qualifying Surviving Spouse, because Maya supports a widowed parent."
+        },
+        {
+          "letter": "D",
+          "text": "Head of Household only if Maya’s mother lives with Maya for at least 6 months during the calendar year."
+        },
+        {
+          "letter": "E",
+          "text": "Married Filing Separately, because supporting a parent in a separate residence triggers separate-household allocation."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-2-2",
+      "targetCitation": "26 CFR § 1.2-2(b)(2) (IRC § 2(b) — Head of Household Parent Exception)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.2-2",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.2-2 — Head of Household rules",
+      "officialGuideUrl": "https://www.irs.gov/publications/p501",
+      "officialGuideLabel": "IRS Publication 501 — Filing Status",
+      "goldenQuote": "even if the parent does not live in the taxpayer's own home, provided the taxpayer pays more than half the cost of keeping up the parent's separate household for the entire year.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 1.2-2(b)(2) (Special rule for a dependent parent)",
+      "socraticHints": [
+        "This is a classic IRS SEE Part 1 filing status trap testing the residency exception for dependent parents.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 1.2-2 (Head of Household).",
+        "Read paragraph (b)(2): unlike other dependents, a dependent parent need NOT live with the taxpayer if the taxpayer pays >50% of maintaining the parent’s separate home all year."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 2(b)(1)(B) and 26 CFR § 1.2-2(b)(2), an unmarried taxpayer may claim Head of Household status based on a dependent parent even when the parent lives in a separate residence, provided the taxpayer pays more than half the cost of keeping up the parent’s main home for the entire year and can claim the parent as a dependent.",
+        "distractors": {
+          "A": "Incorrect: The same-household residency rule has a statutory exception specifically for a dependent father or mother under IRC § 2(b)(1)(B).",
+          "B": "CORRECT: Maya is unmarried, properly claims her mother as a dependent, and pays 70% (>50%) of maintaining her mother’s separate home all year.",
+          "C": "Incorrect: Qualifying Surviving Spouse applies only for two tax years after the death of the taxpayer’s own spouse with a dependent child.",
+          "D": "Incorrect: No 6-month co-residency is required for a dependent parent living in a separate home funded >50% by the taxpayer.",
+          "E": "Incorrect: Married Filing Separately is unavailable to an unmarried taxpayer."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE1-Q02",
+      "number": 32,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — Dependents (IRC § 152)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Daniel provided 75% of the total financial support for his 29-year-old unrelated friend, Owen, whose total gross income for the year was $2,100 (below the qualifying relative gross income limit). Owen is a U.S. citizen, files no joint return, and lived in Daniel’s home from February 1 through December 31 (11 months) before moving in from another city.\n\nUnder IRC § 152(d) and 26 CFR § 1.152-1, may Daniel claim Owen as a qualifying relative dependent?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Yes, because living together for more than half the year (over 6 months) satisfies the residency test for all dependents."
+        },
+        {
+          "letter": "B",
+          "text": "Yes, because Daniel provided more than 50% of Owen’s support and Owen’s gross income was below the statutory limit."
+        },
+        {
+          "letter": "C",
+          "text": "No, because an unrelated individual must live with the taxpayer as a member of the household for the entire taxable year (all 12 months) to satisfy the member-of-household test."
+        },
+        {
+          "letter": "D",
+          "text": "No, because an individual over age 24 can never be claimed as a dependent unless permanently and totally disabled."
+        },
+        {
+          "letter": "E",
+          "text": "Yes, provided Owen signs Form 8332 releasing his personal dependency claim to Daniel."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-1-152-1",
+      "targetCitation": "26 CFR § 1.152-1(b) (IRC § 152(d)(2)(H) — Member of Household Test)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.152-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.152-1 — Definition of a dependent",
+      "officialGuideUrl": "https://www.irs.gov/publications/p501",
+      "officialGuideLabel": "IRS Publication 501 — Dependents & Filing Information",
+      "goldenQuote": "A non-relative (such as an unrelated friend) can qualify as a qualifying relative only if the individual lived with the taxpayer as a member of the household for the entire taxable year (all 12 months)",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 1.152-1(b) (Qualifying relative tests)",
+      "socraticHints": [
+        "Separate the rules for a Qualifying Child (more than half the year) from an unrelated Qualifying Relative.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 1.152-1(b).",
+        "An unrelated friend must live in the taxpayer’s household for the ENTIRE taxable year (January 1 through December 31); 11 months fails the test."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 152(d)(2)(H) and 26 CFR § 1.152-1(b), an individual who does not bear a specified family relationship to the taxpayer can be a qualifying relative only if the individual has the same principal place of abode as the taxpayer and is a member of the taxpayer’s household for the ENTIRE taxable year. Living together for 11 months (starting February 1) disqualifies Owen.",
+        "distractors": {
+          "A": "Incorrect: The more-than-half-the-year residency test applies to a qualifying child, not an unrelated qualifying relative.",
+          "B": "Incorrect: Support and gross income are necessary, but every qualifying relative test (including the full-year household test for non-relatives) must be satisfied.",
+          "C": "CORRECT: Non-relatives must be members of the taxpayer’s household for the entire calendar year (all 12 months).",
+          "D": "Incorrect: There is no age limit for a qualifying relative; the age 19/24 cap applies only to qualifying children.",
+          "E": "Incorrect: Form 8332 is used by a custodial parent to release a child’s dependency claim to a noncustodial parent, not for unrelated friends."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE1-Q03",
+      "number": 33,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — Sale of Principal Residence (IRC § 121)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Elena, a single taxpayer, purchased her home in 2018 for $300,000 and lived in it as her principal residence until selling it in 2025 for $480,000 (net of selling expenses). During ownership, she maintained a qualified home office and properly deducted $18,000 of depreciation after May 6, 1997, reducing her adjusted basis to $282,000 and producing a total realized gain of $198,000.\n\nUnder IRC § 121 and 26 CFR § 1.121-1, how much of Elena’s $198,000 gain is excludable and how much must be recognized?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Exclude all $198,000; recognize $0 because total realized gain is below the $250,000 single exclusion limit."
+        },
+        {
+          "letter": "B",
+          "text": "Exclude $180,000 under IRC § 121; recognize $18,000 of unrecaptured Section 1250 gain attributable to post-May 6, 1997 depreciation."
+        },
+        {
+          "letter": "C",
+          "text": "Exclude $0; recognize all $198,000 because claiming a home office disqualifies the entire home from IRC § 121."
+        },
+        {
+          "letter": "D",
+          "text": "Exclude $180,000; recognize $18,000 as short-term capital gain taxed at 0%."
+        },
+        {
+          "letter": "E",
+          "text": "Exclude $162,000; recognize $36,000 by doubling depreciation recapture for mixed-use residences."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-121-1",
+      "targetCitation": "26 CFR § 1.121-1(d) (IRC § 121(d)(6) — Depreciation Recapture)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.121-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.121-1 — Principal residence gain exclusion",
+      "officialGuideUrl": "https://www.irs.gov/publications/p523",
+      "officialGuideLabel": "IRS Publication 523 — Selling Your Home",
+      "goldenQuote": "The Section 121 exclusion does not apply to so much of the gain from the sale of a principal residence as does not exceed the portion of the depreciation adjustments attributable to periods after May 6, 1997",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 1.121-1(d) (Depreciation recapture limitation)",
+      "socraticHints": [
+        "Check how post-May 6, 1997 home office depreciation interacts with the $250,000 IRC § 121 exclusion.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 1.121-1(d).",
+        "Total gain is $198,000, but the $18,000 depreciation portion cannot be excluded under § 121(d)(6) and is taxed as unrecaptured § 1250 gain; the remaining $180,000 is excluded."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 121(d)(6) and 26 CFR § 1.121-1(d), gain attributable to depreciation allowed or allowable after May 6, 1997 cannot be excluded under Section 121. Out of Elena’s $198,000 realized gain, $18,000 must be recognized as unrecaptured Section 1250 gain (max 25% rate), while the remaining $180,000 qualifies for exclusion under her $250,000 single limit.",
+        "distractors": {
+          "A": "Incorrect: Post-May 6, 1997 depreciation recapture is carved out of the § 121 exclusion even when total gain is under $250,000.",
+          "B": "CORRECT: $18,000 of post-May 6, 1997 depreciation is recognized as unrecaptured § 1250 gain, and $180,000 is excluded.",
+          "C": "Incorrect: A home office within the same dwelling unit does not forfeit the § 121 exclusion on the remaining appreciation.",
+          "D": "Incorrect: Unrecaptured § 1250 gain is long-term capital gain subject to a maximum 25% rate, not 0% short-term gain.",
+          "E": "Incorrect: There is no rule doubling depreciation recapture."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE1-Q04",
+      "number": 34,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — Capital Gains & Wash Sales (IRC § 1091)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "On November 10, investor Marcus sold 100 shares of Apex Corp. common stock for $14,000 that he had purchased two years earlier for $20,000 (a $6,000 realized loss). On November 28 (18 days later), Marcus purchased 100 substantially identical shares of Apex Corp. common stock in the same taxable brokerage account for $15,200.\n\nUnder IRC § 1091 and 26 CFR § 1.1091-1, what is Marcus’s currently deductible loss and his adjusted tax basis in the replacement 100 shares?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Deductible loss: $6,000; replacement basis: $15,200."
+        },
+        {
+          "letter": "B",
+          "text": "Deductible loss: $0; replacement basis: $15,200 (the $6,000 loss is permanently lost)."
+        },
+        {
+          "letter": "C",
+          "text": "Deductible loss: $0; replacement basis: $21,200 (and the prior holding period tacks onto the replacement shares)."
+        },
+        {
+          "letter": "D",
+          "text": "Deductible loss: $3,000 (capital loss limit); replacement basis: $18,200."
+        },
+        {
+          "letter": "E",
+          "text": "Deductible loss: $0; replacement basis: $20,000 (cost of the original shares only)."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-1-1091-1",
+      "targetCitation": "26 CFR § 1.1091-1(a) & (f) (IRC § 1091 — Wash Sale Loss & Basis)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1091-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.1091-1 — Wash sale loss disallowance",
+      "officialGuideUrl": "https://www.irs.gov/publications/p550",
+      "officialGuideLabel": "IRS Publication 550 — Investment Income and Expenses",
+      "goldenQuote": "The disallowed wash sale loss is not permanently forfeited in a taxable account; instead, it is added to the basis of the newly acquired replacement stock or securities (IRC § 1091(d))",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 1.1091-1 (Losses from wash sales)",
+      "socraticHints": [
+        "Check whether acquiring substantially identical stock 18 days after a loss sale falls within the 30-day before/after wash sale window.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 1.1091-1.",
+        "Add the $6,000 disallowed loss to the $15,200 replacement purchase price = $21,200 basis, with tacked holding period."
+      ],
+      "explanation": {
+        "correctReasoning": "Because Marcus repurchased 100 substantially identical shares within 30 days after the loss sale (18 days later), IRC § 1091 disallows the entire $6,000 loss currently. Under IRC § 1091(d) and 26 CFR § 1.1091-1(f), the $6,000 disallowed loss is added to the $15,200 purchase price of the new shares ($15,200 + $6,000 = $21,200 adjusted basis), and the original 2-year holding period tacks onto the replacement shares.",
+        "distractors": {
+          "A": "Incorrect: Reacquiring substantially identical stock within 30 days triggers the wash sale disallowance.",
+          "B": "Incorrect: In a taxable brokerage account, the disallowed wash sale loss is deferred into replacement basis, not permanently forfeited (unlike an IRA wash sale under Rev. Rul. 2008-5).",
+          "C": "CORRECT: $0 current loss, $21,200 replacement basis ($15,200 + $6,000), and tacked holding period.",
+          "D": "Incorrect: The $3,000 net capital loss deduction applies only to allowed losses, not disallowed wash sales.",
+          "E": "Incorrect: Replacement basis equals new cost ($15,200) plus disallowed loss ($6,000) = $21,200, not the original $20,000 cost."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE1-Q05",
+      "number": 35,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — QBI Deduction (IRC § 199A)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Priya is a high-income single taxpayer whose taxable income before the Section 199A deduction is well above the upper phase-in ceiling for IRC § 199A. She operates two separate domestic Schedule C businesses, each paying $0 in W-2 wages and owning $0 in depreciable property (UBIA): (1) an accounting & tax consulting practice (an SSTB), and (2) an independent structural engineering firm.\n\nUnder IRC § 199A and 26 CFR § 1.199A-1, which statement accurately describes her QBI deduction eligibility above the upper phase-in ceiling?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Both businesses are fully excluded as Specified Service Trades or Businesses (SSTBs)."
+        },
+        {
+          "letter": "B",
+          "text": "The accounting practice is completely excluded as an SSTB, and although engineering is excluded from the SSTB list, its QBI deduction is still limited to $0 because it has $0 W-2 wages and $0 UBIA."
+        },
+        {
+          "letter": "C",
+          "text": "The engineering firm receives the full 20% QBI deduction because engineering is exempt from both SSTB rules and the W-2 wage/UBIA limits."
+        },
+        {
+          "letter": "D",
+          "text": "Both businesses qualify for a 10% reduced QBI deduction above the phase-in ceiling."
+        },
+        {
+          "letter": "E",
+          "text": "Priya can elect to treat her W-2 salary from an unrelated C corporation employer as QBI to satisfy the wage limitation."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-199a-1",
+      "targetCitation": "26 CFR § 1.199A-1(d) (IRC § 199A — SSTB & W-2/UBIA Ceiling)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.199A-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.199A-1 — QBI deduction operational rules",
+      "officialGuideUrl": "https://www.irs.gov/publications/p17",
+      "officialGuideLabel": "IRS Publication 17 — Your Federal Income Tax",
+      "goldenQuote": "QBI from an SSTB (such as law, accounting, consulting, health, or financial services — excluding engineering and architecture) is completely disallowed, while non-SSTB businesses are capped by the greater of 50% of W-2 wages or 25% of W-2 wages plus 2.5% of UBIA of qualified property.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 1.199A-1(d) (Threshold and SSTB phase-out)",
+      "socraticHints": [
+        "Check two separate rules above the § 199A phase-in range: (1) which professions are SSTBs vs. statutorily carved out (engineering & architecture), and (2) the W-2 wage / UBIA cap on non-SSTBs.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 1.199A-1(d).",
+        "Accounting is an SSTB ($0 above ceiling); engineering is NOT an SSTB, but above the ceiling it is still capped at max(50% W-2 wages, 25% W-2 + 2.5% UBIA) = $0."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 199A and 26 CFR § 1.199A-1(d), above the upper phase-in ceiling: (1) an accounting/consulting practice is an SSTB and receives $0 QBI deduction; (2) engineering and architecture are statutorily excluded from SSTB status, BUT a non-SSTB above the ceiling is still capped at the greater of 50% of W-2 wages or 25% of W-2 wages plus 2.5% of UBIA. With $0 W-2 wages and $0 UBIA, the engineering firm’s cap is also $0.",
+        "distractors": {
+          "A": "Incorrect: Engineering and architecture are expressly excluded from the statutory SSTB definition under IRC § 199A(d)(2)(A).",
+          "B": "CORRECT: Accounting fails as an SSTB, and engineering (a non-SSTB) hits a $0 ceiling due to $0 W-2 wages and $0 UBIA.",
+          "C": "Incorrect: Non-SSTBs above the upper threshold are still subject to the W-2 wage / UBIA limitation.",
+          "D": "Incorrect: There is no flat 10% reduced QBI rate above the phase-in range.",
+          "E": "Incorrect: Employee W-2 wages from an unrelated employer are never QBI and cannot be attributed to a Schedule C business."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE1-Q06",
+      "number": 36,
+      "suite": "EA_SEE1",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 1",
+      "category": "IRS SEE Part 1 — Gift Tax Exclusions (IRC § 2503)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "During the calendar year, grandmother Evelyn makes three separate transfers for her grandson Leo: (1) she wires $38,000 directly to Leo’s university solely for his undergraduate tuition; (2) she writes a $12,000 check directly to Leo so he can pay his off-campus apartment rent and textbooks; and (3) she transfers $5,000 into an irrevocable trust with NO present withdrawal (Crummey) rights and no income distributions until Leo turns age 35.\n\nUnder IRC § 2503 and 26 CFR § 25.2503-2, which transfer(s) require Evelyn to file Form 709 (United States Gift Tax Return)?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only the $38,000 university tuition wire, because it exceeds the annual gift tax exclusion."
+        },
+        {
+          "letter": "B",
+          "text": "Only the $5,000 irrevocable trust transfer, because a gift of a future interest never qualifies for the annual exclusion and always requires Form 709."
+        },
+        {
+          "letter": "C",
+          "text": "Both the $38,000 tuition wire and the $12,000 check, because combined transfers to Leo exceed $18,000."
+        },
+        {
+          "letter": "D",
+          "text": "None of the transfers require Form 709 because Evelyn’s total transfers are well below the lifetime unified credit."
+        },
+        {
+          "letter": "E",
+          "text": "Only the $12,000 check for rent and textbooks, because cash gifts to grandchildren are never eligible for the annual exclusion."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-25-2503-2",
+      "targetCitation": "26 CFR § 25.2503-2(a) & (b) (IRC § 2503(b) & (e) — Gift Tax Exclusions)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-25.2503-2",
+      "officialSourceLabel": "eCFR: 26 CFR § 25.2503-2 — Exclusions from gifts",
+      "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-gift-taxes",
+      "officialGuideLabel": "IRS.gov — Gift Tax FAQs",
+      "goldenQuote": "A gift of a future interest does not qualify for the annual exclusion and always requires filing Form 709 regardless of dollar amount.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 1 → § 25.2503-2 (Present interest & direct tuition rules)",
+      "socraticHints": [
+        "Evaluate each of the three transfers separately: direct tuition (IRC § 2503(e)), present-interest cash below the annual exclusion, and a future-interest trust.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 1 → § 25.2503-2.",
+        "Direct tuition to a university is unlimitedly excluded; the $12,000 check is a present interest below the annual exclusion; the $5,000 trust is a future interest requiring Form 709."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 2503(e), the $38,000 paid directly to the university for tuition is completely excluded without using any annual exclusion. The $12,000 check to Leo is a present-interest gift well below the annual exclusion. However, the $5,000 transfer to an irrevocable trust with no present withdrawal or current income right is a gift of a future interest under 26 CFR § 25.2503-2(a), which gets $0 annual exclusion and mandates filing Form 709 regardless of amount.",
+        "distractors": {
+          "A": "Incorrect: Direct tuition payments to an educational institution are 100% excluded under IRC § 2503(e) and do not require Form 709.",
+          "B": "CORRECT: Only the $5,000 future-interest trust transfer fails the annual exclusion and triggers mandatory Form 709 filing.",
+          "C": "Incorrect: Direct tuition is excluded under § 2503(e) and does not count toward the annual exclusion threshold.",
+          "D": "Incorrect: Future-interest gifts always require filing Form 709 even if $0 gift tax is due because of the lifetime exemption.",
+          "E": "Incorrect: Direct cash gifts are classic present-interest gifts eligible for the annual exclusion."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q01",
+      "number": 37,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — S Corporation Stock Basis (IRC § 1367)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "At the beginning of the year, Clara owns 100% of an S corporation (with no C corporation earnings and profits) and has an adjusted stock basis of $20,000 and $0 debt basis. During the year, the S corporation reports: (1) $10,000 of tax-exempt municipal bond interest, (2) a $25,000 cash distribution to Clara, (3) $2,000 of nondeductible fines, and (4) a $15,000 ordinary business loss.\n\nApplying the mandatory IRC § 1367 stock basis ordering rules (26 CFR § 1.1367-1(f)), how much of the $25,000 distribution is taxable capital gain and how much of the $15,000 ordinary loss can Clara deduct this year?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Taxable distribution gain: $0; deductible ordinary loss: $3,000 (with $12,000 suspended)."
+        },
+        {
+          "letter": "B",
+          "text": "Taxable distribution gain: $5,000; deductible ordinary loss: $0 (with $15,000 suspended)."
+        },
+        {
+          "letter": "C",
+          "text": "Taxable distribution gain: $12,000; deductible ordinary loss: $15,000."
+        },
+        {
+          "letter": "D",
+          "text": "Taxable distribution gain: $0; deductible ordinary loss: $5,000 (nondeductible fines are ignored until liquidation)."
+        },
+        {
+          "letter": "E",
+          "text": "Taxable distribution gain: $0; deductible ordinary loss: $15,000 (stock basis becomes negative -$12,000)."
+        }
+      ],
+      "correctOption": "A",
+      "targetSectionId": "26-cfr-1-1367-1",
+      "targetCitation": "26 CFR § 1.1367-1(f) (IRC § 1367 — S-Corp Stock Basis Ordering)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1367-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.1367-1 — S corporation stock basis ordering",
+      "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/s-corporations",
+      "officialGuideLabel": "IRS.gov — S Corporations Stock & Debt Basis",
+      "goldenQuote": "Because distributions reduce stock basis BEFORE deductible losses, a shareholder may receive tax-free distributions while having excess ordinary losses suspended and carried forward indefinitely",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.1367-1(f) (4-step basis ordering)",
+      "socraticHints": [
+        "Walk through the exact 4-step S corporation stock basis order: (1) income including tax-exempt, (2) distributions, (3) nondeductible expenses, (4) deductible losses.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.1367-1(f).",
+        "Compute step by step: $20,000 + $10,000 tax-exempt = $30,000; minus $25,000 distribution = $5,000 ($0 gain); minus $2,000 fines = $3,000; remaining $3,000 allows $3,000 loss deduction ($12,000 suspended)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 1367 and 26 CFR § 1.1367-1(f), stock basis is adjusted in strict order: Start $20,000 + Step 1 ($10,000 tax-exempt income) = $30,000. Step 2: Subtract $25,000 distribution -> $5,000 basis remaining ($0 taxable gain). Step 3: Subtract $2,000 nondeductible fines -> $3,000 basis remaining. Step 4: Deduct ordinary loss up to remaining $3,000 basis -> $3,000 deducted currently, ending stock basis $0, and $12,000 suspended loss carried forward indefinitely.",
+        "distractors": {
+          "A": "CORRECT: $20k + $10k - $25k = $5k ($0 gain), minus $2k fines = $3k basis left for deductible loss ($12k suspended).",
+          "B": "Incorrect: Tax-exempt income DOES increase S corporation stock basis in Step 1, preventing gain on the $25,000 distribution.",
+          "C": "Incorrect: Deductible losses cannot be taken before distributions; distributions reduce basis in Step 2 before losses in Step 4.",
+          "D": "Incorrect: Nondeductible expenses reduce stock basis in Step 3 before deductible losses in Step 4 (unless an explicit § 1.1367-1(g) election is made).",
+          "E": "Incorrect: Stock basis can never be reduced below zero."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q02",
+      "number": 38,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — Partnership Liabilities & Basis (IRC § 752)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Jordan becomes a 25% limited partner in Harborview LP by contributing $40,000 in cash. Jordan has no obligation to restore a negative capital account and signs no personal loan guarantees. Immediately after formation, Harborview LP borrows: (1) a $100,000 recourse bank line of credit (for which the general partner bears 100% of the economic risk of loss), and (2) a $200,000 qualified nonrecourse real estate mortgage allocated by profit-sharing ratios.\n\nUnder IRC § 752 and 26 CFR § 1.752-1, what is Jordan’s adjusted outside basis in Harborview LP?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$40,000, because limited partners can never include any partnership debt in outside basis."
+        },
+        {
+          "letter": "B",
+          "text": "$65,000 ($40,000 cash plus 25% of the $100,000 recourse bank line only)."
+        },
+        {
+          "letter": "C",
+          "text": "$90,000 ($40,000 cash plus 25% of the $200,000 nonrecourse mortgage; $0 of the recourse debt)."
+        },
+        {
+          "letter": "D",
+          "text": "$115,000 ($40,000 cash plus 25% of both the $100,000 recourse debt and $200,000 nonrecourse debt)."
+        },
+        {
+          "letter": "E",
+          "text": "$240,000 ($40,000 cash plus 100% of the $200,000 nonrecourse mortgage)."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-1-752-1",
+      "targetCitation": "26 CFR § 1.752-1(a)(1)–(2) (IRC § 752 — Partnership Recourse vs. Nonrecourse Debt)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.752-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.752-1 — Partnership liabilities",
+      "officialGuideUrl": "https://www.irs.gov/publications/p541",
+      "officialGuideLabel": "IRS Publication 541 — Partnerships",
+      "goldenQuote": "nonrecourse liabilities are generally shared by both general and limited partners in accordance with their profit-sharing ratios, allowing limited partners to include a share of nonrecourse debt in outside basis.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.752-1(a) (Recourse vs. nonrecourse liabilities)",
+      "socraticHints": [
+        "Distinguish recourse liabilities (allocated to partners bearing economic risk of loss) from nonrecourse liabilities (shared by profit ratios including limited partners).",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.752-1(a).",
+        "Jordan gets $0 of the recourse bank debt (GP bears risk) and 25% × $200,000 = $50,000 of the nonrecourse mortgage -> $40,000 + $50,000 = $90,000."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 752 and 26 CFR § 1.752-1(a), recourse liabilities are allocated exclusively to partners who bear the economic risk of loss (here, the general partner receives 100% of the $100,000 recourse line, so limited partner Jordan gets $0). Nonrecourse liabilities are allocated to both general and limited partners by profit-sharing ratios: Jordan’s 25% × $200,000 = $50,000. Total outside basis = $40,000 cash + $50,000 nonrecourse share = $90,000.",
+        "distractors": {
+          "A": "Incorrect: Unlike S corporation shareholders (who get zero basis from entity-level third-party debt), limited partners DO receive outside basis for their share of partnership nonrecourse liabilities.",
+          "B": "Incorrect: This reverses the recourse vs. nonrecourse rule; Jordan bears zero economic risk of loss on the recourse loan.",
+          "C": "CORRECT: $40,000 cash + $0 recourse + $50,000 (25% of $200,000 nonrecourse) = $90,000.",
+          "D": "Incorrect: Jordan cannot include 25% of the recourse bank loan without a guarantee or deficit restoration obligation.",
+          "E": "Incorrect: Jordan only receives his 25% profit-sharing portion ($50,000), not 100% of the mortgage."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q03",
+      "number": 39,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — Section 179 Expensing (IRC § 179)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Sole proprietor Hannah places $85,000 of qualifying 5-year machinery in service during the year and elects Section 179 expensing for the entire $85,000 (well below the statutory dollar cap and phase-out threshold). Before taking the Section 179 deduction, Hannah’s Schedule C net business profit is $52,000, and she also earns $18,000 in W-2 wages from a part-time job.\n\nUnder IRC § 179(b)(3) and 26 CFR § 1.179-1(b), what is Hannah’s maximum current-year Section 179 deduction, and what happens to any disallowed excess?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Deduct $85,000 currently, creating a $33,000 Schedule C net operating loss."
+        },
+        {
+          "letter": "B",
+          "text": "Deduct $52,000 currently (Schedule C profit only); the $33,000 excess is permanently lost."
+        },
+        {
+          "letter": "C",
+          "text": "Deduct $70,000 currently ($52,000 Schedule C profit plus $18,000 W-2 wages); the remaining $15,000 carries forward indefinitely to future tax years."
+        },
+        {
+          "letter": "D",
+          "text": "Deduct $52,000 currently; the remaining $33,000 carries back 2 years and forward 20 years."
+        },
+        {
+          "letter": "E",
+          "text": "Deduct $70,000 currently; the remaining $15,000 must be depreciated immediately using MACRS in the current year instead of carrying forward."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-1-179-1",
+      "targetCitation": "26 CFR § 1.179-1(b) (IRC § 179(b)(3) — Business Income Limit & Carryforward)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.179-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.179-1 — Section 179 expensing rules",
+      "officialGuideUrl": "https://www.irs.gov/publications/p946",
+      "officialGuideLabel": "IRS Publication 946 — How To Depreciate Property",
+      "goldenQuote": "aggregate taxable income derived from the active conduct of any trade or business during the taxable year (including W-2 wages for an individual taxpayer, computed without regard to the Section 179 deduction). Any Section 179 amount disallowed solely by the taxable income limitation is carried forward indefinitely",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.179-1(b) (Taxable income limitation & carryforward)",
+      "socraticHints": [
+        "Remember two critical IRS SEE Part 2 Section 179 rules: (1) W-2 wages count as active trade or business income for individuals, and (2) taxable-income-limited § 179 carries forward indefinitely.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.179-1(b).",
+        "Aggregate active business taxable income = $52,000 + $18,000 W-2 = $70,000 deductible now; $85,000 - $70,000 = $15,000 carried forward indefinitely."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 179(b)(3) and 26 CFR § 1.179-1(b), Section 179 cannot create a net business loss, but for an individual taxpayer, active trade or business taxable income includes W-2 wages ($52,000 Schedule C + $18,000 W-2 = $70,000). The remaining $15,000 elected under Section 179 is disallowed solely by the taxable income limit and carries forward indefinitely to future years.",
+        "distractors": {
+          "A": "Incorrect: Unlike MACRS/bonus depreciation, Section 179 cannot exceed aggregate active trade or business taxable income.",
+          "B": "Incorrect: W-2 wages ARE included in active business taxable income, and taxable-income-disallowed § 179 is carried forward, not lost.",
+          "C": "CORRECT: $70,000 ($52,000 + $18,000) is deductible now and $15,000 carries forward indefinitely.",
+          "D": "Incorrect: W-2 wages count toward the income limit, and § 179 carryforwards carry forward indefinitely (no 2-year carryback).",
+          "E": "Incorrect: Elected § 179 amounts disallowed by the business income limit carry forward as § 179 carryforward (whereas phase-out reductions from excess asset purchases recover via MACRS)."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q04",
+      "number": 40,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — Accounting Methods (IRC § 448)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Which of the following domestic business entities is STRICTLY PROHIBITED from using the cash receipts and disbursements method of accounting under IRC § 448 and 26 CFR § 1.448-2, even if its 3-year average annual gross receipts are only $1,200,000?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A C corporation retail hardware company with $1,200,000 average annual gross receipts."
+        },
+        {
+          "letter": "B",
+          "text": "A general partnership whose partners include a C corporation, with $1,200,000 average annual gross receipts."
+        },
+        {
+          "letter": "C",
+          "text": "A limited partnership syndicate that allocates 60% of its taxable losses to limited partners (a tax shelter under IRC § 448(d)(3)), with $1,200,000 average annual gross receipts."
+        },
+        {
+          "letter": "D",
+          "text": "An S corporation consulting firm with $1,200,000 average annual gross receipts."
+        },
+        {
+          "letter": "E",
+          "text": "A single-member LLC taxed as a sole proprietorship with $1,200,000 average annual gross receipts."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-1-448-2",
+      "targetCitation": "26 CFR § 1.448-2(a)–(c) (IRC § 448 — Tax Shelter Cash Method Prohibition)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.448-2",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.448-2 — Limitation on use of the cash method",
+      "officialGuideUrl": "https://www.irs.gov/publications/p538",
+      "officialGuideLabel": "IRS Publication 538 — Accounting Periods and Methods",
+      "goldenQuote": "A tax shelter (including a syndicate where more than 35% of losses are allocated to limited partners or limited entrepreneurs) is strictly prohibited from using the cash method regardless of how low its annual gross receipts are.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.448-2(c) (Absolute bar for tax shelters)",
+      "socraticHints": [
+        "Check which entity category cannot use the small business gross receipts exception under IRC § 448(c).",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.448-2.",
+        "C corporations and partnerships with C corp partners qualify for cash method under the gross receipts test, whereas tax shelters (including >35% loss syndicates) are strictly barred."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 448(a)(3) and 26 CFR § 1.448-2(c), a tax shelter — including a syndicate allocating more than 35% of its losses to limited partners or limited entrepreneurs — is categorically barred from using the cash method regardless of how low its gross receipts are. By contrast, C corporations and partnerships with C corporation partners may use the cash method when they satisfy the IRC § 448(c) small business gross receipts test.",
+        "distractors": {
+          "A": "Incorrect: A non-tax-shelter C corporation meeting the § 448(c) gross receipts test may use the cash method.",
+          "B": "Incorrect: A partnership with a C corporation partner that meets the § 448(c) gross receipts test may use the cash method.",
+          "C": "CORRECT: A tax shelter (syndicate allocating >35% of losses to limited partners) can never use the cash method, regardless of gross receipts.",
+          "D": "Incorrect: S corporations are not barred by § 448(a) unless they are tax shelters.",
+          "E": "Incorrect: Sole proprietorships are eligible for the cash method unless classified as a tax shelter."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q05",
+      "number": 41,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — Corporate Distributions & E&P (IRC § 301 / § 316)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Beacon Inc., a C corporation, begins the year with an Accumulated Earnings and Profits (AEP) deficit of ($90,000). During the current year, Beacon Inc. generates positive Current Earnings and Profits (CEP) of $30,000 and distributes $50,000 in cash to its sole shareholder, Victor, whose adjusted stock basis is $12,000.\n\nUnder IRC § 301(c), § 316, and 26 CFR § 1.316-2, how must Victor report the $50,000 cash distribution?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$0 dividend, $12,000 return of capital, and $38,000 capital gain, because combined E&P is negative (-$60,000)."
+        },
+        {
+          "letter": "B",
+          "text": "$30,000 taxable dividend, $12,000 nontaxable return of capital, and $8,000 capital gain."
+        },
+        {
+          "letter": "C",
+          "text": "$50,000 taxable dividend because every C corporation cash distribution is a dividend."
+        },
+        {
+          "letter": "D",
+          "text": "$30,000 taxable dividend and $20,000 nontaxable return of capital (stock basis becomes -$8,000)."
+        },
+        {
+          "letter": "E",
+          "text": "$12,000 taxable dividend and $38,000 return of capital."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-316-2",
+      "targetCitation": "26 CFR § 1.316-2(a) (IRC § 301(c) & § 316 — Nimble Dividend & E&P Ordering)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.316-2",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.316-2 — Sources of corporate distributions",
+      "officialGuideUrl": "https://www.irs.gov/publications/p542",
+      "officialGuideLabel": "IRS Publication 542 — Corporations",
+      "goldenQuote": "First, as a taxable dividend to the extent of Current Earnings and Profits (CEP), allocated ratably across distributions made during the year — even if the corporation has a large negative Accumulated Earnings and Profits (AEP) deficit",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.316-2(a) (Current E&P nimble dividend ordering)",
+      "socraticHints": [
+        "Never net positive Current E&P against a negative Accumulated E&P deficit when measuring dividend treatment!",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.316-2(a).",
+        "Allocate the $50,000 distribution in layers: $30,000 CEP = dividend; remaining $20,000 -> first $12,000 reduces stock basis to $0 (return of capital); final $8,000 = capital gain."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 316(a)(2) and 26 CFR § 1.316-2(a) (the nimble dividend rule), positive Current E&P ($30,000) is NOT offset by a negative Accumulated E&P deficit (-$90,000). Therefore, of the $50,000 cash distribution: (1) $30,000 is a taxable dividend from CEP; (2) the next $12,000 is a nontaxable return of capital reducing Victor’s stock basis from $12,000 to $0; and (3) the remaining $8,000 is capital gain.",
+        "distractors": {
+          "A": "Incorrect: Positive CEP is never netted against an AEP deficit before determining dividend income.",
+          "B": "CORRECT: $30,000 dividend (CEP) + $12,000 return of capital (basis) + $8,000 capital gain.",
+          "C": "Incorrect: Distributions exceeding both CEP and positive AEP are not dividends.",
+          "D": "Incorrect: Stock basis cannot drop below zero; amounts exceeding basis ($8,000) are capital gain.",
+          "E": "Incorrect: Dividend income is measured by CEP ($30,000), not stock basis ($12,000)."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE2-Q06",
+      "number": 42,
+      "suite": "EA_SEE2",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 2",
+      "category": "IRS SEE Part 2 — Like-Kind Exchanges (IRC § 1031)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Pacific Storage LLC exchanges an investment warehouse (adjusted basis $400,000, fair market value $620,000, unencumbered) for another U.S. commercial investment building (fair market value $580,000) PLUS $40,000 in cash boot. The replacement building is properly identified in writing on Day 35 and closed through a qualified intermediary on Day 140.\n\nUnder IRC § 1031 and 26 CFR § 1.1031(a)-1, what is Pacific Storage LLC’s realized gain and recognized gain on this exchange?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Realized gain: $220,000; recognized gain: $0 because both properties are U.S. commercial real estate."
+        },
+        {
+          "letter": "B",
+          "text": "Realized gain: $220,000; recognized gain: $40,000 (the lesser of realized gain or net boot received)."
+        },
+        {
+          "letter": "C",
+          "text": "Realized gain: $180,000; recognized gain: $180,000 because receiving cash boot invalidates the entire IRC § 1031 exchange."
+        },
+        {
+          "letter": "D",
+          "text": "Realized gain: $220,000; recognized gain: $220,000 because the replacement closed after Day 90."
+        },
+        {
+          "letter": "E",
+          "text": "Realized gain: $40,000; recognized gain: $40,000."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-1031a-1",
+      "targetCitation": "26 CFR § 1.1031(a)-1(b)–(c) (IRC § 1031 — 45/180-Day & Boot Rule)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.1031(a)-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.1031(a)-1 — Like-kind real property exchanges",
+      "officialGuideUrl": "https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips",
+      "officialGuideLabel": "IRS.gov — Like-Kind Exchanges Tax Tips",
+      "goldenQuote": "gain is recognized to the extent of the LESSER of realized gain or the fair market value of net boot received",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 2 → § 1.1031(a)-1(b)–(c) (Deadlines & boot recognition)",
+      "socraticHints": [
+        "First verify both deferred exchange deadlines (45 days to identify, 180 days to close) and that both assets are investment real property.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 2 → § 1.1031(a)-1.",
+        "Amount realized = $580,000 building + $40,000 cash = $620,000; minus $400,000 basis = $220,000 realized gain; recognized gain = lesser of $220,000 or $40,000 boot = $40,000."
+      ],
+      "explanation": {
+        "correctReasoning": "Both deadlines are met (identified on Day 35 <= 45 days; closed on Day 140 <= 180 days) and both properties are U.S. investment real property. Amount realized is $580,000 FMV building + $40,000 cash = $620,000; realized gain = $620,000 - $400,000 basis = $220,000. Under IRC § 1031(b) and 26 CFR § 1.1031(a)-1(c), recognized gain equals the lesser of realized gain ($220,000) or boot received ($40,000) = $40,000 (leaving $180,000 deferred).",
+        "distractors": {
+          "A": "Incorrect: Receiving cash boot triggers gain recognition up to the lesser of realized gain or boot received.",
+          "B": "CORRECT: Realized gain is $220,000 and recognized gain is limited to the $40,000 cash boot.",
+          "C": "Incorrect: Boot does not disqualify the entire § 1031 exchange; it triggers partial recognition only up to boot received.",
+          "D": "Incorrect: The replacement closing deadline is 180 calendar days (or return due date with extensions), not 90 days.",
+          "E": "Incorrect: Realized gain includes both property received and cash ($620,000 - $400,000 = $220,000), not just cash."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q01",
+      "number": 43,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — Representation Authority (26 CFR § 601.504)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Taxpayer Nora executes ONLY Form 8821 (Tax Information Authorization) naming Enrolled Agent Samuel as her appointee for Form 1040 tax year 2024. The IRS subsequently opens an office audit of Nora’s 2024 return.\n\nUnder 26 CFR § 601.504 and IRS Form 2848 / Form 8821 rules, which action is Samuel permitted to take using ONLY Form 8821?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Advocate Nora’s legal position before the IRS Revenue Agent and negotiate an audit settlement."
+        },
+        {
+          "letter": "B",
+          "text": "Inspect and receive Nora’s confidential 2024 IRS tax transcripts and account information, but NOT advocate her position or represent her before the IRS."
+        },
+        {
+          "letter": "C",
+          "text": "Execute Form 872 extending the statute of limitations on assessment for Nora’s 2024 return."
+        },
+        {
+          "letter": "D",
+          "text": "Sign a binding closing agreement (Form 906) on Nora’s behalf because Samuel holds an active Enrolled Agent credential."
+        },
+        {
+          "letter": "E",
+          "text": "File a Tax Court petition as Nora’s legal counsel without separate admission to the U.S. Tax Court."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-601-504",
+      "targetCitation": "26 CFR § 601.504(a)–(b) (Form 2848 Power of Attorney vs. Form 8821)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-601.504",
+      "officialSourceLabel": "eCFR: 26 CFR § 601.504 — Power of attorney requirements",
+      "officialGuideUrl": "https://www.irs.gov/forms-pubs/about-form-8821",
+      "officialGuideLabel": "IRS.gov — About Form 8821 (Tax Information Authorization)",
+      "goldenQuote": "Form 8821 does NOT authorize the appointee to advocate the taxpayer's position, execute waivers, or otherwise represent the taxpayer before the IRS.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 601.504 (Form 2848 vs. Form 8821)",
+      "socraticHints": [
+        "Compare the scope of Form 8821 (information access only) against Form 2848 (Power of Attorney for representation and advocacy).",
+        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 601.504.",
+        "Even an active Enrolled Agent cannot advocate, negotiate, or sign waivers for a client without a valid Form 2848 on file."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 26 CFR § 601.504, Form 8821 (Tax Information Authorization) allows the appointee strictly to inspect and receive confidential tax information for the listed matters and years. Regardless of Samuel’s active EA license, he cannot represent Nora, advocate her audit position, or sign waivers/closing agreements unless Nora signs Form 2848 (Power of Attorney).",
+        "distractors": {
+          "A": "Incorrect: Advocating a taxpayer’s position before the IRS requires Form 2848.",
+          "B": "CORRECT: Form 8821 grants information access only; representation and advocacy require Form 2848.",
+          "C": "Incorrect: Executing statute extensions (Form 872) requires a Form 2848 Power of Attorney.",
+          "D": "Incorrect: Holding an EA card grants eligibility to represent, but Form 2848 is still required for each client engagement.",
+          "E": "Incorrect: Neither Form 8821 nor Form 2848 grants authority to practice before the U.S. Tax Court without Tax Court admission."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q02",
+      "number": 44,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — Assessment Statute of Limitations (IRC § 6501)",
+      "difficulty": "Hard",
+      "targetLookupSeconds": 45,
+      "stem": "Taxpayer Owen timely filed his 2022 Form 1040 on March 10, 2023 (original due date: April 18, 2023). On the return, Owen reported $120,000 of gross income, but inadvertently omitted a $40,000 Schedule C consulting payment (no fraud). Owen did not disclose the omission anywhere on the return.\n\nUnder IRC § 6501(e) and 26 CFR § 301.6501(e)-1, what is the statutory deadline by which the IRS may assess additional tax for Owen’s 2022 return?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "March 10, 2026 (3 years from the actual early filing date)."
+        },
+        {
+          "letter": "B",
+          "text": "April 18, 2026 (3 years from the original statutory due date)."
+        },
+        {
+          "letter": "C",
+          "text": "April 18, 2029 (6 years from the original due date because the $40,000 omission exceeds 25% of the $120,000 stated gross income)."
+        },
+        {
+          "letter": "D",
+          "text": "March 10, 2029 (6 years from the early filing date)."
+        },
+        {
+          "letter": "E",
+          "text": "Unlimited (no statute of limitations applies whenever >25% of gross income is omitted)."
+        }
+      ],
+      "correctOption": "C",
+      "targetSectionId": "26-cfr-301-6501e-1",
+      "targetCitation": "26 CFR § 301.6501(e)-1(a) (IRC § 6501(e) — 6-Year >25% Omission Statute)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-301.6501(e)-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 301.6501(e)-1 — Substantial omission (6-year rule)",
+      "officialGuideUrl": "https://www.irs.gov/publications/p556",
+      "officialGuideLabel": "IRS Publication 556 — Examination of Returns & Limitations",
+      "goldenQuote": "If a taxpayer omits from gross income an amount properly includible therein that is in excess of 25 percent of the amount of gross income stated in the return, the tax may be assessed at any time within 6 years after the return was filed.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 301.6501(e)-1 (3-year vs. 6-year >25% omission)",
+      "socraticHints": [
+        "Check two rules: (1) early-filed returns are deemed filed on the original due date (April 18, 2023), and (2) compare the $40,000 omission against 25% of stated gross income ($120,000 × 25% = $30,000).",
+        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 301.6501(e)-1.",
+        "$40,000 > $30,000 (33.3% omission > 25%), triggering the 6-year statute measured from the April 18, 2023 due date -> April 18, 2029."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 6501(b)(1), an early-filed return (March 10, 2023) is deemed filed on its statutory due date (April 18, 2023). Because Owen omitted $40,000 of gross income — which exceeds 25% of his $120,000 stated gross income ($30,000 threshold) — IRC § 6501(e) and 26 CFR § 301.6501(e)-1 extend the assessment period from 3 years to 6 years, running through April 18, 2029.",
+        "distractors": {
+          "A": "Incorrect: Early returns run from the due date (not early filing date), and >25% omission extends the period to 6 years.",
+          "B": "Incorrect: The 3-year period is overridden by the 6-year substantial omission rule because $40,000 > 25% of $120,000.",
+          "C": "CORRECT: Deemed filed April 18, 2023 + 6 years (due to >25% gross income omission) = April 18, 2029.",
+          "D": "Incorrect: Under IRC § 6501(b)(1), early returns are deemed filed on the last day prescribed by law (April 18, 2023), not March 10.",
+          "E": "Incorrect: An unlimited statute applies only to fraud with intent to evade tax or failure to file, not an inadvertent >25% omission."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q03",
+      "number": 45,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — Collection Due Process (IRC § 6330)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "On May 1, the IRS sends taxpayer Rebecca a Final Notice of Intent to Levy and Notice of Your Right to a Hearing (Letter 1058 / LT11). Rebecca asks her Enrolled Agent to request a Collection Due Process (CDP) hearing on Form 12153 to propose an installment agreement and preserve her right to petition the U.S. Tax Court if Appeals rules against her.\n\nUnder IRC § 6330 and 26 CFR § 301.6330-1, within how many days must Form 12153 be submitted to preserve Tax Court judicial review, and what happens if she files it 60 days later instead?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Within 90 calendar days; filing after 90 days forfeits all IRS Appeals review."
+        },
+        {
+          "letter": "B",
+          "text": "Within 30 calendar days from the day after the notice date; filing 60 days later qualifies only for an Equivalent Hearing, which does NOT preserve U.S. Tax Court review."
+        },
+        {
+          "letter": "C",
+          "text": "Within 60 calendar days; filing on Day 60 still preserves full U.S. Tax Court appeal rights."
+        },
+        {
+          "letter": "D",
+          "text": "Within 10 business days; filing after 10 days requires full payment of the tax before requesting a refund."
+        },
+        {
+          "letter": "E",
+          "text": "Within 1 year; both CDP hearings and Equivalent Hearings provide identical U.S. Tax Court appeal rights."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-301-6330-1",
+      "targetCitation": "26 CFR § 301.6330-1(b) & (e) (IRC § 6330 — 30-Day CDP Hearing Deadline)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-301.6330-1",
+      "officialSourceLabel": "eCFR: 26 CFR § 301.6330-1 — Notice & hearing prior to levy",
+      "officialGuideUrl": "https://www.ecfr.gov/current/title-26/section-301.6320-1",
+      "officialGuideLabel": "eCFR: 26 CFR § 301.6320-1 — CDP Hearing on Federal Tax Lien",
+      "goldenQuote": "The taxpayer must submit a written request (Form 12153) within 30 calendar days beginning on the day after the date of the Final Notice of Intent to Levy.",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 301.6330-1(b) & (e) (30-day CDP vs. Equivalent Hearing)",
+      "socraticHints": [
+        "Do not confuse the 90-day Notice of Deficiency deadline with the 30-day Collection Due Process (CDP) hearing deadline.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 301.6330-1.",
+        "Timely Form 12153 must be filed within 30 days to suspend levy and preserve Tax Court review; a late request (within 1 year) yields an Equivalent Hearing with NO Tax Court review."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 6330 and 26 CFR § 301.6330-1(b) and (e), Form 12153 must be requested within 30 calendar days after the Final Notice of Intent to Levy to suspend levy action and preserve U.S. Tax Court judicial review. Filing 60 days later (still within 1 year) grants only an administrative Equivalent Hearing, whose Decision Letter cannot be appealed to the U.S. Tax Court.",
+        "distractors": {
+          "A": "Incorrect: 90 days is the Statutory Notice of Deficiency (90-day letter) deadline for Tax Court, not the 30-day CDP deadline.",
+          "B": "CORRECT: 30 days for CDP with Tax Court rights; after 30 days (up to 1 year) yields only an Equivalent Hearing without Tax Court appeal rights.",
+          "C": "Incorrect: Day 60 misses the 30-day CDP window and loses Tax Court judicial review.",
+          "D": "Incorrect: The CDP deadline is 30 calendar days, not 10 business days.",
+          "E": "Incorrect: Equivalent Hearings do not suspend collection statutes or confer U.S. Tax Court jurisdiction."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q04",
+      "number": 46,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — Preparer Due Diligence (IRC § 6695(g))",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Paid tax preparer Kevin prepares a client’s Form 1040 claiming Head of Household filing status, the Earned Income Tax Credit (EITC), the Child Tax Credit (CTC), and the American Opportunity Tax Credit (AOTC). Kevin skips Form 8867 altogether and retains zero supporting documents.\n\nUnder IRC § 6695(g) and 26 CFR § 1.6695-2, how many separate due diligence penalties may the IRS assess on this single return, and how long must preparers retain Form 8867 records?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "One single combined penalty per tax return; retain records for 1 year."
+        },
+        {
+          "letter": "B",
+          "text": "Up to four separate IRC § 6695(g) penalties (one each for HOH, EITC, CTC, and AOTC); retain Form 8867 and reliance records for 3 years."
+        },
+        {
+          "letter": "C",
+          "text": "Only one penalty for EITC (Form 8867 does not cover Head of Household or AOTC); retain records for 5 years."
+        },
+        {
+          "letter": "D",
+          "text": "Up to two penalties (one for filing status, one for all credits combined); retain records for 7 years."
+        },
+        {
+          "letter": "E",
+          "text": "Zero penalties if the taxpayer signed Form 8879 e-file authorization."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-6695-2",
+      "targetCitation": "26 CFR § 1.6695-2(a) & (b)(4) (IRC § 6695(g) — Form 8867 Due Diligence)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.6695-2",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.6695-2 — Paid preparer due diligence",
+      "officialGuideUrl": "https://www.irs.gov/forms-pubs/about-form-8867",
+      "officialGuideLabel": "IRS.gov — About Form 8867 (Due Diligence Checklist)",
+      "goldenQuote": "Penalties under IRC § 6695(g) are assessed separately for EACH covered benefit on the same return (meaning up to four separate penalties on a single return).",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 1.6695-2 (4 covered benefits & 3-year retention)",
+      "socraticHints": [
+        "List all four Form 8867 covered items: EITC, CTC/ACTC/ODC, AOTC, and Head of Household.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 1.6695-2.",
+        "IRC § 6695(g) stacks per failure on the same return (up to 4 penalties), and record retention is 3 years."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 6695(g) and 26 CFR § 1.6695-2, Form 8867 due diligence applies to four specific tax benefits: EITC, CTC/ACTC/ODC, AOTC, and Head of Household status. Failure to comply triggers a separate statutory penalty for EACH benefit claimed on the same return (up to 4 separate penalties on one Form 1040), and preparers must retain Form 8867, worksheets, and client reliance records for 3 years.",
+        "distractors": {
+          "A": "Incorrect: Penalties are assessed per covered benefit failure (up to 4 per return), and retention is 3 years, not 1 year.",
+          "B": "CORRECT: Up to 4 separate § 6695(g) penalties on one return, with mandatory 3-year document retention.",
+          "C": "Incorrect: Form 8867 covers all four benefits (EITC, CTC/ACTC/ODC, AOTC, and HOH), and retention is 3 years.",
+          "D": "Incorrect: Each of the four covered benefits triggers its own separate penalty, and retention is 3 years.",
+          "E": "Incorrect: Signing Form 8879 does not relieve the paid preparer of IRC § 6695(g) due diligence duties."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q05",
+      "number": 47,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — Accuracy-Related Penalty (IRC § 6662)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 40,
+      "stem": "Individual taxpayer Trevor (who does NOT claim the IRC § 199A QBI deduction) files Form 1040 showing $38,000 of tax. Upon audit, the IRS determines Trevor’s correct tax required to be shown is $44,000, creating a $6,000 understatement attributable to an aggressive, undisclosed deduction lacking substantial authority and lacking reasonable cause.\n\nUnder IRC § 6662(d) and 26 CFR § 1.6662-3, does Trevor’s $6,000 understatement constitute a substantial understatement of income tax, and what is the applicable accuracy-related penalty?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "No, because $6,000 is less than 25% of the $44,000 tax required to be shown ($0 penalty)."
+        },
+        {
+          "letter": "B",
+          "text": "Yes, because $6,000 exceeds the greater of 10% of the $44,000 tax required to be shown ($4,400) or $5,000; the 20% accuracy-related penalty is $1,200."
+        },
+        {
+          "letter": "C",
+          "text": "Yes, and the penalty stacks to 40% ($2,400) because both negligence and substantial understatement apply to the same $6,000."
+        },
+        {
+          "letter": "D",
+          "text": "No, because individual substantial understatement applies only when the understatement exceeds $10,000."
+        },
+        {
+          "letter": "E",
+          "text": "Yes, and the fraud penalty of 75% ($4,500) applies automatically to any undisclosed position."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "26-cfr-1-6662-3",
+      "targetCitation": "26 CFR § 1.6662-3(a)–(c) (IRC § 6662 — 20% Accuracy-Related Penalty)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.6662-3",
+      "officialSourceLabel": "eCFR: 26 CFR § 1.6662-3 — Accuracy-related penalty rules",
+      "officialGuideUrl": "https://www.irs.gov/payments/accuracy-related-penalty",
+      "officialGuideLabel": "IRS.gov — Accuracy-Related Penalty",
+      "goldenQuote": "For an individual taxpayer, an understatement of income tax is substantial if it exceeds the GREATER of 10 percent of the tax required to be shown on the return or $5,000",
+      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 1.6662-3 (20% penalty & greater of 10% or $5,000)",
+      "socraticHints": [
+        "Compare the $6,000 understatement against the GREATER of 10% of $44,000 ($4,400) or $5,000.",
+        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 1.6662-3.",
+        "$6,000 > $5,000 -> substantial understatement! Accuracy-related penalty = 20% × $6,000 = $1,200 (and § 6662 components never stack on the same dollars)."
+      ],
+      "explanation": {
+        "correctReasoning": "Under IRC § 6662(d)(1)(A) and 26 CFR § 1.6662-3(b), an individual’s understatement is substantial if it exceeds the GREATER of 10% of the tax required to be shown ($4,400) or $5,000. Here, $6,000 > $5,000, so the 20% accuracy-related penalty applies: 20% × $6,000 = $1,200. Components of § 6662 (negligence and substantial understatement) do not stack on the same underpayment portion.",
+        "distractors": {
+          "A": "Incorrect: 25% is the gross income omission threshold for the 6-year statute of limitations (§ 6501(e)), not the § 6662 substantial understatement threshold.",
+          "B": "CORRECT: $6,000 exceeds $5,000 (the greater of $4,400 or $5,000), yielding a 20% penalty of $1,200.",
+          "C": "Incorrect: Under 26 CFR § 1.6662-2(c), the 20% accuracy-related penalty does not stack to 40% for negligence plus substantial understatement on the same dollars.",
+          "D": "Incorrect: $10,000 is the threshold for C corporations, not individuals ($5,000).",
+          "E": "Incorrect: The 75% civil fraud penalty (IRC § 6663) requires the IRS to prove fraudulent intent by clear and convincing evidence."
+        }
+      }
+    },
+    {
+      "id": "EA-SEE3-Q06",
+      "number": 48,
+      "suite": "EA_SEE3",
+      "track": "IRS-EA",
+      "seePart": "SEE Part 3",
+      "category": "IRS SEE Part 3 — EA Renewal, CE & Sanctions (31 CFR § 10.6 & § 10.50)",
+      "difficulty": "Medium",
+      "targetLookupSeconds": 35,
+      "stem": "Enrolled Agent Lydia is in a full 3-year enrollment renewal cycle. During Year 1 she completes 30 hours of qualifying federal tax continuing education (including 2 hours of ethics). During Year 2 she completes 12 hours of qualifying federal tax CE (including 2 hours of ethics). During Year 3 she completes 32 hours of qualifying federal tax CE (including 2 hours of ethics), totaling 74 hours over the 3-year cycle.\n\nUnder 31 CFR § 10.6(e) (Circular 230), has Lydia satisfied the continuing education requirements to renew her active EA status on Form 8554?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Yes, because her 3-year total of 74 hours exceeds the 72-hour requirement and she completed 6 hours of ethics."
+        },
+        {
+          "letter": "B",
+          "text": "No, because Circular 230 requires a minimum of 16 hours of continuing education (including 2 hours of ethics) in EACH individual year of the 3-year enrollment cycle, and Year 2 had only 12 hours."
+        },
+        {
+          "letter": "C",
+          "text": "No, because Enrolled Agents must complete 40 hours per year (120 hours per 3-year cycle)."
+        },
+        {
+          "letter": "D",
+          "text": "Yes, because excess hours from Year 1 (14 excess hours) automatically carry over to cover the Year 2 shortfall."
+        },
+        {
+          "letter": "E",
+          "text": "No, because ethics requires 4 hours per year (12 hours total per 3-year cycle)."
+        }
+      ],
+      "correctOption": "B",
+      "targetSectionId": "31-cfr-10-6",
+      "targetCitation": "31 CFR § 10.6(e) (Circular 230 — 72-Hour Cycle & 16-Hour Annual Minimum)",
+      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.6",
+      "officialSourceLabel": "eCFR: 31 CFR § 10.6 — Term and renewal of EA status",
+      "officialGuideUrl": "https://www.irs.gov/tax-professionals/enrolled-agents/become-an-enrolled-agent",
+      "officialGuideLabel": "IRS.gov — Enrolled Agent Renewal & CE",
+      "goldenQuote": "A minimum of 16 hours of continuing education credit, including 2 hours of ethics or professional conduct, must be completed during each year of an enrollment cycle.",
+      "shortestPathHint": "31 CFR Part 10 → Subparts A & C → § 10.6(e) (72-hour cycle & 16-hour annual minimum)",
+      "socraticHints": [
+        "Check BOTH the 3-year total (72 hours) AND the strict per-year minimum (16 hours including 2 ethics hours each year).",
+        "Open 31 CFR Part 10 → Subparts A & C → § 10.6(e).",
+        "Even though 30 + 12 + 32 = 74 >= 72, Lydia fell short of the mandatory 16-hour annual minimum in Year 2 (only 12 hours) and excess hours do NOT carry over."
+      ],
+      "explanation": {
+        "correctReasoning": "Under 31 CFR § 10.6(e), an Enrolled Agent must complete BOTH at least 72 hours over the 3-year enrollment cycle AND a minimum of 16 hours (including 2 hours of ethics) in EACH individual year of the cycle. Completing only 12 hours in Year 2 violates the 16-hour annual minimum, and excess CE hours from Year 1 cannot be carried over to cure Year 2.",
+        "distractors": {
+          "A": "Incorrect: Meeting the 72-hour 3-year total does not waive the mandatory 16-hour minimum for each individual year.",
+          "B": "CORRECT: Year 2 had only 12 hours, failing the mandatory 16-hour per-year floor under 31 CFR § 10.6(e).",
+          "C": "Incorrect: The Circular 230 requirement is 72 hours per 3-year cycle (16 hours/year min), not 120 hours (which is a typical CPA CPE standard).",
+          "D": "Incorrect: Circular 230 does not allow excess CE hours from one year to carry forward to satisfy another year’s 16-hour minimum.",
+          "E": "Incorrect: Ethics requires 2 hours per year (6 hours per 3-year cycle), not 4 hours per year."
         }
       }
     }

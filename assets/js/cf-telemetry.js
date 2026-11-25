@@ -19,6 +19,22 @@
 
   var localWorkspace = ["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1;
 
+  // Operator pages expose only local API timing in the browser's Performance panel.
+  // Keep task text, pairing links and credentials out of product visitor telemetry.
+  if (localWorkspace && document.documentElement.hasAttribute("data-cf-operator")) {
+    if (typeof PerformanceObserver === "function") {
+      new PerformanceObserver(function (list) {
+        list.getEntries().forEach(function (entry) {
+          if (entry.name.startsWith(window.location.origin + "/api/")) {
+            performance.clearMeasures("cf.operator.last-api");
+            performance.measure("cf.operator.last-api", {start: entry.startTime, duration: entry.duration});
+          }
+        });
+      }).observe({type: "resource", buffered: true});
+    }
+    return;
+  }
+
   var STORAGE_VISITOR = "cf_tele_visitor_id_v1";
   var STORAGE_SESSION = "cf_tele_session_id_v1";
   var STORAGE_GEO = "cf_tele_geo_cache_v1";
@@ -66,7 +82,9 @@
     if (p.indexOf("/codedrill-cbt/seo-pages") !== -1) return "CodeDrill™ 19 CFR pSEO Hub";
     if (p.indexOf("/codedrill-cbt") !== -1) return "CodeDrill™ CBT Simulator";
     if (p.indexOf("/stealthflow") !== -1) return "StealthFlow™ Data Hub";
+    if (p.indexOf("/finopsguard") !== -1) return "FinOpsGuard™ Cloud & LLM Auditor";
     if (p.indexOf("/omnirag") !== -1) return "OmniRAG™ Verifier";
+    if (p.indexOf("/edtech-studio/guides") !== -1) return "AcademyForge™ EdTech pSEO Guides";
     if (p.indexOf("/edtech-studio") !== -1) return "EdTech & SCORM Studio";
     if (p.indexOf("/oobe-agent") !== -1) return "OOBE Sentinel Console";
     if (p.indexOf("/work/") !== -1) return "Case Study (" + p.split("/").pop() + ")";

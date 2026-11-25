@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>EDUCAUSE HECVAT Vendor Security Readiness Scorer for EdTech | Caliber Foundry</title>
+  <meta name="description" content="Calculate your EdTech platform's EDUCAUSE HECVAT (Lite vs. Full 300+ control workbook) readiness score across SAML/OIDC SSO, encryption, SOC 2 evidence coverage, and higher-ed CISO review timelines." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/educause-hecvat-vendor-readiness-scorer.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="EDUCAUSE HECVAT Vendor Readiness Scorer &amp; Higher-Ed Procurement Triage" />
+  <meta property="og:description" content="Interactive HECVAT Lite vs. Full selector, campus CISO review estimator, and 3-question university vendor security check." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/educause-hecvat-vendor-readiness-scorer.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "EDUCAUSE HECVAT Vendor Security Readiness Scorer for EdTech",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/educause-hecvat-vendor-readiness-scorer.html",
+    "educationalUse": ["Interactive Calculator", "Vendor Self-Assessment"],
+    "citation": [
+      "https://www.educause.edu/focus-areas-and-initiatives/policy-and-security/cybersecurity-program/resources/hecvat"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="hecvat-vendor">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">03 · EDUCAUSE HECVAT</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./psychometric-item-writing-distractor-analyzer.html" class="eg-nav-link">← Prev: Psychometrics</a>
+        <a href="./iti-vpat-2-5-acr-conformance-estimator.html" class="eg-nav-link">Next: ITI VPAT 2.5 →</a>
+        <a href="../../dealshield/index.html" class="eg-nav-cta">Auto-Fill HECVAT in DealShield →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Score HECVAT Readiness</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item Campus CISO Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> HECVAT Lite vs. Full Matrix</a></li>
+      </ol>
+      <span class="eg-std-pill">EDUCAUSE HECVAT · Higher-Ed Security</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 03 of 10 · Higher-Education Vendor Security &amp; Procurement</span>
+      <h1 class="eg-title">EDUCAUSE HECVAT Vendor Security Readiness Scorer</h1>
+      <p class="eg-subtitle">Over 300 U.S. colleges and universities gate EdTech contracts on the EDUCAUSE Higher Education Community Vendor Assessment Toolkit (HECVAT). Triage whether you need HECVAT Lite or Full, identify CISO blockers, and estimate campus security review duration.</p>
+
+      <div class="eg-kpi-strip" aria-label="HECVAT readiness metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Readiness Score</span>
+          <span class="eg-kpi-value" id="kpiVal1">92 / 100</span>
+          <span class="eg-kpi-note" id="kpiNote1">HECVAT Readiness Index</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Required Workbook</span>
+          <span class="eg-kpi-value" id="kpiVal2">HECVAT Full (~300+ Qs)</span>
+          <span class="eg-kpi-note" id="kpiNote2">Recommended EDUCAUSE template</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Campus Review Cycle</span>
+          <span class="eg-kpi-value" id="kpiVal3">4 weeks</span>
+          <span class="eg-kpi-note" id="kpiNote3">Est. university security review</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Evidence Gaps</span>
+          <span class="eg-kpi-value" id="kpiVal4">4 gaps</span>
+          <span class="eg-kpi-note" id="kpiNote4">Unanchored questionnaire rows</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="hecvatPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="hecvatPresetHeading">Step 1 — Pick 1 of 3 EdTech Vendor Profiles (or Customize Controls)</h2>
+        <span class="eg-section-hint">Evaluates IAM federation, cryptography, and citation-locked policy evidence</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="HECVAT vendor presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · SOC 2 SaaS + SAML</span>
+          <span class="eg-option-title">FERPA Records · SAML/OIDC · 92% Cited</span>
+          <span class="eg-option-desc">Enterprise-ready LMS/assessment tool with KMS encryption and only 4 minor compensating-control notes.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Early-Stage Blocker Case</span>
+          <span class="eg-option-title">FERPA Records · Password Auth · 29 Gaps</span>
+          <span class="eg-option-desc">Lacks SAML/OIDC federation and at-rest encryption documentation—stalls in university procurement for 10+ weeks.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Zero-PII Reference Tool</span>
+          <span class="eg-option-title">Public Content · HECVAT Lite Eligible</span>
+          <span class="eg-option-desc">Stores zero student grades or PII; qualifies for fast-track HECVAT Lite (~95 controls) review.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="HECVAT readiness calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Vendor Security &amp; Data Scope Inputs</h2>
+            <p class="eg-panel-sub">Change data sensitivity, SSO, or unanswered rows to recompute CISO readiness.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selDataTier"><span>Institutional Data Classification</span><span class="eg-unit">Scope</span></label>
+            <select class="eg-select" id="selDataTier" data-calc-input>
+              <option value="pii-ferpa" selected>FERPA Education Records, Grades, or Student PII (Requires Full)</option>
+              <option value="staff-internal">Faculty/Staff Operational Metadata Only (Full or Lite per Campus)</option>
+              <option value="public-catalog">Zero Student PII / Anonymous Reference Content (HECVAT Lite)</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selSso"><span>Campus Identity &amp; SSO</span><span class="eg-unit">IAM</span></label>
+            <select class="eg-select" id="selSso" data-calc-input>
+              <option value="saml-oidc" selected>SAML 2.0 / OIDC / InCommon + MFA</option>
+              <option value="oauth-social">Google / Microsoft OAuth Only</option>
+              <option value="password-only">Local Email &amp; Password Only</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selEncryption"><span>Cryptographic Controls</span><span class="eg-unit">Crypto</span></label>
+            <select class="eg-select" id="selEncryption" data-calc-input>
+              <option value="both-kms" selected>TLS 1.3 + AES-256 At-Rest (Managed KMS)</option>
+              <option value="tls-aes">TLS 1.2+ &amp; Disk Encryption (Shared Keys)</option>
+              <option value="tls-only">HTTPS Transit Only / Unverified DB At-Rest</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpAuditCoverage"><span>Policy / SOC 2 Citation Coverage</span><span class="eg-unit">0–100%</span></label>
+            <input class="eg-input" type="number" id="inpAuditCoverage" min="0" max="100" value="92" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpUnanswered"><span>Unanswered / Vague Rows</span><span class="eg-unit">0–120</span></label>
+            <input class="eg-input" type="number" id="inpUnanswered" min="0" max="120" value="4" data-calc-input />
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Score HECVAT Posture →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download HECVAT Triage JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Campus CISO Review Projection</h2>
+            <p class="eg-panel-sub">Workbook selection, control breakdown, and procurement acceleration path.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">READY FOR CISO CAMPUS REVIEW</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">92/100 Readiness · HECVAT Full</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="HECVAT scoring breakdown">
+          <thead><tr><th>HECVAT Assessment Dimension</th><th style="text-align:right;">Score / Requirement</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../../dealshield/index.html" class="eg-btn-secondary">Open HECVAT Auto-Responder in DealShield →</a>
+          <a href="../../work/dealshield.html" class="eg-btn-ghost">DealShield Case Study</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="hecvatTakeaways">
+      <h2 class="eg-section-heading" id="hecvatTakeaways">Three Practices That Cut University Security Reviews From Months to Weeks</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Proactive HECVAT + VPAT Bundle:</strong> Attaching a completed HECVAT workbook and ITI VPAT 2.5Rev ACR before the university asks eliminates 2–3 weeks of intake back-and-forth.</li>
+        <li><strong>Cite Exact Policy Sections, Not Bare "Yes":</strong> Answering "Yes" without naming the SOC 2 criterion, penetration test date, or encryption cipher triggers follow-up clarification rounds.</li>
+        <li><strong>Document Compensating Controls Honestly:</strong> Where a control is planned (e.g., InCommon federation vs. direct SAML 2.0), state the active compensating control instead of overclaiming.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="hecvatQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="hecvatQuizHeading">Step 2 — 3-Question EDUCAUSE HECVAT Procurement Check</h2>
+          <p class="eg-panel-sub">Test how university information security offices evaluate vendor responses.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. An EdTech SaaS platform ingests student rosters via LTI NRPS and syncs quiz grades back to Canvas. The vendor submits HECVAT Triage only instead of HECVAT Full. How do most R1 university CISOs respond?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Because rosters and grades constitute protected FERPA education records, institutions almost universally require HECVAT Full (or at minimum HECVAT Lite only for low-impact pilots, never Triage alone).">A. They pause procurement and request HECVAT Full because student rosters and grades are FERPA-protected institutional data.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="LTI integration transmits identifiable learner claims and scores, increasing—not removing—data governance scope.">B. They waive HECVAT review automatically whenever LTI 1.3 is used.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="VPAT covers accessibility (Section 508 / WCAG), not cybersecurity or data protection.">C. They accept an ITI VPAT report in place of security documentation.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. In HECVAT's Vendor Answers sheet, what happens when a vendor marks <span class="mono">"Yes"</span> on third-party vulnerability management and DR testing but leaves the <span class="mono">Additional Information / Guidance</span> column blank across 40 critical controls?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Automated scoring formulas are reviewed manually by campus analysts who verify supporting evidence.">A. Campus procurement approves immediately because the macro score only checks the Yes/No dropdown.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Security analysts require concrete evidence references (e.g., annual CREST/OSCP pentest date, RTO/RPO hours, SOC 2 Bridge Letter) to validate 'Yes' assertions.">B. Analysts return the spreadsheet for clarification, adding weeks to the sales cycle until policy clauses, RTO/RPO metrics, and test dates are cited.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="EDUCAUSE does not certify or host private vendor answers centrally without vendor opt-in to the Cloud Broker Index.">C. EDUCAUSE automatically revokes the vendor's domain certificate.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. Which authentication architecture satisfies higher-education HECVAT identity requirements for campus-wide faculty and student deployments?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Shared classroom passwords violate individual accountability and campus IAM policies.">A. A single shared department password rotated once per semester.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="SMS-only consumer logins bypass institutional deprovisioning when a student or employee leaves the university.">B. Personal SMS magic links tied to students' private phone numbers.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Enterprise SAML 2.0 / OIDC (Shibboleth, Microsoft Entra ID, Okta, InCommon) enforces campus MFA and instant institutional offboarding.">C. SAML 2.0 or OpenID Connect (OIDC) federation integrated with the institution's IdP (Shibboleth, Entra ID, Okta, or LTI 1.3 OIDC).</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="HECVAT reference details">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Selecting Between HECVAT Lite and HECVAT Full</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><strong>HECVAT Lite (~95 questions):</strong> Designed for lower-risk cloud services processing non-sensitive or public/directory data without deep campus network integration.</li>
+            <li><strong>HECVAT Full (~300+ questions across Organization, Policies, Architecture, IAM, Crypto, Change Mgmt, DR/BCP, FERPA/HIPAA/GDPR):</strong> Standard requirement when handling student education records, grades, financial aid, health records, or enterprise SSO/SIS integrations.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public EDUCAUSE Resources</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.educause.edu/focus-areas-and-initiatives/policy-and-security/cybersecurity-program/resources/hecvat" target="_blank" rel="noopener noreferrer">EDUCAUSE — Official Higher Education Community Vendor Assessment Toolkit (HECVAT) Hub</a></li>
+            <li>Pair HECVAT security documentation with <a href="./iti-vpat-2-5-acr-conformance-estimator.html">Guide 04: ITI VPAT 2.5Rev Accessibility Estimator</a> and <a href="./ferpa-34-cfr-99-student-data-architecture-test.html">Guide 09: FERPA 34 CFR § 99.31 Data Architecture</a>.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 03/10 · EDUCAUSE HECVAT Vendor Readiness</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./iti-vpat-2-5-acr-conformance-estimator.html">Next: ITI VPAT 2.5Rev Estimator →</a>
+      <a href="../../work/dealshield.html">DealShield Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

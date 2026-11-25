@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <link rel="canonical" href="https://caliberfoundry.com/finopsguard/" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>FinOpsGuard™ — Аудит облачных и LLM-расходов из CSV | Caliber Foundry</title>
+  <meta name="description" content="Локальный аудитор облачных и LLM-расходов из CSV (AWS CUR, FinOps FOCUS 1.0, OpenAI/Anthropic) с разделением подтверждённых фактов и модельных оценок экономии и печатным PDF-планом." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cf-bg-paper:       #F6F4EF;
+      --cf-bg-stone:       #ECE9E1;
+      --cf-bg-surface:     #FFFFFF;
+      --cf-bg-ink-panel:   #141413;
+
+      --cf-ink-primary:    #141413;
+      --cf-ink-secondary:  #52514E;
+      --cf-ink-muted:      #65625D;
+      --cf-ink-on-dark:    #F6F4EF;
+
+      --cf-rule-strong:    #D4D1C8;
+      --cf-rule-mid:       #E4E2DD;
+      --cf-rule-subtle:    #EFECE6;
+      --cf-shadow-card:    0 1px 3px rgba(17, 17, 19, 0.05), 0 1px 2px rgba(17, 17, 19, 0.03);
+
+      --cf-accent-primary: #C8431F;
+      --cf-accent-hover:   #A33418;
+      --cf-accent-tint:    #FBEBE4;
+      --cf-accent-border:  #DFA995;
+
+      --cf-navy-authority: #1E293B;
+      --cf-navy-tint:      #F1F5F9;
+
+      --cf-forest-pass:    #1A5638;
+      --cf-forest-tint:    #F0FDF4;
+      --cf-forest-border:  #B7DFC7;
+
+      --cf-brass-warn:     #92400E;
+      --cf-brass-tint:     #FFFBEB;
+      --cf-brass-border:   #E9C988;
+
+      --cf-danger:         #B91C1C;
+      --cf-danger-tint:    #FEF2F2;
+      --cf-danger-border:  #F2B8B5;
+
+      --font-display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --font-serif:   'Newsreader', Georgia, serif;
+      --font-sans:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      background: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--cf-accent-primary);
+      outline-offset: 2px;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ==================== BAR 1: HEADER & 3-STEP NAV ==================== */
+    .fg-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      min-height: 56px;
+      padding: 10px 24px;
+      background: var(--cf-bg-ink-panel);
+      color: var(--cf-ink-on-dark);
+      border-bottom: 1px solid #2A2A27;
+    }
+
+    .fg-back-link { color: #DDD9D0; text-decoration: none; font-family: var(--font-mono); font-size: 12px; padding: 5px 9px; border: 1px solid #3A3935; background: #1F1F1D; flex-shrink: 0; }
+    .fg-back-link:hover { color: #FFFFFF; border-color: #6B6861; }
+    .fg-site-footer { border-top: 1px solid var(--cf-rule-mid); padding: 18px 24px; font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-muted); }
+    .fg-site-footer-inner { max-width: 1360px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
+    .fg-site-footer a { color: var(--cf-ink-primary); text-decoration: none; }
+    .fg-site-footer a:hover { text-decoration: underline; }
+    .fg-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .fg-logo-mark {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .fg-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      min-width: 0;
+    }
+
+    .fg-brand-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+    }
+
+    .fg-brand-sub {
+      font-size: 12px;
+      color: #C4C0B7;
+    }
+
+    .fg-stepper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .fg-step-btn {
+      appearance: none;
+      border: 1px solid #3A3935;
+      background: #1F1F1D;
+      color: #DDD9D0;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+    }
+
+    .fg-step-btn:hover {
+      background: #2C2C29;
+      border-color: #6B6861;
+      color: #FFFFFF;
+    }
+
+    .fg-step-btn[aria-current="step"] {
+      background: var(--cf-accent-primary);
+      border-color: var(--cf-accent-primary);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .fg-step-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 1px 5px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* ==================== MAIN CONTAINER ==================== */
+    .fg-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 24px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* ==================== OPENING & SOURCE BAR ==================== */
+    .fg-hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--cf-rule-strong);
+    }
+
+    .fg-hero h1 {
+      margin: 0 0 4px;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--cf-ink-primary);
+    }
+
+    .fg-hero-lead {
+      margin: 0;
+      color: var(--cf-ink-secondary);
+      font-size: 14px;
+      max-width: 720px;
+    }
+
+    .fg-hero-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--cf-ink-secondary);
+    }
+
+    .fg-meta-chip {
+      background: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 4px 8px;
+    }
+
+    /* ==================== BADGES: FACT VS ESTIMATE ==================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-fact {
+      background: var(--cf-forest-tint);
+      color: var(--cf-forest-pass);
+      border-color: var(--cf-forest-border);
+    }
+
+    .badge-estimate {
+      background: var(--cf-brass-tint);
+      color: var(--cf-brass-warn);
+      border-color: var(--cf-brass-border);
+    }
+
+    .badge-waste {
+      background: var(--cf-danger-tint);
+      color: var(--cf-danger);
+      border-color: var(--cf-danger-border);
+    }
+
+    .badge-neutral {
+      background: var(--cf-bg-stone);
+      color: var(--cf-ink-secondary);
+      border-color: var(--cf-rule-strong);
+    }
+
+    /* ==================== 4-KPI EXECUTIVE STRIP ==================== */
+    .fg-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .fg-kpi-card {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+      box-shadow: var(--cf-shadow-card);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .fg-kpi-card.is-fact {
+      border-top: 3px solid var(--cf-forest-pass);
+    }
+
+    .fg-kpi-card.is-estimate {
+      border-top: 3px solid var(--cf-brass-warn);
+    }
+
+    .fg-kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .fg-kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cf-ink-secondary);
+    }
+
+    .fg-kpi-value {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(22px, 2.2vw, 28px);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--cf-ink-primary);
+      word-break: break-word;
+    }
+
+    .fg-kpi-sub {
+      font-size: 12px;
+      color: var(--cf-ink-muted);
+      line-height: 1.35;
+    }
+
+    /* ==================== DELTA COMPARISON BANNER ==================== */
+    .fg-delta-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      padding: 10px 14px;
+      background: var(--cf-navy-tint);
+      border: 1px solid #CBD5E1;
+      border-left: 4px solid var(--cf-navy-authority);
+      font-size: 13px;
+    }
+
+    .fg-delta-bar.visible { display: flex; }
+
+    .fg-delta-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    /* ==================== CARDS & SECTIONS ==================== */
+    .fg-card {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+      box-shadow: var(--cf-shadow-card);
+      padding: 18px 20px;
+      min-width: 0;
+    }
+
+    .fg-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+    }
+
+    .fg-card-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--cf-ink-primary);
+    }
+
+    .fg-card-desc {
+      margin: 3px 0 0;
+      font-size: 13px;
+      color: var(--cf-ink-secondary);
+    }
+
+    /* ==================== BUTTONS (3-TIER HIERARCHY) ==================== */
+    .btn {
+      appearance: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 14px;
+      cursor: pointer;
+      border: 1px solid var(--cf-rule-strong);
+      background: var(--cf-bg-surface);
+      color: var(--cf-ink-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: background 0.14s ease, border-color 0.14s ease, transform 0.08s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--cf-ink-primary);
+      background: var(--cf-bg-paper);
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      background: var(--cf-accent-primary);
+      border-color: var(--cf-ink-primary);
+      color: #FFFFFF;
+      box-shadow: 2px 2px 0 var(--cf-ink-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--cf-accent-hover);
+      border-color: var(--cf-ink-primary);
+      color: #FFFFFF;
+    }
+
+    .btn-forest {
+      background: var(--cf-forest-pass);
+      border-color: var(--cf-ink-primary);
+      color: #FFFFFF;
+      box-shadow: 2px 2px 0 var(--cf-ink-primary);
+    }
+
+    .btn-forest:hover {
+      background: #13422B;
+      color: #FFFFFF;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--cf-ink-secondary);
+      padding: 6px 10px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--cf-bg-surface);
+      border-color: var(--cf-rule-mid);
+      color: var(--cf-ink-primary);
+    }
+
+    /* ==================== STEP 1: IMPORT & 3 OPTIONS ==================== */
+    .fg-import-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.95fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .fg-options-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .fg-option-card {
+      text-align: left;
+      appearance: none;
+      width: 100%;
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 12px 13px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-family: var(--font-sans);
+      color: var(--cf-ink-primary);
+      transition: border-color 0.14s ease, background 0.14s ease;
+    }
+
+    .fg-option-card:hover {
+      border-color: var(--cf-ink-primary);
+      background: var(--cf-bg-surface);
+    }
+
+    .fg-option-card[aria-pressed="true"] {
+      background: var(--cf-accent-tint);
+      border-color: var(--cf-accent-primary);
+      box-shadow: inset 3px 0 0 var(--cf-accent-primary);
+    }
+
+    .fg-option-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cf-accent-primary);
+      text-transform: uppercase;
+    }
+
+    .fg-option-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--cf-ink-primary);
+    }
+
+    .fg-option-meta {
+      font-size: 12px;
+      color: var(--cf-ink-secondary);
+      line-height: 1.35;
+    }
+
+    .fg-dropzone {
+      border: 1px dashed var(--cf-ink-muted);
+      background: var(--cf-bg-paper);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .fg-dropzone.is-dragover {
+      background: var(--cf-accent-tint);
+      border-color: var(--cf-accent-primary);
+      border-style: solid;
+    }
+
+    .fg-dropzone-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ==================== INLINE PROGRESS (ADR-024) ==================== */
+    .fg-progress-strip {
+      margin-top: 10px;
+      padding: 9px 12px;
+      background: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-strong);
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .fg-progress-strip.is-done {
+      background: var(--cf-forest-tint);
+      border-color: var(--cf-forest-border);
+      color: var(--cf-forest-pass);
+    }
+
+    .fg-progress-strip.is-error {
+      background: var(--cf-danger-tint);
+      border-color: var(--cf-danger-border);
+      color: var(--cf-danger);
+    }
+
+    .fg-progress-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      font-weight: 600;
+    }
+
+    .fg-progress-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(20, 20, 19, 0.12);
+      overflow: hidden;
+    }
+
+    .fg-progress-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--cf-forest-pass);
+      transition: width 0.18s ease;
+    }
+
+    .fg-progress-strip.is-running .fg-progress-fill {
+      background: var(--cf-accent-primary);
+    }
+
+    /* ==================== STEP 2: ANALYSIS SPLIT WORKBENCH ==================== */
+    .fg-analysis-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .fg-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    /* Service Breakdown Bars */
+    .fg-bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fg-bar-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fg-bar-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .fg-bar-track {
+      width: 100%;
+      height: 7px;
+      background: var(--cf-bg-stone);
+      overflow: hidden;
+    }
+
+    .fg-bar-fill {
+      height: 100%;
+      background: var(--cf-ink-primary);
+    }
+
+    /* Assumptions Panel */
+    .fg-segmented {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      background: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-mid);
+      padding: 3px;
+      margin-bottom: 14px;
+    }
+
+    .fg-seg-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--cf-ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .fg-seg-btn[aria-pressed="true"] {
+      background: var(--cf-bg-surface);
+      border-color: var(--cf-rule-strong);
+      color: var(--cf-ink-primary);
+      box-shadow: var(--cf-shadow-card);
+    }
+
+    .fg-assumption-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .fg-assumption-item {
+      padding: 10px 12px;
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .fg-assumption-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .fg-assumption-head label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cf-ink-primary);
+    }
+
+    .fg-assumption-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fg-assumption-controls input[type="range"] {
+      flex: 1;
+      min-width: 100px;
+      accent-color: var(--cf-accent-primary);
+    }
+
+    .fg-num-input {
+      width: 72px;
+      padding: 4px 6px;
+      border: 1px solid var(--cf-rule-strong);
+      background: var(--cf-bg-surface);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      text-align: right;
+      color: var(--cf-ink-primary);
+    }
+
+    .fg-assumption-note {
+      font-size: 12px;
+      color: var(--cf-ink-muted);
+      line-height: 1.35;
+    }
+
+    /* ==================== RESPONSIVE DATA TABLES ==================== */
+    .fg-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--cf-rule-mid);
+    }
+
+    table.fg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--cf-bg-surface);
+    }
+
+    table.fg-table th,
+    table.fg-table td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--cf-rule-subtle);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.fg-table thead th {
+      background: var(--cf-bg-stone);
+      color: var(--cf-ink-primary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--cf-rule-strong);
+      white-space: nowrap;
+    }
+
+    table.fg-table td.num,
+    table.fg-table th.num {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    table.fg-table tbody tr.is-inactive {
+      opacity: 0.62;
+      background: #FAF9F6;
+    }
+
+    table.fg-table tfoot td {
+      background: var(--cf-bg-paper);
+      font-weight: 700;
+      border-top: 2px solid var(--cf-rule-strong);
+      border-bottom: none;
+    }
+
+    .fg-formula {
+      display: inline-block;
+      margin-top: 3px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cf-ink-secondary);
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-mid);
+      padding: 2px 6px;
+    }
+
+    .fg-caveat-box {
+      margin-top: 12px;
+      padding: 11px 13px;
+      background: var(--cf-brass-tint);
+      border: 1px solid var(--cf-brass-border);
+      font-size: 12.5px;
+      color: #6B310A;
+      line-height: 1.45;
+    }
+
+    /* ==================== COLLAPSIBLE DETAILS (ADR-012) ==================== */
+    details.fg-drawer {
+      background: var(--cf-bg-surface);
+      border: 1px solid var(--cf-rule-mid);
+      box-shadow: var(--cf-shadow-card);
+    }
+
+    details.fg-drawer summary {
+      padding: 13px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--cf-ink-primary);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--cf-bg-paper);
+    }
+
+    details.fg-drawer summary::-webkit-details-marker { display: none; }
+
+    details.fg-drawer summary::after {
+      content: '+ Открыть';
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cf-ink-secondary);
+      border: 1px solid var(--cf-rule-strong);
+      padding: 2px 7px;
+      background: var(--cf-bg-surface);
+      flex-shrink: 0;
+    }
+
+    details.fg-drawer[open] summary {
+      border-bottom: 1px solid var(--cf-rule-mid);
+    }
+
+    details.fg-drawer[open] summary::after {
+      content: '− Свернуть';
+    }
+
+    .fg-drawer-body {
+      padding: 16px 18px;
+    }
+
+    .fg-csv-textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      border: 1px solid var(--cf-rule-strong);
+      background: var(--cf-bg-paper);
+      color: var(--cf-ink-primary);
+      resize: vertical;
+    }
+
+    /* ==================== STEP 3: PRINTABLE A4 PDF PLAN ==================== */
+    .fg-print-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      padding: 14px 18px;
+      background: var(--cf-bg-stone);
+      border: 1px solid var(--cf-rule-strong);
+      margin-bottom: 16px;
+    }
+
+    .fg-print-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .print-sheet {
+      background: #FFFFFF;
+      border: 1px solid var(--cf-ink-primary);
+      padding: 28px 32px;
+      max-width: 980px;
+      margin: 0 auto;
+      color: var(--cf-ink-primary);
+      box-shadow: 0 6px 24px rgba(20, 20, 19, 0.08);
+    }
+
+    .print-doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--cf-ink-primary);
+      margin-bottom: 18px;
+    }
+
+    .print-doc-title {
+      margin: 4px 0 4px;
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .print-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 10px 12px;
+      background: var(--cf-bg-paper);
+      border: 1px solid var(--cf-rule-strong);
+      font-size: 12px;
+    }
+
+    .print-meta-item span {
+      display: block;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--cf-ink-muted);
+    }
+
+    .print-meta-item strong {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .print-section {
+      margin-top: 20px;
+      break-inside: avoid;
+    }
+
+    .print-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--cf-ink-primary);
+    }
+
+    .print-section-head h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .print-summary-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .print-box {
+      border: 1px solid var(--cf-rule-strong);
+      padding: 12px 14px;
+    }
+
+    .print-box.fact-box { border-left: 4px solid var(--cf-forest-pass); }
+    .print-box.est-box { border-left: 4px solid var(--cf-brass-warn); }
+
+    .print-footer {
+      margin-top: 22px;
+      padding-top: 10px;
+      border-top: 1px solid var(--cf-rule-strong);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--cf-ink-muted);
+    }
+
+    .is-hidden-view { display: none !important; }
+
+    /* ==================== RESPONSIVE BREAKPOINTS ==================== */
+    @media (max-width: 960px) {
+      .fg-import-grid,
+      .fg-analysis-grid,
+      .print-summary-pair {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .fg-header { padding: 10px 14px; }
+      .fg-container { padding: 14px 12px 36px; }
+      .fg-card { padding: 14px; }
+      .print-sheet { padding: 16px 14px; }
+      .fg-step-btn { flex: 1 1 auto; justify-content: center; font-size: 12px; padding: 7px 8px; }
+      .fg-segmented { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    /* ==================== PRINT STYLESHEET (A4 PDF) ==================== */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm;
+    }
+
+    @media print {
+      html, body {
+        background: #FFFFFF !important;
+        color: #141413 !important;
+        font-size: 11pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      #viewPrintPlan {
+        display: block !important;
+      }
+
+      .fg-container {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .print-sheet {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: none;
+        margin: 0;
+      }
+
+      .fg-table-wrap {
+        overflow: visible !important;
+        border: 1px solid #141413;
+      }
+
+      table.fg-table {
+        font-size: 9.5pt;
+      }
+
+      table.fg-table thead {
+        display: table-header-group;
+      }
+
+      table.fg-table tr,
+      .print-section,
+      .print-box,
+      .fg-caveat-box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ==================== BAR 1: HEADER & 3-STEP JOURNEY ==================== -->
+  <header class="fg-header no-print" role="banner">
+    <div class="fg-brand">
+      <a href="../#work" class="fg-back-link">← All products</a>
+      <div class="fg-logo-mark" aria-hidden="true">FG</div>
+      <div class="fg-brand-text">
+        <span class="fg-brand-title">FinOpsGuard™</span>
+        <span class="fg-brand-sub">Caliber Foundry · Аудит облачных и LLM-расходов из CSV</span>
+      </div>
+    </div>
+
+    <nav class="fg-stepper" aria-label="Шаги аудита">
+      <button type="button" class="fg-step-btn" id="stepBtn1" data-step="1" aria-current="step">
+        <span class="fg-step-num">1</span>
+        <span>Импорт CSV</span>
+      </button>
+      <button type="button" class="fg-step-btn" id="stepBtn2" data-step="2" aria-current="false">
+        <span class="fg-step-num">2</span>
+        <span>Анализ и предположения</span>
+      </button>
+      <button type="button" class="fg-step-btn" id="stepBtn3" data-step="3" aria-current="false">
+        <span class="fg-step-num">3</span>
+        <span>Печатный PDF-план</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="fg-container" id="mainApp">
+    <!-- ==================== OPENING TITLE ==================== -->
+    <section class="fg-hero no-print" aria-label="Текущий аудит">
+      <div>
+        <h1>Аудит облачного биллинга и план экономии</h1>
+        <p class="fg-hero-lead">
+          Локальный расчёт без отправки данных наружу. Подтверждённые суммы из CSV строго отделены от модельных оценок по явно заданным предположениям.
+        </p>
+      </div>
+      <div class="fg-hero-meta" aria-label="Метаданные активного файла">
+        <span class="fg-meta-chip" id="heroSourceChip">Файл: —</span>
+        <span class="fg-meta-chip" id="heroSchemaChip">Схема: —</span>
+        <span class="fg-meta-chip" id="heroFingerprintChip">Отпечаток: —</span>
+      </div>
+    </section>
+
+    <!-- ==================== 4-KPI SUMMARY STRIP (FACT VS ESTIMATE) ==================== -->
+    <section class="fg-kpi-grid no-print" aria-label="Сводные показатели">
+      <article class="fg-kpi-card is-fact">
+        <div class="fg-kpi-top">
+          <span class="fg-kpi-label">Подтверждённые расходы</span>
+          <span class="badge badge-fact">Факт по CSV</span>
+        </div>
+        <div class="fg-kpi-value" id="kpiConfirmedTotal">$0.00</div>
+        <div class="fg-kpi-sub" id="kpiConfirmedSub">Загрузите CSV или выберите образец</div>
+      </article>
+
+      <article class="fg-kpi-card is-fact">
+        <div class="fg-kpi-top">
+          <span class="fg-kpi-label">База под оптимизацию</span>
+          <span class="badge badge-fact">Факт по CSV</span>
+        </div>
+        <div class="fg-kpi-value" id="kpiEligibleBase">$0.00</div>
+        <div class="fg-kpi-sub" id="kpiEligibleSub">—</div>
+      </article>
+
+      <article class="fg-kpi-card is-estimate">
+        <div class="fg-kpi-top">
+          <span class="fg-kpi-label">Расчётная экономия / мес</span>
+          <span class="badge badge-estimate">Оценка модели</span>
+        </div>
+        <div class="fg-kpi-value" id="kpiEstMonthly">$0.00</div>
+        <div class="fg-kpi-sub" id="kpiEstMonthlySub">—</div>
+      </article>
+
+      <article class="fg-kpi-card is-estimate">
+        <div class="fg-kpi-top">
+          <span class="fg-kpi-label">Потенциал за 12 мес (×12)</span>
+          <span class="badge badge-estimate">Оценка модели</span>
+        </div>
+        <div class="fg-kpi-value" id="kpiEstAnnual">$0.00</div>
+        <div class="fg-kpi-sub" id="kpiEstAnnualSub">Зависит от указанных допущений</div>
+      </article>
+    </section>
+
+    <!-- ==================== DELTA CHECK BAR (WHEN INPUT CHANGES) ==================== -->
+    <section class="fg-delta-bar no-print" id="deltaBar" role="status" aria-live="polite">
+      <div>
+        <strong>Сравнение с предыдущим входом (<span id="deltaPrevName">—</span>):</strong>
+        <span id="deltaNotice">Пересчёт выполнен после смены источника.</span>
+      </div>
+      <div class="fg-delta-metrics" id="deltaMetrics"></div>
+    </section>
+
+    <!-- ==================== VIEW 1 & 2: WORKBENCH ==================== -->
+    <div id="viewWorkbench" class="fg-stack no-print">
+      <!-- STEP 1: CSV IMPORT & 3 READY OPTIONS -->
+      <section class="fg-card" id="sectionImport" aria-labelledby="headingImport">
+        <div class="fg-card-header">
+          <div>
+            <h2 class="fg-card-title" id="headingImport">Шаг 1. Выберите готовый образец CSV или загрузите свой файл биллинга</h2>
+            <p class="fg-card-desc">Поддерживаются реальные заголовки AWS CUR, FinOps FOCUS 1.0, OpenAI / Anthropic Usage CSV и табличный биллинг с колонками сервиса и суммы.</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="btnGoToPrintTop">Открыть печатный PDF-план</button>
+        </div>
+
+        <div class="fg-import-grid">
+          <div>
+            <div class="fg-options-row" role="group" aria-label="Три готовых демонстрационных набора CSV">
+              <button type="button" class="fg-option-card" id="presetBtnAws" data-preset="aws_cur" aria-pressed="true">
+                <span class="fg-option-kicker">Опция 1 · AWS CUR</span>
+                <span class="fg-option-title">SaaS Production (AWS)</span>
+                <span class="fg-option-meta">12 строк · EC2, RDS, EBS gp2/gp3, NAT Bytes, CloudWatch, Unused SP</span>
+              </button>
+
+              <button type="button" class="fg-option-card" id="presetBtnFocus" data-preset="focus_1_0" aria-pressed="false">
+                <span class="fg-option-kicker">Опция 2 · FOCUS 1.0</span>
+                <span class="fg-option-title">Multi-Cloud (AWS + GCP)</span>
+                <span class="fg-option-meta">10 строк · BilledCost vs EffectiveCost, Unused Commitment, Persistent Disk</span>
+              </button>
+
+              <button type="button" class="fg-option-card" id="presetBtnLlm" data-preset="llm_usage" aria-pressed="false">
+                <span class="fg-option-kicker">Опция 3 · LLM CSV</span>
+                <span class="fg-option-title">OpenAI + Anthropic API</span>
+                <span class="fg-option-meta">7 строк · gpt-4o, claude-3-7-sonnet, cached tokens, batch vs sync</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="fg-dropzone" id="csvDropZone">
+            <div>
+              <strong>Загрузка локального CSV-файла</strong>
+              <p class="fg-card-desc" style="margin-top:4px;">Перетащите файл `.csv` сюда или выберите его на диске. Обработка выполняется только в памяти браузера.</p>
+            </div>
+            <div class="fg-dropzone-actions">
+              <input type="file" id="csvFileInput" accept=".csv,text/csv" class="sr-only" />
+              <button type="button" class="btn btn-forest" id="btnUploadCsv">Выбрать CSV с диска</button>
+              <button type="button" class="btn" id="btnLoadMutationA" title="Загрузить изменённый AWS CUR (EC2 переведён на Savings Plan, удалён отцепленный EBS)">Тест-мутация A (AWS)</button>
+              <button type="button" class="btn" id="btnLoadMutationB" title="Загрузить изменённый LLM CSV (кэш 72% на gpt-4o + новый claude-3-7-sonnet)">Тест-мутация B (LLM)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline Real-Time Progress / Result Strip (ADR-024) -->
+        <div class="fg-progress-strip is-done" id="importProgressStrip" role="status" aria-live="polite">
+          <div class="fg-progress-top">
+            <span id="importProgressLabel">Готово: загружен базовый набор AWS CUR</span>
+            <span class="mono" id="importProgressTiming">100% · 0.0 мс</span>
+          </div>
+          <div class="fg-progress-track" aria-hidden="true">
+            <div class="fg-progress-fill" id="importProgressFill" style="width:100%;"></div>
+          </div>
+        </div>
+
+        <!-- Progressive Disclosure: Raw CSV Editor for live mutation testing -->
+        <details class="fg-drawer" style="margin-top:12px;" id="rawCsvDrawer">
+          <summary>Показать или изменить сырой текст CSV (для ручной проверки пересчёта)</summary>
+          <div class="fg-drawer-body">
+            <label for="rawCsvTextarea" class="sr-only">Содержимое CSV для локального пересчёта</label>
+            <textarea id="rawCsvTextarea" class="fg-csv-textarea" spellcheck="false"></textarea>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:center;">
+              <button type="button" class="btn btn-primary" id="btnApplyRawCsv">Пересчитать изменённый CSV</button>
+              <button type="button" class="btn" id="btnDownloadCurrentCsv">Скачать текущий CSV</button>
+              <span class="fg-card-desc" style="margin:0;">Любая правка суммы или колонки мгновенно обновит факты, оценки и контрольный отпечаток.</span>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- STEP 2: CONFIRMED BREAKDOWN + EXPLICIT ASSUMPTIONS + SAVINGS TABLE -->
+      <section class="fg-analysis-grid" id="sectionAnalysis" aria-label="Анализ подтверждённых расходов и расчёт экономии">
+        <!-- LEFT COLUMN: FACT BREAKDOWN & ASSUMPTION CONTROLS -->
+        <div class="fg-stack">
+          <article class="fg-card" aria-labelledby="headingConfirmedBreakdown">
+            <div class="fg-card-header">
+              <div>
+                <h2 class="fg-card-title" id="headingConfirmedBreakdown">Подтверждённые расходы по сервисам</h2>
+                <p class="fg-card-desc" id="confirmedBreakdownSub">Точная агрегация строк импортированного CSV без допущений.</p>
+              </div>
+              <span class="badge badge-fact">Факт по CSV</span>
+            </div>
+            <div class="fg-bar-list" id="serviceBreakdownList"></div>
+            <div id="focusReconciliationNote" style="margin-top:12px; font-size:12px; color:var(--cf-ink-secondary); display:none;"></div>
+          </article>
+
+          <article class="fg-card" aria-labelledby="headingAssumptions">
+            <div class="fg-card-header">
+              <div>
+                <h2 class="fg-card-title" id="headingAssumptions">Явные предположения модели экономии</h2>
+                <p class="fg-card-desc">Выберите 1 из 3 сценариев или задайте собственные ставки. Изменение сразу пересчитывает таблицу и PDF-план.</p>
+              </div>
+              <span class="badge badge-estimate">Параметры модели</span>
+            </div>
+
+            <div class="fg-segmented" role="group" aria-label="Три сценария предположений">
+              <button type="button" class="fg-seg-btn" id="scenarioBtnConservative" data-scenario="conservative" aria-pressed="false">Опция 1: Консервативный</button>
+              <button type="button" class="fg-seg-btn" id="scenarioBtnBase" data-scenario="base" aria-pressed="true">Опция 2: Базовый</button>
+              <button type="button" class="fg-seg-btn" id="scenarioBtnAggressive" data-scenario="aggressive" aria-pressed="false">Опция 3: Агрессивный</button>
+            </div>
+
+            <div class="fg-assumption-list">
+              <div class="fg-assumption-item">
+                <div class="fg-assumption-head">
+                  <label for="inpSpDiscount">1. Скидка 1-Yr Savings Plan / CUD на On-Demand вычисления (%)</label>
+                  <span class="mono" id="valSpDiscount">24%</span>
+                </div>
+                <div class="fg-assumption-controls">
+                  <input type="range" id="rngSpDiscount" min="0" max="45" step="1" value="24" aria-label="Скидка Savings Plan в процентах" />
+                  <input type="number" id="inpSpDiscount" class="fg-num-input" min="0" max="45" step="1" value="24" />
+                </div>
+                <div class="fg-assumption-note">Применяется только к On-Demand Compute / Managed DB. Уже покрытые SP/RI строки исключены.</div>
+              </div>
+
+              <div class="fg-assumption-item">
+                <div class="fg-assumption-head">
+                  <label for="inpIdleCleanup">2. Доля устранения Idle Storage и Unused Commitments (%)</label>
+                  <span class="mono" id="valIdleCleanup">70%</span>
+                </div>
+                <div class="fg-assumption-controls">
+                  <input type="range" id="rngIdleCleanup" min="0" max="100" step="5" value="70" aria-label="Доля очистки неиспользуемых ресурсов" />
+                  <input type="number" id="inpIdleCleanup" class="fg-num-input" min="0" max="100" step="5" value="70" />
+                </div>
+                <div class="fg-assumption-note">Учитывает, что часть старых снапшотов или обязательств может быть сохранена после сверки с владельцами.</div>
+              </div>
+
+              <div class="fg-assumption-item">
+                <div class="fg-assumption-head">
+                  <label for="inpNetworkOpt">3. Снижение NAT Gateway Bytes и шумных логов (%)</label>
+                  <span class="mono" id="valNetworkOpt">35%</span>
+                </div>
+                <div class="fg-assumption-controls">
+                  <input type="range" id="rngNetworkOpt" min="0" max="75" step="5" value="35" aria-label="Оптимизация NAT и логов" />
+                  <input type="number" id="inpNetworkOpt" class="fg-num-input" min="0" max="75" step="5" value="35" />
+                </div>
+                <div class="fg-assumption-note">VPC Gateway Endpoints (S3/DynamoDB) + политики ретеншна и фильтрации debug-логов.</div>
+              </div>
+
+              <div class="fg-assumption-item">
+                <div class="fg-assumption-head">
+                  <label for="inpLlmCache">4. Целевая доля LLM Prompt Caching (%)</label>
+                  <span class="mono" id="valLlmCache">45%</span>
+                </div>
+                <div class="fg-assumption-controls">
+                  <input type="range" id="rngLlmCache" min="0" max="85" step="5" value="45" aria-label="Целевая доля кэширования промптов LLM" />
+                  <input type="number" id="inpLlmCache" class="fg-num-input" min="0" max="85" step="5" value="45" />
+                </div>
+                <div class="fg-assumption-note">Применяется только к строкам, где фактический кэш ниже цели. Смешанная скидка на cache-read: 65%.</div>
+              </div>
+
+              <div class="fg-assumption-item">
+                <div class="fg-assumption-head">
+                  <label for="inpLlmRoute">5. Доля LLM-трафика на Batch API / малые модели (%)</label>
+                  <span class="mono" id="valLlmRoute">25%</span>
+                </div>
+                <div class="fg-assumption-controls">
+                  <input type="range" id="rngLlmRoute" min="0" max="60" step="5" value="25" aria-label="Доля переноса LLM на Batch и малые модели" />
+                  <input type="number" id="inpLlmRoute" class="fg-num-input" min="0" max="60" step="5" value="25" />
+                </div>
+                <div class="fg-assumption-note">Считается последовательно от остатка после Prompt Caching (без двойного учёта) при скидке 50% на перенесённый объём.</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- RIGHT COLUMN: SAVINGS MODEL TABLE WITH EXPLICIT FORMULAS -->
+        <div class="fg-stack">
+          <article class="fg-card" aria-labelledby="headingSavingsModel">
+            <div class="fg-card-header">
+              <div>
+                <h2 class="fg-card-title" id="headingSavingsModel">Расчёт экономии по рычагам (с открытыми формулами)</h2>
+                <p class="fg-card-desc">Каждый рычаг показывает подтверждённую базу из CSV (факт), применённую формулу и расчётную оценку.</p>
+              </div>
+              <span class="badge badge-estimate">Оценка по модели</span>
+            </div>
+
+            <div class="fg-table-wrap">
+              <table class="fg-table" aria-describedby="headingSavingsModel">
+                <thead>
+                  <tr>
+                    <th scope="col">Рычаг оптимизации и формула</th>
+                    <th scope="col" class="num">База CSV (Факт)</th>
+                    <th scope="col" class="num">Оценка / мес</th>
+                    <th scope="col" class="num">Оценка / год</th>
+                  </tr>
+                </thead>
+                <tbody id="leversTableBody"></tbody>
+                <tfoot id="leversTableFoot"></tfoot>
+              </table>
+            </div>
+
+            <div class="fg-caveat-box" id="modelCaveatBox">
+              <strong>Граница достоверности:</strong> суммы в колонке «База CSV (Факт)» подтверждены строками загруженного файла. Суммы в колонках «Оценка / мес» и «Оценка / год» являются модельной оценкой по явно заданным предположениям и требуют инженерной верификации (CPU p95, зависимости снапшотов, SLA задержки LLM) до внесения изменений в продакшен.
+            </div>
+          </article>
+
+          <!-- PROGRESSIVE DISCLOSURE DRAWERS (ADR-012) -->
+          <details class="fg-drawer" id="rowsDrawer">
+            <summary>Подтверждённые строки CSV и классификация (<span id="rowsDrawerCount" class="mono">0</span>)</summary>
+            <div class="fg-drawer-body">
+              <div class="fg-table-wrap">
+                <table class="fg-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Сервис / Модель</th>
+                      <th scope="col">Ресурс / Проект</th>
+                      <th scope="col">Класс строки (Факт)</th>
+                      <th scope="col" class="num">Сумма CSV</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rawRowsTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          <details class="fg-drawer" id="diagnosticsDrawer">
+            <summary>Диагностика парсера, маппинг колонок и контроль качества CSV</summary>
+            <div class="fg-drawer-body" id="diagnosticsBody" style="font-size:13px;"></div>
+          </details>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== VIEW 3: PRINTABLE A4 PDF PLAN ==================== -->
+    <section id="viewPrintPlan" class="is-hidden-view" aria-label="Печатный PDF-план оптимизации">
+      <div class="fg-print-toolbar no-print">
+        <div>
+          <strong>Печатный план готов к сохранению в PDF (A4)</strong>
+          <p class="fg-card-desc" id="printSyncStatus" style="margin:2px 0 0;">Синхронизирован с текущим CSV и активными предположениями.</p>
+        </div>
+        <div class="fg-print-actions">
+          <button type="button" class="btn" id="btnBackToAnalysis">← Назад к анализу</button>
+          <button type="button" class="btn" id="btnExportJson">Скачать JSON-отчёт</button>
+          <button type="button" class="btn" id="btnExportActionCsv">Скачать план (.csv)</button>
+          <button type="button" class="btn btn-primary" id="btnTriggerPrint">Печать / Сохранить PDF</button>
+        </div>
+      </div>
+
+      <!-- Inline Progress / Confirmation for Print & Export (ADR-024) -->
+      <div class="fg-progress-strip is-done no-print" id="exportProgressStrip" role="status" aria-live="polite" style="margin-bottom:16px;">
+        <div class="fg-progress-top">
+          <span id="exportProgressLabel">План оптимизации синхронизирован с текущим файлом CSV</span>
+          <span class="mono" id="exportProgressTiming">Актуален</span>
+        </div>
+        <div class="fg-progress-track" aria-hidden="true">
+          <div class="fg-progress-fill" id="exportProgressFill" style="width:100%;"></div>
+        </div>
+      </div>
+
+      <!-- ACTUAL PRINTABLE A4 SHEET -->
+      <article class="print-sheet" id="printablePlanSheet" aria-label="Печатный план оптимизации FinOpsGuard">
+        <div class="print-doc-header">
+          <div>
+            <div class="mono" style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cf-accent-primary); font-weight:600;">
+              Caliber Foundry · FinOpsGuard™ Audit Plan
+            </div>
+            <h2 class="print-doc-title">План оптимизации облачных и LLM-расходов</h2>
+            <div style="font-size:13px; color:var(--cf-ink-secondary);">
+              Документ разделяет подтверждённые расходы из CSV (Факт) и расчётную экономию (Оценка по явно указанным предположениям).
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="badge badge-fact" style="margin-bottom:4px;">Сверено с CSV</div>
+            <div class="mono" style="font-size:11.5px; color:var(--cf-ink-secondary);" id="printGeneratedAt">—</div>
+          </div>
+        </div>
+
+        <div class="print-meta-grid" id="printMetaGrid"></div>
+
+        <div class="print-summary-pair">
+          <div class="print-box fact-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:6px;">
+              <strong style="font-size:12px;">ПОДТВЕРЖДЁННЫЕ РАСХОДЫ</strong>
+              <span class="badge badge-fact">Факт по CSV</span>
+            </div>
+            <div class="mono" style="font-size:24px; font-weight:600;" id="printConfirmedTotal">$0.00</div>
+            <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:4px;" id="printConfirmedDetail">—</div>
+          </div>
+
+          <div class="print-box est-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:6px;">
+              <strong style="font-size:12px;">РАСЧЁТНЫЙ ПОТЕНЦИАЛ ЭКОНОМИИ</strong>
+              <span class="badge badge-estimate">Оценка модели</span>
+            </div>
+            <div class="mono" style="font-size:24px; font-weight:600;" id="printEstimatedTotal">$0.00 / мес</div>
+            <div style="font-size:12px; color:var(--cf-ink-secondary); margin-top:4px;" id="printEstimatedDetail">—</div>
+          </div>
+        </div>
+
+        <!-- PRINT SECTION 1: CONFIRMED SPEND -->
+        <div class="print-section">
+          <div class="print-section-head">
+            <h3>1. Подтверждённые расходы из CSV (Факт)</h3>
+            <span class="badge badge-fact">Подтверждено строками CSV</span>
+          </div>
+          <div class="fg-table-wrap">
+            <table class="fg-table">
+              <thead>
+                <tr>
+                  <th scope="col">Сервис / Провайдер</th>
+                  <th scope="col" class="num">Строк</th>
+                  <th scope="col" class="num">Доля счёта</th>
+                  <th scope="col" class="num">Подтверждённая сумма</th>
+                </tr>
+              </thead>
+              <tbody id="printServicesBody"></tbody>
+              <tfoot id="printServicesFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- PRINT SECTION 2: EXPLICIT ASSUMPTIONS -->
+        <div class="print-section">
+          <div class="print-section-head">
+            <h3>2. Явно указанные предположения расчёта</h3>
+            <span class="badge badge-estimate" id="printScenarioBadge">Сценарий: Базовый</span>
+          </div>
+          <div class="fg-table-wrap">
+            <table class="fg-table">
+              <thead>
+                <tr>
+                  <th scope="col">Параметр модели</th>
+                  <th scope="col" class="num">Заданное значение</th>
+                  <th scope="col">Правило применения и ограничение</th>
+                </tr>
+              </thead>
+              <tbody id="printAssumptionsBody"></tbody>
+            </table>
+          </div>
+          <div class="fg-caveat-box">
+            <strong>Методологическая оговорка:</strong> оценки экономии в разделе 3 получены исключительно на основе приведённых выше допущений и не являются гарантированным снижением счёта до выполнения указанных инженерных проверок.
+          </div>
+        </div>
+
+        <!-- PRINT SECTION 3: ACTIONABLE PLAN -->
+        <div class="print-section">
+          <div class="print-section-head">
+            <h3>3. План оптимизации и расчёт экономии (30 / 60 / 90 дней)</h3>
+            <span class="badge badge-estimate">Оценка + обязательная проверка</span>
+          </div>
+          <div class="fg-table-wrap">
+            <table class="fg-table">
+              <thead>
+                <tr>
+                  <th scope="col">Окно</th>
+                  <th scope="col">Мероприятие и формула расчёта</th>
+                  <th scope="col" class="num">База CSV (Факт)</th>
+                  <th scope="col" class="num">Оценка / мес</th>
+                  <th scope="col" class="num">Оценка / год</th>
+                  <th scope="col">Проверка до внедрения</th>
+                </tr>
+              </thead>
+              <tbody id="printPlanBody"></tbody>
+              <tfoot id="printPlanFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- PRINT SECTION 4: IMPORT INTEGRITY -->
+        <div class="print-section">
+          <div class="print-section-head">
+            <h3>4. Журнал целостности импорта CSV</h3>
+            <span class="badge badge-neutral">Аудит источника</span>
+          </div>
+          <div id="printIntegrityBox" style="font-size:12px; color:var(--cf-ink-secondary); line-height:1.5;"></div>
+        </div>
+
+        <footer class="print-footer">
+          <span>Caliber Foundry · FinOpsGuard™ (engineering@caliberfoundry.com)</span>
+          <span class="mono" id="printFooterChecksum">Контрольный отпечаток: —</span>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+    <footer class="fg-site-footer no-print">
+    <div class="fg-site-footer-inner" data-product-feedback>
+      <span>FinOpsGuard™ · Caliber Foundry</span>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;">
+        <a href="../#work">All products</a>
+        <a href="../pricing.html#price-finopsguard">Pricing</a>
+        <a href="mailto:engineering@caliberfoundry.com?subject=FinOpsGuard%20Cloud%20%26%20LLM%20Audit">engineering@caliberfoundry.com</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./app.js" defer></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

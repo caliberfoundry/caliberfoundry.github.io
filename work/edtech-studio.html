@@ -10,7 +10,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>AcademyForge · Practice lessons and course export | Caliber Foundry</title>
-  <meta name="description" content="Try a robotics, developer or assessment lesson in AcademyForge. See an explanation for each answer and download a SCORM 1.2 package for your learning management system." />
+  <meta name="description" content="Try a robotics, developer or assessment lesson in AcademyForge, watch three narrated 1080p 30fps technical micro-lessons with WebVTT captions, and download a SCORM 1.2 package for your LMS." />
   <link rel="canonical" href="https://caliberfoundry.com/work/edtech-studio.html" />
   <link rel="stylesheet" href="../edtech-studio/styles.css" />
 </head>
@@ -38,11 +38,66 @@
         <a href="../edtech-studio/?preset=saas-academy"><strong>Developer academy</strong><span>Handle a repeated webhook delivery.</span></a>
         <a href="../edtech-studio/?preset=clinical-ferpa"><strong>Bilingual assessment</strong><span>Interpret language evidence from two settings.</span></a>
         <a class="af-korean-link" href="../edtech-studio/?preset=steminno-kr&amp;lang=ko" lang="ko">한국어로 로보틱스 실습 열기 →</a>
+        <a href="../edtech-studio/guides/"><strong>EdTech calculators &amp; procurement guides</strong><span>10 interactive SCORM 1.2, item psychometric, HECVAT &amp; VPAT 2.5 tools.</span></a>
       </div>
     </section>
+
+    <section class="af-micro-showcase" id="voiced-micro-lessons" aria-labelledby="microLessonsHeading">
+      <div class="af-micro-head">
+        <h2 id="microLessonsHeading">Voiced 30-second technical micro-lessons</h2>
+        <span class="af-micro-spec">3 × 30.0s · 1920×1080 · 30 fps · 48 kHz Stereo · WebVTT</span>
+      </div>
+      <div class="af-micro-grid">
+        <article class="af-micro-card">
+          <span class="af-micro-kicker">01 · U.S. Customs 19 CFR</span>
+          <h3>Entry Release (§ 142.3) &amp; Commercial Invoice Audit (§ 141.86)</h3>
+          <video id="edtech04Video1" class="af-video-el" controls loading="lazy" width="1920" height="1080" preload="metadata" playsinline poster="../edtech-studio/assets/lesson-01-19cfr-customs-entry-invoice-poster.jpg">
+            <source src="../edtech-studio/assets/lesson-01-19cfr-customs-entry-invoice.mp4" type="video/mp4" />
+            <track kind="captions" srclang="en" label="English" src="../edtech-studio/assets/lesson-01-19cfr-customs-entry-invoice.vtt" default />
+          </video>
+          <span class="af-micro-meta">30.0s · GovInfo 19 CFR §§ 141.86, 142.3 &amp; 111.23</span>
+          <details class="af-micro-transcript">
+            <summary>Read narration transcript</summary>
+            <p>Under Title 19 CFR, incomplete commercial invoices routinely stall cargo release at U.S. ports. 19 CFR § 142.3 requires CBP Form 3461, right-to-make-entry proof, and a compliant invoice. 19 CFR § 141.86 mandates port of entry, exact descriptions, currency, itemized charges, origin, and assists. Vague descriptions trigger CBP holds, and § 111.23 requires five-year U.S. record retention. Audit every § 141.86 invoice field before filing entry. Practice live citations in CodeDrill.</p>
+          </details>
+          <a class="af-micro-cta" href="../codedrill-cbt/">Practice 19 CFR in CodeDrill →</a>
+        </article>
+
+        <article class="af-micro-card">
+          <span class="af-micro-kicker">02 · RAG Citation Verification</span>
+          <h3>Provenance Spans &amp; Entailment Gates (NIST AI 600-1)</h3>
+          <video id="edtech04Video2" class="af-video-el" controls loading="lazy" width="1920" height="1080" preload="metadata" playsinline poster="../edtech-studio/assets/lesson-02-rag-citation-verification-poster.jpg">
+            <source src="../edtech-studio/assets/lesson-02-rag-citation-verification.mp4" type="video/mp4" />
+            <track kind="captions" srclang="en" label="English" src="../edtech-studio/assets/lesson-02-rag-citation-verification.vtt" default />
+          </video>
+          <span class="af-micro-meta">30.0s · NIST AI 600-1 (MS-2.5-003 &amp; MS-2.5-005)</span>
+          <details class="af-micro-transcript">
+            <summary>Read narration transcript</summary>
+            <p>In enterprise RAG, retrieving a relevant document chunk never guarantees an accurate citation. NIST AI 600-1 calls for provenance grounding: lock exact spans, match numbers, and test entailment. Compare each generated claim against its exact page and table cell before showing any answer. If the retrieved span does not entail the claim, block generation and abstain cleanly. Never trust unverified footnotes. Inspect page-and-cell RAG citation gates in OmniRAG.</p>
+          </details>
+          <a class="af-micro-cta" href="../omnirag/">Inspect citations in OmniRAG →</a>
+        </article>
+
+        <article class="af-micro-card">
+          <span class="af-micro-kicker">03 · Security &amp; Accessibility</span>
+          <h3>Cloud Controls in SOC 2 (CC1–CC9) vs. VPAT® 2.5 ACR</h3>
+          <video id="edtech04Video3" class="af-video-el" controls loading="lazy" width="1920" height="1080" preload="metadata" playsinline poster="../edtech-studio/assets/lesson-03-soc2-controls-vs-vpat-poster.jpg">
+            <source src="../edtech-studio/assets/lesson-03-soc2-controls-vs-vpat.mp4" type="video/mp4" />
+            <track kind="captions" srclang="en" label="English" src="../edtech-studio/assets/lesson-03-soc2-controls-vs-vpat.vtt" default />
+          </video>
+          <span class="af-micro-meta">30.0s · AICPA SOC 2® &amp; ITI VPAT® 2.5 / Section 508</span>
+          <details class="af-micro-transcript">
+            <summary>Read narration transcript</summary>
+            <p>In enterprise procurement, a SOC 2 security report never replaces a VPAT accessibility report. SOC 2 documents cloud boundaries and CC1–CC9 controls, tested across months in Type 2. Meanwhile, an ITI VPAT builds an Accessibility Conformance Report for WCAG and Section 508. SOC 2 proves cloud security to CISOs, while VPAT proves inclusive interface access to buyers. Pair attested SOC 2 controls with an honest VPAT ACR. Explore both workflows in DealShield.</p>
+          </details>
+          <a class="af-micro-cta" href="../dealshield/">Open SOC 2 &amp; VPAT in DealShield →</a>
+        </article>
+      </div>
+    </section>
+
     <div class="af-case-details">
-      <details><summary>Watch the 30-second walkthrough</summary>
-        <video id="workEdtechVideo" class="af-video-el" controls preload="metadata" playsinline poster="../edtech-studio/assets/academyforge_demo_poster.jpg"><source src="../edtech-studio/assets/academyforge_demo_lesson.mp4" type="video/mp4" /></video>
+      <details><summary>Watch the 30-second AcademyForge studio walkthrough</summary>
+        <video id="workEdtechVideo" class="af-video-el" controls loading="lazy" width="1280" height="720" preload="metadata" playsinline poster="../edtech-studio/assets/academyforge_demo_poster.jpg"><source src="../edtech-studio/assets/academyforge_demo_lesson.mp4" type="video/mp4" /></video>
       </details>
       <details><summary>Course files, scoring and licensing</summary>
         <p>The SCORM 1.2 ZIP contains the lesson, its runtime adapter and the manifest. Practice here stays in your browser. Your learning management system records new attempts when it accepts scores from the downloaded lesson.</p>
@@ -50,7 +105,7 @@
       </details>
     </div>
   </main>
-  <footer class="af-studio-footer"><a href="../index.html">Caliber Foundry</a><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a><div class="cf-account-cluster"></div></footer>
+  <footer class="af-studio-footer"><a href="../index.html">Caliber Foundry</a><a href="../pricing.html#price-edtech-studio">Pricing</a><a href="mailto:engineering@caliberfoundry.com">Contact engineering</a><div class="cf-account-cluster"></div></footer>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </body>
 </html>

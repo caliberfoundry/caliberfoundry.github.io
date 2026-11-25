@@ -1,0 +1,21 @@
+WEBVTT
+
+1
+00:00:00.250 --> 00:00:05.375
+In enterprise RAG, retrieving a relevant document chunk never guarantees an accurate citation.
+
+2
+00:00:06.250 --> 00:00:11.377
+NIST AI 600-1 calls for provenance grounding: lock exact spans, match numbers, and test entailment.
+
+3
+00:00:12.250 --> 00:00:17.384
+Compare each generated claim against its exact page and table cell before showing any answer.
+
+4
+00:00:18.250 --> 00:00:23.408
+If the retrieved span does not entail the claim, block generation and abstain cleanly.
+
+5
+00:00:24.250 --> 00:00:29.384
+Never trust unverified footnotes. Inspect page-and-cell RAG citation gates in OmniRAG.

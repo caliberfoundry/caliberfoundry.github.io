@@ -1,0 +1,5 @@
+Item_Code	Subsystem	Specification	Scheduled_Value	Compliance_Note
+BOM-01	Inverter Array	20 x 2.5 MW AC Utility Inverters	50.0 MW	Exceeds 42.5 MW substation interconnection permit limit
+BOM-02	Transformer Upgrade	Optional 55 MVA Substation Transformer	$11,400,000	Required if continuous AC output exceeds 42.5 MW
+BOM-03	Land Lease Horizon	Travis County TX 480-Acre Parcel	35 years	Aligned with December 31, 2061 lease expiration
+BOM-04	Annual Fee Cap	Site Monitoring Software License	$50,000	Matches 30-day payment terms in SLA addendum

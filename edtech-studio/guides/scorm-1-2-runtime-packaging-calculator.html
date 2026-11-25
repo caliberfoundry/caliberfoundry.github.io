@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>SCORM 1.2 cmi.suspend_data Budget &amp; Packaging Calculator | Caliber Foundry</title>
+  <meta name="description" content="Calculate SCORM 1.2 cmi.suspend_data character budgets against the 4,096-character ADL Smallest Permitted Maximum, prevent LMS Error 405 truncation, and test your SCORM Run-Time API mastery." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/scorm-1-2-runtime-packaging-calculator.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="SCORM 1.2 Run-Time &amp; cmi.suspend_data 4,096-Char Calculator" />
+  <meta property="og:description" content="Interactive SCORM 1.2 state serializer budget calculator, package cost estimator, and 3-question ADL Run-Time Environment diagnostic." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/scorm-1-2-runtime-packaging-calculator.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "SCORM 1.2 Run-Time Environment & cmi.suspend_data 4,096-Character Budget Calculator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/scorm-1-2-runtime-packaging-calculator.html",
+    "educationalUse": ["Interactive Calculator", "Self-Assessment"],
+    "citation": [
+      "https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/",
+      "https://adlnet.gov/projects/scorm/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="scorm-1-2">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">01 · SCORM 1.2 Runtime</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./psychometric-item-writing-distractor-analyzer.html" class="eg-nav-link">Next: Item Psychometrics →</a>
+        <a href="../index.html" class="eg-nav-cta">Export SCORM in AcademyForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Model cmi.suspend_data Budget</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item SCORM API Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Inspect ADL RTE Reference</a></li>
+      </ol>
+      <span class="eg-std-pill">ADL SCORM 1.2 RTE · SPM 4,096 Chars</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 01 of 10 · LMS Packaging &amp; Run-Time Interoperability</span>
+      <h1 class="eg-title">SCORM 1.2 cmi.suspend_data Budget &amp; Packaging Calculator</h1>
+      <p class="eg-subtitle">Under the ADL SCORM 1.2 Run-Time Environment specification, an LMS is only required to accept 4,096 characters in <span class="mono">cmi.suspend_data</span>. Test whether your course bookmarking and quiz state will survive resume across Moodle, Canvas, Docebo, and Cornerstone.</p>
+
+      <div class="eg-kpi-strip" aria-label="SCORM 1.2 runtime metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Serialized State Size</span>
+          <span class="eg-kpi-value" id="kpiVal1">255 / 4,096</span>
+          <span class="eg-kpi-note" id="kpiNote1">cmi.suspend_data chars (6.2%)</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">SPM Headroom</span>
+          <span class="eg-kpi-value" id="kpiVal2">+3,841 chars</span>
+          <span class="eg-kpi-note" id="kpiNote2">Headroom under ADL SPM</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Completion Mapping</span>
+          <span class="eg-kpi-value" id="kpiVal3">passed / incomplete</span>
+          <span class="eg-kpi-note" id="kpiNote3">cmi.core.lesson_status pair</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Turnkey Build Estimate</span>
+          <span class="eg-kpi-value" id="kpiVal4">$505</span>
+          <span class="eg-kpi-note" id="kpiNote4">Estimated turnkey SCORM build</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="scormPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="scormPresetHeading">Step 1 — Pick 1 of 3 Course Scenarios (or Edit Parameters)</h2>
+        <span class="eg-section-hint">Compare compact bitpacking against verbose JSON state serialization</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="SCORM 1.2 course presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Compact Micro-Course</span>
+          <span class="eg-option-title">18 Screens · 10 Items · Bitpacked</span>
+          <span class="eg-option-desc">Uses ~6% of the 4,096-character limit with explicit passed/incomplete gradebook commits.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Standard JSON Module</span>
+          <span class="eg-option-title">45 Screens · 30 Items · Standard JSON</span>
+          <span class="eg-option-desc">Approaches 75% of the ADL ceiling; safe on modern cloud LMS platforms but tight for verbose rationales.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Overflow Failure Case</span>
+          <span class="eg-option-title">65 Screens · 45 Items · Verbose JSON</span>
+          <span class="eg-option-desc">Exceeds 4,096 characters and omits lesson_status—reproduces silent resume corruption in strict LMS runtimes.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="SCORM 1.2 budget calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">SCORM 1.2 State &amp; Packaging Inputs</h2>
+            <p class="eg-panel-sub">Every input updates character consumption and overflow status immediately.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpSlides"><span>Lesson Screens / Slides</span><span class="eg-unit">3–150</span></label>
+            <input class="eg-input" type="number" id="inpSlides" min="3" max="150" value="18" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpQuestions"><span>Graded Quiz Questions</span><span class="eg-unit">1–120</span></label>
+            <input class="eg-input" type="number" id="inpQuestions" min="1" max="120" value="10" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpBookmarkBytes"><span>Stored State per Item</span><span class="eg-unit">chars/item</span></label>
+            <input class="eg-input" type="number" id="inpBookmarkBytes" min="8" max="220" value="28" data-calc-input />
+            <span class="eg-help">Choice index + timestamp (~28) vs. full prompt text (~95+).</span>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selEncoding"><span>State Serializer Format</span><span class="eg-unit">Encoding</span></label>
+            <select class="eg-select" id="selEncoding" data-calc-input>
+              <option value="compact" selected>Compact Bitpack / Index Array (0.52x)</option>
+              <option value="json">Minified JSON Keys (1.00x)</option>
+              <option value="verbose-json">Verbose Authoring Tool JSON (1.55x)</option>
+            </select>
+          </div>
+          <div class="eg-field eg-field-wide">
+            <label class="eg-label" for="selMasteryMode"><span>Gradebook Status Reporting Pattern</span><span class="eg-unit">cmi.core.lesson_status</span></label>
+            <select class="eg-select" id="selMasteryMode" data-calc-input>
+              <option value="passed-incomplete" selected>Explicit "passed" / "incomplete" + score.raw (Recommended)</option>
+              <option value="completed-passed">"completed" on finish + mastery_score check</option>
+              <option value="raw-only">Write cmi.core.score.raw only (Common LMS Gradebook Bug)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Verify SCORM Budget →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download SCORM Spec JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">ADL SCORM 1.2 Conformance Readout</h2>
+            <p class="eg-panel-sub">Evaluated against the mandatory 4,096-character SPM and LMS gradebook rules.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">SAFE · 6.2% OF 4,096 SPM</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">255 chars (6.2% of SPM)</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="SCORM 1.2 payload breakdown">
+          <thead><tr><th>Payload / Package Element</th><th style="text-align:right;">Calculated Value</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../index.html" class="eg-btn-secondary">Download Working SCORM 1.2 ZIP in AcademyForge →</a>
+          <a href="../../work/edtech-studio.html" class="eg-btn-ghost">AcademyForge Case Study</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="takeawaysHeading">
+      <h2 class="eg-section-heading" id="takeawaysHeading">Key Verified SCORM 1.2 Engineering Rules</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>4,096-Character Ceiling:</strong> SCORM 1.2 defines <span class="mono">cmi.suspend_data</span> with an SPM of 4,096 ASCII characters (unlike SCORM 2004 3rd/4th Edition's 64,000-character limit).</li>
+        <li><strong>String-Typed API Calls:</strong> Every <span class="mono">window.API</span> method (<span class="mono">LMSInitialize("")</span>, <span class="mono">LMSCommit("")</span>, <span class="mono">LMSFinish("")</span>) requires an empty-string argument <span class="mono">""</span>—passing <span class="mono">null</span> or omitting it triggers Error 201 on strict adapters.</li>
+        <li><strong>Single Vocabulary Element:</strong> Unlike SCORM 2004 (which splits completion and success), SCORM 1.2 merges both into <span class="mono">cmi.core.lesson_status</span> (<span class="mono">passed, completed, failed, incomplete, browsed, not attempted</span>).</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="quizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="quizHeading">Step 2 — 3-Question SCORM 1.2 Run-Time Diagnostic</h2>
+          <p class="eg-panel-sub">Select an answer on each scenario to verify your LMS integration logic.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. A learner completes 28 of 40 questions, closes the browser, and reopens the course in Moodle with SCORM 1.2 strict mode enabled. Their progress resets to Slide 1 because the SCO wrote a 5,400-character JSON string to <span class="mono">cmi.suspend_data</span>. Why?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="ADL SCORM 1.2 specifies a Smallest Permitted Maximum (SPM) of 4,096 characters for cmi.suspend_data; strict LMS adapters reject or truncate writes above 4,096 characters (Error 405).">A. SCORM 1.2 only mandates 4,096 characters for cmi.suspend_data, so strict LMS runtimes reject or truncate larger writes with Error 405.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="cmi.core.lesson_location is limited to 255 characters for a single bookmark pointer; full state belongs in cmi.suspend_data within 4,096 characters.">B. SCORM 1.2 requires quiz arrays to be stored inside cmi.core.lesson_location, which holds up to 64,000 characters.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="LMSCommit('') persists data mid-session without ending the session; LMSFinish('') terminates the communication session.">C. Moodle ignores cmi.suspend_data unless LMSFinish('') is called after every single question.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. Which JavaScript sequence accurately records an 85% passing score and persists it immediately to a SCORM 1.2 LMS adapter without closing the learner's active session?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Terminate() and cmi.score.scaled belong to SCORM 2004 (window.API_1484_11), not SCORM 1.2 (window.API).">A. API.SetValue("cmi.score.scaled", "0.85"); API.Terminate("");</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="SCORM 1.2 uses LMSSetValue on cmi.core.score.raw ('0'–'100'), cmi.core.score.min/max, cmi.core.lesson_status, and flushes via LMSCommit('') while keeping the session open.">B. API.LMSSetValue("cmi.core.score.raw", "85"); API.LMSSetValue("cmi.core.lesson_status", "passed"); API.LMSCommit("");</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Passing no argument to LMSCommit() violates the SCORM 1.2 signature LMSCommit('') and triggers Error 201 on strict LMS implementations.">C. API.LMSSetValue("cmi.core.score.raw", 85); API.LMSCommit();</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. Where must <span class="mono">imsmanifest.xml</span> reside inside a valid SCORM 1.2 <span class="mono">.zip</span> archive so Canvas, Docebo, and Moodle import the package without an "Invalid Manifest" error?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Zipping a parent folder places imsmanifest.xml at /course-folder/imsmanifest.xml, which is the #1 cause of LMS import rejection.">A. Inside a single top-level subfolder named /scorm_package/imsmanifest.xml.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Per the ADL Content Aggregation Model (CAM), imsmanifest.xml must sit at the exact root of the ZIP archive with adlcp:scormtype='sco' on launchable SCO resources.">B. Directly at the root level of the ZIP archive (/imsmanifest.xml), referencing the launch HTML resource with adlcp:scormtype="sco".</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Manifests are XML files (imsmanifest.xml) at the archive root, not JSON files inside /assets/.">C. Inside /assets/manifest.json alongside the course stylesheet.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="Technical specifications and sources">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Minimal Zero-Dependency SCORM 1.2 API Discovery Snippet</span></summary>
+        <div class="eg-drawer-body">
+          <p>A compliant SCORM 1.2 SCO walks parent and opener frames (up to 7 levels) to locate <span class="mono">window.API</span>, initializes with <span class="mono">""</span>, and guards offline/standalone preview gracefully:</p>
+          <pre class="eg-code">function findScorm12Api(win) {
+  var depth = 0;
+  while (win &amp;&amp; !win.API &amp;&amp; win.parent &amp;&amp; win.parent !== win &amp;&amp; depth &lt; 7) {
+    depth += 1;
+    win = win.parent;
+  }
+  return (win &amp;&amp; win.API) || (window.opener &amp;&amp; window.opener.API) || null;
+}
+// Always pass "" to SCORM 1.2 session calls:
+// api.LMSInitialize(""); api.LMSSetValue("cmi.core.score.raw", "90"); api.LMSCommit("");</pre>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public Standards &amp; References</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://adlnet.gov/projects/scorm/" target="_blank" rel="noopener noreferrer">Advanced Distributed Learning (ADL) Initiative — Official SCORM Specification Overview</a></li>
+            <li><a href="https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/" target="_blank" rel="noopener noreferrer">SCORM 1.2 Run-Time Environment Data Model Reference (cmi.core &amp; cmi.suspend_data SPM = 4,096)</a></li>
+            <li>Compare live SCORM 1.2 export directly in <a href="../index.html">AcademyForge Practice &amp; Export Studio</a> or explore <a href="./xapi-cmi5-vs-scorm-lms-telemetry-selector.html">Guide 10: SCORM 1.2 vs. cmi5 vs. xAPI Selector</a>.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 01/10 · SCORM 1.2 Run-Time &amp; Packaging</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./psychometric-item-writing-distractor-analyzer.html">Next: Psychometric Item Writing →</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

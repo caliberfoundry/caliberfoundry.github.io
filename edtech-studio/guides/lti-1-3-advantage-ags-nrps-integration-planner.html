@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>1EdTech LTI 1.3 Advantage, AGS 2.0 &amp; Deep Linking Scope Calculator | Caliber Foundry</title>
+  <meta name="description" content="Calculate engineering hours and sprint cost for 1EdTech LTI 1.3 OIDC Third-Party Login, RS256 JWKS key rotation, Assignment &amp; Grade Services (AGS 2.0), Deep Linking 2.0, and NRPS across Canvas, Moodle, Blackboard, and D2L." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/lti-1-3-advantage-ags-nrps-integration-planner.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="1EdTech LTI 1.3 Advantage &amp; AGS 2.0 Integration Scope Planner" />
+  <meta property="og:description" content="Estimate multi-tenant LTI 1.3 OIDC launch, gradebook passback, and LMS certification effort." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/lti-1-3-advantage-ags-nrps-integration-planner.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "1EdTech LTI 1.3 Advantage, AGS 2.0 & Deep Linking Integration Planner",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/lti-1-3-advantage-ags-nrps-integration-planner.html",
+    "educationalUse": ["Interactive Calculator", "Architecture Check"],
+    "citation": [
+      "https://www.1edtech.org/standards/lti",
+      "https://www.imsglobal.org/spec/lti/v1p3/",
+      "https://www.imsglobal.org/spec/lti-ags/v2p0"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="lti-1-3">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">05 · LTI 1.3 Advantage</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./iti-vpat-2-5-acr-conformance-estimator.html" class="eg-nav-link">← Prev: VPAT 2.5</a>
+        <a href="./qti-3-0-item-bank-migration-estimator.html" class="eg-nav-link">Next: QTI 3.0 Migration →</a>
+        <a href="../index.html" class="eg-nav-cta">Try AcademyForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Scope LTI 1.3 Stack</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item OIDC &amp; AGS Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> OIDC Handshake &amp; Official Specs</a></li>
+      </ol>
+      <span class="eg-std-pill">1EdTech LTI 1.3 · AGS 2.0 · NRPS 2.0</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 05 of 10 · LMS Tool Provider Architecture</span>
+      <h1 class="eg-title">1EdTech LTI 1.3 Advantage, AGS 2.0 &amp; Deep Linking Integration Planner</h1>
+      <p class="eg-subtitle">Legacy LTI 1.1 shared OAuth 1.0a secrets are deprecated across university procurement. Scope a modern 1EdTech LTI 1.3 Advantage integration using OpenID Connect (OIDC) third-party login, RS256 JWKS endpoints, Assignment and Grade Services (AGS 2.0), and Deep Linking 2.0.</p>
+
+      <div class="eg-kpi-strip" aria-label="LTI 1.3 integration metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Engineering Effort</span>
+          <span class="eg-kpi-value" id="kpiVal1">100 hrs</span>
+          <span class="eg-kpi-note" id="kpiNote1">Total engineering &amp; QA effort</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Turnkey Sprint Estimate</span>
+          <span class="eg-kpi-value" id="kpiVal2">$11,500</span>
+          <span class="eg-kpi-note" id="kpiNote2">Estimated fixed-scope sprint</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">LMS Test Matrix</span>
+          <span class="eg-kpi-value" id="kpiVal3">2 LMS platforms</span>
+          <span class="eg-kpi-note" id="kpiNote3">Canvas, Moodle, Blackboard, D2L</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Advantage Services</span>
+          <span class="eg-kpi-value" id="kpiVal4">OIDC + AGS 2.0 + DL 2.0</span>
+          <span class="eg-kpi-note" id="kpiNote4">1EdTech specification stack</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="ltiPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="ltiPresetHeading">Step 1 — Select 1 of 3 LTI 1.3 Tool Architectures (or Adjust Parameters)</h2>
+        <span class="eg-section-hint">Models multi-tenant issuer registration and LMS sandbox quirks</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="LTI 1.3 presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · SaaS Courseware Standard</span>
+          <span class="eg-option-title">Canvas + Moodle · AGS 2.0 + Deep Link</span>
+          <span class="eg-option-desc">Multi-tenant OIDC login, module picker inside LMS assignments, and automated gradebook score sync.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Full University Advantage</span>
+          <span class="eg-option-title">4 Major LMSs · AGS + DL + NRPS Roster</span>
+          <span class="eg-option-desc">Full 4-LMS verification (Canvas, Moodle, Blackboard Ultra, Brightspace D2L) with roster provisioning.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · Single-Tenant Launch MVP</span>
+          <span class="eg-option-title">1 LMS · OIDC SSO Launch Only</span>
+          <span class="eg-option-desc">Lightweight SSO embed for ungraded labs; flags gradebook sync warning if graded items exceed 5.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="LTI 1.3 planner">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">LTI 1.3 Architecture &amp; LMS Scope Inputs</h2>
+            <p class="eg-panel-sub">Modify LMS count, Advantage extensions, or tenancy to recompute engineering hours.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpLmsTargets"><span>Target LMS Platforms</span><span class="eg-unit">1–8</span></label>
+            <input class="eg-input" type="number" id="inpLmsTargets" min="1" max="8" value="2" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpAssessments"><span>Graded LineItems / Labs</span><span class="eg-unit">1–200</span></label>
+            <input class="eg-input" type="number" id="inpAssessments" min="1" max="200" value="12" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selTenancy"><span>Registration Tenancy Model</span><span class="eg-unit">Issuers</span></label>
+            <select class="eg-select" id="selTenancy" data-calc-input>
+              <option value="multi-tenant" selected>Multi-Tenant SaaS (iss + client_id + deployment_id)</option>
+              <option value="single-tenant">Single-Institution Dedicated Instance</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selServices"><span>LTI Advantage Extensions</span><span class="eg-unit">1EdTech</span></label>
+            <select class="eg-select" id="selServices" data-calc-input>
+              <option value="ags-dl" selected>AGS 2.0 Gradebook + Deep Linking 2.0</option>
+              <option value="full-advantage">Full Advantage (AGS 2.0 + Deep Linking + NRPS 2.0)</option>
+              <option value="ags-only">AGS 2.0 Gradebook Passback Only</option>
+              <option value="launch-only">Core LTI 1.3 OIDC Launch Only (No Grades)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Calculate LTI 1.3 Plan →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download LTI Architecture JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Engineering Workstream Breakdown</h2>
+            <p class="eg-panel-sub">Includes OIDC state/nonce hardening, Partitioned cookie support, and LMS QA.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">1EDTECH LTI 1.3 ADVANTAGE ARCHITECTURE</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">100 Eng Hours · $11,500</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="LTI 1.3 hours breakdown">
+          <thead><tr><th>Integration Component</th><th style="text-align:right;">Estimated Effort</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../../work/edtech-studio.html" class="eg-btn-secondary">Compare SCORM 1.2 Zero-Backend Alternative →</a>
+          <a href="./educause-hecvat-vendor-readiness-scorer.html" class="eg-btn-ghost">HECVAT Security Scorer</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="ltiTakeaways">
+      <h2 class="eg-section-heading" id="ltiTakeaways">Three Production Traps in LTI 1.3 Advantage Deployments</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Composite Tenant Lookup:</strong> Canvas Cloud shares a single <span class="mono">iss</span> (<span class="mono">https://canvas.instructure.com</span>) across universities—always key tenants by <span class="mono">iss + client_id + deployment_id</span>.</li>
+        <li><strong>Third-Party Cookie Blocking in Iframes:</strong> Safari ITP and Chrome iframe policies drop unpartitioned session cookies; use LTI Platform Storage (<span class="mono">postMessage</span>) or <span class="mono">SameSite=None; Secure; Partitioned</span> state validation.</li>
+        <li><strong>Publish a Public JWKS URL, Not Static PEM Files:</strong> University LMS admins paste PEM keys manually far slower than registering a live <span class="mono">/.well-known/jwks.json</span> endpoint with <span class="mono">kid</span> rotation.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="ltiQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="ltiQuizHeading">Step 2 — 3-Question 1EdTech LTI 1.3 Architecture Check</h2>
+          <p class="eg-panel-sub">Verify OIDC security, JWKS signing, and AGS 2.0 grade passback.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. How does 1EdTech LTI 1.3 replace the deprecated LTI 1.1 shared consumer secret (<span class="mono">oauth_consumer_key</span> / HMAC-SHA1)?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="LTI 1.3 adopts the 1EdTech Security Framework: OpenID Connect Third-Party Initiated Login paired with OAuth 2.0 Client Credentials JWT assertions signed with asymmetric RS256 keys exposed via JWKS.">A. OpenID Connect (OIDC) third-party initiated login and asymmetric RS256-signed JWTs verified against public JSON Web Key Sets (JWKS).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Basic Auth headers are never used for LTI 1.3 launches.">B. HTTP Basic Auth headers transmitted inside the iframe URL query string.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="window.API belongs to SCORM 1.2 packages hosted inside the LMS, not external LTI 1.3 tool providers.">C. Synchronous window.API.LMSSetValue calls across cross-origin domains.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. Which LTI Advantage service lets an instructor browse your catalog of 25 labs inside Canvas and insert a direct graded link to Lab #7 without copying URLs?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="NRPS (Names and Role Provisioning Services) retrieves course membership rosters, not content selection.">A. Names and Role Provisioning Services (NRPS v2.0).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="LTI Deep Linking v2.0 returns signed ltiResourceLink items (including optional lineItem score maximums) directly into the LMS module builder.">B. LTI Deep Linking v2.0 (returning a signed JWT containing ltiResourceLink and lineItem definitions).</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="IMS Caliper is an event analytics specification, not a content-picker flow.">C. 1EdTech Caliper Analytics Sensor API.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. When posting a student's score via LTI Assignment and Grade Services (AGS v2.0) to <span class="mono">/lineitems/{id}/scores</span>, which OAuth 2.0 scope is required on the bearer token?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Per 1EdTech LTI AGS v2.0, posting score updates requires the https://purl.imsglobal.org/spec/lti-ags/scope/score OAuth 2.0 scope.">A. https://purl.imsglobal.org/spec/lti-ags/scope/score</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="contextmembership.readonly is the NRPS roster read scope; it cannot write grades.">B. https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="result.readonly only reads gradebook results; it cannot post scores.">C. https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="1EdTech LTI 1.3 specifications">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — 4-Step LTI 1.3 OIDC Launch Sequence</span></summary>
+        <div class="eg-drawer-body">
+          <pre class="eg-code">1. LMS -> Tool /oidc/init:    GET/POST iss, login_hint, target_link_uri, lti_message_hint, client_id
+2. Tool -> LMS Auth Endpoint: Redirect with state, nonce, response_mode=form_post, prompt=none, scope=openid
+3. LMS -> Tool /lti/launch:   POST signed id_token (RS256 JWT) containing roles, context, and AGS endpoints
+4. Tool Verification:         Verify JWT signature via LMS JWKS, check aud/iss/exp, consume single-use nonce</pre>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public 1EdTech Specifications</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.1edtech.org/standards/lti" target="_blank" rel="noopener noreferrer">1EdTech Learning Tools Interoperability (LTI 1.3 &amp; LTI Advantage) Official Hub</a></li>
+            <li><a href="https://www.imsglobal.org/spec/lti/v1p3/" target="_blank" rel="noopener noreferrer">1EdTech LTI Core Specification v1.3</a></li>
+            <li><a href="https://www.imsglobal.org/spec/lti-ags/v2p0" target="_blank" rel="noopener noreferrer">1EdTech LTI Assignment and Grade Services (AGS) v2.0 Specification</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 05/10 · 1EdTech LTI 1.3 Advantage Planner</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./qti-3-0-item-bank-migration-estimator.html">Next: 1EdTech QTI 3.0 Migration →</a>
+      <a href="../../work/edtech-studio.html">AcademyForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

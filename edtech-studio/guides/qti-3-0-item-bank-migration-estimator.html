@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <title>1EdTech QTI 3.0 Item Bank Migration &amp; MathML Estimator | Caliber Foundry</title>
+  <meta name="description" content="Estimate engineering hours and budget to convert CSV, JSON, QTI 1.2, or QTI 2.1 assessment banks into XSD-validated 1EdTech QTI 3.0 packages with accessible MathML and partial-credit response processing." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/guides/qti-3-0-item-bank-migration-estimator.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="1EdTech QTI 3.0 Item Bank Migration &amp; Scoring Calculator" />
+  <meta property="og:description" content="Calculate QTI 3.0 XML conversion effort across standard choice items, technology-enhanced interactions, and STEM MathML accessibility." />
+  <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/qti-3-0-item-bank-migration-estimator.html" />
+  <link rel="stylesheet" href="./edtech-guides.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "1EdTech QTI 3.0 Assessment Item Bank Migration Estimator",
+    "url": "https://caliberfoundry.com/edtech-studio/guides/qti-3-0-item-bank-migration-estimator.html",
+    "educationalUse": ["Interactive Calculator", "Self-Assessment"],
+    "citation": [
+      "https://www.1edtech.org/standards/qti",
+      "https://www.imsglobal.org/spec/qti/v3p0/"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    }
+  }
+  </script>
+</head>
+<body data-page-id="qti-3-0">
+  <header class="eg-header">
+    <div class="eg-header-inner">
+      <div class="eg-brand-group">
+        <a href="../../index.html#work" class="eg-brand-link">
+          <span class="eg-brand-mark" aria-hidden="true">CF</span>
+          <span>Caliber Foundry</span>
+        </a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <a href="./index.html" class="eg-hub-link">EdTech Guides</a>
+        <span class="eg-crumb-sep" aria-hidden="true">/</span>
+        <span class="eg-hub-link" aria-current="page">06 · QTI 3.0 Migration</span>
+      </div>
+      <div class="eg-header-actions">
+        <a href="./lti-1-3-advantage-ags-nrps-integration-planner.html" class="eg-nav-link">← Prev: LTI 1.3</a>
+        <a href="./ada-title-ii-wcag-courseware-deadline-calculator.html" class="eg-nav-link">Next: ADA Title II →</a>
+        <a href="../../content-studio/index.html" class="eg-nav-cta">Open ContentForge →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="eg-stepbar" aria-label="Guide navigation">
+    <div class="eg-stepbar-inner">
+      <ol class="eg-steps">
+        <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Estimate QTI 3.0 Migration</a></li>
+        <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item QTI XML Check</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> Inspect QTI 3.0 XML Structure</a></li>
+      </ol>
+      <span class="eg-std-pill">1EdTech QTI 3.0 · XSD &amp; MathML</span>
+    </div>
+  </nav>
+
+  <main class="eg-main">
+    <section class="eg-hero">
+      <span class="eg-kicker">Guide 06 of 10 · Portable Assessment &amp; Item Bank Interoperability</span>
+      <h1 class="eg-title">1EdTech QTI 3.0 Assessment Item Bank Migration Estimator</h1>
+      <p class="eg-subtitle">Certification bodies, K-12 districts, and university test engines exchange assessment banks using 1EdTech Question &amp; Test Interoperability (QTI 3.0). Estimate deterministic conversion hours from spreadsheets, QTI 1.2 (Canvas legacy), or QTI 2.1 into accessible QTI 3.0 packages.</p>
+
+      <div class="eg-kpi-strip" aria-label="QTI 3.0 migration metrics">
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Item Bank Volume</span>
+          <span class="eg-kpi-value" id="kpiVal1">250 items</span>
+          <span class="eg-kpi-note" id="kpiNote1">38 TEI / hotspot / multi-part</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Conversion &amp; QA Effort</span>
+          <span class="eg-kpi-value" id="kpiVal2">33 hrs</span>
+          <span class="eg-kpi-note" id="kpiNote2">Automated transform + XSD QA</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">Turnkey Package Cost</span>
+          <span class="eg-kpi-value" id="kpiVal3">$3,465</span>
+          <span class="eg-kpi-note" id="kpiNote3">Turnkey QTI 3.0 migration</span>
+        </div>
+        <div class="eg-kpi-card">
+          <span class="eg-kpi-label">STEM Equation Layer</span>
+          <span class="eg-kpi-value" id="kpiVal4">MathML + ARIA</span>
+          <span class="eg-kpi-note" id="kpiNote4">STEM screen-reader layer</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-presets-section" id="calculator" aria-labelledby="qtiPresetHeading">
+      <div class="eg-section-bar">
+        <h2 class="eg-section-heading" id="qtiPresetHeading">Step 1 — Choose 1 of 3 Item Bank Migration Profiles (or Enter Counts)</h2>
+        <span class="eg-section-hint">Separates standard single-select items from technology-enhanced interactions (TEI)</span>
+      </div>
+      <div class="eg-options-grid" role="group" aria-label="QTI 3.0 migration presets">
+        <button type="button" class="eg-option-btn is-selected" data-preset-idx="0" aria-pressed="true">
+          <span class="eg-option-tag">Option 1 · Certification Bank</span>
+          <span class="eg-option-title">250 Items · CSV/JSON → QTI 3.0</span>
+          <span class="eg-option-desc">85% standard 4-choice items, 15% multi-select/matching with native MathML and feedback blocks.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="1" aria-pressed="false">
+          <span class="eg-option-tag">Option 2 · Legacy QTI 1.2 + Raster Math</span>
+          <span class="eg-option-title">1,200 Items · 35% Complex · PNG Math</span>
+          <span class="eg-option-desc">Upgrades legacy Canvas/Blackboard QTI 1.2 XML and converts rasterized equation images to MathML.</span>
+        </button>
+        <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
+          <span class="eg-option-tag">Option 3 · QTI 2.1 → QTI 3.0 Upgrade</span>
+          <span class="eg-option-title">600 Items · 20% TEI · Clean MathML</span>
+          <span class="eg-option-desc">Translates camelCase QTI 2.1 tags into hyphenated HTML5-aligned QTI 3.0 elements and PNP catalogs.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="eg-workbench-grid" aria-label="QTI 3.0 calculator">
+      <div class="eg-panel">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">Item Bank &amp; Interaction Complexity Inputs</h2>
+            <p class="eg-panel-sub">Change bank size, TEI percentage, or source format to recompute effort.</p>
+          </div>
+        </div>
+
+        <div class="eg-form-grid">
+          <div class="eg-field">
+            <label class="eg-label" for="inpTotalItems"><span>Total Assessment Items</span><span class="eg-unit">10–20,000</span></label>
+            <input class="eg-input" type="number" id="inpTotalItems" min="10" max="20000" value="250" data-calc-input />
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="inpComplexPct"><span>Complex / TEI Share</span><span class="eg-unit">0–100%</span></label>
+            <input class="eg-input" type="number" id="inpComplexPct" min="0" max="100" value="15" data-calc-input />
+            <span class="eg-help">Ordering, hotspot, inline-choice, partial credit, or PCI.</span>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selSourceFormat"><span>Current Source Format</span><span class="eg-unit">Input</span></label>
+            <select class="eg-select" id="selSourceFormat" data-calc-input>
+              <option value="csv-json" selected>Structured CSV / JSON / Markdown</option>
+              <option value="qti-2-1">1EdTech QTI 2.1 / 2.2 XML</option>
+              <option value="qti-1-2">Legacy QTI 1.2 (questestinterop) / Word</option>
+            </select>
+          </div>
+          <div class="eg-field">
+            <label class="eg-label" for="selMathAccessibility"><span>Formula &amp; STEM Notation</span><span class="eg-unit">WCAG / PNP</span></label>
+            <select class="eg-select" id="selMathAccessibility" data-calc-input>
+              <option value="mathml" selected>Clean LaTeX / Native MathML Ready</option>
+              <option value="latex-img">Embedded PNG/SVG Equation Images (Needs OCR/MathML)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="eg-actions-row">
+          <button type="button" class="eg-btn-primary" id="btnRunCalc">Calculate QTI 3.0 Scope →</button>
+          <button type="button" class="eg-btn-secondary" id="btnExportBrief">Download QTI Migration JSON</button>
+        </div>
+
+        <div class="eg-progress-box hidden" id="calcProgressBox" role="status" aria-live="polite">
+          <div class="eg-progress-head">
+            <span class="eg-progress-stage" id="calcProgStage">Ready</span>
+            <span class="eg-progress-eta" id="calcProgEta">100%</span>
+          </div>
+          <div class="eg-progress-track"><div class="eg-progress-fill" id="calcProgFill"></div></div>
+        </div>
+      </div>
+
+      <div class="eg-panel" aria-live="polite">
+        <div class="eg-panel-head">
+          <div>
+            <h2 class="eg-panel-title">QTI 3.0 Transformation Breakdown</h2>
+            <p class="eg-panel-sub">Includes XSD schema validation and deterministic scoring verification.</p>
+          </div>
+          <span class="eg-status-pill status-pass" id="resultStatusPill">VALID QTI 3.0 XML &amp; RESPONSE DECLARATION</span>
+        </div>
+
+        <div class="eg-result-hero">
+          <div class="eg-result-big" id="resultHeadline">250 Items → QTI 3.0 ($3,465)</div>
+          <p class="eg-result-summary" id="resultSummary"></p>
+        </div>
+
+        <table class="eg-breakdown-table" aria-label="QTI 3.0 conversion breakdown">
+          <thead><tr><th>Migration Phase</th><th style="text-align:right;">Estimated Effort</th></tr></thead>
+          <tbody id="resultBreakdownBody"></tbody>
+        </table>
+
+        <p class="eg-recommendation" id="resultRecommendation"></p>
+
+        <div class="eg-actions-row">
+          <a href="../../work/codedrill.html" class="eg-btn-secondary">Inspect CodeDrill Assessment Engine →</a>
+          <a href="./psychometric-item-writing-distractor-analyzer.html" class="eg-btn-ghost">Item Psychometrics Tool</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="eg-takeaways" aria-labelledby="qtiTakeaways">
+      <h2 class="eg-section-heading" id="qtiTakeaways">Key Architectural Shifts in 1EdTech QTI 3.0</h2>
+      <ul class="eg-takeaways-list">
+        <li><strong>Hyphenated HTML5-Friendly Tags:</strong> QTI 3.0 replaces QTI 2.1 camelCase (<span class="mono">assessmentItem</span>, <span class="mono">choiceInteraction</span>) with web-component-aligned kebab-case (<span class="mono">qti-assessment-item</span>, <span class="mono">qti-choice-interaction</span>).</li>
+        <li><strong>Built-In Accessibility Catalogs:</strong> QTI 3.0 embeds spoken/braille/sign-language Personal Needs &amp; Preferences (<span class="mono">qti-companion-materials-info</span> and accessibility catalogs) directly per token.</li>
+        <li><strong>Deterministic Response Processing:</strong> Standard <span class="mono">match_correct</span> and <span class="mono">map_response</span> templates ensure identical scoring across delivery engines without executing untrusted script code.</li>
+      </ul>
+    </section>
+
+    <section class="eg-quiz-section" id="practice-check" aria-labelledby="qtiQuizHeading">
+      <div class="eg-panel-head">
+        <div>
+          <h2 class="eg-panel-title" id="qtiQuizHeading">Step 2 — 3-Question 1EdTech QTI 3.0 Interoperability Check</h2>
+          <p class="eg-panel-sub">Test element naming, partial-credit scoring, and STEM accessibility.</p>
+        </div>
+        <div class="eg-actions-row">
+          <span class="eg-status-pill" id="quizScoreBadge">Score: 0 / 3 (0 answered)</span>
+          <button type="button" class="eg-btn-ghost" id="btnResetQuiz">Reset quiz</button>
+        </div>
+      </div>
+
+      <div class="eg-quiz-list">
+        <article class="eg-quiz-card" data-quiz-q="q1">
+          <p class="eg-quiz-q">1. Which root element name identifies a valid 1EdTech QTI 3.0 assessment item XML file (as opposed to QTI 1.2 or QTI 2.1)?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="questestinterop is the legacy QTI 1.2 root element.">A. &lt;questestinterop&gt;</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="assessmentItem (camelCase) is the QTI 2.0 / 2.1 / 2.2 root element.">B. &lt;assessmentItem&gt;</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="QTI 3.0 standardized kebab-case custom-element-compatible tag names starting with <qti-assessment-item>.">C. &lt;qti-assessment-item&gt;</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q2">
+          <p class="eg-quiz-q">2. A multi-select nursing question awards +1 point for each of two correct interventions and -1 point for dangerous distractors, clamped between 0 and 2. Which QTI 3.0 construct expresses this without custom JavaScript?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="qti-mapping (with lower-bound='0', upper-bound='2', and qti-map-entry elements) paired with the standard map_response template computes bounded partial credit deterministically.">A. A &lt;qti-mapping lower-bound="0" upper-bound="2"&gt; inside &lt;qti-response-declaration&gt; paired with the standard map_response template.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="match_correct is all-or-nothing binary scoring (1 or 0) and awards zero partial credit.">B. The standard match_correct template alone with no mapping table.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="Inline &lt;script&gt; tags inside items fail XSD validation and are stripped by secure test players.">C. An inline &lt;script&gt; tag inside &lt;qti-item-body&gt; that mutates window.score.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+
+        <article class="eg-quiz-card" data-quiz-q="q3">
+          <p class="eg-quiz-q">3. Why do state assessment boards reject QTI packages whose physics formulas are embedded solely as <span class="mono">&lt;img src="eq14.png" alt="equation"&gt;</span>?</p>
+          <div class="eg-quiz-choices">
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="PNG images are allowed in QTI packages when properly described for diagrams, but 'equation' alt-text conveys zero mathematical meaning.">A. QTI 3.0 ZIP manifests forbid PNG files of any kind.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Generic alt='equation' violates WCAG 1.1.1 and blocks refreshable Braille / Nemeth code and token-by-token screen-reader navigation supported by native MathML.">B. Generic alt-text hides the formula from screen readers and Nemeth Braille displays; QTI 3.0 supports native &lt;math&gt; (MathML) plus spoken accessibility catalogs.</button>
+            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="MathML files are tiny text trees, typically smaller than raster images.">C. PNG equations exceed the 4,096-byte QTI manifest limit.</button>
+          </div>
+          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eg-details-stack" id="technical-notes" aria-label="QTI 3.0 XML example and sources">
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 01 — Minimal Valid QTI 3.0 Choice Item Skeleton</span></summary>
+        <div class="eg-drawer-body">
+          <pre class="eg-code">&lt;qti-assessment-item xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+  identifier="item-webhook-idempotency" title="Idempotent Webhook Retry" adaptive="false" time-dependent="false"&gt;
+  &lt;qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"&gt;
+    &lt;qti-correct-response&gt;&lt;qti-value&gt;CHOICE_B&lt;/qti-value&gt;&lt;/qti-correct-response&gt;
+  &lt;/qti-response-declaration&gt;
+  &lt;qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float"/&gt;
+  &lt;qti-item-body&gt;
+    &lt;qti-choice-interaction response-identifier="RESPONSE" max-choices="1"&gt;
+      &lt;qti-prompt&gt;How should a webhook consumer handle duplicate event_id deliveries?&lt;/qti-prompt&gt;
+      &lt;qti-simple-choice identifier="CHOICE_A"&gt;Return HTTP 500 to stop retries&lt;/qti-simple-choice&gt;
+      &lt;qti-simple-choice identifier="CHOICE_B"&gt;Deduplicate on event_id and return HTTP 200&lt;/qti-simple-choice&gt;
+    &lt;/qti-choice-interaction&gt;
+  &lt;/qti-item-body&gt;
+  &lt;qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct.xml"/&gt;
+&lt;/qti-assessment-item&gt;</pre>
+        </div>
+      </details>
+
+      <details class="eg-drawer">
+        <summary><span>Technical Drill-Down 02 — Official Public 1EdTech QTI 3.0 Specifications</span></summary>
+        <div class="eg-drawer-body">
+          <ul>
+            <li><a href="https://www.1edtech.org/standards/qti" target="_blank" rel="noopener noreferrer">1EdTech Question &amp; Test Interoperability (QTI) Official Standard Page</a></li>
+            <li><a href="https://www.imsglobal.org/spec/qti/v3p0/" target="_blank" rel="noopener noreferrer">1EdTech QTI 3.0 Information Model, XML Binding &amp; Best Practices</a></li>
+            <li><a href="https://www.imsglobal.org/spec/qti/v3p0/impl/qti3p0-beginnersguide-v1p0.html" target="_blank" rel="noopener noreferrer">1EdTech QTI 3.0 Beginner's Guide</a></li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="eg-footer">
+    <span>Caliber Foundry · Guide 06/10 · 1EdTech QTI 3.0 Migration</span>
+    <div class="eg-footer-links">
+      <a href="./index.html">← All 10 EdTech Guides</a>
+      <a href="./ada-title-ii-wcag-courseware-deadline-calculator.html">Next: DOJ ADA Title II Calculator →</a>
+      <a href="../../work/content-studio.html">ContentForge Overview</a>
+    </div>
+  </footer>
+
+  <script src="./edtech-guides.js"></script>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>
