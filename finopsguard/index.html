@@ -6,33 +6,37 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="description" content="Audit a local AWS CUR, FOCUS or model usage CSV. Review actual costs, test savings assumptions and export a 30/60/90-day action plan.">
-  <title>FinOpsGuard · Cloud spend audit | Caliber Foundry</title>
+  <meta name="description" content="Compare LLM cost per accepted task across two runs. Count attempts and independent reviews, check quality and export the evidence.">
+  <title>FinOpsGuard · LLM cost per accepted task | Caliber Foundry</title>
   <meta property="og:type" content="website">
-  <meta property="og:title" content="FinOpsGuard · Cloud spend audit">
-  <meta property="og:description" content="Open a sample bill or import a local CSV to estimate savings and export an action plan.">
+  <meta property="og:title" content="FinOpsGuard · LLM cost per accepted task">
+  <meta property="og:description" content="Open a paired task ledger and compare the cost of an accepted LLM result.">
   <meta property="og:url" content="https://caliberfoundry.com/finopsguard/">
   <meta property="og:image" content="https://caliberfoundry.com/assets/banners/finopsguard-social.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="FinOpsGuard cloud spend audit with a sample bill and modeled savings">
+  <meta property="og:image:alt" content="FinOpsGuard LLM task audit showing a paired cost and quality comparison">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FinOpsGuard · Cloud spend audit">
-  <meta name="twitter:description" content="Review cloud and model costs from a local billing export.">
+  <meta name="twitter:title" content="FinOpsGuard · LLM cost per accepted task">
+  <meta name="twitter:description" content="Compare LLM spend and acceptance before and after an optimization.">
   <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/finopsguard-social.jpg">
   <link rel="canonical" href="https://caliberfoundry.com/finopsguard/">
   <link rel="stylesheet" href="./workbench.css">
   <script src="./gumroad-license.js" defer></script>
   <script src="./license.js" defer></script>
   <script src="./app.js" defer></script>
+  <script src="./task-audit.js" defer></script>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </head>
-<body>
+<body data-workspace="tasks">
   <a class="skip" href="#mainApp">Skip to audit</a>
   <header class="mast no-print">
     <div class="mast-inner">
       <a href="../work/finopsguard.html" class="wordmark" aria-label="FinOpsGuard product overview"><i class="mark" aria-hidden="true"><b></b><b></b><b></b></i>FinOpsGuard</a>
-      <nav aria-label="Audit steps" class="steps">
+      <nav aria-label="Task audit steps" class="task-steps task-only">
+        <a href="#calls">Source</a><a href="#results">Comparison</a><a href="#export">Export</a>
+      </nav>
+      <nav aria-label="Audit steps" class="steps cloud-only">
         <button id="stepBtn1" type="button" aria-current="step"><span>1</span> Source</button>
         <button id="stepBtn2" type="button" aria-current="false"><span>2</span> Analysis</button>
         <button id="stepBtn3" type="button" aria-current="false"><span>3</span> Plan</button>
@@ -40,10 +44,10 @@
       <div class="mast-links"><a href="#activate" id="licenseLink" class="portal-link">Activate license</a><a href="../#work" class="portal-link">All products <span aria-hidden="true">↗</span></a></div>
     </div>
   </header>
-  <main id="mainApp" class="container">
+  <main id="mainApp" class="container" tabindex="-1">
     <section id="activate" class="license-panel no-print" aria-labelledby="activationTitle" hidden>
       <h2 id="activationTitle">Activate FinOpsGuard</h2>
-      <p id="activationHelp">Enter your FinOpsGuard license code to unlock the source ledger and full reports for your own bills.</p>
+      <p id="activationHelp">Enter your FinOpsGuard license code to export your own task comparisons and billing reports.</p>
       <form id="licenseForm">
         <label for="licenseInput">License code</label>
         <div class="license-controls"><input id="licenseInput" type="password" required maxlength="200" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="activationHelp licenseFeedback"><button type="submit" class="btn primary" id="activateCode">Activate license</button></div>
@@ -58,7 +62,53 @@
       <p id="licenseFeedback" role="status" aria-live="polite"></p>
       <div class="actions"><button hidden type="button" id="returnToAudit" class="btn">Continue to audit</button><button hidden type="button" id="removeLicense" class="text-btn">Remove license from this browser</button></div>
     </section>
-    <div id="viewWorkbench" class="no-print">
+    <div id="taskWorkspace" class="task-only">
+      <section id="calls" class="task-intro" aria-labelledby="taskAuditTitle" tabindex="-1">
+        <div><h1 id="taskAuditTitle">Cost per accepted task</h1><p>Compare two runs of the same LLM workflow, including retries and independent review.</p></div>
+        <div class="task-import no-print">
+          <input id="taskLedgerFile" type="file" accept=".csv,text/csv" hidden aria-label="Task ledger CSV">
+          <button type="button" id="taskImport" class="btn primary">Import task CSV</button><small>Your file stays in this browser</small>
+        </div>
+      </section>
+      <div class="task-sources no-print">
+        <span>Try an example</span>
+        <div role="group" aria-label="Illustrative task ledgers" class="samples"><button type="button" data-task-example="retry">Fewer retries</button><button type="button" data-task-example="quality">Quality regression</button><button type="button" data-task-example="unpriced">Subscription usage</button></div>
+        <a href="./samples/accepted-tasks.csv" download>CSV template</a>
+      </div>
+      <div id="taskImportState" class="task-operation" role="status" aria-live="polite" hidden><progress id="taskProgress" max="100" aria-label="Reading task ledger"></progress><span id="taskMessage"></span></div>
+      <section id="results" class="task-results" aria-labelledby="taskMetricTitle" tabindex="-1">
+        <div class="task-summary">
+          <div class="task-result-title"><h2 id="taskMetricTitle">Cost per accepted task</h2><span id="taskSourceName"></span></div>
+          <div class="task-pair">
+            <div><p>Before</p><strong id="taskBeforeUnit"></strong><div class="task-meter" aria-hidden="true"><i id="taskBeforeBar"></i></div><small id="taskBeforeNote"></small></div>
+            <div><p>After</p><strong id="taskAfterUnit"></strong><div class="task-meter" aria-hidden="true"><i id="taskAfterBar"></i></div><small id="taskAfterNote"></small></div>
+          </div>
+        </div>
+        <aside class="task-decision"><h2 id="taskVerdict">Acceptance check</h2><p id="taskDecision"></p><p id="taskQuality"></p></aside>
+      </section>
+      <section class="task-report" id="taskEvidence" aria-label="Cost and acceptance details">
+        <div class="sheet"><h2>What went into each result</h2><div class="table-scroll"><table class="task-table"><thead><tr><th scope="col">Whole cohort</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody id="taskBreakdown"></tbody></table></div></div>
+        <div id="export" class="task-export" tabindex="-1"><h2>Export comparison</h2><p id="taskExportExplanation"></p>
+          <div class="actions" id="taskExportActions"><button type="button" class="btn primary" id="taskExportJson">Download report JSON</button></div>
+          <div class="actions" id="taskExportLicense" hidden><a class="btn primary" href="#activate">Enter license code</a><a href="../work/finopsguard.html#licensing">Get Pro</a></div>
+          <p class="sheet-note" id="taskExportStatus" role="status"></p>
+        </div>
+      </section>
+      <details class="task-guide" id="taskFormat">
+        <summary>CSV format and comparison rules</summary>
+        <p>Use the same task IDs in both variants and record every attempt, including failures. Use pseudonyms for tasks and actors. One row represents one execution, retry, review, or final outcome. <a href="./samples/accepted-tasks.csv" download>Download a worked CSV template</a>.</p>
+        <dl>
+          <dt>variant, task_id, call_id, stage, actor</dt><dd>Use before or after. Give every call a unique ID within the variant. Use execute, retry or review for calls. The independent reviewer must have a different actor ID from the workers. Use separate task IDs for separate deliverables.</dd>
+          <dt>cost_basis, cost_usd</dt><dd>Use billed for an attributable USD charge, estimated for a rate-card estimate, no_charge for a verified zero LLM fee, or subscription or unknown with a blank cost. An optional estimated_usd column can record a separate rate-card equivalent. Use identical pricing assumptions for both variants.</dd>
+          <dt>verdict, rubric, expected_calls</dt><dd>Close each task with one outcome row. Leave its call ID and charges blank. Enter accepted, rejected or pending, the rubric version, and the total number of execution, retry and review rows. The outcome actor identifies the independent reviewer.</dd>
+          <dt>input_tokens, output_tokens, cached_input_tokens</dt><dd>Enter metered input and output to compare token usage. Input includes cached reads. Add cached input where available to show the fresh and cached split. Use explicit zeros only when known. The template uses dataset=example. Omit that marker for your own measured runs.</dd>
+        </dl>
+        <p>Both cohorts must include the same tasks and rubric. Every baseline acceptance must still pass. Unit cost includes the spend on rejected tasks. The observed difference describes only the supplied cohort. Missing prices, usage or verdicts remain unknown.</p>
+      </details>
+      <div class="task-legacy"><a href="?mode=cloud" data-switch-workspace="cloud">Open the cloud billing audit</a> <span>AWS CUR, FOCUS and usage CSVs</span></div>
+    </div>
+    <div id="viewWorkbench" class="no-print cloud-only">
+      <a class="back-tasks" href="?" data-switch-workspace="tasks">← LLM task audit</a>
       <section id="sectionImport" tabindex="-1" aria-labelledby="auditTitle">
         <div class="intro">
           <div><h1 id="auditTitle">Cloud spend audit</h1><p>Find the biggest savings opportunity in your billing export.</p></div>
@@ -145,7 +195,7 @@
         </details>
       </section>
     </div>
-    <section id="viewPrintPlan" class="is-hidden-view" tabindex="-1" aria-labelledby="planTitle">
+    <section id="viewPrintPlan" class="is-hidden-view cloud-only" tabindex="-1" aria-labelledby="planTitle">
       <div class="plan-toolbar no-print"><button id="btnBackToAnalysis" type="button" class="text-btn">← Back to analysis</button>
         <div class="actions" id="planExports"><button type="button" class="btn" id="btnExportJson">Download JSON</button><button type="button" class="btn" id="btnExportActionCsv">Download action CSV</button><button type="button" class="btn primary" id="btnTriggerPrint">Print / save PDF</button></div>
       </div>

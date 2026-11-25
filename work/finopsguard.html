@@ -9,35 +9,35 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>FinOpsGuard | Cloud and token billing audit by Caliber Foundry</title>
-  <meta name="description" content="Find cloud and token savings in AWS, FOCUS 1.0 and model usage CSVs. Audit locally, inspect the assumptions, and take a prioritized plan to your team." />
+  <title>FinOpsGuard | LLM cost per accepted task by Caliber Foundry</title>
+  <meta name="description" content="Compare the cost of an independently accepted LLM task before and after a workflow change. Include retries and reviews, then check whether the same tasks passed." />
   <link rel="canonical" href="https://caliberfoundry.com/work/finopsguard.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Caliber Foundry" />
-  <meta property="og:title" content="FinOpsGuard | Find the savings in your cloud bill" />
-  <meta property="og:description" content="Explore a billing example or use your own CSV. Trace each savings estimate to a cost and an engineering check." />
+  <meta property="og:title" content="FinOpsGuard | What does one accepted LLM task cost?" />
+  <meta property="og:description" content="Compare the cost of an independently accepted LLM task before and after a workflow change. Include retries and reviews, then check whether the same tasks passed." />
   <meta property="og:url" content="https://caliberfoundry.com/work/finopsguard.html" />
   <meta property="og:image" content="https://caliberfoundry.com/assets/banners/finopsguard-social.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="FinOpsGuard cloud and token billing auditor" />
+  <meta property="og:image:alt" content="FinOpsGuard compares LLM spend and accepted results" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CaliberFoundry" />
-  <meta name="twitter:title" content="FinOpsGuard | Cloud and token billing audit" />
-  <meta name="twitter:description" content="Browser-local FinOps auditor for AWS CUR, FOCUS 1.0, and OpenAI/Anthropic token CSVs with printable 30/60/90-day remediation plans." />
+  <meta name="twitter:title" content="FinOpsGuard | LLM cost per accepted task" />
+  <meta name="twitter:description" content="Compare the cost of an independently accepted LLM task before and after a workflow change. Include retries and reviews, then check whether the same tasks passed." />
   <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/finopsguard-social.jpg" />
-  <meta name="twitter:image:alt" content="FinOpsGuard cloud and token billing auditor" />
+  <meta name="twitter:image:alt" content="FinOpsGuard compares LLM spend and accepted results" />
   <meta name="theme-color" content="#101f30" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "FinOpsGuard™ Cloud & Token Cost Auditor",
+    "name": "FinOpsGuard LLM Cost Audit",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web Browser",
     "url": "https://caliberfoundry.com/finopsguard/",
     "image": "https://caliberfoundry.com/assets/banners/finopsguard_cover_1600x1200.png",
-    "description": "Zero-upload browser workbench that parses AWS CUR, FinOps FOCUS 1.0 (AWS, GCP, Azure), and OpenAI/Anthropic token usage CSVs locally, separating confirmed invoice spend from modeled Batch API, prompt-cache, and Compute Savings Plan savings.",
+    "description": "Compare the cost of an independently accepted LLM task before and after a workflow change. Include retries and reviews, then check whether the same tasks passed.",
     "author": {
       "@type": "Organization",
       "name": "Caliber Foundry",
@@ -71,63 +71,53 @@
       <div class="hero-art"><img src="../assets/banners/finopsguard-hardware.webp" alt="" fetchpriority="high" /></div>
       <div class="bound hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow">Cloud &amp; token cost audit</p>
-          <h1 id="hero-heading">Find the savings in <em>your cloud bill.</em></h1>
-          <p class="intro">Turn a billing CSV into a list of costs to investigate. See what you paid, what you could save, and what engineering needs to verify.</p>
+          <p class="eyebrow">LLM workflow cost audit</p>
+          <h1 id="hero-heading">The cost of one <em>accepted task.</em></h1>
+          <p class="intro">Did your change make an agent cheaper to run? Compare the same tasks before and after. Every attempt and independent review counts toward the cost.</p>
           <div class="hero-actions">
-            <a class="primary" href="../finopsguard/">Try the free audit <span aria-hidden="true">→</span></a>
-            <a class="secondary" href="#worked-proof">See a worked report <span aria-hidden="true">↓</span></a>
+            <a class="primary" href="../finopsguard/">Compare task costs <span aria-hidden="true">→</span></a>
+            <a class="secondary" href="#worked-proof">See the calculation <span aria-hidden="true">↓</span></a>
           </div>
-          <p class="privacy-note">Your CSV stays in your browser. No cloud credentials required.</p>
+          <p class="privacy-note">Your run data stays in your browser.</p>
         </div>
       </div>
     </section>
 
     <section class="bound report section" id="worked-proof" aria-labelledby="worked-proof-heading">
       <header class="section-intro">
-        <p class="eyebrow">Worked report · synthetic data</p>
-        <h2 id="worked-proof-heading">One bill, five ways to cut costs.</h2>
-        <p>These figures come from the downloadable multi-cloud and token billing example. Each opportunity includes a check to run before changing infrastructure or committing spend.</p>
+        <p class="eyebrow">Worked example · synthetic data</p>
+        <h2 id="worked-proof-heading">Two accepted tasks, before and after.</h2>
+        <p>Both versions attempt the same three tasks. Two pass independent review in each run. Spend on the third task stays in the total, along with the retry and every review.</p>
       </header>
       <div class="report-grid">
         <div class="statement">
-          <p class="statement-kicker">Monthly cost statement <span>USD</span></p>
+          <p class="statement-kicker">Cost per accepted task <span>USD</span></p>
           <dl>
-            <div><dt>Confirmed invoice spend</dt><dd>$18,440.00</dd></div>
-            <div class="subtotal"><dt>Spend reviewed for savings</dt><dd>$14,892.50</dd></div>
-            <div class="estimate"><dt>Modeled monthly savings</dt><dd>$5,246.50</dd></div>
+            <div class="comparison-row"><dt>Before <small>$0.52 spent ÷ 2 accepted</small></dt><dd>$0.26</dd></div>
+            <div class="comparison-row"><dt>After <small>$0.36 spent ÷ 2 accepted</small></dt><dd>$0.18</dd></div>
           </dl>
-          <div class="share-track" aria-hidden="true"><span></span></div>
-          <p class="share-text"><b>28.5%</b> of the bill under the base assumptions.</p>
-          <p class="annual">$62,958 per year if usage and assumptions hold.</p>
+          <p class="example-delta">The difference in this example is <strong>$0.08 per accepted task.</strong></p>
+          <a class="example-open" href="../finopsguard/?example=retry">Open this example in FinOpsGuard <span aria-hidden="true">→</span></a>
         </div>
-        <div class="findings" aria-label="Evidence behind the estimate">
-          <h3>What goes into the estimate?</h3>
-          <p class="disclosure-hint">Open a finding for its calculation and engineering check.</p>
+        <div class="findings" aria-label="How to interpret a comparison">
+          <h3>What makes the comparison fair?</h3>
           <details open>
-            <summary><span>Batch processing</span><strong>$1,950.00<span class="sr"> per month estimated</span></strong></summary>
-            <p>The sample assigns a 50% batch discount to $3,900 of eligible synchronous model calls. Check that the document and evaluation queues can wait up to 24 hours.</p>
+            <summary><span>Count every paid call</span></summary>
+            <p>Add the cost of first attempts, retries and reviews on both sides. A failed task still contributes to spend. Only tasks accepted by the independent reviewer count in the denominator.</p>
           </details>
           <details>
-            <summary><span>Prompt caching</span><strong>$1,184.00<span class="sr"> per month estimated</span></strong></summary>
-            <p>The support workload costs $2,860 and caches 5% of input tokens. Check how often an identical prefix repeats within the provider’s cache window.</p>
+            <summary><span>Check the same tasks and criteria</span></summary>
+            <p>Compare the same work and keep the review standard fixed. If a task that passed before now fails, a lower bill alone cannot justify the change.</p>
           </details>
           <details>
-            <summary><span>Storage &amp; network routing</span><strong>$1,145.00<span class="sr"> per month estimated</span></strong></summary>
-            <p>Storage cleanup contributes $386.75 and the routing change $758.25. Verify volume attachment history and check the destination of regional NAT traffic.</p>
-          </details>
-          <details>
-            <summary><span>Compute commitments</span><strong>$967.50<span class="sr"> per month estimated</span></strong></summary>
-            <p>Size commitments against the stable portion of $6,747.50 of compute spend. Check which instances are short-lived before setting an hourly commitment.</p>
+            <summary><span>Identify the source of the price</span></summary>
+            <p>Use actual charges where available. Token counts priced from a rate card give an estimate. An unpriced subscription run cannot establish a dollar saving.</p>
           </details>
         </div>
       </div>
       <div class="downloads">
-        <div><h3>Take the sample with you.</h3><p>One-page audit for finance. Five action items with verification criteria for engineering.</p></div>
-        <div class="download-links">
-          <a href="../assets/samples/finopsguard-focus10-audit-sample.pdf" download>Audit brief <small>PDF</small><span aria-hidden="true">↓</span></a>
-          <a href="../assets/samples/finopsguard-remediation-plan-sample.csv" download>Action plan <small>CSV</small><span aria-hidden="true">↓</span></a>
-        </div>
+        <div><h3>Try it with your own runs.</h3><p>Use the example CSV as a template. Replace its call costs and review outcomes with your own records.</p></div>
+        <div class="download-links"><a href="../finopsguard/samples/accepted-tasks.csv" download>Download example <small>CSV</small><span aria-hidden="true">↓</span></a></div>
       </div>
     </section>
 
@@ -135,17 +125,17 @@
       <div class="bound workstation">
         <div class="work-sources">
           <p class="eyebrow">Inside the workbench</p>
-          <h2 id="pillars-heading">Start with your billing format.</h2>
-          <p>Each example opens a calculated audit. You can replace the example with a local CSV, change the assumptions and print your own remediation plan.</p>
+          <h2 id="pillars-heading">Try a different outcome.</h2>
           <ul class="source-list">
-            <li><a href="../finopsguard/?sample=aws"><span><b>AWS Cost &amp; Usage Report</b><small>Compute, storage and networking</small></span><span aria-hidden="true">→</span></a></li>
-            <li><a href="../finopsguard/?sample=focus"><span><b>FinOps FOCUS 1.0</b><small>Multi-cloud charges and unused commitments</small></span><span aria-hidden="true">→</span></a></li>
-            <li><a href="../finopsguard/?sample=llm"><span><b>OpenAI &amp; Anthropic usage</b><small>Batch processing and prompt caching</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="../finopsguard/?example=retry"><span><b>Fewer retries</b><small>Compare spend with the same accepted tasks</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="../finopsguard/?example=quality"><span><b>Quality drops</b><small>See what happens when a task fails review</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="../finopsguard/?example=unpriced"><span><b>Missing prices</b><small>Inspect the gaps in a dollar comparison</small></span><span aria-hidden="true">→</span></a></li>
           </ul>
+          <p class="legacy-link">Working with a cloud bill? <a href="../finopsguard/?mode=cloud">Open the original AWS and FOCUS audit.</a></p>
         </div>
         <figure class="app-preview">
-          <img src="../assets/product-previews/finopsguard-workbench.webp" width="1240" height="904" loading="lazy" alt="FinOpsGuard workbench showing confirmed cloud spend and modeled savings for an AWS billing example" />
-          <figcaption>The AWS example in the live workbench.</figcaption>
+          <img src="../assets/product-previews/finopsguard-workbench.webp" width="1240" height="904" loading="lazy" alt="FinOpsGuard workbench comparing the cost of two independently accepted tasks before and after a change" />
+          <figcaption>The live retry example compares three paired tasks. All values shown are illustrative.</figcaption>
         </figure>
       </div>
     </section>
@@ -158,19 +148,19 @@
       <div class="offers">
         <article>
           <h3>FinOpsGuard Pro</h3><p class="price">$149 <small>one time</small></p>
-          <p>Export full reports on your own billing CSVs. Gumroad includes your license code with the receipt. After a Contra purchase, Caliber Foundry sends your code in a separate email to your checkout address.</p>
+          <p>Export comparisons for your own runs. The original cloud billing workbench is included. Gumroad includes your license code with the receipt. After a Contra purchase, Caliber Foundry sends your code in a separate email to your checkout address.</p>
           <div class="purchase"><a href="https://caliberfoundry.gumroad.com/l/finopsguard-pro" target="_blank" rel="noopener noreferrer">Buy on Gumroad ↗</a><a href="https://contra.com/products/7sKkgk7O-fin-ops-guard-cloud-and-llm-billing-audit-pack" target="_blank" rel="noopener noreferrer">Buy on Contra ↗</a></div>
           <p><a href="../finopsguard/#activate">Already have a code? Activate your license →</a></p>
         </article>
         <article>
           <h3>Team license</h3><p class="price">$299 <small>one time</small></p>
-          <p>Share audit workflows and assumption presets with your team. Net-14 invoicing is available.</p>
+          <p>Compare agent workflows across your team. The original billing audit is included. Net-14 invoicing is available.</p>
           <div class="purchase"><a href="../pricing.html#price-finopsguard">See team terms →</a></div>
         </article>
         <article>
           <h3>Engineering sprint</h3><p class="price">$3,500 <small>five business days</small></p>
-          <p>Send a sanitized export. Caliber Foundry investigates the billing drivers and delivers a written audit and remediation PRs.</p>
-          <div class="purchase"><a data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Turnkey%20%243%2C500%20Cloud%20%26%20Token%20Cost%20Audit%20Sprint%20Inquiry">Email a sprint brief ↗</a></div>
+          <p>Test one workflow change with Caliber Foundry. We compare the cost of accepted results, document quality checks and deliver a written report and implementation PRs.</p>
+          <div class="purchase"><a data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Turnkey%20%243%2C500%20LLM%20Workflow%20Cost%20Audit%20Sprint%20Inquiry">Email a sprint brief ↗</a></div>
         </article>
       </div>
     </section>

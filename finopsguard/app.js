@@ -892,6 +892,18 @@
       function text(id,value) { $(id).textContent=value; }
 
       function licensed() { return licenseUntil >= Date.now(); }
+      const legacyHashes = new Set(['#plan','#step3','#viewPrintPlan','#analysis','#step2','#sectionAnalysis','#source','#step1','#sectionImport']);
+      function workspaceFromUrl() {
+        const params = new URLSearchParams(location.search);
+        if (params.get('mode') === 'cloud' || Object.hasOwn(aliases, params.get('sample')) || legacyHashes.has(location.hash)) return 'cloud';
+        return 'tasks';
+      }
+      function chooseWorkspace(name) {
+        document.body.dataset.workspace = name;
+      }
+      chooseWorkspace(workspaceFromUrl());
+      window.FinOpsGuardLicense = Object.freeze({active: licensed});
+      function notifyLicenseChange() { document.dispatchEvent(new Event('finops-license-change')); }
       function canExport() { return Boolean(state.report && (state.preset || licensed())); }
       function clearLicense(message) {
         ++activationAttempt;
@@ -906,6 +918,7 @@
         text('activationTitle','Activate FinOpsGuard');
         $('activationHelp').hidden=false;
         licenseStatus(message);
+        notifyLicenseChange();
         if (state.report) render(state.report);
       }
       function checkExpiry() {
@@ -961,6 +974,7 @@
           const duration=performance.now()-started;
           const elapsed=duration<100?'under 0.1 s':(duration/1000).toFixed(1)+' s';
           licenseStatus((remembered?'Full reports are available.':'Full reports are available in this tab.')+' Verified in '+elapsed+'.');
+          notifyLicenseChange();
           if (!restore) $('returnToAudit').focus();
           if (state.report) render(state.report);
         } catch (error) {
@@ -988,6 +1002,7 @@
         return ({'#plan':3,'#step3':3,'#viewPrintPlan':3,'#analysis':2,'#step2':2,'#sectionAnalysis':2})[location.hash] || 1;
       }
       function navigate(step) {
+        chooseWorkspace('cloud');
         const url=new URL(location.href);
         url.hash=['','#source','#analysis','#plan'][step];
         if (url.href!==location.href) history.pushState(null,'',url);
@@ -1120,6 +1135,7 @@
       }
       function upload(file) {
         if(!file)return;
+        chooseWorkspace('cloud');
         const version=++state.sourceVersion;
         if(state.report) state.previous=state.report;
         state.report=null;
@@ -1197,8 +1213,24 @@
       $('btnExportJson').addEventListener('click',()=>downloadPlan('json'));
       $('btnExportActionCsv').addEventListener('click',()=>downloadPlan('csv'));
       window.addEventListener('beforeprint',()=>{if(state.report) renderPlan(state.report);});
-      const followHash=()=>location.hash==='#activate'?showLicense():setStep(linkStep());
-      window.addEventListener('hashchange',followHash);
+      function followLocation() {
+        if (location.hash === '#activate') { showLicense(); return; }
+        const mode = workspaceFromUrl();
+        chooseWorkspace(mode);
+        $('activate').hidden = true;
+        if (mode === 'cloud') setStep(linkStep());
+      }
+      for (const link of buttons('[data-switch-workspace]')) link.addEventListener('click',event=>{
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        history.pushState(null,'',link.href);
+        followLocation();
+        const title = link.dataset.switchWorkspace === 'tasks' ? $('calls') : $('sectionImport');
+        title.focus({preventScroll:true});
+        window.scrollTo(0,0);
+      });
+      window.addEventListener('hashchange',followLocation);
+      window.addEventListener('popstate',followLocation);
       $('licenseInput').addEventListener('input',()=>{
         $('gumroadPrivacy').hidden=!window.FinOpsGuardGumroad?.matches($('licenseInput').value.trim());
       });
@@ -1206,7 +1238,14 @@
         event.preventDefault();
         activateLicense($('licenseInput').value.trim());
       });
-      $('returnToAudit').addEventListener('click',()=>navigate(state.report && !state.preset?3:1));
+      $('returnToAudit').addEventListener('click',()=>{
+        if (document.body.dataset.workspace === 'cloud') {
+          navigate(state.report && !state.preset?3:1);
+        } else {
+          location.hash='results';
+          $('results').focus();
+        }
+      });
       $('removeLicense').addEventListener('click',()=>{
         clearLicense('License removed from this browser. You can activate it again with the same code.');
         $('licenseInput').focus();
@@ -1220,7 +1259,7 @@
           if (location.hash==='#activate' && document.activeElement===document.body) showLicense();
         }),{once:true});
       }
-      else setStep(linkStep(),Boolean(location.hash));
+      else setStep(linkStep(),document.body.dataset.workspace === 'cloud' && Boolean(location.hash));
       let saved;
       try { saved=localStorage.getItem(licenseStorage); } catch {}
       if (saved) activateLicense(saved,true);
