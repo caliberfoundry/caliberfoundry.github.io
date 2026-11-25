@@ -48,6 +48,11 @@
         <label for="licenseInput">License code</label>
         <div class="license-controls"><input id="licenseInput" type="password" required maxlength="200" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="activationHelp licenseFeedback"><button type="submit" class="btn primary" id="activateCode">Activate license</button></div>
         <div id="gumroadPrivacy" hidden><p>FinOpsGuard sends this code to Gumroad to verify your purchase.</p><label><input id="rememberGumroad" type="checkbox"> Remember the code and verify it with Gumroad when I reopen this browser</label></div>
+        <details><summary>Where is my license code?</summary>
+          <p><strong>Gumroad.</strong> Open your purchase receipt and choose “View my license key”.</p>
+          <p><strong>Contra.</strong> After payment, look for a separate email from Caliber Foundry at the address you used at checkout. Check your spam folder, too.</p>
+          <p>If your code is missing, <a href="mailto:engineering@caliberfoundry.com?subject=Missing%20FinOpsGuard%20license%20code" data-native-mailto="1">contact license support</a> with your order number.</p>
+        </details>
       </form>
       <progress id="licenseProgress" aria-label="Verifying license" hidden></progress>
       <p id="licenseFeedback" role="status" aria-live="polite"></p>
