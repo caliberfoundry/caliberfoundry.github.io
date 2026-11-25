@@ -8,7 +8,7 @@
         aws_cur: {
           key: 'aws_cur',
           filename: '01_aws_cur_baseline.csv',
-          label: 'AWS CUR · SaaS Production (Ноябрь 2026)',
+          label: 'AWS CUR · Production sample',
           csv: [
             'lineItem/UsageStartDate,lineItem/ProductCode,lineItem/UsageType,lineItem/Operation,lineItem/LineItemType,lineItem/ResourceId,product/region,pricing/term,lineItem/UsageAmount,lineItem/UnblendedCost',
             '2026-11-01T00:00:00Z,AmazonEC2,USE1-BoxUsage:m6i.4xlarge,RunInstances,Usage,i-0a91prodapi01,us-east-1,OnDemand,720,4200.00',
@@ -61,7 +61,7 @@
         mutation_a: {
           key: 'mutation_a',
           filename: 'mutation_a_aws_cur_sp_covered.csv',
-          label: 'Изменённый вход A · AWS CUR (SP + удалён EBS)',
+          label: 'AWS after commitment and disk cleanup',
           csv: [
             'lineItem/UsageStartDate,lineItem/ProductCode,lineItem/UsageType,lineItem/Operation,lineItem/LineItemType,lineItem/ResourceId,product/region,pricing/term,lineItem/UsageAmount,lineItem/UnblendedCost',
             '2026-11-01T00:00:00Z,AmazonEC2,USE1-BoxUsage:m6i.4xlarge,RunInstances,SavingsPlanCoveredUsage,i-0a91prodapi01,us-east-1,SavingsPlans,720,3108.00',
@@ -80,7 +80,7 @@
         mutation_b: {
           key: 'mutation_b',
           filename: 'mutation_b_llm_high_cache_batch.csv',
-          label: 'Изменённый вход B · LLM CSV (72% кэш + новый claude-3-7-sonnet)',
+          label: 'LLM after caching and added usage',
           csv: [
             'start_datetime,provider,model,project_id,input_tokens,input_cached_tokens,output_tokens,num_model_requests,batch,cost_usd',
             '2026-11-01T00:00:00Z,OpenAI,gpt-4o,proj_support_rag,420000000,302400000,48000000,185000,true,1050.00',
@@ -97,7 +97,7 @@
 
       const SCENARIO_PRESETS = {
         conservative: {
-          name: 'Консервативный',
+          name: 'Cautious',
           computeSpDiscountPct: 18,
           idleCleanupPct: 50,
           networkLogOptPct: 20,
@@ -105,7 +105,7 @@
           llmBatchRoutePct: 15
         },
         base: {
-          name: 'Базовый',
+          name: 'Base',
           computeSpDiscountPct: 24,
           idleCleanupPct: 70,
           networkLogOptPct: 35,
@@ -113,7 +113,7 @@
           llmBatchRoutePct: 25
         },
         aggressive: {
-          name: 'Агрессивный',
+          name: 'Stretch',
           computeSpDiscountPct: 32,
           idleCleanupPct: 85,
           networkLogOptPct: 50,
@@ -217,7 +217,7 @@
       function parseCsv(csvText) {
         const cleaned = String(csvText || '').replace(/^\uFEFF/, '');
         if (!cleaned.trim()) {
-          return { headers: [], rows: [], delimiter: ',', error: 'Файл CSV пуст.' };
+          return { headers: [], rows: [], delimiter: ',', error: 'The CSV is empty. Select a file or enter a header and at least one data row.' };
         }
         const firstNewline = cleaned.search(/\r?\n/);
         const firstLine = firstNewline >= 0 ? cleaned.slice(0, firstNewline) : cleaned;
@@ -263,18 +263,19 @@
             }
           }
         }
+        if (inQuotes) return { headers: [], rows: [], delimiter, error: 'A quoted field is missing its closing quote.' };
         row.push(field.trim());
         if (row.some((cell) => cell !== '')) matrix.push(row);
 
         if (matrix.length < 2) {
-          return { headers: matrix[0] || [], rows: [], delimiter, error: 'В CSV нет строк данных (найдена только строка заголовков).' };
+          return { headers: matrix[0] || [], rows: [], delimiter, error: 'The CSV has a header but no data rows.' };
         }
 
         const headers = matrix[0];
         const rows = [];
         for (let r = 1; r < matrix.length; r++) {
           const values = matrix[r];
-          const obj = {};
+          const obj = Object.create(null);
           for (let c = 0; c < headers.length; c++) {
             obj[headers[c]] = values[c] !== undefined ? values[c] : '';
           }
@@ -286,7 +287,7 @@
       }
 
       function buildHeaderLookup(headers) {
-        const map = {};
+        const map = Object.create(null);
         for (const h of headers) {
           map[h.trim().toLowerCase()] = h;
         }
@@ -380,7 +381,7 @@
         if (genCost && genService) {
           return {
             id: 'GENERIC_CSV',
-            label: 'Табличный биллинг CSV (универсальный маппинг)',
+            label: 'Generic billing CSV',
             columnMap: {
               date: pickCol(lookup, ['date', 'period', 'month', 'timestamp']),
               provider: pickCol(lookup, ['provider', 'cloud', 'vendor']),
@@ -395,21 +396,21 @@
 
         return {
           id: 'UNKNOWN',
-          label: 'Нераспознанная схема CSV',
+          label: 'Unrecognized CSV schema',
           columnMap: {}
         };
       }
 
       const CLASS_LABELS = {
-        ondemand_compute: { text: 'Факт: On-Demand Compute/DB', badge: 'badge-fact' },
-        committed_used: { text: 'Факт: Покрыто SP / Committed', badge: 'badge-neutral' },
-        unused_commitment: { text: 'Факт: Неиспользованный SP/RI', badge: 'badge-waste' },
-        idle_storage: { text: 'Факт: Отцепленное/архивное хранилище', badge: 'badge-waste' },
-        network_logs: { text: 'Факт: NAT Bytes / Логи', badge: 'badge-fact' },
-        active_baseline: { text: 'Факт: Активная база (без изменений)', badge: 'badge-neutral' },
-        credit_refund: { text: 'Факт: Кредит / Возврат (исключено из базы)', badge: 'badge-neutral' },
+        ondemand_compute: { text: 'On-demand compute or database', badge: 'badge-fact' },
+        committed_used: { text: 'Covered by commitment', badge: 'badge-neutral' },
+        unused_commitment: { text: 'Unused commitment', badge: 'badge-waste' },
+        idle_storage: { text: 'Potential idle storage', badge: 'badge-waste' },
+        network_logs: { text: 'Network or log ingestion', badge: 'badge-fact' },
+        active_baseline: { text: 'Other spend', badge: 'badge-neutral' },
+        credit_refund: { text: 'Credit or refund', badge: 'badge-neutral' },
         commitment_purchase_amortized: { text: 'FOCUS Purchase (Effective = $0)', badge: 'badge-neutral' },
-        llm_usage: { text: 'Факт: LLM Token Billing', badge: 'badge-fact' }
+        llm_usage: { text: 'Model API usage', badge: 'badge-fact' }
       };
 
       function analyzeBillingCsv(csvText, filename, assumptionsInput) {
@@ -425,7 +426,7 @@
         const schema = detectSchema(parsed.headers);
         if (schema.id === 'UNKNOWN') {
           return {
-            error: 'Не удалось распознать колонки стоимости и сервиса. Ожидаются заголовки AWS CUR (lineItem/UnblendedCost, lineItem/ProductCode), FOCUS 1.0 (EffectiveCost/BilledCost, ServiceName), OpenAI/Anthropic (model, cost_usd) или generic (service, cost).',
+            error: 'No matching service and cost columns. Use AWS CUR, FOCUS, model/cost_usd, or a CSV with service and cost columns.',
             fingerprint,
             filename,
             headers: parsed.headers
@@ -433,6 +434,13 @@
         }
 
         const map = schema.columnMap;
+        const currencyColumn = pickCol(buildHeaderLookup(parsed.headers),
+          ['BillingCurrency', 'lineItem/CurrencyCode', 'line_item_currency_code', 'currency', 'currency_code', 'amount_currency']);
+        const costs = [map.cost, map.effectiveCost, map.billedCost].filter(Boolean);
+        if (parsed.rows.some(row => (currencyColumn && row[currencyColumn] && row[currencyColumn].toUpperCase() !== 'USD') ||
+            costs.some(column => /[€£¥]/.test(row[column])))) {
+          return { error: 'This audit uses USD. Convert the export to a single USD billing currency before importing.', fingerprint, filename };
+        }
         const normalizedRows = [];
         const skippedRows = [];
         const dates = [];
@@ -456,7 +464,7 @@
         const llmRouteShareRatio = (Number(assumptions.llmBatchRoutePct) || 0) / 100;
         const llmRowNotes = [];
 
-        const serviceAgg = {};
+        const serviceAgg = Object.create(null);
 
         for (const raw of parsed.rows) {
           let cost = NaN;
@@ -483,22 +491,22 @@
             dateStr = raw[map.date] || '';
 
             if (!Number.isFinite(cost)) {
-              skippedRows.push({ row: raw.__rowIndex, reason: 'Нечисловая стоимость в ' + map.cost });
+              skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid cost in ' + map.cost });
               continue;
             }
 
             const combined = (resource + ' ' + usageType + ' ' + op).toLowerCase();
             if (cost < 0 || /credit|refund|rifee/i.test(liType)) {
               rowClass = 'credit_refund';
-              detailNote = (liType || 'Credit/Refund') + ' (учтено в итоговом факте, исключено из базы экономии)';
+              detailNote = (liType || 'Credit/Refund') + ' (included in net spend, excluded from savings)';
             } else if (term.toLowerCase() === 'unused' || /unused/i.test(combined)) {
               rowClass = 'unused_commitment';
               confirmedUnusedCommitment += cost;
               baseIdleAndUnused += cost;
-              detailNote = 'Неиспользованный коммитмент Savings Plan / RI';
+              detailNote = 'Unused Savings Plan or reservation';
             } else if (/savingsplan|reserved/i.test(term) || /savingsplancovered|discountedusage/i.test(liType)) {
               rowClass = 'committed_used';
-              detailNote = 'Уже покрыто коммитментом (' + (term || liType) + ')';
+              detailNote = 'Covered by commitment (' + (term || liType) + ')';
             } else if (/unattached|orphan|idle/i.test(combined) || /volumeusage\.gp2|snapshotusage/i.test(usageType)) {
               rowClass = 'idle_storage';
               confirmedIdleStorage += cost;
@@ -514,7 +522,7 @@
               detailNote = usageType + ' (On-Demand)';
             } else {
               rowClass = 'active_baseline';
-              detailNote = usageType || 'Активная инфраструктура';
+              detailNote = usageType || 'Active infrastructure';
             }
           } else if (schema.id === 'FOCUS_1_0') {
             const eff = map.effectiveCost ? parseNumericValue(raw[map.effectiveCost]) : NaN;
@@ -522,7 +530,7 @@
             cost = Number.isFinite(eff) ? eff : bill;
             billedCost = Number.isFinite(bill) ? bill : eff;
             if (!Number.isFinite(cost) && !Number.isFinite(billedCost)) {
-              skippedRows.push({ row: raw.__rowIndex, reason: 'Нечисловые EffectiveCost/BilledCost' });
+              skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid EffectiveCost and BilledCost' });
               continue;
             }
             if (!Number.isFinite(cost)) cost = 0;
@@ -541,7 +549,7 @@
             const combined = ((raw[map.resourceId] || '') + ' ' + (raw[map.resourceName] || '') + ' ' + svcCat).toLowerCase();
             if (cost < 0 || /credit|adjustment/i.test(chargeCat)) {
               rowClass = 'credit_refund';
-              detailNote = 'FOCUS ' + (chargeCat || 'Credit') + ' (исключено из базы экономии)';
+              detailNote = 'FOCUS ' + (chargeCat || 'Credit') + ' (excluded from savings)';
             } else if (/purchase/i.test(chargeCat) && cost === 0) {
               rowClass = 'commitment_purchase_amortized';
               detailNote = 'FOCUS Purchase (Billed ' + formatUsd(billedCost) + ', Effective $0.00)';
@@ -557,7 +565,7 @@
               rowClass = 'idle_storage';
               confirmedIdleStorage += cost;
               baseIdleAndUnused += cost;
-              detailNote = 'Непривязанный диск / архив';
+              detailNote = 'Detached disk or archived storage';
             } else if (/networking|observability/i.test(svcCat) || /nat|logging|cloudwatch/i.test(service)) {
               rowClass = 'network_logs';
               baseNetworkAndLogs += cost;
@@ -568,13 +576,13 @@
               detailNote = svcCat + ' · Standard (On-Demand)';
             } else {
               rowClass = 'active_baseline';
-              detailNote = svcCat || 'Активное потребление';
+              detailNote = svcCat || 'Active usage';
             }
           } else if (schema.id === 'LLM_USAGE') {
             cost = parseNumericValue(raw[map.cost]);
             billedCost = cost;
             if (!Number.isFinite(cost)) {
-              skippedRows.push({ row: raw.__rowIndex, reason: 'Нечисловая стоимость в ' + map.cost });
+              skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid cost in ' + map.cost });
               continue;
             }
             const model = raw[map.model] || 'unknown-model';
@@ -619,14 +627,14 @@
               estLlmRouteSavings += rowRouteSav;
             }
 
-            detailNote = 'Кэш: ' + (cacheRatio * 100).toFixed(0) + '% · ' + (isBatch ? 'Batch' : 'Sync') + (isFlagship ? ' · Flagship' : ' · Compact');
+            detailNote = 'Cached input: ' + (cacheRatio * 100).toFixed(0) + '% · ' + (isBatch ? 'Batch' : 'Sync') + (isFlagship ? ' · Flagship' : ' · Compact');
             llmRowNotes.push({ model, project: resource, cost, cacheRatio, isBatch, isFlagship, rowCacheSav, rowRouteSav });
           } else {
             // GENERIC_CSV
             cost = parseNumericValue(raw[map.cost]);
             billedCost = cost;
             if (!Number.isFinite(cost)) {
-              skippedRows.push({ row: raw.__rowIndex, reason: 'Нечисловая стоимость в ' + map.cost });
+              skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid cost in ' + map.cost });
               continue;
             }
             provider = map.provider ? (raw[map.provider] || 'Cloud') : 'Cloud';
@@ -639,7 +647,7 @@
 
             if (cost < 0) {
               rowClass = 'credit_refund';
-              detailNote = 'Кредит / возврат (исключено из базы экономии)';
+              detailNote = 'Credit or refund';
             } else if (/unused/i.test(combined)) {
               rowClass = 'unused_commitment';
               confirmedUnusedCommitment += cost;
@@ -657,12 +665,13 @@
             } else {
               rowClass = 'active_baseline';
             }
-            detailNote = term || 'Импортировано из generic CSV';
+            detailNote = term || 'Generic billing row';
           }
 
           confirmedEffectiveTotal += cost;
           confirmedBilledTotal += billedCost;
           if (dateStr) dates.push(dateStr.slice(0, 10));
+          if (schema.id === 'FOCUS_1_0' && map.dateEnd && raw[map.dateEnd]) dates.push(raw[map.dateEnd].slice(0, 10));
 
           if (!serviceAgg[service]) {
             serviceAgg[service] = { service, count: 0, effectiveCost: 0, billedCost: 0 };
@@ -687,7 +696,7 @@
 
         if (normalizedRows.length === 0) {
           return {
-            error: 'Ни одна строка CSV не содержит валидной числовой суммы расходов.',
+            error: 'No rows contain a valid numeric cost. Check the cost column and try again.',
             fingerprint,
             filename,
             skippedRows
@@ -715,73 +724,73 @@
         const levers = [
           {
             id: 'compute_sp',
-            window: '0–30 дн',
-            title: 'Покрытие On-Demand Compute/DB через 1-Yr Savings Plans / CUD',
+            window: '0–30 days',
+            title: 'Cover steady compute with commitments',
             confirmedBase: baseOnDemandCompute,
-            assumptionLabel: assumptions.computeSpDiscountPct + '% скидка SP/CUD',
+            assumptionLabel: assumptions.computeSpDiscountPct + '% commitment discount',
             formula: baseOnDemandCompute > 0
               ? formatUsd(baseOnDemandCompute) + ' × ' + assumptions.computeSpDiscountPct + '%'
-              : 'База $0.00 (не применимо)',
+              : 'No eligible spend',
             monthlyEstimate: estSpMonthly,
             annualEstimate: roundCents(estSpMonthly * 12),
             active: baseOnDemandCompute > 0,
-            verificationCheck: 'Сверить стабильный baseline CPU/RAM за 30 дней и исключить сезонные пики перед покупкой 1-Yr No Upfront.'
+            verificationCheck: 'Check 30 days of CPU and memory usage before committing to a one-year plan.'
           },
           {
             id: 'idle_unused',
-            window: '0–30 дн',
-            title: 'Очистка Idle Storage (gp2/снапшоты) и перераспределение Unused Commitments',
+            window: '0–30 days',
+            title: 'Reclaim idle storage and unused commitments',
             confirmedBase: baseIdleAndUnused,
-            assumptionLabel: assumptions.idleCleanupPct + '% возврат / очистка',
+            assumptionLabel: assumptions.idleCleanupPct + '% recoverable',
             formula: baseIdleAndUnused > 0
               ? formatUsd(baseIdleAndUnused) + ' × ' + assumptions.idleCleanupPct + '%'
-              : 'База $0.00 (не применимо)',
+              : 'No eligible spend',
             monthlyEstimate: estIdleMonthly,
             annualEstimate: roundCents(estIdleMonthly * 12),
             active: baseIdleAndUnused > 0,
-            verificationCheck: 'Подтвердить с владельцами сервисов отсутствие зависимостей у unattached-томов и архивных снапшотов.'
+            verificationCheck: 'Confirm disk and snapshot dependencies with the service owner before removal.'
           },
           {
             id: 'network_logs',
-            window: '30–60 дн',
-            title: 'VPC Gateway Endpoints для NAT Bytes и политики ретеншна логов',
+            window: '30–60 days',
+            title: 'Reduce network and log ingestion costs',
             confirmedBase: baseNetworkAndLogs,
-            assumptionLabel: assumptions.networkLogOptPct + '% снижение трафика/логов',
+            assumptionLabel: assumptions.networkLogOptPct + '% reduction in traffic and logs',
             formula: baseNetworkAndLogs > 0
               ? formatUsd(baseNetworkAndLogs) + ' × ' + assumptions.networkLogOptPct + '%'
-              : 'База $0.00 (не применимо)',
+              : 'No eligible spend',
             monthlyEstimate: estNetMonthly,
             annualEstimate: roundCents(estNetMonthly * 12),
             active: baseNetworkAndLogs > 0,
-            verificationCheck: 'Проверить VPC Flow Logs (доля трафика в S3/ECR) и требования комплаенса по срокам хранения логов.'
+            verificationCheck: 'Check VPC flow logs for endpoint traffic and confirm retention requirements.'
           },
           {
             id: 'llm_caching',
-            window: '0–30 дн',
-            title: 'LLM Prompt Caching для повторяющегося системного контекста',
+            window: '0–30 days',
+            title: 'Cache repeated model inputs',
             confirmedBase: baseLlmCacheEligible,
-            assumptionLabel: 'Цель ' + assumptions.llmCacheTargetPct + '% кэша (скидка 65%)',
+            assumptionLabel: 'Target ' + assumptions.llmCacheTargetPct + '% cached input (65% assumed discount)',
             formula: baseLlmCacheEligible > 0
               ? 'Σ(cost × weight_in × max(0, ' + assumptions.llmCacheTargetPct + '% − fact_cache) × 65%)'
-              : 'База $0.00 (не применимо)',
+              : 'No eligible spend',
             monthlyEstimate: estCacheMonthly,
             annualEstimate: roundCents(estCacheMonthly * 12),
             active: baseLlmCacheEligible > 0,
-            verificationCheck: 'Стабилизировать префикс системного промпта (>1024 токенов) и замерить реальный cache_read_ratio в staging.'
+            verificationCheck: 'Test a stable prompt prefix and measure the cache hit rate on representative requests.'
           },
           {
             id: 'llm_routing_batch',
-            window: '30–90 дн',
-            title: 'Перенос асинхронных/типовых LLM-вызовов в Batch API и компактные модели',
+            window: '30–90 days',
+            title: 'Route eligible requests to batch or smaller models',
             confirmedBase: baseLlmRouteEligible,
-            assumptionLabel: assumptions.llmBatchRoutePct + '% объёма × 50% скидка (от остатка)',
+            assumptionLabel: assumptions.llmBatchRoutePct + '% of residual cost at 50% discount',
             formula: baseLlmRouteEligible > 0
               ? 'Σ((cost − cache_est) × ' + assumptions.llmBatchRoutePct + '% × 50%)'
-              : 'База $0.00 (не применимо)',
+              : 'No eligible spend',
             monthlyEstimate: estRouteMonthly,
             annualEstimate: roundCents(estRouteMonthly * 12),
             active: baseLlmRouteEligible > 0,
-            verificationCheck: 'Прогнать eval-выборку качества ответов (accuracy/JSON-schema) и подтвердить допуск задержки 24ч для Batch.'
+            verificationCheck: 'Check response quality and confirm that batch latency meets the service target.'
           }
         ];
 
@@ -791,7 +800,7 @@
           const llmUnique = llmRowNotes.reduce((acc, r) => {
             const eligCache = r.cacheRatio < llmCacheTargetRatio;
             const eligRoute = r.isFlagship && !r.isBatch;
-            return acc + ((eligCache || eligRoute) ? r.cost : 0);
+            return acc + ((r.cost > 0 && (eligCache || eligRoute)) ? r.cost : 0);
           }, 0);
           confirmedEligibleUniqueBase = roundCents(confirmedEligibleUniqueBase + llmUnique);
         }
@@ -813,7 +822,7 @@
         dates.sort();
         const periodLabel = dates.length > 0
           ? (dates[0] === dates[dates.length - 1] ? dates[0] : dates[0] + ' .. ' + dates[dates.length - 1])
-          : 'Период не указан в CSV';
+          : 'Period unavailable';
 
         const t1 = typeof performance !== 'undefined' ? performance.now() : Date.now();
 
@@ -836,7 +845,7 @@
           confirmed: {
             effectiveTotal: confirmedEffectiveTotal,
             billedTotal: confirmedBilledTotal,
-            hasSeparateBilledCost: schema.id === 'FOCUS_1_0',
+            hasSeparateBilledCost: schema.id === 'FOCUS_1_0' && Boolean(map.billedCost && map.effectiveCost),
             eligibleBaseTotal: confirmedEligibleUniqueBase,
             eligibleBaseSharePct: confirmedEffectiveTotal > 0 ? (confirmedEligibleUniqueBase / confirmedEffectiveTotal) * 100 : 0,
             unusedCommitmentTotal: roundCents(confirmedUnusedCommitment),
@@ -869,512 +878,231 @@
       /* =====================================================================
          3. APPLICATION STATE & UI CONTROLLER
          ===================================================================== */
-      const state = {
-        activeStep: 1,
-        activePresetKey: 'aws_cur',
-        activeScenarioKey: 'base',
-        currentFilename: DEMO_DATASETS.aws_cur.filename,
-        currentCsvText: DEMO_DATASETS.aws_cur.csv,
-        assumptions: Object.assign({}, SCENARIO_PRESETS.base),
-        report: null,
-        previousReport: null
-      };
+      const $ = id => document.getElementById(id);
+      const aliases = {aws:'aws_cur', focus:'focus_1_0', llm:'llm_usage'};
+      const inputs = [
+        ['SpDiscount','computeSpDiscountPct','One-year commitment discount',45,'On-demand compute and managed databases.'],
+        ['IdleCleanup','idleCleanupPct','Recoverable idle spend',100,'Potential idle storage and unused commitments.'],
+        ['NetworkOpt','networkLogOptPct','Network and logging reduction',75,'Eligible transmission and log ingestion.'],
+        ['LlmCache','llmCacheTargetPct','Target cached input',85,'Incremental input caching at an assumed 65% discount.'],
+        ['LlmRoute','llmBatchRoutePct','Share routed to batch or smaller models',60,'Eligible spend after caching, at an assumed 50% discount.']
+      ];
+      const state = {preset:null, scenario:'base', assumptions:{...SCENARIO_PRESETS.base}, csv:'', filename:'',
+        report:null, previous:null, sourceVersion:0};
+      const buttons = selector => Array.from(document.querySelectorAll(selector));
+      const usd = value => escapeHtml(formatUsd(value));
+      const numberCell = value => '<td class="num">'+usd(value)+'</td>';
+      function text(id,value) { $(id).textContent=value; }
 
-      const $ = (id) => document.getElementById(id);
-
-      function setStep(stepNum) {
-        state.activeStep = stepNum;
-        [1, 2, 3].forEach((n) => {
-          const btn = $('stepBtn' + n);
-          if (btn) btn.setAttribute('aria-current', n === stepNum ? 'step' : 'false');
-        });
-
-        const workbench = $('viewWorkbench');
-        const printView = $('viewPrintPlan');
-        if (stepNum === 3) {
-          workbench.classList.add('is-hidden-view');
-          printView.classList.remove('is-hidden-view');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          printView.classList.add('is-hidden-view');
-          workbench.classList.remove('is-hidden-view');
-          const target = stepNum === 1 ? $('sectionImport') : $('sectionAnalysis');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      function setStep(step, moveFocus=true) {
+        if (!state.report && step !== 1) step=1;
+        [1,2,3].forEach(n=>$('stepBtn'+n).setAttribute('aria-current', n===step?'step':'false'));
+        $('viewWorkbench').classList.toggle('is-hidden-view',step===3);
+        $('viewPrintPlan').classList.toggle('is-hidden-view',step!==3);
+        if (moveFocus) {
+          const target=step===3?$('viewPrintPlan'):$(step===2?'sectionAnalysis':'sectionImport');
+          target.focus({preventScroll:true});
+          if(step===2) target.scrollIntoView({block:'start'});
+          else window.scrollTo(0,0);
         }
       }
-
-      function updateProgressStrip(stripId, labelId, timingId, fillId, status, text, timingText, pct) {
-        const strip = $(stripId);
-        strip.classList.remove('is-done', 'is-error', 'is-running');
-        strip.classList.add(status);
-        $(labelId).textContent = text;
-        $(timingId).textContent = timingText;
-        $(fillId).style.width = pct + '%';
+      function linkStep() {
+        return ({'#plan':3,'#step3':3,'#viewPrintPlan':3,'#analysis':2,'#step2':2,'#sectionAnalysis':2})[location.hash] || 1;
       }
-
-      function syncAssumptionControls() {
-        const pairs = [
-          ['SpDiscount', 'computeSpDiscountPct'],
-          ['IdleCleanup', 'idleCleanupPct'],
-          ['NetworkOpt', 'networkLogOptPct'],
-          ['LlmCache', 'llmCacheTargetPct'],
-          ['LlmRoute', 'llmBatchRoutePct']
-        ];
-        for (const [suffix, prop] of pairs) {
-          const val = state.assumptions[prop];
-          $('rng' + suffix).value = val;
-          $('inp' + suffix).value = val;
-          $('val' + suffix).textContent = val + '%';
+      function navigate(step) {
+        const url=new URL(location.href);
+        url.hash=['','#source','#analysis','#plan'][step];
+        if (url.href!==location.href) history.pushState(null,'',url);
+        setStep(step);
+      }
+      function progress(kind, message, timing='', error=false, pct=100) {
+        const strip=$(kind+'ProgressStrip');
+        strip.hidden=false;
+        strip.classList.toggle('is-error',error);
+        text(kind+'ProgressLabel',message);
+        text(kind+'ProgressTiming',timing);
+        $(kind+'ProgressFill').style.width=pct+'%';
+      }
+      function setValid(valid) {
+        document.body.dataset.valid=String(valid);
+        $('auditResults').hidden=!valid;
+        $('sectionAnalysis').hidden=!valid;
+        for(const id of ['formulaDrawer','rowsDrawer','diagnosticsDrawer']) $(id).hidden=!valid;
+        ['stepBtn2','stepBtn3'].forEach(id=>$(id).disabled=!valid);
+        if(!valid) setStep(1,false);
+      }
+      function syncControls() {
+        for(const b of buttons('[data-preset]')) b.setAttribute('aria-pressed',String(b.dataset.preset===state.preset));
+        for(const b of buttons('[data-scenario]')) b.setAttribute('aria-pressed',String(b.dataset.scenario===state.scenario));
+        for(const [suffix,key] of inputs) {
+          $('rng'+suffix).value=state.assumptions[key];
+          $('inp'+suffix).value=state.assumptions[key];
         }
-        ['conservative', 'base', 'aggressive'].forEach((key) => {
-          const btn = $('scenarioBtn' + key.charAt(0).toUpperCase() + key.slice(1));
-          if (btn) btn.setAttribute('aria-pressed', state.activeScenarioKey === key ? 'true' : 'false');
-        });
       }
-
-      function syncPresetButtons() {
-        const map = { aws_cur: 'presetBtnAws', focus_1_0: 'presetBtnFocus', llm_usage: 'presetBtnLlm' };
-        Object.entries(map).forEach(([key, id]) => {
-          const btn = $(id);
-          if (btn) btn.setAttribute('aria-pressed', state.activePresetKey === key ? 'true' : 'false');
-        });
+      function renderPlan(r) {
+        text('printSyncStatus',r.meta.filename+' · '+r.assumptions.name+' scenario');
+        text('printGeneratedAt','Calculated '+r.meta.generatedAtIso.slice(0,19).replace('T',' ')+' UTC');
+        const meta=[['Format',r.meta.schemaLabel],['Input dates',r.meta.periodLabel]];
+        $('printMetaGrid').innerHTML=meta.map(([a,b])=>'<div><dt>'+a+'</dt><dd>'+escapeHtml(b)+'</dd></div>').join('');
+        text('printConfirmedTotal',formatUsd(r.confirmed.effectiveTotal));
+        text('printConfirmedDetail',r.meta.validRowCount+' rows · '+formatUsd(r.confirmed.eligibleBaseTotal)+' eligible');
+        text('printEstimatedTotal',formatUsd(r.estimated.monthlyTotal));
+        text('printEstimatedDetail',formatUsd(r.estimated.annualTotal)+' over 12 equivalent billing months');
+        $('printServicesBody').innerHTML=r.confirmed.services.map(s=>'<tr><td>'+escapeHtml(s.service)+'</td><td class="num">'+s.count+'</td><td class="num">'+formatPct(s.sharePct)+'</td>'+numberCell(s.effectiveCost)+'</tr>').join('');
+        $('printServicesFoot').innerHTML='<tr><td>Total</td><td class="num">'+r.meta.validRowCount+'</td><td></td>'+numberCell(r.confirmed.effectiveTotal)+'</tr>';
+        text('printScenarioBadge',r.assumptions.name+' scenario. Estimates assume that the export represents one billing month.');
+        $('printAssumptionsBody').innerHTML=inputs.map(([,key,label,,usage])=>'<tr><td>'+label+'</td><td class="num">'+r.assumptions[key]+'%</td><td>'+usage+'</td></tr>').join('');
+        $('printPlanBody').innerHTML=r.estimated.levers.filter(l=>l.active).map(l=>'<tr><td>'+escapeHtml(l.window)+'</td><td><strong>'+escapeHtml(l.title)+'</strong><small>'+escapeHtml(l.formula)+'</small></td>'+numberCell(l.confirmedBase)+numberCell(l.monthlyEstimate)+numberCell(l.annualEstimate)+'<td>'+escapeHtml(l.verificationCheck)+'</td></tr>').join('') ||
+          '<tr><td colspan="6">No eligible costs found for the current model.</td></tr>';
+        $('printPlanFoot').innerHTML='<tr><td colspan="2">Total</td>'+numberCell(r.confirmed.eligibleBaseTotal)+numberCell(r.estimated.monthlyTotal)+numberCell(r.estimated.annualTotal)+'<td></td></tr>';
+        text('printIntegrityBox',r.meta.validRowCount+' valid rows · '+r.meta.skippedRowCount+' skipped. '+(r.confirmed.hasSeparateBilledCost?'Total billed cost '+formatUsd(r.confirmed.billedTotal)+'. ':'')+'The report was calculated locally.');
+        text('printFooterChecksum','Input fingerprint '+r.meta.fingerprint+' · '+r.meta.filename);
       }
-
-      function renderDeltaBar(prev, curr) {
-        const bar = $('deltaBar');
-        if (!prev || !curr || prev.meta.fingerprint === curr.meta.fingerprint) {
-          bar.classList.remove('visible');
+      function render(r) {
+        const {meta,confirmed,estimated}=r;
+        const src=state.preset?'Sample':'Your CSV';
+        text('sourceSummary',src+' · '+meta.filename);
+        text('kpiEstMonthly',formatUsd(estimated.monthlyTotal));
+        text('kpiEstMonthlySub',(confirmed.effectiveTotal>0?formatPct(estimated.savingsSharePct)+' of confirmed spend · ':'')+r.assumptions.name+' scenario');
+        text('kpiConfirmedTotal',formatUsd(confirmed.effectiveTotal));
+        const projected=roundCents(confirmed.effectiveTotal-estimated.monthlyTotal);
+        text('projectedSpend',formatUsd(projected));
+        const graphValid=confirmed.effectiveTotal>0 && projected>=0;
+        $('beforeBar').parentElement.hidden=$('afterBar').parentElement.hidden=!graphValid;
+        $('beforeBar').style.width='100%';
+        $('afterBar').style.width=(graphValid?Math.min(100,100*projected/confirmed.effectiveTotal):0)+'%';
+        const best=estimated.levers.reduce((top,lever)=>lever.monthlyEstimate>0 && (!top || lever.monthlyEstimate>top.monthlyEstimate)?lever:top,null);
+        text('topLeverTitle',best?best.title:'No qualifying opportunity');
+        text('topLeverAmount',best?formatUsd(best.monthlyEstimate):'');
+        $('topLeverUnit').hidden=!best;
+        text('topLeverCheck',best?best.verificationCheck:'Review the source rows and assumptions. The current model found no positive savings estimate.');
+        text('kpiConfirmedSub',meta.validRowCount+' source rows');
+        text('kpiEligibleBase',formatUsd(confirmed.eligibleBaseTotal));
+        text('kpiEstAnnual',formatUsd(estimated.annualTotal));
+        $('serviceBreakdownList').innerHTML=confirmed.services.map(s=>'<div class="service"><span class="name">'+escapeHtml(s.service)+'</span><span class="service-track" aria-hidden="true"><i style="width:'+Math.max(0,Math.min(100,s.sharePct))+'%"></i></span><span class="value">'+usd(s.effectiveCost)+'</span></div>').join('');
+        $('focusReconciliationNote').hidden=!confirmed.hasSeparateBilledCost;
+        text('focusReconciliationNote','Effective cost '+formatUsd(confirmed.effectiveTotal)+' · Billed cost '+formatUsd(confirmed.billedTotal)+'. The model uses effective costs to account for commitments once.');
+        $('leversTableBody').innerHTML=estimated.levers.map(l=>'<tr><td><strong>'+escapeHtml(l.title)+'</strong><small>'+escapeHtml(l.formula)+'</small><small>'+escapeHtml(l.verificationCheck)+'</small></td>'+numberCell(l.confirmedBase)+numberCell(l.monthlyEstimate)+numberCell(l.annualEstimate)+'</tr>').join('');
+        $('leversTableFoot').innerHTML='<tr><td>Total · unique eligible costs</td>'+numberCell(confirmed.eligibleBaseTotal)+numberCell(estimated.monthlyTotal)+numberCell(estimated.annualTotal)+'</tr>';
+        text('rowsDrawerCount',meta.validRowCount);
+        $('rawRowsTableBody').innerHTML=confirmed.rows.map(row=>'<tr><td>'+escapeHtml(row.service)+'<small>'+escapeHtml(row.region)+' · '+escapeHtml(row.date)+'</small></td><td>'+escapeHtml(row.resource)+'<small>'+escapeHtml(row.detailNote)+'</small></td><td>'+escapeHtml(CLASS_LABELS[row.rowClass]?.text || row.rowClass)+'</td>'+numberCell(row.effectiveCost)+'</tr>').join('');
+        const cols=Object.entries(meta.columnMap).filter(([,column])=>column);
+        $('diagnosticsBody').innerHTML='<p>'+escapeHtml(meta.schemaLabel)+' · '+meta.validRowCount+' valid rows · '+meta.skippedRowCount+' skipped · '+meta.elapsedMs+' ms</p><p>Input fingerprint <code>'+escapeHtml(meta.fingerprint)+'</code></p><ul>'+cols.map(([field,column])=>'<li>'+escapeHtml(field)+' ← '+escapeHtml(column)+'</li>').join('')+'</ul>';
+        $('deltaBar').hidden=!state.previous;
+        if(state.previous) {
+          text('deltaPrevName',state.previous.meta.filename);
+          text('deltaMetrics','Spend '+formatSignedUsd(confirmed.effectiveTotal-state.previous.confirmed.effectiveTotal)+' · Monthly estimate '+formatSignedUsd(estimated.monthlyTotal-state.previous.estimated.monthlyTotal));
+        }
+        renderPlan(r);
+      }
+      function audit(csv,filename,{preset=null,notify=true}={}) {
+        const result=analyzeBillingCsv(csv,filename,state.assumptions);
+        state.sourceVersion++;
+        state.csv=csv; state.filename=filename; state.preset=preset;
+        $('rawCsvTextarea').value=csv;
+        $('btnDownloadCurrentCsv').disabled=!csv;
+        if(result.error) {
+          if(state.report) state.previous=state.report;
+          state.report=null;
+          setValid(false); syncControls();
+          text('sourceSummary',filename);
+          text('editStatus',result.error);
+          progress('import',filename+' · '+result.error,'',true);
           return;
         }
-        const diffConfirmed = roundCents(curr.confirmed.effectiveTotal - prev.confirmed.effectiveTotal);
-        const diffSavings = roundCents(curr.estimated.monthlyTotal - prev.estimated.monthlyTotal);
-        $('deltaPrevName').textContent = prev.meta.filename;
-        $('deltaNotice').textContent = 'Отпечаток входа изменён (' + prev.meta.fingerprint.slice(0, 8) + ' → ' + curr.meta.fingerprint.slice(0, 8) + '). Все итоги и печатный план пересчитаны.';
-        $('deltaMetrics').innerHTML =
-          '<span>Факт CSV: <strong>' + escapeHtml(formatSignedUsd(diffConfirmed)) + '</strong></span>' +
-          '<span>Оценка экономии/мес: <strong>' + escapeHtml(formatSignedUsd(diffSavings)) + '</strong></span>' +
-          '<span>Строк: <strong>' + prev.meta.validRowCount + ' → ' + curr.meta.validRowCount + '</strong></span>';
-        bar.classList.add('visible');
+        if(state.report && state.report.meta.fingerprint!==result.meta.fingerprint) state.previous=state.report;
+        state.report=result;
+        syncControls();setValid(true);render(result);
+        text('editStatus','');
+        $('exportProgressStrip').hidden=true;
+        if(notify) progress('import',result.meta.validRowCount+' rows analyzed'+(result.meta.skippedRowCount?' · '+result.meta.skippedRowCount+' skipped':'')+'.',result.meta.elapsedMs+' ms');
+        else $('importProgressStrip').hidden=true;
       }
-
-      function renderReport(report) {
-        // Header meta chips
-        $('heroSourceChip').textContent = 'Файл: ' + report.meta.filename;
-        $('heroSchemaChip').textContent = 'Схема: ' + report.meta.schemaLabel;
-        $('heroFingerprintChip').textContent = 'Отпечаток: #' + report.meta.fingerprint.slice(0, 10);
-
-        // 4 KPI Cards
-        $('kpiConfirmedTotal').textContent = formatUsd(report.confirmed.effectiveTotal);
-        let confSub = report.meta.validRowCount + ' строк · ' + report.meta.periodLabel;
-        if (report.confirmed.hasSeparateBilledCost) {
-          confSub += ' · BilledCost: ' + formatUsd(report.confirmed.billedTotal);
-        }
-        $('kpiConfirmedSub').textContent = confSub;
-
-        $('kpiEligibleBase').textContent = formatUsd(report.confirmed.eligibleBaseTotal);
-        let eligSub = formatPct(report.confirmed.eligibleBaseSharePct) + ' от подтверждённых расходов';
-        if (report.confirmed.unusedCommitmentTotal > 0) {
-          eligSub += ' · Unused SP: ' + formatUsd(report.confirmed.unusedCommitmentTotal);
-        }
-        $('kpiEligibleSub').textContent = eligSub;
-
-        $('kpiEstMonthly').textContent = formatUsd(report.estimated.monthlyTotal);
-        $('kpiEstMonthlySub').textContent = formatPct(report.estimated.savingsSharePct) + ' от счёта · сценарий «' + report.assumptions.name + '»';
-
-        $('kpiEstAnnual').textContent = formatUsd(report.estimated.annualTotal);
-        $('kpiEstAnnualSub').textContent = 'Модельная экстраполяция ×12 при сохранении текущего профиля';
-
-        // Service Breakdown Bars (Confirmed Fact)
-        const maxService = Math.max(1, ...report.confirmed.services.map((s) => s.effectiveCost));
-        $('serviceBreakdownList').innerHTML = report.confirmed.services.map((s) => {
-          const width = Math.max(2, Math.round((s.effectiveCost / maxService) * 100));
-          return (
-            '<div class="fg-bar-row">' +
-              '<div class="fg-bar-meta">' +
-                '<span><strong>' + escapeHtml(s.service) + '</strong> <span class="mono" style="font-size:11px; color:var(--cf-ink-muted);">(' + s.count + ' стр.)</span></span>' +
-                '<span class="mono"><strong>' + escapeHtml(formatUsd(s.effectiveCost)) + '</strong> <span style="color:var(--cf-ink-muted);">(' + formatPct(s.sharePct) + ')</span></span>' +
-              '</div>' +
-              '<div class="fg-bar-track"><div class="fg-bar-fill" style="width:' + width + '%;"></div></div>' +
-            '</div>'
-          );
-        }).join('');
-
-        const focusNote = $('focusReconciliationNote');
-        if (report.confirmed.hasSeparateBilledCost) {
-          focusNote.style.display = 'block';
-          focusNote.innerHTML = '<strong>Сверка FinOps FOCUS 1.0:</strong> сумма <span class="mono">EffectiveCost</span> = <span class="mono">' + escapeHtml(formatUsd(report.confirmed.effectiveTotal)) + '</span>; сумма <span class="mono">BilledCost</span> = <span class="mono">' + escapeHtml(formatUsd(report.confirmed.billedTotal)) + '</span> (строки Purchase с EffectiveCost $0 учтены без двойного счёта).';
-        } else {
-          focusNote.style.display = 'none';
-        }
-
-        // Levers Table
-        $('leversTableBody').innerHTML = report.estimated.levers.map((l) => {
-          return (
-            '<tr class="' + (l.active ? '' : 'is-inactive') + '">' +
-              '<td>' +
-                '<div><strong>' + escapeHtml(l.title) + '</strong></div>' +
-                '<div class="fg-formula">' + escapeHtml(l.formula) + '</div>' +
-                '<div style="font-size:11.5px; color:var(--cf-ink-muted); margin-top:4px;">Проверка: ' + escapeHtml(l.verificationCheck) + '</div>' +
-              '</td>' +
-              '<td class="num">' + escapeHtml(formatUsd(l.confirmedBase)) + '</td>' +
-              '<td class="num"><strong>' + escapeHtml(formatUsd(l.monthlyEstimate)) + '</strong></td>' +
-              '<td class="num">' + escapeHtml(formatUsd(l.annualEstimate)) + '</td>' +
-            '</tr>'
-          );
-        }).join('');
-
-        $('leversTableFoot').innerHTML =
-          '<tr>' +
-            '<td>Итого (уникальная подтверждённая база / суммарная оценка по модели)</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.confirmed.eligibleBaseTotal)) + '</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.estimated.monthlyTotal)) + '</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.estimated.annualTotal)) + '</td>' +
-          '</tr>';
-
-        // Raw rows drawer
-        $('rowsDrawerCount').textContent = String(report.confirmed.rows.length);
-        $('rawRowsTableBody').innerHTML = report.confirmed.rows.map((r) => {
-          const cls = CLASS_LABELS[r.rowClass] || { text: r.rowClass, badge: 'badge-neutral' };
-          return (
-            '<tr>' +
-              '<td><strong>' + escapeHtml(r.service) + '</strong><div class="mono" style="font-size:11px; color:var(--cf-ink-muted);">' + escapeHtml(r.region) + ' · ' + escapeHtml(r.date) + '</div></td>' +
-              '<td class="mono" style="font-size:12px;">' + escapeHtml(r.resource) + '<div style="font-family:var(--font-sans); font-size:11.5px; color:var(--cf-ink-muted);">' + escapeHtml(r.detailNote) + '</div></td>' +
-              '<td><span class="badge ' + cls.badge + '">' + escapeHtml(cls.text) + '</span></td>' +
-              '<td class="num">' + escapeHtml(formatUsd(r.effectiveCost)) + '</td>' +
-            '</tr>'
-          );
-        }).join('');
-
-        // Diagnostics drawer
-        const colPairs = Object.entries(report.meta.columnMap)
-          .filter(([, v]) => Boolean(v))
-          .map(([k, v]) => '<li><span class="mono">' + escapeHtml(k) + '</span> ← <span class="mono">' + escapeHtml(v) + '</span></li>')
-          .join('');
-        $('diagnosticsBody').innerHTML =
-          '<p style="margin-top:0;"><strong>Схема:</strong> ' + escapeHtml(report.meta.schemaLabel) + ' · <strong>Разделитель:</strong> <span class="mono">' + escapeHtml(report.meta.delimiter) + '</span> · <strong>Отпечаток входа:</strong> <span class="mono">#' + escapeHtml(report.meta.fingerprint) + '</span></p>' +
-          '<p><strong>Обработано строк:</strong> ' + report.meta.validRowCount + ' · <strong>Пропущено строк:</strong> ' + report.meta.skippedRowCount + ' · <strong>Время расчёта:</strong> <span class="mono">' + report.meta.elapsedMs + ' мс</span></p>' +
-          '<p style="margin-bottom:4px;"><strong>Сопоставленные колонки CSV:</strong></p>' +
-          '<ul style="margin:0; padding-left:18px; columns:2; gap:16px;">' + colPairs + '</ul>';
-
-        // Printable A4 Plan Sheet
-        renderPrintablePlan(report);
+      function loadSample(key,notify=true) {
+        const sample=DEMO_DATASETS[key];
+        if(!sample)return;
+        audit(sample.csv,sample.filename,{preset:key,notify});
       }
-
-      function renderPrintablePlan(report) {
-        const dt = new Date(report.meta.generatedAtIso);
-        const formattedDate = dt.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-        $('printGeneratedAt').textContent = formattedDate;
-        $('printSyncStatus').textContent = 'Актуален для файла ' + report.meta.filename + ' (отпечаток #' + report.meta.fingerprint.slice(0, 10) + ', сценарий «' + report.assumptions.name + '»).';
-        $('printFooterChecksum').textContent = 'Отпечаток CSV: #' + report.meta.fingerprint + ' · ' + report.meta.filename;
-
-        $('printMetaGrid').innerHTML =
-          '<div class="print-meta-item"><span>Файл-источник</span><strong>' + escapeHtml(report.meta.filename) + '</strong></div>' +
-          '<div class="print-meta-item"><span>Распознанный стандарт</span><strong>' + escapeHtml(report.meta.schemaLabel) + '</strong></div>' +
-          '<div class="print-meta-item"><span>Период биллинга</span><strong>' + escapeHtml(report.meta.periodLabel) + '</strong></div>' +
-          '<div class="print-meta-item"><span>Контрольный отпечаток CSV</span><strong>#' + escapeHtml(report.meta.fingerprint) + '</strong></div>';
-
-        $('printConfirmedTotal').textContent = formatUsd(report.confirmed.effectiveTotal);
-        $('printConfirmedDetail').textContent =
-          report.meta.validRowCount + ' валидных строк' +
-          (report.confirmed.hasSeparateBilledCost ? ' · BilledCost: ' + formatUsd(report.confirmed.billedTotal) : '') +
-          ' · База под оптимизацию: ' + formatUsd(report.confirmed.eligibleBaseTotal) + ' (' + formatPct(report.confirmed.eligibleBaseSharePct) + ')';
-
-        $('printEstimatedTotal').textContent = formatUsd(report.estimated.monthlyTotal) + ' / мес';
-        $('printEstimatedDetail').textContent =
-          'Годовой потенциал (×12): ' + formatUsd(report.estimated.annualTotal) +
-          ' (' + formatPct(report.estimated.savingsSharePct) + ' от подтверждённого счёта)';
-
-        $('printServicesBody').innerHTML = report.confirmed.services.map((s) =>
-          '<tr>' +
-            '<td><strong>' + escapeHtml(s.service) + '</strong></td>' +
-            '<td class="num">' + s.count + '</td>' +
-            '<td class="num">' + formatPct(s.sharePct) + '</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(s.effectiveCost)) + '</td>' +
-          '</tr>'
-        ).join('');
-
-        $('printServicesFoot').innerHTML =
-          '<tr>' +
-            '<td>ИТОГО ПОДТВЕРЖДЁННЫЕ РАСХОДЫ (ФАКТ CSV)</td>' +
-            '<td class="num">' + report.meta.validRowCount + '</td>' +
-            '<td class="num">100.0%</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.confirmed.effectiveTotal)) + '</td>' +
-          '</tr>';
-
-        $('printScenarioBadge').textContent = 'Сценарий: ' + report.assumptions.name;
-        const assumptionRows = [
-          ['Скидка 1-Yr Savings Plans / CUD', report.assumptions.computeSpDiscountPct + '%', 'Применяется только к подтверждённым On-Demand Compute / Managed DB строкам; уже покрытые SP/RI исключены.'],
-          ['Доля устранения Idle Storage / Unused SP', report.assumptions.idleCleanupPct + '%', 'Оценка извлекаемого эффекта после проверки владельцами непривязанных дисков, снапшотов и Unused Commitments.'],
-          ['Оптимизация NAT Bytes и логов', report.assumptions.networkLogOptPct + '%', 'Применяется к строкам NAT Data Processing / Egress и CloudWatch / Cloud Logging ingestion.'],
-          ['Целевой LLM Prompt Caching', report.assumptions.llmCacheTargetPct + '% (скидка 65%)', 'Применяется к разнице между целью и фактическим кэшем input-токенов (вес input vs 4×output).'],
-          ['Перенос LLM на Batch / малые модели', report.assumptions.llmBatchRoutePct + '% × 50% скидка', 'Применяется последовательно к остаточной стоимости флагманских non-batch строк после Prompt Caching.']
-        ];
-        $('printAssumptionsBody').innerHTML = assumptionRows.map((a) =>
-          '<tr><td><strong>' + escapeHtml(a[0]) + '</strong></td><td class="num">' + escapeHtml(a[1]) + '</td><td>' + escapeHtml(a[2]) + '</td></tr>'
-        ).join('');
-
-        $('printPlanBody').innerHTML = report.estimated.levers.map((l) =>
-          '<tr class="' + (l.active ? '' : 'is-inactive') + '">' +
-            '<td class="mono" style="white-space:nowrap;">' + escapeHtml(l.window) + '</td>' +
-            '<td><strong>' + escapeHtml(l.title) + '</strong><div class="fg-formula">' + escapeHtml(l.formula) + '</div></td>' +
-            '<td class="num">' + escapeHtml(formatUsd(l.confirmedBase)) + '</td>' +
-            '<td class="num"><strong>' + escapeHtml(formatUsd(l.monthlyEstimate)) + '</strong></td>' +
-            '<td class="num">' + escapeHtml(formatUsd(l.annualEstimate)) + '</td>' +
-            '<td style="font-size:11.5px;">' + escapeHtml(l.verificationCheck) + '</td>' +
-          '</tr>'
-        ).join('');
-
-        $('printPlanFoot').innerHTML =
-          '<tr>' +
-            '<td colspan="2">ИТОГО ОЦЕНКА ЭКОНОМИИ ПО АКТИВНЫМ ПРЕДПОЛОЖЕНИЯМ</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.confirmed.eligibleBaseTotal)) + '</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.estimated.monthlyTotal)) + '</td>' +
-            '<td class="num">' + escapeHtml(formatUsd(report.estimated.annualTotal)) + '</td>' +
-            '<td style="font-size:11px;">Не является гарантией до инженерного ревью</td>' +
-          '</tr>';
-
-        $('printIntegrityBox').innerHTML =
-          'Импортировано валидных строк: <strong>' + report.meta.validRowCount + '</strong> · Пропущено строк: <strong>' + report.meta.skippedRowCount + '</strong> · ' +
-          'Неиспользованные обязательства (факт в CSV): <strong>' + escapeHtml(formatUsd(report.confirmed.unusedCommitmentTotal)) + '</strong> · ' +
-          'Idle/архивное хранилище (факт в CSV): <strong>' + escapeHtml(formatUsd(report.confirmed.idleStorageTotal)) + '</strong> · ' +
-          'Вычислительный движок: локальный клиентский расчёт (0 внешних API-передач).';
-      }
-
-      function runAudit(csvText, filename, sourceReason) {
-        updateProgressStrip(
-          'importProgressStrip', 'importProgressLabel', 'importProgressTiming', 'importProgressFill',
-          'is-running', 'Этап 1/3: Парсинг CSV и валидация схемы...', '35%', 35
-        );
-
-        const prev = state.report;
-        const result = analyzeBillingCsv(csvText, filename, state.assumptions);
-
-        if (result.error) {
-          updateProgressStrip(
-            'importProgressStrip', 'importProgressLabel', 'importProgressTiming', 'importProgressFill',
-            'is-error', 'Ошибка импорта (' + filename + '): ' + result.error, 'Остановлено', 100
-          );
-          return;
-        }
-
-        if (prev && prev.meta.fingerprint !== result.meta.fingerprint) {
-          state.previousReport = prev;
-        }
-
-        state.currentCsvText = csvText;
-        state.currentFilename = filename;
-        state.report = result;
-
-        $('rawCsvTextarea').value = csvText;
-        renderReport(result);
-        renderDeltaBar(state.previousReport, result);
-
-        updateProgressStrip(
-          'importProgressStrip', 'importProgressLabel', 'importProgressTiming', 'importProgressFill',
-          'is-done',
-          'Готово (' + sourceReason + '): ' + result.meta.validRowCount + ' строк · Факт ' + formatUsd(result.confirmed.effectiveTotal) + ' · Оценка ' + formatUsd(result.estimated.monthlyTotal) + '/мес',
-          '100% · ' + result.meta.elapsedMs + ' мс',
-          100
-        );
-
-        updateProgressStrip(
-          'exportProgressStrip', 'exportProgressLabel', 'exportProgressTiming', 'exportProgressFill',
-          'is-done',
-          'Печатный PDF-план синхронизирован с ' + result.meta.filename + ' (#' + result.meta.fingerprint.slice(0, 10) + ')',
-          'Обновлено за ' + result.meta.elapsedMs + ' мс',
-          100
-        );
-      }
-
-      function triggerDownload(filename, mimeType, content) {
-        const blob = new Blob([content], { type: mimeType });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-      }
-
-      function handleFileUpload(file) {
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          state.activePresetKey = 'custom';
-          syncPresetButtons();
-          runAudit(String(reader.result || ''), file.name, 'загрузка файла');
-        };
-        reader.onerror = () => {
-          updateProgressStrip(
-            'importProgressStrip', 'importProgressLabel', 'importProgressTiming', 'importProgressFill',
-            'is-error', 'Не удалось прочитать файл ' + file.name + '. Проверьте права доступа и повторите.', 'Ошибка', 100
-          );
-        };
+      function upload(file) {
+        if(!file)return;
+        const version=++state.sourceVersion;
+        if(state.report) state.previous=state.report;
+        state.report=null;
+        setValid(false);
+        const reader=new FileReader();
+        progress('import','Reading '+file.name+'…','',false,0);
+        reader.onprogress=e=>{if(version===state.sourceVersion && e.lengthComputable) progress('import','Reading '+file.name+'…',Math.round(e.loaded/e.total*100)+'%',false,e.loaded/e.total*100);};
+        reader.onload=()=>{if(version===state.sourceVersion)audit(String(reader.result || ''),file.name);};
+        reader.onerror=()=>{if(version===state.sourceVersion){audit('',file.name);progress('import','Could not read '+file.name+'. Select the file to retry.','',true);}};
         reader.readAsText(file);
       }
-
-      /* =====================================================================
-         4. EVENT BINDINGS (100% FUNCTIONAL CONTROLS, ZERO PLACEBO)
-         ===================================================================== */
-      ['stepBtn1', 'stepBtn2', 'stepBtn3'].forEach((id, idx) => {
-        $(id).addEventListener('click', () => setStep(idx + 1));
-      });
-
-      $('btnGoToPrintTop').addEventListener('click', () => setStep(3));
-      $('btnBackToAnalysis').addEventListener('click', () => setStep(2));
-
-      document.querySelectorAll('[data-preset]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const key = btn.getAttribute('data-preset');
-          const ds = DEMO_DATASETS[key];
-          if (!ds) return;
-          state.activePresetKey = key;
-          syncPresetButtons();
-          runAudit(ds.csv, ds.filename, ds.label);
-        });
-      });
-
-      $('btnLoadMutationA').addEventListener('click', () => {
-        state.activePresetKey = 'mutation_a';
-        syncPresetButtons();
-        runAudit(DEMO_DATASETS.mutation_a.csv, DEMO_DATASETS.mutation_a.filename, DEMO_DATASETS.mutation_a.label);
-      });
-
-      $('btnLoadMutationB').addEventListener('click', () => {
-        state.activePresetKey = 'mutation_b';
-        syncPresetButtons();
-        runAudit(DEMO_DATASETS.mutation_b.csv, DEMO_DATASETS.mutation_b.filename, DEMO_DATASETS.mutation_b.label);
-      });
-
-      $('btnUploadCsv').addEventListener('click', () => $('csvFileInput').click());
-      $('csvFileInput').addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (file) handleFileUpload(file);
-        e.target.value = '';
-      });
-
-      const dropZone = $('csvDropZone');
-      ['dragenter', 'dragover'].forEach((evt) => {
-        dropZone.addEventListener(evt, (e) => {
-          e.preventDefault();
-          dropZone.classList.add('is-dragover');
-        });
-      });
-      ['dragleave', 'drop'].forEach((evt) => {
-        dropZone.addEventListener(evt, (e) => {
-          e.preventDefault();
-          dropZone.classList.remove('is-dragover');
-        });
-      });
-      dropZone.addEventListener('drop', (e) => {
-        const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file) handleFileUpload(file);
-      });
-
-      $('btnApplyRawCsv').addEventListener('click', () => {
-        const edited = $('rawCsvTextarea').value;
-        state.activePresetKey = 'custom';
-        syncPresetButtons();
-        runAudit(edited, 'edited_' + state.currentFilename.replace(/^edited_/, ''), 'ручное изменение CSV');
-      });
-
-      $('btnDownloadCurrentCsv').addEventListener('click', () => {
-        triggerDownload(state.currentFilename, 'text/csv;charset=utf-8', state.currentCsvText);
-      });
-
-      document.querySelectorAll('[data-scenario]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const key = btn.getAttribute('data-scenario');
-          const preset = SCENARIO_PRESETS[key];
-          if (!preset) return;
-          state.activeScenarioKey = key;
-          state.assumptions = Object.assign({}, preset);
-          syncAssumptionControls();
-          runAudit(state.currentCsvText, state.currentFilename, 'сценарий «' + preset.name + '»');
-        });
-      });
-
-      const assumptionBindings = [
-        ['SpDiscount', 'computeSpDiscountPct', 0, 45],
-        ['IdleCleanup', 'idleCleanupPct', 0, 100],
-        ['NetworkOpt', 'networkLogOptPct', 0, 75],
-        ['LlmCache', 'llmCacheTargetPct', 0, 85],
-        ['LlmRoute', 'llmBatchRoutePct', 0, 60]
-      ];
-
-      assumptionBindings.forEach(([suffix, prop, min, max]) => {
-        const onChange = (rawVal) => {
-          const clamped = Math.max(min, Math.min(max, Math.round(Number(rawVal) || 0)));
-          state.activeScenarioKey = 'custom';
-          state.assumptions = Object.assign({}, state.assumptions, { name: 'Пользовательский', [prop]: clamped });
-          syncAssumptionControls();
-          runAudit(state.currentCsvText, state.currentFilename, 'изменено предположение');
-        };
-        $('rng' + suffix).addEventListener('input', (e) => onChange(e.target.value));
-        $('inp' + suffix).addEventListener('change', (e) => onChange(e.target.value));
-      });
-
-      $('btnTriggerPrint').addEventListener('click', () => {
-        const r = state.report;
-        if (!r) return;
-        updateProgressStrip(
-          'exportProgressStrip', 'exportProgressLabel', 'exportProgressTiming', 'exportProgressFill',
-          'is-done',
-          'Открыт системный диалог печати A4 PDF для ' + r.meta.filename + ' (#' + r.meta.fingerprint.slice(0, 10) + ')',
-          'Готово',
-          100
-        );
-        window.print();
-      });
-
-      $('btnExportJson').addEventListener('click', () => {
-        const r = state.report;
-        if (!r) return;
-        const outName = 'finopsguard-audit-' + r.meta.fingerprint.slice(0, 8).toLowerCase() + '.json';
-        triggerDownload(outName, 'application/json;charset=utf-8', JSON.stringify(r, null, 2));
-        updateProgressStrip(
-          'exportProgressStrip', 'exportProgressLabel', 'exportProgressTiming', 'exportProgressFill',
-          'is-done',
-          'Скачан JSON-отчёт: ' + outName + ' (раздельные блоки confirmed / estimated)',
-          '100%',
-          100
-        );
-      });
-
-      $('btnExportActionCsv').addEventListener('click', () => {
-        const r = state.report;
-        if (!r) return;
-        const lines = [
-          'window,lever_id,title,confirmed_base_usd_fact,formula,monthly_savings_estimate_usd,annual_savings_estimate_usd,required_engineering_check'
-        ];
-        for (const l of r.estimated.levers) {
-          const esc = (v) => '"' + String(v).replace(/"/g, '""') + '"';
-          lines.push([
-            esc(l.window),
-            esc(l.id),
-            esc(l.title),
-            l.confirmedBase.toFixed(2),
-            esc(l.formula),
-            l.monthlyEstimate.toFixed(2),
-            l.annualEstimate.toFixed(2),
-            esc(l.verificationCheck)
-          ].join(','));
+      function download(filename,type,contents) {
+        const a=document.createElement('a'), url=URL.createObjectURL(new Blob([contents],{type}));
+        a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),1000);
+      }
+      function downloadPlan(type) {
+        const r=state.report;
+        if(!r)return;
+        const fp=r.meta.fingerprint.slice(0,8).toLowerCase();
+        if(type==='json') {
+          download('finopsguard-audit-'+fp+'.json','application/json;charset=utf-8',JSON.stringify(r,null,2));
+          progress('export','Audit JSON prepared for download.');
+        } else {
+          const lines=['window,lever_id,title,confirmed_base_usd_fact,formula,monthly_savings_estimate_usd,annual_savings_estimate_usd,required_engineering_check'];
+          const quote=v=>'"'+String(v).replace(/"/g,'""')+'"';
+          for(const l of r.estimated.levers) lines.push([quote(l.window),quote(l.id),quote(l.title),l.confirmedBase.toFixed(2),quote(l.formula),l.monthlyEstimate.toFixed(2),l.annualEstimate.toFixed(2),quote(l.verificationCheck)].join(','));
+          download('finopsguard-plan-'+fp+'.csv','text/csv;charset=utf-8',lines.join('\n'));
+          progress('export','Action CSV prepared for download.');
         }
-        const outName = 'finopsguard-plan-' + r.meta.fingerprint.slice(0, 8).toLowerCase() + '.csv';
-        triggerDownload(outName, 'text/csv;charset=utf-8', lines.join('\n'));
-        updateProgressStrip(
-          'exportProgressStrip', 'exportProgressLabel', 'exportProgressTiming', 'exportProgressFill',
-          'is-done',
-          'Скачан план действий CSV: ' + outName,
-          '100%',
-          100
-        );
+      }
+      $('assumptionsInputs').innerHTML=inputs.map(([suffix,key,label,max])=>'<div class="input-row"><label for="inp'+suffix+'">'+label+' (%)</label><input type="range" id="rng'+suffix+'" min="0" max="'+max+'" aria-label="'+label+' in percent"><input type="number" id="inp'+suffix+'" min="0" max="'+max+'" step="1"></div>').join('');
+      for(const [suffix,key,,max] of inputs) {
+        const adjust=value=>{
+          if(!state.report)return;
+          state.scenario='custom';
+          state.assumptions={...state.assumptions,name:'Custom',[key]:Math.max(0,Math.min(max,Math.round(Number(value)||0)))};
+          audit(state.csv,state.filename,{preset:state.preset,notify:false});
+        };
+        $('rng'+suffix).addEventListener('input',e=>adjust(e.target.value));
+        $('inp'+suffix).addEventListener('change',e=>adjust(e.target.value));
+      }
+      for(const b of buttons('[data-scenario]')) b.addEventListener('click',()=>{
+        if(!state.report)return;
+        state.scenario=b.dataset.scenario;state.assumptions={...SCENARIO_PRESETS[state.scenario]};
+        audit(state.csv,state.filename,{preset:state.preset,notify:false});
       });
-
-      // Initialize with Option 1 (AWS CUR Baseline) immediately on open
-      syncPresetButtons();
-      syncAssumptionControls();
-      runAudit(DEMO_DATASETS.aws_cur.csv, DEMO_DATASETS.aws_cur.filename, DEMO_DATASETS.aws_cur.label);
+      for(const b of buttons('[data-preset]')) b.addEventListener('click',()=>loadSample(b.dataset.preset));
+      $('btnLoadMutationA').addEventListener('click',()=>{loadSample('mutation_a');text('editStatus','Loaded the AWS commitment comparison.');});
+      $('btnLoadMutationB').addEventListener('click',()=>{loadSample('mutation_b');text('editStatus','Loaded the LLM caching comparison.');});
+      $('btnUploadCsv').addEventListener('click',()=>$('csvFileInput').click());
+      $('csvFileInput').addEventListener('change',e=>{upload(e.target.files[0]);e.target.value='';});
+      const zone=$('csvDropZone');
+      ['dragover','dragenter'].forEach(type=>zone.addEventListener(type,e=>{e.preventDefault();zone.classList.add('is-dragover');}));
+      ['dragleave','drop'].forEach(type=>zone.addEventListener(type,e=>{e.preventDefault();zone.classList.remove('is-dragover');}));
+      zone.addEventListener('drop',e=>upload(e.dataTransfer.files[0]));
+      $('rawCsvTextarea').addEventListener('input',e=>{
+        if(state.report) state.previous=state.report;
+        state.sourceVersion++;
+        state.report=null; state.csv=e.target.value; state.preset=null;
+        syncControls(); setValid(false);
+        $('btnDownloadCurrentCsv').disabled=!state.csv;
+        text('sourceSummary','Unapplied CSV edits');
+        text('editStatus','Recalculate to update the audit and exports.');
+      });
+      $('btnApplyRawCsv').addEventListener('click',()=>{
+        audit($('rawCsvTextarea').value,'edited_'+state.filename.replace(/^edited_/,''));
+        if(state.report)text('editStatus','Recalculated '+state.report.meta.validRowCount+' rows. Monthly estimate '+formatUsd(state.report.estimated.monthlyTotal)+'.');
+      });
+      $('btnDownloadCurrentCsv').addEventListener('click',()=>download(state.filename,'text/csv;charset=utf-8',state.csv));
+      ['stepBtn1','stepBtn2','stepBtn3'].forEach((id,index)=>$(id).addEventListener('click',()=>navigate(index+1)));
+      $('btnGoToPrintTop').addEventListener('click',()=>navigate(3));
+      $('btnBackToAnalysis').addEventListener('click',()=>navigate(2));
+      $('btnTriggerPrint').addEventListener('click',()=>{if(state.report){progress('export','Print preview requested. Choose Save as PDF to keep a copy.');window.print();}});
+      $('btnExportJson').addEventListener('click',()=>downloadPlan('json'));
+      $('btnExportActionCsv').addEventListener('click',()=>downloadPlan('csv'));
+      window.addEventListener('hashchange',()=>setStep(linkStep()));
+      const requested=new URLSearchParams(location.search).get('sample');
+      loadSample(Object.hasOwn(aliases,requested)?aliases[requested]:'aws_cur',false);
+      setStep(linkStep(),Boolean(location.hash));
     })();

@@ -291,7 +291,8 @@
 
       // Automatically harvest any entered buyer lead/order fields (Email, Company, Name, PO, Plan) inside modals/forms
       var formFields = {};
-      if (evType === "paywall_action" || target.type === "submit") {
+      if (!document.documentElement.hasAttribute("data-cf-private-inputs") &&
+          (evType === "paywall_action" || target.type === "submit")) {
         try {
           var scope = target.closest(".cf-modal-box, .cf-modal-window, .ds-modal-window, .modal-window, form") || document;
           var inputs = scope.querySelectorAll("input, select, textarea");
@@ -334,16 +335,17 @@
       var el = e.target;
       if (!el) return;
       var tag = (el.tagName || "").toLowerCase();
+      var privateInputs = document.documentElement.hasAttribute("data-cf-private-inputs");
       if (tag === "select") {
         dispatchEvent("preset_change", {
           id: el.id || "",
-          value: String(el.value || "").slice(0, 64)
+          value: privateInputs ? undefined : String(el.value || "").slice(0, 64)
         });
       } else if (tag === "input" && el.type === "file" && el.files && el.files[0]) {
         dispatchEvent("file_upload", {
           id: el.id || "",
-          fileName: String(el.files[0].name || "").slice(0, 64),
-          fileSize: el.files[0].size || 0
+          fileName: privateInputs ? undefined : String(el.files[0].name || "").slice(0, 64),
+          fileSize: privateInputs ? undefined : el.files[0].size || 0
         });
       }
     },
