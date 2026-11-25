@@ -218,6 +218,10 @@ body[data-workspace="cloud"] .task-only {display:none!important}
 .task-table th,.task-table td {text-align:right;vertical-align:top;overflow-wrap:anywhere;white-space:normal}
 .task-table th:first-child {text-align:left;width:50%}.task-table tbody th {font-weight:500}
 .task-table td {font-variant-numeric:tabular-nums}
+.task-cost-heading {margin-top:1.75rem}
+.task-outcomes {table-layout:fixed}
+.task-outcomes summary {min-height:26px;justify-content:flex-end;text-decoration:underline;text-underline-offset:.2em}
+.task-outcomes details p {color:var(--muted);font-size:.78rem;line-height:1.5;margin:.3rem 0;text-align:left;overflow-wrap:anywhere}
 .task-report .table-scroll {margin-top:.55rem}
 .task-export {background:#fff}.task-export p,.task-guide p {color:var(--muted);margin:.65rem 0 1rem}
 .task-export p:empty {display:none}

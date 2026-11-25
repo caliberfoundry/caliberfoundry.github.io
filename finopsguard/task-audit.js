@@ -3,6 +3,14 @@
   'use strict';
   const required = ['variant', 'task_id', 'call_id', 'stage', 'actor', 'cost_basis', 'cost_usd', 'verdict', 'rubric', 'expected_calls'];
   const tokenFields = ['input_tokens', 'output_tokens', 'cached_input_tokens'];
+  const decisionFields = ['release_decision', 'reference_verdict'];
+  const outcomeLabels = {
+    releasedInvalid: 'Invalid work released',
+    stoppedInvalid: 'Invalid work stopped',
+    releasedValid: 'Valid work released',
+    stoppedValid: 'Valid work stopped',
+    unknown: 'Disposition unknown'
+  };
   const costTypes = new Set(['billed', 'estimated', 'subscription', 'unknown', 'no_charge']);
   const illustrativeSources = new Set(['example', 'synthetic', 'illustrative', 'demo', 'sample', 'test']);
   const variants = ['before', 'after'];
@@ -21,7 +29,9 @@
   function parseLedger(csv) {
     const parsed = window.FinOpsGuardEngine.parseCsv(csv);
     if (parsed.error) throw Error(parsed.error);
-    const missing = required.filter(name => !parsed.headers.includes(name));
+    const splitHeaders = decisionFields.filter(name => parsed.headers.includes(name));
+    if (splitHeaders.length === 1) throw Error('Include both release_decision and reference_verdict columns.');
+    const missing = required.filter(name => !parsed.headers.includes(name) && !(name === 'verdict' && splitHeaders.length === 2));
     if (missing.length) throw Error('Missing columns: ' + missing.join(', ') + '. Use the task CSV template.');
     if (new Set(parsed.headers).size !== parsed.headers.length) throw Error('Each column name must be unique.');
     const groups = {before: new Map(), after: new Map()};
@@ -39,13 +49,25 @@
       const task = group.get(row.task_id);
       if (row.stage === 'outcome') {
         if (task.outcome) fail('A task has more than one final outcome.');
-        if (!['accepted', 'rejected', 'pending'].includes(row.verdict) || !row.rubric) fail('Provide a final verdict and rubric ID.');
+        let verdict = row.verdict;
+        let disposition = 'unknown';
+        if (row.release_decision || row.reference_verdict) {
+          if (!['released', 'stopped'].includes(row.release_decision) || !['accepted', 'rejected'].includes(row.reference_verdict)) {
+            fail('Provide both a release decision (released or stopped) and a reference verdict (accepted or rejected).');
+          }
+          const valid = row.reference_verdict === 'accepted';
+          disposition = row.release_decision + (valid ? 'Valid' : 'Invalid');
+          const derived = disposition === 'releasedValid' ? 'accepted' : 'rejected';
+          if (verdict && verdict !== derived) fail('The combined verdict conflicts with the release decision and reference verdict.');
+          verdict = derived;
+        }
+        if (!['accepted', 'rejected', 'pending'].includes(verdict) || !row.rubric) fail('Provide a final verdict and rubric ID.');
         if (row.call_id || row.cost_basis || row.cost_usd || row.estimated_usd || tokenFields.some(k=>row[k])) fail('Record costs and tokens on calls only.');
-        task.outcome = {verdict:row.verdict, actor:row.actor, rubric:row.rubric, expected:numeric(row.expected_calls, true, 'expected_calls at row ' + row.__rowIndex)};
+        task.outcome = {verdict, disposition, actor:row.actor, rubric:row.rubric, expected:numeric(row.expected_calls, true, 'expected_calls at row ' + row.__rowIndex)};
         continue;
       }
       if (!stages.includes(row.stage) || !row.call_id) fail('Provide a unique call ID and an execute, retry or review stage.');
-      if (row.verdict || row.rubric || row.expected_calls) fail('Put the final verdict, rubric and expected_calls on an outcome row.');
+      if (row.verdict || row.rubric || row.expected_calls || decisionFields.some(key=>row[key])) fail('Put release decisions, verdicts, rubric and expected_calls on an outcome row.');
       if (ids[row.variant].has(row.call_id)) fail('Repeated call ID within a variant.');
       ids[row.variant].add(row.call_id);
       if (!costTypes.has(row.cost_basis)) fail('Use billed, estimated, no_charge, subscription or unknown in cost_basis.');
@@ -79,9 +101,11 @@
     const tasks = Array.from(group.values());
     const calls = tasks.flatMap(task => task.calls);
     const criteria = new Set();
+    const releaseOutcomes = Object.fromEntries(Object.keys(outcomeLabels).map(key => [key, []]));
     let accepted = 0, rejected = 0;
     for (const task of tasks) {
       const outcome = task.outcome;
+      releaseOutcomes[outcome?.disposition || 'unknown'].push(task.id);
       const workers = task.calls.filter(call=>call.stage !== 'review').map(call=>call.actor);
       const qualifiedReview = outcome && task.calls.some(call=>call.stage==='review' && call.actor===outcome.actor) && !workers.includes(outcome.actor);
       if (!outcome || !task.calls.some(call => call.stage === 'execute') || outcome.expected !== task.calls.length) {
@@ -95,6 +119,7 @@
         if (outcome.verdict === 'rejected') rejected++;
       }
     }
+    if (releaseOutcomes.unknown.length) issues.add(variant + ' has tasks without separate release decisions and reference verdicts.');
     const billed = totals(calls.map(c=>c.billed));
     const estimated = totals(calls.map(c=>c.estimate));
     const observed = tokenFields.map((_,i)=>totals(calls.map(c=>c.usage[i])));
@@ -107,7 +132,7 @@
         estimate:part.length ? totals(part.map(c=>c.estimate)) : 0};
     }
     const unit = total=>total!==null && accepted ? round(total / accepted) : null;
-    return {tasks:tasks.length, accepted, rejected, calls:calls.length, criteria:[...criteria], byStage,
+    return {tasks:tasks.length, accepted, rejected, releaseOutcomes, calls:calls.length, criteria:[...criteria], byStage,
       billed, estimated, tokens, freshInput:fresh, cachedInput:observed[2], output:observed[1],
       unitBilled:unit(billed), unitEstimated:unit(estimated), unitTokens:unit(tokens),
       priceSources:[...new Set(calls.map(c=>c.basis))]};
@@ -121,15 +146,23 @@
     const taskIds = new Set([...groups.before.keys(), ...groups.after.keys()]);
     const common = [];
     const lost = [];
+    const newFalseReleases = [], retainedFalseReleases = [];
     for (const id of taskIds) {
       const before = groups.before.get(id), after = groups.after.get(id);
       if (!before || !after) { issues.add('Use exactly the same task IDs before and after.'); continue; }
       if (before.outcome?.rubric !== after.outcome?.rubric) issues.add('An acceptance rubric changed between paired runs.');
       if (before.outcome?.verdict==='accepted' && after.outcome?.verdict==='rejected') lost.push(id);
+      if (after.outcome?.disposition === 'releasedInvalid') {
+        const previous = before.outcome?.disposition;
+        if (previous === 'releasedInvalid') retainedFalseReleases.push(id);
+        else if (previous && previous !== 'unknown') newFalseReleases.push(id);
+      }
       common.push(id);
     }
     if (new Set([...result.before.criteria, ...result.after.criteria]).size !== 1) issues.add('Use one common acceptance rubric for this task type.');
     if (lost.length) issues.add(lost.length + (lost.length===1 ? ' previously accepted task failed' : ' previously accepted tasks failed') + ' after the change.');
+    const badReleases = result.after.releaseOutcomes.releasedInvalid.length;
+    if (badReleases) issues.add('The after run released ' + badReleases + (badReleases === 1 ? ' result that failed' : ' results that failed') + ' independent review.');
     if (!result.before.accepted || !result.after.accepted) issues.add('Each variant needs at least one accepted task to compare unit cost.');
     // Only compare like measures. Report a missing or incomplete price explicitly.
     const present = key=>variants.every(v=>result[v][key]!==null);
@@ -138,15 +171,16 @@
     const key = units[metric];
     const baseline = key ? result.before[key] : null;
     const current = key ? result.after[key] : null;
+    const observedDifference = baseline!==null && current!==null ? round(baseline-current) : null;
     const complete = issues.size===0;
-    const difference = complete && baseline!==null && current!==null ? round(baseline-current) : null;
+    const difference = complete ? observedDifference : null;
     const changedPct = difference!==null && baseline>0 ? round(100*difference/baseline) : null;
-    return {version:1, example, ...result, matchedTasks:common.length, lostAcceptances:lost, issues:[...issues], qualityGate:complete,
-      metric, baseline, current, difference, changedPct,
+    return {version:2, example, ...result, matchedTasks:common.length, lostAcceptances:lost, newFalseReleases, retainedFalseReleases, issues:[...issues], qualityGate:complete,
+      metric, baseline, current, observedDifference, difference, changedPct,
       reportedSavingsPerAcceptedTaskUsd:!example && complete && metric==='billed' && difference>0 ? difference : null};
   }
 
-  const sampleHeader = [...required, ...tokenFields, 'dataset'];
+  const sampleHeader = [...required, ...tokenFields, 'dataset', ...decisionFields];
   function sampleRows(scenario) {
     const rows = [sampleHeader];
     const baseline = [[[.11,1100],[.07,700],[.03,300]],[[.13,1300],[.03,300]],[[.10,1000],[.05,500]]];
@@ -159,11 +193,13 @@
           const stage = j===calls.length-1 ? 'review' : j===0 ? 'execute' : 'retry';
           const subscription=scenario==='unpriced';
           rows.push([variant,task,variant+'-'+task+'-'+j,stage,stage==='review'?'checker':'worker',
-            subscription?'subscription':'billed',subscription?'':price,'','','',tokens,tokens/5,0,'example']);
+            subscription?'subscription':'billed',subscription?'':price,'','','',tokens,tokens/5,0,'example','','']);
         });
         let accepted=i!==2;
         if(scenario==='quality' && variant==='after') accepted=i!==0;
-        rows.push([variant,task,'','outcome','checker','','',accepted?'accepted':'rejected','rubric-1',calls.length,'','','','example']);
+        const released = accepted || (scenario === 'quality' && variant === 'after' && i === 0);
+        rows.push([variant,task,'','outcome','checker','','',accepted?'accepted':'rejected','rubric-1',calls.length,'','','','example',
+          released?'released':'stopped', accepted?'accepted':'rejected']);
       });
     }
     return rows.map(row=>row.join(',')).join('\n')+'\n';
@@ -195,6 +231,32 @@
     for(const value of [a,b]) {const td=document.createElement('td'); td.textContent=value; row.append(td);}
     $('taskBreakdown').append(row);
   }
+  function renderOutcomes(report) {
+    const body = $('taskOutcomes');
+    body.replaceChildren();
+    for (const [key, label] of Object.entries(outcomeLabels)) {
+      if (key === 'unknown' && variants.every(v=>!report[v].releaseOutcomes.unknown.length)) continue;
+      const row = body.insertRow();
+      const title = document.createElement('th');
+      title.scope = 'row'; title.textContent = label; row.append(title);
+      for (const variant of variants) {
+        const cell = row.insertCell();
+        const cohort = report[variant];
+        const ids = cohort.releaseOutcomes[key];
+        if (!ids.length) {
+          cell.textContent = cohort.releaseOutcomes.unknown.length === cohort.tasks && key !== 'unknown' ? '—' : '0';
+          continue;
+        }
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = count(ids.length);
+        summary.setAttribute('aria-label', variant + ': ' + ids.length + ' · ' + label + '. Show task IDs.');
+        const list = document.createElement('p');
+        list.textContent = ids.join(', ');
+        details.append(summary, list); cell.append(details);
+      }
+    }
+  }
   function render() {
     const r=state.report;
     $('results').hidden=$('taskEvidence').hidden=!r;
@@ -216,7 +278,8 @@
       show(prefix+'Note',s.accepted+' of '+s.tasks+' tasks accepted · '+counted(s.calls, r.example ? 'call' : 'recorded step'));
     }
     if(r.issues.length) {
-      show('taskVerdict',r.lostAcceptances.length?'Quality regression':'Comparison on hold');
+      const qualityTitle = r.newFalseReleases.length ? 'New invalid release' : r.after.releaseOutcomes.releasedInvalid.length ? 'Invalid work released' : 'Comparison on hold';
+      show('taskVerdict',r.lostAcceptances.length?'Quality regression':qualityTitle);
       show('taskDecision',r.issues.join(' '));
     } else if(r.metric==='unpriced') {
       show('taskVerdict','Cost unavailable');
@@ -234,7 +297,13 @@
       };
       show('taskDecision',(r.example ? 'Illustrative comparison. ' : '')+explanations[r.metric]);
     }
-    show('taskQuality',r.qualityGate?'Every previously accepted task passed the same rubric in this cohort.':'Paired tasks: '+r.matchedTasks+'. The quality check is incomplete or has a regression.');
+    const changes = [];
+    if (r.newFalseReleases.length) changes.push(r.newFalseReleases.length + ' newly released');
+    if (r.retainedFalseReleases.length) changes.push(r.retainedFalseReleases.length + ' released in both runs');
+    show('taskQuality', changes.length ? 'Invalid results · ' + changes.join(', ') + '.' :
+      r.qualityGate ? 'Previously accepted tasks still pass. Every after-run release passed the supplied reference check.' :
+      'Savings are unverified for these ' + r.matchedTasks + ' matched tasks.');
+    renderOutcomes(r);
     $('taskBreakdown').replaceChildren();
     const row=(label,calc)=>appendMetric(label,calc(r.before),calc(r.after));
     row('Accepted tasks',s=>s.accepted+' / '+s.tasks);

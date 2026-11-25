@@ -87,7 +87,10 @@
         <aside class="task-decision"><h2 id="taskVerdict">Acceptance check</h2><p id="taskDecision"></p><p id="taskQuality"></p></aside>
       </section>
       <section class="task-report" id="taskEvidence" aria-label="Cost and acceptance details">
-        <div class="sheet"><h2>What went into each result</h2><div class="table-scroll"><table class="task-table"><thead><tr><th scope="col">Whole cohort</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody id="taskBreakdown"></tbody></table></div>
+        <div class="sheet"><h2>Release decisions</h2>
+          <p class="sheet-note">Valid work meets the independent review criteria. Expand a count to see the task IDs.</p>
+          <div class="table-scroll"><table class="task-table task-outcomes" aria-label="Release decisions and independent quality"><thead><tr><th scope="col">Final outcome</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody id="taskOutcomes"></tbody></table></div>
+          <h2 class="task-cost-heading">What went into each result</h2><div class="table-scroll"><table class="task-table"><thead><tr><th scope="col">Whole cohort</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody id="taskBreakdown"></tbody></table></div>
           <p id="taskStepNote" class="sheet-note" hidden>Each recorded step can be a model call or a local operation.</p>
         </div>
         <div id="export" class="task-export" tabindex="-1"><h2>Export comparison</h2><p id="taskExportExplanation"></p>
@@ -102,10 +105,11 @@
         <dl>
           <dt>variant, task_id, call_id, stage, actor</dt><dd>Use before or after. Give each recorded step a unique call_id within the variant. Set its stage to execute, retry or review. A step can be a model call or a local operation. The independent reviewer must have a different actor ID from the workers. Use separate task IDs for separate deliverables.</dd>
           <dt>cost_basis, cost_usd</dt><dd>Use billed for an attributable USD charge, estimated for a rate-card estimate, no_charge for a verified zero LLM fee, or subscription or unknown with a blank cost. An optional estimated_usd column can record a separate rate-card equivalent. Use identical pricing assumptions for both variants.</dd>
-          <dt>verdict, rubric, expected_calls</dt><dd>Close each task with one outcome row. Leave its call ID and charges blank. Enter accepted, rejected or pending, the rubric version, and the total number of execution, retry and review rows. The outcome actor identifies the independent reviewer.</dd>
+          <dt>release_decision, reference_verdict</dt><dd>On the final outcome record what the workflow did (released or stopped), and separately what an independent review found (accepted or rejected). Only released work that passed the reference review counts toward cost per accepted task.</dd>
+          <dt>verdict, rubric, expected_calls</dt><dd>Close each task with one outcome row. Leave its call ID and charges blank. Enter the rubric version and the number of execution, retry and review rows. The outcome actor identifies the independent reviewer. When both decision fields are present the combined verdict is calculated. If supplied, it must agree. Older ledgers can use accepted, rejected or pending alone. Their release decisions remain unknown.</dd>
           <dt>input_tokens, output_tokens, cached_input_tokens</dt><dd>Enter metered input and output to compare token usage. Input includes cached reads. Add cached input where available to show the fresh and cached split. Use explicit zeros only when known. The template uses dataset=example. Omit that marker for your own measured runs.</dd>
         </dl>
-        <p>Both cohorts must include the same tasks and rubric. Every baseline acceptance must still pass. Unit cost includes the spend on rejected tasks. The observed difference describes only the supplied cohort. Missing prices, usage or verdicts remain unknown.</p>
+        <p>Both cohorts must include the same tasks and rubric. Unit cost includes spending on all attempts. A savings claim requires complete release decisions, retention of previously accepted tasks, and an after run with zero invalid releases. The comparison describes the supplied cohort.</p>
       </details>
       <div class="task-legacy"><a href="?mode=cloud" data-switch-workspace="cloud">Open the cloud billing audit</a> <span>AWS CUR, FOCUS and usage CSVs</span></div>
     </div>
