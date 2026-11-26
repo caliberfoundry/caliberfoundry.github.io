@@ -191,7 +191,6 @@
     if(!DATASET.presetsById[previouslySelected]){
       const free=DATASET.presets[0];STATE.activePresetId=free.id;
       if(!STATE.customSourceText){STATE.customSourceTitle=free.sourceTitle;STATE.customSourceText=free.sourceText;}
-      STATE.webhookUrl=free.webhookEndpoint;
     }
   }
 
@@ -220,7 +219,7 @@
       customSourceTitle: firstPreset ? firstPreset.sourceTitle : '',
       customSourceText: firstPreset ? firstPreset.sourceText : '',
       customSchemaText: firstPreset ? firstPreset.schemaTemplate : '',
-      webhookUrl: firstPreset ? firstPreset.webhookEndpoint : '',
+      webhookUrl: '',
       synthesizedOverride: null,
       lastWebhookReceipt: null,
       quizSelectedOption: null,
@@ -257,6 +256,7 @@
       if (!raw) return getDefaultState();
       const parsed = JSON.parse(raw);
       const restored = Object.assign(getDefaultState(), parsed);
+      if (/^https:\/\/(?:n8n|eval-api|lms-bridge|growth-engine)\.caliberfoundry-staging\.io\//i.test(restored.webhookUrl)) restored.webhookUrl = '';
       if (!PLAN_PACKAGES[restored.selectedPlanCode]) restored.selectedPlanCode = 'STUDIO_PRO';
       return restored;
     } catch (e) {
@@ -391,14 +391,14 @@
     };
 
     const dynamicWebhookPayload = {
-      workflowId: (basePreset.webhookPayload && basePreset.webhookPayload.workflowId) || `wf_${basePreset.id}_v2`,
+      workflowId: isDefaultUnmodified ? basePreset.webhookPayload.workflowId : 'contentforge_source_excerpts',
       sourceRevision: sha256,
       sourceDocumentTitle: rawTitle,
-      webhookDestination: STATE.webhookUrl || basePreset.webhookEndpoint,
+      webhookDestination: STATE.webhookUrl || null,
       sourceChecksumSha256:sha256,
       mode: 'source_excerpts',
       sourceVersion: sha256,
-      verifiedSpanCount: extractedSegments.length,
+      verifiedSpanCount: dynamicEvalCases.length,
       extractedClaims: dynamicEvalCases.map(c => ({
         claimId: c.id,
         sourceClause: c.sourceRef,
@@ -553,7 +553,7 @@
     // 4. Webhook Endpoint Input
     const webhookInput = document.getElementById('webhookUrlInput');
     if (webhookInput && document.activeElement !== webhookInput) {
-      webhookInput.value = STATE.webhookUrl || preset.webhookEndpoint;
+      webhookInput.value = STATE.webhookUrl || '';
     }
   }
 
@@ -845,7 +845,6 @@
     STATE.customSourceTitle = target.sourceTitle;
     STATE.customSourceText = target.sourceText;
     STATE.customSchemaText = target.schemaTemplate;
-    STATE.webhookUrl = target.webhookEndpoint;
     STATE.quizSelectedOption = null;
     STATE.quizChecked = false;
     saveState();
@@ -892,8 +891,9 @@
     if (sourceNeedsRun()) return null;
     const bundle = getActiveSynthesizedBundle();
     const endpoint = String(customEndpoint ?? document.getElementById('webhookUrlInput').value).trim();
-    const preview = {mode:'local_preview', endpoint, payload:bundle.webhookPayload};
     STATE.webhookUrl = endpoint;
+    bundle.webhookPayload.webhookDestination = endpoint || null;
+    const preview = {mode:'local_preview', endpoint, payload:bundle.webhookPayload};
     STATE.lastWebhookReceipt = null;
     saveState();
     const box = document.getElementById('webhookStatusBox');
@@ -919,19 +919,21 @@ ${JSON.stringify(preview.payload, null, 2)}`;
 
     const preset = getActivePreset();
     const bundle = getActiveSynthesizedBundle();
-    const dossierId = `CF-EVAL-2026-${preset.code}`;
+    const revision = sourceVersion(JSON.stringify([bundle.sha256, bundle.comparisons, bundle.isCustomSynthesized ? null : preset.id]));
+    const dossierId = `CF-${revision.slice(0, 16)}`;
+    const sourceType = bundle.isCustomSynthesized ? 'Submitted document' : `Sample · ${preset.shortTitle || preset.title}`;
 
     body.innerHTML = `
       <div style="border:1.5px solid #141413;padding:16px 20px;background:#F6F4EF;margin-bottom:14px;">
         <div style="font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:#C8431F;letter-spacing:0.06em;">
-          CALIBER FOUNDRY — CONTENTFORGE™ GROUND-TRUTH EVALUATION &amp; CONTENT DOSSIER
+          CALIBER FOUNDRY — CONTENTFORGE™ SOURCE &amp; CLAIM DOSSIER
         </div>
         <h3 style="font-family:var(--font-display);font-size:25px;font-weight:400;color:#141413;margin:4px 0 8px 0;">
           ${escapeHtml(bundle.monograph.headline)}
         </h3>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;font-family:var(--font-mono);font-size:11px;border-top:1px solid #C9C4B8;padding-top:8px;">
           <div>Dossier ID: <strong>${escapeHtml(dossierId)}</strong></div>
-          <div>Scenario: <strong>${escapeHtml(preset.shortTitle || preset.title)}</strong></div>
+          <div>Source type: <strong>${escapeHtml(sourceType)}</strong></div>
           <div>Source: <strong>${escapeHtml(STATE.customSourceTitle)}</strong></div>
           <div>Source version: <strong>${escapeHtml(bundle.sha256.slice(0, 16))}</strong></div>
           <div>Source excerpts: <strong>${bundle.anchorCount}</strong></div>
@@ -1182,6 +1184,10 @@ ${JSON.stringify(preview.payload, null, 2)}`;
   }
 
   function initEventListeners() {
+    document.getElementById('webhookUrlInput').addEventListener('input', event => {
+      STATE.webhookUrl = event.target.value.trim();
+      saveState();
+    });
     for (const id of ['sourceTextInput','sourceTitleInput']) {
       document.getElementById(id).addEventListener('input', () => {
         STATE.sourceDraft = {title:document.getElementById('sourceTitleInput').value, text:document.getElementById('sourceTextInput').value};

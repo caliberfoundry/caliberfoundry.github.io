@@ -1669,4 +1669,5 @@ body {
   body:has(#modalEvalDossier:not(.hidden)) > :not(#modalEvalDossier) { display:none !important; }
   #modalEvalDossier:not(.hidden) { position:static; overflow:visible; }
   #evalDossierPrintableBody { overflow-wrap:anywhere; }
+  #evalDossierPrintableBody .cf-data-table th:first-child { min-width:8ch; }
 }
