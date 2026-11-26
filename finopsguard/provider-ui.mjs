@@ -65,8 +65,8 @@ function showReports() {
   get('unallocated').value='0';get('modelShare').value='';get('discountPct').value='';
   updateMethod();
 }
-get('providerFiles').addEventListener('change',async event=>{
-  const files=[...event.target.files], run=++generation, meter=get('loadProgress');
+async function importFiles() {
+  const files=[...get('providerFiles').files], run=++generation, meter=get('loadProgress');
   invalidate();reports=[];costs=null;
   get('observed').hidden=get('scenario').hidden=true;
   get('importNote').textContent='';meter.hidden=true;
@@ -88,7 +88,11 @@ get('providerFiles').addEventListener('change',async event=>{
     }
     reports=loaded;showReports(); get('importNote').textContent='Import complete.';
   }catch(e){if(run===generation){get('importNote').textContent=e.message;meter.hidden=true;}}
-});
+}
+const fileInput=get('providerFiles');
+fileInput.addEventListener('change',importFiles);
+fileInput.disabled=false;
+if(fileInput.files.length)importFiles();
 for(const id of ['modelShare','discountPct','unallocated','fromModel','toModel'])get(id).addEventListener('input',invalidate);
 for(const id of ['method','chargeScope'])get(id).addEventListener('change',updateMethod);
 get('calculateEstimate').addEventListener('click',()=>{
