@@ -10,16 +10,16 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>Caliber Foundry | Documents, Data &amp; Learning Products</title>
-  <meta name="description" content="Independent software studio building tools for document accessibility, data analysis and professional learning. Explore the product collections or send a project brief." />
+  <meta name="description" content="Product engineering studio building software to trace evidence, understand costs and teach professional skills. Explore the product collections or send a project brief." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://caliberfoundry.com/" />
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Caliber Foundry" />
   <meta property="og:title" content="Caliber Foundry | Documents, Data &amp; Learning Products" />
-  <meta property="og:description" content="Independent software studio building tools for document accessibility, data analysis and professional learning. Explore the product collections or send a project brief." />
+  <meta property="og:description" content="Product engineering studio building software to trace evidence, understand costs and teach professional skills. Explore the product collections or send a project brief." />
   <meta property="og:url" content="https://caliberfoundry.com/" />
-  <meta property="og:image" content="https://caliberfoundry.com/assets/home/collections-social.png" />
+  <meta property="og:image" content="https://caliberfoundry.com/assets/home/atlas-social.png" />
   <meta property="og:image:alt" content="Caliber Foundry product collections for documents, data and learning." />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -27,8 +27,8 @@
   <meta name="twitter:image:alt" content="Caliber Foundry product collections for documents, data and learning." />
   <meta name="twitter:site" content="@CaliberFoundry" />
   <meta name="twitter:title" content="Caliber Foundry | Documents, Data &amp; Learning Products" />
-  <meta name="twitter:description" content="Independent software studio building tools for document accessibility, data analysis and professional learning. Explore the product collections or send a project brief." />
-  <meta name="twitter:image" content="https://caliberfoundry.com/assets/home/collections-social.png" />
+  <meta name="twitter:description" content="Product engineering studio building software to trace evidence, understand costs and teach professional skills. Explore the product collections or send a project brief." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/assets/home/atlas-social.png" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -118,44 +118,54 @@
 }
   </script>
   <link rel="preload" href="/assets/home/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/home/showcase.css">
+  <link rel="stylesheet" href="/assets/home/showcase.css?v=atlas">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="mast wrap">
-    <a class="brand" href="./"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Caliber Foundry</a>
-    <nav aria-label="Main navigation">
-      <a href="#work">Products</a><a href="#capabilities">Studio</a><a href="./pricing.html">Pricing</a><a href="./insights/">Insights</a>
-    </nav>
-    <a class="contact-link" data-native-mailto="1" href="mailto:engineering@caliberfoundry.com?subject=Project%20Brief">Email the studio</a>
+  <header class="atlas-head">
+    <div class="mast wrap">
+      <a class="brand" href="./"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Caliber Foundry</a>
+      <nav aria-label="Main navigation"><a href="#work">Products</a><a href="#capabilities">Studio</a><a href="./pricing.html">Pricing</a><a href="./insights/">Insights</a></nav>
+      <span class="studio-label">Product engineering studio</span>
+    </div>
   </header>
-
   <main id="main">
     <section class="hero" aria-labelledby="intro">
-      <div class="wrap">
-        <div class="hero-lead">
-          <h1 id="intro">Independent<br>software studio.</h1>
-          <div class="hero-intro">
-            <p>We build tools for working with documents, analysing data and teaching professional skills.</p>
-            <a class="button light" href="#work">Explore all products</a>
+      <div class="wrap atlas-layout">
+        <div class="atlas-copy">
+          <h1 id="intro">Documents.<br>Data.<br><em>Learning.</em></h1>
+          <p>We build software that helps teams trace evidence, understand costs and teach professional skills.</p>
+        </div>
+        <div class="collections" role="group" aria-label="Product collections">
+          <div class="collection-row">
+            <a class="collection" href="#documents">
+              <span class="collection-preview"><img src="./assets/product-previews/omnirag.jpg" width="600" height="390" alt=""></span>
+              <span class="collection-label"><strong>Review documents</strong><small>Find the passage behind a claim.</small></span>
+            </a>
+            <button class="preview-toggle" type="button" data-preview="OmniRAG" aria-label="Enlarge OmniRAG preview" aria-haspopup="dialog" aria-controls="preview-dialog" hidden>+</button>
+          </div>
+          <div class="collection-row">
+            <a class="collection" href="#data">
+              <span class="collection-preview"><img src="./assets/product-previews/finopsguard-workbench.webp" width="600" height="390" alt=""></span>
+              <span class="collection-label"><strong>Explore data</strong><small>See what an accepted task costs.</small></span>
+            </a>
+            <button class="preview-toggle" type="button" data-preview="FinOpsGuard" aria-label="Enlarge FinOpsGuard preview" aria-haspopup="dialog" aria-controls="preview-dialog" hidden>+</button>
+          </div>
+          <div class="collection-row">
+            <a class="collection" href="#learning">
+              <span class="collection-preview"><img src="./assets/product-previews/edtech-studio.jpg" width="600" height="390" alt=""></span>
+              <span class="collection-label"><strong>Design learning</strong><small>Try a lesson and inspect its feedback.</small></span>
+            </a>
+            <button class="preview-toggle" type="button" data-preview="AcademyForge" aria-label="Enlarge AcademyForge preview" aria-haspopup="dialog" aria-controls="preview-dialog" hidden>+</button>
           </div>
         </div>
-        <nav class="collections" aria-label="Product collections">
-          <a class="collection" href="#documents">
-            <span class="collection-preview"><img src="./assets/product-previews/omnirag.jpg" width="600" height="390" alt="OmniRAG document search interface"></span>
-            <span class="collection-label"><strong>Documents & evidence</strong></span>
-          </a>
-          <a class="collection" href="#data">
-            <span class="collection-preview"><img src="./assets/product-previews/finopsguard-workbench.webp" width="600" height="390" alt="FinOpsGuard cost comparison interface"></span>
-            <span class="collection-label"><strong>Data & analysis</strong></span>
-          </a>
-          <a class="collection" href="#learning">
-            <span class="collection-preview"><img src="./assets/product-previews/edtech-studio.jpg" width="600" height="390" alt="AcademyForge lesson practice interface"></span>
-            <span class="collection-label"><strong>Learning & assessment</strong></span>
-          </a>
-        </nav>
       </div>
     </section>
+    <dialog id="preview-dialog" aria-labelledby="preview-name">
+      <div class="preview-head"><h2 id="preview-name">Product preview</h2><button type="button" id="preview-close">Close</button></div>
+      <img id="preview-image" alt="">
+      <p id="preview-caption"></p>
+    </dialog>
 
     <section id="work" class="catalog wrap" aria-labelledby="products-heading">
       <div class="catalog-head">
@@ -255,6 +265,7 @@
   <footer class="wrap site-footer">
     <div class="footer-signature"><a class="brand" href="./">Caliber Foundry</a><small>&copy; 2026 Caliber Foundry</small></div>
     <div class="footer-links" data-product-feedback>
+        <a href="#capabilities">Studio</a>
         <a href="./pricing.html">Pricing</a>
         <a href="./terms.html">Terms of Service</a>
         <a href="./privacy.html">Privacy Policy</a>
@@ -284,6 +295,22 @@
         });
         const current = filters.querySelector('[aria-current]');
         document.querySelector('.filter-status').textContent = 'Showing ' + current.textContent.toLowerCase() + '.';
+      }
+      const preview = document.getElementById('preview-dialog');
+      const image = document.getElementById('preview-image');
+      if (typeof preview.showModal === 'function') {
+        document.querySelectorAll('.preview-toggle').forEach(button => {
+          button.hidden = false;
+          button.addEventListener('click', () => {
+            const link = button.previousElementSibling;
+            image.src = link.querySelector('img').src;
+            image.alt = button.dataset.preview + ' interface';
+            document.getElementById('preview-name').textContent = button.dataset.preview;
+            document.getElementById('preview-caption').textContent = link.querySelector('small').textContent;
+            preview.showModal();
+          });
+        });
+        document.getElementById('preview-close').addEventListener('click', () => preview.close());
       }
       updateProducts();
       window.addEventListener('hashchange', updateProducts);
