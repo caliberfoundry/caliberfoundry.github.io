@@ -7,7 +7,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>CodeDrill™ CBT — Customs Broker (CBLE) &amp; IRS Enrolled Agent (SEE Parts 1–3) Simulator</title>
-  <meta name="description" content="Practise customs broker and enrolled agent questions, review a cited authority, and inspect your session results. Corporate practice license available as a one-time purchase." />
+  <meta name="description" content="Practise customs broker and enrolled agent questions, review a cited authority, and inspect your session results. Choose a 30-day candidate pass or a corporate practice license." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -74,7 +74,7 @@
         <span class="cd-license-pill" id="headerLicenseStatusBadge">Free Trial (3/48 Qs)</span>
         <span class="cd-user-email-pill hidden" id="headerUserEmailBadge"></span>
         <button type="button" class="cd-btn-signin" id="btnHeaderSignIn">Sign In</button>
-        <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Unlock Full Access ($399)</button>
+        <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Plans and license</button>
         <button type="button" class="cd-btn-signin hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
       </div>
 
@@ -799,6 +799,11 @@
           <!-- Two Pricing Cards: Candidate Pro (B2C) & Freight Forwarder / Brokerage Team (B2B) -->
           <div class="pricing-cards-grid">
 
+            <div class="pricing-card">
+              <div class="pricing-card-top"><h3 class="pricing-tier-name">Individual candidate</h3>
+                <p class="pricing-tier-tagline">All 48 practice questions for 30 days from purchase. No automatic renewal.</p></div>
+              <p><a href="https://caliberfoundry.gumroad.com/l/codedrill-candidate" target="_blank" rel="noopener noreferrer">Buy the $49 candidate pass &nearr;</a></p>
+            </div>
             <!-- Tier 2: Brokerage & Freight Forwarder Team ($399 once) -->
             <div class="pricing-card pricing-card-featured">
               <div class="pricing-popular-ribbon">Enterprise Team Plan</div>
@@ -1003,7 +1008,7 @@
       <div class="pvue-modal-header">
         <div class="pvue-modal-title-group">
           <span class="pvue-modal-icon">§</span>
-          <h2 id="checkoutModalTitle">Account, Registration &amp; Pro Access</h2>
+          <h2 id="checkoutModalTitle">Plans and license</h2>
         </div>
         <button type="button" class="pvue-modal-close" id="btnCloseCheckoutModal" aria-label="Close Account Modal">×</button>
       </div>
@@ -1015,6 +1020,7 @@
           <span id="paywallTriggerText">Create an account and activate a Pro plan to unlock all 48 exam cases and 10 topic suites (CBLE + IRS SEE Parts 1–3).</span>
         </div>
 
+        <p>Studying on your own? <a href="https://caliberfoundry.gumroad.com/l/codedrill-candidate" target="_blank" rel="noopener noreferrer">Buy the $49 candidate pass &nearr;</a> for 30 days. Already purchased? Use Payment &amp; License Activation below.</p>
         <!-- 3-Tab Navigation Bar -->
         <div class="auth-modal-tabs" role="tablist" aria-label="Account and Payment Steps">
           <button type="button" class="auth-tab-btn active" data-auth-tab="register" id="tabBtnAuthRegister">
@@ -1108,7 +1114,7 @@
               <span class="checkout-plan-kicker">Selected Plan</span>
               <h3 class="checkout-plan-name" id="checkoutSelectedPlanName">Corporate practice license · $399 once</h3>
             </div>
-            <span class="checkout-guarantee-pill">75% Pass Guarantee</span>
+            <span class="checkout-guarantee-pill">Practice access</span>
           </div>
 
           <!-- 3 Payment / Activation Method Sub-Tabs -->
@@ -1235,7 +1241,7 @@
           <!-- Activation Confirmation Box -->
           <div class="checkout-success-box hidden" id="checkoutSuccessBox">
             <div class="checkout-success-icon">Pro License Active — Full practice bank unlocked</div>
-            <h3 id="checkoutSuccessKeyDisplay">Key: CF-PRO-2026-8841-992B</h3>
+            <h3 id="checkoutSuccessKeyDisplay">License verified</h3>
             <p id="checkoutSuccessMessage">
               Your CodeDrill™ CBT license is now active. All 48 practice questions and timed citation drills are unlocked.
             </p>
@@ -1358,8 +1364,8 @@
   <!-- External Data Payload + Core Application Logic -->
   <footer class="product-utilities" data-product-feedback><a href="../#work">All products</a></footer>
   <script src="data/codedrill-data.js"></script>
-  <script src="../assets/js/gumroad-receipt.js"></script>
-  <script src="app.js?v=20261124-workspace"></script>
+  <script src="../assets/js/gumroad-receipt.js?v=20261126-pass"></script>
+  <script src="app.js?v=20261126-pass"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>
