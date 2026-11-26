@@ -858,7 +858,7 @@
       }
 
       // Expose deterministic engine for automated E2E / unit verification
-      window.FinOpsGuardEngine = {
+      const engine = {
         DEMO_DATASETS,
         SCENARIO_PRESETS,
         parseCsv,
@@ -867,6 +867,12 @@
         computeFingerprint,
         formatUsd
       };
+
+      if (typeof module === 'object' && module.exports) {
+        module.exports = engine;
+        return;
+      }
+      window.FinOpsGuardEngine = engine;
 
       /* =====================================================================
          3. APPLICATION STATE & UI CONTROLLER

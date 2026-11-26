@@ -1,6 +1,8 @@
 /* A local, paired comparison. The caller supplies the source charges and final review decisions. */
 (() => {
   'use strict';
+  const commonJS = typeof module === 'object' && module.exports;
+  const {parseCsv} = commonJS ? require('./app.js') : window.FinOpsGuardEngine;
   const required = ['variant', 'task_id', 'call_id', 'stage', 'actor', 'cost_basis', 'cost_usd', 'verdict', 'rubric', 'expected_calls'];
   const tokenFields = ['input_tokens', 'output_tokens', 'cached_input_tokens'];
   const decisionFields = ['release_decision', 'reference_verdict'];
@@ -27,7 +29,7 @@
   }
 
   function parseLedger(csv) {
-    const parsed = window.FinOpsGuardEngine.parseCsv(csv);
+    const parsed = parseCsv(csv);
     if (parsed.error) throw Error(parsed.error);
     const splitHeaders = decisionFields.filter(name => parsed.headers.includes(name));
     if (splitHeaders.length === 1) throw Error('Include both release_decision and reference_verdict columns.');
@@ -205,6 +207,11 @@
     return rows.map(row=>row.join(',')).join('\n')+'\n';
   }
 
+  const audit = Object.freeze({compare, sampleRows});
+  if (commonJS) {
+    module.exports = audit;
+    return;
+  }
   const $ = id=>document.getElementById(id);
   const show = (id,value)=>{$(id).textContent=value;};
   function currency(n) {
@@ -376,7 +383,7 @@
     show('taskExportStatus','Comparison report prepared for download.');
   });
   document.addEventListener('finops-license-change',syncAccess);
-  window.FinOpsGuardTaskAudit=Object.freeze({compare,sampleRows});
+  window.FinOpsGuardTaskAudit=audit;
   const preset=new URLSearchParams(location.search).get('example');
   useSample(Object.hasOwn(names,preset)?preset:'retry',false);
 })();
