@@ -7,6 +7,13 @@
 (function () {
   'use strict';
   const receipt = window.createGumroadReceiptVerifier('sj1w4HpSpi57c-P5DCrABw==', 'TEAM');
+  const candidateReceipt = window.createGumroadReceiptVerifier('zdGZ_SqMZojfsvK-mFQG7A==', 'PRO', 30);
+
+  async function checkPracticeReceipt(key, feedback) {
+    await receipt.check(key, feedback);
+    if (receipt.matches(key) && !receipt.decision(key).valid) await candidateReceipt.check(key, feedback);
+  }
+
 
   function classifyQuestionSuite(q) {
     if (q.suite && ['CBLE_111_113', 'CBLE_141_142', 'CBLE_152_177_190', 'CBLE_HTSUS', 'EA_SEE1', 'EA_SEE2', 'EA_SEE3'].includes(q.suite)) {
@@ -290,7 +297,10 @@
   }
 
   function verifyCodeDrillLicenseKey(rawKey) {
-    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
+    if (receipt.matches(rawKey)) {
+      const team = receipt.decision(rawKey);
+      return team.valid ? team : candidateReceipt.decision(rawKey);
+    }
     const clean = String(rawKey || '').trim().toUpperCase();
     if (!clean) return { valid: false };
     const parts = clean.split('-');
@@ -334,7 +344,7 @@
   function isProOrTeamActive() {
     const hasTier = STATE.licenseTier === 'PRO' || STATE.licenseTier === 'TEAM';
     if (!hasTier) return false;
-    if (typeof isLocalQaEnvironment === 'function' && isLocalQaEnvironment()) return true;
+    if (!receipt.matches(STATE.licenseKey) && isLocalQaEnvironment()) return true;
     return verifyCodeDrillLicenseKey(STATE.licenseKey).valid;
   }
 
@@ -593,6 +603,7 @@
     document.querySelectorAll('.pay-method-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-pay-method') === methodKey);
     });
+    document.querySelector('.checkout-selected-plan-banner').classList.toggle('hidden', methodKey === 'key');
     document.getElementById('payPanelCard').classList.toggle('hidden', methodKey !== 'card');
     document.getElementById('payPanelInvoice').classList.toggle('hidden', methodKey !== 'invoice');
     document.getElementById('payPanelKey').classList.toggle('hidden', methodKey !== 'key');
@@ -684,7 +695,7 @@
     const clean = String(rawKey || '').trim().toUpperCase();
     const receiptStatus = document.getElementById('receiptStatus');
     try {
-      await receipt.check(clean, receiptStatus);
+      await checkPracticeReceipt(clean, receiptStatus);
     } catch (error) {
       receiptStatus.textContent = error.message;
       return;
@@ -692,7 +703,8 @@
     const ver = verifyCodeDrillLicenseKey(clean);
 
     if (!ver.valid) {
-      showToast('This key could not be verified for this product. Check the key in your purchase receipt.');
+      receiptStatus.textContent = ver.expired ? 'This 30-day pass expired on ' + ver.expiresIso + '.' : 'This key could not be verified for CodeDrill. Check the key in your receipt.';
+      showToast(receiptStatus.textContent);
       return false;
     }
 
@@ -711,7 +723,10 @@
     const totalQCount = DATASET.questions.length || 30;
     if (msgEl) {
       const emailLabel = (STATE.accountUser && STATE.accountUser.email) ? ` for ${STATE.accountUser.email}` : '';
-      msgEl.textContent = `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions are now unlocked.`;
+      const license = candidateReceipt.decision(clean);
+      msgEl.textContent = license.valid
+        ? `Candidate pass active through ${new Date(license.expiresIso).toLocaleString()}. All ${totalQCount} questions are available.`
+        : `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions are now unlocked.`;
     }
     if (successBox) successBox.classList.remove('hidden');
 
@@ -821,7 +836,8 @@
     const totalQCount = DATASET.questions.length || 30;
     if (isProOrTeamActive()) {
       if (statusBadge) {
-        statusBadge.textContent = STATE.licenseTier === 'TEAM'
+        const pass = candidateReceipt.decision(STATE.licenseKey);
+        statusBadge.textContent = pass.valid ? 'Candidate pass until ' + new Date(pass.expiresIso).toLocaleDateString() : STATE.licenseTier === 'TEAM'
           ? `Team License Active (${totalQCount}/${totalQCount} Qs)`
           : `Pro License Active (${totalQCount}/${totalQCount} Qs)`;
         statusBadge.classList.add('pro-active');
@@ -3463,6 +3479,14 @@
     if (clockEl) clockEl.textContent = formatHmsClock(STATE.cbtTimerRemainingSec);
 
     cbtTimerInterval = setInterval(() => {
+      const candidate = candidateReceipt.decision(STATE.licenseKey);
+      if (STATE.licenseTier === 'PRO' && candidate.expired) {
+        STATE.licenseTier = 'FREE';
+        STATE.selectedTrack = 'CBLE';
+        saveUserState();
+        refreshAllViews();
+        showToast('Your 30-day candidate pass has ended.');
+      }
       if (STATE.cbtTimerPaused || STATE.activeMode !== 'cbt') return;
       if (STATE.cbtTimerRemainingSec > 0) {
         STATE.cbtTimerRemainingSec--;
@@ -3540,9 +3564,10 @@
 
   async function initApp() {
     if (receipt.matches(STATE.licenseKey)) {
-        try { await receipt.check(STATE.licenseKey); }
+        try { await checkPracticeReceipt(STATE.licenseKey); }
         catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
       }
+    if (isSuiteLockedForCurrentTier(STATE.selectedTrack)) STATE.selectedTrack = 'CBLE';
     const verBadge = document.getElementById('cdVersionBadge');
     if (verBadge && DATASET.meta.version) {
       verBadge.textContent = String(DATASET.meta.version).replace(/^v/i, '');
@@ -3554,6 +3579,10 @@
     startGlobalClocks();
     switchMode(STATE.activeMode || 'cbt');
     setupStudyNavigation();
+    if (location.hash === '#activate') {
+      openAccountPaywallModal({ tab: 'payment' });
+      switchPaymentMethodSubTab('key');
+    }
   }
 
   // Expose clean controller for external QA test harnesses without polluting production UI

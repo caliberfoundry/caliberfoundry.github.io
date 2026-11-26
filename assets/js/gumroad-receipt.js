@@ -1,16 +1,25 @@
 /* Gumroad returns purchase details directly to the buyer's browser. Store only
    the decision in memory. Each product restores access with a new verification. */
-window.createGumroadReceiptVerifier = function (productId, tier) {
+window.createGumroadReceiptVerifier = function (productId, tier, durationDays) {
   'use strict';
   let accepted = '';
+  let expiresAt = null;
   const normalize = code => String(code || '').trim().toUpperCase();
   const matches = code => /^(?:[A-F0-9]{8}-){3}[A-F0-9]{8}$/.test(normalize(code));
-  const decision = code => accepted && accepted === normalize(code)
-    ? { valid: true, tier, customerTag: 'Gumroad', provider: 'Gumroad' }
-    : { valid: false };
+  function decision(code) {
+    if (!accepted || accepted !== normalize(code)) return { valid: false };
+    if (durationDays) {
+      if (!Number.isFinite(expiresAt)) return { valid: false };
+      const expiresIso = new Date(expiresAt).toISOString();
+      if (Date.now() >= expiresAt) return { valid: false, expired: true, expiresIso };
+      return { valid: true, tier, customerTag: 'Gumroad', provider: 'Gumroad', expiresIso };
+    }
+    return { valid: true, tier, customerTag: 'Gumroad', provider: 'Gumroad' };
+  }
 
   async function check(code, feedback) {
     if (!matches(code)) return;
+    expiresAt = null;
     const key = normalize(code);
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
@@ -31,6 +40,11 @@ window.createGumroadReceiptVerifier = function (productId, tier) {
       accepted = result.success === true && order?.product_id === productId &&
         normalize(order.license_key) === key && order.refunded === false &&
         order.disputed === false && order.chargebacked === false ? key : '';
+      if (accepted && durationDays) {
+        const purchased = Date.parse(order.created_at || order.sale_timestamp);
+        if (!Number.isFinite(purchased) || purchased > Date.now()) accepted = '';
+        else expiresAt = purchased + durationDays * 86400000;
+      }
     } catch {
       accepted = '';
       throw new Error('Gumroad is unavailable. Check your connection and try the receipt key again.');
