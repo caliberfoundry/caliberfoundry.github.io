@@ -630,7 +630,9 @@
     var vaultPda = deriveVaultPda('primary_treasury');
     var subVaultPda = deriveVaultPda('yield_optimizer_subagent');
 
-    var decisionHash = sha256Hex(JSON.stringify({
+    var decisionInput = {
+      priorityFeeLamports: priorityFeeLamports,
+      policy: policy,
       poolId: POOL_ID,
       epoch: pool.epochNumber,
       equity: pool.totalEquityUsd,
@@ -639,10 +641,11 @@
       unwind: riskResult.emergencyUnwindRequired,
       execute: proposal.shouldExecute,
       turnover: proposal.totalTurnoverUsd
-    }));
+    };
+    var decisionHash = sha256Hex(JSON.stringify(decisionInput));
 
     var aceHash = sha256Hex(JSON.stringify({
-      provider: 'ace-data-cloud-mcp-v1',
+      source: 'built-in scenario assumptions',
       epoch: pool.epochNumber,
       sentiment: sentimentMap,
       scores: targets.map(function (t) { return [t.venueId, t.riskAdjustedScore]; })
@@ -720,6 +723,7 @@
       actionType: actionType,
       executed: proposal.shouldExecute,
       decisionHashSha256: decisionHash,
+      decisionInput: decisionInput,
       simulatedSignature: simSig,
       multiHopperRouteId: mhRouteId,
       aceResearchBriefHash: aceHash,
@@ -730,9 +734,16 @@
     };
   }
 
+  function defaultPeriodInputs() {
+    return [35000, 45000, 40000, 420000, 65000].map(function (fee, idx) {
+      return { priorityFeeLamports: fee, drawdownBps: idx === 4 ? 640 : 0 };
+    });
+  }
+
   // Application State
   var state = {
     activeScenarioIdx: 0,
+    periodInputs: defaultPeriodInputs(),
     backtestSteps: [],
     selectedStepIdx: 0
   };
@@ -763,9 +774,6 @@
   function runFull5EpochSimulation() {
     var initialCapital = Number(document.getElementById('capitalSlider').value);
     var policy = getPolicyFromSliders();
-    var customDrawdownBps = Number(document.getElementById('drawdownSlider').value);
-    var customPriorityFee = Number(document.getElementById('priorityFeeSlider').value);
-
     var pool = {
       poolId: POOL_ID,
       totalEquityUsd: initialCapital,
@@ -783,14 +791,10 @@
       {
         label: '01_NORMAL_GENESIS_DEPLOYMENT',
         elapsedHours: 0,
-        fee: state.activeScenarioIdx === 0 ? customPriorityFee : 35000,
-        shockBps: state.activeScenarioIdx === 0 ? -customDrawdownBps : 0
       },
       {
         label: '02_ANTI_CHURN_HOLD_REGIME',
         elapsedHours: 24,
-        fee: state.activeScenarioIdx === 1 ? customPriorityFee : 45000,
-        shockBps: state.activeScenarioIdx === 1 ? -customDrawdownBps : 0,
         patch: function (vs) {
           var jlp = vs.find(function (x) { return x.id === 'jupiter-jlp'; });
           if (jlp) {
@@ -804,8 +808,6 @@
       {
         label: '03_MULTIHOPPER_YIELD_ROTATION',
         elapsedHours: 24,
-        fee: state.activeScenarioIdx === 2 ? customPriorityFee : 40000,
-        shockBps: state.activeScenarioIdx === 2 ? -customDrawdownBps : 0,
         patch: function (vs, sent) {
           var jlp = vs.find(function (x) { return x.id === 'jupiter-jlp'; });
           var drift = vs.find(function (x) { return x.id === 'drift'; });
@@ -824,8 +826,6 @@
       {
         label: '04_ORACLE_AND_GAS_GUARDRAIL_BLOCK',
         elapsedHours: 24,
-        fee: state.activeScenarioIdx === 3 ? Math.max(customPriorityFee, 420000) : 420000,
-        shockBps: state.activeScenarioIdx === 3 ? -customDrawdownBps : 0,
         patch: function (vs) {
           var met = vs.find(function (x) { return x.id === 'meteora-dlmm'; });
           if (met) {
@@ -837,8 +837,6 @@
       {
         label: '05_BLACK_SWAN_EMERGENCY_UNWIND',
         elapsedHours: 12,
-        fee: 65000,
-        shockBps: state.activeScenarioIdx === 4 && customDrawdownBps > 0 ? -customDrawdownBps : -640,
         patch: function (vs) {
           var met = vs.find(function (x) { return x.id === 'meteora-dlmm'; });
           if (met) {
@@ -852,6 +850,9 @@
     var results = [];
 
     scenarios.forEach(function (sc, idx) {
+      var conditions = state.periodInputs[idx];
+      sc.fee = conditions.priorityFeeLamports;
+      sc.shockBps = -conditions.drawdownBps;
       // Accrue yield
       if (sc.elapsedHours > 0) {
         var sumDep = 0;
@@ -913,6 +914,7 @@
       results.push({
         stepIndex: idx + 1,
         regimeLabel: sc.label,
+        conditions: Object.assign({ elapsedHours: sc.elapsedHours }, conditions),
         poolAfter: JSON.parse(JSON.stringify(pool)),
         venuesSnapshot: JSON.parse(JSON.stringify(venues)),
         targets: targets,
@@ -982,13 +984,9 @@
         status: risk.portfolioDailyVaR95Bps > policy.maxDailyVaR95Bps ? 'BLOCK' : 'PASS'
       },
       {
-        label: 'Pyth Oracle Freshness',
-        detail: risk.violations.some(function (v) { return v.code === 'ORACLE_STALE' || v.code === 'ORACLE_CONFIDENCE_WIDE'; })
-          ? 'STALE (92s > 45s)'
-          : 'FRESH (<= 11s)',
-        status: risk.violations.some(function (v) { return v.code === 'ORACLE_STALE' || v.code === 'ORACLE_CONFIDENCE_WIDE'; })
-          ? 'BLOCK'
-          : 'PASS'
+        label: 'Age of modeled oracle data',
+        detail: Math.max(...step.venuesSnapshot.map(v => v.oracleAgeSeconds)) + 's oldest / ' + policy.maxOracleStalenessSeconds + 's maximum',
+        status: risk.violations.some(v => v.code === 'ORACLE_STALE') ? 'BLOCK' : 'PASS'
       },
       {
         label: 'Priority Fee Ceiling',
@@ -998,7 +996,7 @@
       {
         label: 'USDC Reserve Buffer',
         detail: '$' + step.poolAfter.liquidReserveUsd.toLocaleString('en-US', { minimumFractionDigits: 2 }),
-        status: 'PASS'
+        status: step.poolAfter.liquidReserveUsd + 0.005 >= step.poolAfter.totalEquityUsd * policy.minReserveBufferBps / 10000 ? 'PASS' : 'BELOW TARGET'
       }
     ];
 
@@ -1074,7 +1072,7 @@
           '</td>' +
           '<td class="mono">' +
             '<strong>' + escapeHtml(netApyPct) + '</strong>' +
-            '<div style="font-size:10px;color:var(--cf-ink-muted);">Ace: ' + escapeHtml(convStr) + '</div>' +
+            '<div style="font-size:10px;color:var(--cf-ink-muted);">Scenario adjustment: ' + escapeHtml(convStr) + '</div>' +
           '</td>' +
           '<td class="mono">' +
             escapeHtml(t.sharpeRatio.toFixed(2)) + ' / ' + escapeHtml(t.sortinoRatio.toFixed(2)) +
@@ -1169,7 +1167,7 @@
     if (step.receipt.instructions.length === 0) {
       document.getElementById('instructionBundleList').innerHTML =
         '<div class="ix-card">' +
-          '<div class="ix-top"><span class="ix-name">ZERO ON-CHAIN INSTRUCTIONS EMITTED</span><span class="badge badge-pass">0 CU GAS SAVED</span></div>' +
+          '<div class="ix-top"><span class="ix-name">No modeled instructions</span><span class="badge badge-pass">0 simulated compute units</span></div>' +
           '<div class="ix-data">Anti-churn or guardrail hold suppressed transaction emission to preserve vault principal.</div>' +
         '</div>';
     } else {
@@ -1207,6 +1205,9 @@
 
   ['capitalSlider', 'maxCapSlider', 'reserveSlider', 'paybackSlider', 'drawdownSlider', 'priorityFeeSlider'].forEach(function (id) {
     document.getElementById(id).addEventListener('input', function () {
+      if (id === 'priorityFeeSlider' || id === 'drawdownSlider') {
+        state.periodInputs[state.activeScenarioIdx][id === 'priorityFeeSlider' ? 'priorityFeeLamports' : 'drawdownBps'] = Number(this.value);
+      }
       syncSliderLabels();
       runFull5EpochSimulation();
     });
@@ -1230,33 +1231,26 @@
     window.dispatchEvent(new CustomEvent('cf:workflow', { detail: { stage: stage } }));
   }
 
+  function selectPeriod(idx) {
+    state.activeScenarioIdx = idx;
+    var conditions = state.periodInputs[idx];
+    document.getElementById('drawdownSlider').value = conditions.drawdownBps;
+    document.getElementById('priorityFeeSlider').value = conditions.priorityFeeLamports;
+    syncSliderLabels();
+    renderStep(idx);
+    recordWorkflowStage('result_ready');
+  }
+
   document.querySelectorAll('.scenario-tab').forEach(function (tab) {
     tab.addEventListener('click', function () {
-      var idx = Number(tab.getAttribute('data-scenario'));
-      state.activeScenarioIdx = idx;
       recordWorkflowStage('sample_selected');
-      if (idx === 4) {
-        document.getElementById('drawdownSlider').value = '640';
-        document.getElementById('priorityFeeSlider').value = '65000';
-      } else if (idx === 3) {
-        document.getElementById('drawdownSlider').value = '0';
-        document.getElementById('priorityFeeSlider').value = '420000';
-      } else {
-        document.getElementById('drawdownSlider').value = '0';
-        document.getElementById('priorityFeeSlider').value = '35000';
-      }
-      syncSliderLabels();
-      runFull5EpochSimulation();
+      selectPeriod(Number(tab.getAttribute('data-scenario')));
       showDecision();
-      recordWorkflowStage('result_ready');
     });
   });
 
   document.getElementById('executeTickBtn').addEventListener('click', function () {
-    var nextIdx = (state.selectedStepIdx + 1) % 5;
-    state.activeScenarioIdx = nextIdx;
-    renderStep(nextIdx);
-    recordWorkflowStage('result_ready');
+    selectPeriod((state.selectedStepIdx + 1) % state.periodInputs.length);
   });
 
   document.getElementById('runBacktestBtn').addEventListener('click', function () {
@@ -1278,6 +1272,7 @@
     document.getElementById('drawdownSlider').value = '0';
     document.getElementById('priorityFeeSlider').value = '35000';
     state.activeScenarioIdx = 0;
+    state.periodInputs = defaultPeriodInputs();
     syncSliderLabels();
     runFull5EpochSimulation();
   });
@@ -1308,6 +1303,7 @@
         return {
           stepIndex: s.stepIndex,
           regimeLabel: s.regimeLabel,
+          conditions: s.conditions,
           poolAfter: s.poolAfter,
           riskResult: s.riskResult,
           proposal: s.proposal,

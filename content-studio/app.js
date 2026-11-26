@@ -7,7 +7,7 @@
 
 (function () {
   'use strict';
-  const receipt = window.createGumroadReceiptVerifier('pcIf63WFSlfW7YHD7pnmNQ==', 'PRO');
+
 
   /* ==========================================================================
      1. TEXT ENCODING AND SOURCE VERSION UTILITIES
@@ -22,18 +22,7 @@
   }
 
   function sourceVersion(inputStr) {
-    const str = String(inputStr || '');
-    const seeds = [
-      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
-      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-    ];
-    for (let i = 0; i < str.length; i++) {
-      const code = str.charCodeAt(i);
-      const lane = i & 7;
-      seeds[lane] = ((seeds[lane] << 5) - seeds[lane] + code + (i * 2654435761)) | 0;
-      seeds[(lane + 3) & 7] ^= (seeds[lane] >>> 7) + code;
-    }
-    return seeds.map(n => (n >>> 0).toString(16).padStart(8, '0')).join('');
+    return window.sha256(String(inputStr ?? ""));
   }
 
   /* ==========================================================================
@@ -137,11 +126,7 @@
     ]
   };
 
-  function buildNormalizedDataset() {
-    const ext = (typeof window !== 'undefined' && window.CONTENTFORGE_DATA && typeof window.CONTENTFORGE_DATA === 'object')
-      ? window.CONTENTFORGE_DATA
-      : null;
-
+  function buildNormalizedDataset(ext=window.CONTENTFORGE_DATA) {
     const meta = Object.assign({}, FALLBACK_CONTENTFORGE_DATA.meta, ext && ext.meta ? ext.meta : {});
     if (!Array.isArray(meta.validLicenseKeys)) {
       meta.validLicenseKeys = FALLBACK_CONTENTFORGE_DATA.meta.validLicenseKeys;
@@ -195,7 +180,20 @@
     };
   }
 
-  const DATASET = buildNormalizedDataset();
+  const sampleTemplates=buildNormalizedDataset();
+  let DATASET=sampleTemplates;
+  const templateAccess=createFoundryLibraryAccess('contentforge',full=>{
+    if(!full || !Array.isArray(full.presets) || full.presets.length!==4 || !['n8n-pipeline','eval-harness','edtech-courseware','fintech-monograph'].every(id=>full.presets.some(p=>p.id===id && p.sourceText && p.monograph && p.evalCases?.length)))throw Error("The template library is incomplete. Retry activation.");
+    DATASET=buildNormalizedDataset(full);
+  },message=>{useSampleTemplates();refreshAllViews();document.getElementById("receiptStatus").textContent=message;});
+  function useSampleTemplates(){
+    const previouslySelected=STATE.activePresetId;DATASET=sampleTemplates;STATE.licenseTier="FREE";
+    if(!DATASET.presetsById[previouslySelected]){
+      const free=DATASET.presets[0];STATE.activePresetId=free.id;
+      if(!STATE.customSourceText){STATE.customSourceTitle=free.sourceTitle;STATE.customSourceText=free.sourceText;}
+      STATE.webhookUrl=free.webhookEndpoint;
+    }
+  }
 
   /* ==========================================================================
      3. APPLICATION STATE & PERSISTENCE
@@ -268,107 +266,19 @@
 
   function saveState() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+      const stored={...STATE}, preset=DATASET.presetsById[STATE.activePresetId];
+      if(preset && !sampleTemplates.presetsById[preset.id] && stored.customSourceTitle===preset.sourceTitle && stored.customSourceText===preset.sourceText){
+        stored.customSourceTitle='';stored.customSourceText='';stored.customSchemaText='';
+      }
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(stored));
     } catch (e) {
       // Ignore storage errors in sandboxed frames
     }
   }
 
-  const CF_RSA_PUBLIC_MODULUS_B36 =
-    '131IRZHBZ87C6IXGX2XD8YG1YLYMJJZPTAXPXIAZ82NVXKGRA4E2P1ECVL1P7M5FNMHF899RJ4TODBM6QO1A0V2NHIO8DZ9DEBF7';
-  const ALLOWED_CF_KEY_DIGESTS = [
-    '2081216b02af5cc9a81d3bd81d5371e6287df9bd5f059b759706a5f203f67ccf',
-    'dfead5f6340733438ee01620308c1bd16661a131bfa488f5a333e321484dd321',
-    '4c121399b298f07cd2d61cf1dfe2736df5ab9ac24dd8f7df4253fd06962b7924',
-    'aa368e25aced9f219906f8cfb603966c65f4edfa2baf81d1ace7665f42e83f3b',
-    '0219f433cd945512924e9061d2d097efe7a79d80818f582d96282b3111b323c0'
-  ];
-
-  function cfBase36ToBigInt(str) {
-    const clean = String(str || '').trim().toUpperCase();
-    if (!/^[0-9A-Z]+$/.test(clean)) return 0n;
-    let val = 0n;
-    for (let i = 0; i < clean.length; i++) {
-      const code = clean.charCodeAt(i);
-      const digit = code >= 65 ? BigInt(code - 55) : BigInt(code - 48);
-      val = val * 36n + digit;
-    }
-    return val;
-  }
-
-  function cfModPow(base, exp, mod) {
-    let res = 1n;
-    base = base % mod;
-    while (exp > 0n) {
-      if (exp & 1n) res = (res * base) % mod;
-      exp >>= 1n;
-      base = (base * base) % mod;
-    }
-    return res;
-  }
-
-  function cfComputeSaltedDigestHex(inputStr) {
-    const s = 'CF_KDF_2026_SALT_9F84C2E1|' + String(inputStr || '').trim().toUpperCase();
-    const seeds = [
-      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
-      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-    ];
-    for (let round = 0; round < 8; round++) {
-      for (let i = 0; i < s.length; i++) {
-        const c = s.charCodeAt(i);
-        const lane = (i + round) & 7;
-        seeds[lane] = (Math.imul(seeds[lane] ^ c, 2654435761) + ((seeds[(lane + 1) & 7] >>> 3) ^ (i * 1597334677))) | 0;
-        seeds[(lane + 3) & 7] = (seeds[(lane + 3) & 7] ^ ((seeds[lane] << 7) | (seeds[lane] >>> 25))) | 0;
-      }
-    }
-    return seeds.map(n => (n >>> 0).toString(16).padStart(8, '0')).join('');
-  }
-
-  function verifyContentForgeLicenseKey(rawKey) {
-    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
-    const clean = String(rawKey || '').trim().toUpperCase();
-    if (!clean) return { valid: false };
-    const parts = clean.split('-');
-    if (parts[0] === 'CFK' && (parts.length === 6 || parts.length === 5)) {
-      try {
-        const prod = parts[1];
-        const tier = parts[2];
-        const cust = parts[3];
-        const hasExp = parts.length === 6;
-        const expYmd = hasExp ? parts[4] : '20991231';
-        const sigB36 = hasExp ? parts[5] : parts[4];
-        if (prod === 'CF' || prod === 'ALL') {
-          const N = cfBase36ToBigInt(CF_RSA_PUBLIC_MODULUS_B36);
-          const sigBig = cfBase36ToBigInt(sigB36);
-          if (sigBig > 0n && sigBig < N) {
-            const recovered = cfModPow(sigBig, 65537n, N);
-            const header = hasExp ? 'CFK-' + prod + '-' + tier + '-' + cust + '-' + expYmd : 'CFK-' + prod + '-' + tier + '-' + cust;
-            const expectedHex = '01ff' + cfComputeSaltedDigestHex('RSA_MSG|' + header);
-            if (recovered === BigInt('0x' + expectedHex) && /^\d{8}$/.test(expYmd)) {
-              const yyyy = Number(expYmd.slice(0, 4));
-              const mm = Number(expYmd.slice(4, 6));
-              const dd = Number(expYmd.slice(6, 8));
-              const expEndMs = Date.UTC(yyyy, mm - 1, dd, 23, 59, 59, 999);
-              const expiresIso = expYmd.slice(0, 4) + '-' + expYmd.slice(4, 6) + '-' + expYmd.slice(6, 8);
-              if (Date.now() > expEndMs) {
-                return { valid: false, expired: true, expiresIso, customerTag: cust };
-              }
-              return { valid: true, tier, customerTag: cust, expiresIso };
-            }
-          }
-        }
-      } catch (_) {}
-    }
-    const digest = cfComputeSaltedDigestHex(clean);
-    if (ALLOWED_CF_KEY_DIGESTS.includes(digest)) {
-      return { valid: true, tier: 'PRO', customerTag: 'ENTERPRISE', expiresIso: '2027-11-23' };
-    }
-    return { valid: false };
-  }
-
+  function verifyContentForgeLicenseKey(key){return templateAccess.decision(key);}
   function isProUnlocked() {
     if (STATE.licenseTier !== 'PRO') return false;
-    if (typeof isLocalQaEnvironment === 'function' && isLocalQaEnvironment()) return true;
     return verifyContentForgeLicenseKey(STATE.licenseKey).valid;
   }
 
@@ -394,9 +304,11 @@
     const anchorRegex = /\[([^\]]+)\]\s*([^\[]+)/g;
     const extractedSegments = [];
     let match;
+    const prefix=rawText.match(/^([^[]+)\[/);
+    if(prefix?.[1].trim())extractedSegments.push({anchor:"Opening passage",statement:prefix[1].trim()});
     while ((match = anchorRegex.exec(rawText)) !== null) {
       const anchor = match[1].trim();
-      const statement = match[2].trim().replace(/\s+/g, ' ');
+      const statement = match[2].trim();
       if (statement.length) {
         extractedSegments.push({ anchor, statement });
       }
@@ -418,34 +330,18 @@
       rawTitle === String(basePreset.sourceTitle || '').trim()
     );
 
-    if (isDefaultUnmodified) {
-      return {
-        isCustomSynthesized: false,
-        sha256,
-        anchorCount: extractedSegments.length || basePreset.evalCases.length,
-        charCount: rawText.length,
-        monograph: basePreset.monograph,
-        evalCases: basePreset.evalCases,
-        webhookPayload: Object.assign({}, basePreset.webhookPayload, {
-          sourceVersion: sha256
-        }),
-        courseModule: basePreset.courseModule,
-        socialAndVideo: basePreset.socialAndVideo
-      };
-    }
-
     // Build deterministically synthesized multi-format outputs from edited source text
     const dynamicEvalCases = extractedSegments.slice(0, 8).map((seg, idx) => {
       const numMatches = seg.statement.match(/(\$[0-9.,]+\s*(?:million|billion|M|B|K)?|[0-9.,]+%|[0-9.,]+\s*(?:ms|milliseconds|bps|months|days|hours|pages|questions))/gi);
       const metricSummary = numMatches && numMatches.length > 0
-        ? `Verified Numeric Invariant: ${numMatches.slice(0, 2).join(' · ')}`
+        ? `Numbers in source: ${numMatches.slice(0, 2).join(' · ')}`
         : seg.statement.slice(0, 88);
 
       return {
         id: `EVAL-0${idx + 1}`,
         sourceRef: seg.anchor,
         groundTruth: seg.statement,
-        generatedClaim: `${seg.statement} (Verified against [${seg.anchor}])`,
+        generatedClaim: `${seg.statement} [${seg.anchor}]`,
         exactMatch: 'Verbatim',
         latency: 'Local',
         cost: '—',
@@ -455,6 +351,17 @@
       };
     });
 
+    const sample=extractedSegments[0];
+    const termMatches=sample.statement.match(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’%-]*/gu)||[];
+    const unique=[...new Set(termMatches)].sort((a,b)=>b.length-a.length);
+    const answer=unique[0];
+    const choices=answer ? [answer,...unique.slice(1,3)] : [];
+    const offset=choices.length ? parseInt(sha256.slice(0,2),16)%choices.length : 0;
+    const ordered=choices.slice(offset).concat(choices.slice(0,offset));
+    const courseModule=choices.length>=2 ? {moduleTitle:rawTitle+" · Passage recall",objective:"Restore the exact wording of "+sample.anchor,goldenQuote:sample.statement,
+      quizStem:"What word completes the original passage? "+sample.statement.replace(answer,"_____"),
+      options:ordered.map((text,i)=>({letter:String.fromCharCode(65+i),text,isCorrect:text===answer,rationale:"The passage uses “"+answer+"”."}))}:null;
+    const storyboard=extractedSegments.slice(0,6).map((seg,i)=>({scene:String(i+1),visual:"Show the cited passage from "+rawTitle,voiceover:seg.statement,dataOverlay:seg.anchor}));
     const dynamicSections = [];
     for (let i = 0; i < extractedSegments.length; i += 2) {
       const first = extractedSegments[i];
@@ -462,7 +369,7 @@
       const combinedBody = second ? `${first.statement} ${second.statement}` : first.statement;
       const combinedRef = second ? `[${first.anchor} & ${second.anchor}]` : `[${first.anchor}]`;
       dynamicSections.push({
-        heading: `${Math.floor(i / 2) + 1}. Deterministic Verification — ${first.anchor}`,
+        heading: `${Math.floor(i / 2) + 1}. Passages · ${first.anchor}`,
         body: combinedBody,
         citationRef: combinedRef
       });
@@ -473,7 +380,7 @@
     );
 
     const dynamicMonograph = {
-      headline: `${rawTitle} — Citation-Gated Multi-Channel Synthesis`,
+      headline:rawTitle,
       subtitle: `Extracted ${extractedSegments.length} source passages (Version: ${sha256.slice(0, 16)}...)`,
       executiveSummary: extractedSegments[0]
         ? `${extractedSegments[0].statement} Source contains ${extractedSegments.length} excerpt(s).`
@@ -488,8 +395,8 @@
       sourceRevision: sha256,
       sourceDocumentTitle: rawTitle,
       webhookDestination: STATE.webhookUrl || basePreset.webhookEndpoint,
-      citationGatePassed: true,
-      mode: 'local_preview',
+      sourceChecksumSha256:sha256,
+      mode: 'source_excerpts',
       sourceVersion: sha256,
       verifiedSpanCount: extractedSegments.length,
       extractedClaims: dynamicEvalCases.map(c => ({
@@ -502,17 +409,22 @@
         monographSections: dynamicMonograph.sections.length,
         evalCasesVerified: dynamicEvalCases.length,
         xThreadCardCount: Math.min(6, extractedSegments.length),
-        scormQuizReady: false
+        readingQuizReady: Boolean(courseModule), storyboardScenes:storyboard.length
       }
     };
 
     const dynamicThreadCards = extractedSegments.slice(0, 6).map((seg, idx) => ({
       index: `0${idx + 1}/0${Math.min(6, extractedSegments.length)}`,
-      hook: `Verified Finding #${idx + 1} from ${rawTitle} [${seg.anchor}]:`,
+      hook: `Passage #${idx + 1} from ${rawTitle} [${seg.anchor}]:`,
       body: seg.statement,
       metricTag: `Source: [${seg.anchor}]`
     }));
 
+    if (isDefaultUnmodified) {
+      return {isCustomSynthesized:false,sha256,anchorCount:extractedSegments.length,charCount:rawText.length,
+        monograph:basePreset.monograph,evalCases:dynamicEvalCases,webhookPayload:dynamicWebhookPayload,
+        courseModule:basePreset.courseModule,socialAndVideo:basePreset.socialAndVideo};
+    }
     return {
       isCustomSynthesized: true,
       sha256,
@@ -521,98 +433,33 @@
       monograph: dynamicMonograph,
       evalCases: dynamicEvalCases.length > 0 ? dynamicEvalCases : basePreset.evalCases,
       webhookPayload: dynamicWebhookPayload,
-      courseModule: null,
+      courseModule,
       socialAndVideo: {
         threadCards: dynamicThreadCards.length > 0 ? dynamicThreadCards : basePreset.socialAndVideo.threadCards,
-        storyboard: []
+        storyboard
       }
     };
   }
 
   function getActiveSynthesizedBundle() {
     const preset = getActivePreset();
-    return parseSourceExcerptClaims(
+    const bundle = parseSourceExcerptClaims(
       STATE.customSourceTitle || preset.sourceTitle,
       STATE.customSourceText || preset.sourceText,
       preset
     );
+    const source=STATE.customSourceText || preset.sourceText;
+    const candidates=String(STATE.comparisonClaims||"").split(/\r?\n/).map(v=>v.trim()).filter(Boolean);
+    bundle.comparisons=candidates.map(claim=>{
+      const start=source.indexOf(claim);
+      return {claim,result:start<0?"No exact match":"Verbatim match",startOffset:start<0?null:start,endOffset:start<0?null:start+claim.length};
+    });
+    bundle.webhookPayload.comparisons=bundle.comparisons;
+    return bundle;
   }
 
   /* ==========================================================================
      5. VECTOR SVG ARCHITECTURE BLUEPRINT GENERATOR
-     ========================================================================== */
-  function buildPipelineVectorSvg(preset, bundle) {
-    const code = escapeHtml(preset.code || 'PIPE-01');
-    const latency = escapeHtml(`${preset.avgLatencyMs}ms E2E`);
-    const spanCount = bundle.anchorCount;
-    const shaShort = escapeHtml((bundle.sha256 || '').slice(0, 12));
-
-    return `
-      <svg viewBox="0 0 860 164" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Deterministic Content and Citation Verification Pipeline Diagram">
-        <rect x="1" y="1" width="858" height="162" fill="#F6F4EF" stroke="#141413" stroke-width="1.5"/>
-        <!-- Grid lines -->
-        <line x1="0" y1="32" x2="860" y2="32" stroke="#DFDBD2" stroke-width="1"/>
-        <text x="14" y="21" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#141413">
-          ${code} // DETERMINISTIC AST &amp; CITATION GATE TOPOLOGY // Example architecture · version: ${shaShort} // ${latency}
-        </text>
-
-        <!-- Stage 1 -->
-        <rect x="14" y="48" width="144" height="86" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
-        <rect x="14" y="48" width="144" height="20" fill="#1B365D"/>
-        <text x="22" y="62" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#F6F4EF">01. AST INGESTION</text>
-        <text x="22" y="84" font-family="Plus Jakarta Sans, sans-serif" font-size="10.5" font-weight="700" fill="#141413">Source Tokenizer</text>
-        <text x="22" y="101" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#4A4842">${spanCount} Anchored Spans</text>
-        <text x="22" y="118" font-family="IBM Plex Mono, monospace" font-size="9" fill="#1A5638">SHA-256 Indexed</text>
-
-        <line x1="158" y1="91" x2="184" y2="91" stroke="#141413" stroke-width="1.5"/>
-        <polygon points="184,91 178,87 178,95" fill="#141413"/>
-
-        <!-- Stage 2 -->
-        <rect x="186" y="48" width="148" height="86" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
-        <rect x="186" y="48" width="148" height="20" fill="#1B365D"/>
-        <text x="194" y="62" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#F6F4EF">02. JSON EXTRACTION</text>
-        <text x="194" y="84" font-family="Plus Jakarta Sans, sans-serif" font-size="10.5" font-weight="700" fill="#141413">Schema Contract</text>
-        <text x="194" y="101" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#4A4842">Draft 2020-12 AST</text>
-        <text x="194" y="118" font-family="IBM Plex Mono, monospace" font-size="9" fill="#1A5638">Numeric Invariants</text>
-
-        <line x1="334" y1="91" x2="360" y2="91" stroke="#141413" stroke-width="1.5"/>
-        <polygon points="360,91 354,87 354,95" fill="#141413"/>
-
-        <!-- Stage 3: Citation Gate -->
-        <rect x="362" y="44" width="156" height="94" fill="#EDF5F0" stroke="#1A5638" stroke-width="2"/>
-        <rect x="362" y="44" width="156" height="22" fill="#1A5638"/>
-        <text x="370" y="59" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#FFFFFF">03. CITATION GATE</text>
-        <text x="370" y="82" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="#141413">0.0% Hallucination</text>
-        <text x="370" y="99" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#1A5638">Span F1: ${escapeHtml(preset.citationPrecision)}</text>
-        <text x="370" y="116" font-family="IBM Plex Mono, monospace" font-size="9" fill="#C8431F">Unanchored -> DLQ</text>
-
-        <line x1="518" y1="91" x2="544" y2="91" stroke="#141413" stroke-width="1.5"/>
-        <polygon points="544,91 538,87 538,95" fill="#141413"/>
-
-        <!-- Stage 4 -->
-        <rect x="546" y="48" width="144" height="86" fill="#FFFFFF" stroke="#141413" stroke-width="1.5"/>
-        <rect x="546" y="48" width="144" height="20" fill="#141413"/>
-        <text x="554" y="62" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#F6F4EF">04. MULTI-CHANNEL</text>
-        <text x="554" y="84" font-family="Plus Jakarta Sans, sans-serif" font-size="10.5" font-weight="700" fill="#141413">4-Format Compiler</text>
-        <text x="554" y="101" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#4A4842">Monograph + Quiz</text>
-        <text x="554" y="118" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4A4842">Thread + 60fps Video</text>
-
-        <line x1="690" y1="91" x2="714" y2="91" stroke="#141413" stroke-width="1.5"/>
-        <polygon points="714,91 708,87 708,95" fill="#141413"/>
-
-        <!-- Stage 5 -->
-        <rect x="716" y="48" width="130" height="86" fill="#FFFFFF" stroke="#C8431F" stroke-width="1.5"/>
-        <rect x="716" y="48" width="130" height="20" fill="#C8431F"/>
-        <text x="724" y="62" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#FFFFFF">05. N8N WEBHOOK</text>
-        <text x="724" y="84" font-family="Plus Jakarta Sans, sans-serif" font-size="10.5" font-weight="700" fill="#141413">Signed Dispatch</text>
-        <text x="724" y="101" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#1A5638">HTTP 200 OK</text>
-        <text x="724" y="118" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4A4842">${escapeHtml(preset.costPerRunUsd)}/run</text>
-      </svg>
-    `;
-  }
-
-  /* ==========================================================================
-     6. UI RENDERERS FOR TOP BARS, LEFT PANEL & 4 RIGHT INSPECTOR TABS
      ========================================================================== */
   function renderTopBars() {
     const preset = getActivePreset();
@@ -622,7 +469,7 @@
     const shortTitleMap = {
       'n8n-pipeline': 'n8n & Multi-Model Pipeline',
       'eval-harness': 'Document Eval Harness',
-      'edtech-courseware': 'EdTech & SCORM 1.2 Studio',
+      'edtech-courseware': 'Learning content brief',
       'fintech-monograph': 'FinTech & Cross-Border Brief'
     };
     const selectEl = document.getElementById('presetSelect');
@@ -700,7 +547,7 @@
     // 3. Schema Template Input
     const schemaInput = document.getElementById('schemaTemplateInput');
     if (schemaInput && document.activeElement !== schemaInput) {
-      schemaInput.value = STATE.customSchemaText || preset.schemaTemplate;
+      schemaInput.value = JSON.stringify({type:"object", required:["workflowId","sourceDocumentTitle","sourceChecksumSha256","extractedClaims"], properties:{workflowId:{type:"string"},sourceDocumentTitle:{type:"string"},sourceChecksumSha256:{type:"string",pattern:"^[0-9a-f]{64}$"},extractedClaims:{type:"array",items:{type:"object",required:["claimId","sourceClause","verbatimSpan"]}}}},null,2);
     }
 
     // 4. Webhook Endpoint Input
@@ -746,21 +593,18 @@
     if (metaStrip) {
       metaStrip.innerHTML = `
         <span class="cf-meta-chip">Source version: ${escapeHtml(bundle.sha256.slice(0, 16))}...</span>
-        <span class="cf-meta-chip">Verified Spans: ${bundle.anchorCount}</span>
+        <span class="cf-meta-chip">Source excerpts: ${bundle.anchorCount}</span>
 
       `;
     }
 
     const svgLabel = document.getElementById('svgBlueprintCodeLabel');
-    if (svgLabel) svgLabel.textContent = `Example architecture · ${preset.code}`;
+    if (svgLabel) svgLabel.textContent = `Dossier contents · ${preset.code}`;
 
     const svgContainer = document.getElementById('svgArchitectureContainer');
     if (svgContainer) {
-      if (bundle.isCustomSynthesized) {
-        svgContainer.textContent = `${STATE.customSourceTitle} → ${bundle.anchorCount} source excerpts → dossier and JSON preview.`;
-      } else {
-        svgContainer.innerHTML = buildPipelineVectorSvg(preset, bundle);
-      }
+      svgContainer.textContent = `${STATE.customSourceTitle} → ${bundle.anchorCount} source excerpts → dossier and JSON preview.`;
+
     }
 
     const bodyContainer = document.getElementById('monographBodyContainer');
@@ -798,10 +642,16 @@
   }
 
   function renderEvalHarnessTab(preset, bundle) {
+    const comparisonOutput=document.getElementById("comparisonOutput");
+    comparisonOutput.replaceChildren();
+    for(const item of bundle.comparisons){
+      const li=document.createElement("li");li.textContent=item.result+(item.startOffset===null?"":" at characters "+(item.startOffset+1)+"–"+item.endOffset)+" · "+item.claim;comparisonOutput.append(li);
+    }
     const allCases = bundle.evalCases || [];
     const filterMode = STATE.evalFilter || 'ALL';
 
     const filteredCases = allCases.filter(c => {
+      if (filterMode === 'EXACT') return c.exactMatch==='Verbatim';
       if (filterMode === 'NUMERIC') {
         return /\$|%|\d/.test(`${c.groundTruth} ${c.generatedClaim}`);
       }
@@ -810,7 +660,7 @@
 
     const summaryStrip = document.getElementById('evalSummaryStrip');
     if (summaryStrip) {
-      summaryStrip.textContent = `${filteredCases.length} of ${allCases.length} items · ${bundle.isCustomSynthesized ? 'Quoted from the edited source' : 'Sample evaluation data'}`;
+      summaryStrip.textContent = `${filteredCases.length} of ${allCases.length} items · ${bundle.isCustomSynthesized ? 'Quoted from the edited source' : 'Quoted from the sample source'}`;
     }
 
     const tbody = document.getElementById('evalMatrixTableBody');
@@ -821,9 +671,9 @@
           <td class="cf-mono-col">${escapeHtml(c.sourceRef)}</td>
           <td><div class="cf-span-quote">${escapeHtml(c.groundTruth)}</div></td>
           <td>${escapeHtml(c.generatedClaim)}</td>
-          <td class="cf-mono-col">${escapeHtml(c.exactMatch || '100.0%')}</td>
-          <td class="cf-mono-col">${escapeHtml(c.latency || '42ms')} · ${escapeHtml(c.cost || '$0.002')}</td>
-          <td><span class="cf-verdict-badge">${escapeHtml(c.status || 'PASS')}</span></td>
+          <td class="cf-mono-col">${escapeHtml(c.exactMatch || '—')}</td>
+          <td class="cf-mono-col">${escapeHtml(c.latency || '—')}</td>
+          <td><span class="cf-verdict-badge">${escapeHtml(c.status || 'Unreviewed')}</span></td>
         </tr>
       `).join('');
     }
@@ -837,12 +687,12 @@
 
     const quizBox = document.getElementById('edtechQuizContainer');
     if (!quizBox) return;
-    if (bundle.isCustomSynthesized) {
-      quizBox.textContent = 'The example quiz belongs to the sample source. Your edited passages are available in the JSON preview.';
+    if (!bundle.courseModule) {
+      quizBox.textContent = 'The first passage needs two distinct words to build a reading question.';
       return;
     }
 
-    const cm = bundle.courseModule || preset.courseModule;
+    const cm = bundle.courseModule;
     if (!cm) return;
 
     const selectedOpt = STATE.quizSelectedOption;
@@ -876,7 +726,7 @@
     const rationaleBanner = isChecked
       ? `
         <div class="cf-quiz-rationale-box">
-          <strong>VERIFIED GOLDEN QUOTE &amp; SCORM 1.2 MASTERY PROOF:</strong>
+          <strong>Source passage</strong>
           <div><code>${escapeHtml(cm.goldenQuote)}</code></div>
         </div>
       `
@@ -885,10 +735,10 @@
     quizBox.innerHTML = `
       <div class="cf-block-header">
         <div>
-          <span class="cf-block-kicker">EDTECH SCORM 1.2 &amp; PSYCHOMETRIC CERTIFICATION ITEM</span>
+          <span class="cf-block-kicker">Reading exercise</span>
           <h2 class="cf-block-title">${escapeHtml(cm.moduleTitle)}</h2>
         </div>
-        <span class="cf-block-tag">5-OPTION (A–E) ITEM</span>
+        <span class="cf-block-tag">${(cm.options || []).length} choices</span>
       </div>
       <div class="cf-quiz-stem">${escapeHtml(cm.quizStem)}</div>
       <div class="cf-quiz-options-list">${optionsHtml}</div>
@@ -916,13 +766,12 @@
     if (btnCheck) {
       btnCheck.addEventListener('click', () => {
         if (!STATE.quizSelectedOption) {
-          const correctChoice = (cm.options || []).find(o => o.isCorrect);
-          STATE.quizSelectedOption = correctChoice ? correctChoice.letter : 'B';
+          showToast("Choose an answer first.");return;
         }
         STATE.quizChecked = true;
         saveState();
         renderWebhookAndQuizTab(preset, bundle);
-        showToast('Verified SCORM 1.2 Assessment Item against Ground-Truth Golden Quote');
+        showToast('Answer checked against the source passage');
       });
     }
   }
@@ -972,20 +821,20 @@
   /* ==========================================================================
      7. CORE PIPELINE ACTIONS: SELECT PRESET, RUN SYNTHESIS, FIRE WEBHOOK
      ========================================================================== */
-  function selectPreset(presetId, options) {
-    const opts = options || {};
+  function selectPreset(presetId) {
     const target = DATASET.presetsById[presetId];
-    if (!target) return false;
 
-    if (!opts.bypassPaywall && isPresetLocked(presetId)) {
+
+    if (isPresetLocked(presetId)) {
       openPaywallModal({
-        reason: `Preset "${target.title}" requires a ContentForge™ Pro or Enterprise License. Activate a license key, generate a 14-day provisional corporate invoice, or complete instant checkout below.`
+        reason: `Template "${target?.title || presetId}" requires a ContentForge™ Pro or Enterprise License. Purchase the software and activate your receipt key, or request an invoice.`
       });
       const selectEl = document.getElementById('presetSelect');
       if (selectEl) selectEl.value = STATE.activePresetId;
       return false;
     }
 
+    if(!target)return false;
     if (STATE.activePresetId === target.id) return true;
     STATE.sourceDraft = null;
     STATE.needsRun = true;
@@ -1021,6 +870,7 @@
       (!title ? titleEl : textEl)?.focus();
       return null;
     }
+    STATE.quizSelectedOption=null; STATE.quizChecked=false;
     STATE.customSourceTitle = title;
     STATE.customSourceText = text;
     STATE.customSchemaText = schema;
@@ -1109,12 +959,13 @@ ${JSON.stringify(preview.payload, null, 2)}`;
               <td class="cf-mono-col">${escapeHtml(c.sourceRef)}</td>
               <td>${escapeHtml(c.groundTruth)}</td>
               <td>${escapeHtml(c.generatedClaim)}</td>
-              <td class="cf-mono-col" style="color:#1A5638;">${escapeHtml(c.status || 'PASS')}</td>
+              <td class="cf-mono-col" style="color:#1A5638;">${escapeHtml(c.status || 'Unreviewed')}</td>
             </tr>
           `).join('')}
         </tbody>
       </table>
 
+      ${bundle.comparisons.length ? '<h4>Submitted statements</h4><ul>'+bundle.comparisons.map(c=>'<li>'+escapeHtml(c.result)+' · '+escapeHtml(c.claim)+'</li>').join('')+'</ul>' : ''}
       <h4 style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;border-bottom:1.5px solid #141413;padding-bottom:4px;margin-bottom:8px;">
         Source takeaways
       </h4>
@@ -1169,27 +1020,17 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     document.getElementById('payPanelKey').classList.toggle('hidden', tabKey !== 'key');
   }
 
-  function isLocalQaEnvironment() {
-    if (typeof window === 'undefined' || !window.location) return true;
-    const h = window.location.hostname;
-    return h === '127.0.0.1' || h === 'localhost' || !h;
-  }
-
   function generateCorporateInvoice(customOrg, customPo) {
     const orgInput = document.getElementById('invoiceOrgInput');
     const poInput = document.getElementById('invoicePoInput');
-    const orgName = String(customOrg || (orgInput && orgInput.value) || 'Enterprise Client LLC').trim();
-    const poNumber = String(customPo || (poInput && poInput.value) || 'PO-2026-8841').trim();
+    const orgName = String(customOrg || (orgInput && orgInput.value) || '').trim();
+    const poNumber = String(customPo || (poInput && poInput.value) || '').trim();
 
     const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.STUDIO_PRO;
-    const invoiceId = `INV-CF-CS-2026-${plan.amountUsd}`;
-
-    if (isLocalQaEnvironment()) {
-      STATE.licenseTier = 'PRO';
-    }
-    STATE.provisionalInvoiceId = invoiceId;
+    if(!orgName){orgInput?.focus();showToast("Enter the organization name.");return null;}
+    const invoiceId="REQ-CS-"+crypto.randomUUID();
+    STATE.provisionalInvoiceId=invoiceId;
     saveState();
-
     renderCorporateInvoicePreview(orgName, poNumber, invoiceId);
     const invBox = document.getElementById('corporateInvoicePreviewBox');
     if (invBox) invBox.classList.remove('hidden');
@@ -1201,19 +1042,21 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const successTitle = document.getElementById('paywallSuccessTitle');
     const successDesc = document.getElementById('paywallSuccessDesc');
     if (successBanner && successTitle && successDesc) {
-      successTitle.textContent = `Commercial Tax Invoice Issued (${invoiceId})`;
-      successDesc.textContent = `Issued official invoice ${invoiceId} for ${orgName} (PO: ${poNumber}). Complete payment via Contra (0% fee) or Gumroad, or email engineering@caliberfoundry.com to receive your license key.`;
+      successTitle.textContent = `Invoice request prepared (${invoiceId})`;
+      successDesc.textContent = `Email your request to billing. The order remains pending until the invoice and payment are confirmed.`;
       successBanner.classList.remove('hidden');
     }
 
-    showToast(`Generated Invoice ${invoiceId} for ${orgName}`);
+    const emailLink=document.getElementById("emailInvoice");
+    emailLink.hidden=false;emailLink.href="mailto:engineering@caliberfoundry.com?subject="+encodeURIComponent("Invoice request "+invoiceId)+"&body="+encodeURIComponent([invoiceId,orgName,poNumber,plan.name,"USD "+plan.amountUsd].filter(Boolean).join("\n"));
+    showToast(`Prepared invoice request ${invoiceId} for ${orgName}`);
     return {
       invoiceId,
       organization: orgName,
       poNumber,
       amountUsd: plan.amountUsd,
       planName: plan.name,
-      provisionalUnlock: isLocalQaEnvironment()
+      provisionalUnlock: false
     };
   }
 
@@ -1223,21 +1066,21 @@ ${JSON.stringify(preview.payload, null, 2)}`;
 
     const orgInput = document.getElementById('invoiceOrgInput');
     const poInput = document.getElementById('invoicePoInput');
-    const orgName = orgOverride || (orgInput && orgInput.value) || 'Helmsted Enterprise Systems LLC';
-    const poNum = poOverride || (poInput && poInput.value) || 'PO-2026-8841';
+    const orgName = orgOverride || (orgInput && orgInput.value) || '';
+    const poNum = poOverride || (poInput && poInput.value) || '';
     const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.STUDIO_PRO;
-    const invId = invIdOverride || STATE.provisionalInvoiceId || `INV-CF-CS-2026-${plan.amountUsd}`;
+    const invId = invIdOverride || "Draft preview";
     const dateStr = new Date().toISOString().slice(0, 10);
 
     box.innerHTML = `
       <div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:6px;margin-bottom:6px;">
         <div>
-          <strong>CALIBER FOUNDRY — COMMERCIAL INVOICE</strong><br/>
+          <strong>CALIBER FOUNDRY · INVOICE REQUEST</strong><br/>
           <span>Vendor: Caliber Foundry &lt;engineering@caliberfoundry.com&gt;</span>
         </div>
         <div style="text-align:right;">
           <strong>${escapeHtml(invId)}</strong><br/>
-          <span>Date: ${escapeHtml(dateStr)} · Terms: Net 15</span>
+          <span>Date: ${escapeHtml(dateStr)} · Awaiting billing review</span>
         </div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
@@ -1249,8 +1092,8 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         <strong>$${plan.amountUsd.toLocaleString('en-US')}.00 USD</strong>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#4A4842;">
-        <span>Includes 14-Day Provisional Enterprise Unlock &amp; Asynchronous Delivery</span>
-        <strong>Total Due: $${plan.amountUsd.toLocaleString('en-US')}.00 USD</strong>
+        <span>Billing confirms payment before license delivery</span>
+        <strong>Quoted amount: $${plan.amountUsd.toLocaleString('en-US')}.00 USD</strong>
       </div>
     `;
   }
@@ -1259,7 +1102,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const clean = String(rawKey || '').trim().toUpperCase();
     const receiptStatus = document.getElementById('receiptStatus');
     try {
-      await receipt.check(clean, receiptStatus);
+      if(!await templateAccess.open(clean, receiptStatus))return false;
     } catch (error) {
       receiptStatus.textContent = error.message;
       return;
@@ -1281,7 +1124,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const successDesc = document.getElementById('paywallSuccessDesc');
     if (successBanner && successTitle && successDesc) {
       successTitle.textContent = `Enterprise License Active (${ver.customerTag || 'PRO'})`;
-      successDesc.textContent = 'All 4 ContentForge™ industry presets, evaluation dossiers, and n8n webhook pipelines are unlocked.';
+      successDesc.textContent = 'All four templates are available. Download dossier JSON and use the included sender for a signed webhook delivery.';
       successBanner.classList.remove('hidden');
     }
 
@@ -1328,10 +1171,8 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     if (typeof window === 'undefined' || !window.location) return;
     const params = new URLSearchParams(window.location.search);
     const presetParam = params.get('preset');
-    if (presetParam && DATASET.presetsById[presetParam]) {
-      const freeIds = DATASET.meta.freePresetIds || ['n8n-pipeline', 'eval-harness'];
-      const allowBypass = freeIds.includes(presetParam) || isLocalQaEnvironment();
-      selectPreset(presetParam, { bypassPaywall: allowBypass });
+    if (presetParam && ['n8n-pipeline','eval-harness','edtech-courseware','fintech-monograph'].includes(presetParam)) {
+      selectPreset(presetParam);
     }
     const tabParam = params.get('tab');
     if (tabParam && ['monograph', 'eval', 'webhook', 'storyboard'].includes(tabParam)) {
@@ -1356,6 +1197,13 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         document.getElementById('tabRightWebhook').focus();
       }
       if (detail.step === 3 && (!sourceNeedsRun() || runPipelineSynthesis())) openEvalDossierModal();
+    });
+    const comparison=document.getElementById("comparisonInput");
+    comparison.value=STATE.comparisonClaims||"";
+    document.getElementById("checkComparisons").addEventListener("click",()=>{
+      if(sourceNeedsRun()){updateSourceStatus("Create the dossier from the edited source before comparing statements.");document.getElementById("runPipelineBtn").focus();return;}
+      STATE.comparisonClaims=comparison.value;saveState();refreshAllViews();
+      document.getElementById("comparisonStatus").textContent=getActiveSynthesizedBundle().comparisons.length+" statements compared.";
     });
     const presetSelect = document.getElementById('presetSelect');
     if (presetSelect) {
@@ -1563,7 +1411,9 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         document.querySelectorAll('#paywallPlanGrid .cf-plan-card').forEach(c => {
           c.classList.toggle('selected', c.getAttribute('data-plan-code') === code);
         });
-        renderCorporateInvoicePreview();
+        document.getElementById("corporateInvoicePreviewBox").classList.add("hidden");
+        document.getElementById("btnPrintCorporateInvoice").classList.add("hidden");
+        document.getElementById("emailInvoice").hidden=true;
       });
     });
 
@@ -1583,13 +1433,6 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         const org = document.getElementById('checkoutOrgInput').value.trim();
         STATE.accountUser = { fullName: name, email, organization: org };
         saveState();
-
-        if (isLocalQaEnvironment()) {
-          STATE.licenseTier = 'PRO';
-          saveState();
-          refreshAllViews();
-          return;
-        }
 
         const gatewayEl = document.querySelector('#cfCardCheckoutForm select');
         const gateway = gatewayEl ? gatewayEl.value : 'gumroad';
@@ -1640,10 +1483,12 @@ ${JSON.stringify(preview.payload, null, 2)}`;
   }
 
   async function initApp() {
-    if (receipt.matches(STATE.licenseKey)) {
-        try { await receipt.check(STATE.licenseKey); }
-        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
-      }
+    if(STATE.licenseKey){
+      try{const result=await templateAccess.open(STATE.licenseKey,document.getElementById('receiptStatus'));if(result)STATE.licenseTier='PRO';}
+      catch(error){document.getElementById('receiptStatus').textContent=error.message;useSampleTemplates();}
+    }else useSampleTemplates();
+    const actual=getActivePreset();
+    if(!STATE.customSourceText){STATE.customSourceText=actual.sourceText;STATE.customSourceTitle=actual.sourceTitle;}
     handleUrlQueryDeepLink();
     initEventListeners();
     refreshAllViews();
@@ -1655,7 +1500,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
       getDataset: () => DATASET,
       getState: () => STATE,
       setState: (patch) => {
-        if (!isLocalQaEnvironment() && patch && patch.licenseTier === 'PRO' && !verifyContentForgeLicenseKey(patch.licenseKey).valid) {
+        if (patch && patch.licenseTier === 'PRO' && !verifyContentForgeLicenseKey(patch.licenseKey).valid) {
           return;
         }
         STATE = Object.assign(getDefaultState(), patch || {});

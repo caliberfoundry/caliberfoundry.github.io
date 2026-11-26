@@ -1,10 +1,9 @@
 {
-  "name": "orff-maestra-ttl-msm-edtech-studio",
+  "name": "academyforge-studio",
   "version": "1.2.0",
   "private": true,
-  "description": "ORFF Maestra TTL-MSM Clinical Assessment Reasoning Prototype (FERPA Zero-PII) & SocratAI 1-Click SCORM 1.2 Exporter",
+  "description": "Browser authoring, classroom observation worksheets and SCORM 1.2 course export.",
   "scripts": {
-    "start": "npx serve . -l 3003",
-    "deploy": "npx vercel --prod --yes"
+    "start": "python3 -m http.server 3003 --directory .."
   }
 }

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" data-cf-private-inputs>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.caliberfoundry.com; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>StealthFlow · Combine supplier files</title><link rel="stylesheet" href="../assets/css/file-workbench.css">
+<script src="/assets/js/cf-telemetry.js" defer></script><script type="module" src="batch.mjs"></script>
+</head>
+<body><header><a href="./">← StealthFlow catalog</a><a href="../insights/resilient-web-data-extraction-beyond-dom-scraping.html">API example</a></header>
+<main><h1>Combine supplier files</h1>
+<p>Merge catalog exports with matching column names. StealthFlow aligns columns, removes tracking parameters from product URLs and keeps distinct records for different variants.</p>
+<section><h2>Select catalogs</h2>
+<label for="catalogs">CSV files with a product URL column</label><input id="catalogs" type="file" accept=".csv,text/csv" multiple>
+<p>Send up to 12 CSV files to the Caliber Foundry batch service. Files are processed in memory. For a single file you can also <a href="./#supplierCatalog">work entirely on your device</a>.</p>
+<button type="button" id="combine" disabled>Send and combine files</button><progress id="requestProgress" aria-label="File processing" max="100" value="0" hidden></progress><span id="requestTiming"></span><p role="status" id="status"></p></section>
+<section id="output" hidden><h2>Combined catalog</h2><p id="counts"></p><div style="overflow-x:auto"><table><caption>First three output records</caption><thead id="columns"></thead><tbody id="preview"></tbody></table></div>
+<button type="button" id="download">Download combined CSV</button>
+</section></main></body></html>

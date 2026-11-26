@@ -9,7 +9,7 @@
  *   - Automated cross-document numeric & clause discrepancy verification
  *   - Print-ready Due Diligence Evidence Dossier (@media print + JSON + CSV)
  *   - Freemium boundary (2 files free / up to 12 files with $249 Pack)
- *   - Local Net-15 Corporate Tax Invoice generator + RSA-512 license verifier
+ *   - Local purchase request generator + RSA-512 license verifier
  *
  * Security: Strict escapeHtml() on every dynamic HTML sink, 0 inline handlers, 0 external payments.
  */
@@ -296,19 +296,12 @@
     comparison: null,
     returnToAnswer: null,
     selectedPlanCode: 'DD_PACK_249',
-    licenseTier: 'FREE', // 'FREE' | 'PRO' | 'TEAM' | 'ENTERPRISE' | 'LOCAL_REVIEW'
+    licenseTier: 'FREE', // 'FREE' | 'PRO' | 'TEAM' | 'ENTERPRISE'
     licenseKey: '',
     licenseCustomer: '',
     lastInvoice: null,
     lastDossierId: ''
   };
-
-  function isLocalReviewEnv() {
-    if (typeof window === 'undefined' || !window.location) return true;
-    const h = window.location.hostname;
-    const p = window.location.protocol;
-    return h === 'localhost' || h === '127.0.0.1' || p === 'file:' || !h;
-  }
 
   async function loadPersistedState() {
     try {
@@ -319,22 +312,21 @@
         state.selectedPlanCode = saved.selectedPlanCode;
       }
       if (saved.lastInvoice && saved.lastInvoice.invoiceId) {
-        state.lastInvoice = saved.lastInvoice;
+        const draft = saved.lastInvoice;
+        delete draft.dueDate;
+        state.lastInvoice = {...draft, status:'draft', documentType:'pro_forma_purchase_request', paymentTerms:'Subject to billing confirmation'};
       }
       if (saved.licenseKey) {
         if (receipt.matches(saved.licenseKey)) {
-        try { await receipt.check(saved.licenseKey); }
-        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
-      }
+          try { await receipt.check(saved.licenseKey); }
+          catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+        }
         const ver = verifyOmniLicenseKey(saved.licenseKey);
         if (ver.valid) {
           state.licenseTier = ver.tier;
           state.licenseKey = saved.licenseKey;
           state.licenseCustomer = ver.customerTag || 'PRO';
         }
-      } else if (saved.licenseTier === 'LOCAL_REVIEW' && isLocalReviewEnv()) {
-        state.licenseTier = 'LOCAL_REVIEW';
-        state.licenseCustomer = 'Local Review Mode';
       }
     } catch (_) {}
   }
@@ -355,9 +347,7 @@
   }
 
   function isProUnlocked() {
-    if (state.licenseTier === 'LOCAL_REVIEW' && isLocalReviewEnv()) return true;
-    if (state.licenseKey && verifyOmniLicenseKey(state.licenseKey).valid) return true;
-    return false;
+    return Boolean(state.licenseKey && verifyOmniLicenseKey(state.licenseKey).valid);
   }
 
   function activeFileLimit() {
@@ -379,14 +369,14 @@
   function normalized(value) {
     return String(value || '')
       .toLowerCase()
-      .replace(/[^a-z0-9$%.]+/g, ' ')
+      .normalize('NFKC').replace(/[^\p{L}\p{N}$%.]+/gu, ' ')
       .trim();
   }
 
   function tokenizeKeywords(value) {
     return String(value || '')
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, ' ')
+      .normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu, ' ')
       .split(/\s+/)
       .filter((w) => w.length >= 3 && !STOPWORDS.has(w));
   }
@@ -497,283 +487,11 @@
   /* =========================================================================
      4. REAL CLIENT-SIDE PARSERS: CSV/TSV, PDF (UNCOMPRESSED + FLATE), TXT
      ========================================================================= */
-  function colIndexToLetters(idx) {
-    let n = idx + 1;
-    let out = '';
-    while (n > 0) {
-      const rem = (n - 1) % 26;
-      out = String.fromCharCode(65 + rem) + out;
-      n = Math.floor((n - 1) / 26);
-    }
-    return out;
-  }
-
-  function parseDelimitedRows(rawText, delimiter) {
-    const text = String(rawText || '').replace(/^\uFEFF/, '');
-    const rows = [];
-    let row = [];
-    let field = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < text.length; i++) {
-      const ch = text[i];
-      if (inQuotes) {
-        if (ch === '"') {
-          if (text[i + 1] === '"') {
-            field += '"';
-            i++;
-          } else {
-            inQuotes = false;
-          }
-        } else {
-          field += ch;
-        }
-      } else if (ch === '"') {
-        inQuotes = true;
-      } else if (ch === delimiter) {
-        row.push(field.trim());
-        field = '';
-      } else if (ch === '\r') {
-        if (text[i + 1] === '\n') i++;
-        row.push(field.trim());
-        if (row.some((c) => c.length > 0)) rows.push(row);
-        row = [];
-        field = '';
-      } else if (ch === '\n') {
-        row.push(field.trim());
-        if (row.some((c) => c.length > 0)) rows.push(row);
-        row = [];
-        field = '';
-      } else {
-        field += ch;
-      }
-    }
-    row.push(field.trim());
-    if (row.some((c) => c.length > 0)) rows.push(row);
-    return rows;
-  }
-
-  function parseDelimitedDocument(fileName, rawText, byteLength, docId) {
-    const isTsv = /\.tsv$/i.test(fileName) || (!/\.csv$/i.test(fileName) && rawText.split(/\r?\n/)[0].includes('\t'));
-    const delimiter = isTsv ? '\t' : ',';
-    const rows = parseDelimitedRows(rawText, delimiter);
-
-    if (rows.length === 0) {
-      return {
-        id: docId,
-        name: fileName,
-        format: isTsv ? 'TSV' : 'CSV',
-        byteLength,
-        uploaded: true,
-        statusNote: 'Empty table (0 rows)',
-        chunks: [
-          {
-            id: docId + '_empty',
-            coord: 'Row 1',
-            title: 'No tabular rows detected',
-            text: 'The uploaded file contained 0 non-empty rows.'
-          }
-        ]
-      };
-    }
-
-    const headers = rows[0];
-    const dataRows = rows.length > 1 ? rows.slice(1) : rows;
-    const hasHeaderRow = rows.length > 1;
-    const lastCol = colIndexToLetters(Math.max(0, headers.length - 1));
-
-    const chunks = dataRows.map((cells, idx) => {
-      const rowNum = hasHeaderRow ? idx + 2 : idx + 1;
-      const pairs = cells
-        .map((val, cIdx) => {
-          if (!val) return '';
-          const hName = hasHeaderRow && headers[cIdx] ? headers[cIdx] : 'Col ' + colIndexToLetters(cIdx);
-          return hName + ': ' + val;
-        })
-        .filter(Boolean);
-
-      // Identify primary metric column (e.g. Reported_Value / Scheduled_Value / numeric cell)
-      let primaryMetric = '';
-      for (let cIdx = 0; cIdx < cells.length; cIdx++) {
-        const headerLower = String((hasHeaderRow && headers[cIdx]) || '').toLowerCase();
-        const cellVal = cells[cIdx] || '';
-        if (
-          /(value|amount|price|cap|fee|limit|profit|ebitda|revenue|cost|rate|total)/i.test(headerLower) &&
-          /\d/.test(cellVal)
-        ) {
-          primaryMetric = cellVal;
-          break;
-        }
-      }
-      if (!primaryMetric) {
-        for (let cIdx = 0; cIdx < cells.length; cIdx++) {
-          if (/^[\$€£]?\d[\d,.]*(?:\s*(?:MW|%|days?|years?|USD|M|K))?$/i.test(cells[cIdx] || '')) {
-            primaryMetric = cells[cIdx];
-            break;
-          }
-        }
-      }
-
-      const nonEmpty = cells.filter(Boolean);
-      const titleParts = nonEmpty.slice(0, 3).filter((p) => p.length <= 64);
-      const rowTitle = titleParts.length ? titleParts.join(' · ') : 'Table Row ' + rowNum;
-
-      return {
-        id: docId + '_r' + rowNum,
-        coord: 'Row ' + rowNum + ' (Col A-' + lastCol + ')',
-        title: rowTitle,
-        text: 'Row ' + rowNum + ' | ' + pairs.join(' | '),
-        primaryMetric
-      };
-    });
-
-    return {
-      id: docId,
-      name: fileName,
-      format: isTsv ? 'TSV' : 'CSV',
-      byteLength,
-      uploaded: true,
-      rowCount: dataRows.length,
-      colCount: headers.length,
-      statusNote: dataRows.length + ' rows × ' + headers.length + ' cols parsed',
-      chunks
-    };
-  }
-
-  /* --- Client-Side PDF Parser (Uncompressed & FlateDecode Content Streams) --- */
-  function decodeLatin1(uint8) {
-    try {
-      return new TextDecoder('latin1').decode(uint8);
-    } catch (_) {
-      let s = '';
-      for (let i = 0; i < uint8.length; i++) s += String.fromCharCode(uint8[i]);
-      return s;
-    }
-  }
-
-  async function parsePdfDocument(fileName, arrayBuffer, docId) {
-    const reader = await import('./pdf-passages.mjs');
-    return reader.parse(fileName, arrayBuffer, docId);
-  }
-
-  function parsePlainTextDocument(fileName, rawText, byteLength, docId) {
-    const clean = String(rawText || '').replace(/^\uFEFF/, '').trim();
-    const blocks = clean
-      .split(/\r?\n\s*\r?\n/)
-      .map((b) => b.replace(/\s+/g, ' ').trim())
-      .filter((b) => b.length >= 3);
-
-    const chunks = blocks.length
-      ? blocks.map((b, idx) => ({
-          id: docId + '_b' + (idx + 1),
-          coord: 'Section ' + (idx + 1),
-          title: b.length > 68 ? b.slice(0, 65).trim() + '...' : b,
-          text: b
-        }))
-      : [
-          {
-            id: docId + '_empty',
-            coord: 'Section 1',
-            title: 'Empty text document',
-            text: 'No text content found in ' + fileName + '.'
-          }
-        ];
-
-    return {
-      id: docId,
-      name: fileName,
-      format: 'TXT',
-      byteLength,
-      uploaded: true,
-      statusNote: chunks.length + ' text section(s) parsed',
-      chunks
-    };
-  }
-
-  async function parseFileBuffer(fileName, arrayBuffer, index) {
-    const docId = 'up_' + deterministicHash(fileName + ':' + arrayBuffer.byteLength + ':' + index).slice(0, 8);
-    const lower = String(fileName || '').toLowerCase();
-    const bytes = new Uint8Array(arrayBuffer);
-
-    if (lower.endsWith('.pdf') || decodeLatin1(bytes.slice(0, 16)).includes('%PDF-')) {
-      return parsePdfDocument(fileName, arrayBuffer, docId);
-    }
-    const text = new TextDecoder('utf-8', { fatal: false }).decode(bytes);
-    if (lower.endsWith('.csv') || lower.endsWith('.tsv')) {
-      return parseDelimitedDocument(fileName, text, arrayBuffer.byteLength, docId);
-    }
-    if (lower.endsWith('.txt') || lower.endsWith('.md')) {
-      return parsePlainTextDocument(fileName, text, arrayBuffer.byteLength, docId);
-    }
-    return {
-      id: docId,
-      name: fileName,
-      format: 'UNSUPPORTED',
-      byteLength: arrayBuffer.byteLength,
-      uploaded: true,
-      parseError: true,
-      statusNote: 'Unsupported format (use PDF, CSV, TSV, or TXT)',
-      chunks: [
-        {
-          id: docId + '_unsupported',
-          coord: 'Format Check',
-          title: 'Unsupported binary format: ' + fileName,
-          text: 'Browser-side verification supports .pdf text streams, .csv, .tsv, and .txt files. For Excel (.xlsx) or Word (.docx), export to .csv or .pdf first.'
-        }
-      ]
-    };
-  }
-
   /* =========================================================================
      5. AUTOMATED CROSS-DOCUMENT NUMERIC & CLAUSE DISCREPANCY ENGINE
      ========================================================================= */
   function extractStructuredMetrics(text) {
-    const s = String(text || '');
-    const metrics = [];
-
-    // Currency amounts: $285,000 | $4.19M | $68500
-    const usdRe = /\$([\d,]+(?:\.\d+)?)(\s*[MBK])?\b/gi;
-    let m;
-    while ((m = usdRe.exec(s)) !== null) {
-      let val = parseFloat(m[1].replace(/,/g, ''));
-      const mult = (m[2] || '').trim().toUpperCase();
-      if (mult === 'M') val *= 1e6;
-      else if (mult === 'B') val *= 1e9;
-      else if (mult === 'K') val *= 1e3;
-      if (!isNaN(val)) {
-        metrics.push({ unit: 'USD', value: val, raw: m[0].trim() });
-      }
-    }
-
-    // Megawatts: 42.5 MW | 50.0 MW
-    const mwRe = /\b(\d+(?:\.\d+)?)\s*MW\b/gi;
-    while ((m = mwRe.exec(s)) !== null) {
-      const val = parseFloat(m[1]);
-      if (!isNaN(val)) metrics.push({ unit: 'MW', value: val, raw: m[0].trim() });
-    }
-
-    // Percentages: 12.0% | 81.4%
-    const pctRe = /\b(\d+(?:\.\d+)?)%/g;
-    while ((m = pctRe.exec(s)) !== null) {
-      const val = parseFloat(m[1]);
-      if (!isNaN(val)) metrics.push({ unit: '%', value: val, raw: m[0].trim() });
-    }
-
-    // Payment / contract days: 30-day | 15-day | 30 days
-    const dayRe = /\b(\d+)\s*-?\s*days?\b/gi;
-    while ((m = dayRe.exec(s)) !== null) {
-      const val = parseFloat(m[1]);
-      if (!isNaN(val)) metrics.push({ unit: 'DAYS', value: val, raw: m[0].trim() });
-    }
-
-    // Term years: 35 years | 35-year
-    const yrRe = /\b(\d+)\s*-?\s*years?\b/gi;
-    while ((m = yrRe.exec(s)) !== null) {
-      const val = parseFloat(m[1]);
-      if (!isNaN(val)) metrics.push({ unit: 'YEARS', value: val, raw: m[0].trim() });
-    }
-
-    return metrics;
+    return window.OmniFigures.measure(text).filter(figure => figure.unit);
   }
 
   function formatMetricValue(metric) {
@@ -781,6 +499,7 @@
       return '$' + Number(metric.value).toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
     if (metric.unit === 'MW') return metric.value + ' MW';
+    if (metric.unit === 'EUR' || metric.unit === 'GBP') return metric.unit + ' ' + metric.value;
     if (metric.unit === '%') return metric.value + '%';
     if (metric.unit === 'DAYS') return metric.value + ' days';
     if (metric.unit === 'YEARS') return metric.value + ' years';
@@ -789,33 +508,36 @@
 
   function runCrossDocumentChecks(docs) {
     const validDocs = docs.filter((d) => !d.parseError && d.chunks && d.chunks.length);
+    state.crossCheckLimited = false;
     if (validDocs.length < 2) return [];
 
-    const indexed = [];
-    validDocs.forEach((doc) => {
-      doc.chunks.forEach((chunk) => {
-        const primaryMetrics = chunk.primaryMetric ? extractStructuredMetrics(chunk.primaryMetric) : [];
-        const allMetrics = extractStructuredMetrics(chunk.text);
-        if (!allMetrics.length) return;
+    const indexedByDoc = new Map();
+    for (const doc of validDocs) {
+      const indexed = [];
+      for (const chunk of doc.chunks) {
+        const metrics = new Map();
+        for (const metric of extractStructuredMetrics(chunk.text)) {
+          // Multiple figures with the same unit could refer to different years or clauses.
+          metrics.set(metric.unit, metrics.has(metric.unit) ? null : metric);
+        }
+        if (!metrics.size) continue;
         const keywords = new Set(tokenizeKeywords(chunk.title + ' ' + chunk.text));
-        indexed.push({
-          doc,
-          chunk,
-          keywords,
-          primaryMetrics: primaryMetrics.length ? primaryMetrics : [allMetrics[0]],
-          allMetrics
-        });
-      });
-    });
-
+        indexed.push({doc, chunk, keywords, metrics});
+      }
+      if (indexed.length) indexedByDoc.set(doc.id, indexed);
+    }
+    const groups = [...indexedByDoc.values()];
+    let pairCount = 0, previous = 0;
+    for (const group of groups) { pairCount += previous * group.length; previous += group.length; }
+    if (pairCount > 100000) {
+      state.crossCheckLimited = true;
+      return [];
+    }
     const candidates = [];
-    const seenKeys = new Set();
 
-    for (let i = 0; i < indexed.length; i++) {
-      for (let j = i + 1; j < indexed.length; j++) {
-        const a = indexed[i];
-        const b = indexed[j];
-        if (a.doc.id === b.doc.id) continue;
+    for (const [idx, group] of groups.entries()) {
+      const otherDocs = groups.slice(idx + 1).flat();
+      for (const a of group) for (const b of otherDocs) {
 
         const shared = [];
         const domainShared = [];
@@ -827,42 +549,17 @@
         });
         if (shared.length < 2 || domainShared.length < 1) continue;
 
-        // Compare by shared metric unit using primary metric when available
-        const unitsA = new Set(a.primaryMetrics.map((x) => x.unit));
-        const unitsB = new Set(b.primaryMetrics.map((x) => x.unit));
-        let commonUnits = Array.from(unitsA).filter((u) => unitsB.has(u));
-        if (!commonUnits.length) {
-          const allUA = new Set(a.allMetrics.map((x) => x.unit));
-          const allUB = new Set(b.allMetrics.map((x) => x.unit));
-          commonUnits = Array.from(allUA).filter((u) => allUB.has(u));
+        const topic = (domainShared.length >= 2 ? domainShared : shared).slice(0, 4).join(' · ');
+        for (const [unit, metricA] of a.metrics) {
+          const metricB = b.metrics.get(unit);
+          if (!metricA || !metricB) continue;
+          candidates.push({
+            status: metricA.value === metricB.value ? 'MATCH' : 'MISMATCH',
+            unit, topic, domainScore: domainShared.length * 3 + shared.length,
+            valueA: formatMetricValue(metricA), valueB: formatMetricValue(metricB),
+            docA:a.doc, chunkA:a.chunk, docB:b.doc, chunkB:b.chunk
+          });
         }
-        if (!commonUnits.length) continue;
-
-        const unit = commonUnits[0];
-        const metricA = a.primaryMetrics.find((x) => x.unit === unit) || a.allMetrics.find((x) => x.unit === unit);
-        const metricB = b.primaryMetrics.find((x) => x.unit === unit) || b.allMetrics.find((x) => x.unit === unit);
-        if (!metricA || !metricB) continue;
-
-        const dedupeKey = [a.doc.id, a.chunk.id, b.doc.id, b.chunk.id, unit].sort().join('|');
-        if (seenKeys.has(dedupeKey)) continue;
-        seenKeys.add(dedupeKey);
-
-        const isMatch = Math.abs(metricA.value - metricB.value) < 0.001;
-        const topicLabel = (domainShared.length >= 2 ? domainShared : shared).slice(0, 4).join(' · ');
-
-        candidates.push({
-          status: isMatch ? 'MATCH' : 'MISMATCH',
-          unit,
-          topic: topicLabel,
-          domainScore: domainShared.length * 3 + shared.length,
-          sharedCount: shared.length,
-          valueA: formatMetricValue(metricA),
-          valueB: formatMetricValue(metricB),
-          docA: a.doc,
-          chunkA: a.chunk,
-          docB: b.doc,
-          chunkB: b.chunk
-        });
       }
     }
 
@@ -871,8 +568,8 @@
     const usedPairSlots = new Set();
     const findings = [];
     for (const c of candidates) {
-      const slotA = c.docA.id + ':' + c.chunkA.id + '->' + c.docB.id;
-      const slotB = c.docB.id + ':' + c.chunkB.id + '->' + c.docA.id;
+      const slotA = c.docA.id + ':' + c.chunkA.id + '->' + c.docB.id + ':' + c.unit;
+      const slotB = c.docB.id + ':' + c.chunkB.id + '->' + c.docA.id + ':' + c.unit;
       if (usedPairSlots.has(slotA) || usedPairSlots.has(slotB)) continue;
       usedPairSlots.add(slotA);
       usedPairSlots.add(slotB);
@@ -992,8 +689,9 @@
       let score = 0;
       let tokenHits = 0;
 
+      const passageTokens = new Set(tokenizeKeywords(hay));
       queryTokens.forEach((tk) => {
-        if (tokenizeKeywords(hay).includes(tk)) {
+        if (passageTokens.has(tk)) {
           tokenHits++;
           score += tk.length >= 6 ? 3 : 2;
         }
@@ -1036,16 +734,13 @@
     const headerBtn = document.getElementById('btnOpenPaywall');
     const footerBtn = document.getElementById('btnOpenPaywallFooter');
     const uploadMeta = document.getElementById('omUploadSummaryMeta');
-    const localReviewBox = document.getElementById('omLocalReviewBox');
+    const forgetButton = document.getElementById('btnResetLocalLicense');
 
     const unlocked = isProUnlocked();
     const limit = activeFileLimit();
 
     if (pill) {
-      if (state.licenseTier === 'LOCAL_REVIEW' && unlocked) {
-        pill.textContent = 'Local Review · up to ' + limit + ' files';
-        pill.classList.add('is-unlocked');
-      } else if (unlocked) {
+      if (unlocked) {
         pill.textContent = state.licenseTier + ' Active · up to ' + limit + ' files';
         pill.classList.add('is-unlocked');
       } else {
@@ -1055,10 +750,10 @@
     }
 
     if (headerBtn) {
-      headerBtn.textContent = unlocked ? 'License & Invoice ($249)' : 'Due Diligence Pack ($249)';
+      headerBtn.textContent = unlocked ? 'License and purchase request' : 'Due Diligence Pack ($249)';
     }
     if (footerBtn) {
-      footerBtn.textContent = unlocked ? 'Corporate Invoice & License' : 'Unlock $249 Pack & Corporate Invoice';
+      footerBtn.textContent = unlocked ? 'Purchase Request & License' : 'Unlock $249 Pack & Purchase Request';
     }
     if (uploadMeta) {
       const count = state.uploadedDocs.length;
@@ -1066,9 +761,7 @@
         ? count + ' uploaded · Active limit: ' + limit + ' files'
         : count + ' uploaded · Free limit: ' + FREE_FILE_LIMIT + ' files ($249: up to ' + PRO_FILE_LIMIT + ')';
     }
-    if (localReviewBox) {
-      localReviewBox.classList.toggle('om-hidden', !isLocalReviewEnv());
-    }
+    if (forgetButton) forgetButton.classList.toggle('om-hidden', !unlocked);
   }
 
   function renderPromptChips() {
@@ -1213,21 +906,23 @@
         crossEl.replaceChildren();
       } else {
         crossEl.classList.remove('om-hidden');
-        if (state.crossFindings.length === 0) {
+        if (state.crossCheckLimited) {
+          crossEl.textContent = 'Automatic candidate comparison exceeds 100,000 numeric passage pairs. Search the indexed documents or choose a smaller pack.';
+        } else if (state.crossFindings.length === 0) {
           crossEl.innerHTML =
-            '<div class="om-crosscheck-title">Automated Cross-Document Verification</div>' +
+            '<div class="om-crosscheck-title">Candidate numeric comparisons</div>' +
             '<p class="om-upload-note">No overlapping numeric clauses detected across the uploaded files. Use the search bar above to inspect exact passages.</p>';
         } else {
           const mismatchCount = state.crossFindings.filter((f) => f.status === 'MISMATCH').length;
           const matchCount = state.crossFindings.length - mismatchCount;
           crossEl.innerHTML =
-            '<div class="om-crosscheck-title">Automated Cross-Document Verification (' +
+            '<div class="om-crosscheck-title">Candidate numeric comparisons (' +
             mismatchCount +
             ' mismatch' +
             (mismatchCount === 1 ? '' : 'es') +
             ' · ' +
             matchCount +
-            ' verified match' +
+            ' equal candidate' +
             (matchCount === 1 ? '' : 'es') +
             ')</div>' +
             state.crossFindings
@@ -1246,7 +941,7 @@
                   '<span class="pack-status-pill ' +
                   (isMis ? 'pack-status-warn' : 'pack-status-ok') +
                   '">' +
-                  escapeHtml(isMis ? '! MISMATCH DETECTED' : '✓ VERIFIED MATCH') +
+                  escapeHtml(isMis ? '! MISMATCH DETECTED' : 'Equal values') +
                   '</span>' +
                   '</div>' +
                   '<div style="font-size:13px;color:var(--om-muted);margin-bottom:6px;">Shared topic: ' +
@@ -1311,6 +1006,7 @@
     if (selectedByUser) workflow('sample_selected');
 
     state.activeMode = 'sample';
+    if (selectedByUser) { importRevision++; state.pendingExcessFiles = []; }
     state.currentPresetKey = presetKey;
     state.answers = [];
     state.comparison = null;
@@ -1390,113 +1086,75 @@
     workflow('sample_selected');
   }
 
-  async function ingestLocalFiles(fileObjects) {
-    const incoming = Array.from(fileObjects || []);
-    if (!incoming.length) return;
+  let importRevision = 0;
+  let importQueue = Promise.resolve();
+  let nextDocumentNumber = 0;
 
-    const startMs = performance.now();
-    const limit = activeFileLimit();
-    const remainingSlots = Math.max(0, limit - state.uploadedDocs.length);
-    const toProcess = incoming.slice(0, remainingSlots);
-    const excess = incoming.slice(remainingSlots);
-
-    if (excess.length > 0) {
-      state.pendingExcessFiles = excess;
-    }
-
-    if (toProcess.length === 0) {
-      const msg = isProUnlocked()
-        ? 'Session limit reached (' + PRO_FILE_LIMIT + ' local files). Clear existing files to verify another set.'
-        : 'Free tier inspects up to ' + FREE_FILE_LIMIT + ' local files per pack. Unlock OmniRAG™ Due Diligence Pack ($249 one-time) to verify up to ' + PRO_FILE_LIMIT + ' files in one session.';
-      updateUploadProgress(msg, 100, 'Limit: ' + limit + ' files', 'is-warn');
-      if (!isProUnlocked()) {
-        openPaywallModal(msg);
+  function ingestLocalFiles(fileObjects, replace = false, revision = importRevision) {
+    const incoming = Array.from(fileObjects);
+    const task = async () => {
+      if (revision !== importRevision) return;
+      const errors = [];
+      const limit = activeFileLimit();
+      const docs = replace ? [] : state.uploadedDocs.slice();
+      const queued = [];
+      const started = performance.now();
+      const {readLocalDocument} = await import('./uploaded-files.mjs');
+      for (const [i, file] of incoming.entries()) {
+        if (revision !== importRevision) return;
+        if (docs.length >= limit) {
+          queued.push(file);
+          continue;
+        }
+        const pct = Math.round(100 * i / incoming.length);
+        const elapsed = performance.now() - started;
+        const eta = i ? Math.ceil((elapsed / i) * (incoming.length - i) / 1000) + 's remaining' : 'Estimating time';
+        updateUploadProgress('Reading ' + file.name + ' (' + (i + 1) + '/' + incoming.length + ')', pct, eta, '');
+        try {
+          const buffer = file.arrayBuffer ? await file.arrayBuffer() : file.buffer;
+          docs.push(await readLocalDocument(file.name, buffer, 'up_' + ++nextDocumentNumber));
+        } catch (error) {
+          errors.push(file.name + ' · ' + error.message);
+        }
       }
-      return;
-    }
-
-    for (let i = 0; i < toProcess.length; i++) {
-      const f = toProcess[i];
-      const pct = Math.round(((i + 0.3) / toProcess.length) * 75);
-      updateUploadProgress(
-        'Stage 1/3: Reading & parsing ' + f.name + ' (' + (i + 1) + '/' + toProcess.length + ')...',
-        pct,
-        Math.round(pct) + '%',
-        ''
-      );
-      const buf = f.arrayBuffer ? await f.arrayBuffer() : f.buffer;
-      const parsedDoc = await parseFileBuffer(f.name, buf, state.uploadedDocs.length);
-      state.uploadedDocs.push(parsedDoc);
-    }
-
-    updateUploadProgress('Stage 2/3: Running cross-document numeric & clause checks...', 88, '88%', '');
-    activateUploadedPackView();
-
-    const elapsedMs = Math.max(1, Math.round(performance.now() - startMs));
-    const totalChunks = state.uploadedDocs.reduce((s, d) => s + d.chunks.length, 0);
-    const mismatchCount = state.crossFindings.filter((f) => f.status === 'MISMATCH').length;
-
-    if (excess.length > 0 && !isProUnlocked()) {
-      const gateMsg =
-        'Parsed ' +
-        toProcess.length +
-        ' file(s) in ' +
-        elapsedMs +
-        ' ms. ' +
-        excess.length +
-        ' additional file(s) queued — unlock the $249 Due Diligence Pack (up to ' +
-        PRO_FILE_LIMIT +
-        ' files) to include them.';
-      updateUploadProgress(gateMsg, 100, elapsedMs + ' ms', 'is-warn');
-      openPaywallModal(gateMsg);
-    } else {
-      updateUploadProgress(
-        'Stage 3/3 Complete: Parsed ' +
-          state.uploadedDocs.length +
-          ' local file(s) · ' +
-          totalChunks +
-          ' passages indexed · ' +
-          mismatchCount +
-          ' mismatch(es) flagged.',
-        100,
-        elapsedMs + ' ms',
-        'is-done'
-      );
-    }
+      if (revision !== importRevision) return;
+      if (docs.length && (replace || docs.length > state.uploadedDocs.length)) {
+        state.uploadedDocs = docs;
+        activateUploadedPackView();
+      }
+      state.pendingExcessFiles = isProUnlocked() ? [] : state.pendingExcessFiles.concat(queued);
+      const active = state.activeMode === 'uploaded' ? state.uploadedDocs.length + ' local file(s) indexed' : 'Sample pack remains selected';
+      const limitText = queued.length ? queued.length + ' additional file(s) exceeded the ' + limit + '-file limit.' : '';
+      const status = [active, ...errors, limitText].filter(Boolean).join(' · ');
+      updateUploadProgress(status, 100, Math.round(performance.now() - started) + ' ms', errors.length || queued.length ? 'is-warn' : 'is-done');
+      if (queued.length && !isProUnlocked()) openPaywallModal(limitText + ' Unlock the pack to include up to ' + PRO_FILE_LIMIT + ' local files.');
+    };
+    importQueue = importQueue.then(task).catch(error => {
+      if (revision === importRevision) updateUploadProgress('Unable to read files: ' + error.message, 100, 'Retry selection', 'is-warn');
+    });
+    return importQueue;
   }
 
   async function loadBundledReviewSamples() {
-    const startMs = performance.now();
-    updateUploadProgress('Stage 1/3: Fetching bundled sample pack (PDF + CSV)...', 25, '25%', '');
+    const revision = ++importRevision;
+    state.pendingExcessFiles = [];
+    updateUploadProgress('Reading bundled PDF and CSV...', 0, 'Loading', '');
     try {
-      const sampleSpecs = [
-        { name: 'Vendor_SLA_Addendum.pdf', url: './samples/Vendor_SLA_Addendum.pdf' },
-        { name: 'Q3_Financial_Schedule.csv', url: './samples/Q3_Financial_Schedule.csv' }
-      ];
-      const fetched = [];
-      for (const spec of sampleSpecs) {
-        const res = await fetch(spec.url);
-        if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + spec.name);
-        const buffer = await res.arrayBuffer();
-        fetched.push({ name: spec.name, buffer });
-      }
-      state.uploadedDocs = [];
-      state.pendingExcessFiles = [];
-      await ingestLocalFiles(fetched);
-      const totalMs = Math.max(1, Math.round(performance.now() - startMs));
-      const etaEl = document.getElementById('omUploadEtaText');
-      if (etaEl) etaEl.textContent = totalMs + ' ms';
-    } catch (_) {
-      updateUploadProgress(
-        'Direct sample fetch requires an HTTP server (browser blocks fetch on file://). Click "Select PDF / CSV / TSV / TXT files" and pick local .pdf, .csv, or .tsv files from your device.',
-        100,
-        'Manual pick required',
-        'is-warn'
-      );
+      const filenames = ['Vendor_SLA_Addendum.pdf', 'Q3_Financial_Schedule.csv'];
+      const files = await Promise.all(filenames.map(async name => {
+        const res = await fetch('./samples/' + name);
+        if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + name);
+        return {name, buffer: await res.arrayBuffer()};
+      }));
+      await ingestLocalFiles(files, true, revision);
+    } catch (error) {
+      if (revision === importRevision) updateUploadProgress('Unable to read sample files. ' + error.message, 100, 'Retry loading the samples', 'is-warn');
     }
   }
 
   function removeUploadedDoc(docId) {
+    importRevision++;
+    state.pendingExcessFiles = [];
     state.uploadedDocs = state.uploadedDocs.filter((d) => d.id !== docId);
     if (state.uploadedDocs.length === 0) {
       document.getElementById('omUploadProgressWrap').classList.add('om-hidden');
@@ -1514,6 +1172,7 @@
   }
 
   function clearAllUploads() {
+    importRevision++;
     state.uploadedDocs = [];
     state.crossFindings = [];
     state.pendingExcessFiles = [];
@@ -1648,16 +1307,16 @@
       return;
     }
 
-    const numsA = textA.match(/\$?\d[\d,.]*/g) || [];
-    const numsB = textB.match(/\$?\d[\d,.]*/g) || [];
-    if (!numsA.length || !numsB.length) {
+    const first = window.OmniFigures.measure(textA);
+    const second = window.OmniFigures.measure(textB);
+    if (!first.length || !second.length) {
       if (badge) badge.textContent = 'Both passages need at least one number for comparison.';
       return;
     }
-
-    const normA = numsA.map((n) => n.replace(/,/g, ''));
-    const normB = numsB.map((n) => n.replace(/,/g, ''));
-    const hasMismatch = JSON.stringify(normA) !== JSON.stringify(normB);
+    const numsA = first.map(figure => figure.raw);
+    const numsB = second.map(figure => figure.raw);
+    const hasMismatch = first.length !== second.length || first.some((figure, i) =>
+      figure.unit !== second[i].unit || figure.value !== second[i].value);
 
     state.comparison = {
       source_a: textA,
@@ -1688,7 +1347,7 @@
       '<span class="pack-status-pill ' +
       (hasMismatch ? 'pack-status-warn' : 'pack-status-ok') +
       '">' +
-      (hasMismatch ? '! MISMATCH DETECTED' : '✓ VERIFIED MATCH') +
+      (hasMismatch ? '! MISMATCH DETECTED' : 'Equal values') +
       '</span>' +
       '</div>' +
       '<div class="diff-compare-grid">' +
@@ -1730,14 +1389,14 @@
     state.lastDossierId = dossierId;
 
     return {
-      schema: 'https://caliberfoundry.com/schemas/omnirag-evidence-dossier-v1.json',
+      schema: 'https://caliberfoundry.com/omnirag/evidence-dossier.schema.json',
       studio_version: 'caliberfoundry-omnirag-plan53-review',
       dossier_id: dossierId,
       pack_origin: state.activeMode === 'uploaded' ? 'local_uploaded_files' : 'built_in_sample_pack',
       preset: state.activeMode === 'uploaded' ? 'custom_upload' : state.currentPresetKey,
       pack_title: activePackTitle(),
       license_tier: state.licenseTier,
-      prepared_for: (state.lastInvoice && state.lastInvoice.company) || 'Local Verification Review',
+      prepared_for: 'Local Verification Review',
       content_fingerprint: fingerprint,
       timestamp: new Date().toISOString(),
       documents: docs.map((d) => ({
@@ -1747,7 +1406,9 @@
         passage_count: d.chunks.length,
         passages: d.chunks.map((c) => ({ location: c.coord, title: c.title, text: c.text }))
       })),
-      cross_document_findings: state.crossFindings.map((f) => ({
+      automatic_comparison_skipped: state.activeMode === 'uploaded' && Boolean(state.crossCheckLimited),
+      comparison_method: 'Candidate pairs selected by terminology and measurement unit. Review original passages.',
+      cross_document_findings: (state.activeMode === 'uploaded' ? state.crossFindings : []).map((f) => ({
         status: f.status,
         topic: f.topic,
         unit: f.unit,
@@ -1760,10 +1421,10 @@
     };
   }
 
-  function buildEvidenceCsv(payload) {
+  function buildEvidenceCsv(payload, spreadsheetText) {
     const header = ['Row_Type', 'Document', 'Location', 'Topic_Or_Question', 'Status', 'Evidence_Text'];
     const lines = [header.join(',')];
-    const escCsv = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const escCsv = (v) => '"' + spreadsheetText(v == null ? '' : v).replace(/"/g, '""') + '"';
 
     payload.cross_document_findings.forEach((f) => {
       lines.push(
@@ -1837,7 +1498,7 @@
               '<div class="om-qa-block">' +
               '<div class="finding-header">' +
               '<strong>' +
-              escapeHtml(f.status === 'MISMATCH' ? '! Mismatch: ' : '✓ Verified Match: ') +
+              escapeHtml(f.status === 'MISMATCH' ? '! Mismatch: ' : 'Equal values: ') +
               escapeHtml(f.source_a.value) +
               (f.status === 'MISMATCH' ? ' vs. ' + escapeHtml(f.source_b.value) : '') +
               '</strong>' +
@@ -1856,7 +1517,7 @@
               '</div>'
           )
           .join('')
-      : '<p style="font-size:13px;color:var(--om-muted);">No automated cross-document discrepancies recorded for this pack.</p>';
+      : '<p style="font-size:13px;color:var(--om-muted);">No candidate figure comparisons are listed. Check source passages for completeness.</p>';
 
     const qaHtml = payload.questions.length
       ? payload.questions
@@ -2010,10 +1671,11 @@
     }
   }
 
-  function triggerCsvDownload() {
+  async function triggerCsvDownload() {
+    const {spreadsheetText} = await import('../assets/js/delimited.mjs');
     const payload = buildEvidencePayload();
     const slug = state.activeMode === 'uploaded' ? 'uploaded_pack' : state.currentPresetKey;
-    triggerDownload('omnirag_evidence_' + slug + '.csv', '\uFEFF' + buildEvidenceCsv(payload), 'text/csv;charset=utf-8;');
+    triggerDownload('omnirag_evidence_' + slug + '.csv', '\uFEFF' + buildEvidenceCsv(payload, spreadsheetText), 'text/csv;charset=utf-8;');
     workflow('export_ready');
   }
 
@@ -2030,7 +1692,7 @@
   }
 
   /* =========================================================================
-     10. COMMERCIAL $249 LICENSING & NET-15 CORPORATE TAX INVOICE
+     10. Purchasing and receipt activation
      ========================================================================= */
   function selectCommercialPlan(planCode) {
     const plan = PLANS[planCode] || PLANS.DD_PACK_249;
@@ -2048,9 +1710,13 @@
       btn.textContent = active ? 'Selected: ' + p.shortLabel : 'Select ' + p.shortLabel;
     });
 
+    if (state.lastInvoice && state.lastInvoice.planCode !== plan.code) {
+      document.getElementById('omInvoicePrintSheet').classList.add('om-hidden');
+      document.getElementById('omInvoiceActions').classList.add('om-hidden');
+    }
     const genBtn = document.getElementById('btnGenerateInvoice');
     if (genBtn) {
-      genBtn.textContent = 'Generate Corporate Tax Invoice ($' + plan.amountUsd.toLocaleString('en-US') + ')';
+      genBtn.textContent = 'Prepare purchase request ($' + plan.amountUsd.toLocaleString('en-US') + ')';
     }
   }
 
@@ -2071,7 +1737,7 @@
 
     selectCommercialPlan(state.selectedPlanCode || 'DD_PACK_249');
     renderLicenseHeader();
-    if (state.lastInvoice) {
+    if (state.lastInvoice?.planCode === state.selectedPlanCode) {
       renderCorporateInvoiceSheet(state.lastInvoice);
     }
 
@@ -2094,16 +1760,12 @@
     const mailtoLink = document.getElementById('omInvoiceMailtoLink');
     if (!sheet || !inv) return;
 
-    const statusBadge = isProUnlocked()
-      ? state.licenseTier === 'LOCAL_REVIEW'
-        ? 'LOCAL REVIEW MODE · PROVISIONAL UNLOCK'
-        : 'LICENSE ACTIVE · SETTLED'
-      : 'ISSUED · NET-15 AWAITING SETTLEMENT';
+    const statusBadge = 'Local draft · awaiting billing review';
 
     sheet.innerHTML =
       '<div class="om-invoice-top">' +
       '<div>' +
-      '<div class="mono" style="font-size:11px;font-weight:600;color:var(--om-deep);">CALIBER FOUNDRY — COMMERCIAL B2B TAX INVOICE</div>' +
+      '<div class="mono" style="font-size:11px;font-weight:600;color:var(--om-deep);">CALIBER FOUNDRY — PRO FORMA PURCHASE REQUEST</div>' +
       '<div style="font-size:13px;">Vendor: <strong>Caliber Foundry</strong> · <code>engineering@caliberfoundry.com</code></div>' +
       '<div style="font-size:12px;color:var(--om-muted);">https://caliberfoundry.com/omnirag/</div>' +
       '</div>' +
@@ -2111,17 +1773,14 @@
       '<div style="font-weight:700;font-size:14px;">' +
       escapeHtml(inv.invoiceId) +
       '</div>' +
-      '<div style="font-size:11.5px;">Issue Date: ' +
+      '<div style="font-size:11.5px;">Prepared on: ' +
       escapeHtml(inv.issueDate) +
-      '</div>' +
-      '<div style="font-size:11.5px;">Due Date (Net 15): ' +
-      escapeHtml(inv.dueDate) +
       '</div>' +
       '</div>' +
       '</div>' +
       '<div class="om-invoice-cols">' +
       '<div>' +
-      '<div class="spec-label">Bill To</div>' +
+      '<div class="spec-label">Requested by</div>' +
       '<div><strong>' +
       escapeHtml(inv.company) +
       '</strong></div>' +
@@ -2150,8 +1809,8 @@
       '.00 USD</div>' +
       '</div>' +
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--om-muted);">' +
-      '<span>Settlement: Net-15 ACH / Wire / SEPA · Send PO confirmation asynchronously to <code>engineering@caliberfoundry.com</code>. Signed RSA-512 activation key delivered by email upon confirmation.</span>' +
-      '<strong class="mono" style="color:var(--om-ink);font-size:14px;">Total Due: $' +
+      '<span>Send this draft for price and payment confirmation to <code>engineering@caliberfoundry.com</code>.</span>' +
+      '<strong class="mono" style="color:var(--om-ink);font-size:14px;">Estimated amount: $' +
       escapeHtml(Number(inv.amountUsd).toLocaleString('en-US')) +
       '.00 USD</strong>' +
       '</div>';
@@ -2160,13 +1819,13 @@
     if (actions) actions.classList.remove('om-hidden');
 
     if (mailtoLink) {
-      const subj = encodeURIComponent('OmniRAG Corporate Invoice & PO Confirmation — ' + inv.invoiceId + ' (' + inv.company + ')');
+      const subj = encodeURIComponent('OmniRAG purchase request ' + inv.invoiceId + ' (' + inv.company + ')');
       const body = encodeURIComponent(
         'Caliber Foundry Billing Team,\n\n' +
-          'Please process our commercial invoice for ' +
+          'Please confirm pricing and invoicing for ' +
           inv.planName +
           '.\n\n' +
-          'Invoice ID: ' +
+          'Request reference: ' +
           inv.invoiceId +
           '\n' +
           'Legal Entity: ' +
@@ -2178,10 +1837,10 @@
           'PO Reference: ' +
           (inv.poNumber || 'N/A') +
           '\n' +
-          'Total Due (Net 15): $' +
+          'Estimated amount: $' +
           inv.amountUsd +
           '.00 USD\n\n' +
-          'Please reply with wire/ACH details and our signed OmniRAG license key.'
+          'Please reply with the confirmed scope, invoicing terms and delivery details.'
       );
       mailtoLink.setAttribute('href', 'mailto:engineering@caliberfoundry.com?subject=' + subj + '&body=' + body);
     }
@@ -2196,9 +1855,7 @@
 
     const plan = PLANS[state.selectedPlanCode] || PLANS.DD_PACK_249;
     const now = new Date();
-    const due = new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000);
-    const seed = deterministicHash(company + '|' + email + '|' + plan.code + '|' + now.toISOString().slice(0, 10));
-    const invoiceId = 'INV-OMNI-2026-' + seed.slice(0, 4).toUpperCase();
+    const invoiceId = 'REQ-OMNI-' + crypto.randomUUID();
 
     const inv = {
       invoiceId,
@@ -2211,9 +1868,10 @@
       billingCycle: plan.billingCycle,
       amountUsd: plan.amountUsd,
       currency: 'USD',
-      paymentTerms: 'Net 15 (ACH / Wire / SEPA)',
+      status: 'draft',
+      documentType: 'pro_forma_purchase_request',
+      paymentTerms: 'Subject to billing confirmation',
       issueDate: now.toISOString().slice(0, 10),
-      dueDate: due.toISOString().slice(0, 10),
       generatedAt: now.toISOString(),
       externalPaymentTriggered: false
     };
@@ -2230,9 +1888,9 @@
         inv.invoiceId +
         ' ($' +
         inv.amountUsd +
-        '.00 USD Net-15) for ' +
+        '.00 USD) for ' +
         inv.company +
-        '. Print or download below; no external payment was charged.';
+        '. Print or download the draft below.';
     }
   }
 
@@ -2263,7 +1921,6 @@
       state.licenseCustomer = ver.customerTag || 'PRO';
       savePersistedState();
       renderLicenseHeader();
-      if (state.lastInvoice) renderCorporateInvoiceSheet(state.lastInvoice);
       if (fb) {
         fb.classList.remove('om-hidden', 'is-error');
         fb.textContent =
@@ -2286,36 +1943,19 @@
     }
   }
 
-  function handleEnableLocalReviewUnlock() {
-    if (!isLocalReviewEnv()) return;
-    state.licenseTier = 'LOCAL_REVIEW';
-    state.licenseKey = '';
-    state.licenseCustomer = 'Local Review Mode';
-    savePersistedState();
-    renderLicenseHeader();
-    if (state.lastInvoice) renderCorporateInvoiceSheet(state.lastInvoice);
-    const fb = document.getElementById('omLicenseFeedback');
-    if (fb) {
-      fb.classList.remove('om-hidden', 'is-error');
-      fb.textContent =
-        'Local Review Unlock enabled (up to ' +
-        PRO_FILE_LIMIT +
-        ' local files per session). Production deployments require a signed CFK-OMNI license key.';
-    }
-    processPendingExcessAfterUnlock();
-  }
-
   function handleResetLocalLicense() {
     state.licenseTier = 'FREE';
     state.licenseKey = '';
     state.licenseCustomer = '';
+    document.getElementById('omLicenseKeyInput').value = '';
+    document.getElementById('receiptStatus').textContent = '';
+    clearAllUploads();
     savePersistedState();
     renderLicenseHeader();
-    if (state.lastInvoice) renderCorporateInvoiceSheet(state.lastInvoice);
     const fb = document.getElementById('omLicenseFeedback');
     if (fb) {
       fb.classList.remove('om-hidden', 'is-error');
-      fb.textContent = 'Reset to Free Diagnostic Tier (up to ' + FREE_FILE_LIMIT + ' local files per pack).';
+      fb.textContent = 'License removed from this browser and local pack cleared. Free limit: ' + FREE_FILE_LIMIT + ' files.';
     }
   }
 
@@ -2456,14 +2096,13 @@
     document.getElementById('btnDownloadInvoiceJson').addEventListener('click', () => {
       if (!state.lastInvoice) return;
       triggerDownload(
-        'omnirag_invoice_' + state.lastInvoice.invoiceId + '.json',
+        'omnirag_purchase_request_' + state.lastInvoice.invoiceId + '.json',
         JSON.stringify(state.lastInvoice, null, 2),
         'application/json'
       );
     });
 
     document.getElementById('btnActivateKey').addEventListener('click', handleActivateLicenseKey);
-    document.getElementById('btnLocalReviewUnlock').addEventListener('click', handleEnableLocalReviewUnlock);
     document.getElementById('btnResetLocalLicense').addEventListener('click', handleResetLocalLicense);
 
     // Backdrop click & Escape dismissal

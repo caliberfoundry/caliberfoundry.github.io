@@ -79,9 +79,9 @@
             <button type="button" id="btnClearUploads" class="btn-tactile" hidden>Clear uploaded pack</button>
           </div>
           <p class="om-upload-note">
-            Parsed locally in your browser (zero server upload): uncompressed or Flate-encoded <code>.pdf</code> text streams, <code>.csv</code>, <code>.tsv</code>, and <code>.txt</code>.
+            Your files stay in this browser. Import a searchable PDF, a UTF-8 text file, or a CSV or TSV with named columns. Scanned pages require OCR first. Read table passages against their original column headings.
             Free tier inspects up to <strong>2 local files</strong>; Due Diligence Pack (<strong>$249 one-time</strong>) unlocks up to <strong>12 local files</strong> per session and unredacted PDF dossiers.
-            For Excel <code>.xlsx</code> workbooks, export sheets to <code>.csv</code> or <code>.tsv</code> first.
+            Export Excel sheets to CSV or TSV first. Automatic comparisons suggest up to eight pairs with related terms and an unambiguous figure per measurement unit. Check both original passages before using a figure. Download JSON for the original values. In CSV, formula-like text is prefixed with an apostrophe for spreadsheet use.
           </p>
         </div>
 
@@ -148,7 +148,7 @@
       <button type="button" id="btnOpenAuditModal">Preview printable dossier</button>
       <button type="button" id="btnDownloadCsvQuick">Download CSV ↓</button>
       <button type="button" id="btnSignOff">Download JSON ↓</button>
-      <button type="button" id="btnOpenPaywallFooter" class="om-btn-commercial">Unlock $249 Pack &amp; Corporate Invoice</button>
+      <button type="button" id="btnOpenPaywallFooter" class="om-btn-commercial">Unlock $249 Pack &amp; Purchase Request</button>
     </div>
   </main>
 
@@ -158,14 +158,14 @@
       <div class="om-modal-header">
         <div>
           <div class="om-modal-kicker">OmniRAG™ Due Diligence Evidence Dossier · Caliber Foundry</div>
-          <h2 id="auditReportModalTitle" class="om-modal-title">Citation-Verified Document Evidence Report</h2>
+          <h2 id="auditReportModalTitle" class="om-modal-title">Document Evidence Report</h2>
         </div>
         <button type="button" id="btnCloseAuditModal" class="om-modal-close no-print">Close</button>
       </div>
       <div class="om-modal-body">
         <div id="auditReportModalContent"></div>
         <div class="om-modal-footer no-print">
-          <button type="button" id="btnOpenPaywallFromReport" class="btn-tactile">$249 Pack &amp; Corporate Invoice</button>
+          <button type="button" id="btnOpenPaywallFromReport" class="btn-tactile">$249 Pack &amp; Purchase Request</button>
           <button type="button" id="btnDownloadCsvModal" class="btn-tactile">Download CSV Evidence ↓</button>
           <button type="button" id="btnDownloadJsonModal" class="btn-tactile btn-tactile-forest">Download JSON Audit File ↓</button>
           <button type="button" id="btnPrintDossier" class="btn-tactile btn-tactile-primary">Print / Save as PDF</button>
@@ -174,12 +174,12 @@
     </div>
   </div>
 
-  <!-- MODAL 2: COMMERCIAL $249 LICENSING & NET-15 CORPORATE TAX INVOICE -->
+  <!-- MODAL 2: Licensing and purchase requests -->
   <div id="omPaywallModal" class="om-modal-backdrop om-hidden" role="dialog" aria-modal="true" aria-labelledby="omPaywallTitle">
     <div class="om-modal-window">
       <div class="om-modal-header no-print">
         <div>
-          <div class="om-modal-kicker">Commercial Licensing &amp; Net-15 Corporate Tax Invoice</div>
+          <div class="om-modal-kicker">Licensing and procurement</div>
           <h2 id="omPaywallTitle" class="om-modal-title">OmniRAG™ Due Diligence Pack ($249)</h2>
         </div>
         <button type="button" id="btnClosePaywallModal" class="om-modal-close">Close</button>
@@ -198,7 +198,7 @@
                 <li>Up to 12 local PDF, CSV, TSV, or TXT files per verification session</li>
                 <li>Full unredacted printable PDF Evidence Dossier + CSV/JSON exports</li>
                 <li>Automated cross-document numeric &amp; clause discrepancy checks</li>
-                <li>Instant Net-15 Corporate Tax Invoice (<code>INV-OMNI-2026-XXXX</code>)</li>
+                <li>Printable procurement request with your company details</li>
               </ul>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
@@ -213,9 +213,9 @@
               <div class="om-plan-name">Audit Team License</div>
               <div class="om-plan-price">$499 <span>/ month</span></div>
               <ul class="om-plan-list">
-                <li>Up to 5 team reviewers with unlimited local verification sessions</li>
-                <li>Custom organization entity header on printed PDF dossiers</li>
-                <li>Signed RSA-512 team activation key + Net-15 invoice billing</li>
+                <li>Request a quote for up to five local reviewers</li>
+                <li>Each reviewer works with their own local files</li>
+                <li>Scope, license delivery and terms are confirmed by billing</li>
                 <li>100% async support via <code>engineering@caliberfoundry.com</code></li>
               </ul>
             </div>
@@ -242,11 +242,11 @@
         </div>
 
         <div class="om-billing-split">
-          <!-- Left: Local Net-15 Corporate Tax Invoice Generator -->
+          <!-- Left: Local purchase request form -->
           <div class="om-billing-box om-invoice-form-col">
-            <h3>1. Generate Net-15 Corporate Tax Invoice</h3>
+            <h3>1. Prepare a purchase request</h3>
             <p class="om-upload-note" style="margin-bottom:10px;">
-              Generate a printable invoice locally for accounts payable or corporate expense approval. No external payment charge is triggered from this form.
+              Prepare a local pro forma request for internal approval. Send the draft to billing if you need an issued invoice.
             </p>
             <form id="omInvoiceForm" class="om-form-grid">
               <div class="om-field">
@@ -261,13 +261,13 @@
                 <label for="invPoInput">Purchase Order Reference (Optional)</label>
                 <input type="text" id="invPoInput" class="om-form-input" placeholder="PO-DD-2026-0419" />
               </div>
-              <button type="submit" id="btnGenerateInvoice" class="btn-tactile btn-tactile-primary">Generate Corporate Tax Invoice ($249)</button>
+              <button type="submit" id="btnGenerateInvoice" class="btn-tactile btn-tactile-primary">Prepare purchase request ($249)</button>
             </form>
           </div>
 
-          <!-- Right: License Key Activation & Local Review Controls -->
+          <!-- License key activation -->
           <div class="om-billing-box om-license-col">
-            <h3>2. Activate Signed License Key</h3>
+            <h3>2. Activate a license key</h3>
             <p class="om-upload-note" style="margin-bottom:10px;">
               Paste your Gumroad receipt key or an issued Caliber Foundry license to unlock up to 12 local files per pack.
             </p>
@@ -281,25 +281,16 @@
             </div>
             <div id="omLicenseFeedback" class="om-status-msg om-hidden" role="status"></div>
 
-            <!-- Explicitly labeled local-review unlock control (hidden on public production domains) -->
-            <div id="omLocalReviewBox" class="om-local-review-box om-hidden">
-              <p style="margin:0 0 8px;">
-                <strong>Local review environment:</strong> Test the unlocked $249 multi-file pack (up to 12 files) locally without initiating an external payment.
-              </p>
-              <div class="om-upload-actions">
-                <button type="button" id="btnLocalReviewUnlock" class="btn-tactile btn-tactile-forest">Enable Local Review Unlock ($249)</button>
-                <button type="button" id="btnResetLocalLicense" class="btn-tactile">Reset to Free Tier (2 files)</button>
-              </div>
-            </div>
+            <button type="button" id="btnResetLocalLicense" class="btn-tactile om-hidden">Remove key and clear local pack</button>
           </div>
         </div>
 
-        <!-- Generated Printable Corporate Tax Invoice Sheet -->
+        <!-- Printable pro forma draft -->
         <div id="omInvoicePrintSheet" class="om-invoice-sheet om-hidden" aria-live="polite"></div>
         <div id="omInvoiceActions" class="om-modal-footer om-invoice-actions om-hidden no-print">
           <a id="omInvoiceMailtoLink" href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Corporate%20Invoice" class="btn-tactile">Prepare PO Email Draft</a>
-          <button type="button" id="btnDownloadInvoiceJson" class="btn-tactile">Download Invoice (.json) ↓</button>
-          <button type="button" id="btnPrintInvoice" class="btn-tactile btn-tactile-primary">Print / Save Invoice PDF</button>
+          <button type="button" id="btnDownloadInvoiceJson" class="btn-tactile">Download request (.json) ↓</button>
+          <button type="button" id="btnPrintInvoice" class="btn-tactile btn-tactile-primary">Print / save purchase request</button>
         </div>
       </div>
     </div>
@@ -315,6 +306,7 @@
   </footer>
 
   <script src="../assets/js/gumroad-receipt.js"></script>
+  <script src="./figures.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>

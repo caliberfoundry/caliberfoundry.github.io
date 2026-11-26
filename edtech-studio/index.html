@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://api.caliberfoundry.com https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>AcademyForge · Practice studio | Caliber Foundry</title>
   <meta name="description" content="Practise a lesson in AcademyForge, get feedback on your answer and download a SCORM 1.2 course. The robotics lesson is available in English and Korean." />
   <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/" />
@@ -42,35 +42,29 @@
           <span class="af-library-subject">Education</span><strong>Bilingual assessment</strong><span>Interpret language evidence from home and the classroom.</span><span class="af-card-link">Open lesson <span aria-hidden="true">→</span></span>
         </button>
       </div>
-      <details class="af-library-tools" id="authorDrawer"><summary>Write exercises from your own topic</summary>
+      <details class="af-library-tools" id="authorDrawer"><summary>Write or import your exercises</summary>
       <div class="af-custom-gen-box">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-          <span class="af-kicker" style="color:var(--cf-ink-primary);">New exercise topic</span>
+          <span class="af-kicker" style="color:var(--cf-ink-primary);">Lesson source passage</span>
           <span class="mono" style="font-size:11px;color:var(--cf-ink-muted);" id="customGenCounterBadge"></span>
         </div>
 
         <div class="af-chips-row" role="group" aria-label="Quick Topic Adjustment Chips">
           <button type="button" class="btn-chip" id="chipBilingualStem" data-quick-chip="Bilingual EN/Korean autonomous rover PID &amp; LiDAR obstacle lab with Unity WebGL telemetry">+ EN / 한국어 Robotics Lab</button>
           <button type="button" class="btn-chip" id="chipApiWebhook" data-quick-chip="Production REST API key rotation every 90 days with mTLS and idempotent webhook retries">+ SaaS API &amp; Webhook Security</button>
-          <button type="button" class="btn-chip" id="chipFerpaSoc2" data-quick-chip="FERPA 34 CFR 99.31 student record AES-256-GCM anonymization and 19 CFR statutory audit">+ FERPA &amp; 19 CFR Compliance</button>
+          <button type="button" class="btn-chip" id="chipFerpaSoc2" data-quick-chip="Store the assessment file separately from its passphrase. Send the encrypted record only to an authorized reviewer.">+ Record handling</button>
         </div>
 
         <div class="af-custom-row">
-          <input
-            type="text"
-            id="customTopicInput"
-            class="af-input"
-            value="Autonomous Rover PID Control: Fuse IMU pitch angle with wheel encoder velocity and clamp integral windup on 12-degree inclines."
-            placeholder="Describe a lesson rule, STEM concept, or API workflow to synthesize 3 custom module options..."
-            aria-label="Custom course topic or revision comment"
-          />
+          <textarea id="customTopicInput" class="af-input" rows="4" maxlength="20000" aria-label="Lesson source passage">On a steep incline, clamp the integral term. Fuse wheel velocity with measured pitch to estimate motion. Record the controller settings before testing.</textarea>
           <button type="button" class="btn-primary" id="btnGenerateCustomVariants">
-            <span>&#8635; Generate 3 Custom Module Options</span>
+            <span>&#8635; Build 3 passage-recall exercises</span>
           </button>
         </div>
 
         <details class="af-custom-gen-box"><summary>Author your own graded exercise</summary>
           <form id="authorExercise">
+            <label>Lesson text (optional) <textarea name="lesson" class="af-input" maxlength="20000"></textarea></label>
             <label>Question <input class="af-input" name="question" required maxlength="800"></label>
             <label>Correct answer <input class="af-input" name="correct" required maxlength="400"></label>
             <label>Incorrect alternative 1 <input class="af-input" name="first" required maxlength="400"></label>
@@ -81,6 +75,7 @@
             <p>Need several questions in one module? <a href="https://caliberfoundry.gumroad.com/l/academyforge-module" target="_blank" rel="noopener noreferrer">Get the $99 module kit &nearr;</a>.</p>
           </form>
         </details>
+        <button type="button" class="btn-secondary" id="saveAuthor">Download editable exercise source</button><label>Open an exercise source (.json) <input type="file" id="loadAuthor" accept=".json"></label><p id="authorSourceStatus" role="status"></p>
         <!-- Mandatory ADR-024 Inline Progress Bar, Stage Label & Live Countdown right below button -->
         <div class="af-inline-progress hidden" id="genInlineProgress" role="status" aria-live="polite">
           <div class="af-prog-top">
@@ -104,16 +99,16 @@
         <div class="af-section-card" id="ttlFerpaCard">
           <div class="af-section-head" style="margin-bottom:8px;">
             <div>
-              <span class="af-kicker">DETERMINISTIC RUBRIC &amp; FERPA ZERO-PII ENGINE</span>
-              <h2 class="af-section-title" style="font-size:21px;">TTL-MSM 4-Gate Rubric &amp; AES-256-GCM</h2>
+              <span class="af-kicker">Classroom observation worksheet</span>
+              <h2 class="af-section-title" style="font-size:21px;">Rate four observations</h2>
             </div>
             <span class="af-vvs-metric" id="compositeScoreBadge">TOTAL: 6/8</span>
           </div>
 
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-            <button type="button" class="btn-chip active" id="btnSampleDiff" data-clinical-preset="difference">Case A: Bilingual (No Disorder)</button>
-            <button type="button" class="btn-chip" id="btnSampleDisorder" data-clinical-preset="disorder">Case B: High Support Need</button>
-            <button type="button" class="btn-chip" id="btnSampleTypical" data-clinical-preset="typical">Case C: On-Track</button>
+            <button type="button" class="btn-chip active" id="btnSampleDiff" data-clinical-preset="difference">Example A: Mixed ratings</button>
+            <button type="button" class="btn-chip" id="btnSampleDisorder" data-clinical-preset="disorder">Example B: Low ratings</button>
+            <button type="button" class="btn-chip" id="btnSampleTypical" data-clinical-preset="typical">Example C: High ratings</button>
           </div>
 
           <div class="af-ttl-grid">
@@ -168,8 +163,8 @@
 
           <div class="af-verdict-banner warn" id="verdictCard">
             <div class="mono" style="font-size:10.5px;font-weight:700;display:flex;justify-content:space-between;">
-              <span>TTL-MSM DETERMINISTIC VERDICT</span>
-              <span id="verdictConfidence">CONFIDENCE: 95%</span>
+              <span>Observation summary</span>
+              <span id="verdictConfidence">Instructor ratings</span>
             </div>
             <div style="font-weight:700;font-size:14px;margin-top:3px;" id="verdictTitle"></div>
             <div style="font-size:12px;color:var(--cf-ink-secondary);margin-top:3px;" id="verdictSummary"></div>
@@ -178,9 +173,9 @@
           <!-- FERPA WebCrypto AES-256-GCM Masking (Segmented Switch, Zero Checkboxes) -->
           <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--cf-rule-subtle);display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-              <span class="mono" style="font-size:11px;font-weight:700;color:var(--cf-forest-pass);">FERPA STUDENT PII PROTECTION:</span>
-              <div class="af-seg-group" role="group" aria-label="FERPA Encryption Mode">
-                <button type="button" class="af-seg-btn active" id="btnFerpaEncrypted" data-ferpa-mode="encrypted">AES-256-GCM Locked</button>
+              <span class="mono" style="font-size:11px;font-weight:700;color:var(--cf-forest-pass);">Local record format</span>
+              <div class="af-seg-group" role="group" aria-label="Record format">
+                <button type="button" class="af-seg-btn active" id="btnFerpaEncrypted" data-ferpa-mode="encrypted">Password-encrypted file</button>
                 <button type="button" class="af-seg-btn" id="btnFerpaPlain" data-ferpa-mode="plain">Raw Input Preview</button>
               </div>
             </div>
@@ -190,13 +185,12 @@
               <input type="text" id="piiDistrictId" class="af-input" value="SEL-STEM-2026" aria-label="Organization Cohort Code" />
             </div>
 
-            <div class="af-terminal" style="font-size:10.5px;">
-              <div>TOKEN: <span style="color:#FEF08A;" id="cryptoSubjectToken"></span> &middot; IV: <span style="color:#93C5FD;" id="cryptoIv"></span></div>
-              <div style="color:#86EFAC;margin-top:3px;" id="cryptoCiphertext"></div>
-            </div>
-
+            <label>Record passphrase <input id="recordPassword" class="af-input" type="password" autocomplete="off" placeholder="10 or more characters"></label>
+            <p id="cryptoCiphertext" style="overflow-wrap:anywhere"></p>
+            <label>Reopen an encrypted record <input type="file" id="openRecord" accept=".json"></label>
+            <p role="status" id="recordStatus"></p><pre id="openedRecord" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
             <button type="button" class="btn-secondary" id="btnExportFerpaJson" style="width:100%;">
-              <span>Export FERPA AES-256 Rubric Record (.JSON)</span>
+              <span>Download encrypted rubric record</span>
             </button>
           </div>
         </div>
@@ -325,7 +319,7 @@
         </div>
       </div>
 
-      <!-- Mandatory ADR-024 Inline Progress Bar & ETA Countdown for SCORM ZIP Export -->
+        <!-- Mandatory ADR-024 Inline Progress Bar & ETA Countdown for SCORM ZIP Export -->
       <div class="af-inline-progress hidden" id="exportInlineProgress" style="margin-top:12px;" role="status" aria-live="polite">
         <div class="af-prog-top">
           <span class="af-prog-stage" id="exportProgStage">Stage 1/3: Compiling ADL SCORM 1.2 imsmanifest.xml...</span>
@@ -385,14 +379,14 @@
               <div class="af-price-num" style="margin:6px 0;">$299 <span style="font-size:12px;font-weight:500;color:var(--cf-ink-muted);">USD one-time</span></div>
               <ul class="af-feature-list">
                 <li>&bull; Unlocks Modules 2 &amp; 3 across all 3 industry presets</li>
-                <li>&bull; Unlimited EN &harr; 한국어 &amp; custom SCORM 1.2 .ZIP exports</li>
-                <li>&bull; FERPA AES-256-GCM rubric &amp; white-label LMS wrapper</li>
-                <li>&bull; Instant RSA-512 license key + 30-day refund guarantee</li>
+                <li>&bull; SCORM 1.2 exports for all nine preset exercises, including Korean robotics lessons</li>
+                <li>&bull; Authored exercises, observation worksheet and password-encrypted records</li>
+                <li>&bull; Unlock with your verified purchase key</li>
               </ul>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
               <a href="https://caliberfoundry.gumroad.com/l/academyforge-pro" target="_blank" rel="noopener noreferrer" class="btn-primary">Buy on Gumroad ($299) &nearr;</a>
-              <a href="#invoiceSectionWrap" class="btn-secondary">Generate Net-14 Corporate Invoice Below &darr;</a>
+              <a href="#invoiceSectionWrap" class="btn-secondary">Prepare an invoice request &darr;</a>
             </div>
           </div>
 
@@ -411,14 +405,14 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:6px;">
               <a href="https://contra.com/s/gEEAcXNg-academy-forge-customer-academy-in-a-box-scorm-12-sprint" target="_blank" rel="noopener noreferrer" class="btn-primary">Order on Contra ($2,900 &middot; 0% Fee) &nearr;</a>
-              <a href="#invoiceSectionWrap" class="btn-secondary">Generate Net-14 Corporate Invoice ($2,900) Below &darr;</a>
+              <a href="#invoiceSectionWrap" class="btn-secondary">Request a service quote &darr;</a>
             </div>
           </div>
         </div>
 
         <!-- RSA-512 Individual License Key Activation -->
         <form id="licenseKeyForm" class="af-custom-gen-box af-no-print" style="margin-top:0;">
-          <span class="af-kicker" style="color:var(--cf-ink-primary);">ACTIVATE INDIVIDUAL RSA-512 LICENSE KEY (CFK-ALL / CFK-CF / CFK-ED)</span>
+          <span class="af-kicker" style="color:var(--cf-ink-primary);">Activate a purchase key</span>
           <div class="af-custom-row">
             <input type="password" id="licenseKeyInput" class="af-input mono" placeholder="Paste your receipt or issued license key" aria-label="Receipt or issued license key" />
               <span id="receiptStatus" role="status" aria-live="polite"></span>
@@ -431,10 +425,10 @@
         <div class="af-invoice-sheet" id="invoiceSectionWrap">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
             <div>
-              <span class="af-kicker">CORPORATE PROCUREMENT &amp; 14-DAY PROVISIONAL UNLOCK</span>
-              <h3 style="font-size:16px;font-weight:700;">Generate Corporate Tax Invoice (Net-14 Wire / ACH / Card)</h3>
+              <span class="af-kicker">Corporate procurement</span>
+              <h3 style="font-size:16px;font-weight:700;">Prepare an invoice request</h3>
             </div>
-            <span class="af-vvs-metric" id="invStatusPill">Instant 14-Day Unlock</span>
+            <span class="af-vvs-metric" id="invStatusPill">Draft request</span>
           </div>
 
           <form id="invoiceForm" class="af-no-print" style="display:flex;flex-direction:column;gap:10px;">
@@ -450,27 +444,27 @@
               <input type="text" id="invPoInput" class="af-input mono" placeholder="Optional PO / Reference #" aria-label="PO Number" />
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button type="submit" class="btn-primary" id="btnGenerateInvoice">Generate Invoice &amp; Unlock 14-Day Access</button>
-              <button type="button" class="btn-secondary hidden" id="btnPrintInvoice">Print / Save Invoice PDF</button>
+              <button type="submit" class="btn-primary" id="btnGenerateInvoice">Prepare request</button>
+              <button type="button" class="btn-secondary hidden" id="btnPrintInvoice">Print request</button>
             </div>
           </form>
 
           <div class="hidden" id="invoicePreviewSheet" style="border-top:1px solid var(--cf-rule-mid);padding-top:12px;">
             <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
               <div>
-                <strong style="font-size:15px;">CALIBER FOUNDRY — COMMERCIAL TAX INVOICE</strong>
+                <strong style="font-size:15px;">CALIBER FOUNDRY — INVOICE REQUEST</strong>
                 <div class="mono" style="font-size:11.5px;color:var(--cf-ink-secondary);">Vendor: Caliber Foundry &middot; engineering@caliberfoundry.com &middot; caliberfoundry.com</div>
               </div>
               <div style="text-align:right;">
                 <div class="mono" style="font-size:14px;font-weight:700;color:var(--cf-accent-primary);" id="invNumberCode">INV-ED-2026-0000</div>
-                <div class="mono" style="font-size:11px;color:var(--cf-forest-pass);" id="invProvisionalExpiryText">14-Day Provisional Access Active</div>
+                <div class="mono" style="font-size:11px;color:var(--cf-forest-pass);" id="invProvisionalExpiryText">Awaiting billing review</div>
               </div>
             </div>
             <div style="background:var(--cf-bg-paper);border:1px solid var(--cf-rule-mid);border-radius:5px;padding:10px 12px;font-size:12.5px;display:flex;flex-direction:column;gap:4px;">
               <div><strong>Bill To:</strong> <span id="invBillToText"></span></div>
               <div><strong>Line Item:</strong> <span id="invLineItemText"></span></div>
-              <div><strong>Amount Due (Net-14):</strong> <span class="mono" style="font-weight:700;" id="invAmountText"></span></div>
-              <div><strong>Payment Channels:</strong> Contra B2B (0% Fee), Gumroad Card/Apple Pay, or ACH/Wire via <code>engineering@caliberfoundry.com</code></div>
+              <div><strong>Quoted amount:</strong> <span class="mono" style="font-weight:700;" id="invAmountText"></span></div>
+              <div><a id="sendInvoice" href="mailto:engineering@caliberfoundry.com">Email this request to billing</a>. A billing representative confirms the order before issuing an invoice or license.</div>
             </div>
           </div>
         </div>
@@ -486,13 +480,15 @@
       <div class="cf-account-cluster" id="headerAccountCluster">
         <span class="cf-license-pill" id="headerLicenseBadge"></span>
         <button class="btn-secondary" type="button" id="btnOpenPaywall">Plans and license</button>
-        <button class="btn-secondary" type="button" id="btnOpenInvoiceModal">Get an invoice</button>
+        <button class="btn-secondary" type="button" id="btnOpenInvoiceModal">Request an invoice</button>
         <a href="mailto:engineering@caliberfoundry.com">Contact engineering</a>
       </div>
     </details>
   </footer>
   <script src="./scorm_and_ttl_engine.js"></script>
-  <script src="../assets/js/gumroad-receipt.js"></script>
+  <script src="../assets/js/library-access.js"></script>
+  <script src="./authoring.js"></script>
+  <script src="./rubric-record.js"></script>
   <script src="./app.js"></script>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </body>

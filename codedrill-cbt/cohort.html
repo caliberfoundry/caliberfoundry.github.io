@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-cf-private-inputs>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.caliberfoundry.com; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>CodeDrill · Cohort practice results</title>
+  <link rel="stylesheet" href="../assets/css/file-workbench.css"><script src="/assets/js/cf-telemetry.js" defer></script><script type="module" src="cohort.mjs"></script>
+</head>
+<body>
+  <header><a href="./">← CodeDrill practice</a> <a href="/pricing.html#price-codedrill-cbt">Pricing</a></header>
+  <main>
+    <h1>Cohort practice results</h1>
+    <p>Combine checked answers from multiple practice browsers and see which topics need another lesson.</p>
+    <section><h2>Export your practice</h2>
+      <p id="practiceStatus" role="status">Reading the checked answers in this browser…</p>
+      <button type="button" id="exportAttempt" disabled>Save my attempt file</button>
+    </section>
+    <section><h2>Review a cohort</h2>
+      <label for="attempts">Select one CodeDrill attempt file per practice browser.</label>
+      <input id="attempts" type="file" accept=".json,application/json" multiple>
+      <p>On calculation, CodeDrill sends the random session IDs, question IDs, answer choices and bank version to Caliber Foundry for scoring. The service processes them in memory. Learner names and email addresses stay out of the report.</p>
+      <button type="button" id="calculate" disabled>Calculate results</button><progress id="requestProgress" aria-label="File processing" max="100" value="0" hidden></progress><span id="requestTiming"></span>
+      <p role="status" id="status"></p>
+    </section>
+    <section id="result" hidden><h2>Results</h2><p id="summary"></p>
+      <table><caption>Accuracy by topic</caption><thead><tr><th>Topic</th><th>Correct</th><th>Checked</th></tr></thead><tbody id="topics"></tbody></table>
+      <button type="button" id="download">Save session scores (.csv)</button>
+      <p>Scores reflect the submitted practice answers. A learner can edit their exported file before sharing it.</p>
+    </section>
+  </main>
+</body></html>

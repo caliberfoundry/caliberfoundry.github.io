@@ -9,7 +9,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>DealShield&trade; Studio — Security Questionnaire (DDQ / CAIQ / HECVAT) &amp; VPAT 2.5 Auto-Responder | Caliber Foundry</title>
+  <title>DealShield&trade; Studio — Security Questionnaire (DDQ / CAIQ / HECVAT) and Policy Evidence Review | Caliber Foundry</title>
   <meta name="description" content="Match questionnaire rows to candidate policy excerpts, review gaps with a policy owner, and export the answers as a CSV." />
   <link rel="canonical" href="https://caliberfoundry.com/work/dealshield.html" />
   <style>
@@ -17,7 +17,7 @@
 body{--ink:#302432;--paper:#fbf7fa;--link:#773458;--inverse:white;--line:#d7c4d0;--cf-ink-primary:#302432}header{background:#462039;color:white}header a{color:#f9dce9}main{width:min(1040px,100% - 36px);margin:clamp(28px,5vw,72px) auto}.title{font:750 clamp(38px,5vw,67px)/1.03 "Plus Jakarta Sans",Arial,sans-serif;max-width:17ch}.hero-actions{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}.btn-secondary{display:inline-flex;align-items:center;gap:6px;padding:11px 16px;color:var(--ink);background:#ffffff;border:1px solid var(--line);border-radius:5px;font-weight:650;text-decoration:none}.btn-secondary:hover{background:#f5ecf2;border-color:#a85883}.grid-2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:22px}.panel{background:#fff;border:1px solid var(--line);border-radius:9px;padding:22px}.panel:first-child{border-left:5px solid #a85883}.spec-list{list-style:none;padding-left:0}.spec-list li+li{border-top:1px solid var(--line)}
 .worked-ddq{margin-top:30px;background:#ffffff;border:1px solid var(--line);border-radius:9px;padding:24px}.worked-kicker{display:block;font:700 11.5px/1.3 "IBM Plex Mono",ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:#773458;margin-bottom:6px}.worked-sub{color:#56425a;font-size:15px;max-width:66ch;margin:0 0 18px}
 .ds-table-wrap{overflow-x:auto;max-inline-size:100%;container-type:inline-size;border:1px solid var(--line);border-radius:6px;background:#ffffff}
-table.ds-proof-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;--label-2:"Drafted Response";--label-3:"Policy / Control Citation"}
+table.ds-proof-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;--label-2:"Drafted Response";--label-3:"Source and review decision"}
 table.ds-proof-table caption{text-align:left;padding:11px 14px;background:#f6edf3;border-bottom:1px solid var(--line);font:600 12.5px/1.4 "IBM Plex Mono",ui-monospace,Menlo,monospace;color:var(--ink)}
 table.ds-proof-table thead{position:sticky;inset-block-start:0;z-index:1}
 table.ds-proof-table thead th{background:#faf4f8;color:var(--ink);font:700 11px/1.35 "IBM Plex Mono",ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.04em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
@@ -62,7 +62,7 @@ table.ds-proof-table tbody tr.is-gap th,table.ds-proof-table tbody tr.is-gap td{
     <p class="lede">Open a sample or import questions. See the proposed answer beside the matching policy clause, review gaps, and export the responses.</p>
     <div class="hero-actions">
       <a href="../dealshield/" class="btn btn-primary">Review a sample questionnaire &rarr;</a>
-      <a href="../assets/samples/dealshield-vpat25-acr-sample.pdf" download class="btn-secondary">Download Sample VPAT 2.5 PDF &darr;</a>
+      <a href="../assets/samples/dealshield-vpat25-acr-sample.pdf" download class="btn-secondary">Download illustrative VPAT 2.5 PDF &darr;</a>
       <a href="../assets/samples/dealshield-hecvat-ddq-evidence-sample.csv" download class="btn-secondary">Download Sample DDQ CSV &darr;</a>
     </div>
 
@@ -72,17 +72,17 @@ table.ds-proof-table tbody tr.is-gap th,table.ds-proof-table tbody tr.is-gap td{
         <li><a href="../dealshield/?autoProof=2">Review missing evidence</a></li>
         <li><a href="../dealshield/?autoProof=3">Preview the report</a></li>
       </ol></div>
-      <div class="panel"><h2 class="panel-title">Choose a framework</h2><p>Start with a cloud security or higher-education questionnaire. You can edit answers and review the cited clause before saving an export.</p><p style="margin-top:12px"><a href="../dealshield/?preset=caiq-v4">Cloud security &middot; CAIQ</a> &middot; <a href="../dealshield/?preset=hecvat-3">Higher education &middot; HECVAT</a></p></div>
+      <div class="panel"><h2 class="panel-title">Choose a framework</h2><p>Start with a cloud security or higher-education questionnaire. Match questions against your policy text, inspect each verbatim passage and record your decision. Unmatched questions remain open. The printable report includes eight accessibility criteria for manual assessment.</p><p style="margin-top:12px"><a href="../dealshield/?preset=caiq-v4">Cloud security &middot; CAIQ</a> &middot; <a href="../dealshield/?preset=hecvat-3">Higher education &middot; HECVAT</a></p></div>
     </section>
 
     <section class="worked-ddq" id="worked-questionnaire" aria-labelledby="worked-questionnaire-title">
-      <span class="worked-kicker">Worked Questionnaire Output &middot; CAIQ v4 / HECVAT / VPAT 2.5</span>
-      <h2 class="panel-title" id="worked-questionnaire-title">Evidence-locked answers plus explicit gap abstention</h2>
-      <p class="worked-sub">Inspect three representative buyer procurement rows: two policy-grounded responses locked to internal security runbooks, and one honest evidence gap flagged for engineering review instead of fabricated boilerplate.</p>
+      <span class="worked-kicker">Illustrative questionnaire output &middot; CAIQ v4 / HECVAT / VPAT 2.5</span>
+      <h2 class="panel-title" id="worked-questionnaire-title">From buyer question to policy excerpt</h2>
+      <p class="worked-sub">These three rows come from the cloud-security example in the workbench. A reviewer decides whether each proposed passage answers the buyer’s question.</p>
 
       <div tabindex="0" role="region" aria-labelledby="ds-proof-caption" class="ds-table-wrap">
         <table class="ds-proof-table">
-          <caption id="ds-proof-caption">Sample Security &amp; Accessibility Procurement Matrix (2 Verified Controls &middot; 1 Explicit Evidence Gap)</caption>
+          <caption id="ds-proof-caption">Cloud-security example with two candidate passages and one missing source</caption>
           <thead>
             <tr>
               <th scope="col">Question ID &amp; Buyer Prompt</th>
@@ -92,46 +92,19 @@ table.ds-proof-table tbody tr.is-gap th,table.ds-proof-table tbody tr.is-gap td{
           </thead>
           <tbody>
             <tr>
-              <th scope="row">
-                <span class="q-meta">
-                  <span class="q-id">CEK-03.1 &middot; CAIQ v4</span>
-                  <span class="ds-badge ds-badge-pass">VERIFIED</span>
-                </span>
-                <span class="q-prompt">Are cryptographic keys managed in a dedicated KMS with automated rotation and separation of duties?</span>
-              </th>
-              <td>Tenant data-encryption keys (DEKs) are wrapped via envelope encryption under FIPS 140-3 Level 3 HSM-backed master keys with automated 365-day rotation and dual-custodian IAM separation.</td>
-              <td>
-                <span class="cite-pill">SOC 2 CC6.1 / KMS Policy &sect;4.2</span>
-                <span class="cite-note">Exact key-rotation interval (365d) and FIPS 140-3 boundary verified against KMS policy clause.</span>
-              </td>
+              <th scope="row"><span class="q-id">CAIQ-IAM-01</span><span class="q-prompt">Do you enforce multi-factor authentication (MFA) and SAML 2.0 / OIDC SSO for administrative and tenant access?</span></th>
+              <td>Logical Access &amp; SSO: All production infrastructure and administrative consoles enforce SAML 2.0 / OIDC Single Sign-On with FIDO2/WebAuthn hardware MFA and role-based access control (RBAC).</td>
+              <td><code>[SOC2-CC6.1]</code><span class="cite-note">Review candidate</span></td>
             </tr>
             <tr>
-              <th scope="row">
-                <span class="q-meta">
-                  <span class="q-id">NET-04.2 &middot; HECVAT v3</span>
-                  <span class="ds-badge ds-badge-pass">VERIFIED</span>
-                </span>
-                <span class="q-prompt">Is institutional and student data encrypted in transit across public and internal service-to-service links?</span>
-              </th>
-              <td>External HTTPS endpoints enforce TLS 1.3 (<code>TLS_AES_256_GCM_SHA384</code>) with HSTS (<code>max-age=63072000</code>); internal east-west service mesh traffic enforces mutual TLS (mTLS) with 24-hour workload certificates.</td>
-              <td>
-                <span class="cite-pill">TLS 1.3 Runbook &sect;2.1 &middot; SOC 2 CC6.7</span>
-                <span class="cite-note">Matches production ingress cipher config and 24h mTLS X.509 rotation schedule.</span>
-              </td>
+              <th scope="row"><span class="q-id">CAIQ-CRY-02</span><span class="q-prompt">How is customer data encrypted at rest and in transit, and how frequently are cryptographic keys rotated?</span></th>
+              <td>Encryption in Transit &amp; At Rest: All customer data is encrypted at rest using AES-256-GCM with AWS KMS envelope keys rotated every 90 days, and in transit via TLS 1.3 (ECDHE-RSA-AES256-GCM-SHA384).</td>
+              <td><code>[SOC2-CC6.7]</code><span class="cite-note">Review candidate</span></td>
             </tr>
-            <tr class="is-gap">
-              <th scope="row">
-                <span class="q-meta">
-                  <span class="q-id">AIS-07.4 &middot; Vendor Scope</span>
-                  <span class="ds-badge ds-badge-gap">NEEDS_EVIDENCE</span>
-                </span>
-                <span class="q-prompt">Provide third-party penetration test attestation covering your sub-processor VPC peering link within the last 6 months.</span>
-              </th>
-              <td><strong>Abstained &mdash; Do Not Submit Unverified:</strong> Annual core platform pentest (2026-04) is on file, but dedicated VPC-peered sub-processor attestation is absent from the evidence vault.</td>
-              <td>
-                <span class="cite-pill is-gap">NEEDS_EVIDENCE &middot; Missing Bridge Letter</span>
-                <span class="cite-note">Blocks blind &ldquo;Yes&rdquo; export; routes row to Security Engineering to attach sub-processor scope addendum.</span>
-              </td>
+            <tr>
+              <th scope="row"><span class="q-id">CAIQ-ONP-12</span><span class="q-prompt">Can the platform be deployed inside an air-gapped on-premise Kubernetes cluster without outbound internet?</span></th>
+              <td>No supporting passage found. Request policy evidence.</td>
+              <td>Needs evidence</td>
             </tr>
           </tbody>
         </table>
@@ -140,7 +113,7 @@ table.ds-proof-table tbody tr.is-gap th,table.ds-proof-table tbody tr.is-gap td{
       <div class="ds-sample-actions">
         <a href="../dealshield/?autoProof=2" class="btn btn-primary">Inspect missing evidence in DealShield &rarr;</a>
         <a href="../assets/samples/dealshield-hecvat-ddq-evidence-sample.csv" download class="btn-secondary">Download Sample HECVAT / DDQ CSV &darr;</a>
-        <a href="../assets/samples/dealshield-vpat25-acr-sample.pdf" download class="btn-secondary">Download Sample VPAT 2.5 ACR PDF &darr;</a>
+        <a href="../assets/samples/dealshield-vpat25-acr-sample.pdf" download class="btn-secondary">Download illustrative VPAT 2.5 ACR PDF &darr;</a>
       </div>
     </section>
   </main>

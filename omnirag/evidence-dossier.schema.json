@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caliberfoundry.com/omnirag/evidence-dossier.schema.json",
+  "title": "OmniRAG evidence dossier",
+  "type": "object",
+  "required": ["dossier_id", "pack_origin", "content_fingerprint", "timestamp", "documents", "questions", "cross_document_findings"],
+  "properties": {
+    "dossier_id": {"type":"string"},
+    "pack_origin": {"enum":["built_in_sample_pack","local_uploaded_files"]},
+    "timestamp": {"type":"string","format":"date-time"},
+    "content_fingerprint": {"type":"string"},
+    "documents": {
+      "type":"array",
+      "items": {
+        "type":"object",
+        "required":["name","format","passages"],
+        "properties": {
+          "name":{"type":"string"},
+          "format":{"type":"string"},
+          "passages":{"type":"array","items":{"type":"object","required":["location","title","text"]}}
+        }
+      }
+    },
+    "questions": {"type":"array","items":{"type":"object","required":["question","result","evidence"]}},
+    "automatic_comparison_skipped":{"type":"boolean"},
+    "cross_document_findings":{"type":"array","items":{"type":"object","required":["unit","status","source_a","source_b"]}}
+  }
+}

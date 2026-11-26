@@ -1,10 +1,9 @@
 {
-  "name": "stealthflow-12-source-playwright-make-demo",
+  "name": "stealthflow-catalog",
   "version": "2.4.0",
   "private": true,
-  "description": "StealthFlow: 12-Source Playwright Lead Extractor, eCommerce Entity Matcher & Make.com Webhook Dispatcher",
+  "description": "Normalize and deduplicate supplied catalog CSV files locally.",
   "scripts": {
-    "start": "npx serve . -l 3001",
-    "deploy": "npx vercel --prod --yes"
+    "start": "npx serve .. -l 3001"
   }
 }

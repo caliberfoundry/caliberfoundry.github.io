@@ -6,14 +6,9 @@
 
 (function () {
   'use strict';
-  const receipt = window.createGumroadReceiptVerifier('sj1w4HpSpi57c-P5DCrABw==', 'TEAM');
-  const candidateReceipt = window.createGumroadReceiptVerifier('zdGZ_SqMZojfsvK-mFQG7A==', 'PRO', 30);
-
-  async function checkPracticeReceipt(key, feedback) {
-    await receipt.check(key, feedback);
-    if (receipt.matches(key) && !receipt.decision(key).valid) await candidateReceipt.check(key, feedback);
-  }
-
+  const bankUrl = "https://api.caliberfoundry.com/portfolio/v1/codedrill/bank";
+  let licenseSession = null, licenseRequest = 0, expiryTimer;
+  const normalizeKey = key => String(key || "").trim().toUpperCase();
 
   function classifyQuestionSuite(q) {
     if (q.suite && ['CBLE_111_113', 'CBLE_141_142', 'CBLE_152_177_190', 'CBLE_HTSUS', 'EA_SEE1', 'EA_SEE2', 'EA_SEE3'].includes(q.suite)) {
@@ -44,8 +39,7 @@
     return 'CBLE_152_177_190';
   }
 
-  function buildNormalizedDataset() {
-    const ext = window.CODEDRILL_DATA;
+  function buildNormalizedDataset(ext) {
     if (!Array.isArray(ext?.questions) || !ext.questions.length || !Array.isArray(ext.corpora) || !ext.corpora.length) return null;
     const meta = ext.meta || {};
     const rawCorpora = JSON.parse(JSON.stringify(ext.corpora));
@@ -147,7 +141,8 @@
     };
   }
 
-  const DATASET = buildNormalizedDataset();
+  const sampleBank = buildNormalizedDataset(window.CODEDRILL_DATA);
+  let DATASET = sampleBank;
   if (!DATASET) {
     const message = document.createElement('p');
     message.textContent = 'The practice bank could not be loaded. Check your connection and reload the questions.';
@@ -248,104 +243,61 @@
     return STATE.questionWork[qId];
   }
 
-  const CF_RSA_PUBLIC_MODULUS_B36 =
-    '131IRZHBZ87C6IXGX2XD8YG1YLYMJJZPTAXPXIAZ82NVXKGRA4E2P1ECVL1P7M5FNMHF899RJ4TODBM6QO1A0V2NHIO8DZ9DEBF7';
-  const ALLOWED_CDR_KEY_DIGESTS = [
-    '945416031fafcd7634eb6655a83a56733a12c290a9a28eb4bf2251a83df2915e',
-    '4e9b9eaf9d9064f0d4e2459202498542d9b5cc472cb3d2943afa84c8a38c21ad',
-    '02af77c4a345fea255ae4bd188e9f8377ab3776856d03dfd202327923f047fd6'
-  ];
-
-  function cfBase36ToBigInt(str) {
-    const clean = String(str || '').trim().toUpperCase();
-    if (!/^[0-9A-Z]+$/.test(clean)) return 0n;
-    let val = 0n;
-    for (let i = 0; i < clean.length; i++) {
-      const code = clean.charCodeAt(i);
-      const digit = code >= 65 ? BigInt(code - 55) : BigInt(code - 48);
-      val = val * 36n + digit;
-    }
-    return val;
+  function licenseDecision(key) {
+    if (!licenseSession || licenseSession.key!==normalizeKey(key)) return {valid:false};
+    if (licenseSession.expiresMs!==null && Date.now()>=licenseSession.expiresMs) return {valid:false,expired:true};
+    return {valid:true,tier:licenseSession.tier,expiresIso:licenseSession.expiresAt};
   }
-
-  function cfModPow(base, exp, mod) {
-    let res = 1n;
-    base = base % mod;
-    while (exp > 0n) {
-      if (exp & 1n) res = (res * base) % mod;
-      exp >>= 1n;
-      base = (base * base) % mod;
-    }
-    return res;
+  function isProOrTeamActive(){return DATASET!==sampleBank && licenseDecision(STATE.licenseKey).valid;}
+  function catalogCount(suite=STATE.selectedTrack){return sampleBank.meta.catalogCounts?.[suite] || getFilteredQuestions().length;}
+  function releasePaidBank(message){
+    clearTimeout(expiryTimer);licenseSession=null;DATASET=sampleBank;
+    STATE.licenseTier='FREE';if(isSuiteLockedForCurrentTier(STATE.selectedTrack))STATE.selectedTrack='CBLE';
+    saveUserState();refreshAllViews();
+    // A completed report may contain a previous paid question.
+    document.getElementById("scoreReportModalBackdrop").classList.add("hidden");
+    document.getElementById("scoreReportModalBody").replaceChildren();
+    document.getElementById("receiptStatus").textContent=message;
+    if(message)showToast(message);
   }
+  function checkExpiry(){
+    if(!licenseSession?.expiresMs)return;
+    const remaining=licenseSession.expiresMs-Date.now();
+    if(remaining<=0){releasePaidBank("This practice pass has expired. Activate a current key to reopen the full bank.");return;}
+    clearTimeout(expiryTimer);expiryTimer=setTimeout(checkExpiry,Math.min(remaining,2147483647));
+  }
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkExpiry();});
 
-  function cfComputeSaltedDigestHex(inputStr) {
-    const s = 'CF_KDF_2026_SALT_9F84C2E1|' + String(inputStr || '').trim().toUpperCase();
-    const seeds = [
-      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
-      0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-    ];
-    for (let round = 0; round < 8; round++) {
-      for (let i = 0; i < s.length; i++) {
-        const c = s.charCodeAt(i);
-        const lane = (i + round) & 7;
-        seeds[lane] = (Math.imul(seeds[lane] ^ c, 2654435761) + ((seeds[(lane + 1) & 7] >>> 3) ^ (i * 1597334677))) | 0;
-        seeds[(lane + 3) & 7] = (seeds[(lane + 3) & 7] ^ ((seeds[lane] << 7) | (seeds[lane] >>> 25))) | 0;
+  async function loadLicensedBank(key){
+    const serial=++licenseRequest;
+    if(!key)throw Error("Enter the purchase key from your receipt.");
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+    try {
+      let response;
+      try {response=await fetch(bankUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({licenseKey:key}),
+        cache:"no-store",credentials:"omit",redirect:"error",referrerPolicy:"no-referrer",signal:controller.signal});}
+      catch {throw Error("The practice bank service is unavailable. Your practice records are saved in this browser. Retry activation.");}
+      if(!response.ok){
+        const result=await response.json().catch(()=>({}));
+        if(serial!==licenseRequest)return null;
+        const denied=[400,401,403,404,410,422].includes(response.status);
+        const message=denied ? (/expir/i.test(String(result.error||result.message))?"This practice pass has expired. Activate a current key.":"This key could not open the full CodeDrill bank. Check the receipt and retry.") :
+          "The practice bank service is unavailable. Retry activation.";
+        if(denied && STATE.licenseKey===key && DATASET!==sampleBank)releasePaidBank(message);
+        throw Error(message);
       }
-    }
-    return seeds.map(n => (n >>> 0).toString(16).padStart(8, '0')).join('');
-  }
-
-  function verifyCodeDrillLicenseKey(rawKey) {
-    if (receipt.matches(rawKey)) {
-      const team = receipt.decision(rawKey);
-      return team.valid ? team : candidateReceipt.decision(rawKey);
-    }
-    const clean = String(rawKey || '').trim().toUpperCase();
-    if (!clean) return { valid: false };
-    const parts = clean.split('-');
-    if (parts[0] === 'CFK' && (parts.length === 6 || parts.length === 5)) {
-      try {
-        const prod = parts[1];
-        const tier = parts[2];
-        const cust = parts[3];
-        const hasExp = parts.length === 6;
-        const expYmd = hasExp ? parts[4] : '20991231';
-        const sigB36 = hasExp ? parts[5] : parts[4];
-        if (prod === 'CDR' || prod === 'ALL') {
-          const N = cfBase36ToBigInt(CF_RSA_PUBLIC_MODULUS_B36);
-          const sigBig = cfBase36ToBigInt(sigB36);
-          if (sigBig > 0n && sigBig < N) {
-            const recovered = cfModPow(sigBig, 65537n, N);
-            const header = hasExp ? 'CFK-' + prod + '-' + tier + '-' + cust + '-' + expYmd : 'CFK-' + prod + '-' + tier + '-' + cust;
-            const expectedHex = '01ff' + cfComputeSaltedDigestHex('RSA_MSG|' + header);
-            if (recovered === BigInt('0x' + expectedHex) && /^\d{8}$/.test(expYmd)) {
-              const yyyy = Number(expYmd.slice(0, 4));
-              const mm = Number(expYmd.slice(4, 6));
-              const dd = Number(expYmd.slice(6, 8));
-              const expEndMs = Date.UTC(yyyy, mm - 1, dd, 23, 59, 59, 999);
-              const expiresIso = expYmd.slice(0, 4) + '-' + expYmd.slice(4, 6) + '-' + expYmd.slice(6, 8);
-              if (Date.now() > expEndMs) {
-                return { valid: false, expired: true, expiresIso, customerTag: cust };
-              }
-              return { valid: true, tier: tier === 'TEAM' ? 'TEAM' : 'PRO', customerTag: cust, expiresIso };
-            }
-          }
-        }
-      } catch (_) {}
-    }
-    const digest = cfComputeSaltedDigestHex(clean);
-    if (ALLOWED_CDR_KEY_DIGESTS.includes(digest)) {
-      return { valid: true, tier: clean.includes('TEAM') ? 'TEAM' : 'PRO', customerTag: 'ENTERPRISE', expiresIso: '2027-05-22' };
-    }
-    return { valid: false };
-  }
-
-  function isProOrTeamActive() {
-    const hasTier = STATE.licenseTier === 'PRO' || STATE.licenseTier === 'TEAM';
-    if (!hasTier) return false;
-    if (!receipt.matches(STATE.licenseKey) && isLocalQaEnvironment()) return true;
-    return verifyCodeDrillLicenseKey(STATE.licenseKey).valid;
+      const result=await response.json();
+      if(serial!==licenseRequest)return null;
+      const paid=buildNormalizedDataset(result.bank), expiresAt=result.expiresAt || null;
+      const expiresMs=expiresAt===null?null:Date.parse(expiresAt);
+      if(!paid || paid.questions.length!==catalogCount("ALL") || new Set(paid.questions.map(q=>q.id)).size!==paid.questions.length ||
+        !paid.questions.every(q=>q.stem && q.options.some(o=>o.letter===q.correctOption) && paid.sectionsById[q.targetSectionId]))
+        throw Error("The full practice bank could not be loaded. Retry activation.");
+      if(expiresMs!==null && (!Number.isFinite(expiresMs)||expiresMs<=Date.now()))throw Error("This practice pass has expired.");
+      const tier=/^(TEAM|CORPORATE)$/i.test(String(result.tier))?'TEAM':'PRO';
+      DATASET=paid;licenseSession={key,tier,expiresMs,expiresAt};STATE.licenseTier=tier;STATE.licenseKey=key;saveUserState();checkExpiry();
+      return licenseDecision(key);
+    } finally {clearTimeout(timeout);}
   }
 
   const FREE_DIAGNOSTIC_SUITES = ['CBLE', 'CBLE_111_113', 'EA', 'EA_SEE1', 'EA_SEE2', 'EA_SEE3'];
@@ -675,44 +627,19 @@
     backdrop.classList.remove('hidden');
   }
 
-  function generateSignedLicenseKey(tierStr) {
-    const prefix = (tierStr === 'TEAM') ? 'CF-TEAM-2026' : 'CF-PRO-2026';
-    const block1 = '8841';
-    const block2 = (tierStr === 'TEAM') ? '773A' : '992B';
-    return `${prefix}-${block1}-${block2}`;
-  }
-
-  function isLocalQaEnvironment() {
-    if (typeof window === 'undefined' || !window.location) return true;
-    const h = window.location.hostname;
-    return h === '127.0.0.1' || h === 'localhost' || !h;
-  }
-
   /**
    * Validates and activates a Caliber Foundry license key (CDR-PRO-2026-CALIBER, CF-PRO-2026-..., or CF-TEAM-2026-...)
    */
   async function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
     const receiptStatus = document.getElementById('receiptStatus');
-    try {
-      await checkPracticeReceipt(clean, receiptStatus);
-    } catch (error) {
-      receiptStatus.textContent = error.message;
-      return;
-    }
-    const ver = verifyCodeDrillLicenseKey(clean);
-
-    if (!ver.valid) {
-      receiptStatus.textContent = ver.expired ? 'This 30-day pass expired on ' + ver.expiresIso + '.' : 'This key could not be verified for CodeDrill. Check the key in your receipt.';
-      showToast(receiptStatus.textContent);
-      return false;
-    }
-
-    const activatedTier = ver.tier === 'TEAM' ? 'TEAM' : 'PRO';
-    STATE.licenseTier = activatedTier;
-    STATE.licenseKey = clean;
-    saveUserState();
-
+    receiptStatus.textContent="Verifying your key and opening the full practice bank…";
+    let ver;
+    try {ver=await loadLicensedBank(clean);}
+    catch(error){receiptStatus.textContent=error.message;showToast(error.message);return false;}
+    if(!ver)return false;
+    receiptStatus.textContent="Purchase verified.";
+    const activatedTier=ver.tier;
     const successBox = document.getElementById('checkoutSuccessBox');
     const keyDisplay = document.getElementById('checkoutSuccessKeyDisplay');
     const msgEl = document.getElementById('checkoutSuccessMessage');
@@ -720,11 +647,11 @@
 
     if (paywallBanner) paywallBanner.classList.add('hidden');
     if (keyDisplay) keyDisplay.textContent = `License verified`;
-    const totalQCount = DATASET.questions.length || 30;
+    const totalQCount = catalogCount("ALL");
     if (msgEl) {
       const emailLabel = (STATE.accountUser && STATE.accountUser.email) ? ` for ${STATE.accountUser.email}` : '';
-      const license = candidateReceipt.decision(clean);
-      msgEl.textContent = license.valid
+      const license = licenseDecision(clean);
+      msgEl.textContent = license.valid && license.expiresIso
         ? `Candidate pass active through ${new Date(license.expiresIso).toLocaleString()}. All ${totalQCount} questions are available.`
         : `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions are now unlocked.`;
     }
@@ -735,32 +662,38 @@
     return true;
   }
 
-  function renderCorporateInvoicePreview() {
+  let invoiceDraft=null;
+  function renderCorporateInvoicePreview(issue=false) {
     const box = document.getElementById('corporateInvoicePreviewBox');
     if (!box) return;
 
     const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.TEAM_LICENSE;
     const companyName = (document.getElementById('invCompanyInput') && document.getElementById('invCompanyInput').value.trim())
       || (STATE.accountUser && STATE.accountUser.fullName)
-      || 'Authorized Customs Brokerage Candidate';
+      || '';
     const poNum = (document.getElementById('invPoNumberInput') && document.getElementById('invPoNumberInput').value.trim())
-      || 'PO-2026-0419';
+      || '';
     const userEmail = (STATE.accountUser && STATE.accountUser.email)
       || (document.getElementById('checkoutEmailInput') && document.getElementById('checkoutEmailInput').value.trim())
-      || 'compliance@clientbrokerage.com';
+      || '';
 
-    const invNumber = `INV-CF-2026-${String(plan.amountUsd)}${plan.tier === 'TEAM' ? '8' : '4'}`;
+    const signature=JSON.stringify([plan.code,companyName,poNum,userEmail]);
+    if(issue && !companyName){showToast("Enter the organization name.");document.getElementById("invCompanyInput").focus();return;}
+    if(issue && invoiceDraft?.signature!==signature)invoiceDraft={signature,id:"REQ-CD-"+crypto.randomUUID()};
+    const draftReady=invoiceDraft?.signature===signature;
+    const invNumber=draftReady?invoiceDraft.id:"Draft preview";
+    for(const id of ["btnPrintInvoice","btnMailtoInvoice"])document.getElementById(id).hidden=!draftReady;
     const issueDate = new Date().toISOString().slice(0, 10);
 
     box.innerHTML = `
       <div style="display:flex;justify-content:space-between;border-bottom:1px solid #141413;padding-bottom:8px;margin-bottom:8px;">
         <div>
-          <strong>CALIBER FOUNDRY — COMMERCIAL INVOICE</strong><br/>
+          <strong>CALIBER FOUNDRY · INVOICE REQUEST</strong><br/>
           <span>Vendor: Caliber Foundry (engineering@caliberfoundry.com)</span>
         </div>
         <div style="text-align:right;">
           <strong>${escapeHtml(invNumber)}</strong><br/>
-          <span>Date: ${escapeHtml(issueDate)} · Terms: Net 15</span>
+          <span>Date: ${escapeHtml(issueDate)} · Awaiting billing confirmation</span>
         </div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
@@ -777,8 +710,8 @@
         <strong>$${plan.amountUsd}.00 USD</strong>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:11px;color:#4A4842;">
-        <span>Payment Instructions: ACH / Wire Transfer or Purchase Order Confirmation</span>
-        <strong>Total Due: $${plan.amountUsd}.00 USD</strong>
+        <span>Send this request to billing for an invoice and license terms.</span>
+        <strong>Quoted amount: $${plan.amountUsd}.00 USD</strong>
       </div>
     `;
 
@@ -786,7 +719,7 @@
     if (mailtoLink) {
       const subject = encodeURIComponent(`Purchase Order & License Activation Request — ${invNumber} (${companyName})`);
       const body = encodeURIComponent(
-        `Caliber Foundry Billing Team,\n\nPlease issue and activate our CodeDrill CBT license under invoice ${invNumber}.\n\n` +
+        `Caliber Foundry Billing Team,\n\nPlease review our CodeDrill purchase request ${invNumber}.\n\n` +
         `Organization / Candidate: ${companyName}\n` +
         `Account Email: ${userEmail}\n` +
         `Selected Plan: ${plan.name} ($${plan.amountUsd}.00 USD)\n` +
@@ -833,11 +766,11 @@
     const btnUnlockPro = document.getElementById('btnHeaderUnlockPro');
     const btnAccountBilling = document.getElementById('btnHeaderAccountBilling');
 
-    const totalQCount = DATASET.questions.length || 30;
+    const totalQCount = catalogCount("ALL");
     if (isProOrTeamActive()) {
       if (statusBadge) {
-        const pass = candidateReceipt.decision(STATE.licenseKey);
-        statusBadge.textContent = pass.valid ? 'Candidate pass until ' + new Date(pass.expiresIso).toLocaleDateString() : STATE.licenseTier === 'TEAM'
+        const pass = licenseDecision(STATE.licenseKey);
+        statusBadge.textContent = pass.valid && pass.expiresIso ? 'Pass until ' + new Date(pass.expiresIso).toLocaleDateString() : STATE.licenseTier === 'TEAM'
           ? `Team License Active (${totalQCount}/${totalQCount} Qs)`
           : `Pro License Active (${totalQCount}/${totalQCount} Qs)`;
         statusBadge.classList.add('pro-active');
@@ -855,7 +788,7 @@
       if (btnAccountBilling) btnAccountBilling.classList.remove('hidden');
     } else {
       if (statusBadge) {
-        statusBadge.textContent = `Free Trial (${STATE.freeQuestionLimit || 3}/${totalQCount} Qs)`;
+        statusBadge.textContent = `Free samples · ${sampleBank.questions.length} of ${totalQCount} questions`;
         statusBadge.classList.remove('pro-active');
       }
       if (emailBadge) {
@@ -973,7 +906,7 @@
     }
 
     const posEl = document.getElementById('pvueQuestionPosition');
-    if (posEl) posEl.textContent = `Question ${posNum} of ${pool.length}`;
+    if (posEl) posEl.textContent = `Question ${posNum} of ${catalogCount()}`;
 
     const verifyPill = document.getElementById('pvueCitationVerifyPill');
     if (verifyPill) {
@@ -1026,6 +959,7 @@
 
     // 6. Options A–E with Radio Selection & Right-Click / Button Strikethrough
     document.getElementById('btnVerifyAnswerMain').disabled = !work.selectedOption;
+    document.getElementById('retryGradedQuestion').hidden=!work.checked;
     const optionsContainer = document.getElementById('qOptionsList');
     optionsContainer.innerHTML = '';
 
@@ -1052,6 +986,7 @@
             type="radio"
             name="cbtQuestionOption"
             class="q-option-radio"
+            ${work.checked ? 'disabled' : ''}
             value="${escapeHtml(opt.letter)}"
             ${isSelected ? 'checked' : ''}
             aria-label="Option ${escapeHtml(opt.letter)}. ${escapeHtml(opt.text)}"
@@ -1105,8 +1040,8 @@
     const btnNext = document.getElementById('btnNextQuestion');
     if (btnPrev) btnPrev.disabled = (posNum <= 1);
     if (btnNext) {
-      btnNext.disabled = (posNum >= pool.length);
-      if (!isProOrTeamActive() && posNum >= (STATE.freeQuestionLimit || 3) && posNum < pool.length) {
+      btnNext.disabled = (posNum >= catalogCount());
+      if (!isProOrTeamActive() && posNum >= (STATE.freeQuestionLimit || 3) && posNum < catalogCount()) {
         btnNext.textContent = 'Next Question (PRO) →';
       } else {
         btnNext.textContent = 'Next Question →';
@@ -1155,6 +1090,7 @@
 
   function selectQuestionOption(questionId, letter) {
     const work = getQuestionWork(questionId);
+    if(work.checked){showToast('Start a new attempt to change your graded answer.');return;}
     work.selectedOption = letter;
     work.struckOptions = (work.struckOptions || []).filter(l => l !== letter);
     saveUserState();
@@ -1197,7 +1133,7 @@
       const rawSec = STATE.activeMode === 'drill'
         ? drillLookupElapsedSeconds
         : ((Date.now() - questionLookupStartMs) / 1000);
-      work.lookupSeconds = Math.max(0.8, Number(rawSec.toFixed(1)));
+      work.lookupSeconds = Math.max(0, Number(rawSec.toFixed(1)));
     }
 
     if (!wasAlreadyChecked) {
@@ -2227,7 +2163,7 @@
       item.addEventListener('click', () => {
         if (isLocked) {
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
+            paywallReason: 'Activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }
@@ -2314,7 +2250,7 @@
         if (isLocked) {
           backdrop.classList.add('hidden');
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
+            paywallReason: 'Activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }
@@ -2370,210 +2306,26 @@
   /* ==========================================================================
      16B. PRINTABLE B2B TEAM READINESS & CITATION LATENCY DOSSIER ENGINE
      ========================================================================== */
-  let b2bReportViewMode = 'cohort'; // 'session' | 'cohort'
+  const b2bReportViewMode = 'session';
 
-  function generateB2BTeamReadinessData(modeOverride) {
-    const stats = getSessionStats();
-    const resolvedMode = modeOverride
-      ? modeOverride
-      : (stats.gradedCount > 0 ? b2bReportViewMode : b2bReportViewMode);
-
-    const domainDefinitions = [
-      {
-        id: 'DOM_111_113',
-        label: '19 CFR Parts 111 & 113 — Broker Compliance & Bonds',
-        filterFn: (q) => q.suite === 'CBLE_111_113',
-        cohortAcc: 86,
-        cohortLookup: 29.4,
-        trapNote: '19 CFR § 111.32 mandatory fraud-separation reporting & § 113.62(b) 30-day redelivery liquidated damages'
-      },
-      {
-        id: 'DOM_141_142',
-        label: '19 CFR Parts 141 & 142 — Entry & Release Deadlines',
-        filterFn: (q) => q.suite === 'CBLE_141_142',
-        cohortAcc: 84,
-        cohortLookup: 26.8,
-        trapNote: '19 CFR § 142.12(b) 10 working days (Form 7501) vs. 15 calendar days (§ 142.12(a)) & § 141.19 nominal consignee liability'
-      },
-      {
-        id: 'DOM_152',
-        label: '19 CFR Part 152 — Customs Valuation & Assists',
-        filterFn: (q) => q.suite === 'CBLE_152_177_190' && /152|valuation|assist/i.test(`${q.category} ${q.targetCitation} ${q.targetSectionId}`),
-        cohortAcc: 78,
-        cohortLookup: 35.6,
-        trapNote: '19 CFR § 152.102(a)(1)(iv) U.S.-domiciled engineering exclusion vs. foreign tooling assists & § 152.103(i) post-importation assembly'
-      },
-      {
-        id: 'DOM_177_190',
-        label: '19 CFR Parts 177 & 190 — Rulings & TFTEA Drawback',
-        filterFn: (q) => q.suite === 'CBLE_152_177_190' && !/152|valuation|assist/i.test(`${q.category} ${q.targetCitation} ${q.targetSectionId}`),
-        cohortAcc: 81,
-        cohortLookup: 34.2,
-        trapNote: '19 CFR § 190.32 8-digit HTSUS substitution (10-digit when starting with "Other") & 5-year importation window'
-      },
-      {
-        id: 'DOM_HTSUS',
-        label: 'HTSUS & GRI 1–6 — Tariff Classification',
-        filterFn: (q) => q.suite === 'CBLE_HTSUS',
-        cohortAcc: 83,
-        cohortLookup: 33.1,
-        trapNote: 'GRI 3(b) retail set essential character vs. GRI 3(c) last in numerical order & GRI 5(a)/(b) fitted cases'
-      },
-      {
-        id: 'DOM_EA_SEE1',
-        label: 'IRS SEE Part 1 — Individuals (26 CFR / IRC)',
-        filterFn: (q) => q.suite === 'EA_SEE1',
-        cohortAcc: 85,
-        cohortLookup: 30.8,
-        trapNote: 'IRC § 121(d)(6) home-office depreciation recapture, § 1091 wash sale basis adjustment & § 199A SSTB/W-2 limits'
-      },
-      {
-        id: 'DOM_EA_SEE2',
-        label: 'IRS SEE Part 2 — Businesses (26 CFR / IRC)',
-        filterFn: (q) => q.suite === 'EA_SEE2',
-        cohortAcc: 82,
-        cohortLookup: 33.4,
-        trapNote: 'IRC § 1367 S-Corp stock basis ordering (distributions before losses), § 752 recourse vs. nonrecourse debt & § 316 nimble dividends'
-      },
-      {
-        id: 'DOM_EA_SEE3',
-        label: 'IRS SEE Part 3 — Representation, Practices & Procedures (Circular 230 & 26 CFR)',
-        filterFn: (q) => q.suite === 'EA_SEE3' || q.suite === 'EA',
-        cohortAcc: 88,
-        cohortLookup: 28.5,
-        trapNote: '31 CFR § 10.6 72-hr/16-hr annual CE floor, Form 2848 vs. 8821 (§ 601.504), 30-day CDP hearing (§ 6330) & § 6695(g) Form 8867 stacking'
-      }
-    ];
-
-    const domains = domainDefinitions.map(def => {
-      const qs = DATASET.questions.filter(def.filterFn);
-      const qCount = qs.length;
-      let graded = 0;
-      let correct = 0;
-      const lookups = [];
-
-      qs.forEach(q => {
-        const w = STATE.questionWork[q.id];
-        if (!w) return;
-        if (typeof w.lookupSeconds === 'number' && w.lookupSeconds > 0) {
-          lookups.push(w.lookupSeconds);
-        }
-        if (w.checked) {
-          graded++;
-          if (w.selectedOption === q.correctOption) correct++;
-        }
-      });
-
-      const useSession = (resolvedMode === 'session');
-      const accuracyPct = useSession
-        ? (graded > 0 ? Math.round((correct / graded) * 100) : null)
-        : def.cohortAcc;
-      const meanLookupSec = useSession
-        ? (lookups.length > 0 ? Number((lookups.reduce((a, b) => a + b, 0) / lookups.length).toFixed(1)) : null)
-        : def.cohortLookup;
-
-      return {
-        id: def.id,
-        domain: def.label,
-        questionsCovered: qCount,
-        gradedCount: useSession ? graded : qCount,
-        accuracyPct,
-        meanLookupSec,
-        trapAndPriorityDrill: def.trapNote
-      };
+  function generateB2BTeamReadinessData() {
+    const graded=DATASET.questions.filter(q=>STATE.questionWork[q.id]?.checked);
+    const stats=getSessionStats(graded), total=DATASET.questions.length;
+    const domains=[...new Set(DATASET.questions.map(q=>q.track+" / "+q.category))].map(domain=>{
+      const bank=DATASET.questions.filter(q=>q.track+" / "+q.category===domain);
+      const checked=bank.filter(q=>STATE.questionWork[q.id]?.checked);
+      const summary=getSessionStats(checked);
+      return {domain,questionsCovered:checked.length,gradedCount:checked.length,accuracyPct:summary.accuracyPercent,meanLookupSec:summary.avgLookupSeconds,
+        trapAndPriorityDrill:checked.filter(q=>STATE.questionWork[q.id].selectedOption!==q.correctOption).map(q=>q.targetCitation).join(", ")||"—"};
     });
-
-    const isSessionMode = (resolvedMode === 'session');
-    const overallReadinessPct = isSessionMode
-      ? (stats.accuracyPercent !== null ? stats.accuracyPercent : 0)
-      : 83;
-    const meanLookupSeconds = isSessionMode
-      ? (stats.avgLookupSeconds !== null ? stats.avgLookupSeconds : null)
-      : 31.3;
-    const totalQuestions = DATASET.questions.length || 30;
-    const verifiedProofRatePct = isSessionMode
-      ? (stats.gradedCount > 0 ? Math.round((stats.verifiedProofCount / Math.max(1, stats.gradedCount)) * 100) : 0)
-      : 92;
-
-    const isExamReady = overallReadinessPct >= 75 && (meanLookupSeconds === null || meanLookupSeconds <= 45.0);
-    const verdict = isExamReady
-      ? 'EXAM READY — ABOVE 75% CBP THRESHOLD'
-      : 'DIAGNOSTIC BASELINE — REQUIRES CITATION DRILL';
-
-    const cohortSeats = [
-      {
-        seatLabel: isSessionMode ? 'Seat 01 — Active Candidate Session' : 'Seat 01 — Lead Customs Entry Writer (LAX)',
-        trackFocus: 'Full CBLE (19 CFR Parts 111–190 & HTSUS)',
-        masteryPct: isSessionMode ? (stats.accuracyPercent !== null ? `${stats.accuracyPercent}% (${stats.correctCount}/${stats.gradedCount})` : '--% (0 Graded)') : '88% (21/24)',
-        avgLookup: isSessionMode ? (stats.avgLookupSeconds !== null ? `${stats.avgLookupSeconds.toFixed(1)}s` : '--s') : '27.8s',
-        verifiedProofs: isSessionMode ? `${stats.verifiedProofCount} / ${totalQuestions}` : '22 / 24',
-        ready: isSessionMode ? (stats.accuracyPercent !== null && stats.accuracyPercent >= 75) : true
-      },
-      {
-        seatLabel: 'Seat 02 — Senior Import Compliance Specialist (ORD)',
-        trackFocus: '19 CFR Part 152 Valuation & Part 190 Drawback',
-        masteryPct: '84% (25/30)',
-        avgLookup: '30.4s',
-        verifiedProofs: '27 / 30',
-        ready: true
-      },
-      {
-        seatLabel: 'Seat 03 — Tariff Classification Analyst (JFK)',
-        trackFocus: 'HTSUS & GRI 1–6 Classification Suite',
-        masteryPct: '83% (20/24)',
-        avgLookup: '32.1s',
-        verifiedProofs: '21 / 24',
-        ready: true
-      },
-      {
-        seatLabel: 'Seat 04 — Brokerage Bond & Entry Coordinator (HOU)',
-        trackFocus: '19 CFR Parts 111, 113, 141 & 142',
-        masteryPct: '79% (19/24)',
-        avgLookup: '34.6s',
-        verifiedProofs: '20 / 24',
-        ready: true
-      },
-      {
-        seatLabel: 'Seat 05 — Trade Tax & Transfer Pricing Specialist (NYC)',
-        trackFocus: '31 CFR Part 10 (Circular 230) & 19 CFR Part 152',
-        masteryPct: '90% (27/30)',
-        avgLookup: '28.9s',
-        verifiedProofs: '28 / 30',
-        ready: true
-      },
-      {
-        seatLabel: 'Seat 06 — Associate Customs Entry Writer (SAV)',
-        trackFocus: '19 CFR Part 152 Assists & GRI 3(b) Sets',
-        masteryPct: '71% (17/24)',
-        avgLookup: '42.5s',
-        verifiedProofs: '18 / 24',
-        ready: false
-      }
-    ];
-
-    return {
-      reportId: 'B2B-CD-2026-8410',
-      viewMode: resolvedMode,
-      viewModeTitle: isSessionMode
-        ? 'Current Session Telemetry'
-        : 'Sample 12-Seat Brokerage Cohort Benchmark',
-      totalQuestions,
-      overallReadinessPct,
-      meanLookupSeconds,
-      verifiedProofRatePct,
-      verdict,
-      isExamReady,
-      domains,
-      cohortSeats
-    };
+    return {reportId:"CD-"+new Date().toISOString().slice(0,10),viewMode:"session",viewModeTitle:"This browser’s graded attempts",totalQuestions:total,
+      overallReadinessPct:stats.accuracyPercent,meanLookupSeconds:stats.avgLookupSeconds,verifiedProofRatePct:graded.length?Math.round(100*stats.verifiedProofCount/graded.length):null,
+      verdict:graded.length?stats.correctCount+" correct of "+graded.length+" graded":"No graded attempts",isExamReady:false,domains,
+      cohortSeats:graded.length?[{seatLabel:"This browser",trackFocus:"All practiced topics",masteryPct:stats.accuracyPercent+"%",avgLookup:stats.avgLookupSeconds==null?"—":stats.avgLookupSeconds+"s",verifiedProofs:stats.verifiedProofCount+" / "+graded.length}]:[]};
   }
 
-  function renderB2BTeamReadinessReportModal(modeOverride) {
-    if (modeOverride) {
-      b2bReportViewMode = modeOverride;
-    }
-    const data = generateB2BTeamReadinessData(b2bReportViewMode);
-
+  function renderB2BTeamReadinessReportModal() {
+    const data = generateB2BTeamReadinessData();
     const viewLabelEl = document.getElementById('b2bReportActiveViewLabel');
     if (viewLabelEl) viewLabelEl.textContent = data.viewModeTitle;
 
@@ -2582,26 +2334,26 @@
 
     const kpiGrid = document.getElementById('b2bReportKpiGrid');
     if (kpiGrid) {
-      const readinessStr = (data.viewMode === 'session' && getSessionStats().gradedCount === 0)
+      const readinessStr = (data.overallReadinessPct === null)
         ? '--%'
         : `${data.overallReadinessPct}%`;
       const lookupStr = data.meanLookupSeconds !== null
         ? `${data.meanLookupSeconds.toFixed(1)}s`
         : '--s';
-      const proofStr = (data.viewMode === 'session' && getSessionStats().gradedCount === 0)
-        ? '0%'
+      const proofStr = (data.overallReadinessPct === null)
+        ? '—'
         : `${data.verifiedProofRatePct}%`;
 
       kpiGrid.innerHTML = `
         <div class="b2b-kpi-box">
-          <span class="b2b-kpi-label">Overall Domain Mastery &amp; Pass Readiness %</span>
+          <span class="b2b-kpi-label">Correct answers</span>
           <strong class="b2b-kpi-val" id="b2bKpiReadinessVal">${escapeHtml(readinessStr)}</strong>
-          <span class="b2b-kpi-sub">CBP Official Passing Threshold: &gt;= 75.0%</span>
+          <span class="b2b-kpi-sub">Across graded questions</span>
         </div>
         <div class="b2b-kpi-box">
           <span class="b2b-kpi-label">Mean Citation Lookup Latency (s)</span>
           <strong class="b2b-kpi-val" id="b2bKpiLatencyVal">${escapeHtml(lookupStr)}</strong>
-          <span class="b2b-kpi-sub">Target Benchmark: &lt;= 40.0s (Legacy PDF: 145s)</span>
+          <span class="b2b-kpi-sub">Mean recorded time across graded questions</span>
         </div>
         <div class="b2b-kpi-box">
           <span class="b2b-kpi-label">Verified 19 CFR / HTSUS Citation Proof Rate %</span>
@@ -2609,7 +2361,7 @@
           <span class="b2b-kpi-sub">Exact statutory section locked as evidence</span>
         </div>
         <div class="b2b-kpi-box">
-          <span class="b2b-kpi-label">Compliance Director Verdict</span>
+          <span class="b2b-kpi-label">Graded attempts</span>
           <strong class="b2b-kpi-val ${data.isExamReady ? 'b2b-verdict-pass' : 'b2b-verdict-warn'}" id="b2bKpiVerdictVal" style="font-size:13px;line-height:1.3;">${escapeHtml(data.verdict)}</strong>
           <span class="b2b-kpi-sub">${escapeHtml(data.viewModeTitle)}</span>
         </div>
@@ -2644,7 +2396,7 @@
           <td class="b2b-mono-cell">${escapeHtml(seat.verifiedProofs)}</td>
           <td>
             <span class="b2b-status-chip ${seat.ready ? 'chip-pass' : 'chip-warn'}">
-              ${seat.ready ? 'EXAM READY (>= 75%)' : 'PRIORITY DRILL (< 75%)'}
+              Recorded in this browser
             </span>
           </td>
         </tr>
@@ -2654,16 +2406,9 @@
     return data;
   }
 
-  function openB2BTeamReadinessReport(modeOverride) {
+  function openB2BTeamReadinessReport() {
     const modal = document.getElementById('modalTeamReadinessReport');
     if (!modal) return null;
-
-    if (modeOverride) {
-      b2bReportViewMode = modeOverride;
-    } else {
-      const stats = getSessionStats();
-      b2bReportViewMode = stats.gradedCount > 0 ? 'session' : 'cohort';
-    }
 
     const reportData = renderB2BTeamReadinessReportModal(b2bReportViewMode);
     modal.classList.remove('hidden');
@@ -2686,7 +2431,7 @@
     // Enforce Freemium Paywall on full Submit & Score Exam when on FREE tier
     if (!isProOrTeamActive()) {
       openAccountPaywallModal({
-        paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases (CBLE + IRS SEE Parts 1–3) and full practice exam scoring.'
+        paywallReason: 'Activate a Pro plan to unlock all 48 exam cases (CBLE + IRS SEE Parts 1–3) and full practice exam scoring.'
       });
       return;
     }
@@ -2717,13 +2462,13 @@
     renderGlobalBarTelemetry();
 
     const stats = getSessionStats(pool);
-    const scorePct = pool.length > 0 ? Math.round((correct / pool.length) * 100) : 0;
-    const passed = scorePct >= (DATASET.meta.passingScorePercent || 75);
+    const scorePct = answered ? Math.round((correct / answered) * 100) : null;
+    const passed = scorePct !== null && scorePct >= (DATASET.meta.passingScorePercent || 75);
     const avgLookupStr = stats.avgLookupSeconds !== null ? `${stats.avgLookupSeconds.toFixed(1)}s` : '--s';
     const isSeeTrack = /^EA/.test(STATE.selectedTrack || '');
     const examTrackHeading = isSeeTrack
-      ? 'IRS SPECIAL ENROLLMENT EXAMINATION (SEE) DETERMINATION (75% BENCHMARK)'
-      : 'OFFICIAL EXAMINATION DETERMINATION (75% PASSING THRESHOLD)';
+      ? 'IRS SEE study questions · practice score'
+      : 'Customs broker study questions · practice score';
     const corpusAuditLabel = isSeeTrack
       ? 'Exact 26 CFR / IRC / Circular 230 Cited'
       : 'Exact eCFR / HTSUS Section Cited';
@@ -2735,15 +2480,15 @@
             ${examTrackHeading}
           </div>
           <h3 style="font-family:var(--font-display);font-size:26px;font-weight:400;color:#141413;margin-top:4px;">
-            ${passed ? 'PASS — Ready for Licensing Examination' : 'BELOW 75% THRESHOLD — Additional Citation-Speed Drills Needed'}
+            ${answered ? correct+' correct of '+answered+' attempted' : 'No answers submitted'}
           </h3>
           <p style="font-size:13px;color:#4A4842;margin-top:4px;">
             You answered <strong>${correct} of ${pool.length}</strong> questions correctly (${answered} attempted) with <strong>${verifiedProofs}</strong> verified statutory citation proofs.
           </p>
         </div>
         <div style="text-align:right;">
-          <div style="font-family:var(--font-mono);font-size:36px;font-weight:600;color:${passed ? '#1A5638' : '#C8431F'};">${scorePct}%</div>
-          <div style="font-family:var(--font-mono);font-size:11px;color:#4A4842;">Required: >= 75%</div>
+          <div style="font-family:var(--font-mono);font-size:36px;font-weight:600;color:${passed ? '#1A5638' : '#C8431F'};">${scorePct === null ? "—" : scorePct+"%"} </div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:#4A4842;">Percentage of attempted questions</div>
         </div>
       </div>
 
@@ -2777,7 +2522,7 @@
                 <strong>Q${posNum} (${escapeHtml(q.category)})</strong> — Governing Authority: <code>${escapeHtml(q.targetCitation)}</code>
               </div>
               <div style="font-family:var(--font-mono);font-weight:600;">
-                Your Ans: ${w.selectedOption || 'None'} · Official: ${q.correctOption} (${isRight ? 'Pass' : 'Fail'})
+                Your answer: ${w.selectedOption || 'None'} · Answer key: ${q.correctOption} (${isRight ? 'Pass' : 'Fail'})
               </div>
             </div>
           `;
@@ -2813,7 +2558,7 @@
         if (isSuiteLockedForCurrentTier(requestedSuite)) {
           trackSelect.value = STATE.selectedTrack;
           openAccountPaywallModal({
-            paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
+            paywallReason: 'Activate a Pro plan to unlock all 48 exam cases and 10 suites (CBLE + IRS SEE Parts 1–3).'
           });
           return;
         }
@@ -2981,6 +2726,11 @@
 
     document.getElementById('btnOpenNavigator').addEventListener('click', openNavigatorModal);
     document.getElementById('btnOpenScratchpad').addEventListener('click', openScratchpadModal);
+    document.getElementById('retryGradedQuestion').addEventListener('click',()=>{
+      const q=getCurrentQuestion();if(!q)return;
+      const w=getQuestionWork(q.id);Object.assign(w,{selectedOption:null,checked:false,lookupSeconds:null,attachedSectionId:null,attachedCitation:null,struckOptions:[]});
+      resetPerQuestionLookupStopwatch();saveUserState();refreshAllViews();
+    });
     document.getElementById('btnCheckCurrentAnswer').addEventListener('click', verifyCurrentQuestionAnswer);
     document.getElementById('btnVerifyAnswerMain').addEventListener('click', verifyCurrentQuestionAnswer);
     document.getElementById('btnGradeFullExam').addEventListener('click', openOfficialScoreReportModal);
@@ -3040,11 +2790,11 @@
       const pool = getFilteredQuestions();
       const idx = pool.findIndex(q => q.id === STATE.currentQuestionId);
       const nextIdx = idx + 1;
-      if (nextIdx >= pool.length) return;
+      if (nextIdx >= catalogCount()) return;
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock the full practice bank.'
+          paywallReason: 'Activate a Pro plan to unlock the full practice bank.'
         });
         return;
       }
@@ -3096,7 +2846,7 @@
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock the full practice bank.'
+          paywallReason: 'Activate a Pro plan to unlock the full practice bank.'
         });
         return;
       }
@@ -3317,7 +3067,7 @@
         if (invComp) invComp.value = fullName;
 
         switchAuthModalTab('payment');
-        showToast(`Account created for ${email}. Complete payment or license activation below.`);
+        showToast(`Local profile saved for ${email}. Complete payment or license activation below.`);
       });
     }
 
@@ -3342,10 +3092,10 @@
 
         if (isProOrTeamActive()) {
           document.getElementById('checkoutModalBackdrop').classList.add('hidden');
-          showToast(`Signed in as ${email} (${STATE.licenseTier} License Active)`);
+          showToast(`Local profile selected for ${email} (${STATE.licenseTier} License Active)`);
         } else {
           switchAuthModalTab('payment');
-          showToast(`Signed in as ${email}. Activate your Pro plan below.`);
+          showToast(`Local profile selected for ${email}. Activate your Pro plan below.`);
         }
       });
     }
@@ -3375,12 +3125,6 @@
           saveUserState();
         }
 
-        if (isLocalQaEnvironment()) {
-          const generatedKey = generateSignedLicenseKey(plan.tier);
-          validateAndActivateLicenseKey(generatedKey);
-          return;
-        }
-
         const gwEl = document.querySelector('#stripeCheckoutForm select');
         const gw = gwEl ? gwEl.value : 'gumroad';
         const url =
@@ -3397,8 +3141,7 @@
     const btnGenInv = document.getElementById('btnGenerateInvoice');
     if (btnGenInv) {
       btnGenInv.addEventListener('click', () => {
-        renderCorporateInvoicePreview();
-        showToast('Generated Commercial Invoice from Caliber Foundry');
+        renderCorporateInvoicePreview(true);
       });
     }
 
@@ -3431,7 +3174,7 @@
     const btnB2BCardReport = document.getElementById('btnB2BCardPreviewReport');
     if (btnB2BCardReport) {
       btnB2BCardReport.addEventListener('click', () => {
-        openB2BTeamReadinessReport('cohort');
+        openB2BTeamReadinessReport();
       });
     }
 
@@ -3439,15 +3182,6 @@
     if (btnCloseB2BModal) {
       btnCloseB2BModal.addEventListener('click', () => {
         document.getElementById('modalTeamReadinessReport').classList.add('hidden');
-      });
-    }
-
-    const btnToggleCohort = document.getElementById('btnToggleB2BCohortMode');
-    if (btnToggleCohort) {
-      btnToggleCohort.addEventListener('click', () => {
-        b2bReportViewMode = (b2bReportViewMode === 'cohort') ? 'session' : 'cohort';
-        renderB2BTeamReadinessReportModal(b2bReportViewMode);
-        showToast(`Switched B2B Dossier to: ${b2bReportViewMode === 'cohort' ? 'Sample 12-Seat Brokerage Cohort Benchmark' : 'Current Session Telemetry'}`);
       });
     }
 
@@ -3479,14 +3213,6 @@
     if (clockEl) clockEl.textContent = formatHmsClock(STATE.cbtTimerRemainingSec);
 
     cbtTimerInterval = setInterval(() => {
-      const candidate = candidateReceipt.decision(STATE.licenseKey);
-      if (STATE.licenseTier === 'PRO' && candidate.expired) {
-        STATE.licenseTier = 'FREE';
-        STATE.selectedTrack = 'CBLE';
-        saveUserState();
-        refreshAllViews();
-        showToast('Your 30-day candidate pass has ended.');
-      }
       if (STATE.cbtTimerPaused || STATE.activeMode !== 'cbt') return;
       if (STATE.cbtTimerRemainingSec > 0) {
         STATE.cbtTimerRemainingSec--;
@@ -3563,10 +3289,10 @@
   }
 
   async function initApp() {
-    if (receipt.matches(STATE.licenseKey)) {
-        try { await checkPracticeReceipt(STATE.licenseKey); }
-        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
-      }
+    if (STATE.licenseKey) {
+      try{await loadLicensedBank(normalizeKey(STATE.licenseKey));}
+      catch(error){STATE.licenseTier="FREE";document.getElementById("receiptStatus").textContent=error.message;}
+    }
     if (isSuiteLockedForCurrentTier(STATE.selectedTrack)) STATE.selectedTrack = 'CBLE';
     const verBadge = document.getElementById('cdVersionBadge');
     if (verBadge && DATASET.meta.version) {
@@ -3591,7 +3317,7 @@
       getDataset: () => DATASET,
       getState: () => STATE,
       setState: (newState) => {
-        if (!isLocalQaEnvironment() && newState && (newState.licenseTier === 'PRO' || newState.licenseTier === 'TEAM') && !verifyCodeDrillLicenseKey(newState.licenseKey).valid) {
+        if (newState && (newState.licenseTier === 'PRO' || newState.licenseTier === 'TEAM') && !licenseDecision(newState.licenseKey).valid) {
           return;
         }
         STATE = Object.assign(getDefaultUserState(), newState);

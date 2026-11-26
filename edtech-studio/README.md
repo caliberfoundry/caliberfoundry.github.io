@@ -1,11 +1,9 @@
-# ORFF Maestra TTL-MSM Assessment Engine & SocratAI SCORM EdTech Studio
+# AcademyForge
 
-Dual-Mode Interactive EdTech & Clinical Assessment Prototype built for:
-1. **HackerNews `#50339081` (`https://orffmaestra.com/developer` & `https://orffmaestra.com/technical-lead`)** — *ORFF Maestra: TTL-MSM Assessment Reasoning Browser Prototype with FERPA Privacy-by-Design*
-2. **Upwork Job `~022122329038257767465`** — *Automated SCORM 1.2/2004 Certification Study Modules & Socratic AI Tutor*
-3. **HackerNews `#50340985` (`careers@memorang.com`)** — *Memorang: AI Stack for Education & Distractor-Aware Assessment Engine*
+The browser workspace contains nine single-question lessons across robotics, developer onboarding and education. The robotics lessons also include Korean text. The first lesson in each collection is available to try. A verified Pro purchase opens the remaining lessons.
 
-## 1-Click Deployment
-```bash
-npx vercel --prod --yes
-```
+Authors can create three word-recall exercises from a passage or enter an original lesson, question, alternatives and explanation. Download an editable source file to revise it later. Export the selected exercise as a SCORM 1.2 package to record its score and completion in an LMS.
+
+The classroom worksheet records four instructor ratings. Save a plain JSON record or a password-encrypted AES-GCM file. Keep the passphrase separately to reopen an encrypted file.
+
+[Open AcademyForge](https://caliberfoundry.com/edtech-studio/)

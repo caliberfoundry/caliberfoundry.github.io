@@ -124,7 +124,7 @@
 
           <div class="slider-item">
             <div class="slider-label-row">
-              <label for="drawdownSlider">Simulated Drawdown Shock</label>
+              <label for="drawdownSlider">Drawdown shock in this period</label>
               <span class="slider-val" id="drawdownValDisplay">0.00%</span>
             </div>
             <input type="range" id="drawdownSlider" min="0" max="800" step="20" value="0" />
@@ -132,7 +132,7 @@
 
           <div class="slider-item">
             <div class="slider-label-row">
-              <label for="priorityFeeSlider">Solana Priority Fee (Lamports)</label>
+              <label for="priorityFeeSlider">Priority fee in this period (lamports)</label>
               <span class="slider-val" id="priorityFeeValDisplay">35,000</span>
             </div>
             <input type="range" id="priorityFeeSlider" min="5000" max="500000" step="5000" value="35000" />
@@ -165,7 +165,7 @@
       <button type="button" class="quiet" id="resetVaultBtn">Reset model inputs</button>
     </details>
 
-    <details class="pane receipt-pane" aria-label="SAP MCP Instruction Bundle and Cryptographic Receipt">
+    <details class="pane receipt-pane" aria-label="Simulated instructions and decision record">
       <summary class="pane-header">
         <span class="pane-title">Decision receipt and allocation details</span>
       </summary>
@@ -204,7 +204,7 @@
               <span class="mono" id="econTotalCost">$54.2574</span>
             </div>
             <div class="econ-item">
-              <span class="spec-label">MultiHopper Settlement</span>
+              <span class="spec-label">Modeled routing</span>
               <span class="mono" id="econMultiHopperStatus">Routed (5 Legs)</span>
             </div>
           </div></details>
@@ -214,7 +214,7 @@
             <div class="hash-value" id="receiptDecisionHash">a056f26534f31185...</div>
           </div>
           <div class="meta-cell">
-            <span class="spec-label">MultiHopper Route ID</span>
+            <span class="spec-label">Simulated route ID</span>
             <div class="hash-value" id="receiptMultiHopperId">mhopper-route-ep1</div>
           </div>
           <div class="meta-cell">
@@ -222,7 +222,7 @@
             <div class="hash-value" id="receiptComputeUnits">292,300 CU · 35k lamp.</div>
           </div>
           <div class="meta-cell full-span">
-            <span class="spec-label">Ace Data Cloud MCP Research Brief Hash</span>
+            <span class="spec-label">Scenario assumptions hash</span>
             <div class="hash-value" id="receiptAceHash">6b4529180e4c88ec...</div>
           </div>
         </div>
@@ -250,7 +250,7 @@
       </div>
     </section>
   </main>
-  <footer><span>OOBE Sentinel · Simulated market data</span><span data-product-feedback></span></footer>
+  <footer><span>OOBE Sentinel · Simulated market data</span><a href="../work/oobe-agent.html">How the simulation works</a><span data-product-feedback></span></footer>
   <script src="./simulation.js"></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>

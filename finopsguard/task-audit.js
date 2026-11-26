@@ -221,7 +221,7 @@
     return new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', minimumFractionDigits:2, maximumFractionDigits:digits}).format(n);
   }
   const count = n=>n===null?'Unavailable':n.toLocaleString('en-US',{maximumFractionDigits:2});
-  const state = {report:null, csv:'', name:'', sample:null, serial:0};
+  const state = {report:null, sourceBytes:null, name:'', sample:null, serial:0};
   const names = {retry:'Fewer retries', quality:'Quality regression', unpriced:'Subscription usage'};
   const displayUnit = (metric,n)=>n===null?'—':metric==='tokens'?count(n):currency(n);
   const canExport = ()=>Boolean(state.report && (state.sample || window.FinOpsGuardLicense.active()));
@@ -332,8 +332,8 @@
     $('taskProgress').value=pct;
     show('taskMessage',text);
   }
-  function apply(csv,name,sample=null,notify=true) {
-    state.csv=csv; state.name=name; state.sample=sample; state.report=null;
+  function apply(csv,name,sample=null,notify=true,bytes=null) {
+    state.sourceBytes=bytes || new TextEncoder().encode(csv); state.name=name; state.sample=sample; state.report=null;
     try { state.report=compare(csv); if (notify) message('Reviewed '+name+' · '+state.report.matchedTasks+' paired tasks.'); }
     catch(error){message(error.message,0,true);}
     for(const button of document.querySelectorAll('[data-task-example]'))button.setAttribute('aria-pressed',String(button.dataset.taskExample===sample));
@@ -353,7 +353,7 @@
     if(!file)return;
     event.target.value='';
     const version=++state.serial;
-    state.report=null;state.sample=null;render();
+    state.report=null;state.sample=null;state.sourceBytes=null;render();
     document.querySelectorAll('[data-task-example]').forEach(b=>b.setAttribute('aria-pressed','false'));
     const url=new URL(location.href);url.searchParams.delete('example');url.hash='calls';history.replaceState(null,'',url);
     if(file.size>16*1024*1024) {message('This file exceeds 16 MiB. Export one matched task cohort and retry.',0,true);return;}
@@ -366,14 +366,22 @@
       const seconds=e.loaded?Math.ceil((performance.now()-started)*(e.total-e.loaded)/e.loaded/1000):0;
       message('Reading '+file.name+' · '+pct+'%'+(seconds?' · about '+seconds+' s left':''),pct);
     };
-    reader.onload=()=>{if(version===state.serial)apply(String(reader.result),file.name);};
+    reader.onload=()=>{
+      if (version !== state.serial) return;
+      try {
+        const csv = new TextDecoder('utf-8', {fatal:true}).decode(reader.result);
+        apply(csv, file.name, null, true, reader.result);
+      } catch {
+        message('Export the ledger as a UTF-8 CSV and import it again.', 0, true);
+      }
+    };
     reader.onerror=()=>{if(version===state.serial)message('Could not read this file. Select the file to try again.',0,true);};
-    reader.readAsText(file);
+    reader.readAsArrayBuffer(file);
   });
   $('taskExportJson').addEventListener('click',async()=>{
     if(!canExport())return;
     const report=state.report, serial=state.serial;
-    const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(state.csv));
+    const bytes=await crypto.subtle.digest('SHA-256',state.sourceBytes);
     if(serial!==state.serial || report!==state.report || !canExport())return;
     const hash=Array.from(new Uint8Array(bytes),n=>n.toString(16).padStart(2,'0')).join('');
     const payload={source:{file:state.name,sha256:hash,type:report.example?'illustrative':'user-supplied'},report};

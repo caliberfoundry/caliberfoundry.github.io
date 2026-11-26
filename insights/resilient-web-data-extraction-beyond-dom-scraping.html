@@ -9,73 +9,23 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation &amp; Signed Webhooks | Caliber Foundry</title>
-  <meta name="description" content="Systems engineering guide to resilient web data extraction and catalog ETL pipelines (StealthFlow™). Learn how network-layer XHR/Fetch payload interception, Pydantic/JSON-Schema quarantine gates, and HMAC-SHA256 webhooks replace brittle CSS/XPath scrapers." />
+  <title>Combining supplier catalogs without losing product variants | Caliber Foundry</title>
+  <meta name="description" content="Align CSV columns, normalize tracking URLs and remove duplicate rows across supplier files." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html" />
   <link rel="alternate" type="text/plain" href="https://caliberfoundry.com/llms.txt" title="LLM Context &amp; Capabilities Index" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Caliber Foundry" />
-  <meta property="og:title" content="Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines" />
-  <meta property="og:description" content="Why CSS selector scrapers silently corrupt downstream databases—and how StealthFlow™ intercepts network-layer JSON payloads with strict schema gates." />
+  <meta property="og:title" content="Combining supplier catalogs without losing product variants" />
+  <meta property="og:description" content="Align CSV columns, normalize tracking URLs and remove duplicate rows across supplier files." />
   <meta property="og:url" content="https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html" />
   <meta property="og:image" content="https://caliberfoundry.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CaliberFoundry" />
-  <meta name="twitter:title" content="Resilient Web Data Extraction Beyond DOM Scraping (StealthFlow™) — Caliber Foundry" />
-  <meta name="twitter:description" content="Replacing brittle DOM scrapers with Playwright network-layer XHR interception, strict JSON Schema validation, and HMAC-signed webhooks." />
+  <meta name="twitter:title" content="Combining supplier catalogs without losing product variants" />
+  <meta name="twitter:description" content="Align CSV columns, normalize tracking URLs and remove duplicate rows across supplier files." />
   <meta name="twitter:image" content="https://caliberfoundry.com/og-image.png" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html#article",
-        "headline": "Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines",
-        "description": "Engineering architecture for replacing brittle CSS/XPath DOM scrapers with network-layer XHR/Fetch JSON interception, schema quarantine gates, cross-source deduplication, and HMAC-SHA256 webhook delivery.",
-        "datePublished": "2026-11-22",
-        "dateModified": "2026-11-22",
-        "author": {
-          "@type": "Organization",
-          "name": "Caliber Foundry",
-          "url": "https://caliberfoundry.com/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Caliber Foundry",
-          "url": "https://caliberfoundry.com/",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://caliberfoundry.com/og-image.png"
-          }
-        },
-        "mainEntityOfPage": "https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html"
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Why is XHR/Fetch network interception more reliable than CSS or XPath DOM scraping?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Frontend frameworks frequently regenerate obfuscated CSS class names on every build deployment, breaking DOM selectors immediately. By contrast, the underlying JSON API responses (XHR, Fetch, GraphQL, or Next.js __NEXT_DATA__ payloads) consumed by the frontend adhere to stable backend database schemas and include clean numeric types, timestamps, and canonical IDs."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does a schema quarantine gate prevent bad scraped data from corrupting a CRM or data warehouse?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Every extracted record is validated against a strict Pydantic or JSON Schema contract checking field types, currency formats, non-null primary keys, and domain bounds. If an upstream portal alters its payload structure, non-conforming records are diverted to a dead-letter quarantine table and trigger an immediate schema-drift alert before any null or corrupted rows reach production."
-            }
-          }
-        ]
-      }
-    ]
-  }
-  </script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Combining supplier catalogs without losing product variants", "description": "Align CSV columns, normalize tracking URLs and remove duplicate rows across supplier files.", "url": "https://caliberfoundry.com/insights/resilient-web-data-extraction-beyond-dom-scraping.html", "author": {"@type": "Organization", "name": "Caliber Foundry"}}</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -174,140 +124,39 @@
       </a>
       <div style="display:flex; gap:12px;">
         <a href="./" class="btn"><span>All Insights</span></a>
-        <a href="../stealthflow/" class="btn btn-primary"><span>Launch StealthFlow&trade; Demo</span><span>&rarr;</span></a>
+        <a href="../stealthflow/" class="btn btn-primary"><span>Open catalog cleaner</span><span>&rarr;</span></a>
       </div>
     </div>
   </header>
 
-  <main class="article-shell">
-    <a href="./" class="breadcrumb">&larr; Back to Engineering &amp; Regulatory Insights</a>
+  <main class="article-shell"><a href="./" class="breadcrumb">← Engineering insights</a><h1 class="article-title">Combining supplier catalogs without losing product variants</h1><p class="article-lead">Align CSV columns, normalize tracking URLs and remove duplicate rows across supplier files.</p><article class="prose">
+<h2>What makes two rows the same?</h2><p>A supplier can use one product URL for several SKUs. StealthFlow removes tracking parameters from the product URL, then compares all the fields. Two copies of the same product row collapse into one. A different size, SKU or price remains a separate record.</p>
+<h2>Merge two exports</h2><p>Use the browser to clean one local file. For multiple suppliers, select their exports in the batch workbench. The batch service accepts the same column names in different orders. It rejects a file with missing columns so a price cannot silently land under a SKU heading.</p>
+<pre><code>File A
+sku,url
+S,https://shop.example/item?utm_source=feed
 
-    <div class="meta-strip">
-      <span class="tag-accent">MONOGRAPH // 03</span>
-      <span>SYSTEM: STEALTHFLOW&trade; ETL</span>
-      <span>DOMAIN: RESILIENT DATA EXTRACTION</span>
-      <span>UPDATED: NOV 2026</span>
-    </div>
-
-    <h1 class="article-title">Resilient Web Data Extraction Beyond DOM Scraping: XHR Interception, Schema Validation, and Signed Webhook Pipelines</h1>
-
-    <p class="article-lede">
-      Most commercial web scrapers are built on fragile CSS selectors (`div.css-1dbjc4n > span:nth-child(2)`) that silently output `null` or shifted columns the moment a target site deploys a frontend build. Production data engineering requires treating web extraction as a typed network-interception and ETL quarantine pipeline.
-    </p>
-
-    <div class="cta-inline">
-      <div>
-        <span class="cta-inline-label">LIVE PIPELINE // STEALTHFLOW&trade; DATA HUB</span>
-        <h3>Test 12-Source Live Extraction, Deduplication &amp; JSON/CSV Export</h3>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a href="../stealthflow/" class="btn btn-primary"><span>Launch StealthFlow&trade; App</span><span>&rarr;</span></a>
-        <a href="mailto:engineering@caliberfoundry.com?subject=Free%20Data%20Extraction%20Sample%20Request" class="btn"><span>Request Free Data Sample</span><span>&nearr;</span></a>
-      </div>
-    </div>
-
-    <article class="prose">
-      <h2>01 // The Silent Failure Mode of DOM-Selector Scrapers</h2>
-      <p>
-        Modern web applications built with React, Next.js, Vue, or Tailwind CSS compile utility classes or hashed CSS-in-JS identifiers at build time. When an engineering team relies on BeautifulSoup or raw Playwright `page.locator('.price-card__value')` selectors:
-      </p>
-      <ul>
-        <li><strong>DOM Hydration Races:</strong> Dynamic portals render skeleton placeholders first and hydrate secondary pricing, inventory, or regulatory status fields asynchronously via background `fetch` calls. Scraping the initial HTML snapshot captures incomplete records.</li>
-        <li><strong>Silent Column Shifting:</strong> When a vendor inserts a promotional badge into a product card, positional XPath selectors (`div[3]/span[1]`) extract the badge label into the price column without raising an HTTP error.</li>
-        <li><strong>Lost Canonical Identifiers:</strong> The visible DOM rarely displays the internal database UUID, GTIN/UPC, or exact stock count—even though those exact fields were transmitted over the wire in the JSON API payload milliseconds earlier.</li>
-      </ul>
-
-      <h2>02 // Network-Layer XHR &amp; Hydration State Interception</h2>
-      <p>
-        In <a href="../stealthflow/">StealthFlow&trade;</a>, the browser runtime is used to establish an authenticated session and trigger pagination events, while actual data capture occurs at the <strong>network response layer</strong> (`page.on("response", ...)`). By intercepting `application/json` GraphQL, REST, and SSR hydration streams directly:
-      </p>
-
-      <div class="code-panel">
-# StealthFlow™ Network-Layer JSON Interception &amp; Schema Gate Pattern
-async def attach_xhr_interceptor(page, quarantine_queue, verified_sink):
-    async def handle_response(response):
-        if "application/json" not in response.headers.get("content-type", ""):
-            return
-        if "/api/v2/catalog/listings" in response.url or "graphql" in response.url:
-            raw_payload = await response.json()
-            for item in extract_items(raw_payload):
-                validation = CatalogRecordSchema.validate_deterministic(item)
-                if validation.is_valid:
-                    await verified_sink.upsert_idempotent(validation.record)
-                else:
-                    await quarantine_queue.isolate(item, validation.errors)
-
-    page.on("response", handle_response)
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Pipeline Stage</th>
-            <th>Legacy CSS/XPath Scraper</th>
-            <th>StealthFlow&trade; Network &amp; Schema Pipeline</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Capture Layer</strong></td>
-            <td>Rendered HTML DOM nodes &amp; regex string stripping</td>
-            <td>Typed JSON payloads from XHR/Fetch/GraphQL network streams</td>
-          </tr>
-          <tr>
-            <td><strong>Schema Drift Protection</strong></td>
-            <td>None (writes `null` or malformed strings to DB)</td>
-            <td>Strict Pydantic / JSON Schema gate + Dead-Letter Quarantine Queue</td>
-          </tr>
-          <tr>
-            <td><strong>Cross-Source Normalization</strong></td>
-            <td>Manual post-processing scripts</td>
-            <td>Deterministic SKU, domain, phone (E.164), and currency normalization</td>
-          </tr>
-          <tr>
-            <td><strong>Downstream Delivery</strong></td>
-            <td>Ad-hoc CSV attachments</td>
-            <td>Idempotent upserts + `HMAC-SHA256` signed webhooks to CRM / Warehouse</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>03 // Idempotent Upserts &amp; HMAC-SHA256 Webhook Delivery</h2>
-      <p>
-        Data collection is only useful when records land cleanly in your operational systems (PostgreSQL, Snowflake, BigQuery, HubSpot, Salesforce, or internal pricing engines) without duplicates. StealthFlow&trade; computes a deterministic content fingerprint for every record:
-      </p>
-      <div class="code-panel">
-record_fingerprint = SHA256(canonical_source_id + "::" + normalized_sku + "::" + effective_date)
-webhook_signature  = HMAC_SHA256(webhook_secret, timestamp + "." + json_payload_bytes)
-      </div>
-      <p>
-        Downstream consumers verify the `X-Caliber-Signature-256` header and upsert by `record_fingerprint`, guaranteeing exactly-once state synchronization even across retry bursts.
-      </p>
-
-      <h2>04 // Get a Free Live Data Extraction Sample in 24 Hours</h2>
-      <p>
-        Have a complex directory, supplier portal, public registry, or multi-vendor e-commerce catalog you need synchronized into your database? Send us the target URLs. Within 24 hours, we will reply with a clean, schema-validated JSON/CSV sample extracted from your exact target source before any contract begins.
-      </p>
-    </article>
-
-    <div class="cta-inline" style="background-color:var(--cf-bg-ink-panel); color:var(--cf-ink-on-dark); margin-top:48px;">
-      <div>
-        <span class="cta-inline-label">24-HOUR WORKING PROOF // STEALTHFLOW&trade; ETL</span>
-        <h3 style="color:var(--cf-ink-on-dark);">Send us your target URL—receive a live structured dataset within 24 hours</h3>
-      </div>
-      <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="mailto:engineering@caliberfoundry.com?subject=Target%20URL%20for%20Free%20Data%20Sample" class="btn btn-primary"><span>Email engineering@caliberfoundry.com</span><span>&nearr;</span></a>
-        <a href="../stealthflow/" class="btn"><span>Launch StealthFlow&trade; Demo</span><span>&rarr;</span></a>
-      </div>
-    </div>
-  </main>
+File B
+url,sku
+https://shop.example/item,S
+https://shop.example/item,L</code></pre>
+<p>These three rows produce two records: S and L. The interactive workbench includes a preview and a downloadable CSV.</p>
+<h2>Call the batch API</h2><p>The following example reads your files as UTF-8 and posts their contents to Caliber Foundry. The response contains the output headers, rows and counts. The service processes up to 12 catalogs, 10,000 input rows and 512 KiB of JSON per request, in memory. URLs inside the files are treated as text.</p>
+<pre><code>python3 - first.csv second.csv &lt;&lt;'PYTHON' | curl --fail-with-body -sS \
+  -H 'Content-Type: application/json' --data-binary @- \
+  https://api.caliberfoundry.com/portfolio/v1/stealthflow/catalogs
+import json, pathlib, sys
+print(json.dumps({"catalogs": [pathlib.Path(p).read_text(encoding="utf-8-sig")
+                              for p in sys.argv[1:]]}))
+PYTHON</code></pre>
+<p><a class="btn btn-primary" href="../stealthflow/batch.html">Combine supplier files →</a></p></article></main>
 
   <footer class="site-footer">
     <span>&copy; 2026 Caliber Foundry &mdash; United States (Remote)</span>
     <div style="display:flex; flex-wrap:wrap; gap: 20px;">
       <a href="../">Home</a>
       <a href="./">All Insights</a>
-      <a href="../stealthflow/">StealthFlow&trade; Live</a>
+      <a href="../stealthflow/">StealthFlow catalog</a>
       <a href="../llms.txt">llms.txt</a>
       <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
     </div>

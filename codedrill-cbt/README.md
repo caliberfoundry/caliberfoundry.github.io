@@ -1,5 +1,7 @@
-# CodeDrill™ CBT — 1:1 Pearson VUE Open-Book Regulatory Exam Simulator
+# CodeDrill CBT
 
-- **Live Simulator:** https://caliberfoundry.com/codedrill-cbt/
-- **19 CFR & HTSUS Public pSEO Knowledge Hub:** https://caliberfoundry.com/codedrill-cbt/seo-pages/
-- **XML Sitemap:** https://caliberfoundry.com/codedrill-cbt/seo-pages/sitemap.xml
+Practise customs broker and enrolled agent topics with 48 original questions, a searchable reference library and explanations tied to source passages. The workspace measures lookup time and reports results from graded answers in this browser.
+
+The individual candidate pass lasts 30 days from purchase. The corporate practice license is a separate one-time purchase. Activate a purchased license using its receipt key.
+
+[Open CodeDrill](https://caliberfoundry.com/codedrill-cbt/) · [Browse study guides](https://caliberfoundry.com/codedrill-cbt/seo-pages/)

@@ -125,3 +125,9 @@ footer { display:flex; align-items:center; justify-content:space-between; flex-w
   .metrics span,.metrics small { font-size:12px; } .metrics strong { font-size:23px; }
   .tools { padding-top:17px; }
 }
+
+.model-guide { max-width: 720px; padding-block: 42px; }
+.model-guide h2 { font-size: clamp(28px, 5vw, 46px); line-height: 1.12; }
+.model-guide p, .model-guide ol { margin-block: 20px; }
+.model-guide li { margin-block: 10px; }
+.model-guide a { color: var(--apricot); }

@@ -200,7 +200,6 @@
     var explicitMessage = eventType === "product_feedback" || eventType === "direct_contact_message";
     if ((!isPublicSite || isTestSession) && !explicitMessage && !window.__CF_FORCE_CLOUD_TELEMETRY__) return;
     updateDwellAndScroll();
-    var params = new URLSearchParams(window.location.search || "");
     var payload = {
       v: 1,
       ev: eventType,
@@ -211,8 +210,7 @@
       host: window.location.hostname || "caliberfoundry.com",
       path: window.location.pathname || "/",
       product: detectProduct(window.location.pathname),
-      preset: params.get("preset") || "",
-      referrer: (document.referrer || "direct").slice(0, 140),
+      referrer: document.referrer ? new URL(document.referrer).origin : "direct",
       country: geoData.country,
       countryCode: geoData.countryCode,
       region: geoData.region,
@@ -280,7 +278,6 @@
         .replace(/\s+/g, " ")
         .trim()
         .slice(0, 72);
-      var href = target.getAttribute("href") || "";
 
       var evType = "click";
       if (id === "btnOpenPaywall" || id === "btnCompleteCheckout" || id === "btnGenerateCorporateInvoice" || id === "btnSubmitCardPayment" || target.hasAttribute("data-Select-Plan") || /unlock|paywall|checkout|invoice/i.test(id + label)) {
@@ -289,33 +286,8 @@
         evType = "tab_switch";
       }
 
-      // Automatically harvest any entered buyer lead/order fields (Email, Company, Name, PO, Plan) inside modals/forms
-      var formFields = {};
-      if (!document.documentElement.hasAttribute("data-cf-private-inputs") &&
-          (evType === "paywall_action" || target.type === "submit")) {
-        try {
-          var scope = target.closest(".cf-modal-box, .cf-modal-window, .ds-modal-window, .modal-window, form") || document;
-          var inputs = scope.querySelectorAll("input, select, textarea");
-          for (var i = 0; i < inputs.length; i++) {
-            var inp = inputs[i];
-            var key = inp.id || inp.name || inp.placeholder || ("field_" + i);
-            // Never capture raw card number / CVC fields
-            if (/card|cvc|cvv|expir|cc-/i.test(key)) continue;
-            var val = String(inp.value || "").trim();
-            if (val && val.length < 160) {
-              formFields[key] = val;
-            }
-          }
-        } catch (_) {}
-      }
-
-      dispatchEvent(evType, {
-        tag: tag,
-        id: id,
-        label: label,
-        href: href.slice(0, 100),
-        buyerFields: Object.keys(formFields).length > 0 ? formFields : undefined
-      });
+      // Only fixed control identifiers are needed to count product actions.
+      dispatchEvent(evType, {tag: tag, id: id});
     },
     true
   );
@@ -335,19 +307,9 @@
       var el = e.target;
       if (!el) return;
       var tag = (el.tagName || "").toLowerCase();
-      var privateInputs = document.documentElement.hasAttribute("data-cf-private-inputs");
-      if (tag === "select") {
-        dispatchEvent("preset_change", {
-          id: el.id || "",
-          value: privateInputs ? undefined : String(el.value || "").slice(0, 64)
-        });
-      } else if (tag === "input" && el.type === "file" && el.files && el.files[0]) {
-        dispatchEvent("file_upload", {
-          id: el.id || "",
-          fileName: privateInputs ? undefined : String(el.files[0].name || "").slice(0, 64),
-          fileSize: privateInputs ? undefined : el.files[0].size || 0
-        });
-      }
+      if (tag === "select") dispatchEvent("preset_change", {id: el.id || ""});
+      else if (tag === "input" && el.type === "file" && el.files && el.files.length)
+        dispatchEvent("file_upload", {id: el.id || ""});
     },
     true
   );

@@ -223,6 +223,7 @@
         let row = [];
         let field = '';
         let inQuotes = false;
+        let closedQuote = false;
 
         for (let i = 0; i < cleaned.length; i++) {
           const ch = cleaned[i];
@@ -234,11 +235,19 @@
               i++;
             } else if (ch === '"') {
               inQuotes = false;
+              closedQuote = true;
             } else {
               field += ch;
             }
           } else {
+            if (closedQuote && ch !== delimiter && ch !== '\r' && ch !== '\n') {
+              if (ch === ' ' || ch === '\t') continue;
+              return {headers: [], rows: [], delimiter, error: 'Unexpected text after a closing CSV quote.'};
+            }
+            closedQuote = false;
             if (ch === '"') {
+              if (field.trim()) return {headers: [], rows: [], delimiter, error: 'Quote a whole CSV field and double embedded quotes.'};
+              field = '';
               inQuotes = true;
             } else if (ch === delimiter) {
               row.push(field.trim());
@@ -358,18 +367,19 @@
         const llmModel = pickCol(lookup, ['model', 'model_name', 'line_item']);
         const llmInput = pickCol(lookup, ['input_tokens', 'prompt_tokens', 'n_context_tokens_total']);
         const llmCost = pickCol(lookup, ['cost_usd', 'amount_value', 'cost', 'total_cost_usd']);
-        if (llmModel && (llmInput || llmCost)) {
+        if (llmModel && llmCost) {
           return {
             id: 'LLM_USAGE',
-            label: 'LLM API Usage & Cost CSV (OpenAI / Anthropic)',
+            label: 'Model API usage and cost CSV',
             columnMap: {
               date: pickCol(lookup, ['start_datetime', 'start_time', 'date', 'usage_date']),
               provider: pickCol(lookup, ['provider', 'vendor']),
               model: llmModel,
               project: pickCol(lookup, ['project_id', 'workspace', 'api_key_id', 'team']),
               inputTokens: llmInput,
-              cachedInputTokens: pickCol(lookup, ['input_cached_tokens', 'cached_tokens']),
+              cachedInputTokens: pickCol(lookup, ['input_cached_tokens', 'cached_input_tokens', 'cached_tokens']),
               anthropicCacheReadTokens: pickCol(lookup, ['cache_read_input_tokens']),
+              anthropicCacheWriteTokens: pickCol(lookup, ['cache_creation_input_tokens']),
               outputTokens: pickCol(lookup, ['output_tokens', 'completion_tokens', 'n_generated_tokens_total']),
               requests: pickCol(lookup, ['num_model_requests', 'requests']),
               batch: pickCol(lookup, ['batch', 'is_batch', 'tier']),
@@ -416,6 +426,32 @@
         llm_usage: { text: 'Model API usage', badge: 'badge-fact' }
       };
 
+      function storageMarkedIdle(text) {
+        return /(?:^|[^a-z0-9])(?:unattached|orphan(?:ed)?|idle)(?:$|[^a-z0-9])/i.test(text);
+      }
+
+      function tokenMeasurements(raw, map) {
+        function count(column) {
+          if (!column || !raw[column]) return null;
+          const n = parseNumericValue(raw[column]);
+          if (!Number.isSafeInteger(n) || n < 0) throw Error('invalid ' + column);
+          return n;
+        }
+        try {
+          const input = count(map.inputTokens), output = count(map.outputTokens);
+          const inclusiveCache = count(map.cachedInputTokens), cacheRead = count(map.anthropicCacheReadTokens);
+          const cacheWrite = count(map.anthropicCacheWriteTokens);
+          if (inclusiveCache !== null && (cacheRead !== null || cacheWrite !== null)) throw Error('conflicting cache accounting fields');
+          if (inclusiveCache !== null && input !== null && inclusiveCache > input) throw Error('cached input exceeds total input');
+          const total = input === null ? null : input + (cacheRead ?? 0) + (cacheWrite ?? 0);
+          if (total !== null && !Number.isSafeInteger(total)) throw Error('input token total is too large');
+          const cached = inclusiveCache ?? cacheRead;
+          return {total, output, ratio:total > 0 && cached !== null ? cached / total : null};
+        } catch (error) {
+          return {error:error.message};
+        }
+      }
+
       function analyzeBillingCsv(csvText, filename, assumptionsInput) {
         const t0 = typeof performance !== 'undefined' ? performance.now() : Date.now();
         const assumptions = Object.assign({}, SCENARIO_PRESETS.base, assumptionsInput || {});
@@ -436,6 +472,10 @@
           };
         }
 
+        for (const name of Object.keys(SCENARIO_PRESETS.base).filter(key => key.endsWith('Pct'))) {
+          const value = Number(assumptions[name]);
+          if (!Number.isFinite(value) || value < 0 || value > 100) return {error:'Scenario percentages must be between 0 and 100.', fingerprint, filename};
+        }
         const map = schema.columnMap;
         const currencyColumn = pickCol(buildHeaderLookup(parsed.headers),
           ['BillingCurrency', 'lineItem/CurrencyCode', 'line_item_currency_code', 'currency', 'currency_code', 'amount_currency']);
@@ -448,6 +488,7 @@
         const skippedRows = [];
         const dates = [];
 
+        let absoluteCharges = 0;
         let confirmedEffectiveTotal = 0;
         let confirmedBilledTotal = 0;
         let confirmedUnusedCommitment = 0;
@@ -490,7 +531,7 @@
             const liType = raw[map.lineItemType] || '';
             const term = raw[map.pricingTerm] || '';
             resource = raw[map.resourceId] || usageType || '—';
-            region = raw[map.region] || 'global';
+            region = raw[map.region] || 'Region not supplied';
             dateStr = raw[map.date] || '';
 
             if (!Number.isFinite(cost)) {
@@ -499,7 +540,7 @@
             }
 
             const combined = (resource + ' ' + usageType + ' ' + op).toLowerCase();
-            if (cost < 0 || /credit|refund|rifee/i.test(liType)) {
+            if (cost < 0 || /credit|refund/i.test(liType)) {
               rowClass = 'credit_refund';
               detailNote = (liType || 'Credit/Refund') + ' (included in net spend, excluded from savings)';
             } else if (term.toLowerCase() === 'unused' || /unused/i.test(combined)) {
@@ -510,7 +551,7 @@
             } else if (/savingsplan|reserved/i.test(term) || /savingsplancovered|discountedusage/i.test(liType)) {
               rowClass = 'committed_used';
               detailNote = 'Covered by commitment (' + (term || liType) + ')';
-            } else if (/unattached|orphan|idle/i.test(combined) || /volumeusage\.gp2|snapshotusage/i.test(usageType)) {
+            } else if (storageMarkedIdle(combined)) {
               rowClass = 'idle_storage';
               confirmedIdleStorage += cost;
               baseIdleAndUnused += cost;
@@ -544,7 +585,7 @@
             const pricingCat = raw[map.pricingCategory] || '';
             const commitStatus = raw[map.commitmentStatus] || '';
             resource = raw[map.resourceName] || raw[map.resourceId] || '—';
-            region = raw[map.region] || 'global';
+            region = raw[map.region] || 'Region not supplied';
             dateStr = raw[map.dateStart] || '';
 
             const combined = ((raw[map.resourceId] || '') + ' ' + (raw[map.resourceName] || '') + ' ' + svcCat).toLowerCase();
@@ -562,12 +603,12 @@
             } else if (/committed/i.test(pricingCat) || /^used$/i.test(commitStatus)) {
               rowClass = 'committed_used';
               detailNote = 'PricingCategory = Committed (Used)';
-            } else if (/unattached|orphan|idle|snapshot|gp2/i.test(combined)) {
+            } else if (storageMarkedIdle(combined)) {
               rowClass = 'idle_storage';
               confirmedIdleStorage += cost;
               baseIdleAndUnused += cost;
               detailNote = 'Detached disk or archived storage';
-            } else if (/networking|observability/i.test(svcCat) || /nat|logging|cloudwatch/i.test(service)) {
+            } else if (/networking|observability/i.test(svcCat) || /\bnat(?:gateway)?\b|logging|cloudwatch/i.test(service)) {
               rowClass = 'network_logs';
               baseNetworkAndLogs += cost;
               detailNote = svcCat || service;
@@ -586,49 +627,38 @@
               skippedRows.push({ row: raw.__rowIndex, reason: 'Invalid cost in ' + map.cost });
               continue;
             }
-            const model = raw[map.model] || 'unknown-model';
-            provider = raw[map.provider] || (/claude/i.test(model) ? 'Anthropic' : 'OpenAI');
+            const model = raw[map.model] || 'Model not supplied';
+            provider = raw[map.provider] || 'Provider not supplied';
             service = provider + ' · ' + model;
-            resource = raw[map.project] || 'default-project';
-            region = 'API';
+            resource = raw[map.project] || 'Project not supplied';
+            region = '—';
             dateStr = raw[map.date] || '';
-            rowClass = 'llm_usage';
+            rowClass = cost < 0 ? 'credit_refund' : 'llm_usage';
 
-            const inputRaw = map.inputTokens ? (parseNumericValue(raw[map.inputTokens]) || 0) : 0;
-            let cachedTokens = 0;
-            let totalInput = inputRaw;
-            if (map.anthropicCacheReadTokens && raw[map.anthropicCacheReadTokens] !== '') {
-              cachedTokens = parseNumericValue(raw[map.anthropicCacheReadTokens]) || 0;
-              totalInput = inputRaw + cachedTokens;
-            } else if (map.cachedInputTokens) {
-              cachedTokens = Math.min(parseNumericValue(raw[map.cachedInputTokens]) || 0, inputRaw);
-              totalInput = inputRaw;
-            }
-            const outputTokens = map.outputTokens ? (parseNumericValue(raw[map.outputTokens]) || 0) : 0;
-            const cacheRatio = totalInput > 0 ? cachedTokens / totalInput : 0;
-            const isBatch = map.batch ? /^(true|1|yes|batch)$/i.test(String(raw[map.batch] || '').trim()) : false;
-            const isFlagship = /(gpt-4o(?!-mini)|gpt-4\.1(?!-mini|-nano)|gpt-5(?!-mini|-nano)|claude-3-7-sonnet|claude-3-5-sonnet|claude-4|claude-opus|\bo1\b|\bo3\b(?!-mini))/i.test(model);
-
-            let rowCacheSav = 0;
-            if (cost > 0 && cacheRatio < llmCacheTargetRatio && totalInput > 0) {
+            const usage = tokenMeasurements(raw, map);
+            const tier = (raw[map.batch] || '').toLowerCase();
+            const sync = ['false', '0', 'no', 'sync', 'standard'].includes(tier);
+            const batch = ['true', '1', 'yes', 'batch'].includes(tier);
+            const routeModel = /^(?:gpt-(?:4o|4\.1|5)|claude-(?:3-[57]-sonnet|opus-4|sonnet-4)|o[13])(?:$|-\d{4})/i.test(model);
+            const canCache = cost > 0 && !usage.error && usage.ratio !== null && usage.output !== null && usage.ratio < llmCacheTargetRatio;
+            const canRoute = cost > 0 && !usage.error && sync && routeModel;
+            let cacheSavings = 0;
+            if (canCache) {
               baseLlmCacheEligible += cost;
-              const inputWeight = (totalInput + 4 * outputTokens) > 0
-                ? totalInput / (totalInput + 4 * outputTokens)
-                : 0.7;
-              const deltaCache = Math.max(0, llmCacheTargetRatio - cacheRatio);
-              rowCacheSav = cost * inputWeight * deltaCache * 0.65;
-              estLlmCacheSavings += rowCacheSav;
+              const inputWeight = usage.total / (usage.total + 4 * usage.output);
+              cacheSavings = cost * inputWeight * (llmCacheTargetRatio - usage.ratio) * 0.65;
+              estLlmCacheSavings += cacheSavings;
             }
-
-            if (cost > 0 && isFlagship && !isBatch) {
+            if (canRoute) {
               baseLlmRouteEligible += cost;
-              const residualCost = Math.max(0, cost - rowCacheSav);
-              estLlmRouteSavings += residualCost * llmRouteShareRatio * 0.50;
+              estLlmRouteSavings += (cost - cacheSavings) * llmRouteShareRatio * 0.50;
             }
-
-            detailNote = 'Cached input: ' + (cacheRatio * 100).toFixed(0) + '% · ' + (isBatch ? 'Batch' : 'Sync') + (isFlagship ? ' · Flagship' : ' · Compact');
-            if (cost > 0 && ((totalInput > 0 && cacheRatio < llmCacheTargetRatio) || (isFlagship && !isBatch))) {
-              eligibleLlmSpend += cost;
+            if (canCache || canRoute) eligibleLlmSpend += cost;
+            if (usage.error) detailNote = 'Spend retained; usage excluded: ' + usage.error;
+            else {
+              const cacheNote = usage.ratio === null ? 'Cached share unavailable' : 'Cached input: ' + (usage.ratio * 100).toFixed(1) + '%';
+              const tierNote = sync ? 'Sync' : batch ? 'Batch' : 'Processing tier unconfirmed';
+              detailNote = cacheNote + ' · ' + tierNote + (usage.output === null ? ' · Output tokens unavailable' : '');
             }
           } else {
             // GENERIC_CSV
@@ -653,11 +683,11 @@
               rowClass = 'unused_commitment';
               confirmedUnusedCommitment += cost;
               baseIdleAndUnused += cost;
-            } else if (/unattached|idle|snapshot|gp2/i.test(combined)) {
+            } else if (storageMarkedIdle(combined)) {
               rowClass = 'idle_storage';
               confirmedIdleStorage += cost;
               baseIdleAndUnused += cost;
-            } else if (/nat|cloudwatch|logging/i.test(combined)) {
+            } else if (/\bnat(?:gateway)?\b|cloudwatch|logging/i.test(combined)) {
               rowClass = 'network_logs';
               baseNetworkAndLogs += cost;
             } else if (/ec2|rds|compute|sql|vm/i.test(combined) && !/committed|reserved|savingsplan/i.test(combined)) {
@@ -669,6 +699,10 @@
             detailNote = term || 'Generic billing row';
           }
 
+          absoluteCharges += Math.max(Math.abs(cost), Math.abs(billedCost));
+          if (absoluteCharges > Number.MAX_SAFE_INTEGER / 1200) {
+            return {error:'The total is too large for cent-accurate USD projections.', fingerprint, filename};
+          }
           confirmedEffectiveTotal += cost;
           confirmedBilledTotal += billedCost;
           if (dateStr) dates.push(dateStr.slice(0, 10));
@@ -716,6 +750,17 @@
         const idleRate = (Number(assumptions.idleCleanupPct) || 0) / 100;
         const netRate = (Number(assumptions.networkLogOptPct) || 0) / 100;
 
+        // Charge start dates avoid counting FOCUS's exclusive period-end boundary as another month.
+        const monthIndices = normalizedRows.map(row => {
+          const date = /^([0-9]{4})-(0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$/.exec(row.date);
+          return date ? Number(date[1]) * 12 + Number(date[2]) : null;
+        });
+        const monthsKnown = monthIndices.every(index => index !== null);
+        const modelMonths = monthsKnown ? monthIndices.reduce((max, x) => Math.max(max,x), -Infinity)
+          - monthIndices.reduce((min, x) => Math.min(min,x), Infinity) + 1 : 1;
+        const projectionBasis = monthsKnown
+          ? 'Monthly figures average the charge-start span of ' + modelMonths + ' calendar month(s), assuming complete coverage. Annual estimates assume twelve such months.'
+          : 'Dates are incomplete. This scenario treats the supplied costs as one billing month and projects twelve equivalent months.';
         const estSpMonthly = roundCents(baseOnDemandCompute * spRate);
         const estIdleMonthly = roundCents(baseIdleAndUnused * idleRate);
         const estNetMonthly = roundCents(baseNetworkAndLogs * netRate);
@@ -770,7 +815,7 @@
             window: '0–30 days',
             title: 'Cache repeated model inputs',
             confirmedBase: baseLlmCacheEligible,
-            assumptionLabel: 'Target ' + assumptions.llmCacheTargetPct + '% cached input (65% assumed discount)',
+            assumptionLabel: 'Target ' + assumptions.llmCacheTargetPct + '% cached input; assume a 65% discount and 4× output-token weight',
             formula: baseLlmCacheEligible > 0
               ? 'Σ(cost × weight_in × max(0, ' + assumptions.llmCacheTargetPct + '% − fact_cache) × 65%)'
               : 'No eligible spend',
@@ -795,12 +840,22 @@
           }
         ];
 
+        for (const lever of levers) {
+          lever.periodEstimate = lever.monthlyEstimate;
+          if (modelMonths > 1) {
+            lever.monthlyEstimate = roundCents(lever.periodEstimate / modelMonths);
+            lever.annualEstimate = roundCents(lever.periodEstimate * 12 / modelMonths);
+            if (lever.active) lever.formula = '(' + lever.formula + ') / ' + modelMonths + ' months';
+          }
+        }
+
         // Confirmed unique eligible base (avoiding double-counting overlapping LLM rows)
         const confirmedEligibleUniqueBase = roundCents(baseOnDemandCompute + baseIdleAndUnused + baseNetworkAndLogs + eligibleLlmSpend);
 
         const totalEstMonthly = roundCents(levers.reduce((sum, l) => sum + l.monthlyEstimate, 0));
         const totalEstAnnual = roundCents(levers.reduce((sum, l) => sum + l.annualEstimate, 0));
-        const savingsSharePct = confirmedEffectiveTotal > 0 ? (totalEstMonthly / confirmedEffectiveTotal) * 100 : 0;
+        const periodEstimate = roundCents(levers.reduce((sum, lever) => sum + lever.periodEstimate, 0));
+        const savingsSharePct = confirmedEffectiveTotal > 0 ? (periodEstimate / confirmedEffectiveTotal) * 100 : 0;
 
         const services = Object.values(serviceAgg)
           .map((s) => ({
@@ -827,7 +882,7 @@
             schemaLabel: schema.label,
             delimiter: parsed.delimiter,
             fingerprint,
-            periodLabel,
+            periodLabel, modelMonths, projectionBasis,
             generatedAtIso: new Date().toISOString(),
             elapsedMs: Math.max(0.1, Number((t1 - t0).toFixed(1))),
             validRowCount: normalizedRows.length,
@@ -849,6 +904,7 @@
           },
           assumptions: Object.assign({}, assumptions),
           estimated: {
+            periodEstimate,
             monthlyTotal: totalEstMonthly,
             annualTotal: totalEstAnnual,
             savingsSharePct: Number(savingsSharePct.toFixed(2)),
@@ -1053,7 +1109,7 @@
         text('printEstimatedDetail',formatUsd(r.estimated.annualTotal)+' over 12 equivalent billing months');
         $('printServicesBody').innerHTML=r.confirmed.services.map(s=>'<tr><td>'+escapeHtml(s.service)+'</td><td class="num">'+s.count+'</td><td class="num">'+formatPct(s.sharePct)+'</td>'+numberCell(s.effectiveCost)+'</tr>').join('');
         $('printServicesFoot').innerHTML='<tr><td>Total</td><td class="num">'+r.meta.validRowCount+'</td><td></td>'+numberCell(r.confirmed.effectiveTotal)+'</tr>';
-        text('printScenarioBadge',r.assumptions.name+' scenario. Estimates assume that the export represents one billing month.');
+        text('printScenarioBadge',r.assumptions.name+' scenario. '+r.meta.projectionBasis);
         if (!full) {
           $('printAssumptionsBody').closest('section').hidden=true;
           $('printAssumptionsBody').replaceChildren();
@@ -1078,7 +1134,8 @@
         text('kpiEstMonthly',formatUsd(estimated.monthlyTotal));
         text('kpiEstMonthlySub',(confirmed.effectiveTotal>0?formatPct(estimated.savingsSharePct)+' of confirmed spend · ':'')+r.assumptions.name+' scenario');
         text('kpiConfirmedTotal',formatUsd(confirmed.effectiveTotal));
-        const projected=roundCents(confirmed.effectiveTotal-estimated.monthlyTotal);
+        text('projectionBasis',meta.projectionBasis);
+        const projected=roundCents(confirmed.effectiveTotal-estimated.periodEstimate);
         text('projectedSpend',formatUsd(projected));
         const graphValid=confirmed.effectiveTotal>0 && projected>=0;
         $('beforeBar').parentElement.hidden=$('afterBar').parentElement.hidden=!graphValid;

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.caliberfoundry.com https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>CodeDrill™ CBT — Customs Broker (CBLE) &amp; IRS Enrolled Agent (SEE Parts 1–3) Simulator</title>
   <meta name="description" content="Practise customs broker and enrolled agent questions, review a cited authority, and inspect your session results. Choose a 30-day candidate pass or a corporate practice license." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -71,11 +71,12 @@
 
       <!-- Account & License Status Bar -->
       <div class="cd-account-cluster" id="headerAccountCluster">
+        <a class="cd-global-link" href="./cohort.html">Cohort results</a>
         <span class="cd-license-pill" id="headerLicenseStatusBadge">Free Trial (3/48 Qs)</span>
         <span class="cd-user-email-pill hidden" id="headerUserEmailBadge"></span>
-        <button type="button" class="cd-btn-signin" id="btnHeaderSignIn">Sign In</button>
+        <button type="button" class="cd-btn-signin" id="btnHeaderSignIn">Billing profile</button>
         <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Plans and license</button>
-        <button type="button" class="cd-btn-signin hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
+        <button type="button" class="cd-btn-signin hidden" id="btnHeaderAccountBilling">Profile &amp; billing</button>
       </div>
 
       <a href="seo-pages/index.html" class="cd-global-link" title="Browse Programmatic Regulatory Study Guides &amp; Citation Drills">
@@ -340,6 +341,7 @@
               <span class="q-strike-tip">Right-click any option or click <strong>Strike</strong> to cross out distractors</span>
             </div>
 
+            <button type="button" hidden id="retryGradedQuestion" class="pvue-tool-btn">Start a new attempt</button>
             <div class="q-options-list" id="qOptionsList" role="radiogroup" aria-label="Answer Choices A through E">
               <!-- Populated dynamically with A-E choices -->
             </div>
@@ -672,7 +674,7 @@
             </p>
             <div class="an-hero-actions">
               <button type="button" class="an-btn-export-b2b" id="btnExportB2BTeamReport">
-                Export Printable B2B Team Readiness Report (PDF) →
+                Export Candidate Practice Report (PDF) →
               </button>
             </div>
           </div>
@@ -768,32 +770,8 @@
         <div class="pricing-section-wrap" id="pricingSectionWrap">
           <div class="pricing-header-block">
             <span class="pricing-kicker">Exam Engineering vs. Legacy Prep Courses</span>
-            <h2 class="pricing-main-title">Stop Paying $1,500+ for Static PDF Binders That Do Not Simulate Pearson VUE</h2>
-            <p class="pricing-main-desc">
-              Traditional customs broker prep courses charge $1,200 to $2,400 for passive video lectures while 84.8% of examinees still fail the electronic exam. Train in the exact split-screen environment used on test day.
-            </p>
-          </div>
-
-          <!-- Side-by-Side Legacy vs CodeDrill Comparison Table -->
-          <div class="pricing-comparison-banner">
-            <div class="comp-col comp-col-legacy">
-              <div class="comp-col-badge">Legacy Prep Courses ($1,200 – $2,400)</div>
-              <ul class="comp-list">
-                <li>— Static paper PDFs &amp; 100-hour pre-recorded slideshow videos</li>
-                <li>— Zero 1:1 Pearson VUE split-screen eCFR / HTSUS interface training</li>
-                <li>— No tracking of citation lookup seconds or right-click distractor strikethrough</li>
-                <li>— Average student lookup time: 2.5+ minutes per question (runs out of time at Q58)</li>
-              </ul>
-            </div>
-            <div class="comp-col comp-col-codedrill">
-              <div class="comp-col-badge">CodeDrill™ CBT + Citation-Speed Engine ($399 once)</div>
-              <ul class="comp-list">
-                <li>+ Authentic 1:1 Pearson VUE Split-Screen Simulator with instant eCFR search</li>
-                <li>+ 90-Second Citation-Speed Drill + 3-Step Study Coach &amp; Hints</li>
-                <li>+ Real-time lookup stopwatch, Golden Quote proof verification &amp; A–E distractor audit</li>
-                <li>+ Sub-45-second lookup muscle memory engineered to clear the 75% CBP threshold</li>
-              </ul>
-            </div>
+            <h2 class="pricing-main-title">Choose a practice license</h2>
+            <p class="pricing-main-desc">Use the split-screen question and reference library to practise timed lookup. The report shows your graded answers and the sections you attached as evidence.</p>
           </div>
 
           <!-- Two Pricing Cards: Candidate Pro (B2C) & Freight Forwarder / Brokerage Team (B2B) -->
@@ -827,7 +805,7 @@
                   Deploy Brokerage Team Plan ($399 once) →
                 </button>
                 <button type="button" class="pricing-b2b-report-link" id="btnB2BCardPreviewReport">
-                  Export Printable B2B Team Readiness Report (PDF)
+                  Export Candidate Practice Report (PDF)
                 </button>
               </div>
             </div>
@@ -1017,17 +995,17 @@
         <!-- Paywall Trigger Banner (Shown when hitting Free Trial 3-Question / Pro Suite limit) -->
         <div class="paywall-trigger-banner hidden" id="paywallTriggerBanner">
           <strong>Free Trial Limit Reached (3/3 Diagnostic Questions).</strong>
-          <span id="paywallTriggerText">Create an account and activate a Pro plan to unlock all 48 exam cases and 10 topic suites (CBLE + IRS SEE Parts 1–3).</span>
+          <span id="paywallTriggerText">Set up a local billing profile and activate a Pro plan to unlock all 48 exam cases and 10 topic suites (CBLE + IRS SEE Parts 1–3).</span>
         </div>
 
         <p>Studying on your own? <a href="https://caliberfoundry.gumroad.com/l/codedrill-candidate" target="_blank" rel="noopener noreferrer">Buy the $49 candidate pass &nearr;</a> for 30 days. Already purchased? Use Payment &amp; License Activation below.</p>
         <!-- 3-Tab Navigation Bar -->
         <div class="auth-modal-tabs" role="tablist" aria-label="Account and Payment Steps">
           <button type="button" class="auth-tab-btn active" data-auth-tab="register" id="tabBtnAuthRegister">
-            1. Create Account &amp; Choose Plan
+            1. Local profile and plan
           </button>
           <button type="button" class="auth-tab-btn" data-auth-tab="signin" id="tabBtnAuthSignIn">
-            2. Sign In
+            2. Billing email
           </button>
           <button type="button" class="auth-tab-btn" data-auth-tab="payment" id="tabBtnAuthPayment">
             3. Payment &amp; License Activation
@@ -1051,10 +1029,6 @@
             </div>
 
             <div class="auth-two-col-fields">
-              <div class="checkout-field">
-                <label for="regPasswordInput">Create Password</label>
-                <input type="password" id="regPasswordInput" required minlength="6" placeholder="Minimum 6 characters" />
-              </div>
               <div class="checkout-field">
                 <label for="regRoleSelect">Role / Track</label>
                 <select id="regRoleSelect">
@@ -1092,15 +1066,11 @@
         <div class="auth-tab-panel hidden" id="authPanelSignIn">
           <form id="signInForm" class="checkout-form">
             <div class="checkout-field">
-              <label for="signInEmailInput">Registered Email Address</label>
+              <label for="signInEmailInput">Billing email for this browser</label>
               <input type="email" id="signInEmailInput" required placeholder="j.hayes@pacificcustoms.com" />
             </div>
-            <div class="checkout-field">
-              <label for="signInPasswordInput">Password</label>
-              <input type="password" id="signInPasswordInput" required placeholder="Enter your password" />
-            </div>
             <button type="submit" class="checkout-submit-btn" id="btnSubmitSignIn">
-              Sign In to CodeDrill™ Account →
+              Save local billing profile →
             </button>
           </form>
         </div>
@@ -1123,7 +1093,7 @@
               Method A: Card / Instant Checkout
             </button>
             <button type="button" class="pay-method-btn" data-pay-method="invoice" id="btnPayMethodInvoice">
-              Method B: Corporate Invoice (ACH / PO)
+              Method B: Request a corporate invoice
             </button>
             <button type="button" class="pay-method-btn" data-pay-method="key" id="btnPayMethodKey">
               Method C: Activate License Key
@@ -1199,7 +1169,7 @@
                 </div>
               </div>
               <button type="button" class="pvue-btn-secondary" id="btnGenerateInvoice">
-                Generate Official Commercial Invoice
+                Prepare an invoice request
               </button>
 
               <!-- Rendered Official Invoice Box -->
@@ -1209,7 +1179,7 @@
 
               <div class="invoice-actions-row">
                 <button type="button" class="pvue-btn-secondary" id="btnPrintInvoice">
-                  Print / Save PDF Invoice
+                  Print purchase request
                 </button>
                 <a href="mailto:engineering@caliberfoundry.com" class="pvue-btn-primary invoice-mailto-link" id="btnMailtoInvoice">
                   Send Purchase Order via Email →
@@ -1260,24 +1230,24 @@
       <div class="pvue-modal-header no-print">
         <div class="pvue-modal-title-group">
           <span class="pvue-modal-icon">§</span>
-          <h2 id="b2bReportModalTitle">Printable B2B Team Exam Readiness &amp; Citation Latency Report (PDF)</h2>
+          <h2 id="b2bReportModalTitle">Printable Candidate Practice &amp; Citation Lookup Report (PDF)</h2>
         </div>
         <button type="button" class="pvue-modal-close" id="btnCloseB2BTeamReportModal" aria-label="Close B2B Readiness Report">×</button>
       </div>
 
       <div class="pvue-modal-body b2b-report-printable-sheet" id="b2bReportPrintableSheet">
+        <p><a href="./cohort.html">Export practice answers or combine a cohort</a></p>
         <!-- Official Swiss Editorial Dossier Header -->
         <header class="b2b-dossier-header">
           <div class="b2b-dossier-top-row">
             <span class="b2b-dossier-kicker">CALIBER FOUNDRY — CODEDRILL™ CBT ENTERPRISE COMPLIANCE DOSSIER</span>
-            <span class="b2b-dossier-mode-pill" id="b2bReportActiveViewLabel">Sample 12-Seat Brokerage Cohort Benchmark</span>
+            <span class="b2b-dossier-mode-pill" id="b2bReportActiveViewLabel">Graded attempts in this browser</span>
           </div>
-          <h3 class="b2b-dossier-title">Customs Brokerage &amp; Trade Compliance — B2B Team Exam Readiness &amp; Citation Latency Report</h3>
+          <h3 class="b2b-dossier-title">Customs Brokerage &amp; Trade Compliance — Candidate Practice &amp; Citation Lookup Report</h3>
           <div class="b2b-dossier-meta-grid">
-            <div><span>Report ID:</span> <strong id="b2bReportIdVal">B2B-CD-2026-8410</strong></div>
+            <div><span>Report ID:</span> <strong id="b2bReportIdVal">Current practice</strong></div>
             <div><span>Regulatory Corpus:</span> <strong>19 CFR (Parts 111–190) · HTSUS GRI 1–6 · 31 CFR Part 10</strong></div>
-            <div><span>CBP Passing Threshold:</span> <strong>75.0% (vs. 15.2% National Pass Rate)</strong></div>
-            <div><span>Target Citation Lookup Latency:</span> <strong>&lt;= 40.0s</strong></div>
+
           </div>
         </header>
 
@@ -1296,17 +1266,17 @@
         <section class="b2b-report-section" aria-label="Regulatory Domain Mastery Matrix">
           <div class="b2b-section-head">
             <span class="b2b-section-num">SECTION 02</span>
-            <h4 class="b2b-section-title">Mastery &amp; Citation Lookup Speed Across All 6 Regulatory Domains (30-Question Bank)</h4>
+            <h4 class="b2b-section-title">Graded questions and recorded time by topic</h4>
           </div>
           <div class="b2b-table-wrap">
             <table class="b2b-report-table" id="b2bReportDomainTable">
               <thead>
                 <tr>
                   <th>Regulatory Domain</th>
-                  <th>Questions Covered</th>
+                  <th>Questions graded</th>
                   <th>Accuracy %</th>
                   <th>Mean Lookup Latency</th>
-                  <th>High-Risk Exam Trap &amp; Priority Drill</th>
+                  <th>Revisit missed citations</th>
                 </tr>
               </thead>
               <tbody id="b2bReportDomainTableBody">
@@ -1320,7 +1290,7 @@
         <section class="b2b-report-section" aria-label="Cohort Seat Readiness Ledger">
           <div class="b2b-section-head">
             <span class="b2b-section-num">SECTION 03</span>
-            <h4 class="b2b-section-title">Cohort Seat Readiness Ledger (Customs Brokerage &amp; Trade Compliance Department)</h4>
+            <h4 class="b2b-section-title">Candidate practice summary</h4>
           </div>
           <div class="b2b-table-wrap">
             <table class="b2b-report-table" id="b2bReportCohortTable">
@@ -1331,7 +1301,7 @@
                   <th>Graded Mastery %</th>
                   <th>Avg Citation Lookup</th>
                   <th>Verified Proofs</th>
-                  <th>CBP Exam Readiness Status</th>
+                  <th>Record source</th>
                 </tr>
               </thead>
               <tbody id="b2bReportCohortTableBody">
@@ -1343,9 +1313,6 @@
       </div>
 
       <div class="pvue-modal-footer b2b-report-footer no-print">
-        <button type="button" class="pvue-btn-secondary" id="btnToggleB2BCohortMode">
-          Toggle Session vs. 12-Seat Brokerage Cohort View
-        </button>
         <div class="b2b-footer-right-actions">
           <button type="button" class="pvue-btn-secondary" id="btnPrintB2BTeamReport">
             Print / Save Team Practice Report
@@ -1363,9 +1330,9 @@
 
   <!-- External Data Payload + Core Application Logic -->
   <footer class="product-utilities" data-product-feedback><a href="../#work">All products</a></footer>
-  <script src="data/codedrill-data.js"></script>
+  <script src="data/codedrill-data.js?v=public-samples-20261126"></script>
   <script src="../assets/js/gumroad-receipt.js?v=20261126-pass"></script>
-  <script src="app.js?v=20261126-pass"></script>
+  <script src="app.js?v=20261126-bank"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { normalizeCatalog, toCsv } from './catalog-import.mjs';
+import { normalizeCatalog, toCsv, countEscapedCells } from './catalog-import.mjs';
 const fileInput = document.querySelector('#supplierCsv');
 const status = document.querySelector('#supplierStatus');
 const preview = document.querySelector('#supplierPreview');
@@ -15,15 +15,20 @@ fileInput.addEventListener('change', async () => {
   if (!file) return;
   try {
     if (file.size > 5_000_000) throw new Error('Use a CSV file under 5 MB.');
-    const result = normalizeCatalog(await file.text());
+    let source;
+    try { source = new TextDecoder('utf-8', {fatal:true}).decode(await file.arrayBuffer()); }
+    catch { throw new Error('Choose a readable UTF-8 CSV file.'); }
+    const result = normalizeCatalog(source);
     if (version !== generation) return;
     current = result;
     preview.textContent = toCsv({...result, rows:result.rows.slice(0, 3)});
     status.textContent = file.name + ' · ' + result.total + ' input rows · ' + result.changed +
-      ' URLs normalized · ' + result.duplicates + ' duplicate rows removed.';
+      ' URLs normalized · ' + result.duplicates + ' duplicate rows removed. ' + countEscapedCells(result) + ' formula-like cells will be exported as text.';
     download.disabled = false;
   } catch (error) {
     if (version === generation) status.textContent = error.message;
+  } finally {
+    if (version === generation) fileInput.value = '';
   }
 });
 

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-product-design="oobe-agent">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <meta name="description" content="Use five modeled market periods to teach portfolio fees, reserve requirements and drawdown rules.">
+  <link rel="canonical" href="https://caliberfoundry.com/work/oobe-agent.html">
+  <link rel="stylesheet" href="../oobe-agent/styles.css">
+  <title>OOBE Sentinel · Portfolio simulation for teaching</title>
+</head>
+<body>
+  <header class="oobe-mast"><a href="../#work">All products</a><h1>OOBE Sentinel</h1></header>
+  <main class="model-guide">
+    <h2>What happens when the cost of a rebalance rises?</h2>
+    <p>Financial technology instructors can use this five-period exercise to teach the relationship between trading costs, cash reserves and drawdown limits. All market conditions and decisions in the exercise are simulated.</p>
+    <ol>
+      <li>Open the simulator and compare the five periods at the default starting capital.</li>
+      <li>Open the model inputs, select one period and change its fee or drawdown. The calculation carries the resulting balance into later periods.</li>
+      <li>Download the JSON and compare the inputs, reserve, modeled costs and decision for each period. Reset the inputs to reproduce the original run.</li>
+    </ol>
+    <p>The model uses five predefined venues with fixed scenario changes. It calculates simple yield between periods and applies a uniform shock to the simulated balance, including cash. It runs locally without a wallet or market feed.</p>
+    <a href="../oobe-agent/">Open the simulator →</a>
+  </main>
+  <footer><span>Caliber Foundry</span></footer>
+  <script src="/assets/js/cf-telemetry.js" defer></script>
+</body>
+</html>

@@ -210,6 +210,11 @@
         }
         return initialized;
       },
+      previous: function () {
+        if (!initialized) return null;
+        try {var status = api.LMSGetValue('cmi.core.lesson_status');
+          return ['passed','failed','completed'].includes(status) ? {status:status,score:api.LMSGetValue('cmi.core.score.raw')} : null;} catch {return null;}
+      },
       setValue: function (key, value) { return call('LMSSetValue', [String(key), String(value)]); },
       commit: function () { return call('LMSCommit', ['']); },
       reportScore: function (rawScore, masteryScore) {
@@ -325,7 +330,7 @@
       "  </div>",
       "  <script>",
       "    var COURSE = " + dataJson + ";",
-      "    var lastAttempt = null;",
+      "    var lastAttempt = null, previousGrade = null;",
       "    var currentLang = COURSE.defaultLang || 'en';",
       "    window.onScormWrapperEvent = function(callStr, res) {",
       "      var el = document.getElementById('scoLog');",
@@ -355,9 +360,11 @@
       "      var feedback = document.getElementById('scoFeedback');",
       "      optsEl.after(feedback);",
       "      optsEl.innerHTML = '';",
+      "      if(previousGrade){feedback.hidden=false;feedback.textContent='Recorded attempt: '+previousGrade.status+' · '+previousGrade.score+'/100';}",
       "      p.options.forEach(function(o) {",
       "        var b = document.createElement('button');",
       "        b.type = 'button';",
+      "        b.disabled = !!previousGrade || !!(lastAttempt && lastAttempt.result.connected && (lastAttempt.result.saved || lastAttempt.letter !== o.letter));",
       "        var selected = lastAttempt && lastAttempt.letter === o.letter;",
       "        b.className = selected ? 'opt-btn ' + (o.correct ? 'correct' : 'wrong') : 'opt-btn';",
       "        b.setAttribute('aria-pressed', String(!!selected));",
@@ -383,6 +390,7 @@
       "    document.getElementById('scoLangEn').addEventListener('click', function() { currentLang = 'en'; renderSco(); });",
       "    document.getElementById('scoLangKo').addEventListener('click', function() { if (COURSE.ko) { currentLang = 'ko'; renderSco(); } });",
       "    window.AcademyForgeSCORM.initialize();",
+      "    previousGrade = window.AcademyForgeSCORM.previous();",
       "    renderSco();",
       "  </script>",
       "</body>",
@@ -391,7 +399,7 @@
     ].join("\n");
   }
 
-  function compileScorm12Zip(courseData) {
+  function compileScorm12Zip(courseData, schemaFiles = []) {
     const manifestXml = generateScormManifest({
       identifier: courseData.identifier,
       title: (courseData.en && courseData.en.title) || courseData.title,
@@ -403,7 +411,8 @@
     const entries = [
       { name: "imsmanifest.xml", content: manifestXml },
       { name: "scorm_api_wrapper.js", content: wrapperJs },
-      { name: "index.html", content: indexHtml }
+      { name: "index.html", content: indexHtml },
+      ...schemaFiles
     ];
 
     const zipBytes = createBinaryZip(entries);
@@ -419,79 +428,14 @@
 
   const TTL_MSM_ENGINE = {
     evaluate: function (inputs) {
-      const parentL1 = Number(inputs.parentL1) || 0;
-      const teacherObs = Number(inputs.teacherObs) || 0;
-      const languageSample = Number(inputs.languageSample) || 0;
-      const dynamicAssessment = Number(inputs.dynamicAssessment) || 0;
-      const totalScore = parentL1 + teacherObs + languageSample + dynamicAssessment;
-
-      const r2HighModifiability = dynamicAssessment === 2;
-      const r3TrueDisorder = parentL1 === 0 && languageSample === 0 && dynamicAssessment <= 1;
-
-      let verdictCode = "TYPICAL_DEVELOPMENT";
-      let verdictTitle = "Typical Communicative Profile — Age-Appropriate Proficiency";
-      let verdictColor = "emerald";
-      let confidence = 97;
-      let clinicalSummary =
-        "All primary evidence sources and dynamic learning indicators meet or exceed age-expected thresholds across communicative environments.";
-
-      if (r3TrueDisorder || totalScore <= 2) {
-        verdictCode = "LANGUAGE_DISORDER";
-        verdictTitle = "Developmental Language Disorder (DLD) — Specialized Support Eligible";
-        verdictColor = "rose";
-        confidence = 98;
-        clinicalSummary =
-          "Convergent deficit across L1 Home Report, Direct Language Sample morphosyntax, and low Dynamic Assessment modifiability confirms an underlying learning need rather than L2 exposure difference.";
-      } else if (r2HighModifiability && (teacherObs <= 1 || languageSample === 1)) {
-        verdictCode = "LANGUAGE_DIFFERENCE";
-        verdictTitle = "Bilingual / Dialectal Difference — General Education Supported";
-        verdictColor = "amber";
-        confidence = 95;
-        clinicalSummary =
-          "Although L2 classroom observation shows emerging variation, intact L1 caregiver baseline and rapid 20-minute Dynamic Assessment modifiability rule out an intrinsic disorder under TTL-MSM rules.";
-      }
-
-      const trace = [
-        {
-          gate: "Gate 01",
-          name: "Home L1 Caregiver Baseline",
-          inputVal: "Score " + parentL1 + "/2",
-          outcome: parentL1 === 0 ? "Home L1 Deficit Flag" : "Intact Home L1 Baseline",
-          passed: parentL1 >= 1
-        },
-        {
-          gate: "Gate 02",
-          name: "Academic Classroom Participation",
-          inputVal: "Score " + teacherObs + "/2",
-          outcome: teacherObs === 0 ? "High Classroom Struggle" : "Developing / Proficient",
-          passed: teacherObs >= 1
-        },
-        {
-          gate: "Gate 03",
-          name: "Direct Narrative & Grammar Sample",
-          inputVal: "Score " + languageSample + "/2",
-          outcome: languageSample === 0 ? "Structural Grammar Deficit" : "Age / Dialect Appropriate",
-          passed: languageSample >= 1
-        },
-        {
-          gate: "Gate 04",
-          name: "20-Min Dynamic Modifiability (Test-Teach-Retest)",
-          inputVal: "Score " + dynamicAssessment + "/2",
-          outcome: r2HighModifiability ? "Fast Learning Gain (Rules Out Disorder)" : "Requires Scaffolding",
-          passed: r2HighModifiability
-        }
-      ];
-
-      return {
-        verdictCode,
-        verdictTitle,
-        verdictColor,
-        confidence,
-        totalScore,
-        maxScore: 8,
-        clinicalSummary,
-        trace
-      };
+      const labels={parentL1:"Home language",teacherObs:"Classroom observation",languageSample:"Narrative sample",dynamicAssessment:"Response to teaching"};
+      const trace=Object.entries(labels).map(([key,name],index)=>{
+        const rating=Number(inputs[key]);if(![0,1,2].includes(rating))throw Error("Choose a rating of 0, 1 or 2.");
+        return {gate:"Observation "+(index+1),name,inputVal:rating+"/2",outcome:["Lower observed rating","Intermediate observed rating","Higher observed rating"][rating],rating,passed:rating>=1};
+      });
+      const totalScore=trace.reduce((sum,item)=>sum+item.rating,0);
+      return {verdictCode:"OBSERVATIONS",verdictTitle:"Recorded observations",verdictColor:"emerald",totalScore,maxScore:8,
+        clinicalSummary:trace.map(item=>item.name+" "+item.inputVal).join(" · ")+". Use this classroom record to discuss what additional evidence to collect.",trace};
     },
     generateScormManifest: generateScormManifest,
     generateScormApiWrapperJs: generateScormApiWrapperJs,

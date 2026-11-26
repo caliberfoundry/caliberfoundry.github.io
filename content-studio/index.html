@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://api.gumroad.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://api.caliberfoundry.com https://api.gumroad.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>ContentForge™ — Multi-Format B2B, EdTech &amp; Technical Content Generation Studio | Caliber Foundry</title>
@@ -17,10 +17,10 @@
 <body>
   <header class="desk-mast">
     <a href="../#work">← All products</a><a href="./" class="desk-brand">ContentForge</a>
-    <details class="desk-account"><summary>Studio account</summary>
+    <details class="desk-account"><summary>Studio profile</summary>
       <div class="cf-account-cluster" id="headerAccountCluster">
         <span id="headerLicenseBadge">Free studio</span><span class="hidden" id="headerUserEmailBadge"></span>
-        <button type="button" id="btnHeaderSignIn">Sign in</button><button type="button" id="btnOpenPaywall">Plans</button>
+        <button type="button" id="btnHeaderSignIn">Local billing profile</button><button type="button" id="btnOpenPaywall">Plans</button>
         <button type="button" id="btnResetStudio">Reset studio</button>
       </div>
     </details>
@@ -52,7 +52,7 @@
           <summary class="cf-drawer-summary">
             <div>
               <span class="cf-drawer-kicker">Processing</span>
-              <strong class="cf-drawer-title">5-Stage Citation-Locked Pipeline Topology</strong>
+              <strong class="cf-drawer-title">Example integration architecture</strong>
             </div>
             <span class="cf-block-tag" id="pipelineRunStatusBadge">5/5 STAGES VERIFIED</span>
           </summary>
@@ -102,9 +102,9 @@
             </div>
 
             <div class="cf-field-group" style="margin-top: 6px;">
-              <label for="schemaTemplateInput" class="cf-field-label">Structured JSON Schema &amp; Citation Guardrails</label>
+              <label for="schemaTemplateInput" class="cf-field-label">Example integration schema (reference)</label>
               <textarea
-                id="schemaTemplateInput"
+                id="schemaTemplateInput" readonly
                 class="cf-textarea cf-schema-textarea"
                 rows="4"
                 aria-label="Structured Output Schema and Prompt Contract"
@@ -193,6 +193,7 @@
              TAB 2: EVALUATION HARNESS (GROUND-TRUTH SPAN VS. EXTRACTED CLAIM)
              =============================================================== -->
         <div class="cf-tab-panel hidden" id="panelRightEval">
+            <div class="cf-field-group"><label class="cf-field-label" for="comparisonInput">Compare statements with the source</label><p>Enter one statement per line. An exact match locates the same text, including punctuation and case. A paraphrase requires editorial review.</p><textarea id="comparisonInput" class="cf-textarea" rows="3" maxlength="24000"></textarea><button type="button" id="checkComparisons" class="cf-btn-secondary">Compare statements</button><span id="comparisonStatus" role="status"></span><ul id="comparisonOutput"></ul></div>
           <div class="cf-eval-header-card">
             <div class="cf-eval-header-top">
               <div>
@@ -202,7 +203,7 @@
               <div class="cf-eval-controls">
                 <select id="evalFilterSelect" class="cf-filter-select" aria-label="Filter Evaluation Cases">
                   <option value="ALL">All Claims</option>
-                  <option value="EXACT">Exact Match (F1 &gt;= 0.98)</option>
+                  <option value="EXACT">Verbatim extracts</option>
                   <option value="NUMERIC">Numeric Thresholds</option>
                 </select>
                 <button type="button" class="cf-btn-mini cf-btn-mini-navy" id="btnPrintEvalDossier">
@@ -223,8 +224,8 @@
                   <th>Source Anchor</th>
                   <th>Ground-Truth Span</th>
                   <th>Generated Claim</th>
-                  <th>Match / F1</th>
-                  <th>Latency / Cost</th>
+                  <th>Source match</th>
+                  <th>Processing</th>
                   <th>Verdict</th>
                 </tr>
               </thead>
@@ -268,7 +269,7 @@
             <div class="cf-section-bar">
               <div>
                 <span class="cf-block-kicker">X / LINKEDIN TECHNICAL THREAD</span>
-                <h2 class="cf-block-title">Citation-Verified Social Distribution Thread</h2>
+                <h2 class="cf-block-title">Source-based social drafts</h2>
               </div>
               <button type="button" class="cf-btn-mini" id="btnCopySocialThread">Copy Thread</button>
             </div>
@@ -364,7 +365,7 @@
                 <strong>Turnkey n8n / Make.com Pipeline Sprint</strong>
                 <span class="cf-plan-price">$2,500 Fixed</span>
               </div>
-              <p class="cf-plan-desc">Custom 5-stage document &amp; content extraction DAG, 0.0% hallucination citation verifier, and production webhook deployment.</p>
+              <p class="cf-plan-desc">Custom 5-stage document &amp; content extraction DAG, source-reference checks, and production webhook deployment.</p>
             </div>
           </label>
 
@@ -386,14 +387,14 @@
                 <strong>ContentForge Studio Pro</strong>
                 <span class="cf-plan-price">$299 once</span>
               </div>
-              <p class="cf-plan-desc">Unlimited access to all 4 presets (including EdTech SCORM 1.2 &amp; FinTech Monograph / Video Storyboard engines) for up to 10 seats.</p>
+              <p class="cf-plan-desc">Four source templates for up to 10 seats. Create printable briefs, reading exercises, social drafts and storyboard outlines. Download JSON for signed webhook delivery.</p>
             </div>
           </label>
         </div>
 
         <div class="cf-pay-tabs" role="tablist">
           <button type="button" class="cf-pay-tab active" data-pay-tab="card" id="payTabCard">1. Instant Card / Sprint</button>
-          <button type="button" class="cf-pay-tab" data-pay-tab="invoice" id="payTabInvoice">2. Corporate Invoice (Net-14)</button>
+          <button type="button" class="cf-pay-tab" data-pay-tab="invoice" id="payTabInvoice">2. Request an invoice</button>
           <button type="button" class="cf-pay-tab" data-pay-tab="key" id="payTabKey">3. Activate License Key</button>
         </div>
 
@@ -462,12 +463,13 @@
             </div>
             <div class="cf-invoice-actions-top">
               <button type="button" class="cf-btn-primary" id="btnGenerateCorporateInvoice">
-                Generate Corporate Invoice &amp; Unlock 14-Day Provisional Pro →
+                Prepare invoice request →
               </button>
               <button type="button" class="cf-btn-secondary hidden" id="btnPrintCorporateInvoice">
-                Print Invoice PDF
+                Print request
               </button>
             </div>
+            <p><a id="emailInvoice" hidden href="mailto:engineering@caliberfoundry.com">Email request to billing</a></p>
             <div class="cf-invoice-preview-box hidden" id="corporateInvoicePreviewBox"></div>
           </div>
         </div>
@@ -478,7 +480,7 @@
               <label for="licenseKeyInput" class="cf-field-label">Enter Enterprise License Key</label>
               <input type="password" id="licenseKeyInput" class="cf-text-input cf-key-input" placeholder="Paste your receipt or issued license key" required />
               <span id="receiptStatus" role="status" aria-live="polite"></span>
-              <span class="cf-key-hint">Issued automatically upon payment or corporate invoice approval.</span>
+              <span class="cf-key-hint">Use the purchase key from your receipt. Billing confirms invoiced orders separately.</span>
             </div>
             <button type="button" class="cf-btn-primary cf-btn-full" id="btnActivateLicenseKey">
               Verify &amp; Activate Enterprise Key →
@@ -502,7 +504,7 @@
       <div class="cf-modal-header">
         <div class="cf-modal-title-row">
           <span class="cf-modal-mark">CF</span>
-          <h2 id="accountModalTitle">ContentForge™ Studio Account &amp; Workspace Sync</h2>
+          <h2 id="accountModalTitle">Billing profile on this browser</h2>
         </div>
         <button type="button" class="cf-modal-close" id="btnCloseAccountModal" aria-label="Close Account Modal">×</button>
       </div>
@@ -531,8 +533,9 @@
   <div class="cf-toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="/assets/js/cf-telemetry.js" defer></script>
+  <script src="vendor/sha256.js"></script>
   <script src="presets-data.js"></script>
-  <script src="../assets/js/gumroad-receipt.js"></script>
+  <script src="../assets/js/library-access.js"></script>
   <script src="app.js?v=20261124-ux"></script>
 </body>
 </html>

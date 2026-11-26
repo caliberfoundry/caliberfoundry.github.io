@@ -316,7 +316,7 @@
         var auditPct = clamp(getNum("inpAuditCoverage", 92), 0, 100);
         var unanswered = clamp(getNum("inpUnanswered", 4), 0, 120);
 
-        var requiredSheet = dataTier === "public-catalog" ? "HECVAT Lite (~95 Qs)" : "HECVAT Full (~300+ Qs)";
+        var requiredSheet = "HECVAT 4 workbook";
         var ssoPts = sso === "saml-oidc" ? 25 : sso === "oauth-social" ? 14 : 4;
         var encPts = enc === "both-kms" ? 25 : enc === "tls-aes" ? 20 : 6;
         var auditPts = Math.round(auditPct * 0.30);
@@ -332,8 +332,8 @@
 
         return {
           kpis: [
-            { value: readiness + " / 100", note: "HECVAT Readiness Index" },
-            { value: requiredSheet, note: "Recommended EDUCAUSE template" },
+            { value: readiness + " / 100", note: "Illustrative worksheet index" },
+            { value: requiredSheet, note: "Single EDUCAUSE workbook" },
             { value: reviewWeeks + " weeks", note: "Est. university security review" },
             { value: fmtInt(unanswered) + " gaps", note: "Unanchored questionnaire rows" }
           ],
@@ -342,9 +342,9 @@
           headline: readiness + "/100 Readiness · " + requiredSheet,
           summary:
             "Based on " + (dataTier === "public-catalog" ? "non-PII instructional content" : "FERPA student records / institutional PII") +
-            ", campus procurement requires " + requiredSheet + " with citation-locked SOC 2 / policy evidence.",
+            ", the procurement team can review " + requiredSheet + " with citation-locked SOC 2 / policy evidence.",
           rows: [
-            { label: "Required EDUCAUSE Workbook Tier", value: requiredSheet },
+            { label: "Current EDUCAUSE workbook", value: requiredSheet },
             { label: "InCommon / SAML 2.0 / OIDC SSO Posture", value: ssoPts + " / 25 pts" },
             { label: "Transit (TLS 1.3) & At-Rest (AES-256) Controls", value: encPts + " / 25 pts" },
             { label: "Policy & SOC 2 Citation Coverage (" + auditPct + "%)", value: auditPts + " / 30 pts" },
@@ -578,33 +578,35 @@
         var videos = clamp(getNum("inpVideos", 45), 0, 5000);
         var weeklyHours = clamp(getNum("inpWeeklyCapacity", 18), 2, 400);
 
-        /* Current workspace date: Nov 24, 2026 -> ~22 weeks to April 26, 2027; ~74 weeks to April 26, 2028 */
-        var weeksRemaining = tier === "large-2027" ? 22 : 74;
+        var deadline = Date.UTC(tier === "large-2027" ? 2027 : 2028, 3, 26);
+        var today = new Date();
+        var midnight=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());
+        var weeksRemaining=Math.max(0,(deadline-midnight)/604800000);
         var deadlineLabel = tier === "large-2027" ? "April 26, 2027 (>=50k pop. IFR)" : "April 26, 2028 (<50k pop. IFR)";
 
         var pdfHours = Math.ceil(pdfs * 0.65);
         var videoHours = Math.ceil(videos * 0.75);
         var lmsAuditHours = 24;
         var totalHours = pdfHours + videoHours + lmsAuditHours;
-        var requiredPerWeek = Math.round((totalHours / weeksRemaining) * 10) / 10;
+        var requiredPerWeek = weeksRemaining ? Math.round((totalHours / weeksRemaining) * 10) / 10 : 0;
         var capacityGap = Math.round((requiredPerWeek - weeklyHours) * 10) / 10;
 
-        var level = capacityGap <= 0 ? "pass" : capacityGap <= 10 ? "warn" : "fail";
+        var level = weeksRemaining === 0 ? "fail" : capacityGap <= 0 ? "pass" : capacityGap <= 10 ? "warn" : "fail";
         var pill =
-          level === "pass" ? "ON SCHEDULE FOR DOJ TITLE II DEADLINE" :
+          weeksRemaining === 0 ? "DEADLINE REACHED · REVIEW REMAINING WORK" : level === "pass" ? "CAPACITY MEETS PROJECTED WORK" :
           level === "warn" ? "CAPACITY DEFICIT · AUTOMATION NEEDED" :
           "DEADLINE AT RISK · BACKLOG EXCEEDS TEAM VELOCITY";
 
         return {
           kpis: [
-            { value: weeksRemaining + " weeks", note: "Until " + deadlineLabel },
+            { value: weeksRemaining.toFixed(1) + " weeks", note: "Until " + deadlineLabel },
             { value: fmtInt(totalHours) + " hrs", note: "Total WCAG 2.1 AA courseware work" },
             { value: requiredPerWeek.toFixed(1) + " hrs/wk", note: "Required velocity vs " + weeklyHours + "h/wk" },
             { value: capacityGap <= 0 ? "0h deficit" : "+" + capacityGap.toFixed(1) + "h/wk gap", note: capacityGap <= 0 ? "Team capacity sufficient" : "Extra weekly capacity needed" }
           ],
           statusLevel: level,
           statusLabel: pill,
-          headline: requiredPerWeek.toFixed(1) + " hrs/wk Required (" + weeksRemaining + " Wks Left)",
+          headline: (weeksRemaining ? requiredPerWeek.toFixed(1) + " hrs/wk Required (" : "Deadline reached (") + weeksRemaining.toFixed(1) + " Wks Left)",
           summary:
             "To remediate " + fmtInt(pdfs) + " course PDFs and " + fmtInt(videos) +
             " instructional videos before " + deadlineLabel + " under DOJ 28 CFR Part 35 (WCAG 2.1 Level AA).",
@@ -623,7 +625,7 @@
             standard: "US DOJ ADA Title II Web & Mobile Rule (28 CFR Part 35 · WCAG 2.1 AA)",
             entityTier: tier,
             complianceDeadline: deadlineLabel,
-            weeksRemainingFromNov2026: weeksRemaining,
+            weeksRemaining: Number(weeksRemaining.toFixed(2)),
             coursePdfs: pdfs,
             instructionalVideos: videos,
             totalRemediationHours: totalHours,
@@ -718,22 +720,22 @@
 
         var level = score >= 85 && training === "prohibited" && basis !== "clickwrap-tos" ? "pass" : score >= 60 ? "warn" : "fail";
         var pill =
-          level === "pass" ? "COMPLIANT · 34 CFR § 99.31(a)(1) ALIGNED" :
+          level === "pass" ? "SELECTED CONTROLS PRESENT" :
           level === "warn" ? "REVIEW DPA RETENTION & REDISCLOSURE CLAUSES" :
-          "VIOLATION RISK · REDISCLOSURE / UNAUTHORIZED USE";
+          "REVIEW AUTHORIZATION AND SECONDARY USE";
 
         return {
           kpis: [
-            { value: score + " / 100", note: "FERPA Architecture Score" },
-            { value: basis === "clickwrap-tos" ? "Invalid ToS" : "Valid Legal Basis", note: "34 CFR § 99.30 / § 99.31" },
-            { value: training === "prohibited" ? "Zero Model Training" : "Redisclosure Violation", note: "34 CFR § 99.33(a) limit" },
+            { value: score + " / 100", note: "Illustrative control index" },
+            { value: basis === "clickwrap-tos" ? "Review terms" : "Basis selected", note: "34 CFR § 99.30 / § 99.31" },
+            { value: training === "prohibited" ? "Training excluded" : "Review training use", note: "34 CFR § 99.33(a) limit" },
             { value: retention + " days", note: "Post-termination purge SLA" }
           ],
           statusLevel: level,
           statusLabel: pill,
           headline: score + "/100 FERPA Posture · " + retention + "-Day Purge",
           summary:
-            "Evaluated against the four statutory prongs of the 34 CFR § 99.31(a)(1)(i)(B) 'School Official' exception and 34 CFR § 99.33 redisclosure restrictions.",
+            "This worksheet scores selected controls. Eligibility for a FERPA exception depends on the actual arrangement and handling of records.",
           rows: [
             { label: "Legal Authorization Basis (" + basis + ")", value: basisPts + " / 35 pts" },
             { label: "34 CFR § 99.33 Secondary Use / Training Prohibition", value: trainPts + " / 30 pts" },
@@ -742,15 +744,15 @@
           ],
           recommendation:
             basis === "clickwrap-tos" || training !== "prohibited"
-              ? "Critical defect: Standard clickwrap Terms of Service or training shared models on identifiable student records violates 'direct control' (34 CFR § 99.31(a)(1)(i)(B)(2)) and redisclosure limits (§ 99.33). Execute a district/university DPA and isolate student identifiers before inference."
-              : "Architecture aligned: Strip direct student identifiers client-side or at ingestion, encrypt records with tenant-scoped AES-256-GCM keys, and honor <= 60-day destruction upon contract end.",
+              ? "Review the intended use, authorization and safeguards with the institution before disclosing identifiable education records."
+              : "Verify direct control, permitted purposes, access and the agreed deletion schedule against the institution’s actual arrangements.",
           payload: {
             standard: "US FERPA 34 CFR Part 99 (§ 99.31 School Official & § 99.33 Redisclosure)",
             legalBasis: basis,
             modelTrainingPolicy: training,
             piiStorageMode: crypto,
             postContractPurgeDays: retention,
-            complianceScore: score,
+            worksheetScore: score,
             status: level
           }
         };
@@ -836,7 +838,7 @@
     function updateCalculatedView() {
       if (!model) return null;
       var out = model.compute();
-      latestPayload = out.payload;
+      latestPayload = Object.assign({basis:"Illustrative planning worksheet based on the values entered"},out.payload);
 
       for (var i = 0; i < out.kpis.length; i++) {
         setText("kpiVal" + (i + 1), out.kpis[i].value);

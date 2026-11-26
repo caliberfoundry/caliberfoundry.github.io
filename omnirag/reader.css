@@ -1279,14 +1279,6 @@ a {
   color: var(--om-alert);
 }
 
-.om-local-review-box {
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px dashed var(--om-line);
-  font-size: 12.5px;
-  color: var(--om-muted);
-}
-
 /* Case Study Shared Classes (preserved for /work/omnirag.html compatibility) */
 .om-case-actions {
   display: flex;

@@ -13,7 +13,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Caliber Foundry" />
   <meta property="og:title" content="EDUCAUSE HECVAT Vendor Readiness Scorer &amp; Higher-Ed Procurement Triage" />
-  <meta property="og:description" content="Interactive HECVAT Lite vs. Full selector, campus CISO review estimator, and 3-question university vendor security check." />
+  <meta property="og:description" content="Interactive HECVAT 4 vs. Full selector, campus CISO review estimator, and 3-question university vendor security check." />
   <meta property="og:url" content="https://caliberfoundry.com/edtech-studio/guides/educause-hecvat-vendor-readiness-scorer.html" />
   <link rel="stylesheet" href="./edtech-guides.css" />
   <script type="application/ld+json">
@@ -60,7 +60,7 @@
       <ol class="eg-steps">
         <li><a href="#calculator" class="eg-step-link is-active"><span class="eg-step-num">1.</span> Score HECVAT Readiness</a></li>
         <li><a href="#practice-check" class="eg-step-link"><span class="eg-step-num">2.</span> Take 3-Item Campus CISO Check</a></li>
-        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> HECVAT Lite vs. Full Matrix</a></li>
+        <li><a href="#technical-notes" class="eg-step-link"><span class="eg-step-num">3.</span> HECVAT 4 vs. Full Matrix</a></li>
       </ol>
       <span class="eg-std-pill">EDUCAUSE HECVAT · Higher-Ed Security</span>
     </div>
@@ -70,7 +70,7 @@
     <section class="eg-hero">
       <span class="eg-kicker">Guide 03 of 10 · Higher-Education Vendor Security &amp; Procurement</span>
       <h1 class="eg-title">EDUCAUSE HECVAT Vendor Security Readiness Scorer</h1>
-      <p class="eg-subtitle">Over 300 U.S. colleges and universities gate EdTech contracts on the EDUCAUSE Higher Education Community Vendor Assessment Toolkit (HECVAT). Triage whether you need HECVAT Lite or Full, identify CISO blockers, and estimate campus security review duration.</p>
+      <p class="eg-subtitle">Over 300 U.S. colleges and universities gate EdTech contracts on the EDUCAUSE Higher Education Community Vendor Assessment Toolkit (HECVAT). Triage whether you need HECVAT 4 or Full, identify CISO blockers, and estimate campus security review duration.</p>
 
       <div class="eg-kpi-strip" aria-label="HECVAT readiness metrics">
         <div class="eg-kpi-card">
@@ -80,7 +80,7 @@
         </div>
         <div class="eg-kpi-card">
           <span class="eg-kpi-label">Required Workbook</span>
-          <span class="eg-kpi-value" id="kpiVal2">HECVAT Full (~300+ Qs)</span>
+          <span class="eg-kpi-value" id="kpiVal2">HECVAT 4</span>
           <span class="eg-kpi-note" id="kpiNote2">Recommended EDUCAUSE template</span>
         </div>
         <div class="eg-kpi-card">
@@ -114,8 +114,8 @@
         </button>
         <button type="button" class="eg-option-btn" data-preset-idx="2" aria-pressed="false">
           <span class="eg-option-tag">Option 3 · Zero-PII Reference Tool</span>
-          <span class="eg-option-title">Public Content · HECVAT Lite Eligible</span>
-          <span class="eg-option-desc">Stores zero student grades or PII; qualifies for fast-track HECVAT Lite (~95 controls) review.</span>
+          <span class="eg-option-title">Public Content · HECVAT 4 Eligible</span>
+          <span class="eg-option-desc">Stores zero student grades or PII; qualifies for fast-track HECVAT 4 (~95 controls) review.</span>
         </button>
       </div>
     </section>
@@ -135,7 +135,7 @@
             <select class="eg-select" id="selDataTier" data-calc-input>
               <option value="pii-ferpa" selected>FERPA Education Records, Grades, or Student PII (Requires Full)</option>
               <option value="staff-internal">Faculty/Staff Operational Metadata Only (Full or Lite per Campus)</option>
-              <option value="public-catalog">Zero Student PII / Anonymous Reference Content (HECVAT Lite)</option>
+              <option value="public-catalog">Zero Student PII / Anonymous Reference Content (HECVAT 4)</option>
             </select>
           </div>
           <div class="eg-field">
@@ -188,7 +188,7 @@
         </div>
 
         <div class="eg-result-hero">
-          <div class="eg-result-big" id="resultHeadline">92/100 Readiness · HECVAT Full</div>
+          <div class="eg-result-big" id="resultHeadline">92/100 Readiness · HECVAT 4</div>
           <p class="eg-result-summary" id="resultSummary"></p>
         </div>
 
@@ -228,15 +228,7 @@
       </div>
 
       <div class="eg-quiz-list">
-        <article class="eg-quiz-card" data-quiz-q="q1">
-          <p class="eg-quiz-q">1. An EdTech SaaS platform ingests student rosters via LTI NRPS and syncs quiz grades back to Canvas. The vendor submits HECVAT Triage only instead of HECVAT Full. How do most R1 university CISOs respond?</p>
-          <div class="eg-quiz-choices">
-            <button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="Because rosters and grades constitute protected FERPA education records, institutions almost universally require HECVAT Full (or at minimum HECVAT Lite only for low-impact pilots, never Triage alone).">A. They pause procurement and request HECVAT Full because student rosters and grades are FERPA-protected institutional data.</button>
-            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="LTI integration transmits identifiable learner claims and scores, increasing—not removing—data governance scope.">B. They waive HECVAT review automatically whenever LTI 1.3 is used.</button>
-            <button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="VPAT covers accessibility (Section 508 / WCAG), not cybersecurity or data protection.">C. They accept an ITI VPAT report in place of security documentation.</button>
-          </div>
-          <div class="eg-quiz-feedback hidden" data-quiz-feedback></div>
-        </article>
+        <article class="eg-quiz-card" data-quiz-q="q1"><p class="eg-quiz-q">Which HECVAT workbook should a team start with for a new review?</p><div class="eg-quiz-choices"><button type="button" class="eg-choice-btn" data-choice-correct="true" data-choice-rationale="HECVAT 4 brings the earlier Full, Lite and On-Premise versions into one workbook.">The current HECVAT 4 workbook, scoped with the institution.</button><button type="button" class="eg-choice-btn" data-choice-correct="false" data-choice-rationale="An accessibility report covers a different purpose.">A VPAT accessibility report alone.</button></div><div class="eg-quiz-feedback hidden" data-quiz-feedback></div></article>
 
         <article class="eg-quiz-card" data-quiz-q="q2">
           <p class="eg-quiz-q">2. In HECVAT's Vendor Answers sheet, what happens when a vendor marks <span class="mono">"Yes"</span> on third-party vulnerability management and DR testing but leaves the <span class="mono">Additional Information / Guidance</span> column blank across 40 critical controls?</p>
@@ -261,15 +253,7 @@
     </section>
 
     <section class="eg-details-stack" id="technical-notes" aria-label="HECVAT reference details">
-      <details class="eg-drawer">
-        <summary><span>Technical Drill-Down 01 — Selecting Between HECVAT Lite and HECVAT Full</span></summary>
-        <div class="eg-drawer-body">
-          <ul>
-            <li><strong>HECVAT Lite (~95 questions):</strong> Designed for lower-risk cloud services processing non-sensitive or public/directory data without deep campus network integration.</li>
-            <li><strong>HECVAT Full (~300+ questions across Organization, Policies, Architecture, IAM, Crypto, Change Mgmt, DR/BCP, FERPA/HIPAA/GDPR):</strong> Standard requirement when handling student education records, grades, financial aid, health records, or enterprise SSO/SIS integrations.</li>
-          </ul>
-        </div>
-      </details>
+      <details class="eg-drawer"><summary>Choosing the scope of a HECVAT review</summary><p>HECVAT 4 combines the previous Full, Lite and On-Premise versions. Confirm the scope and required evidence with the reviewing institution. <a href="https://www.educause.edu/higher-education-community-vendor-assessment-toolkit/hecvat-faqs-for-higher-education">EDUCAUSE guidance</a></p></details>
 
       <details class="eg-drawer">
         <summary><span>Technical Drill-Down 02 — HECVAT Resources</span></summary>
