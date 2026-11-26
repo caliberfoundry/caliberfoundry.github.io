@@ -6,6 +6,7 @@
 
 (function () {
   "use strict";
+  const receipt = window.createGumroadReceiptVerifier('CSa2cNVH2rTjF57BfZ19GA==', 'PRO');
 
   const STORAGE_KEYS = {
     PRO_UNLOCKED: "cf_dealshield_pro_v1",
@@ -64,6 +65,7 @@
   }
 
   function verifyDealShieldLicenseKey(rawKey) {
+    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
     const clean = String(rawKey || "").trim().toUpperCase();
     if (!clean) return { valid: false };
     const parts = clean.split("-");
@@ -579,9 +581,13 @@
     controls: []
   };
 
-  function loadPersistedState() {
+  async function loadPersistedState() {
     try {
       const savedKey = localStorage.getItem(STORAGE_KEYS.LICENSE_KEY) || "";
+      if (receipt.matches(savedKey)) {
+        try { await receipt.check(savedKey); }
+        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+      }
       const ver = verifyDealShieldLicenseKey(savedKey);
       state.isProUnlocked = ver.valid;
       state.licenseKey = ver.valid ? savedKey : "";
@@ -603,6 +609,8 @@
   // =========================================================================
   // CORE RENDERING & AUTO-FILL ENGINE
   // =========================================================================
+  let questionnaireRevision = 0;
+
   function loadPreset(presetId, bypassPaywallCheck, trackSelection = true) {
     const preset = PRESETS[presetId] || PRESETS["caiq-v4"];
     if (preset.isPro && !state.isProUnlocked && !bypassPaywallCheck) {
@@ -613,6 +621,7 @@
     }
 
     if (trackSelection) window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
+    questionnaireRevision++;
     state.activePresetId = preset.id;
     state.controls = preset.controls.map((c) => Object.assign({}, c));
     state.selectedControlIndex = Math.max(0, state.controls.findIndex(c => c.status !== 'COMPLIANT'));
@@ -647,7 +656,7 @@
     }
 
     if (paywallBtn) {
-      paywallBtn.textContent = state.isProUnlocked ? "PRO Active (Invoice)" : "Unlock Deal Pack ($199)";
+      paywallBtn.textContent = state.isProUnlocked ? "Pro active" : "Unlock Deal Pack ($199)";
     }
 
     if (state.userSession && state.userSession.email) {
@@ -741,7 +750,7 @@
     const fWarn = document.getElementById("filterBtnCompensating");
     if (fAll) fAll.textContent = "All Controls (" + totalCount + ")";
     if (fComp) fComp.textContent = "Compliant (" + compliantCount + ")";
-    if (fWarn) fWarn.textContent = "Compensating / Action (" + compCount + ")";
+    if (fWarn) fWarn.textContent = "Needs review (" + compCount + ")";
 
     const freeLimit = 6;
     const unlockBadge = document.getElementById("ddqUnlockCounterBadge");
@@ -756,7 +765,7 @@
 
     const rowsHtml = [];
     state.controls.forEach((ctrl, idx) => {
-      if (state.activeFilter !== "all" && ctrl.status !== state.activeFilter) {
+      if (state.activeFilter !== "all" && (state.activeFilter === "COMPLIANT" ? ctrl.status !== "COMPLIANT" : ctrl.status === "COMPLIANT")) {
         return;
       }
       const isLockedRow = !state.isProUnlocked && idx >= freeLimit;
@@ -814,6 +823,7 @@
 
   function renderSelectedControlInspector() {
     const ctrl = state.controls[state.selectedControlIndex] || state.controls[0];
+    document.getElementById('selectedControlInspector').hidden = !ctrl;
     if (!ctrl) return;
 
     const freeLimit = 6;
@@ -829,7 +839,7 @@
     }
     document.getElementById('inspectorReviewReason').textContent = !sourceClause(ctrl)
       ? 'Evidence gap. Add a source policy that supports this answer.'
-      : ctrl.status === 'COMPENSATING' ? 'Partial evidence. Verify with the policy owner whether this clause covers the buyer’s request.' : 'A supporting policy clause is available.';
+      : ctrl.status !== 'COMPLIANT' ? 'Candidate evidence. Verify with the policy owner whether this clause covers the buyer’s request.' : 'A supporting policy clause is available.';
     document.getElementById('inspectorPolicyExcerpt').textContent = sourceClause(ctrl) || 'No matching clause in the current policy.';
     if (qEl) qEl.textContent = ctrl.question;
     if (anchorEl) anchorEl.textContent = ctrl.anchor;
@@ -983,7 +993,7 @@
     document.getElementById('runPipelineBtn').hidden = !state.sourceDirty;
     for (const id of ['btnExportCsvFile','btnExportJsonFile','btnExportVpatPdf','btnDownloadCsvQuick','btnCopyAllAnswers','btnOpenEvalDossier']) {
       const action = document.getElementById(id);
-      if (action) action.disabled = !!state.sourceDirty;
+      if (action) action.disabled = state.sourceDirty || !state.controls.length;
     }
     if (state.sourceDirty) {csvBox.textContent = statusText; jsonBox.textContent = statusText; return;}
     if (csvBox) csvBox.textContent = buildCsvContent();
@@ -1049,8 +1059,8 @@
       question: questionText,
       answer: anchor ? cleanClause : "No supporting clause found. Request policy evidence.",
       anchor: anchor,
-      status: anchor ? "COMPLIANT" : "COMPENSATING",
-      confidence: anchor ? "Text match" : "Needs evidence"
+      status: anchor ? "REVIEW_REQUIRED" : "MISSING_EVIDENCE",
+      confidence: anchor ? "Candidate clause; confirm coverage with policy owner" : "Needs evidence"
     };
   }
 
@@ -1073,6 +1083,7 @@
           });
         }
       } catch (_) {}
+      return [];
     }
 
     // Parse lines (CSV / TSV / Pipe-delimited / Plain lines)
@@ -1250,7 +1261,7 @@
   function renderInvoiceBox(inv) {
     const box = document.getElementById("generatedInvoiceBox");
     if (!box) return;
-    const isPaid = Boolean(inv.isPaid || state.isProUnlocked);
+    const isPaid = Boolean(inv.isPaid);
     const statusLabel = isPaid ? "PAID · PRO ACTIVE" : "AWAITING PAYMENT · NET-15 / INSTANT CHECKOUT";
     const statusColor = isPaid ? "#1A5638" : "#C8431F";
     const gumroadUrl = "https://caliberfoundry.gumroad.com/l/dealshield-pro";
@@ -1445,14 +1456,32 @@
       });
     }
 
+    function clearQuestionnaire() {
+      questionnaireRevision++;
+      state.controls = [];
+      state.selectedControlIndex = 0;
+      state.sourceDirty = false;
+      renderAll();
+    }
+
+    document.getElementById('customQuestionsTextarea').addEventListener('input', clearQuestionnaire);
     // Custom CSV / JSON questionnaire uploader & parser
     const fileInput = document.getElementById("fileInputQuestionnaire");
     if (fileInput) {
       fileInput.addEventListener("change", (e) => {
         const file = e.target.files && e.target.files[0];
         if (!file) return;
+        clearQuestionnaire();
+        const revision = questionnaireRevision;
         const reader = new FileReader();
+        reader.onerror = () => {
+          if (revision !== questionnaireRevision) return;
+          const feedback = document.getElementById("customParseFeedback");
+          feedback.textContent = "Could not read this file. Choose it again or paste your questions.";
+          feedback.classList.remove("hidden");
+        };
         reader.onload = function (evt) {
+          if (revision !== questionnaireRevision) return;
           const content = String(evt.target.result || "");
           const customBox = document.getElementById("customQuestionsTextarea");
           if (customBox) customBox.value = content;
@@ -1483,6 +1512,7 @@
       parseCustomBtn.addEventListener("click", () => {
         const customBox = document.getElementById("customQuestionsTextarea");
         const raw = customBox ? customBox.value : "";
+        clearQuestionnaire();
         const parsed = parseCustomQuestionnaireInput(raw);
         if (!parsed.length) {
           const feedback = document.getElementById('customParseFeedback');
@@ -1680,27 +1710,23 @@
 
     const activateKeyBtn = document.getElementById("btnActivateLicenseKey");
     if (activateKeyBtn) {
-      activateKeyBtn.addEventListener("click", () => {
+      activateKeyBtn.addEventListener("click", async () => {
         const keyIn = document.getElementById("licenseKeyInput");
         const keyVal = keyIn ? keyIn.value.trim().toUpperCase() : "";
-        const ver = verifyDealShieldLicenseKey(keyVal);
+        const receiptStatus = document.getElementById('receiptStatus');
+    try {
+      await receipt.check(keyVal, receiptStatus);
+    } catch (error) {
+      receiptStatus.textContent = error.message;
+      return;
+    }
+    const ver = verifyDealShieldLicenseKey(keyVal);
         if (ver.valid) {
-          unlockProLicense(
-            "Verified License · " + (ver.customerTag || "PRO"),
-            {
-              invoiceId: "INV-DSH-2026-8841",
-              company: ver.customerTag || (state.userSession && state.userSession.org) || "Enterprise License Holder",
-              email: (state.userSession && state.userSession.email) || "security@enterprise.io",
-              plan: "DealShield Studio PRO License (" + ver.tier + ")",
-              amount: "$399.00",
-              isPaid: true
-            },
-            keyVal
-          );
+          unlockProLicense("Verified license · " + ver.customerTag, null, keyVal);
         } else {
           const fb = document.getElementById("licenseFeedbackBox");
           if (fb) {
-            fb.textContent = "Invalid license key signature. Complete checkout via Gumroad or Contra (0% fee) to receive your signed activation key.";
+            fb.textContent = "This key could not be verified for this product. Check the key in your purchase receipt.";
             fb.classList.remove("hidden");
           }
         }
@@ -1752,8 +1778,8 @@
   // =========================================================================
   // BOOTSTRAP
   // =========================================================================
-  function init() {
-    loadPersistedState();
+  async function init() {
+    await loadPersistedState();
     bindEvents();
 
     const params = new URLSearchParams(window.location.search);

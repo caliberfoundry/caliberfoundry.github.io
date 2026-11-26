@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-product-design="edtech-studio">
+<html data-cf-private-inputs lang="en" data-product-design="edtech-studio">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; media-src 'self' data: blob:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>AcademyForge · Practice studio | Caliber Foundry</title>
   <meta name="description" content="Practise a lesson in AcademyForge, get feedback on your answer and download a SCORM 1.2 course. The robotics lesson is available in English and Korean." />
   <link rel="canonical" href="https://caliberfoundry.com/edtech-studio/" />
@@ -69,6 +69,17 @@
           </button>
         </div>
 
+        <details class="af-custom-gen-box"><summary>Author your own graded exercise</summary>
+          <form id="authorExercise">
+            <label>Question <input class="af-input" name="question" required maxlength="800"></label>
+            <label>Correct answer <input class="af-input" name="correct" required maxlength="400"></label>
+            <label>Incorrect alternative 1 <input class="af-input" name="first" required maxlength="400"></label>
+            <label>Incorrect alternative 2 <input class="af-input" name="second" required maxlength="400"></label>
+            <label>Explanation <input class="af-input" name="reason" required maxlength="1000"></label>
+            <button class="btn-primary" type="submit">Use this exercise</button>
+            <p role="status" id="authorStatus"></p>
+          </form>
+        </details>
         <!-- Mandatory ADR-024 Inline Progress Bar, Stage Label & Live Countdown right below button -->
         <div class="af-inline-progress hidden" id="genInlineProgress" role="status" aria-live="polite">
           <div class="af-prog-top">
@@ -403,7 +414,8 @@
         <form id="licenseKeyForm" class="af-custom-gen-box af-no-print" style="margin-top:0;">
           <span class="af-kicker" style="color:var(--cf-ink-primary);">ACTIVATE INDIVIDUAL RSA-512 LICENSE KEY (CFK-ALL / CFK-CF / CFK-ED)</span>
           <div class="af-custom-row">
-            <input type="text" id="licenseKeyInput" class="af-input mono" placeholder="CFK-CF-PRO-CLIENT-20271124-..." aria-label="RSA-512 License Key" />
+            <input type="password" id="licenseKeyInput" class="af-input mono" placeholder="Paste your receipt or issued license key" aria-label="Receipt or issued license key" />
+              <span id="receiptStatus" role="status" aria-live="polite"></span>
             <button type="submit" class="btn-primary" id="btnActivateLicenseKey">Activate Key</button>
           </div>
           <div class="mono hidden" id="licenseStatusMsg" style="font-size:11.5px;"></div>
@@ -474,6 +486,7 @@
     </details>
   </footer>
   <script src="./scorm_and_ttl_engine.js"></script>
+  <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="./app.js"></script>
   <script src="/assets/js/cf-telemetry.js" defer></script>
 </body>

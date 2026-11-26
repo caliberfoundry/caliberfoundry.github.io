@@ -8,6 +8,7 @@
  */
 (function () {
   "use strict";
+  const receipt = window.createGumroadReceiptVerifier('mRCHZzzC19F5vhYJqgdFbQ==', 'PRO');
 
   const STORAGE_KEYS = {
     PRO_UNLOCKED: "cf_academyforge_pro_v2",
@@ -68,6 +69,7 @@
   }
 
   function verifyAcademyForgeLicenseKey(rawKey) {
+    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
     const clean = String(rawKey || "").trim().toUpperCase();
     if (!clean) return { valid: false, reason: "EMPTY" };
     const parts = clean.split("-");
@@ -619,10 +621,14 @@
     attempts: new WeakMap()
   };
 
-  function restorePersistedLicense() {
+  async function restorePersistedLicense() {
     try {
       const savedKey = localStorage.getItem(STORAGE_KEYS.LICENSE_KEY);
       if (savedKey) {
+        if (receipt.matches(savedKey)) {
+        try { await receipt.check(savedKey); }
+        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+      }
         const ver = verifyAcademyForgeLicenseKey(savedKey);
         if (ver.valid) {
           state.proUnlocked = true;
@@ -1327,11 +1333,18 @@
     if (modal) modal.classList.add("hidden");
   }
 
-  function handleLicenseActivation(ev) {
+  async function handleLicenseActivation(ev) {
     ev.preventDefault();
     const inp = document.getElementById("licenseKeyInput");
     const msg = document.getElementById("licenseStatusMsg");
     const raw = inp ? inp.value.trim() : "";
+    const receiptStatus = document.getElementById('receiptStatus');
+    try {
+      await receipt.check(raw, receiptStatus);
+    } catch (error) {
+      receiptStatus.textContent = error.message;
+      return;
+    }
     const ver = verifyAcademyForgeLicenseKey(raw);
     if (!msg) return;
     msg.classList.remove("hidden");
@@ -1345,14 +1358,14 @@
       } catch (_) {}
       msg.style.color = "var(--cf-forest-pass)";
       msg.textContent =
-        "✓ RSA-512 Signature Verified (" + ver.product + " · " + ver.tier + " · Valid through " + ver.expiresIso + "). All PRO modules unlocked!";
+        ver.provider ? "Gumroad purchase verified. All Pro modules unlocked." : "✓ RSA-512 Signature Verified (" + ver.product + " · " + ver.tier + " · Valid through " + ver.expiresIso + "). All PRO modules unlocked!";
       renderAll();
     } else if (ver.expired) {
       msg.style.color = "var(--cf-danger)";
       msg.textContent = "License expired on " + ver.expiresIso + ". Please renew or generate a new invoice below.";
     } else {
       msg.style.color = "var(--cf-danger)";
-      msg.textContent = "Invalid RSA-512 license key signature. Expected CFK-ALL-..., CFK-CF-..., or CFK-ED-...";
+      msg.textContent = "This key could not be verified for this product. Check the key in your purchase receipt.";
     }
   }
 
@@ -1430,8 +1443,36 @@
   // =========================================================================
   // DOM INITIALIZATION & EVENT BINDINGS (ZERO INLINE ONCLICK — CSP SAFE)
   // =========================================================================
-  window.addEventListener("DOMContentLoaded", () => {
-    restorePersistedLicense();
+  window.addEventListener("DOMContentLoaded", async () => {
+    await restorePersistedLicense();
+
+    document.getElementById('authorExercise').addEventListener('submit', event => {
+      event.preventDefault();
+      const fields = new FormData(event.currentTarget);
+      const value = name => String(fields.get(name) || '').trim();
+      const answers = ['first', 'correct', 'second'].map(value);
+      const question = value('question'), reason = value('reason');
+      const status = document.getElementById('authorStatus');
+      if (!question || !reason || answers.includes('') || new Set(answers.map(a => a.toLowerCase())).size < 3) {
+        status.textContent = 'Enter a question, explanation and three different answers.';
+        return;
+      }
+      const correctText = answers[1];
+      const shift = question.length % 3;
+      const options = answers.slice(shift).concat(answers.slice(0, shift)).map((title, i) => ({
+        letter: 'ABC'[i], title, correct: title === correctText, detail: '', rationale: reason
+      }));
+      state.customVariants = [{ label:'Authored exercise', en:{
+        title:question, summary:'Instructor-authored exercise', stemHtml:'<p>' + escapeHtml(question) + '</p>',
+        questionPlain:question, options, hint1:'Review the lesson material.', hint2:'Choose the answer supported by the lesson.'
+      }, ko:null }];
+      state.activeCustomIdx = 0;
+      state.lang = 'en';
+      document.getElementById('generatedVariantsGrid').classList.add('hidden');
+      renderAll();
+      status.textContent = 'Exercise ready to practise and export as SCORM 1.2.';
+    });
+
 
     appendScormLog("Local practice", "Scores stay in this preview. The exported course connects to your LMS.");
 

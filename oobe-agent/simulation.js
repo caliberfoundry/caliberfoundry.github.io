@@ -1300,7 +1300,10 @@
     var payload = {
       exportedAt: new Date().toISOString(),
       agentId: 'oobe-sentinel-capital-agent-01',
-      runtime: 'OOBE Protocol / Steve Capital SAP MCP',
+      runtime: 'Local browser simulation',
+      simulated: true,
+      initialCapitalUsd: Number(document.getElementById('capitalSlider').value),
+      policy: getPolicyFromSliders(),
       epochs: state.backtestSteps.map(function (s) {
         return {
           stepIndex: s.stepIndex,
@@ -1316,7 +1319,7 @@
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'oobe-sentinel-sap-mcp-audit-trail.json';
+    a.download = 'oobe-sentinel-simulation.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

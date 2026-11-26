@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-product-design="codedrill-cbt">
+<html data-cf-private-inputs lang="en" data-product-design="codedrill-cbt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>CodeDrill™ CBT — Customs Broker (CBLE) &amp; IRS Enrolled Agent (SEE Parts 1–3) Simulator</title>
   <meta name="description" content="Split-Screen CBT Simulator &amp; 90-Second Citation-Speed Drill for the U.S. Customs Broker License Exam (19 CFR / HTSUS / GRI) and IRS Enrolled Agent Special Enrollment Examination (SEE Parts 1–3: 26 CFR / IRC &amp; 31 CFR Part 10)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -74,7 +74,7 @@
         <span class="cd-license-pill" id="headerLicenseStatusBadge">Free Trial (3/48 Qs)</span>
         <span class="cd-user-email-pill hidden" id="headerUserEmailBadge"></span>
         <button type="button" class="cd-btn-signin" id="btnHeaderSignIn">Sign In</button>
-        <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Unlock Full Access ($79)</button>
+        <button type="button" class="cd-btn-unlock-pro" id="btnHeaderUnlockPro">Unlock Full Access ($399)</button>
         <button type="button" class="cd-btn-signin hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
       </div>
 
@@ -181,11 +181,11 @@
               <button type="button" class="pvue-ratio-btn" data-split="38-62" title="38% Question / 62% Code Reader">38/62</button>
             </div>
 
-            <button type="button" class="pvue-tool-btn pvue-btn-check" id="btnCheckCurrentAnswer" title="Verify current question and reveal Official CBP Explanation">
+            <button type="button" class="pvue-tool-btn pvue-btn-check" id="btnCheckCurrentAnswer" title="Verify current question and reveal practice question explanation">
               <span>Check Answer</span>
             </button>
 
-            <button type="button" class="pvue-tool-btn pvue-btn-grade-exam" id="btnGradeFullExam" title="Complete exam and generate Official Score Report (75% Passing Threshold)">
+            <button type="button" class="pvue-tool-btn pvue-btn-grade-exam" id="btnGradeFullExam" title="Complete exam and generate practice score report (75% Passing Threshold)">
               <span>Submit &amp; Score Exam</span>
             </button>
           </div>
@@ -382,7 +382,7 @@
             <!-- ===========================================================
                  COLLAPSIBLE STUDY COACH & HINTS (3 STEP-BY-STEP CLUES)
                  =========================================================== -->
-            <section class="q-explanation-panel hidden" id="qExplanationPanel" aria-label="Official Legal Explanation and Distractor Analysis">
+            <section class="q-explanation-panel hidden" id="qExplanationPanel" aria-label="Practice explanation and Distractor Analysis">
               <div class="exp-status-banner" id="expStatusBanner">
                 <div class="exp-status-title" id="expStatusTitle">Correct Determination</div>
                 <div class="exp-status-meta" id="expStatusMeta">Target Citation: 19 CFR § 152.103</div>
@@ -411,13 +411,13 @@
 
               <!-- Verbatim Golden Quote -->
               <div class="exp-golden-quote-box">
-                <div class="exp-quote-header">§ Verbatim Golden Quote from Regulation</div>
+                <div class="exp-quote-header">§ Study passage · check the linked authority</div>
                 <blockquote class="exp-golden-quote-text" id="expGoldenQuoteText"></blockquote>
               </div>
 
               <!-- Official Legal Reasoning -->
               <div class="exp-reasoning-box">
-                <div class="exp-sub-header">Official Legal &amp; Regulatory Analysis</div>
+                <div class="exp-sub-header">Practice answer and explanation</div>
                 <p class="exp-reasoning-text" id="expCorrectReasoningText"></p>
               </div>
 
@@ -786,7 +786,7 @@
               </ul>
             </div>
             <div class="comp-col comp-col-codedrill">
-              <div class="comp-col-badge">CodeDrill™ CBT + Citation-Speed Engine ($79/mo)</div>
+              <div class="comp-col-badge">CodeDrill™ CBT + Citation-Speed Engine ($399 once)</div>
               <ul class="comp-list">
                 <li>+ Authentic 1:1 Pearson VUE Split-Screen Simulator with instant eCFR search</li>
                 <li>+ 90-Second Citation-Speed Drill + 3-Step Study Coach &amp; Hints</li>
@@ -799,64 +799,27 @@
           <!-- Two Pricing Cards: Candidate Pro (B2C) & Freight Forwarder / Brokerage Team (B2B) -->
           <div class="pricing-cards-grid">
 
-            <!-- Tier 1: Candidate Pro ($79/mo or $199 Exam Cycle Pass) -->
-            <div class="pricing-card">
-              <div class="pricing-card-top">
-                <div class="pricing-tier-tag">B2C Individual Candidate</div>
-                <h3 class="pricing-tier-name">Candidate Pro</h3>
-                <p class="pricing-tier-tagline">Complete 1:1 Pearson VUE Simulator &amp; Citation-Speed Drill for individual examinees.</p>
-
-                <div class="pricing-billing-toggle">
-                  <button type="button" class="billing-opt active" data-cycle="monthly" id="btnCycleMonthly">Monthly ($79/mo)</button>
-                  <button type="button" class="billing-opt" data-cycle="pass" id="btnCycleExamPass">6-Month Exam Cycle Pass ($199)</button>
-                </div>
-
-                <div class="pricing-price-row">
-                  <span class="pricing-price-amount" id="b2cPriceAmount">$79</span>
-                  <span class="pricing-price-period" id="b2cPricePeriod">/ month · cancel anytime</span>
-                </div>
-              </div>
-
-              <ul class="pricing-feature-list">
-                <li><strong>Full Split-Screen CBT Simulator</strong> (All 48 Exam Cases &amp; 10 Suites: CBLE + IRS SEE Parts 1–3)</li>
-                <li><strong>Unlimited 90s Citation-Speed Drill</strong> (0.1s lookup telemetry &amp; topic test suites)</li>
-                <li><strong>3-Step Study Coach</strong> with progressive regulatory hints &amp; shortest code paths</li>
-                <li><strong>2018–2026 Official CBP Past Exam Bank</strong> updated for Modernized Part 111 &amp; TFTEA Part 190 Drawback</li>
-                <li><strong>Authentic Pearson VUE Tools:</strong> Right-Click Distractor Strikethrough, Yellow Marker Highlight &amp; Valuation Calculator</li>
-                <li><strong>75% Pass Probability Guarantee</strong> or free extension through next CBP exam cycle</li>
-              </ul>
-
-              <button type="button" class="pricing-cta-btn pricing-cta-b2c" id="btnCheckoutB2C" data-plan-code="PRO_MONTHLY" data-plan="Candidate Pro Monthly — $79 / month">
-                Start Candidate Pro — $79/mo →
-              </button>
-            </div>
-
-            <!-- Tier 2: Brokerage & Freight Forwarder Team ($399/mo) -->
+            <!-- Tier 2: Brokerage & Freight Forwarder Team ($399 once) -->
             <div class="pricing-card pricing-card-featured">
               <div class="pricing-popular-ribbon">Enterprise Team Plan</div>
               <div class="pricing-card-top">
                 <div class="pricing-tier-tag">B2B Customs Brokerages &amp; Freight Forwarders</div>
                 <h3 class="pricing-tier-name">Brokerage &amp; Freight Forwarder Team</h3>
-                <p class="pricing-tier-tagline">License more in-house customs brokers and trade compliance specialists with centralized team telemetry.</p>
+                <p class="pricing-tier-tagline">Use timed practice and source lookup to review the questions your staff missed.</p>
 
                 <div class="pricing-price-row">
                   <span class="pricing-price-amount">$399</span>
-                  <span class="pricing-price-period">/ month · up to 15 seats included</span>
+                  <span class="pricing-price-period">one-time purchase</span>
                 </div>
-                <div class="pricing-seat-note">Replaces $18,000+ in traditional corporate prep course reimbursements</div>
               </div>
-
               <ul class="pricing-feature-list">
-                <li><strong>Up to 15 Candidate Pro Seats</strong> with instant seat reassignment across exam cycles</li>
-                <li><strong>Team Manager Readiness Dashboard:</strong> Monitor each employee’s lookup speed &amp; 75% pass probability before exam day</li>
-                <li><strong>Multi-Track Regulatory License:</strong> Includes <strong>US Customs Broker (19 CFR / HTSUS)</strong> + <strong>IRS Enrolled Agent (SEE Parts 1–3: 26 CFR / IRC &amp; Circular 230)</strong> tracks</li>
-                <li><strong>Custom Corporate Drills:</strong> Assign Part 152 Valuation, Part 190 Drawback, or HTSUS GRI sprints to entry writers</li>
-                <li><strong>Corporate Invoice / ACH / Wire / PO Billing</strong> &amp; Printable B2B Readiness Dossier</li>
+                <li>The full customs broker and enrolled agent practice bank</li>
+                <li>Explanations, citations and timed reference drills</li>
+                <li>A printable report of answers from the current session</li>
               </ul>
-
               <div class="pricing-b2b-btn-stack">
-                <button type="button" class="pricing-cta-btn pricing-cta-b2b" id="btnCheckoutB2B" data-plan-code="TEAM_MONTHLY" data-plan="Brokerage &amp; Freight Forwarder Team — $399 / month">
-                  Deploy Brokerage Team Plan ($399/mo) →
+                <button type="button" class="pricing-cta-btn pricing-cta-b2b" id="btnCheckoutB2B" data-plan-code="TEAM_LICENSE" data-plan="Brokerage &amp; Freight Forwarder Team — $399 once">
+                  Deploy Brokerage Team Plan ($399 once) →
                 </button>
                 <button type="button" class="pricing-b2b-report-link" id="btnB2BCardPreviewReport">
                   Export Printable B2B Team Readiness Report (PDF)
@@ -1016,7 +979,7 @@
       <div class="pvue-modal-header">
         <div class="pvue-modal-title-group">
           <span class="pvue-modal-icon">§</span>
-          <h2 id="scoreModalTitle">Official Examination Score Report</h2>
+          <h2 id="scoreModalTitle">Practice Examination Score Report</h2>
         </div>
         <button type="button" class="pvue-modal-close" id="btnCloseScoreReportModal" aria-label="Close Score Report">×</button>
       </div>
@@ -1097,38 +1060,16 @@
             </div>
 
             <!-- Choose 1 of 3 Plans -->
-            <div class="plan-picker-label">Select Your Plan:</div>
+            <div class="plan-picker-label">Corporate license</div>
             <div class="plan-picker-grid" id="regPlanSelector">
-              <label class="plan-radio-card selected" data-plan-code="PRO_MONTHLY">
-                <input type="radio" name="regPlanChoice" value="PRO_MONTHLY" checked />
-                <div class="plan-radio-body">
-                  <div class="plan-radio-top">
-                    <strong>Candidate Pro Monthly</strong>
-                    <span class="plan-radio-price">$79 / month</span>
-                  </div>
-                  <div class="plan-radio-desc">Full access to all 30 exam cases, 7 topic suites, unlimited 90s Speed Drills &amp; calculator.</div>
-                </div>
-              </label>
-
-              <label class="plan-radio-card" data-plan-code="PRO_CYCLE">
-                <input type="radio" name="regPlanChoice" value="PRO_CYCLE" />
-                <div class="plan-radio-body">
-                  <div class="plan-radio-top">
-                    <strong>6-Month Exam Cycle Pass <span class="plan-save-tag">Save 58%</span></strong>
-                    <span class="plan-radio-price">$199 one-time</span>
-                  </div>
-                  <div class="plan-radio-desc">Complete uninterrupted access across the entire 6-month CBP / IRS examination cycle.</div>
-                </div>
-              </label>
-
-              <label class="plan-radio-card" data-plan-code="TEAM_MONTHLY">
-                <input type="radio" name="regPlanChoice" value="TEAM_MONTHLY" />
+              <label class="plan-radio-card" data-plan-code="TEAM_LICENSE">
+                <input checked type="radio" name="regPlanChoice" value="TEAM_LICENSE" />
                 <div class="plan-radio-body">
                   <div class="plan-radio-top">
                     <strong>Brokerage &amp; Freight Forwarder Team</strong>
-                    <span class="plan-radio-price">$399 / month</span>
+                    <span class="plan-radio-price">$399 once</span>
                   </div>
-                  <div class="plan-radio-desc">Up to 15 staff seats, team readiness analytics, multi-track CBLE + EA &amp; corporate invoicing.</div>
+                  <div class="plan-radio-desc">Access the full practice bank, timing data and printable session reports.</div>
                 </div>
               </label>
             </div>
@@ -1165,7 +1106,7 @@
           <div class="checkout-selected-plan-banner">
             <div>
               <span class="checkout-plan-kicker">Selected Plan</span>
-              <h3 class="checkout-plan-name" id="checkoutSelectedPlanName">Candidate Pro Monthly — $79 / month</h3>
+              <h3 class="checkout-plan-name" id="checkoutSelectedPlanName">Corporate practice license · $399 once</h3>
             </div>
             <span class="checkout-guarantee-pill">75% Pass Guarantee</span>
           </div>
@@ -1201,7 +1142,7 @@
                 <label for="cardNumberInput">Preferred Payment Gateway</label>
                 <select id="cardNumberInput">
                   <option value="gumroad">Instant Credit Card / Apple Pay (Gumroad · $399 Auto-Key Delivery)</option>
-                  <option value="contra">Contra B2B Checkout (0% Fee · $399 Corporate Card / ACH)</option>
+                  <option value="contra">Discuss a separately scoped service on Contra</option>
                 </select>
               </div>
 
@@ -1277,12 +1218,13 @@
               <div class="checkout-field">
                 <label for="licenseKeyInput">Enter Caliber Foundry License Key</label>
                 <input
-                  type="text"
+                  type="password"
                   id="licenseKeyInput"
                   class="license-key-input"
-                  placeholder="CDR-PRO-2026-XXXX or CF-TEAM-2026-XXXX-XXXX"
+                  placeholder="Paste your receipt or issued license key"
                 />
-                <span class="license-key-hint">Delivered automatically on your Gumroad or Contra receipt, or upon Corporate Invoice confirmation.</span>
+              <span id="receiptStatus" role="status" aria-live="polite"></span>
+                <span class="license-key-hint">Delivered automatically on your Gumroad receipt, or upon Corporate Invoice confirmation.</span>
               </div>
               <button type="button" class="checkout-submit-btn" id="btnActivateLicenseKey">
                 Validate &amp; Activate License Key →
@@ -1400,10 +1342,10 @@
         </button>
         <div class="b2b-footer-right-actions">
           <button type="button" class="pvue-btn-secondary" id="btnPrintB2BTeamReport">
-            Print / Save Official B2B Readiness PDF
+            Print / Save Team Practice Report
           </button>
           <button type="button" class="pvue-btn-primary" id="btnUpgradeFromB2BReport">
-            Provision 15-Seat Brokerage Team License ($399/mo) →
+            Get the corporate practice license ($399 once) →
           </button>
         </div>
       </div>
@@ -1416,6 +1358,7 @@
   <!-- External Data Payload + Core Application Logic -->
   <footer class="product-utilities" data-product-feedback><a href="../#work">All products</a></footer>
   <script src="data/codedrill-data.js"></script>
+  <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="app.js?v=20261124-workspace"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-product-design="omnirag">
+<html data-cf-private-inputs lang="en" data-product-design="omnirag">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
   <title>OmniRAG™ — Document Evidence Verifier &amp; Due Diligence Pack | Caliber Foundry</title>
   <link rel="stylesheet" href="./reader.css" />
 </head>
@@ -204,7 +204,6 @@
             <div style="display:flex;flex-direction:column;gap:6px;">
               <button type="button" class="btn-tactile btn-tactile-primary" id="btnSelectPlan249" data-plan-select="DD_PACK_249">Selected: $249 Pack</button>
               <a href="https://caliberfoundry.gumroad.com/l/omnirag-pro" target="_blank" rel="noopener noreferrer" class="btn-tactile" style="text-align:center;text-decoration:none;">Buy on Gumroad ($249) &nearr;</a>
-              <a href="https://contra.com/products/xPCcoFhy-omni-rag-multi-document-citation-and-due-diligence-pack" target="_blank" rel="noopener noreferrer" class="btn-tactile" style="text-align:center;text-decoration:none;">Buy on Contra ($249 &middot; 0% fee) &nearr;</a>
             </div>
           </div>
 
@@ -270,12 +269,13 @@
           <div class="om-billing-box om-license-col">
             <h3>2. Activate Signed License Key</h3>
             <p class="om-upload-note" style="margin-bottom:10px;">
-              Paste your Caliber Foundry RSA-512 activation key (<code>CFK-OMNI-...</code>) issued after invoice settlement to unlock up to 12 local files per pack.
+              Paste your Gumroad receipt key or an issued Caliber Foundry license to unlock up to 12 local files per pack.
             </p>
             <div class="om-form-grid">
               <div class="om-field">
                 <label for="omLicenseKeyInput">License Key</label>
-                <input type="text" id="omLicenseKeyInput" class="om-form-input mono" placeholder="CFK-OMNI-PRO-..." autocomplete="off" />
+                <input type="password" id="omLicenseKeyInput" class="om-form-input mono" placeholder="Paste your receipt or issued license key" autocomplete="off" />
+              <span id="receiptStatus" role="status" aria-live="polite"></span>
               </div>
               <button type="button" id="btnActivateKey" class="btn-tactile">Activate License Key</button>
             </div>
@@ -310,11 +310,11 @@
     <div style="display:flex;flex-wrap:wrap;gap:14px;">
       <a href="../pricing.html#price-omnirag">Pricing ($249)</a>
       <a href="https://caliberfoundry.gumroad.com/l/omnirag-pro" target="_blank" rel="noopener noreferrer">Gumroad ($249) &nearr;</a>
-      <a href="https://contra.com/products/xPCcoFhy-omni-rag-multi-document-citation-and-due-diligence-pack" target="_blank" rel="noopener noreferrer">Contra (0% fee) &nearr;</a>
       <a href="mailto:engineering@caliberfoundry.com?subject=OmniRAG%20Due%20Diligence%20Pack%20inquiry">Contact engineering</a>
     </div>
   </footer>
 
+  <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="./app.js" defer></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>

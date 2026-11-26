@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-product-design="content-studio">
+<html data-cf-private-inputs lang="en" data-product-design="content-studio">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://api.gumroad.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>ContentForge™ — Multi-Format B2B, EdTech &amp; Technical Content Generation Studio | Caliber Foundry</title>
-  <meta name="description" content="Citation-locked B2B technical content generation, Ground-Truth Document Extraction Evaluation Harness (0.0% Hallucination Gate), n8n/Make.com JSON Webhook automation, and EdTech SCORM 1.2 quiz studio." />
+  <meta name="description" content="Create a printable dossier from source excerpts, inspect the JSON and deliver it to your HTTPS webhook with a signed Python request." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -92,6 +92,11 @@
               </div>
             </div>
 
+            <details><summary>Deliver this dossier to your webhook</summary>
+              <p>Download the current payload and Python sender. Set CONTENTFORGE_WEBHOOK_URL and CONTENTFORGE_SIGNING_SECRET in your environment, then run <code>python3 deliver.py dossier.json</code>. Your receiver can verify the HMAC-SHA256 signature in X-ContentForge-Signature and deduplicate repeated requests by Idempotency-Key.</p>
+              <button type="button" class="cf-btn-mini" id="downloadWebhookPayload">Download dossier.json</button>
+              <a href="./deliver.py" download>Download Python sender</a>
+            </details>
             <div class="cf-webhook-status-box" id="webhookStatusBox" role="status">
               Preview the locally generated payload for your selected scenario.
             </div>
@@ -413,7 +418,7 @@
                 <label for="cardNumberInput" class="cf-field-label">Preferred Payment Gateway</label>
                 <select id="cardNumberInput" class="cf-text-input">
                   <option value="gumroad">Instant Card / Apple Pay (Gumroad · $299 Auto-Key)</option>
-                  <option value="contra">Contra B2B Checkout (0% Fee · $399 / $2,500 Sprint)</option>
+                  <option value="contra">Discuss a separately scoped service on Contra</option>
                 </select>
               </div>
             </div>
@@ -471,7 +476,8 @@
           <div class="cf-checkout-form">
             <div class="cf-field-group">
               <label for="licenseKeyInput" class="cf-field-label">Enter Enterprise License Key</label>
-              <input type="text" id="licenseKeyInput" class="cf-text-input cf-key-input" placeholder="CF-XXXX-XXXX-XXXX" required />
+              <input type="password" id="licenseKeyInput" class="cf-text-input cf-key-input" placeholder="Paste your receipt or issued license key" required />
+              <span id="receiptStatus" role="status" aria-live="polite"></span>
               <span class="cf-key-hint">Issued automatically upon payment or corporate invoice approval.</span>
             </div>
             <button type="button" class="cf-btn-primary cf-btn-full" id="btnActivateLicenseKey">
@@ -526,6 +532,7 @@
 
   <script src="/assets/js/cf-telemetry.js" defer></script>
   <script src="presets-data.js"></script>
+  <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="app.js?v=20261124-ux"></script>
 </body>
 </html>

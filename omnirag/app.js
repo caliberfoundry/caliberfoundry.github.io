@@ -16,6 +16,7 @@
 
 (function () {
   'use strict';
+  const receipt = window.createGumroadReceiptVerifier('6xYvQh92wtkxQlp8C3Vu-A==', 'PRO');
 
   const STORAGE_KEY = 'cf_omnirag_plan53_state_v1';
   const FREE_FILE_LIMIT = 2;
@@ -309,7 +310,7 @@
     return h === 'localhost' || h === '127.0.0.1' || p === 'file:' || !h;
   }
 
-  function loadPersistedState() {
+  async function loadPersistedState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
@@ -321,6 +322,10 @@
         state.lastInvoice = saved.lastInvoice;
       }
       if (saved.licenseKey) {
+        if (receipt.matches(saved.licenseKey)) {
+        try { await receipt.check(saved.licenseKey); }
+        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+      }
         const ver = verifyOmniLicenseKey(saved.licenseKey);
         if (ver.valid) {
           state.licenseTier = ver.tier;
@@ -441,6 +446,7 @@
   }
 
   function verifyOmniLicenseKey(rawKey) {
+    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
     const clean = String(rawKey || '').trim().toUpperCase();
     if (!clean) return { valid: false };
     const parts = clean.split('-');
@@ -645,419 +651,9 @@
     }
   }
 
-  async function inflateBytes(compressedUint8) {
-    if (typeof DecompressionStream === 'undefined') return null;
-    for (const algo of ['deflate', 'deflate-raw']) {
-      try {
-        const ds = new DecompressionStream(algo);
-        const writer = ds.writable.getWriter();
-        writer.write(compressedUint8);
-        writer.close();
-        const outBuf = await new Response(ds.readable).arrayBuffer();
-        return new Uint8Array(outBuf);
-      } catch (_) {
-        // Try next algorithm
-      }
-    }
-    return null;
-  }
-
-  function decodePdfLiteralString(raw) {
-    let out = '';
-    for (let i = 0; i < raw.length; i++) {
-      const ch = raw[i];
-      if (ch === '\\' && i + 1 < raw.length) {
-        const next = raw[++i];
-        if (next === 'n') out += '\n';
-        else if (next === 'r') out += '\r';
-        else if (next === 't') out += '\t';
-        else if (next === 'b') out += '\b';
-        else if (next === 'f') out += '\f';
-        else if (next === '(' || next === ')' || next === '\\') out += next;
-        else if (/[0-7]/.test(next)) {
-          let oct = next;
-          if (i + 1 < raw.length && /[0-7]/.test(raw[i + 1])) oct += raw[++i];
-          if (i + 1 < raw.length && /[0-7]/.test(raw[i + 1])) oct += raw[++i];
-          out += String.fromCharCode(parseInt(oct, 8));
-        } else if (next === '\r' || next === '\n') {
-          if (next === '\r' && raw[i + 1] === '\n') i++;
-        } else {
-          out += next;
-        }
-      } else {
-        out += ch;
-      }
-    }
-    return out;
-  }
-
-  function decodePdfHexString(hex) {
-    const clean = hex.replace(/[^0-9a-fA-F]/g, '');
-    if (!clean.length) return '';
-    const padded = clean.length % 2 === 1 ? clean + '0' : clean;
-    // Check UTF-16BE BOM FEFF
-    if (padded.toUpperCase().startsWith('FEFF') && padded.length >= 8) {
-      let u16 = '';
-      for (let i = 4; i + 3 < padded.length; i += 4) {
-        u16 += String.fromCharCode(parseInt(padded.slice(i, i + 4), 16));
-      }
-      return u16;
-    }
-    let out = '';
-    for (let i = 0; i + 1 < padded.length; i += 2) {
-      const code = parseInt(padded.slice(i, i + 2), 16);
-      if (code >= 32 && code <= 126) out += String.fromCharCode(code);
-      else if (code === 10 || code === 13 || code === 9) out += ' ';
-    }
-    return out;
-  }
-
-  function extractTextLinesFromPdfStream(streamText) {
-    const lines = [];
-    const btRegex = /\bBT\b([\s\S]*?)\bET\b/g;
-    let btMatch;
-
-    while ((btMatch = btRegex.exec(streamText)) !== null) {
-      const block = btMatch[1];
-      let i = 0;
-      let currentLine = '';
-
-      const flushLine = () => {
-        const cleaned = currentLine.replace(/\s+/g, ' ').trim();
-        if (cleaned.length >= 2) lines.push(cleaned);
-        currentLine = '';
-      };
-
-      while (i < block.length) {
-        const ch = block[i];
-
-        // Skip PDF comments
-        if (ch === '%') {
-          while (i < block.length && block[i] !== '\n' && block[i] !== '\r') i++;
-          continue;
-        }
-
-        // Literal string (...)
-        if (ch === '(') {
-          let depth = 1;
-          let raw = '';
-          i++;
-          while (i < block.length && depth > 0) {
-            if (block[i] === '\\' && i + 1 < block.length) {
-              raw += block[i] + block[i + 1];
-              i += 2;
-              continue;
-            }
-            if (block[i] === '(') depth++;
-            else if (block[i] === ')') {
-              depth--;
-              if (depth === 0) {
-                i++;
-                break;
-              }
-            }
-            raw += block[i++];
-          }
-          // Check operator immediately following string (Tj, ', ")
-          let j = i;
-          while (j < block.length && /\s/.test(block[j])) j++;
-          if (block.slice(j, j + 2) === 'Tj' || block[j] === "'" || block[j] === '"') {
-            currentLine += decodePdfLiteralString(raw);
-            i = j + (block.slice(j, j + 2) === 'Tj' ? 2 : 1);
-            flushLine();
-            continue;
-          }
-          continue;
-        }
-
-        // Array [...] TJ
-        if (ch === '[') {
-          let arrText = '';
-          i++;
-          while (i < block.length && block[i] !== ']') {
-            if (block[i] === '(') {
-              let depth = 1;
-              let raw = '';
-              i++;
-              while (i < block.length && depth > 0) {
-                if (block[i] === '\\' && i + 1 < block.length) {
-                  raw += block[i] + block[i + 1];
-                  i += 2;
-                  continue;
-                }
-                if (block[i] === '(') depth++;
-                else if (block[i] === ')') {
-                  depth--;
-                  if (depth === 0) {
-                    i++;
-                    break;
-                  }
-                }
-                raw += block[i++];
-              }
-              arrText += decodePdfLiteralString(raw);
-            } else if (block[i] === '<' && block[i + 1] !== '<') {
-              let hex = '';
-              i++;
-              while (i < block.length && block[i] !== '>') hex += block[i++];
-              if (block[i] === '>') i++;
-              arrText += decodePdfHexString(hex);
-            } else if (/[-\d.]/.test(block[i])) {
-              let numStr = '';
-              while (i < block.length && /[-\d.]/.test(block[i])) numStr += block[i++];
-              const kern = parseFloat(numStr);
-              if (!isNaN(kern) && kern < -140 && arrText && !arrText.endsWith(' ')) {
-                arrText += ' ';
-              }
-            } else {
-              i++;
-            }
-          }
-          if (block[i] === ']') i++;
-          let j = i;
-          while (j < block.length && /\s/.test(block[j])) j++;
-          if (block.slice(j, j + 2) === 'TJ') {
-            currentLine += arrText;
-            i = j + 2;
-            flushLine();
-            continue;
-          }
-          continue;
-        }
-
-        // Hex string <...> Tj
-        if (ch === '<' && block[i + 1] !== '<') {
-          let hex = '';
-          i++;
-          while (i < block.length && block[i] !== '>') hex += block[i++];
-          if (block[i] === '>') i++;
-          let j = i;
-          while (j < block.length && /\s/.test(block[j])) j++;
-          if (block.slice(j, j + 2) === 'Tj') {
-            currentLine += decodePdfHexString(hex);
-            i = j + 2;
-            flushLine();
-            continue;
-          }
-          continue;
-        }
-
-        i++;
-      }
-      flushLine();
-    }
-
-    // Filter out non-printable garbage while preserving real readable text
-    return lines.filter((line) => {
-      const printable = line.replace(/[^\x20-\x7E\u00A0-\u024F\u0400-\u04FF]/g, '');
-      return printable.length >= 4 && printable.length / line.length >= 0.75;
-    });
-  }
-
   async function parsePdfDocument(fileName, arrayBuffer, docId) {
-    const bytes = new Uint8Array(arrayBuffer);
-    const latin1 = decodeLatin1(bytes);
-    const verMatch = latin1.slice(0, 1024).match(/%PDF-(\d\.\d)/);
-
-    if (!verMatch) {
-      return {
-        id: docId,
-        name: fileName,
-        format: 'PDF',
-        byteLength: bytes.length,
-        uploaded: true,
-        parseError: true,
-        statusNote: 'Invalid PDF header',
-        chunks: [
-          {
-            id: docId + '_err',
-            coord: 'File Header',
-            title: 'Not a valid PDF binary',
-            text: 'No %PDF-1.x header signature was found at the start of this file.'
-          }
-        ]
-      };
-    }
-
-    const pdfVersion = '%PDF-' + verMatch[1];
-    const isEncrypted = /\/Encrypt\b/.test(latin1);
-    const pageMatches = latin1.match(/\/Type\s*\/Page\b(?!s)/g);
-    const pageCount = pageMatches ? pageMatches.length : 1;
-
-    if (isEncrypted) {
-      return {
-        id: docId,
-        name: fileName,
-        format: 'PDF',
-        byteLength: bytes.length,
-        pageCount,
-        uploaded: true,
-        statusNote: pdfVersion + ' · Encrypted PDF (text locked)',
-        chunks: [
-          {
-            id: docId + '_enc',
-            coord: 'Document Catalog',
-            title: 'Encrypted PDF — Browser Extraction Blocked',
-            text:
-              fileName +
-              ' (' +
-              pdfVersion +
-              ', ' +
-              pageCount +
-              ' page(s)) contains an /Encrypt dictionary. Decrypt or export an unencrypted copy to inspect passages locally.'
-          }
-        ]
-      };
-    }
-
-    // Index all indirect objects with exact byte offsets into bytes[]
-    const objMap = new Map();
-    const objRegex = /(\d+)\s+(\d+)\s+obj\b/g;
-    let m;
-    while ((m = objRegex.exec(latin1)) !== null) {
-      const objNum = Number(m[1]);
-      const bodyStart = m.index + m[0].length;
-      const endIdx = latin1.indexOf('endobj', bodyStart);
-      if (endIdx === -1) continue;
-      objMap.set(objNum, {
-        objNum,
-        bodyStart,
-        bodyEnd: endIdx,
-        bodyText: latin1.slice(bodyStart, endIdx)
-      });
-    }
-
-    // Map pages to their /Contents object numbers
-    const pageContentRefs = [];
-    for (const obj of objMap.values()) {
-      if (/\/Type\s*\/Page\b(?!s)/.test(obj.bodyText)) {
-        const refs = [];
-        const singleMatch = obj.bodyText.match(/\/Contents\s+(\d+)\s+\d+\s+R/);
-        const arrayMatch = obj.bodyText.match(/\/Contents\s*\[([\s\S]*?)\]/);
-        if (singleMatch) {
-          refs.push(Number(singleMatch[1]));
-        } else if (arrayMatch) {
-          const rRe = /(\d+)\s+\d+\s+R/g;
-          let rm;
-          while ((rm = rRe.exec(arrayMatch[1])) !== null) refs.push(Number(rm[1]));
-        }
-        pageContentRefs.push(refs);
-      }
-    }
-
-    // Helper to extract and decode a stream object
-    let unsupportedFilters = 0;
-    async function extractStreamFromObj(obj) {
-      if (!obj) return '';
-      const streamRel = obj.bodyText.indexOf('stream');
-      if (streamRel === -1) return '';
-      const dictPart = obj.bodyText.slice(0, streamRel);
-      const endStreamRel = obj.bodyText.indexOf('endstream', streamRel);
-      if (endStreamRel === -1) return '';
-
-      let dataStart = obj.bodyStart + streamRel + 6;
-      if (bytes[dataStart] === 13 && bytes[dataStart + 1] === 10) dataStart += 2;
-      else if (bytes[dataStart] === 10 || bytes[dataStart] === 13) dataStart += 1;
-
-      let dataEnd = obj.bodyStart + endStreamRel;
-      if (dataEnd > dataStart && bytes[dataEnd - 1] === 10) dataEnd--;
-      if (dataEnd > dataStart && bytes[dataEnd - 1] === 13) dataEnd--;
-
-      const rawSlice = bytes.slice(dataStart, Math.max(dataStart, dataEnd));
-      const hasFlate = /\/FlateDecode\b/.test(dictPart);
-      const hasOtherFilter = /\/(LZWDecode|ASCII85Decode|DCTDecode|JPXDecode|CCITTFaxDecode|JBIG2Decode)\b/.test(dictPart);
-
-      if (hasOtherFilter && !hasFlate) {
-        unsupportedFilters++;
-        return '';
-      }
-      if (hasFlate) {
-        const inflated = await inflateBytes(rawSlice);
-        if (!inflated) {
-          unsupportedFilters++;
-          return '';
-        }
-        return decodeLatin1(inflated);
-      }
-      return decodeLatin1(rawSlice);
-    }
-
-    const chunks = [];
-    let extractedPages = 0;
-
-    if (pageContentRefs.length > 0 && pageContentRefs.some((r) => r.length > 0)) {
-      for (let pIdx = 0; pIdx < pageContentRefs.length; pIdx++) {
-        const pageNum = pIdx + 1;
-        const refs = pageContentRefs[pIdx];
-        let combinedStream = '';
-        for (const refId of refs) {
-          combinedStream += '\n' + (await extractStreamFromObj(objMap.get(refId)));
-        }
-        const lines = extractTextLinesFromPdfStream(combinedStream);
-        if (lines.length > 0) extractedPages++;
-        lines.forEach((line, lIdx) => {
-          const title = line.length > 68 ? line.slice(0, 65).trim() + '...' : line;
-          chunks.push({
-            id: docId + '_p' + pageNum + '_l' + (lIdx + 1),
-            coord: 'Page ' + pageNum + ', Line ' + (lIdx + 1),
-            title,
-            text: line
-          });
-        });
-      }
-    } else {
-      // Fallback: scan all stream objects in document order
-      let streamIdx = 0;
-      for (const obj of objMap.values()) {
-        if (!obj.bodyText.includes('stream')) continue;
-        streamIdx++;
-        const decoded = await extractStreamFromObj(obj);
-        const lines = extractTextLinesFromPdfStream(decoded);
-        lines.forEach((line, lIdx) => {
-          const title = line.length > 68 ? line.slice(0, 65).trim() + '...' : line;
-          chunks.push({
-            id: docId + '_s' + streamIdx + '_l' + (lIdx + 1),
-            coord: 'Stream ' + streamIdx + ', Line ' + (lIdx + 1),
-            title,
-            text: line
-          });
-        });
-      }
-    }
-
-    if (chunks.length === 0) {
-      const reason = unsupportedFilters > 0
-        ? 'Uses compressed/image streams unsupported without external OCR or custom font CMap.'
-        : '0 text-stream operators extracted (likely a scanned image-only PDF; OCR is not included in browser-only tier).';
-      return {
-        id: docId,
-        name: fileName,
-        format: 'PDF',
-        byteLength: bytes.length,
-        pageCount,
-        uploaded: true,
-        statusNote: pdfVersion + ' · ' + pageCount + ' pp · metadata only (0 text runs)',
-        chunks: [
-          {
-            id: docId + '_meta',
-            coord: 'PDF Metadata (' + pageCount + ' pp)',
-            title: 'PDF Parsed — No Extractable Plain Text Found',
-            text: fileName + ' (' + pdfVersion + ', ' + Math.max(1, Math.round(bytes.length / 1024)) + ' KB, ' + pageCount + ' page(s)). ' + reason
-          }
-        ]
-      };
-    }
-
-    return {
-      id: docId,
-      name: fileName,
-      format: 'PDF',
-      byteLength: bytes.length,
-      pageCount,
-      uploaded: true,
-      statusNote: pdfVersion + ' · ' + pageCount + ' pp · ' + chunks.length + ' text passages',
-      chunks
-    };
+    const reader = await import('./pdf-passages.mjs');
+    return reader.parse(fileName, arrayBuffer, docId);
   }
 
   function parsePlainTextDocument(fileName, rawText, byteLength, docId) {
@@ -1384,7 +980,7 @@
     }
 
     // 3. Token & numeric overlap scoring (strict minimum threshold -> zero hallucination)
-    const queryTokens = Array.from(new Set(tokenizeKeywords(query)));
+    const queryTokens = Array.from(new Set(tokenizeKeywords(query).filter(word => !/^\d+$/.test(word))));
     const queryNums = (query.match(/\$?[\d,]+(?:\.\d+)?/g) || []).map((n) => n.replace(/[$,]/g, ''));
 
     if (queryTokens.length === 0 && queryNums.length === 0) return [];
@@ -1397,7 +993,7 @@
       let tokenHits = 0;
 
       queryTokens.forEach((tk) => {
-        if (hay.includes(tk)) {
+        if (tokenizeKeywords(hay).includes(tk)) {
           tokenHits++;
           score += tk.length >= 6 ? 3 : 2;
         }
@@ -1407,7 +1003,7 @@
       queryNums.forEach((qn) => {
         if (qn.length >= 2 && hayCleanNums.includes(qn)) {
           numHits++;
-          score += 5;
+          score += /^(19|20)\d{2}$/.test(qn) ? 1 : 5;
         }
       });
 
@@ -2648,10 +2244,17 @@
     }
   }
 
-  function handleActivateLicenseKey() {
+  async function handleActivateLicenseKey() {
     const input = document.getElementById('omLicenseKeyInput');
     const fb = document.getElementById('omLicenseFeedback');
     const raw = input ? input.value.trim().toUpperCase() : '';
+    const receiptStatus = document.getElementById('receiptStatus');
+    try {
+      await receipt.check(raw, receiptStatus);
+    } catch (error) {
+      receiptStatus.textContent = error.message;
+      return;
+    }
     const ver = verifyOmniLicenseKey(raw);
 
     if (ver.valid) {
@@ -2668,8 +2271,7 @@
           ver.tier +
           ' · ' +
           state.licenseCustomer +
-          ', expires ' +
-          ver.expiresIso +
+          (ver.expiresIso ? ', expires ' + ver.expiresIso : '') +
           '). Up to ' +
           PRO_FILE_LIMIT +
           ' local files per pack unlocked.';
@@ -2680,7 +2282,7 @@
       fb.classList.add('is-error');
       fb.textContent = ver.expired
         ? 'This license key expired on ' + ver.expiresIso + '. Contact engineering@caliberfoundry.com to renew.'
-        : 'Invalid RSA-512 license key signature. Generate a Net-15 corporate invoice to obtain a signed CFK-OMNI key.';
+        : 'This key could not be verified for this product. Check the key in your purchase receipt.';
     }
   }
 
@@ -2898,8 +2500,8 @@
     });
   }
 
-  function init() {
-    loadPersistedState();
+  async function init() {
+    await loadPersistedState();
     bindEvents();
     switchPreset('enterprise_rag', false);
     selectCommercialPlan(state.selectedPlanCode || 'DD_PACK_249');

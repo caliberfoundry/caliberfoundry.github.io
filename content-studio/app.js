@@ -7,6 +7,7 @@
 
 (function () {
   'use strict';
+  const receipt = window.createGumroadReceiptVerifier('pcIf63WFSlfW7YHD7pnmNQ==', 'PRO');
 
   /* ==========================================================================
      1. TEXT ENCODING AND SOURCE VERSION UTILITIES
@@ -261,7 +262,7 @@
     const status = document.getElementById('sourceRunStatus');
     if (status) status.textContent = message || (stale ? 'Source changed. Create the dossier to use these edits.' :
       'The dossier uses the document above.');
-    for (const id of ['btnOpenEvalDossier','btnPrintEvalDossier','btnExportJsonPayload','btnCopyWebhookJson','btnCopySocialThread','btnCopyMonographMarkdown','btnFireWebhook','btnDispatchFromTab']) {
+    for (const id of ['downloadWebhookPayload','btnOpenEvalDossier','btnPrintEvalDossier','btnExportJsonPayload','btnCopyWebhookJson','btnCopySocialThread','btnCopyMonographMarkdown','btnFireWebhook','btnDispatchFromTab']) {
       const action = document.getElementById(id);
       if (action) action.disabled = stale;
     }
@@ -337,6 +338,7 @@
   }
 
   function verifyContentForgeLicenseKey(rawKey) {
+    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
     const clean = String(rawKey || '').trim().toUpperCase();
     if (!clean) return { valid: false };
     const parts = clean.split('-');
@@ -1266,12 +1268,19 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     `;
   }
 
-  function validateAndActivateLicenseKey(rawKey) {
+  async function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
+    const receiptStatus = document.getElementById('receiptStatus');
+    try {
+      await receipt.check(clean, receiptStatus);
+    } catch (error) {
+      receiptStatus.textContent = error.message;
+      return;
+    }
     const ver = verifyContentForgeLicenseKey(clean);
 
     if (!ver.valid) {
-      showToast('Invalid license key signature. Complete checkout via Gumroad or Contra (0% fee) to receive your signed enterprise key.');
+      showToast('This key could not be verified for this product. Check the key in your purchase receipt.');
       return false;
     }
 
@@ -1397,6 +1406,16 @@ ${JSON.stringify(preview.payload, null, 2)}`;
       });
     }
 
+    document.getElementById('downloadWebhookPayload').addEventListener('click', () => {
+      if (sourceNeedsRun()) return;
+      const data = getActiveSynthesizedBundle().webhookPayload;
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type:'application/json'}));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'dossier.json';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
     const btnExportJson = document.getElementById('btnExportJsonPayload');
     if (btnExportJson) {
       btnExportJson.addEventListener('click', () => {
@@ -1631,7 +1650,11 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     }
   }
 
-  function initApp() {
+  async function initApp() {
+    if (receipt.matches(STATE.licenseKey)) {
+        try { await receipt.check(STATE.licenseKey); }
+        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+      }
     handleUrlQueryDeepLink();
     initEventListeners();
     refreshAllViews();

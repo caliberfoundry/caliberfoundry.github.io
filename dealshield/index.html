@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-product-design="dealshield">
+<html data-cf-private-inputs lang="en" data-product-design="dealshield">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self'; connect-src 'self' https://api.gumroad.com https://get.geojs.io https://ntfy.sh http://localhost:4173;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>DealShield™ — Security Questionnaire (DDQ / CAIQ / HECVAT) &amp; VPAT 2.5 Auto-Responder | Caliber Foundry</title>
@@ -564,7 +564,7 @@
                 <label for="chkGatewaySelect" class="cf-field-label">Preferred Payment Method</label>
                 <select id="chkGatewaySelect" class="cf-select">
                   <option value="gumroad">Instant Credit Card / Apple Pay (Gumroad · Auto-Key Delivery)</option>
-                  <option value="contra">Contra B2B Checkout (0% Fee · Corporate Card / ACH / Escrow)</option>
+                  <option value="contra">Discuss a separately scoped service on Contra</option>
                   <option value="invoice">Generate Net-15 Corporate Tax Invoice (PO / Wire / ACH)</option>
                 </select>
               </div>
@@ -598,17 +598,18 @@
           <div class="cf-checkout-panel">
             <h4 class="cf-subpanel-title">2. Activate Existing DealShield™ PRO License Key</h4>
             <p class="cf-help-text">
-              Your Enterprise License Key is delivered automatically upon completing checkout on Gumroad or Contra (or upon Corporate Invoice confirmation). Paste your key below to unlock all 4 frameworks (<code>CAIQ v4</code>, <code>HECVAT v3</code>, <code>SIG-Lite 2026</code>, <code>VPAT 2.5 INT</code>) and full <code>.CSV</code> / PDF exports.
+              Your Enterprise License Key is delivered automatically upon completing checkout on Gumroad (or upon Corporate Invoice confirmation). Paste your key below to unlock all 4 frameworks (<code>CAIQ v4</code>, <code>HECVAT v3</code>, <code>SIG-Lite 2026</code>, <code>VPAT 2.5 INT</code>) and full <code>.CSV</code> / PDF exports.
             </p>
             <div class="cf-field-group">
               <label for="licenseKeyInput" class="cf-field-label">Enterprise License Key</label>
               <input
-                type="text"
+                type="password"
                 id="licenseKeyInput"
                 class="cf-input"
-                placeholder="DSH-XXXX-XXXX-XXXX"
+                placeholder="Paste your receipt or issued license key"
                 value=""
               />
+              <span id="receiptStatus" role="status" aria-live="polite"></span>
             </div>
             <div class="cf-webhook-btn-row">
               <button type="button" class="cf-btn-secondary" id="btnActivateLicenseKey">
@@ -668,6 +669,7 @@
     </div>
   </div>
 
+  <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="app.js?v=20261124-workspace"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>

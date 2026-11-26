@@ -57,3 +57,8 @@ body {background:var(--sf-sheet);color:var(--sf-ink);font:16px/1.45 var(--font-s
 .sf-case-options h2 {font:700 36px/1 var(--font-display);margin:0 0 10px;}.sf-case-options nav a {display:block;border-top:1px solid var(--sf-line);padding:11px 0;color:var(--sf-ink);font-weight:600;text-underline-offset:4px;}
 .sf-case-options p {color:var(--sf-muted);max-width:52ch;}
 @media(max-width:700px){.sf-case{grid-template-columns:1fr;padding-block:18px;}}
+
+.sf-import {padding:20px;scroll-margin-top:16px}
+.sf-import input,.sf-import label {display:block;margin:8px 0;max-width:100%}
+.sf-import pre {overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+.sf-import button {padding:9px 14px}

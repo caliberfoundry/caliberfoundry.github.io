@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-product-design="stealthflow">
+<html data-cf-private-inputs lang="en" data-product-design="stealthflow">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -9,7 +9,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>StealthFlow · Sample catalog export | Caliber Foundry</title>
+  <title>StealthFlow · Supplier catalog export | Caliber Foundry</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -610,7 +610,8 @@
   <main class="sf-width sf-shell">
     <div class="sf-desk">
       <section class="sf-export" aria-labelledby="catalog-heading">
-        <h1 id="catalog-heading">Catalog export</h1><p>Choose a sample segment and download its records.</p>
+        <h1 id="catalog-heading">Catalog export</h1><p>Clean a supplier CSV or explore a sample segment.</p>
+        <p><a href="#supplierCatalog" style="color:inherit">Import a supplier CSV ↓</a></p>
         <div class="sf-segments" id="filters" aria-label="Catalog segment">
           <button type="button" id="btnResetSources" onclick="selectSource('ALL')" aria-pressed="true">All records</button>
           <button type="button" id="qf_src_02_shopify_plus" onclick="selectSource('src_02_shopify_plus')" aria-pressed="false">Shopify</button>
@@ -630,6 +631,15 @@
         </details>
       </section>
     </div>
+    <section id="supplierCatalog" class="sf-drawer sf-import">
+      <h2>Clean a supplier catalog</h2>
+      <label for="supplierCsv">CSV with a url, product_url or canonical_url column (up to 5 MB)</label>
+      <input id="supplierCsv" type="file" accept=".csv,text/csv">
+      <p>Tracking parameters are removed. Product variants and other columns are retained. Identical rows are combined locally.</p>
+      <p id="supplierStatus" role="status"></p>
+      <pre id="supplierPreview" aria-label="First three normalized rows"></pre>
+      <button id="supplierDownload" type="button" disabled>Download normalized CSV</button>
+    </section>
     <details class="sf-drawer" id="sfRecords">
       <summary>Browse and filter the records</summary>
     <!-- Split Workbench: Left = 50-Record Ledger | Right = Before/After Comparison + Make.com Webhook Dispatcher -->
@@ -1169,5 +1179,6 @@
     window.addEventListener('DOMContentLoaded', initDashboard);
   </script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
+  <script type="module" src="./import-workspace.mjs"></script>
 </body>
 </html>

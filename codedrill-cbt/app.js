@@ -6,6 +6,7 @@
 
 (function () {
   'use strict';
+  const receipt = window.createGumroadReceiptVerifier('sj1w4HpSpi57c-P5DCrABw==', 'TEAM');
 
   /* ==========================================================================
      1. COMPREHENSIVE 24-QUESTION FALLBACK & SUPPLEMENTARY DATASET
@@ -70,7 +71,16 @@
                 examFrequency: 'High Yield',
                 keywords: ['unlicensed person', 'freight forwarder', 'power of attorney', 'direct billing', 'compensation'],
                 crossRefs: ['19 CFR § 111.23', '19 CFR § 141.86'],
-                text: `(a) Employment by unlicensed person other than importer. When a broker is employed for the transaction of customs business by an unlicensed person who is not the actual importer, the broker must transmit to the actual importer either a copy of his bill for services rendered or a copy of the entry, unless the merchandise was purchased on a delivered duty-paid basis or unless the importer has in writing waived transmittal of the copy of the entry or bill for services rendered.\n(c) Compensation of freight forwarder. A broker may compensate a freight forwarder for referring brokerage business provided the importer is notified in advance in writing of the name of the forwarder being compensated, the broker transmits a true copy of brokerage charges directly to the importer, and the forwarder neither controls brokerage fees nor forbids direct communication between broker and importer.`
+                text: `§ 111.36 Relations with unlicensed persons.
+(a) Employment by unlicensed person other than importer. When a broker is employed for the transaction of customs business by an unlicensed person who is not the actual importer, the broker must transmit to the actual importer either a copy of his bill for services rendered or a copy of the entry, unless the merchandise was purchased on a delivered duty-paid basis or unless the importer has in writing waived transmittal of the copy of the entry or bill for services rendered.
+(b) Service to others not to benefit unlicensed person. Except as otherwise provided in paragraph (c) of this section, a broker must not enter into any agreement with an unlicensed person to transact customs business for others in such manner that the fees or other benefits resulting from the services rendered for others inure to the benefit of the unlicensed person.
+(c) Relations with a freight forwarder. A broker may compensate a freight forwarder for referring brokerage business, subject to the following conditions:
+(1) The importer or other party in interest is notified in advance by the forwarder or broker of the name of the broker selected by the forwarder for the handling of his Customs transactions;
+(2) The broker transmits directly to the importer or other party in interest:
+(i) A true copy of his brokerage charges if the fees and charges are to be collected by or through the forwarder, unless this requirement is waived in writing by the importer or other party in interest; or
+(ii) A statement of his brokerage charges and an itemized list of any charges to be collected for the account of the freight forwarder if the fees and charges are to be collected by or through the broker;
+(3) The broker must execute a customs power of attorney directly with the importer of record or drawback claimant, and not via a freight forwarder or other third party, to transact customs business for that importer of record or drawback claimant. No part of the agreement of compensation between the broker and the forwarder, nor any action taken pursuant to the agreement, can forbid or prevent direct communication between the importer of record, drawback claimant, or other party in interest and the broker; and
+(4) In making the agreement and in all actions taken pursuant to the agreement, the broker remains subject to all other provisions of this part.`
               }
             ]
           },
@@ -1324,25 +1334,11 @@
   const STORAGE_KEY = 'CODEDRILL_CBT_STATE_V2026';
 
   const PLAN_CATALOG = {
-    PRO_MONTHLY: {
-      code: 'PRO_MONTHLY',
-      name: 'Candidate Pro Monthly — $79 / month',
-      amountUsd: 79,
-      billingCycle: 'Monthly Subscription',
-      tier: 'PRO'
-    },
-    PRO_CYCLE: {
-      code: 'PRO_CYCLE',
-      name: '6-Month Exam Cycle Pass — $199 one-time',
-      amountUsd: 199,
-      billingCycle: '6-Month Exam Cycle Pass (Save 58%)',
-      tier: 'PRO'
-    },
-    TEAM_MONTHLY: {
-      code: 'TEAM_MONTHLY',
-      name: 'Brokerage & Freight Forwarder Team — $399 / month',
+    TEAM_LICENSE: {
+      code: 'TEAM_LICENSE',
+      name: 'Corporate practice license · $399 once',
       amountUsd: 399,
-      billingCycle: 'Enterprise Monthly (Up to 15 Seats)',
+      billingCycle: 'One-time purchase',
       tier: 'TEAM'
     }
   };
@@ -1354,7 +1350,7 @@
       licenseTier: 'FREE', // 'FREE' | 'PRO' | 'TEAM'
       freeQuestionLimit: 3, // First 3 diagnostic questions unlocked on FREE tier
       licenseKey: null,
-      selectedPlanCode: 'PRO_MONTHLY',
+      selectedPlanCode: 'TEAM_LICENSE',
       accountUser: null, // { fullName, email, role, createdAt }
       currentQuestionId: DATASET.questions[0] ? DATASET.questions[0].id : null,
       activeCorpusId: DATASET.corpora[0] ? DATASET.corpora[0].id : null,
@@ -1469,6 +1465,7 @@
   }
 
   function verifyCodeDrillLicenseKey(rawKey) {
+    if (receipt.matches(rawKey)) return receipt.decision(rawKey);
     const clean = String(rawKey || '').trim().toUpperCase();
     if (!clean) return { valid: false };
     const parts = clean.split('-');
@@ -1781,7 +1778,7 @@
   }
 
   function selectPlanByCode(planCode) {
-    const plan = PLAN_CATALOG[planCode] || PLAN_CATALOG.PRO_MONTHLY;
+    const plan = PLAN_CATALOG[planCode] || PLAN_CATALOG.TEAM_LICENSE;
     STATE.selectedPlanCode = plan.code;
     saveUserState();
 
@@ -1797,7 +1794,7 @@
   }
 
   function syncSelectedPlanBanner() {
-    const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.PRO_MONTHLY;
+    const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.TEAM_LICENSE;
     const nameEl = document.getElementById('checkoutSelectedPlanName');
     if (nameEl) nameEl.textContent = plan.name;
 
@@ -1834,7 +1831,7 @@
     if (opts.planCode) {
       selectPlanByCode(opts.planCode);
     } else {
-      selectPlanByCode(STATE.selectedPlanCode || 'PRO_MONTHLY');
+      selectPlanByCode(STATE.selectedPlanCode || 'TEAM_LICENSE');
     }
 
     const initialTab = opts.tab || (STATE.accountUser ? 'payment' : 'register');
@@ -1858,12 +1855,19 @@
   /**
    * Validates and activates a Caliber Foundry license key (CDR-PRO-2026-CALIBER, CF-PRO-2026-..., or CF-TEAM-2026-...)
    */
-  function validateAndActivateLicenseKey(rawKey) {
+  async function validateAndActivateLicenseKey(rawKey) {
     const clean = String(rawKey || '').trim().toUpperCase();
+    const receiptStatus = document.getElementById('receiptStatus');
+    try {
+      await receipt.check(clean, receiptStatus);
+    } catch (error) {
+      receiptStatus.textContent = error.message;
+      return;
+    }
     const ver = verifyCodeDrillLicenseKey(clean);
 
     if (!ver.valid) {
-      showToast('Invalid license key signature. Complete checkout via Gumroad or Contra (0% fee) to receive your signed license key.');
+      showToast('This key could not be verified for this product. Check the key in your purchase receipt.');
       return false;
     }
 
@@ -1878,16 +1882,16 @@
     const paywallBanner = document.getElementById('paywallTriggerBanner');
 
     if (paywallBanner) paywallBanner.classList.add('hidden');
-    if (keyDisplay) keyDisplay.textContent = `Active License Key: ${clean}`;
+    if (keyDisplay) keyDisplay.textContent = `License verified`;
     const totalQCount = DATASET.questions.length || 30;
     if (msgEl) {
       const emailLabel = (STATE.accountUser && STATE.accountUser.email) ? ` for ${STATE.accountUser.email}` : '';
-      msgEl.textContent = `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions and all 7 topic suites are now unlocked.`;
+      msgEl.textContent = `${activatedTier === 'TEAM' ? 'Team License' : 'Pro License'} activated${emailLabel}. All ${totalQCount} exam questions are now unlocked.`;
     }
     if (successBox) successBox.classList.remove('hidden');
 
     refreshAllViews();
-    showToast(`Activated ${activatedTier} License (${clean}) — All ${totalQCount} Questions Unlocked`);
+    showToast(`Activated ${activatedTier} License — All ${totalQCount} Questions Unlocked`);
     return true;
   }
 
@@ -1895,7 +1899,7 @@
     const box = document.getElementById('corporateInvoicePreviewBox');
     if (!box) return;
 
-    const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.PRO_MONTHLY;
+    const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.TEAM_LICENSE;
     const companyName = (document.getElementById('invCompanyInput') && document.getElementById('invCompanyInput').value.trim())
       || (STATE.accountUser && STATE.accountUser.fullName)
       || 'Authorized Customs Brokerage Candidate';
@@ -2408,7 +2412,7 @@
     if (isCorrect) {
       titleEl.textContent = `Correct Legal Determination — Option ${q.correctOption}`;
     } else {
-      titleEl.textContent = `Incorrect — You selected Option ${work.selectedOption} (Official Ruling: Option ${q.correctOption})`;
+      titleEl.textContent = `Incorrect — You selected Option ${work.selectedOption} (Practice answer: Option ${q.correctOption})`;
     }
 
     const timeStr = typeof work.lookupSeconds === 'number' ? `${work.lookupSeconds.toFixed(1)}s` : '--s';
@@ -2562,7 +2566,7 @@
     } else if (promptType === 'valuation_gri') {
       replyHtml = `
         <div class="socratic-ai-msg">
-          <strong>Rule Hierarchy &amp; Golden Quote:</strong><br/>
+          <strong>Rule Hierarchy &amp; Study passage:</strong><br/>
           ${escapeHtml(q.socraticHints[0])} ${escapeHtml(q.socraticHints[1])}<br/>
           • <strong>Statutory Text:</strong> <em>${escapeHtml(q.goldenQuote)}</em>
         </div>
@@ -2610,7 +2614,7 @@
             <strong>Study Coach Note for "${escapeHtml(customQuery)}":</strong><br/>
             For Question ${posNum}, inspect <code>${escapeHtml(q.targetCitation)}</code> (${escapeHtml(q.shortestPathHint)}).<br/>
             • <strong>Clue:</strong> ${escapeHtml(q.socraticHints[1])}<br/>
-            • <strong>Golden Quote:</strong> <em>${escapeHtml(q.goldenQuote)}</em>
+            • <strong>Study passage:</strong> <em>${escapeHtml(q.goldenQuote)}</em>
           </div>
         `;
       }
@@ -2879,8 +2883,7 @@
     if (!activeSection) return;
 
     document.getElementById('refDocBreadcrumb').textContent = activeSection.breadcrumb;
-    const cleanFreq = String(activeSection.examFrequency || 'High Yield').replace(/\s*\(.*?\)/g, '');
-    document.getElementById('refDocFreqBadge').textContent = cleanFreq;
+    document.getElementById('refDocFreqBadge').textContent = 'Study notes';
     document.getElementById('refDocCitationCode').innerHTML = highlightTextWithSearchQuery(activeSection.citation, query);
     const official = document.getElementById('refOfficialSource');
     const officialGuide = document.getElementById('refOfficialGuide');
@@ -3842,7 +3845,7 @@
     // Enforce Freemium Paywall on full Submit & Score Exam when on FREE tier
     if (!isProOrTeamActive()) {
       openAccountPaywallModal({
-        paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases (CBLE + IRS SEE Parts 1–3) and full Official Exam Scoring.'
+        paywallReason: 'Create an account and activate a Pro plan to unlock all 48 exam cases (CBLE + IRS SEE Parts 1–3) and full practice exam scoring.'
       });
       return;
     }
@@ -4002,7 +4005,7 @@
     const btnHeaderUnlockPro = document.getElementById('btnHeaderUnlockPro');
     if (btnHeaderUnlockPro) {
       btnHeaderUnlockPro.addEventListener('click', () => {
-        openAccountPaywallModal({ tab: 'register', planCode: 'PRO_MONTHLY' });
+        openAccountPaywallModal({ tab: 'register', planCode: 'TEAM_LICENSE' });
       });
     }
 
@@ -4200,7 +4203,7 @@
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
+          paywallReason: 'Create an account and activate a Pro plan to unlock the full practice bank.'
         });
         return;
       }
@@ -4252,7 +4255,7 @@
 
       if (isQuestionIndexLockedForCurrentTier(nextIdx)) {
         openAccountPaywallModal({
-          paywallReason: 'Create an account and activate a Pro plan to unlock all 30 exam cases and 7 topic suites.'
+          paywallReason: 'Create an account and activate a Pro plan to unlock the full practice bank.'
         });
         return;
       }
@@ -4421,41 +4424,10 @@
     });
 
     // Mode 3 Pricing Card Toggle & CTAs
-    const btnMonthly = document.getElementById('btnCycleMonthly');
-    const btnPass = document.getElementById('btnCycleExamPass');
-    const b2cAmount = document.getElementById('b2cPriceAmount');
-    const b2cPeriod = document.getElementById('b2cPricePeriod');
-    const btnCheckoutB2C = document.getElementById('btnCheckoutB2C');
-
-    if (btnMonthly && btnPass) {
-      btnMonthly.addEventListener('click', () => {
-        btnMonthly.classList.add('active');
-        btnPass.classList.remove('active');
-        b2cAmount.textContent = '$79';
-        b2cPeriod.textContent = '/ month · cancel anytime';
-        btnCheckoutB2C.textContent = 'Start Candidate Pro — $79/mo →';
-        btnCheckoutB2C.setAttribute('data-plan-code', 'PRO_MONTHLY');
-      });
-      btnPass.addEventListener('click', () => {
-        btnPass.classList.add('active');
-        btnMonthly.classList.remove('active');
-        b2cAmount.textContent = '$199';
-        b2cPeriod.textContent = '/ 6-month exam cycle pass (Save 58%)';
-        btnCheckoutB2C.textContent = 'Start 6-Month Exam Cycle Pass — $199 →';
-        btnCheckoutB2C.setAttribute('data-plan-code', 'PRO_CYCLE');
-      });
-    }
-
-    if (btnCheckoutB2C) {
-      btnCheckoutB2C.addEventListener('click', () => {
-        const planCode = btnCheckoutB2C.getAttribute('data-plan-code') || 'PRO_MONTHLY';
-        openAccountPaywallModal({ tab: STATE.accountUser ? 'payment' : 'register', planCode });
-      });
-    }
     const btnCheckoutB2B = document.getElementById('btnCheckoutB2B');
     if (btnCheckoutB2B) {
       btnCheckoutB2B.addEventListener('click', () => {
-        openAccountPaywallModal({ tab: STATE.accountUser ? 'payment' : 'register', planCode: 'TEAM_MONTHLY' });
+        openAccountPaywallModal({ tab: STATE.accountUser ? 'payment' : 'register', planCode: 'TEAM_LICENSE' });
       });
     }
 
@@ -4552,7 +4524,7 @@
         e.preventDefault();
         const email = document.getElementById('checkoutEmailInput').value.trim();
         const holder = document.getElementById('checkoutOrgInput').value.trim();
-        const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.PRO_MONTHLY;
+        const plan = PLAN_CATALOG[STATE.selectedPlanCode] || PLAN_CATALOG.TEAM_LICENSE;
 
         if (email) {
           STATE.accountUser = Object.assign({}, STATE.accountUser || {}, {
@@ -4651,7 +4623,7 @@
         document.getElementById('modalTeamReadinessReport').classList.add('hidden');
         openAccountPaywallModal({
           tab: 'payment',
-          planCode: 'TEAM_MONTHLY'
+          planCode: 'TEAM_LICENSE'
         });
         switchPaymentMethodSubTab('invoice');
       });
@@ -4741,7 +4713,11 @@
     }
   }
 
-  function initApp() {
+  async function initApp() {
+    if (receipt.matches(STATE.licenseKey)) {
+        try { await receipt.check(STATE.licenseKey); }
+        catch (error) { document.getElementById('receiptStatus').textContent = error.message; }
+      }
     const verBadge = document.getElementById('cdVersionBadge');
     if (verBadge && DATASET.meta.version) {
       verBadge.textContent = String(DATASET.meta.version).replace(/^v/i, '');
