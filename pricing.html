@@ -12,8 +12,8 @@
   <title>Pricing &amp; Commercial Licensing — Caliber Foundry</title>
   <meta name="description" content="Official commercial pricing and enterprise licensing for Caliber Foundry software products: DealShield DDQ &amp; VPAT 2.5 Studio, DocuShield PDF/UA Studio, CodeDrill CBT Simulator, ContentForge Studio, AcademyForge SCORM 1.2 Studio, FinOpsGuard LLM Workflow Cost Audit, and OmniRAG Due Diligence Pack." />
   <link rel="canonical" href="https://caliberfoundry.com/pricing.html" />
+  <link rel="stylesheet" href="/assets/home/atlas-header.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
     :root {
       --cf-bg-paper: #F6F4EF;
       --cf-bg-stone: #ECE9E1;
@@ -21,27 +21,20 @@
       --cf-ink-primary: #141413;
       --cf-ink-secondary: #4A4842;
       --cf-ink-muted: #78756D;
-      --cf-rule-strong: #141413;
+      --cf-rule-strong: #cbd2d7;
       --cf-rule-mid: #D6D1C7;
-      --cf-accent-primary: #C8431F;
+      --cf-accent-primary: #275975;
       --cf-forest-pass: #1A5638;
-      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --font-mono: ui-monospace, monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--cf-bg-paper); color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; }
+    body { background: #fff; color: var(--cf-ink-primary); font-family: var(--font-sans); line-height: 1.6; }
     .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-    .site-header { border-bottom: 1.5px solid var(--cf-rule-strong); background: var(--cf-bg-paper); position: sticky; top: 0; z-index: 100; }
-    .header-inner { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cf-ink-primary); }
-    .brand-mark { width: 28px; height: 28px; background: var(--cf-ink-primary); color: var(--cf-bg-paper); font-family: var(--font-mono); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
-    .brand-name { font-family: var(--font-mono); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
-    .nav-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-    .nav-item { font-family: var(--font-mono); font-size: 12px; color: var(--cf-ink-secondary); text-decoration: none; text-transform: uppercase; }
     .hero { padding: 48px 0 32px; border-bottom: 1.5px solid var(--cf-rule-strong); }
     .eyebrow { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--cf-accent-primary); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 10px; }
-    h1 { font-family: var(--font-display); font-size: clamp(34px, 4.5vw, 52px); font-weight: 400; line-height: 1.1; margin-bottom: 12px; }
+    h1 { font-family: var(--font-display); font-size: clamp(34px, 4.5vw, 52px); font-weight: 600; letter-spacing: -.055em; line-height: 1.1; margin-bottom: 12px; }
     .subtitle { font-size: 16px; color: var(--cf-ink-secondary); max-width: 760px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; padding: 36px 0; }
     .card { background: var(--cf-bg-surface); border: 1.5px solid var(--cf-rule-strong); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -63,8 +56,8 @@
     .footer-inner a { color: var(--cf-ink-primary); text-decoration: none; }
       .grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr)); align-items:start; }
     .card { justify-content:flex-start; min-width:0; }
-    .card-title { font-size:32px; }.desc {font-size:15px;}
-    .trial-link,.offer a,.product-jumps a { color:#933019;text-underline-offset:3px;font-weight:600; }
+    .card-title { font-size:32px; font-weight:600; letter-spacing:-.045em; }.desc {font-size:15px;}
+    .trial-link,.offer a,.product-jumps a { color:#275975;text-underline-offset:3px;font-weight:600; }
     .trial-link { margin:0 0 16px;align-self:flex-start; }
     .product-jumps { display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px; }
     .product-jumps a { padding:4px 0; }
@@ -72,31 +65,21 @@
     .offer summary { cursor:pointer;color:#242321;font-size:16px; }
     .offer summary strong { float:right;color:#211f31; }
     .offer p { margin:8px 0 4px;color:#4c4a47; } .offer a {display:inline-block;padding:4px 0;}
-    article[id] {scroll-margin-top:80px;}
-    @media (max-width:600px) { .header-inner {padding:10px 16px;display:block}.nav-links {margin-top:8px;gap:6px 14px;flex-wrap:wrap}.nav-links a{padding:3px 0}.hero{padding:24px 0 18px}.grid{padding:18px 0}.card{padding:16px}.container{padding-inline:16px} }
+    article[id] {scroll-margin-top:16px;}
+    @media (max-width:600px) { .hero{padding:24px 0 18px}.grid{padding:18px 0}.card{padding:16px}.container{padding-inline:16px} }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="./" class="brand">
-        <span class="brand-mark">CF</span>
-        <span class="brand-name">Caliber Foundry</span>
-      </a>
-      <nav class="nav-links">
-        <a href="./#work" class="nav-item">Live Products</a>
-        <a href="./pricing.html" class="nav-item">Pricing</a>
-        <a href="./insights/" class="nav-item">Insights</a>
-        <a href="./terms.html" class="nav-item">Terms</a>
-        <a href="./privacy.html" class="nav-item">Privacy</a>
-        <a href="./refund-policy.html" class="nav-item">Refund Policy</a>
-      </nav>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="atlas-head">
+    <div class="mast">
+      <a class="brand" href="./"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Caliber Foundry</a>
+      <nav aria-label="Main navigation"><a href="./#work">Products</a><a href="./#capabilities">Studio</a><a href="./pricing.html" aria-current="page">Pricing</a><a href="./insights/">Insights</a></nav>
+      <span class="studio-label">Product engineering studio</span>
     </div>
   </header>
-
-  <main class="container">
+  <main class="container" id="main">
     <section class="hero">
-      <span class="eyebrow">Commercial SaaS &amp; Enterprise Software Licensing</span>
       <h1>Product licenses and services</h1>
       <p class="subtitle">Choose a product and an offer. Each price is in USD. Each link opens the named checkout provider or direct engineering contact.</p>
       <nav class="product-jumps" aria-label="Jump to a product"><a href="#price-dealshield">DealShield</a><a href="#price-docushield">DocuShield</a><a href="#price-codedrill-cbt">CodeDrill</a><a href="#price-content-studio">ContentForge</a><a href="#price-edtech-studio">AcademyForge</a><a href="#price-finopsguard">FinOpsGuard</a><a href="#price-omnirag">OmniRAG</a><a href="#price-stealthflow">StealthFlow</a><a href="#price-oobe">OOBE Sentinel</a></nav>

@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("fonts/plus-jakarta-sans.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400 750;
+}
+
+.atlas-head {
+  background: #16253b;
+  color: #f7f6ef;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+.mast, .mast nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.mast {
+  width: min(1296px, 90%);
+  margin-inline: auto;
+  justify-content: space-between;
+  min-height: 72px;
+  padding-block: 10px;
+  gap: 8px 24px;
+  border-bottom: 1px solid #566272;
+}
+.mast a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: none; }
+.mast .brand { gap: 10px; font-size: 1.32rem; font-weight: 750; letter-spacing: -.055em; }
+.mark { display: flex; align-items: center; gap: 2px; height: 32px; transform: skewY(-16deg); }
+.mark i { width: 6px; height: 20px; background: currentColor; }
+.mark i:nth-child(2) { height: 28px; }
+.mark i:last-child { height: 24px; }
+.mast nav { gap: clamp(14px, 2vw, 30px); color: #ccd6e0; }
+.mast nav a { font-size: .9rem; font-weight: 650; }
+.mast a:hover, .mast [aria-current="page"] { text-decoration: underline; text-underline-offset: .28em; }
+.mast :focus-visible { outline: 3px solid #a3d9ef; outline-offset: 0; }
+.studio-label { font-size: .85rem; color: #e3e8ef; }
+@media (max-width: 760px) {
+  .mast { padding-block: 4px; gap: 0 8px; }
+  .mast .brand { font-size: 1.15rem; }
+  .studio-label { max-width: 14ch; text-align: right; font-size: .8rem; }
+  .mast nav { order: 1; width: 100%; gap: 0 clamp(12px, 4vw, 24px); }
+}
+
+.skip { position: absolute; top: 8px; left: 8px; z-index: 5; transform: translateY(-180%); padding: 8px 16px; background: white; color: #16253b; }
+.skip:focus { transform: none; }
