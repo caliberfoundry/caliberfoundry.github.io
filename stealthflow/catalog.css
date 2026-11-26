@@ -62,3 +62,7 @@ body {background:var(--sf-sheet);color:var(--sf-ink);font:16px/1.45 var(--font-s
 .sf-import input,.sf-import label {display:block;margin:8px 0;max-width:100%}
 .sf-import pre {overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 .sf-import button {padding:9px 14px}
+
+.sf-import h1{font:700 clamp(36px,5vw,60px)/1 var(--font-display);margin:0 0 1rem}.sf-import{margin-bottom:1.5rem;background:white;border:1px solid var(--sf-line)}.sf-import p{max-width:80ch}.sf-import pre:empty{display:none}.sf-export h2{font:700 36px/1 var(--font-display);margin:0 0 .6rem}
+
+#supplierDownload{background:var(--sf-lime);color:var(--sf-ink);border:1px solid var(--sf-ink);font:700 16px var(--font-sans);padding:.6rem .9rem;cursor:pointer}#supplierDownload:disabled{background:var(--sf-bg-stone,#e9eddf);color:#5d6259;border-color:var(--sf-line);cursor:default}.sf-import summary{font-weight:600;cursor:pointer}.sf-import pre:empty,.sf-import p[role=status]:empty{display:none}.sf-import details{margin:.6rem 0 1rem}

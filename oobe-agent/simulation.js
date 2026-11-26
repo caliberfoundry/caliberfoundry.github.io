@@ -748,6 +748,51 @@
     selectedStepIdx: 0
   };
 
+  var candleSource=null, importGeneration=0;
+  var candleFile=document.getElementById('candleFile');
+  var candleStatus=document.getElementById('candleStatus');
+  function resetHistory() {
+    candleSource=null;
+    document.getElementById('drawdownSlider').max=800;
+    document.getElementById('drawdownSlider').step=20;
+  }
+  function describeHistory() {
+    if(!candleSource) return;
+    const overrides=state.periodInputs.filter(p=>p.drawdownSource==='manual').length;
+    candleStatus.textContent=candleSource.file+' · '+candleSource.periods[1].startUtc.slice(0,16)+' to '+
+      candleSource.periods[4].endUtc.slice(0,16)+' UTC · Declines for periods 2–5: '+
+      candleSource.periods.slice(1).map(p=>(p.drawdownBps/100).toFixed(2)+'%').join(', ')+
+      (overrides?' · '+overrides+' period(s) manually overridden.':'.');
+  }
+  async function importCandles() {
+    const generation=++importGeneration, file=candleFile.files[0];
+    if(!file)return;
+    const button=document.getElementById('downloadAuditBtn');
+    button.disabled=true;
+    candleStatus.textContent='Reading historical prices…';
+    try {
+      const source=await window.OobeCandles.read(file);
+      if(generation!==importGeneration)return;
+      candleSource=source;
+      state.periodInputs.forEach((p,i)=>{
+        p.drawdownBps=source.periods[i].drawdownBps;
+        p.drawdownSource=i?'historical decline':'initial allocation';
+      });
+      const slider=document.getElementById('drawdownSlider');
+      slider.max=Math.max(800,...source.periods.map(p=>p.drawdownBps));slider.step=1;
+      runFull5EpochSimulation();selectPeriod(state.activeScenarioIdx);describeHistory();
+    } catch(error) {
+      if(generation!==importGeneration)return;
+      describeHistory();
+      candleStatus.textContent='Import failed. '+error.message+' Current inputs: '+(candleSource?candleStatus.textContent:'existing scenario sliders.');
+    } finally {
+      if(generation===importGeneration){button.disabled=false;candleFile.value='';}
+    }
+  }
+  candleFile.addEventListener('change',importCandles);
+  candleFile.disabled=false;
+  if(candleFile.files.length)importCandles();
+
   function getPolicyFromSliders() {
     var maxCapPct = Number(document.getElementById('maxCapSlider').value);
     var reservePct = Number(document.getElementById('reserveSlider').value);
@@ -1206,6 +1251,7 @@
   ['capitalSlider', 'maxCapSlider', 'reserveSlider', 'paybackSlider', 'drawdownSlider', 'priorityFeeSlider'].forEach(function (id) {
     document.getElementById(id).addEventListener('input', function () {
       if (id === 'priorityFeeSlider' || id === 'drawdownSlider') {
+        if(id==='drawdownSlider' && candleSource){state.periodInputs[state.activeScenarioIdx].drawdownSource='manual';describeHistory();}
         state.periodInputs[state.activeScenarioIdx][id === 'priorityFeeSlider' ? 'priorityFeeLamports' : 'drawdownBps'] = Number(this.value);
       }
       syncSliderLabels();
@@ -1272,6 +1318,7 @@
     document.getElementById('drawdownSlider').value = '0';
     document.getElementById('priorityFeeSlider').value = '35000';
     state.activeScenarioIdx = 0;
+    importGeneration++;resetHistory();candleFile.value='';candleStatus.textContent='';document.getElementById('downloadAuditBtn').disabled=false;
     state.periodInputs = defaultPeriodInputs();
     syncSliderLabels();
     runFull5EpochSimulation();
@@ -1296,6 +1343,7 @@
       exportedAt: new Date().toISOString(),
       agentId: 'oobe-sentinel-capital-agent-01',
       runtime: 'Local browser simulation',
+      historicalInput: candleSource,
       simulated: true,
       initialCapitalUsd: Number(document.getElementById('capitalSlider').value),
       policy: getPolicyFromSliders(),

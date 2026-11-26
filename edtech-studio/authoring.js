@@ -1,6 +1,7 @@
 /* Three verbatim retrieval exercises built entirely from an instructor's passage. */
 window.AcademyAuthoring = (() => {
-  function exercises(raw) {
+  const commonEnglish = new Set(('the this those these there that their which where when while with from into over under other another have has been being does make made its own about more most very actually usually generally always sometimes').split(' '));
+  function exercises(raw, version = 2) {
     const passage = raw.trim();
     const words = [...passage.matchAll(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’%-]*/gu)];
     const seen = new Set();
@@ -10,6 +11,11 @@ window.AcademyAuthoring = (() => {
       seen.add(term);
       return true;
     }).sort((a,b) => b[0].length - a[0].length);
+    if (version === 2) {
+      // Prefer distinctive source terms while keeping short and non-English passages usable.
+      const relevance = word => commonEnglish.has(word[0].toLowerCase()) ? 1 : 0;
+      terms.sort((a,b) => relevance(a) - relevance(b));
+    }
     if (terms.length < 3) throw Error('Enter a source passage containing at least three distinct words.');
     return terms.slice(0, 3).map((match, i) => {
       const start = match.index, end = start + match[0].length;

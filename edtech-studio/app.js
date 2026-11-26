@@ -592,7 +592,7 @@
   // CUSTOM 3-VARIANT GENERATOR WITH ADR-024 INLINE PROGRESS & COUNTDOWN
   // =========================================================================
 
-  async function runCustomGenerationWithProgress() {
+  async function runCustomGenerationWithProgress({selectedVariant = 0, sourceId = authorId, sourceName = authorSource?.sourceName || '', generatorVersion = 2} = {}) {
     const btn = document.getElementById("btnGenerateCustomVariants");
     const progWrap = document.getElementById("genInlineProgress");
     const stageEl = document.getElementById("genProgStage");
@@ -601,7 +601,7 @@
     const inputEl = document.getElementById("customTopicInput");
     const gridEl = document.getElementById("generatedVariantsGrid");
 
-    if (btn.disabled) return;
+    if (btn.disabled) return false;
     const rawTopic = inputEl.value.trim();
     const start = performance.now();
     btn.disabled = true;
@@ -612,17 +612,20 @@
     try {
       await new Promise(resolve => requestAnimationFrame(resolve));
       state.generationCount += 1;
-      state.customVariants = AcademyAuthoring.exercises(rawTopic);
+      const variants = AcademyAuthoring.exercises(rawTopic,generatorVersion);
+      authorId = sourceId;
+      state.customVariants = variants;
+      if (sourceName) variants.forEach((v,index) => {v.en.title = sourceName + ' · Exercise ' + (index+1);});
       state.customVariants.forEach(v => { v.en.stemHtml = "<p>" + escapeHtml(rawTopic) + "</p>"; });
-      saveAuthorSource({type:"passage",passage:rawTopic});
-      state.activeCustomIdx = 0;
+      state.activeCustomIdx = selectedVariant;
+      saveAuthorSource({type:"passage",passage:rawTopic,sourceName,selectedVariant,generatorVersion});
 
       if (gridEl) {
         gridEl.classList.remove("hidden");
         state.customVariants.forEach((v, idx) => {
           const vBtn = document.getElementById("genVarBtn" + idx);
           if (vBtn) {
-            vBtn.className = "af-gen-variant-btn" + (idx === 0 ? " active" : "");
+            vBtn.className = "af-gen-variant-btn" + (idx === selectedVariant ? " active" : "");
             vBtn.innerHTML =
               '<span class="af-opt-tag" style="align-self:flex-start;">' +
               escapeHtml(v.label) +
@@ -649,6 +652,7 @@
       fillEl.style.width = "100%";
       stageEl.textContent = "✓ Ready in " + seconds + "s · Three passage-recall exercises";
       etaEl.textContent = "100% · " + document.getElementById("activeContentHashBadge").textContent;
+      return true;
     } catch (error) {
       stageEl.textContent = error.message;
       etaEl.textContent = "";
@@ -897,12 +901,18 @@
     const form=document.getElementById("authorExercise");
     if(src.type==="passage" && typeof src.passage==="string" && src.passage.length<=20000) {
       AcademyAuthoring.exercises(src.passage);
-      authorId=src.id;document.getElementById("customTopicInput").value=src.passage;return runCustomGenerationWithProgress();
+      const variant = src.selectedVariant ?? 0;
+      const generatorVersion = src.generatorVersion ?? 1;
+      if (![1,2].includes(generatorVersion)) throw Error("Unknown passage generator version.");
+      if (!Number.isInteger(variant) || variant<0 || variant>2) throw Error("Unknown exercise variant.");
+      document.getElementById("customTopicInput").value = src.passage;
+      const sourceName = typeof src.sourceName==='string' ? src.sourceName.slice(0,180) : '';
+      return runCustomGenerationWithProgress({selectedVariant:variant,sourceId:src.id,sourceName,generatorVersion});
     }
     const names=["lesson","question","correct","first","second","reason"];
     if(src.type!=="authored" || !names.every(k=>typeof src[k]==="string" && src[k].trim() && src[k].length<=form.elements[k].maxLength) ||
       new Set([src.correct,src.first,src.second].map(v=>v.trim().toLowerCase())).size!==3) throw Error("The authored exercise is incomplete.");
-    authorId=src.id;names.forEach(k=>form.elements[k].value=src[k]);form.requestSubmit();
+    authorId=src.id;names.forEach(k=>form.elements[k].value=src[k]);form.requestSubmit();return true;
   }
   window.addEventListener("DOMContentLoaded", async () => {
     await restorePersistedLicense();
@@ -936,14 +946,44 @@
     });
 
 
+    let sourceRequest = 0;
     const authorStatus=document.getElementById("authorSourceStatus");
+    const sourceFile = document.getElementById("lessonTextFile");
+    const fileStatus = document.getElementById("lessonFileStatus");
+    sourceFile.addEventListener("change",async () => {
+      const revision = ++sourceRequest;
+      const file = sourceFile.files[0];
+      sourceFile.value = '';
+      if (!file) return;
+      try {
+        if (!/\.(txt|md)$/i.test(file.name) || file.size>80000) throw Error("Choose a UTF-8 .txt or .md file of up to 20,000 characters.");
+        const text = new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer()).trim();
+        if (text.length>20000 || text.includes('\0')) throw Error("Choose a text source of up to 20,000 characters.");
+        AcademyAuthoring.exercises(text);
+        if (revision!==sourceRequest) return;
+        document.getElementById("customTopicInput").value = text;
+        const sourceName = file.name.replace(/\.(txt|md)$/i,'').slice(0,180);
+        const restored = await runCustomGenerationWithProgress({sourceId:crypto.randomUUID(), sourceName});
+        if (!restored) throw Error("Wait for the current exercise build and choose the file again.");
+        fileStatus.textContent = file.name + " opened. Three exercises are available.";
+      } catch(error) {
+        if (revision===sourceRequest) fileStatus.textContent = error.message;
+      }
+    });
     document.getElementById("saveAuthor").onclick=()=>{
       if(!authorSource){authorStatus.textContent="Build a passage exercise or save an authored question first.";return;}
       downloadFile("academyforge-exercise.json",new Blob([JSON.stringify(authorSource,null,2)],{type:"application/json"}));authorStatus.textContent="Editable source downloaded.";
     };
     document.getElementById("loadAuthor").onchange=async event=>{
       const file=event.target.files[0];event.target.value="";if(!file)return;
-      try {if(file.size>100000)throw Error("Choose an exercise smaller than 100 KB."); await restoreAuthorSource(JSON.parse(await file.text()));authorStatus.textContent="Editable source restored.";}
+      const revision = ++sourceRequest;
+      try {
+        if(file.size>100000)throw Error("Choose an exercise smaller than 100 KB.");
+        const src=JSON.parse(await file.text());
+        if(revision!==sourceRequest)return;
+        if(!await restoreAuthorSource(src))throw Error("Wait for the current exercise build and choose the file again.");
+        authorStatus.textContent="Editable source restored.";
+      }
       catch(error){authorStatus.textContent=error.message;}
     };
     try{const saved=JSON.parse(localStorage.getItem("academyforge.author"));if(saved)await restoreAuthorSource(saved);}catch{}
@@ -1007,6 +1047,7 @@
       vBtn.addEventListener("click", () => {
         if (!state.customVariants) return;
         state.activeCustomIdx = Number(vBtn.getAttribute("data-gen-idx")) || 0;
+        if (authorSource?.type === 'passage') saveAuthorSource({...authorSource,selectedVariant:state.activeCustomIdx});
         document.querySelectorAll("[data-gen-idx]").forEach((b, i) => {
           b.className = "af-gen-variant-btn" + (i === state.activeCustomIdx ? " active" : "");
         });

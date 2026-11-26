@@ -69,6 +69,10 @@
       <div class="export-line"><div><h2>Simulation record</h2><p>All five decisions and their receipts in one file.</p></div>
         <button type="button" id="downloadAuditBtn" class="export">Download JSON <span aria-hidden="true">↓</span></button>
       </div>
+      <div class="export-line history-import"><div><h2>Test a historical price decline</h2>
+        <p>Open Coinbase Exchange candle JSON at six-hour granularity. The latest 14 complete candles supply three 24-hour periods and one 12-hour period after initial allocation. Only price declines enter the stress model. Fees and yields use scenario assumptions. <a href="https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-product-candles" target="_blank" rel="noopener noreferrer">Coinbase candle format</a> (granularity 21600).</p>
+        <label for="candleFile">Historical candles (.json)</label> <input id="candleFile" type="file" accept=".json,application/json" disabled>
+        <p id="candleStatus" role="status"></p></div></div>
       <div class="drawers">
       <details class="pane settings-pane">
       <summary class="pane-header">
@@ -250,7 +254,8 @@
       </div>
     </section>
   </main>
-  <footer><span>OOBE Sentinel · Simulated market data</span><a href="../work/oobe-agent.html">How the simulation works</a><span data-product-feedback></span></footer>
+  <footer><span>OOBE Sentinel · Portfolio stress simulation</span><a href="../work/oobe-agent.html">How the simulation works</a><span data-product-feedback></span></footer>
+  <script src="./candles.js"></script>
   <script src="./simulation.js"></script>
   <script src="../assets/js/cf-telemetry.js" defer></script>
 </body>

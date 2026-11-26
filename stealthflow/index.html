@@ -608,10 +608,20 @@
     <div class="sf-width sf-top"><a class="sf-name" href="./">StealthFlow</a><a href="../#work">All products ↗</a></div>
   </header>
   <main class="sf-width sf-shell">
+    <section id="supplierCatalog" class="sf-drawer sf-import">
+      <h1 id="catalog-heading">Clean a supplier catalog</h1>
+      <label for="supplierCsv">Choose a CSV (up to 5 MB) or supplier product JSON (up to 20 MB)</label>
+      <input id="supplierCsv" type="file" disabled accept=".csv,.json,text/csv,application/json">
+      <p>Remove tracking parameters from product links and merge identical rows. Your file stays in this browser.</p>
+      <details><summary>File format and export rules</summary><p>Use product_url, canonical_url or url for product links. JSON may contain one product or an array. Nested fields remain JSON in the CSV. Null and missing values export as blank cells. Formula-like text is prefixed with an apostrophe for spreadsheets.</p></details>
+      <p id="supplierStatus" role="status"></p>
+      <pre id="supplierPreview" aria-label="First three normalized rows"></pre>
+      <button id="supplierDownload" type="button" disabled>Download normalized CSV</button>
+      <p><a href="./batch.html">Combine supplier files</a> with the hosted batch service.</p>
+    </section>
     <div class="sf-desk">
-      <section class="sf-export" aria-labelledby="catalog-heading">
-        <h1 id="catalog-heading">Catalog export</h1><p>Remove tracking parameters and duplicate rows from a supplier CSV.</p>
-        <p><a href="#supplierCatalog" style="color:inherit">Clean your supplier file ↓</a></p>
+      <section class="sf-export" aria-labelledby="sample-heading">
+        <h2 id="sample-heading">Sample catalog</h2><p>Explore the filters using 50 example records.</p>
         <div class="sf-segments" id="filters" aria-label="Catalog segment">
           <button type="button" id="btnResetSources" onclick="selectSource('ALL')" aria-pressed="true">All records</button>
           <button type="button" id="qf_src_02_shopify_plus" onclick="selectSource('src_02_shopify_plus')" aria-pressed="false">Shopify</button>
@@ -631,16 +641,6 @@
         </details>
       </section>
     </div>
-    <section id="supplierCatalog" class="sf-drawer sf-import">
-      <h2>Clean a supplier catalog</h2>
-      <label for="supplierCsv">CSV with a url, product_url or canonical_url column (up to 5 MB)</label>
-      <input id="supplierCsv" type="file" accept=".csv,text/csv">
-      <p>The first available link column is cleaned in this order: product_url, canonical_url, url. Tracking parameters are removed and identical rows merged. Other values are retained. CSV exports prefix formula-like text with an apostrophe.</p>
-      <p id="supplierStatus" role="status"></p>
-      <pre id="supplierPreview" aria-label="First three normalized rows"></pre>
-      <button id="supplierDownload" type="button" disabled>Download normalized CSV</button>
-      <p><a href="./batch.html">Combine supplier files</a> with the hosted batch service.</p>
-    </section>
     <details class="sf-drawer" id="sfRecords">
       <summary>Browse and filter the records</summary>
     <!-- Split Workbench: Left = 50-Record Ledger | Right = Before/After Comparison + Make.com Webhook Dispatcher -->

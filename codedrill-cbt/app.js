@@ -508,11 +508,9 @@
       if (w.checked) {
         gradedCount++;
         if (w.selectedOption === q.correctOption) correctCount++;
-        if (typeof w.lookupSeconds === 'number' && w.lookupSeconds > 0) {
+        if (typeof w.lookupSeconds === 'number' && w.lookupSeconds >= 0) {
           lookupTimes.push(w.lookupSeconds);
         }
-      } else if (typeof w.lookupSeconds === 'number' && w.lookupSeconds > 0) {
-        lookupTimes.push(w.lookupSeconds);
       }
     });
 
@@ -530,6 +528,7 @@
       answeredCount,
       verifiedProofCount,
       avgLookupSeconds,
+      timedGraded: lookupTimes.length,
       accuracyPercent
     };
   }
@@ -742,7 +741,7 @@
 
     const probBadge = document.getElementById('globalPassProbBadge');
     if (probBadge) {
-      probBadge.textContent = stats.accuracyPercent !== null ? `${stats.accuracyPercent}% Pass Prob` : '75% Goal';
+      probBadge.textContent = stats.accuracyPercent !== null ? `${stats.accuracyPercent}% correct` : 'No graded answers';
     }
 
     // Update Suite Select Options (Add/Remove " · PRO" suffix based on license status)
@@ -1762,7 +1761,7 @@
       ? Number(drillLookupElapsedSeconds.toFixed(1))
       : Number(((Date.now() - questionLookupStartMs) / 1000).toFixed(1));
 
-    work.lookupSeconds = Math.max(0.8, elapsedSec);
+    work.lookupSeconds = Math.max(0, elapsedSec);
     drillCitationLocked = true;
 
     const matched = isCitationProofMatch(q, sec.id);
@@ -2051,15 +2050,7 @@
     document.getElementById('anKpiAccuracySub').innerHTML = `Current Accuracy: <strong>${accStr}</strong>`;
     document.getElementById('anKpiVerifiedCitations').textContent = String(stats.verifiedProofCount);
 
-    if (stats.avgLookupSeconds !== null) {
-      const secSavedPerQ = Math.max(15, 145 - stats.avgLookupSeconds);
-      const totalMinSaved = Math.round((secSavedPerQ * 80) / 60);
-      const hrs = Math.floor(totalMinSaved / 60);
-      const mins = totalMinSaved % 60;
-      document.getElementById('anKpiTimeSaved').textContent = `+${hrs}h ${mins}m`;
-    } else {
-      document.getElementById('anKpiTimeSaved').textContent = '--';
-    }
+    document.getElementById('anKpiTimeSaved').textContent = String(stats.timedGraded);
 
     const cbleDomainSpecs = [
       { suite: 'CBLE_111_113', label: '19 CFR Parts 111 & 113 — Broker Compliance & Customs Bonds', color: '#1A5638' },
@@ -2088,7 +2079,7 @@
       matchingQs.forEach(q => {
         const w = STATE.questionWork[q.id];
         if (w) {
-          if (typeof w.lookupSeconds === 'number' && w.lookupSeconds > 0) domLookups.push(w.lookupSeconds);
+          if (w.checked && typeof w.lookupSeconds === 'number' && w.lookupSeconds >= 0) domLookups.push(w.lookupSeconds);
           if (w.checked) {
             domGraded++;
             if (w.selectedOption === q.correctOption) domCorrect++;
@@ -2106,7 +2097,7 @@
 
       let statusLabel = 'Not Tested Yet';
       if (hasDomData) {
-        statusLabel = (domAcc >= 75) ? 'Exam Ready' : 'Needs Review';
+        statusLabel = domCorrect === domGraded ? 'All checked answers correct' : 'Review missed answers';
       }
 
       const row = document.createElement('div');
@@ -2282,8 +2273,11 @@
     const transactionVal = Math.max(0, invoice + packing + assist + royalty - nonDutiable);
     const baseDuty = transactionVal * (ratePct / 100);
     const rawMpf = transactionVal * 0.003464;
-    const clampedMpf = transactionVal > 0 ? Math.min(614.35, Math.max(31.67, rawMpf)) : 0;
-    const hmf = transactionVal * 0.00125;
+    const feeMode = document.getElementById('calcFees').value;
+    const roundCents = value => Math.round((value + Number.EPSILON) * 100) / 100;
+    const clampedMpf = transactionVal > 0 && ['mpf','both'].includes(feeMode)
+      ? roundCents(Math.min(670.86, Math.max(34.58, rawMpf))) : 0;
+    const hmf = ['hmf','both'].includes(feeMode) ? roundCents(transactionVal * 0.00125) : 0;
     const mpfHmf = clampedMpf + hmf;
     const totalDeposit = baseDuty + mpfHmf;
 
@@ -2318,7 +2312,12 @@
       return {domain,questionsCovered:checked.length,gradedCount:checked.length,accuracyPct:summary.accuracyPercent,meanLookupSec:summary.avgLookupSeconds,
         trapAndPriorityDrill:checked.filter(q=>STATE.questionWork[q.id].selectedOption!==q.correctOption).map(q=>q.targetCitation).join(", ")||"—"};
     });
-    return {reportId:"CD-"+new Date().toISOString().slice(0,10),viewMode:"session",viewModeTitle:"This browser’s graded attempts",totalQuestions:total,
+    let sessionId = localStorage.getItem('codedrill-cohort-attempt-v1');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem('codedrill-cohort-attempt-v1',sessionId);
+    }
+    return {reportId:sessionId,viewMode:"session",viewModeTitle:"This browser’s graded attempts",totalQuestions:total,
       overallReadinessPct:stats.accuracyPercent,meanLookupSeconds:stats.avgLookupSeconds,verifiedProofRatePct:graded.length?Math.round(100*stats.verifiedProofCount/graded.length):null,
       verdict:graded.length?stats.correctCount+" correct of "+graded.length+" graded":"No graded attempts",isExamReady:false,domains,
       cohortSeats:graded.length?[{seatLabel:"This browser",trackFocus:"All practiced topics",masteryPct:stats.accuracyPercent+"%",avgLookup:stats.avgLookupSeconds==null?"—":stats.avgLookupSeconds+"s",verifiedProofs:stats.verifiedProofCount+" / "+graded.length}]:[]};
@@ -2351,14 +2350,14 @@
           <span class="b2b-kpi-sub">Across graded questions</span>
         </div>
         <div class="b2b-kpi-box">
-          <span class="b2b-kpi-label">Mean Citation Lookup Latency (s)</span>
+          <span class="b2b-kpi-label">Mean recorded question time (s)</span>
           <strong class="b2b-kpi-val" id="b2bKpiLatencyVal">${escapeHtml(lookupStr)}</strong>
           <span class="b2b-kpi-sub">Mean recorded time across graded questions</span>
         </div>
         <div class="b2b-kpi-box">
-          <span class="b2b-kpi-label">Verified 19 CFR / HTSUS Citation Proof Rate %</span>
+          <span class="b2b-kpi-label">Matched reference rate</span>
           <strong class="b2b-kpi-val" id="b2bKpiProofRateVal">${escapeHtml(proofStr)}</strong>
-          <span class="b2b-kpi-sub">Exact statutory section locked as evidence</span>
+          <span class="b2b-kpi-sub">Graded questions with a matching reference</span>
         </div>
         <div class="b2b-kpi-box">
           <span class="b2b-kpi-label">Graded attempts</span>
@@ -2494,9 +2493,9 @@
 
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
         <div style="background:#F6F4EF;border:1px solid #C9C4B8;padding:12px;border-radius:0px;">
-          <div style="font-family:var(--font-mono);font-size:10.5px;color:#78756D;font-weight:600;">AVG CITATION LOOKUP</div>
+          <div style="font-family:var(--font-mono);font-size:10.5px;color:#78756D;font-weight:600;">MEAN RECORDED QUESTION TIME</div>
           <div style="font-family:var(--font-mono);font-size:20px;font-weight:600;color:#141413;">${avgLookupStr}</div>
-          <div style="font-family:var(--font-mono);font-size:10.5px;color:#1A5638;">Target Benchmark: <= 45.0s</div>
+          <div style="font-family:var(--font-mono);font-size:10.5px;color:#1A5638;">Timed, graded practice</div>
         </div>
         <div style="background:#F6F4EF;border:1px solid #C9C4B8;padding:12px;border-radius:0px;">
           <div style="font-family:var(--font-mono);font-size:10.5px;color:#78756D;font-weight:600;">VERIFIED CITATION PROOFS</div>
@@ -2522,7 +2521,7 @@
                 <strong>Q${posNum} (${escapeHtml(q.category)})</strong> — Governing Authority: <code>${escapeHtml(q.targetCitation)}</code>
               </div>
               <div style="font-family:var(--font-mono);font-weight:600;">
-                Your answer: ${w.selectedOption || 'None'} · Answer key: ${q.correctOption} (${isRight ? 'Pass' : 'Fail'})
+                Your answer: ${w.selectedOption || 'None'} · Answer key: ${q.correctOption} (${w.selectedOption ? (isRight ? 'Correct' : 'Incorrect') : 'Unanswered'})
               </div>
             </div>
           `;
@@ -2606,8 +2605,9 @@
     const btnResetDemo = document.getElementById('btnResetDemoData');
     if (btnResetDemo) {
       btnResetDemo.addEventListener('click', () => {
-        localStorage.removeItem(STORAGE_KEY);
-        STATE = getDefaultUserState();
+        const {accountUser,licenseKey,licenseTier,selectedPlanCode} = STATE;
+        localStorage.removeItem('codedrill-cohort-attempt-v1');
+        STATE = Object.assign(getDefaultUserState(), {accountUser,licenseKey,licenseTier,selectedPlanCode});
         currentSearchQuery = '';
         const searchInput = document.getElementById('ecfrSearchInput');
         if (searchInput) searchInput.value = '';
@@ -2616,7 +2616,7 @@
         saveUserState();
         switchMode('cbt');
         refreshAllViews();
-        showToast('Session reset to fresh Free Trial (0/30 Answered)');
+        showToast('Practice cleared. Start a new attempt.');
       });
     }
 
@@ -2976,14 +2976,14 @@
     document.getElementById('btnScratchpadDone').addEventListener('click', closeScratch);
     document.getElementById('btnAnalyticsOpenScratchpad').addEventListener('click', openScratchpadModal);
 
-    ['calcInvoicePrice', 'calcPackingCost', 'calcAssistCost', 'calcRoyaltyCost', 'calcNonDutiable', 'calcDutyRate'].forEach(id => {
+    ['calcInvoicePrice', 'calcPackingCost', 'calcAssistCost', 'calcRoyaltyCost', 'calcNonDutiable', 'calcDutyRate', 'calcFees'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('input', updateCustomsValuationCalculator);
     });
 
     document.getElementById('btnInsertCalcToScratchpad').addEventListener('click', () => {
       const res = updateCustomsValuationCalculator();
-      const note = `\n19 CFR § 152.103 Valuation Calculation: Appraised Transaction Value = ${res.transactionVal} | Duty (${res.ratePct}%) = ${res.baseDuty} | MPF+HMF = ${res.mpfHmf} | Total CBP Deposit = ${res.totalDeposit}`;
+      const note = `\nFY 2027 practice · ${document.getElementById('calcFees').selectedOptions[0].textContent} · 19 CFR § 152.103: Appraised Transaction Value = ${res.transactionVal} | Duty (${res.ratePct}%) = ${res.baseDuty} | MPF+HMF = ${res.mpfHmf} | Total CBP Deposit = ${res.totalDeposit}`;
       const textarea = document.getElementById('candidateScratchpadTextarea');
       textarea.value = (textarea.value.trim() + '\n' + note).trim();
       STATE.scratchpadText = textarea.value;

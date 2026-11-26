@@ -41,11 +41,13 @@ export async function readLocalDocument(fileName, buffer, id) {
   const bytes = new Uint8Array(buffer);
   const document = {id, name:fileName, byteLength:bytes.length, uploaded:true};
   if (!bytes.length) throw new Error('The file is empty.');
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  document.fileSha256 = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
   if (/\.pdf$/i.test(fileName) || new TextDecoder().decode(bytes.slice(0, 16)).includes('%PDF-')) {
     const reader = await import('./pdf-passages.mjs');
     const parsed = await reader.parse(fileName, buffer, id);
     if (parsed.parseError || !parsed.chunks.length) throw new Error(parsed.statusNote);
-    return parsed;
+    return {...parsed, fileSha256:document.fileSha256};
   }
   if (!/\.(csv|tsv|txt|md)$/i.test(fileName)) throw new Error('Choose PDF, CSV, TSV, TXT or Markdown.');
   let text;

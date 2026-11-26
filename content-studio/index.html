@@ -93,7 +93,7 @@
             </div>
 
             <details><summary>Deliver this dossier to your webhook</summary>
-              <p>Download the current payload and Python sender. Set CONTENTFORGE_WEBHOOK_URL and CONTENTFORGE_SIGNING_SECRET in your environment, then run <code>python3 deliver.py dossier.json</code>. Your receiver can verify the HMAC-SHA256 signature in X-ContentForge-Signature and deduplicate repeated requests by Idempotency-Key.</p>
+              <p>Download the complete source, cited passages, generated assets and comparison results in one JSON file. Use the Python sender to deliver the file. Set CONTENTFORGE_WEBHOOK_URL and CONTENTFORGE_SIGNING_SECRET in your environment, then run <code>python3 deliver.py dossier.json</code>. Your receiver can verify the HMAC-SHA256 signature in X-ContentForge-Signature and deduplicate repeated requests by Idempotency-Key.</p>
               <button type="button" class="cf-btn-mini" id="downloadWebhookPayload">Download dossier.json</button>
               <a href="./deliver.py" download>Download Python sender</a>
             </details>
@@ -534,6 +534,7 @@
 
   <script src="/assets/js/cf-telemetry.js" defer></script>
   <script src="vendor/sha256.js"></script>
+  <script src="source-passages.js"></script>
   <script src="presets-data.js"></script>
   <script src="../assets/js/library-access.js"></script>
   <script src="app.js?v=20261124-ux"></script>

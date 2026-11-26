@@ -1,11 +1,11 @@
-import { normalizeCatalog, toCsv, countEscapedCells } from './catalog-import.mjs';
+import { normalizeCatalog, normalizeSupplierJson, toCsv, countEscapedCells } from './catalog-import.mjs';
 const fileInput = document.querySelector('#supplierCsv');
 const status = document.querySelector('#supplierStatus');
 const preview = document.querySelector('#supplierPreview');
 const download = document.querySelector('#supplierDownload');
 let current = null, generation = 0;
 
-fileInput.addEventListener('change', async () => {
+async function readCatalog() {
   const version = ++generation;
   current = null;
   download.disabled = true;
@@ -14,14 +14,16 @@ fileInput.addEventListener('change', async () => {
   const file = fileInput.files[0];
   if (!file) return;
   try {
-    if (file.size > 5_000_000) throw new Error('Use a CSV file under 5 MB.');
+    const json=/\.json$/i.test(file.name)||file.type==='application/json';
+    if (file.size > (json?20000000:5000000)) throw Error('CSV limit: 5 MB. JSON limit: 20 MB.');
     let source;
     try { source = new TextDecoder('utf-8', {fatal:true}).decode(await file.arrayBuffer()); }
-    catch { throw new Error('Choose a readable UTF-8 CSV file.'); }
-    const result = normalizeCatalog(source);
+    catch { throw new Error('Choose a readable UTF-8 catalog.'); }
+    const result = json ? normalizeSupplierJson(source) : normalizeCatalog(source);
     if (version !== generation) return;
     current = result;
-    preview.textContent = toCsv({...result, rows:result.rows.slice(0, 3)});
+    const display=toCsv({...result, rows:result.rows.slice(0, 3)});
+    preview.textContent=display.length>3000?display.slice(0,3000)+'…':display;
     status.textContent = file.name + ' · ' + result.total + ' input rows · ' + result.changed +
       ' URLs normalized · ' + result.duplicates + ' duplicate rows removed. ' + countEscapedCells(result) + ' formula-like cells will be exported as text.';
     download.disabled = false;
@@ -30,7 +32,10 @@ fileInput.addEventListener('change', async () => {
   } finally {
     if (version === generation) fileInput.value = '';
   }
-});
+}
+fileInput.addEventListener('change',readCatalog);
+fileInput.disabled=false;
+if(fileInput.files.length)readCatalog();
 
 download.addEventListener('click', () => {
   if (!current) return;

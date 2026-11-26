@@ -11,7 +11,7 @@
 <main><h1>Combine supplier files</h1>
 <p>Merge catalog exports with matching column names. StealthFlow aligns columns, removes tracking parameters from product URLs and keeps distinct records for different variants.</p>
 <section><h2>Select catalogs</h2>
-<label for="catalogs">CSV files with a product URL column</label><input id="catalogs" type="file" accept=".csv,text/csv" multiple>
+<label for="catalogs">CSV files with a product URL column</label><input id="catalogs" disabled type="file" accept=".csv,text/csv" multiple>
 <p>Send up to 12 CSV files to the Caliber Foundry batch service. Files are processed in memory. For a single file you can also <a href="./#supplierCatalog">work entirely on your device</a>.</p>
 <button type="button" id="combine" disabled>Send and combine files</button><progress id="requestProgress" aria-label="File processing" max="100" value="0" hidden></progress><span id="requestTiming"></span><p role="status" id="status"></p></section>
 <section id="output" hidden><h2>Combined catalog</h2><p id="counts"></p><div style="overflow-x:auto"><table><caption>First three output records</caption><thead id="columns"></thead><tbody id="preview"></tbody></table></div>

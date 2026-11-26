@@ -42,7 +42,7 @@
       </button>
       <button type="button" class="cd-mode-tab" data-mode="analytics" id="tabModeAnalytics" title="Readiness Analytics &amp; B2C/B2B Plans (Alt+3)">
         <span class="cd-tab-label">Analytics &amp; Plans</span>
-        <span class="cd-tab-tag" id="globalPassProbBadge">75% Goal</span>
+        <span class="cd-tab-tag" id="globalPassProbBadge">No graded answers</span>
       </button>
     </nav>
 
@@ -51,7 +51,7 @@
       <div class="cd-track-selector-wrap">
         <label for="examTrackSelect" class="cd-track-label">Suite:</label>
         <select id="examTrackSelect" class="cd-track-select" aria-label="Select Exam Test Suite">
-          <option value="CBLE">Full CBLE Mock Exam (24 Questions — All 19 CFR &amp; HTSUS)</option>
+          <option value="CBLE">CBLE Practice Bank (24 Questions — All 19 CFR &amp; HTSUS)</option>
           <option value="CBLE_111_113">CBLE Topic 1: Broker Compliance &amp; Bonds (19 CFR Parts 111 &amp; 113 — 5 Qs)</option>
           <option value="CBLE_141_142">CBLE Topic 2: Entry, Invoices &amp; Release Deadlines (Parts 141 &amp; 142 — 5 Qs) · PRO</option>
           <option value="CBLE_152_177_190">CBLE Topic 3: Valuation, Rulings &amp; Drawback (Parts 152, 177 &amp; 190 — 8 Qs) · PRO</option>
@@ -667,10 +667,10 @@
         <!-- Hero Readiness Banner -->
         <div class="an-hero-banner" id="modeViewAnalytics">
           <div class="an-hero-left">
-            <span class="an-kicker">Candidate Telemetry &amp; Pass Probability</span>
-            <h1 class="an-hero-title">CBLE &amp; EA Exam Readiness Dashboard</h1>
+            <span class="an-kicker">Candidate practice</span>
+            <h1 class="an-hero-title">Practice results by suite</h1>
             <p class="an-hero-desc">
-              The U.S. Customs Broker License Exam has a <strong>15.2% national pass rate</strong>—not because candidates fail to study, but because static PDF binders do not train <strong>sub-45-second eCFR split-screen lookup speed</strong>. Track your real-time citation velocity against the <strong>75% CBP passing threshold</strong>.
+              See the answers you checked in the selected suite, your recorded times and the references you attached.
             </p>
             <div class="an-hero-actions">
               <button type="button" class="an-btn-export-b2b" id="btnExportB2BTeamReport">
@@ -680,15 +680,10 @@
           </div>
           <div class="an-hero-right">
             <div class="an-gauge-card">
-              <div class="an-gauge-label">Projected Pass Probability</div>
+              <div class="an-gauge-label">Graded question accuracy</div>
               <div class="an-gauge-value" id="anPassProbabilityValue">--%</div>
-              <div class="an-gauge-benchmarks">
-                <span class="an-bench-pass">CBP Target: &gt;= 75%</span>
-                <span class="an-bench-nat">National Avg: 15.2%</span>
-              </div>
               <div class="an-gauge-bar-track">
                 <div class="an-gauge-bar-fill" id="anPassProbabilityBar" style="width: 0%;"></div>
-                <div class="an-gauge-threshold-marker" style="left: 75%;" title="75% CBP Official Passing Score"></div>
               </div>
             </div>
           </div>
@@ -697,9 +692,9 @@
         <!-- 4 Telemetry KPI Cards -->
         <div class="an-kpi-grid">
           <div class="an-kpi-card">
-            <div class="an-kpi-label">Avg Citation Lookup Speed</div>
+            <div class="an-kpi-label">Mean recorded question time</div>
             <div class="an-kpi-num" id="anKpiAvgLookup">--s</div>
-            <div class="an-kpi-sub">Target Benchmark: <strong>&lt;= 45.0s</strong> (Legacy PDF Avg: 145s)</div>
+            <div class="an-kpi-sub">Across timed, graded questions</div>
           </div>
 
           <div class="an-kpi-card">
@@ -715,9 +710,9 @@
           </div>
 
           <div class="an-kpi-card">
-            <div class="an-kpi-label">Projected Time Saved (80-Q Exam)</div>
+            <div class="an-kpi-label">Timed, graded questions</div>
             <div class="an-kpi-num" id="anKpiTimeSaved">--</div>
-            <div class="an-kpi-sub">Buffer created across the 4.5-hour Pearson VUE clock</div>
+            <div class="an-kpi-sub">Checked questions with a recorded time</div>
           </div>
         </div>
 
@@ -907,6 +902,14 @@
               <label for="calcDutyRate">HTSUS Ad Valorem Duty Rate (%):</label>
               <input type="number" id="calcDutyRate" value="6.5" step="0.1" />
             </div>
+            <div class="calc-field">
+              <label for="calcFees">Fees applicable to this practice entry</label>
+              <select id="calcFees">
+                <option value="both">MPF and HMF</option><option value="mpf">MPF only</option>
+                <option value="hmf">HMF only</option><option value="none">Neither fee</option>
+              </select>
+            </div>
+            <p>FY 2027 electronic formal-entry practice. MPF is 0.3464% ($34.58 minimum, $670.86 maximum). HMF is 0.125% for qualifying port cargo. Choose the applicable fees for the exercise. <a href="https://www.govinfo.gov/content/pkg/FR-2026-07-31/pdf/2026-15530.pdf" target="_blank" rel="noopener">CBP fee schedule, Table 2</a></p>
           </div>
 
           <div class="calc-results-box">
@@ -919,7 +922,7 @@
               <strong id="calcResBaseDuty">$3,380.00</strong>
             </div>
             <div class="calc-res-row">
-              <span>MPF (0.3464% — Min $31.67 / Max $614.35) + HMF (0.125%):</span>
+              <span>Applicable processing and harbor fees:</span>
               <strong id="calcResMpfHmf">$245.13</strong>
             </div>
             <div class="calc-res-row calc-res-total">
@@ -1236,17 +1239,17 @@
       </div>
 
       <div class="pvue-modal-body b2b-report-printable-sheet" id="b2bReportPrintableSheet">
-        <p><a href="./cohort.html">Export practice answers or combine a cohort</a></p>
+        <p class="no-print"><a href="./cohort.html">Export practice answers or combine a cohort</a></p>
         <!-- Official Swiss Editorial Dossier Header -->
         <header class="b2b-dossier-header">
           <div class="b2b-dossier-top-row">
-            <span class="b2b-dossier-kicker">CALIBER FOUNDRY — CODEDRILL™ CBT ENTERPRISE COMPLIANCE DOSSIER</span>
+            <span class="b2b-dossier-kicker">CALIBER FOUNDRY — CODEDRILL™ PRACTICE REPORT</span>
             <span class="b2b-dossier-mode-pill" id="b2bReportActiveViewLabel">Graded attempts in this browser</span>
           </div>
-          <h3 class="b2b-dossier-title">Customs Brokerage &amp; Trade Compliance — Candidate Practice &amp; Citation Lookup Report</h3>
+          <h3 class="b2b-dossier-title">Customs broker and enrolled agent practice report</h3>
           <div class="b2b-dossier-meta-grid">
-            <div><span>Report ID:</span> <strong id="b2bReportIdVal">Current practice</strong></div>
-            <div><span>Regulatory Corpus:</span> <strong>19 CFR (Parts 111–190) · HTSUS GRI 1–6 · 31 CFR Part 10</strong></div>
+            <div><span>Practice session:</span> <strong id="b2bReportIdVal">Current practice</strong></div>
+            <div><span>Regulatory Corpus:</span> <strong>19 CFR · HTSUS · Internal Revenue Code · 26 and 31 CFR</strong></div>
 
           </div>
         </header>
@@ -1255,7 +1258,7 @@
         <section class="b2b-report-section" aria-label="Department Summary KPIs">
           <div class="b2b-section-head">
             <span class="b2b-section-num">SECTION 01</span>
-            <h4 class="b2b-section-title">Executive Readiness &amp; Citation Latency Telemetry</h4>
+            <h4 class="b2b-section-title">Graded answers and cited references</h4>
           </div>
           <div class="b2b-kpi-grid" id="b2bReportKpiGrid">
             <!-- Populated dynamically in app.js -->

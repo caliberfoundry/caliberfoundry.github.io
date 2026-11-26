@@ -5,7 +5,7 @@ const byId = id => document.getElementById(id);
 const input = byId('catalogs'), run = byId('combine'), status = byId('status'), output = byId('output');
 let generation = 0;
 let result;
-input.addEventListener('change', () => {
+function selectCatalogs() {
   generation++;
   progress.reset();
   result = null;
@@ -14,7 +14,10 @@ input.addEventListener('change', () => {
   const valid = files.length > 0 && files.length <= 12 && files.reduce((n, file) => n + file.size, 0) <= 524288;
   status.textContent = !files.length ? '' : valid ? files.length + ' file(s) selected.' : 'Choose at most 12 files totalling up to 512 KiB.';
   run.disabled = !valid;
-});
+}
+input.addEventListener('change',selectCatalogs);
+input.disabled=false;
+if(input.files.length)selectCatalogs();
 function tableRow(values, tag) {
   const tr = document.createElement('tr');
   for (const value of values) {

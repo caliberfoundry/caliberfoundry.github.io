@@ -16,6 +16,36 @@ export function normalizeProductUrl(value) {
 export function normalizeCatalog(input) {
   if (input.length > 5_000_000) throw new Error('Use a CSV file under 5 MB.');
   const [headers, ...rows] = parseCsv(input.replace(/^\uFEFF/, ''));
+  return normalizeRows(headers,rows);
+}
+
+// Supplier JSON may use different fields for different products. Keep every field
+// in the CSV and serialize nested values as JSON inside their original column.
+export function normalizeSupplierJson(input) {
+  const data=JSON.parse(input,(_key,value)=>{
+    if(typeof value==='number' && (!Number.isFinite(value) || (Number.isInteger(value) && !Number.isSafeInteger(value)))) {
+      throw Error('Represent very large numbers and long identifiers as strings in the JSON feed.');
+    }
+    return value;
+  });
+  const records=Array.isArray(data) ? data : [data];
+  if (!records.length || records.length>50000) throw Error('Choose between 1 and 50,000 product objects.');
+  const headers=new Set();
+  for(const record of records) {
+    if(!record || typeof record!=='object' || Array.isArray(record)) throw Error('Expected a JSON product object or array of product objects.');
+    for(const key of Object.keys(record)) headers.add(key);
+    if(headers.size>256) throw Error('Use a catalog with up to 256 distinct fields.');
+  }
+  const fields=[...headers];
+  if (fields.length*records.length>2000000) throw Error('Choose a smaller JSON catalog.');
+  const rows=records.map(record=>fields.map(key=>{
+    if(!Object.hasOwn(record,key) || record[key]===null) return '';
+    return typeof record[key]==='object' ? JSON.stringify(record[key]) : String(record[key]);
+  }));
+  return normalizeRows(fields,rows);
+}
+
+function normalizeRows(headers,rows) {
   if (!headers || !rows.length) throw new Error('Include a header and at least one record.');
   const names = headers.map(h => h.trim().toLowerCase());
   if (names.some(n => !n) || new Set(names).size !== names.length) throw new Error('Give each column a unique name.');

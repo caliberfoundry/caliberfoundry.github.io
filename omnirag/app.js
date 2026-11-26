@@ -838,7 +838,7 @@
           '<div class="chunk-head">' +
           '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
           '<span class="chunk-coord-pill">' +
-          escapeHtml(doc.name) +
+          escapeHtml(displayDocument(doc)) +
           ' &mdash; ' +
           escapeHtml(chunk.coord) +
           '</span>' +
@@ -879,12 +879,12 @@
               '<div class="om-file-card">' +
               '<div class="om-file-card-top">' +
               '<span class="om-file-name">' +
-              escapeHtml(doc.name) +
+              escapeHtml(displayDocument(doc)) +
               '</span>' +
               '<button type="button" class="om-file-remove" data-remove-doc="' +
               escapeHtml(doc.id) +
               '" aria-label="Remove ' +
-              escapeHtml(doc.name) +
+              escapeHtml(displayDocument(doc)) +
               '">Remove</button>' +
               '</div>' +
               '<div class="om-file-meta">' +
@@ -1253,6 +1253,7 @@
     const matches = findEvidenceMatches(query);
     const evidence = matches.map(({ doc, chunk }) => ({
       document: doc.name,
+      document_id: doc.id,
       location: chunk.coord,
       text: chunk.text,
       id: chunk.id
@@ -1276,7 +1277,7 @@
               '" data-jump-chunk="' +
               escapeHtml(chunk.id) +
               '">Open ' +
-              escapeHtml(doc.name) +
+              escapeHtml(displayDocument(doc)) +
               ' · ' +
               escapeHtml(chunk.coord) +
               '</button>'
@@ -1381,11 +1382,19 @@
   /* =========================================================================
      9. PRINT-READY EVIDENCE DOSSIER, JSON & CSV EXPORTS
      ========================================================================= */
+  function displayDocument(doc) {
+    if (!activeBaseDocs().some(other=>other.id!==doc.id && other.name===doc.name)) return doc.name;
+    return doc.name+' ['+doc.id+(doc.fileSha256?' · '+doc.fileSha256.slice(0,10):'')+']';
+  }
+
   function buildEvidencePayload() {
     const docs = activeBaseDocs();
     const corpusString = docs.map((d) => d.name + ':' + d.chunks.map((c) => c.text).join('\n')).join('\n---\n');
     const fingerprint = deterministicHash(corpusString);
-    const dossierId = 'OMNI-DD-2026-' + fingerprint.slice(0, 6).toUpperCase();
+    const selectedDoc = availableDocs().find(d=>d.chunks.some(c=>c.id===state.highlightedChunkId));
+    const selectedPassage = selectedDoc?.chunks.find(c=>c.id===state.highlightedChunkId);
+    const reviewVersion = deterministicHash(JSON.stringify([fingerprint, docs.map(d=>d.fileSha256 || d.id), state.answers, state.comparison, state.highlightedChunkId]));
+    const dossierId = 'OMNI-DD-' + reviewVersion.toUpperCase();
     state.lastDossierId = dossierId;
 
     return {
@@ -1400,11 +1409,12 @@
       content_fingerprint: fingerprint,
       timestamp: new Date().toISOString(),
       documents: docs.map((d) => ({
-        name: d.name,
+        id: d.id, name: d.name,
+        file_sha256: d.fileSha256 || null,
         format: d.format,
         status: d.statusNote || 'Indexed',
         passage_count: d.chunks.length,
-        passages: d.chunks.map((c) => ({ location: c.coord, title: c.title, text: c.text }))
+        passages: d.chunks.map((c) => ({ id: c.id, location: c.coord, title: c.title, text: c.text }))
       })),
       automatic_comparison_skipped: state.activeMode === 'uploaded' && Boolean(state.crossCheckLimited),
       comparison_method: 'Candidate pairs selected by terminology and measurement unit. Review original passages.',
@@ -1412,17 +1422,24 @@
         status: f.status,
         topic: f.topic,
         unit: f.unit,
-        source_a: { document: f.docA.name, location: f.chunkA.coord, value: f.valueA, text: f.chunkA.text },
-        source_b: { document: f.docB.name, location: f.chunkB.coord, value: f.valueB, text: f.chunkB.text }
+        source_a: { document: f.docA.name, document_id: f.docA.id, passage_id: f.chunkA.id, location: f.chunkA.coord, value: f.valueA, text: f.chunkA.text },
+        source_b: { document: f.docB.name, document_id: f.docB.id, passage_id: f.chunkB.id, location: f.chunkB.coord, value: f.valueB, text: f.chunkB.text }
       })),
-      selected_excerpt: state.highlightedChunkId,
+      selected_excerpt: selectedPassage?.id || null,
+      selected_excerpt_location: selectedPassage ? {
+        document_id:selectedDoc.id, document:selectedDoc.name, id:selectedPassage.id,
+        location:selectedPassage.coord, text:selectedPassage.text
+      } : null,
       questions: state.answers,
-      comparison: state.comparison
+      comparison: state.comparison ? {...state.comparison, passages:['a','b'].map(side=>({
+        id:'cit_custom_'+side, document_id:'pasted_'+side, text:state.comparison['source_'+side]
+      }))} : null
     };
   }
 
   function buildEvidenceCsv(payload, spreadsheetText) {
-    const header = ['Row_Type', 'Document', 'Location', 'Topic_Or_Question', 'Status', 'Evidence_Text'];
+    const header = ['Row_Type', 'Document', 'Location', 'Topic_Or_Question', 'Status', 'Evidence_Text', 'Document_Id', 'Passage_Id', 'Source_File_SHA256'];
+    const files = new Map(payload.documents.map(d=>[d.id, d.file_sha256 || '']));
     const lines = [header.join(',')];
     const escCsv = (v) => '"' + spreadsheetText(v == null ? '' : v).replace(/"/g, '""') + '"';
 
@@ -1434,7 +1451,10 @@
           f.source_a.location + ' / ' + f.source_b.location,
           f.topic,
           f.status,
-          f.source_a.value + ' vs ' + f.source_b.value
+          f.source_a.value + ' vs ' + f.source_b.value,
+          f.source_a.document_id + ' / ' + f.source_b.document_id,
+          f.source_a.passage_id + ' / ' + f.source_b.passage_id,
+          [files.get(f.source_a.document_id), files.get(f.source_b.document_id)].join(' / ')
         ]
           .map(escCsv)
           .join(',')
@@ -1444,16 +1464,22 @@
     payload.questions.forEach((q) => {
       if (q.evidence && q.evidence.length) {
         q.evidence.forEach((e) => {
-          lines.push(['QA_CITATION', e.document, e.location, q.question, 'SOURCE_FOUND', e.text].map(escCsv).join(','));
+          lines.push(['QA_CITATION', e.document, e.location, q.question, 'SOURCE_FOUND', e.text, e.document_id, e.id, files.get(e.document_id)].map(escCsv).join(','));
         });
       } else {
-        lines.push(['QA_CITATION', 'Active Pack', '-', q.question, 'NO_ANSWER', 'No supporting passage found'].map(escCsv).join(','));
+        lines.push(['QA_CITATION', 'Active Pack', '-', q.question, 'NO_ANSWER', 'No supporting passage found', '', '', ''].map(escCsv).join(','));
       }
     });
 
+    if (payload.comparison) {
+      for (const side of ['a','b']) {
+        lines.push(['MANUAL_COMPARISON', 'Pasted passage ' + side.toUpperCase(), '', '',
+          payload.comparison.status, payload.comparison['source_' + side], 'pasted_'+side, 'cit_custom_'+side, ''].map(escCsv).join(','));
+      }
+    }
     payload.documents.forEach((d) => {
       d.passages.forEach((p) => {
-        lines.push(['SOURCE_PASSAGE', d.name, p.location, p.title, d.format, p.text].map(escCsv).join(','));
+        lines.push(['SOURCE_PASSAGE', d.name, p.location, p.title, d.format, p.text, d.id, p.id, d.file_sha256].map(escCsv).join(','));
       });
     });
 
@@ -1471,12 +1497,13 @@
     const totalPassages = docs.reduce((s, d) => s + d.chunks.length, 0);
     const mismatchCount = payload.cross_document_findings.filter((f) => f.status === 'MISMATCH').length;
 
+    const documentLabels = new Map(docs.map(d=>[d.id, displayDocument(d)]));
     const inventoryRows = docs
       .map(
         (d) =>
           '<tr>' +
           '<td><strong>' +
-          escapeHtml(d.name) +
+          escapeHtml(displayDocument(d)) +
           '</strong></td>' +
           '<td class="mono">' +
           escapeHtml(d.format) +
@@ -1509,10 +1536,10 @@
               '</span>' +
               '</div>' +
               '<div><strong>Source A:</strong> ' +
-              escapeHtml(f.source_a.document + ' (' + f.source_a.location + ') — ' + f.source_a.text) +
+              escapeHtml((documentLabels.get(f.source_a.document_id) || f.source_a.document) + ' (' + f.source_a.location + ') — ' + f.source_a.text) +
               '</div>' +
               '<div><strong>Source B:</strong> ' +
-              escapeHtml(f.source_b.document + ' (' + f.source_b.location + ') — ' + f.source_b.text) +
+              escapeHtml((documentLabels.get(f.source_b.document_id) || f.source_b.document) + ' (' + f.source_b.location + ') — ' + f.source_b.text) +
               '</div>' +
               '</div>'
           )
@@ -1533,7 +1560,7 @@
                     .map(
                       (c) =>
                         '<div style="margin-top:4px;"><span class="mono" style="font-size:11.5px;font-weight:600;">[' +
-                        escapeHtml(c.document + ' · ' + c.location) +
+                        escapeHtml((documentLabels.get(c.document_id) || c.document) + ' · ' + c.location) +
                         ']</span> ' +
                         escapeHtml(c.text) +
                         '</div>'
@@ -1561,7 +1588,7 @@
             (c) =>
               '<tr>' +
               '<td><strong>' +
-              escapeHtml(d.name) +
+              escapeHtml(displayDocument(d)) +
               '</strong></td>' +
               '<td class="mono">' +
               escapeHtml(c.coord) +

@@ -10,8 +10,8 @@ Caliber Foundry builds software for evidence review, operations and training. Pr
 - [DealShield](https://caliberfoundry.com/dealshield/) compares questionnaire rows with supplied policy evidence and exports a review CSV. The user reviews answers and gaps before responding to a buyer.
 - [FinOpsGuard](https://caliberfoundry.com/finopsguard/) compares actual charges and accepted outputs across recorded tasks. The cloud billing workbench also accepts local cost exports.
 - [OmniRAG](https://caliberfoundry.com/omnirag/) searches text-bearing PDFs, TXT and delimited tables locally. Inspect source excerpts and file locations before exporting a dossier. Scanned pages need OCR.
-- [StealthFlow](https://caliberfoundry.com/stealthflow/) cleans supplied catalog CSVs, normalizes URL tracking parameters and removes duplicate records. The batch API accepts supplied records.
-- [OOBE Sentinel](https://caliberfoundry.com/oobe-agent/) simulates five periods of portfolio decisions. The output is a teaching simulation.
+- [StealthFlow](https://caliberfoundry.com/stealthflow/) reads supplied catalog CSVs and product JSON, normalizes URL tracking parameters and removes duplicate records. The batch API accepts supplied records.
+- [OOBE Sentinel](https://caliberfoundry.com/oobe-agent/) simulates five periods of portfolio decisions using built-in assumptions or downside shocks derived from imported price candles. The output is a teaching simulation.
 - [DocuShield v2 PDF accessibility studio](https://caliberfoundry.com/docushield/) audits PDFs with veraPDF, preserves supported content during repair and provides a revised PDF and a JSON report. Reading order, table semantics and image descriptions require human review.
 - [DocuShield Pro licensing and sample audit](https://caliberfoundry.com/work/docushield.html) covers the free tier and the $299 one-time Gumroad license. Buyers activate Pro with their receipt key.
 

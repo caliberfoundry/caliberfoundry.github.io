@@ -4092,19 +4092,19 @@ mark.ecfr-search-highlight {
 }
 
 @media print {
-  body * {
-    visibility: hidden;
+  body:has(#modalTeamReadinessReport:not(.hidden)) > :not(#modalTeamReadinessReport) {
+    display: none !important;
   }
-  #modalTeamReadinessReport,
-  #modalTeamReadinessReport * {
-    visibility: visible;
+  body:has(#modalTeamReadinessReport:not(.hidden)) {
+    display: block;
+    background: white;
   }
-  #modalTeamReadinessReport {
-    position: absolute;
-    inset: 0;
-    background: #FFFFFF !important;
-    padding: 0 !important;
-    display: block !important;
+  #modalTeamReadinessReport:not(.hidden) {
+    position: static;
+    height: auto;
+    display: block;
+    padding: 0;
+    background: white;
   }
   .b2b-readiness-modal-window {
     width: 100% !important;

@@ -296,34 +296,11 @@
      4. DETERMINISTIC SOURCE PARSER & LIVE MULTI-FORMAT SYNTHESIS ENGINE
      ========================================================================== */
   function parseSourceExcerptClaims(sourceTitle, sourceText, basePreset) {
-    const rawText = String(sourceText || '').trim();
+    const rawText = String(sourceText || '');
     const rawTitle = String(sourceTitle || basePreset.sourceTitle || 'Technical Dossier').trim();
     const sha256 = sourceVersion(`${rawTitle}::${rawText}`);
 
-    // Extract [Clause ...] or [Section ...] or [Table ...] anchors and their following statements
-    const anchorRegex = /\[([^\]]+)\]\s*([^\[]+)/g;
-    const extractedSegments = [];
-    let match;
-    const prefix=rawText.match(/^([^[]+)\[/);
-    if(prefix?.[1].trim())extractedSegments.push({anchor:"Opening passage",statement:prefix[1].trim()});
-    while ((match = anchorRegex.exec(rawText)) !== null) {
-      const anchor = match[1].trim();
-      const statement = match[2].trim();
-      if (statement.length) {
-        extractedSegments.push({ anchor, statement });
-      }
-    }
-
-    // If user typed custom text without brackets, segment by sentences
-    if (extractedSegments.length === 0 && rawText.length > 0) {
-      const sentences = rawText.split(/(?<=[.!?])\s+/).filter(s => s.trim().length);
-      sentences.forEach((s, idx) => {
-        extractedSegments.push({
-          anchor: `Passage ${idx + 1}`,
-          statement: s.trim()
-        });
-      });
-    }
+    const extractedSegments = window.ContentForgePassages.collect(rawText);
 
     const isDefaultUnmodified = (
       rawText === String(basePreset.sourceText || '').trim() &&
@@ -331,7 +308,7 @@
     );
 
     // Build deterministically synthesized multi-format outputs from edited source text
-    const dynamicEvalCases = extractedSegments.slice(0, 8).map((seg, idx) => {
+    const dynamicEvalCases = extractedSegments.map((seg, idx) => {
       const numMatches = seg.statement.match(/(\$[0-9.,]+\s*(?:million|billion|M|B|K)?|[0-9.,]+%|[0-9.,]+\s*(?:ms|milliseconds|bps|months|days|hours|pages|questions))/gi);
       const metricSummary = numMatches && numMatches.length > 0
         ? `Numbers in source: ${numMatches.slice(0, 2).join(' · ')}`
@@ -340,6 +317,7 @@
       return {
         id: `EVAL-0${idx + 1}`,
         sourceRef: seg.anchor,
+        startOffset: seg.startOffset, endOffset: seg.endOffset,
         groundTruth: seg.statement,
         generatedClaim: `${seg.statement} [${seg.anchor}]`,
         exactMatch: 'Verbatim',
@@ -351,17 +329,28 @@
       };
     });
 
-    const sample=extractedSegments[0];
-    const termMatches=sample.statement.match(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’%-]*/gu)||[];
-    const unique=[...new Set(termMatches)].sort((a,b)=>b.length-a.length);
-    const answer=unique[0];
-    const choices=answer ? [answer,...unique.slice(1,3)] : [];
-    const offset=choices.length ? parseInt(sha256.slice(0,2),16)%choices.length : 0;
-    const ordered=choices.slice(offset).concat(choices.slice(0,offset));
-    const courseModule=choices.length>=2 ? {moduleTitle:rawTitle+" · Passage recall",objective:"Restore the exact wording of "+sample.anchor,goldenQuote:sample.statement,
-      quizStem:"What word completes the original passage? "+sample.statement.replace(answer,"_____"),
-      options:ordered.map((text,i)=>({letter:String.fromCharCode(65+i),text,isCorrect:text===answer,rationale:"The passage uses “"+answer+"”."}))}:null;
-    const storyboard=extractedSegments.slice(0,6).map((seg,i)=>({scene:String(i+1),visual:"Show the cited passage from "+rawTitle,voiceover:seg.statement,dataOverlay:seg.anchor}));
+    const learningPassages = extractedSegments.filter(seg => {
+      const statement=seg.statement;
+      return statement.length>=24 && statement.length<=600 && !/^(?:#|\.\.|!\[|\[.*\]:|https?:)/.test(statement);
+    });
+    const editorialPassages = learningPassages.length ? learningPassages : extractedSegments;
+    const exercises=[];
+    for (const sample of learningPassages) {
+      const terms=sample.statement.match(/[\p{L}][\p{L}\p{M}'’-]{2,}/gu)||[];
+      const unique=[...new Set(terms)].sort((a,b)=>b.length-a.length);
+      if (unique.length<3) continue;
+      const choices=unique.slice(0,3), answer=choices[0];
+      const order=(parseInt(sha256.slice(0,2),16)+exercises.length)%choices.length;
+      exercises.push({moduleTitle:rawTitle+' · Passage recall',objective:'Restore the exact wording of '+sample.anchor,
+        sourceAnchor:sample.anchor, startOffset:sample.startOffset, endOffset:sample.endOffset, goldenQuote:sample.statement,
+        quizStem:'What word completes the original passage? '+sample.statement.replace(answer,'_____'),
+        options:choices.slice(order).concat(choices.slice(0,order)).map((text,i)=>({
+          letter:String.fromCharCode(65+i),text,isCorrect:text===answer,rationale:'The passage uses “'+answer+'”.'
+        }))});
+      if (exercises.length === (basePreset.id==='edtech-courseware' ? 8 : 1)) break;
+    }
+    const courseModule=exercises[0] || null;
+    const storyboard=editorialPassages.slice(0,6).map((seg,i)=>({scene:String(i+1),visual:"Show the cited passage from "+rawTitle,voiceover:seg.statement,dataOverlay:seg.anchor}));
     const dynamicSections = [];
     for (let i = 0; i < extractedSegments.length; i += 2) {
       const first = extractedSegments[i];
@@ -375,15 +364,15 @@
       });
     }
 
-    const dynamicTakeaways = extractedSegments.slice(0, 4).map(seg =>
+    const dynamicTakeaways = editorialPassages.slice(0, 4).map(seg =>
       `${seg.statement} [${seg.anchor}]`
     );
 
     const dynamicMonograph = {
       headline:rawTitle,
       subtitle: `Extracted ${extractedSegments.length} source passages (Version: ${sha256.slice(0, 16)}...)`,
-      executiveSummary: extractedSegments[0]
-        ? `${extractedSegments[0].statement} Source contains ${extractedSegments.length} excerpt(s).`
+      executiveSummary: editorialPassages[0]
+        ? `${editorialPassages[0].statement} Source contains ${extractedSegments.length} excerpt(s).`
         : basePreset.monograph.executiveSummary,
       sections: dynamicSections.length > 0 ? dynamicSections : basePreset.monograph.sections,
       svgDiagramTitle: basePreset.monograph.svgDiagramTitle,
@@ -394,6 +383,9 @@
       workflowId: isDefaultUnmodified ? basePreset.webhookPayload.workflowId : 'contentforge_source_excerpts',
       sourceRevision: sha256,
       sourceDocumentTitle: rawTitle,
+      sourceText: rawText,
+      sourceTextSha256: sourceVersion(rawText),
+      offsetUnit: 'UTF-16 code units, zero-based, end exclusive',
       webhookDestination: STATE.webhookUrl || null,
       sourceChecksumSha256:sha256,
       mode: 'source_excerpts',
@@ -402,19 +394,20 @@
       extractedClaims: dynamicEvalCases.map(c => ({
         claimId: c.id,
         sourceClause: c.sourceRef,
+        startOffset: c.startOffset, endOffset: c.endOffset,
         verbatimSpan: c.groundTruth,
         verdict: c.status
       })),
       synthesizedAssets: {
         monographSections: dynamicMonograph.sections.length,
         evalCasesVerified: dynamicEvalCases.length,
-        xThreadCardCount: Math.min(6, extractedSegments.length),
+        xThreadCardCount: Math.min(6, editorialPassages.length),
         readingQuizReady: Boolean(courseModule), storyboardScenes:storyboard.length
       }
     };
 
-    const dynamicThreadCards = extractedSegments.slice(0, 6).map((seg, idx) => ({
-      index: `0${idx + 1}/0${Math.min(6, extractedSegments.length)}`,
+    const dynamicThreadCards = editorialPassages.slice(0, 6).map((seg, idx) => ({
+      index: `0${idx + 1}/0${Math.min(6, editorialPassages.length)}`,
       hook: `Passage #${idx + 1} from ${rawTitle} [${seg.anchor}]:`,
       body: seg.statement,
       metricTag: `Source: [${seg.anchor}]`
@@ -423,7 +416,7 @@
     if (isDefaultUnmodified) {
       return {isCustomSynthesized:false,sha256,anchorCount:extractedSegments.length,charCount:rawText.length,
         monograph:basePreset.monograph,evalCases:dynamicEvalCases,webhookPayload:dynamicWebhookPayload,
-        courseModule:basePreset.courseModule,socialAndVideo:basePreset.socialAndVideo};
+        courseModule:basePreset.courseModule,exercises:basePreset.courseModule ? [basePreset.courseModule] : [],socialAndVideo:basePreset.socialAndVideo};
     }
     return {
       isCustomSynthesized: true,
@@ -433,7 +426,7 @@
       monograph: dynamicMonograph,
       evalCases: dynamicEvalCases.length > 0 ? dynamicEvalCases : basePreset.evalCases,
       webhookPayload: dynamicWebhookPayload,
-      courseModule,
+      courseModule, exercises,
       socialAndVideo: {
         threadCards: dynamicThreadCards.length > 0 ? dynamicThreadCards : basePreset.socialAndVideo.threadCards,
         storyboard
@@ -455,6 +448,16 @@
       return {claim,result:start<0?"No exact match":"Verbatim match",startOffset:start<0?null:start,endOffset:start<0?null:start+claim.length};
     });
     bundle.webhookPayload.comparisons=bundle.comparisons;
+    bundle.webhookPayload.templateId=preset.id;
+    bundle.webhookPayload.assets={
+      brief:bundle.monograph, readingExercise:bundle.courseModule, readingExercises:bundle.exercises || [],
+      socialDrafts:bundle.socialAndVideo?.threadCards || [], storyboard:bundle.socialAndVideo?.storyboard || []
+    };
+    bundle.webhookPayload.synthesizedAssets={
+      monographSections:bundle.monograph.sections.length, evalCasesVerified:bundle.evalCases.length,
+      xThreadCardCount:bundle.webhookPayload.assets.socialDrafts.length, readingQuizReady:Boolean(bundle.courseModule),
+      storyboardScenes:bundle.webhookPayload.assets.storyboard.length
+    };
     return bundle;
   }
 
@@ -688,7 +691,7 @@
     const quizBox = document.getElementById('edtechQuizContainer');
     if (!quizBox) return;
     if (!bundle.courseModule) {
-      quizBox.textContent = 'The first passage needs two distinct words to build a reading question.';
+      quizBox.textContent = 'A reading question needs a prose passage with at least three distinct words.';
       return;
     }
 
@@ -859,9 +862,9 @@
     const schemaEl = document.getElementById('schemaTemplateInput');
 
     const title = String(customInputs?.sourceTitle ?? titleEl?.value ?? '').trim();
-    const text = String(customInputs?.sourceText ?? textEl?.value ?? '').trim();
+    const text = String(customInputs?.sourceText ?? textEl?.value ?? '');
     const schema = customInputs?.schemaTemplate ?? schemaEl?.value;
-    if (!title || !text) {
+    if (!title || !text.trim()) {
       STATE.sourceDraft = {title, text};
       STATE.needsRun = true;
       saveState();
@@ -967,6 +970,11 @@ ${JSON.stringify(preview.payload, null, 2)}`;
         </tbody>
       </table>
 
+      ${preset.id==='edtech-courseware' && bundle.exercises?.length ?
+        '<h4>Reading exercises and answer key</h4><ol>'+bundle.exercises.map(ex=>
+          '<li><p>'+escapeHtml(ex.quizStem)+'</p><p>'+ex.options.map(o=>escapeHtml(o.letter+'. '+o.text)).join(' · ')+
+          '</p><p>Answer: '+escapeHtml(ex.options.find(o=>o.isCorrect)?.text || '')+' · '+escapeHtml(ex.sourceAnchor || ex.objective)+'</p></li>'
+        ).join('')+'</ol>':''}
       ${bundle.comparisons.length ? '<h4>Submitted statements</h4><ul>'+bundle.comparisons.map(c=>'<li>'+escapeHtml(c.result)+' · '+escapeHtml(c.claim)+'</li>').join('')+'</ul>' : ''}
       <h4 style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;border-bottom:1.5px solid #141413;padding-bottom:4px;margin-bottom:8px;">
         Source takeaways

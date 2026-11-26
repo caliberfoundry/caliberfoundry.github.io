@@ -15,7 +15,7 @@
         "type":"object",
         "required":["name","format","passages"],
         "properties": {
-          "name":{"type":"string"},
+          "id":{"type":"string"}, "file_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"}, "name":{"type":"string"},
           "format":{"type":"string"},
           "passages":{"type":"array","items":{"type":"object","required":["location","title","text"]}}
         }

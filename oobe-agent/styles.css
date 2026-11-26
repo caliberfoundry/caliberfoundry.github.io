@@ -131,3 +131,5 @@ footer { display:flex; align-items:center; justify-content:space-between; flex-w
 .model-guide p, .model-guide ol { margin-block: 20px; }
 .model-guide li { margin-block: 10px; }
 .model-guide a { color: var(--apricot); }
+
+.history-import{margin:1.25rem 0}.history-import p{max-width:74ch;overflow-wrap:anywhere}.history-import input{max-width:100%}
