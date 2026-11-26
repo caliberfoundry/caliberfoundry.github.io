@@ -1,0 +1,123 @@
+{
+  "mode_requested": "auto",
+  "mode_used": "in-place",
+  "before": {
+    "ok": true,
+    "is_compliant": false,
+    "profile": "PDF/UA-1 validation profile",
+    "passed_rules": 99,
+    "failed_rules": 7,
+    "passed_checks": 926,
+    "failed_checks": 112,
+    "violations": [
+      {
+        "clause": "6.2",
+        "test_number": 1,
+        "specification": "ISO 14289-1:2014",
+        "description": "The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true",
+        "failed_checks": 1,
+        "sample_contexts": [
+          "root"
+        ]
+      },
+      {
+        "clause": "7.1",
+        "test_number": 3,
+        "specification": "ISO 14289-1:2014",
+        "description": "Content shall be marked as Artifact or tagged as real content",
+        "failed_checks": 65,
+        "sample_contexts": [
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[0]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[1]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[2]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[3]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[4]"
+        ]
+      },
+      {
+        "clause": "7.1",
+        "test_number": 8,
+        "specification": "ISO 14289-1:2014",
+        "description": "The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML",
+        "failed_checks": 1,
+        "sample_contexts": [
+          "root/document[0]"
+        ]
+      },
+      {
+        "clause": "7.1",
+        "test_number": 10,
+        "specification": "ISO 14289-1:2014",
+        "description": "The document catalog dictionary shall include a ViewerPreferences dictionary containing a DisplayDocTitle key, whose value shall be true",
+        "failed_checks": 1,
+        "sample_contexts": [
+          "root"
+        ]
+      },
+      {
+        "clause": "7.1",
+        "test_number": 11,
+        "specification": "ISO 14289-1:2014",
+        "description": "The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-1:2008, 14.7",
+        "failed_checks": 1,
+        "sample_contexts": [
+          "root/document[0]"
+        ]
+      },
+      {
+        "clause": "7.2",
+        "test_number": 34,
+        "specification": "ISO 14289-1:2014",
+        "description": "Natural language for text in page content shall be determined",
+        "failed_checks": 40,
+        "sample_contexts": [
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[3]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[4]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[5]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[6]",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/content[0]/contentItem[7]"
+        ]
+      },
+      {
+        "clause": "7.21.4.1",
+        "test_number": 1,
+        "specification": "ISO 14289-1:2014",
+        "description": "The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9",
+        "failed_checks": 3,
+        "sample_contexts": [
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/operators[13]/font[0](Helvetica-Bold)",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/operators[19]/font[0](Courier)",
+          "root/document[0]/pages[0](3 0 obj PDPage)/contentStream[0](7 0 obj PDSemanticContentStream)/operators[31]/font[0](Helvetica)"
+        ]
+      }
+    ],
+    "has_font_embedding_issues": true,
+    "error": null
+  },
+  "after": {
+    "ok": true,
+    "is_compliant": true,
+    "profile": "PDF/UA-1 validation profile",
+    "passed_rules": 106,
+    "failed_rules": 0,
+    "passed_checks": 4602,
+    "failed_checks": 0,
+    "violations": [],
+    "has_font_embedding_issues": false,
+    "error": null
+  },
+  "quality": {
+    "review_required": true,
+    "notes": [
+      "Check reading order with a screen reader. Review table headers, contrast, figure descriptions and scanned text against the original before publishing.",
+      "Embedded matching URW fonts for Courier, Helvetica, Helvetica-Bold.",
+      "Tables on pages 1 retain their visible cells. Add and review semantic table, row and header tags in an accessibility editor."
+    ],
+    "page_count": 1,
+    "text_order_checked": true,
+    "link_destinations_checked": true,
+    "page_rendering_checked": true,
+    "source_sha256": "dceada75f9e0012d72424401992678aaf7c2e258d76e5932697ff77724a199f4",
+    "output_sha256": "6b9f3a412c98d440ad8627dfc6739ebd85fd47054525c90d97294fbaa068d0db"
+  }
+}

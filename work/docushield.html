@@ -9,13 +9,13 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>DocuShield&trade; v2 — ISO 14289-1 (PDF/UA-1) Remediation with veraPDF 1.30.4 | Caliber Foundry</title>
-  <meta name="description" content="DocuShield v2 audits binary PDFs with veraPDF 1.30.4, runs hybrid In-Place and Reflow ISO 14289-1 remediation, and reviews deterministic PNG figure crops for /Alt text without an LLM via CLI, Docker, FastAPI, or browser studio." />
+  <title>PDF accessibility audit and repair with veraPDF | DocuShield</title>
+  <meta name="description" content="Check a PDF against PDF/UA-1 with veraPDF. Download the revised PDF and a before-and-after JSON report. Try up to three PDFs a day, ten pages each, free." />
   <link rel="canonical" href="https://caliberfoundry.com/work/docushield.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Caliber Foundry" />
-  <meta property="og:title" content="DocuShield™ v2 — ISO 14289-1 (PDF/UA-1) Audit &amp; Hybrid Remediation" />
-  <meta property="og:description" content="Verify and remediate PDF/UA-1 documents with veraPDF 1.30.4, hybrid In-Place + Reflow passes, and zero-LLM deterministic PNG figure crop /Alt review." />
+  <meta property="og:title" content="PDF accessibility audit and repair with veraPDF | DocuShield" />
+  <meta property="og:description" content="Check a PDF against PDF/UA-1 with veraPDF. Download the revised PDF and a before-and-after JSON report. Try up to three PDFs a day, ten pages each, free." />
   <meta property="og:url" content="https://caliberfoundry.com/work/docushield.html" />
   <meta property="og:image" content="https://caliberfoundry.com/assets/banners/docushield-social.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -23,8 +23,8 @@
   <meta property="og:image:alt" content="DocuShield v2 before and after veraPDF PDF/UA-1 audit showing 7 failed rules resolved to 0 failed and 106 passed rules" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@CaliberFoundry" />
-  <meta name="twitter:title" content="DocuShield™ v2 — Deterministic ISO 14289-1 Remediation" />
-  <meta name="twitter:description" content="Hybrid In-Place and Reflow PDF/UA-1 remediation verified with veraPDF 1.30.4, zero-LLM PNG figure crop /Alt review, CLI, Docker, and FastAPI." />
+  <meta name="twitter:title" content="PDF accessibility audit and repair with veraPDF | DocuShield" />
+  <meta name="twitter:description" content="Check a PDF against PDF/UA-1 with veraPDF. Download the revised PDF and a before-and-after JSON report. Try up to three PDFs a day, ten pages each, free." />
   <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/docushield-social.jpg" />
   <meta name="twitter:image:alt" content="DocuShield v2 before and after veraPDF PDF/UA-1 audit showing 7 failed rules resolved to 0 failed and 106 passed rules" />
   <meta name="theme-color" content="#142d49" />
@@ -34,10 +34,10 @@
     "@type": "SoftwareApplication",
     "name": "DocuShield v2 PDF/UA-1 Remediation Studio",
     "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web Browser, Linux, macOS, Docker",
+    "operatingSystem": "Web browser",
     "url": "https://caliberfoundry.com/docushield/",
     "image": "https://caliberfoundry.com/assets/banners/docushield_cover_1600x1200.png",
-    "description": "Deterministic ISO 14289-1 (PDF/UA-1) audit and hybrid In-Place + Reflow remediation powered by veraPDF 1.30.4 with zero-LLM PNG figure crop /Alt review across CLI, Docker, FastAPI, and browser workbench.",
+    "description": "Check a PDF against PDF/UA-1 with veraPDF. Download the revised PDF and a before-and-after JSON report. Try up to three PDFs a day, ten pages each, free.",
     "author": {
       "@type": "Organization",
       "name": "Caliber Foundry",
@@ -257,7 +257,7 @@
       <a href="../docushield/" class="wordmark"><span class="ds-mark" aria-hidden="true">DS</span><span>DocuShield</span></a>
       <nav class="mast-nav" aria-label="Product navigation">
         <a href="../#work">All products</a>
-        <a href="#engine-modes">Architecture</a>
+        <a href="#engine-modes">How it works</a>
         <a href="#licensing">Pricing</a>
       </nav>
     </div>
@@ -267,27 +267,27 @@
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-grid-art" aria-hidden="true"></div>
       <div class="bound hero-inner">
-        <p class="eyebrow">ISO 14289-1 (PDF/UA-1) &middot; veraPDF 1.30.4 Engine</p>
-        <h1 id="hero-heading">Deterministic PDF/UA-1 <em>audit &amp; remediation.</em></h1>
+        <p class="eyebrow">DocuShield &middot; PDF/UA-1</p>
+        <h1 id="hero-heading">PDF accessibility <em>audit and repair</em></h1>
         <p class="hero-lede">
-          Inspect binary PDFs with official veraPDF 1.30.4, extract deterministic PNG figure crops for /Alt review without an LLM, and run hybrid In-Place + Reflow remediation via CLI, Docker, FastAPI, or browser studio.
+          Check a report, syllabus or handbook against PDF/UA-1 with veraPDF. Download a revised PDF and a before-and-after JSON report to see which rules still need attention.
         </p>
         <div class="hero-actions">
-          <a href="../docushield/#verapdfStudio" class="btn-primary">Open DocuShield Studio &rarr;</a>
-          <a href="#worked-proof" class="btn-ghost">Inspect real audit proof &darr;</a>
+          <a href="../docushield/#verapdfStudio" class="btn-primary">Check a PDF for free &rarr;</a>
+          <a href="#worked-proof" class="btn-ghost">See a worked example &darr;</a>
         </div>
         <p class="hero-note">
-          Uploaded documents are processed on the server. Downloads are private to the browser session that created them.
+          Free for three repairs per day, up to ten pages each. Files are processed on our server. Download your results in the same browser session.
         </p>
       </div>
     </section>
 
     <section class="bound section" id="worked-proof" aria-labelledby="worked-proof-heading">
       <div class="section-intro">
-        <p class="section-kicker">Verified Engine Run &middot; Public Audit Sample</p>
-        <h2 id="worked-proof-heading">Before vs. after veraPDF verification.</h2>
+        <p class="section-kicker">Public audit sample</p>
+        <h2 id="worked-proof-heading">What changes in a one-page PDF?</h2>
         <p>
-          Running Auto mode on the public Matterhorn audit sample below detects missing <code>/StructTreeRoot</code>, missing <code>/Lang</code>, untagged content, and unembedded Type1 fonts (Clause <code>7.21.4.1</code>), preserves the page layout, embeds matching fonts, and verifies <code>0 failed / 106 passed</code> ISO 14289-1 rules.
+          The original sample failed seven PDF/UA-1 rules, including missing language, tags and embedded fonts. After an in-place repair, the downloaded PDF passed all 106 automated rules. The table still needs semantic tags and a human check of its headers.
         </p>
       </div>
 
@@ -315,66 +315,43 @@
             <li><code>7.21.4.1</code>: Detects unembedded Standard-14 fonts (<code>Helvetica</code>, <code>Courier</code>) and rebuilds with embedded Unicode fonts.</li>
           </ul>
           <div class="sample-links">
-            <a href="../docushield/#verapdfStudio" class="btn-solid">Run in live studio &rarr;</a>
-            <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf" download class="btn-link">Sample PDF &darr;</a>
-            <a href="../assets/samples/docushield-remediation-manifest-sample.json" download class="btn-link">Sample JSON &darr;</a>
+            <a href="../docushield/#verapdfStudio" class="btn-solid">Try the sample in the studio &rarr;</a>
+            <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf" download class="btn-link">Original PDF &darr;</a>
+            <a href="../assets/samples/docushield-matterhorn-verapdf-report.json" download class="btn-link">Audit results (JSON excerpt) &darr;</a>
           </div>
         </div>
 
         <figure class="preview-card">
           <img src="../assets/product-previews/docushield.jpg" width="600" height="390" alt="DocuShield v2 FastAPI workbench showing 0 failed and 106 passed veraPDF ISO 14289-1 rules after Auto remediation" />
           <figcaption>
-            Live capture of the DocuShield v2 remediation panel verifying <code>0 failed / 106 passed</code> ISO 14289-1 rules with PDF/UA-1 download and JSON report links.
+            The studio shows the veraPDF results alongside links to download the revised PDF and full JSON report.
           </figcaption>
         </figure>
       </div>
 
       <div class="matterhorn-note" role="note">
-        <strong>Explicit Manual Matterhorn Review Scope:</strong> Automated veraPDF 1.30.4 checks verify machine-testable PDF/UA-1 syntax and structure rules. Passing 106 automated checks does not replace human Matterhorn Protocol 1.1 review for logical reading order, image <code>/Alt</code> semantic accuracy, complex table header associations, or color contrast.
+        <strong>What still needs review?</strong> Read the pages in order, check each image description and table header, and inspect contrast. A person must verify these parts of accessibility before publication.
       </div>
     </section>
 
     <section class="band-white section" id="engine-modes" aria-labelledby="engine-modes-heading">
       <div class="bound">
         <div class="section-intro">
-          <p class="section-kicker">DocuShield v2 Architecture</p>
-          <h2 id="engine-modes-heading">How DocuShield repairs a document.</h2>
-          <p>
-            Designed for universities, legal operations, healthcare teams, and EU Directive 2019/882 (EAA) / ADA Title II / Section 508 compliance workflows requiring reproducible artifacts.
-          </p>
+          <h2 id="engine-modes-heading">Review PDFs before publication</h2>
+          <p>For accessibility specialists and document teams checking recurring publications. Keep the report with each revised PDF so a reviewer can follow up on the findings.</p>
         </div>
-
         <div class="arch-grid">
           <article class="arch-card">
-            <h3>Hybrid In-Place + Reflow</h3>
-            <p>Choose between <strong>Auto</strong>, <strong>In-Place</strong>, or <strong>Reflow</strong> remediation modes verified before and after with <code>verapdf --flavour ua1</code>.</p>
-            <ul>
-              <li><strong>In-Place:</strong> Preserves original design, fonts, and layout while tagging streams and catalog dictionaries via <code>pikepdf</code> and <code>PyMuPDF</code>.</li>
-              <li><strong>Reflow:</strong> Rebuilds eligible plain text with embedded fonts. Columns, tables and artwork require layout preservation.</li>
-            </ul>
+            <h3>1. Audit a PDF</h3>
+            <p>Upload a PDF up to 25 MB. The studio runs veraPDF against PDF/UA-1 and lists machine-detectable issues, including missing tags, metadata and font information.</p>
           </article>
-
           <article class="arch-card">
-            <h3>Zero-LLM Figure Crop /Alt Review</h3>
-            <p>Never invent image descriptions with generative models. Inspect extracted images and supply descriptions or mark decorative content.</p>
-            <ul>
-              <li><code>extract-figures</code> exports high-DPI PNG crops alongside <code>alt_template.json</code>.</li>
-              <li>Authors assign concise <code>/Alt</code> strings or mark decorative elements as <code>/Artifact</code>; unresolved figures are surfaced in <code>missing_alt_figures</code>.</li>
-            </ul>
+            <h3>2. Review and repair</h3>
+            <p>Review images and add descriptions where needed. Auto mode keeps complex layouts in place and can rebuild eligible plain-text pages. Some issues may remain.</p>
           </article>
-
           <article class="arch-card">
-            <h3>CLI, Docker &amp; FastAPI</h3>
-            <p>Deploy locally in containers with <code>veraPDF 1.30.4</code> pre-installed or run batch pre-checks in the browser studio.</p>
-            <ul>
-              <li>CLI: <code>docushield audit</code>, <code>extract-figures</code>, <code>fix</code>, and <code>serve --port 8190</code>.</li>
-              <li>FastAPI: <code>GET /api/health</code>, <code>POST /api/audit</code>, <code>POST /api/remediate</code>, and job artifact downloads.</li>
-            </ul>
-            <div class="workflow-links">
-              <a href="../docushield/#vsStep1">Sample audit</a>
-              <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf">Sample PDF</a>
-              <a href="../assets/samples/docushield-remediation-manifest-sample.json">Report preview</a>
-            </div>
+            <h3>3. Check the revised file</h3>
+            <p>Download the PDF and JSON report. Compare failed rules before and after repair, then check the reading order, table headers, image descriptions and contrast yourself.</p>
           </article>
         </div>
       </div>
@@ -404,7 +381,7 @@
           <p class="offer-price">$299 <small>one-time license</small></p>
           <p>Activate with the individual license key in your Gumroad receipt. Email engineering@caliberfoundry.com with your order number for support or a full refund within 30 days.</p>
           <div class="offer-actions">
-            <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener noreferrer" class="btn-solid">Buy Pro on Gumroad &nearr;</a>
+            <a href="https://caliberfoundry.gumroad.com/l/docushield-pro?utm_campaign=docushield_pro&amp;utm_content=product_overview&amp;utm_medium=website&amp;utm_source=caliberfoundry" target="_blank" rel="noopener noreferrer" class="btn-solid">Buy Pro on Gumroad &nearr;</a>
             <a href="../pricing.html#price-docushield" class="btn-link">See pricing card &rarr;</a>
           </div>
         </article>
