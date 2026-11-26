@@ -30,13 +30,13 @@
     </div>
 
     <details class="ds-account-menu">
-      <summary>Account</summary>
+      <summary>Session</summary>
       <div class="ds-account-cluster">
         <span class="ds-license-pill" id="headerLicenseBadge">Free Diagnostic Tier (2/6 Packets)</span>
         <span class="ds-user-email-pill hidden" id="headerUserEmailBadge"></span>
-        <button type="button" class="ds-header-btn" id="btnHeaderSignIn">Sign In</button>
-        <button type="button" class="ds-header-btn ds-btn-accent" id="btnHeaderUnlockPro">Unlock Pro Studio ($199)</button>
-        <button type="button" class="ds-header-btn hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button>
+        <span hidden><button type="button" class="ds-header-btn" id="btnHeaderSignIn">Sign In</button>
+        <button type="button" class="ds-header-btn ds-btn-accent" id="btnHeaderUnlockPro">Pro account</button>
+        <button type="button" class="ds-header-btn hidden" id="btnHeaderAccountBilling">Account &amp; Billing</button></span>
         <button type="button" class="ds-header-btn ds-btn-reset" id="btnResetStudio" title="Reset session state">Reset</button>
       </div>
     </details>
@@ -273,9 +273,9 @@
         </div>
       </div>
       <div class="ds-trojan-actions">
-        <button type="button" class="ds-trojan-cta-btn" id="btnTrojanUnlockCta">
-          Unlock Full Domain Remediation ($299/mo or $199 Archive Pack) →
-        </button>
+        <span hidden><button type="button" class="ds-trojan-cta-btn" id="btnTrojanUnlockCta">
+          Pro account
+        </button></span>
         <button type="button" class="ds-trojan-close-btn" id="btnCloseTrojanBanner" aria-label="Dismiss Audit Banner">×</button>
       </div>
     </section>
