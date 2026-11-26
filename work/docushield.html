@@ -9,49 +9,431 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://get.geojs.io https://ntfy.sh http://localhost:4173; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
-  <title>DocuShield&trade; — ISO 14289-1 (PDF/UA) &amp; European Accessibility Act Remediation Studio | Caliber Foundry</title>
-  <meta name="description" content="DocuShield™ is a deterministic ISO 14289-1 (PDF/UA), European Accessibility Act (Directive 2019/882), WCAG 2.2 AA, and Section 508 document and courseware remediation studio by Caliber Foundry." />
+  <title>DocuShield&trade; v2 — ISO 14289-1 (PDF/UA-1) Remediation with veraPDF 1.30.4 | Caliber Foundry</title>
+  <meta name="description" content="DocuShield v2 audits binary PDFs with veraPDF 1.30.4, runs hybrid In-Place and Reflow ISO 14289-1 remediation, and reviews deterministic PNG figure crops for /Alt text without an LLM via CLI, Docker, FastAPI, or browser studio." />
   <link rel="canonical" href="https://caliberfoundry.com/work/docushield.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caliber Foundry" />
+  <meta property="og:title" content="DocuShield™ v2 — ISO 14289-1 (PDF/UA-1) Audit &amp; Hybrid Remediation" />
+  <meta property="og:description" content="Verify and remediate PDF/UA-1 documents with veraPDF 1.30.4, hybrid In-Place + Reflow passes, and zero-LLM deterministic PNG figure crop /Alt review." />
+  <meta property="og:url" content="https://caliberfoundry.com/work/docushield.html" />
+  <meta property="og:image" content="https://caliberfoundry.com/assets/banners/docushield-social.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="DocuShield v2 before and after veraPDF PDF/UA-1 audit showing 7 failed rules resolved to 0 failed and 106 passed rules" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@CaliberFoundry" />
+  <meta name="twitter:title" content="DocuShield™ v2 — Deterministic ISO 14289-1 Remediation" />
+  <meta name="twitter:description" content="Hybrid In-Place and Reflow PDF/UA-1 remediation verified with veraPDF 1.30.4, zero-LLM PNG figure crop /Alt review, CLI, Docker, and FastAPI." />
+  <meta name="twitter:image" content="https://caliberfoundry.com/assets/banners/docushield-social.jpg" />
+  <meta name="twitter:image:alt" content="DocuShield v2 before and after veraPDF PDF/UA-1 audit showing 7 failed rules resolved to 0 failed and 106 passed rules" />
+  <meta name="theme-color" content="#142d49" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DocuShield v2 PDF/UA-1 Remediation Studio",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser, Linux, macOS, Docker",
+    "url": "https://caliberfoundry.com/docushield/",
+    "image": "https://caliberfoundry.com/assets/banners/docushield_cover_1600x1200.png",
+    "description": "Deterministic ISO 14289-1 (PDF/UA-1) audit and hybrid In-Place + Reflow remediation powered by veraPDF 1.30.4 with zero-LLM PNG figure crop /Alt review across CLI, Docker, FastAPI, and browser workbench.",
+    "author": {
+      "@type": "Organization",
+      "name": "Caliber Foundry",
+      "url": "https://caliberfoundry.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "299.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://caliberfoundry.com/pricing.html#price-docushield"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
-*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.55 "Plus Jakarta Sans",Arial,sans-serif}a{color:var(--link);text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid var(--link);outline-offset:3px}header,footer{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px clamp(18px,5vw,70px)}header .brand{font-weight:750;letter-spacing:-.04em;text-decoration:none;color:inherit}header .brand-mark{display:none}.breadcrumb,footer{font-size:13px}.header-inner{display:contents}h1,h2,p{margin:0 0 14px}.title{font:500 clamp(42px,5.5vw,76px)/1.05 Georgia,serif;letter-spacing:-.065em}.lede{font-size:clamp(16px,1.4vw,20px);max-width:50ch}.btn-primary{display:inline-flex;padding:12px 18px;color:var(--inverse);background:var(--link);border-radius:5px;font-weight:700;text-decoration:none}.panel-title{font-size:22px;letter-spacing:-.035em}.spec-list{padding-left:22px;margin:0}.spec-list li{padding:8px 0}.panel{min-width:0}footer{margin-top:28px;border-top:1px solid var(--line)}@media(max-width:700px){.title{font-size:43px}header{padding-block:12px}.panel{padding:16px}}
-body{--ink:#172f4c;--paper:#e8eff6;--link:#174d8b;--inverse:#fff;--line:#aec2d2;--cf-ink-primary:#172f4c}header{border-bottom:1px solid var(--line)}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.83fr);column-gap:clamp(30px,7vw,100px);align-content:start;max-width:1200px;margin:clamp(30px,7vw,96px) auto;padding:0 30px}main>.title,main>.lede,main>.btn{grid-column:1}.btn{justify-self:start;align-self:start}.grid-2{grid-column:2;grid-row:1/span 3;margin:0!important;background:white;border:1px solid var(--line);padding:30px;box-shadow:7px 7px 0 #f8fbff}.panel+.panel{border-top:1px solid var(--line);padding-top:15px;margin-top:14px}.panel-title{font-family:Georgia,serif}.doc-sample-bar{grid-column:1/-1;margin-top:34px;background:#ffffff;border:1px solid var(--line);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px}.doc-sample-actions{display:flex;flex-wrap:wrap;gap:10px}.btn-sample-dl{display:inline-flex;align-items:center;padding:10px 14px;border-radius:4px;border:1px solid var(--link);background:#f3f8fd;color:var(--link);font-weight:700;font-size:14px;text-decoration:none}.btn-sample-dl:hover{background:#e1eefb}@media(max-width:700px){main{display:block;margin:26px auto;padding:0 18px}.grid-2{margin:24px 4px 0 0!important;padding:14px}.panel+.panel{margin-top:0}.doc-sample-bar{margin-top:20px;padding:16px}.doc-sample-actions a{width:100%;justify-content:center}}
+    :root {
+      color-scheme: light;
+      --ds-paper: #e8eff6;
+      --ds-sheet: #ffffff;
+      --ds-tint: #edf4fc;
+      --ds-navy: #142d49;
+      --ds-navy-deep: #10253d;
+      --ds-ink: #142d49;
+      --ds-muted: #37526c;
+      --ds-accent: #174d8b;
+      --ds-accent-hover: #103961;
+      --ds-rule: #bed0de;
+      --ds-rule-strong: #8da8be;
+      --ds-pass: #15803d;
+      --ds-pass-bg: #f0fdf4;
+      --ds-fail: #991b1b;
+      --ds-fail-bg: #fef2f2;
+      --ds-warn-bg: #fffbeb;
+      --ds-warn-ink: #78350f;
+      --ds-warn-rule: #d97706;
+      --ds-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --ds-serif: "Instrument Serif", Georgia, serif;
+      --ds-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body, h1, h2, h3, p, figure, dl, dd, ul, ol { margin: 0; }
+    body {
+      background: var(--ds-paper);
+      color: var(--ds-ink);
+      font: 16px/1.6 var(--ds-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--ds-accent); text-underline-offset: 0.24em; }
+    :focus-visible { outline: 3px solid #174d8b; outline-offset: 3px; }
+    .masthead :focus-visible, .hero :focus-visible, footer :focus-visible { outline-color: #bed0de; }
+    .bound { width: min(100% - clamp(32px, 7vw, 112px), 1200px); margin-inline: auto; }
+    .skip:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .skip:focus { position: fixed; z-index: 20; top: 10px; left: 10px; background: #ffffff; color: var(--ds-ink); padding: 10px 14px; border: 2px solid var(--ds-accent); }
+
+    .masthead { background: var(--ds-navy-deep); color: #e8eff6; border-bottom: 1px solid #2b4b6f; }
+    .mast-row, .foot-row { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; }
+    .mast-row { min-height: 66px; }
+    .wordmark {
+      display: inline-flex; align-items: center; gap: 11px; min-height: 44px;
+      color: #ffffff; text-decoration: none; font-weight: 700; font-size: 19px; letter-spacing: -0.03em;
+    }
+    .ds-mark {
+      display: inline-grid; place-items: center; width: 28px; height: 28px;
+      background: #174d8b; border: 1px solid #bed0de; color: #ffffff;
+      font: 700 11px/1 var(--ds-mono); letter-spacing: 0.04em;
+    }
+    .mast-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 24px; }
+    .mast-nav a { display: inline-flex; align-items: center; min-height: 44px; color: #dbe7f3; text-decoration: none; font-size: 14px; font-weight: 600; }
+    .mast-nav a:hover { color: #ffffff; text-decoration: underline; }
+
+    .hero {
+      position: relative; isolation: isolate; overflow: hidden;
+      background: var(--ds-navy); color: #e8eff6;
+      border-bottom: 3px solid var(--ds-accent);
+    }
+    .hero-grid-art {
+      position: absolute; inset: 0 0 0 auto; width: 52%; z-index: -1;
+      background-image:
+        linear-gradient(to right, rgba(190, 208, 222, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(190, 208, 222, 0.14) 1px, transparent 1px),
+        linear-gradient(to right, rgba(232, 239, 246, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(232, 239, 246, 0.06) 1px, transparent 1px);
+      background-size: 56px 56px, 56px 56px, 14px 14px, 14px 14px;
+      mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+    }
+    .hero-inner { padding-block: clamp(32px, 4.2vw, 56px); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font: 600 12px/1.4 var(--ds-mono); letter-spacing: 0.08em; text-transform: uppercase;
+      color: #bed0de; margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ""; width: 20px; height: 2px; background: #68a3e0; flex-shrink: 0; }
+    h1, h2 { font-family: var(--ds-serif); font-weight: 400; line-height: 1.03; letter-spacing: -0.03em; }
+    h1 { font-size: clamp(2.8rem, 5.2vw, 4.85rem); color: #ffffff; max-width: 19ch; }
+    h1 em { display: block; color: #bed0de; font-style: italic; }
+    .hero-lede { margin-top: 20px; max-width: 60ch; color: #dbe7f3; font-size: clamp(1rem, 1.25vw, 1.15rem); line-height: 1.55; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 26px; }
+    .btn-primary, .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 46px; padding: 11px 20px; border-radius: 4px;
+      font-weight: 700; font-size: 14.5px; text-decoration: none;
+    }
+    .btn-primary { background: #e8eff6; color: var(--ds-navy-deep); border: 1px solid #e8eff6; }
+    .btn-primary:hover { background: #ffffff; }
+    .btn-ghost { background: transparent; color: #ffffff; border: 1px solid #6b8cae; }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); border-color: #bed0de; }
+    .hero-note { margin-top: 14px; font-size: 13px; color: #bed0de; max-width: 62ch; }
+
+    .section { padding-block: clamp(36px, 4.8vw, 64px); }
+    .section-kicker {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+      font: 600 11.5px/1.4 var(--ds-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ds-accent);
+    }
+    .section-kicker::before { content: ""; width: 18px; height: 2px; background: var(--ds-accent); flex-shrink: 0; }
+    h2 { font-size: clamp(2.1rem, 3.6vw, 3.35rem); color: var(--ds-ink); }
+    .section-intro > p { margin-top: 12px; max-width: 68ch; color: var(--ds-muted); }
+
+    .proof-grid {
+      display: grid; grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+      gap: clamp(20px, 3.6vw, 44px); align-items: start; margin-top: 26px;
+    }
+    .statement-card, .preview-card {
+      background: var(--ds-sheet); border: 1px solid var(--ds-rule-strong);
+      border-radius: 4px; padding: clamp(18px, 2.5vw, 28px);
+    }
+    .statement-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding-bottom: 12px; border-bottom: 1px solid var(--ds-rule);
+      font: 600 12px/1.3 var(--ds-mono); text-transform: uppercase; color: var(--ds-muted);
+    }
+    .metrics-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .metric-box {
+      padding: 13px 14px; border: 1px solid var(--ds-rule); border-radius: 4px; background: var(--ds-tint);
+    }
+    .metric-box.is-fail { background: var(--ds-fail-bg); border-color: #fecaca; }
+    .metric-box.is-pass { background: var(--ds-pass-bg); border-color: #86efac; }
+    .metric-label { display: block; font: 600 11px/1.3 var(--ds-mono); text-transform: uppercase; color: var(--ds-muted); }
+    .metric-val { display: block; margin-top: 4px; font: 600 clamp(1.35rem, 2.2vw, 1.75rem)/1.15 var(--ds-mono); font-variant-numeric: tabular-nums; }
+    .metric-box.is-fail .metric-val { color: var(--ds-fail); }
+    .metric-box.is-pass .metric-val { color: var(--ds-pass); }
+    .metric-sub { display: block; margin-top: 4px; font-size: 12.5px; color: var(--ds-muted); }
+    .clause-list { margin: 16px 0 0; padding-left: 20px; font-size: 14px; color: var(--ds-muted); }
+    .clause-list li + li { margin-top: 6px; }
+    .clause-list code { font: 600 12.5px var(--ds-mono); color: var(--ds-ink); background: var(--ds-tint); padding: 1px 5px; border-radius: 3px; }
+    .sample-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--ds-rule); }
+    .btn-link, .btn-solid {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      min-height: 44px; padding: 9px 14px; border-radius: 4px;
+      font-size: 13.5px; font-weight: 700; text-decoration: none;
+    }
+    .btn-solid { background: var(--ds-accent); color: #ffffff; border: 1px solid var(--ds-accent); }
+    .btn-solid:hover { background: var(--ds-accent-hover); }
+    .btn-link { background: var(--ds-sheet); color: var(--ds-accent); border: 1px solid var(--ds-accent); }
+    .btn-link:hover { background: var(--ds-tint); }
+
+    .preview-card { padding: 14px; }
+    .preview-card img { display: block; width: 100%; height: auto; border: 1px solid var(--ds-rule); border-radius: 2px; }
+    .preview-card figcaption { margin-top: 10px; font-size: 13px; color: var(--ds-muted); line-height: 1.45; }
+
+    .matterhorn-note {
+      margin-top: 22px; padding: 14px 18px;
+      background: var(--ds-warn-bg); border: 1px solid var(--ds-warn-rule); border-left: 4px solid var(--ds-warn-rule);
+      border-radius: 4px; color: var(--ds-warn-ink); font-size: 14px; line-height: 1.5;
+    }
+
+    .band-white { background: var(--ds-sheet); border-block: 1px solid var(--ds-rule-strong); }
+    .arch-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 26px; }
+    .arch-card {
+      background: #f9fcff; border: 1px solid var(--ds-rule); border-top: 3px solid var(--ds-accent);
+      border-radius: 4px; padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0;
+    }
+    .arch-card h3 { font-size: 18px; line-height: 1.25; letter-spacing: -0.02em; color: var(--ds-ink); }
+    .arch-card p, .arch-card li { font-size: 14.5px; color: var(--ds-muted); }
+    .arch-card ul { margin: 0; padding-left: 18px; }
+    .arch-card li + li { margin-top: 5px; }
+    .arch-card code { font: 500 12.5px var(--ds-mono); color: var(--ds-ink); background: var(--ds-tint); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+    .workflow-links { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--ds-rule); font-size: 13.5px; font-weight: 600; }
+
+    .offers-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 26px; }
+    .offer-card {
+      background: var(--ds-sheet); border: 1px solid var(--ds-rule-strong); border-top: 3px solid var(--ds-rule-strong);
+      border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0;
+    }
+    .offer-card.is-pro { border-top-color: var(--ds-accent); }
+    .offer-card h3 { font-size: 20px; letter-spacing: -0.02em; }
+    .offer-price { font: 600 clamp(1.5rem, 2.4vw, 2.1rem)/1.2 var(--ds-mono); font-variant-numeric: tabular-nums; color: var(--ds-ink); }
+    .offer-price small { font: 500 13px var(--ds-sans); color: var(--ds-muted); }
+    .offer-card p { font-size: 14.5px; color: var(--ds-muted); }
+    .offer-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; }
+
+    footer { background: var(--ds-navy-deep); color: #dbe7f3; border-top: 1px solid #2b4b6f; }
+    .foot-row { padding-block: 24px; font-size: 13.5px; }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .foot-links a { display: inline-flex; align-items: center; min-height: 44px; color: #dbe7f3; text-decoration: none; }
+    .foot-links a:hover { color: #ffffff; text-decoration: underline; }
+
+    @media (max-width: 860px) {
+      .proof-grid, .arch-grid, .offers-grid { grid-template-columns: minmax(0, 1fr); }
+      .hero-grid-art { width: 42%; }
+    }
+    @media (max-width: 600px) {
+      .bound { width: calc(100% - 32px); }
+      .hero-grid-art { display: none; }
+      .metrics-pair { grid-template-columns: minmax(0, 1fr); }
+      .hero-actions a, .sample-links a, .offer-actions a { width: 100%; }
+    }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../docushield/" class="brand"><span class="brand-mark">CF</span><span class="brand-name">DocuShield</span></a>
-      <a href="../#work" class="breadcrumb">← All products</a>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="bound mast-row">
+      <a href="../docushield/" class="wordmark"><span class="ds-mark" aria-hidden="true">DS</span><span>DocuShield</span></a>
+      <nav class="mast-nav" aria-label="Product navigation">
+        <a href="../#work">All products</a>
+        <a href="#engine-modes">Architecture</a>
+        <a href="#licensing">Pricing</a>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="title">Check a document for accessibility</h1>
-    <p class="lede">Inspect a local PDF or HTML file, or explore a sample. Review structural findings and take the assessment into a manual accessibility review.</p>
-    <a href="../docushield/" class="btn btn-primary">Inspect a document →</a>
-    <section class="grid-2" style="margin-top:32px">
-      <div class="panel"><h2 class="panel-title">Try the workflow</h2><ol class="spec-list">
-        <li><a href="../docushield/?autoProof=1">Review the sample</a></li>
-        <li><a href="../docushield/?autoProof=2">Prepare a tag-tree draft</a></li>
-        <li><a href="../docushield/?autoProof=3">Open an assessment report</a></li>
-      </ol></div>
-      <div class="panel"><h2 class="panel-title">What the report covers</h2><p>The report lists the checked structural signals, the source filename, and the number that passed. Review reading order, descriptions and table semantics manually. JSON and XML downloads accompany the printable report.</p><p style="margin-top:12px"><a href="mailto:engineering@caliberfoundry.com?subject=Document%20accessibility%20review">Request an archive review</a></p></div>
-    </section>
-    <section class="doc-sample-bar" aria-labelledby="doc-sample-heading">
-      <div>
-        <h2 class="panel-title" id="doc-sample-heading" style="margin:0 0 4px;">Inspect sample PDF/UA &amp; Matterhorn 1.1 output files</h2>
-        <p style="margin:0;font-size:14.5px;color:#334e6b;">Download a synthetic syllabus accessibility audit PDF and its machine-readable checkpoint manifest before uploading a file.</p>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-grid-art" aria-hidden="true"></div>
+      <div class="bound hero-inner">
+        <p class="eyebrow">ISO 14289-1 (PDF/UA-1) &middot; veraPDF 1.30.4 Engine</p>
+        <h1 id="hero-heading">Deterministic PDF/UA-1 <em>audit &amp; remediation.</em></h1>
+        <p class="hero-lede">
+          Inspect binary PDFs with official veraPDF 1.30.4, extract deterministic PNG figure crops for /Alt review without an LLM, and run hybrid In-Place + Reflow remediation via CLI, Docker, FastAPI, or browser studio.
+        </p>
+        <div class="hero-actions">
+          <a href="../docushield/#verapdfStudio" class="btn-primary">Open DocuShield Studio &rarr;</a>
+          <a href="#worked-proof" class="btn-ghost">Inspect real audit proof &darr;</a>
+        </div>
+        <p class="hero-note">
+          Uploaded documents are processed on the server. Downloads are private to the browser session that created them.
+        </p>
       </div>
-      <div class="doc-sample-actions">
-        <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf" download class="btn-sample-dl">Download Sample PDF/UA Audit (PDF) &darr;</a>
-        <a href="../assets/samples/docushield-remediation-manifest-sample.json" download class="btn-sample-dl">Download Remediation Manifest (JSON) &darr;</a>
+    </section>
+
+    <section class="bound section" id="worked-proof" aria-labelledby="worked-proof-heading">
+      <div class="section-intro">
+        <p class="section-kicker">Verified Engine Run &middot; Public Audit Sample</p>
+        <h2 id="worked-proof-heading">Before vs. after veraPDF verification.</h2>
+        <p>
+          Running Auto mode on the public Matterhorn audit sample below detects missing <code>/StructTreeRoot</code>, missing <code>/Lang</code>, untagged content, and unembedded Type1 fonts (Clause <code>7.21.4.1</code>), preserves the page layout, embeds matching fonts, and verifies <code>0 failed / 106 passed</code> ISO 14289-1 rules.
+        </p>
+      </div>
+
+      <div class="proof-grid">
+        <div class="statement-card">
+          <div class="statement-head">
+            <span>docushield-matterhorn-pdfua-audit-sample.pdf</span>
+            <span>Mode: Auto &rarr; In-place</span>
+          </div>
+          <div class="metrics-pair">
+            <div class="metric-box is-fail">
+              <span class="metric-label">Before Audit (veraPDF ua1)</span>
+              <span class="metric-val">7 failed</span>
+              <span class="metric-sub">99 passed rules &middot; 112 failed checks</span>
+            </div>
+            <div class="metric-box is-pass">
+              <span class="metric-label">After Remediation (veraPDF ua1)</span>
+              <span class="metric-val">0 failed</span>
+              <span class="metric-sub">106 passed rules &middot; 0 failed checks</span>
+            </div>
+          </div>
+          <ul class="clause-list">
+            <li><code>6.2 &amp; 7.1</code>: Injects <code>/MarkInfo &lt;&lt; /Marked true &gt;&gt;</code>, XMP <code>pdfuaid:part=1</code>, <code>/DisplayDocTitle</code>, and full <code>/StructTreeRoot</code>.</li>
+            <li><code>7.2</code>: Assigns BCP-47 <code>/Lang</code> and content structure tags across all text and artifacts.</li>
+            <li><code>7.21.4.1</code>: Detects unembedded Standard-14 fonts (<code>Helvetica</code>, <code>Courier</code>) and rebuilds with embedded Unicode fonts.</li>
+          </ul>
+          <div class="sample-links">
+            <a href="../docushield/#verapdfStudio" class="btn-solid">Run in live studio &rarr;</a>
+            <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf" download class="btn-link">Sample PDF &darr;</a>
+            <a href="../assets/samples/docushield-remediation-manifest-sample.json" download class="btn-link">Sample JSON &darr;</a>
+          </div>
+        </div>
+
+        <figure class="preview-card">
+          <img src="../assets/product-previews/docushield.jpg" width="600" height="390" alt="DocuShield v2 FastAPI workbench showing 0 failed and 106 passed veraPDF ISO 14289-1 rules after Auto remediation" />
+          <figcaption>
+            Live capture of the DocuShield v2 remediation panel verifying <code>0 failed / 106 passed</code> ISO 14289-1 rules with PDF/UA-1 download and JSON report links.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="matterhorn-note" role="note">
+        <strong>Explicit Manual Matterhorn Review Scope:</strong> Automated veraPDF 1.30.4 checks verify machine-testable PDF/UA-1 syntax and structure rules. Passing 106 automated checks does not replace human Matterhorn Protocol 1.1 review for logical reading order, image <code>/Alt</code> semantic accuracy, complex table header associations, or color contrast.
+      </div>
+    </section>
+
+    <section class="band-white section" id="engine-modes" aria-labelledby="engine-modes-heading">
+      <div class="bound">
+        <div class="section-intro">
+          <p class="section-kicker">DocuShield v2 Architecture</p>
+          <h2 id="engine-modes-heading">How DocuShield repairs a document.</h2>
+          <p>
+            Designed for universities, legal operations, healthcare teams, and EU Directive 2019/882 (EAA) / ADA Title II / Section 508 compliance workflows requiring reproducible artifacts.
+          </p>
+        </div>
+
+        <div class="arch-grid">
+          <article class="arch-card">
+            <h3>Hybrid In-Place + Reflow</h3>
+            <p>Choose between <strong>Auto</strong>, <strong>In-Place</strong>, or <strong>Reflow</strong> remediation modes verified before and after with <code>verapdf --flavour ua1</code>.</p>
+            <ul>
+              <li><strong>In-Place:</strong> Preserves original design, fonts, and layout while tagging streams and catalog dictionaries via <code>pikepdf</code> and <code>PyMuPDF</code>.</li>
+              <li><strong>Reflow:</strong> Rebuilds eligible plain text with embedded fonts. Columns, tables and artwork require layout preservation.</li>
+            </ul>
+          </article>
+
+          <article class="arch-card">
+            <h3>Zero-LLM Figure Crop /Alt Review</h3>
+            <p>Never invent image descriptions with generative models. Inspect extracted images and supply descriptions or mark decorative content.</p>
+            <ul>
+              <li><code>extract-figures</code> exports high-DPI PNG crops alongside <code>alt_template.json</code>.</li>
+              <li>Authors assign concise <code>/Alt</code> strings or mark decorative elements as <code>/Artifact</code>; unresolved figures are surfaced in <code>missing_alt_figures</code>.</li>
+            </ul>
+          </article>
+
+          <article class="arch-card">
+            <h3>CLI, Docker &amp; FastAPI</h3>
+            <p>Deploy locally in containers with <code>veraPDF 1.30.4</code> pre-installed or run batch pre-checks in the browser studio.</p>
+            <ul>
+              <li>CLI: <code>docushield audit</code>, <code>extract-figures</code>, <code>fix</code>, and <code>serve --port 8190</code>.</li>
+              <li>FastAPI: <code>GET /api/health</code>, <code>POST /api/audit</code>, <code>POST /api/remediate</code>, and job artifact downloads.</li>
+            </ul>
+            <div class="workflow-links">
+              <a href="../docushield/#vsStep1">Sample audit</a>
+              <a href="../assets/samples/docushield-matterhorn-pdfua-audit-sample.pdf">Sample PDF</a>
+              <a href="../assets/samples/docushield-remediation-manifest-sample.json">Report preview</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="bound section" id="licensing" aria-labelledby="licensing-heading">
+      <div class="section-intro">
+        <p class="section-kicker">Free Tier &amp; Commercial Licensing</p>
+        <h2 id="licensing-heading">Free checks and Pro licensing.</h2>
+        <p>
+          Hosted Pro sales are paused pending public service availability. Every license includes 30-day money-back coverage. Pro removes the free daily and page limits. The 25 MB upload limit applies to every document.
+        </p>
+      </div>
+
+      <div class="offers-grid">
+        <article class="offer-card">
+          <h3>Free Diagnostic Tier</h3>
+          <p class="offer-price">$0 <small>no signup required</small></p>
+          <p>Run unlimited browser structural pre-checks plus server-side veraPDF 1.30.4 remediation for up to <strong>3 PDFs per day</strong> and <strong>10 pages max</strong> per document.</p>
+          <div class="offer-actions">
+            <a href="../docushield/#verapdfStudio" class="btn-link">Try Free Studio &rarr;</a>
+          </div>
+        </article>
+
+        <article class="offer-card is-pro">
+          <h3>DocuShield PRO</h3>
+          <p class="offer-price">$299 <small>one-time license</small></p>
+          <p>Activate with the individual license key in your Gumroad receipt. Email engineering@caliberfoundry.com with your order number for support or a full refund within 30 days.</p>
+          <div class="offer-actions">
+            <a href="https://caliberfoundry.gumroad.com/l/docushield-pro" target="_blank" rel="noopener noreferrer" class="btn-solid">Gumroad listing &nearr;</a>
+            <a href="../pricing.html#price-docushield" class="btn-link">See pricing card &rarr;</a>
+          </div>
+        </article>
+
+        <article class="offer-card">
+          <h3>Procurement &amp; Batch Service</h3>
+          <p class="offer-price">From $299 <small>scoped delivery</small></p>
+          <p>A separately scoped document service. Self-service Pro licenses are issued through Gumroad.</p>
+          <div class="offer-actions">
+            <a href="https://contra.com/s/2eo62WOe-deal-shieldtm-and-docu-shieldtm-security-ddq-vpat-25-and-pdfua" target="_blank" rel="noopener noreferrer" class="btn-link">View on Contra &nearr;</a>
+            <a href="mailto:engineering@caliberfoundry.com?subject=DocuShield%20v2%20Archive%20Remediation" class="btn-link">Email brief &nearr;</a>
+          </div>
+        </article>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <span>&copy; 2026 Caliber Foundry</span>
-    <a href="mailto:engineering@caliberfoundry.com" style="color:var(--cf-ink-primary); text-decoration:none;">engineering@caliberfoundry.com</a>
+  <footer>
+    <div class="bound foot-row" data-product-feedback>
+      <span>&copy; 2026 Caliber Foundry</span>
+      <nav class="foot-links" aria-label="Footer navigation">
+        <a href="../#work">All products</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../terms.html">Terms</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../refund-policy.html">Refund policy</a>
+        <a href="mailto:engineering@caliberfoundry.com">engineering@caliberfoundry.com</a>
+      </nav>
+    </div>
   </footer>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>

@@ -1606,6 +1606,10 @@
   }
 
   function openPaywallModal(options) {
+    if (document.documentElement.hasAttribute('data-precheck-only')) {
+      showToast('This archive offers a free browser pre-check. Visit DocuShield v2 for repair availability.');
+      return;
+    }
     const opts = options || {};
     const backdrop = document.getElementById('paywallModalBackdrop');
     if (!backdrop) return;
