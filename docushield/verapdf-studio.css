@@ -222,6 +222,7 @@
 }
 .vs-progress-inline.is-done { border-left-color: var(--vs-pass); background: var(--vs-pass-bg); }
 .vs-progress-inline.is-error { border-left-color: var(--vs-fail); background: var(--vs-fail-bg); }
+.vs-progress-inline.is-limited .vs-progress-track { display: none; }
 .vs-progress-head { display: flex; justify-content: space-between; gap: 10px; font: 600 12.5px/1.3 var(--vs-sans); }
 .vs-progress-eta { font: 600 12px/1.3 var(--vs-mono); color: var(--vs-ink-muted); font-variant-numeric: tabular-nums; }
 .vs-progress-track { width: 100%; height: 6px; background: #dce8f2; border-radius: 2px; overflow: hidden; }

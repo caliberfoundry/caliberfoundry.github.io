@@ -67,6 +67,12 @@
     const note = byId('vsLicenseStatusNote');
     if (!badge || !q) return;
     if (q.tier === 'PRO') {
+      const offer = byId('vsQuotaOffer');
+      if (offer && !offer.hidden) {
+        offer.hidden = true;
+        byId('vsRemediateProgress').hidden = true;
+        byId('vsRemediateBtn').focus();
+      }
       badge.className = 'vs-tier-badge is-pro';
       badge.textContent = `PRO Active · Unlimited${q.expires_iso ? ` (until ${q.expires_iso})` : ''}`;
       if (note) note.textContent = `License verified (${q.source === 'gumroad' ? 'Gumroad' : 'ECDSA CFK2'}). Unlimited pages & daily runs unlocked.`;
@@ -91,13 +97,16 @@
   }
 
   function handleQuotaError(data) {
-    const details = byId('vsLicenseDetails');
-    const note = byId('vsLicenseStatusNote');
-    if (details) details.open = true;
     renderQuota(data);
-    const msg = data?.detail || 'Free tier quota reached. Activate a DocuShield PRO license key below.';
-    if (note) note.textContent = msg;
-    announce(msg);
+    const offer = byId('vsQuotaOffer');
+    if (offer) {
+      offer.hidden = false;
+      offer.scrollIntoView({ block: 'nearest' });
+    } else {
+      const details = byId('vsLicenseDetails');
+      details.open = true;
+      details.scrollIntoView({ block: 'nearest' });
+    }
   }
 
   async function handleVerifySubmit(e) {
@@ -141,6 +150,10 @@
       input.addEventListener('input', () => { if (input.value.trim()) setLicenseError(''); });
       input.addEventListener('invalid', (e) => { e.preventDefault(); setLicenseError('Paste a valid license key.'); });
     }
+    byId('vsOpenKeyEntry')?.addEventListener('click', () => {
+      byId('vsLicenseDetails').open = true;
+      input.focus();
+    });
     if (form) form.addEventListener('submit', handleVerifySubmit);
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {

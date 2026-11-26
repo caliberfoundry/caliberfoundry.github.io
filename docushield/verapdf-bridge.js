@@ -40,7 +40,7 @@
     const wrap = byId(prefix + 'Progress');
     if (!wrap) return;
     wrap.hidden = false;
-    wrap.classList.remove('is-done', 'is-error');
+    wrap.classList.remove('is-done', 'is-error', 'is-limited');
     if (stateClass) wrap.classList.add(stateClass);
     const bar = byId(prefix + 'Bar');
     if (bar) bar.style.width = `${pct}%`;
@@ -109,6 +109,8 @@
   }
 
   function applySelectedFile(file) {
+    const offer = byId('vsQuotaOffer');
+    if (offer) offer.hidden = true;
     state.selectedFile = file || null;
     state.jobId = null;
     for (const id of ['vsStep2', 'vsStep3', 'vsResultPanel', 'vsAuditProgress', 'vsRemediateProgress']) byId(id).hidden = true;
@@ -232,6 +234,8 @@
     e.preventDefault();
     const isAudit = kind === 'audit';
     const source = state.selectedFile;
+    const offer = byId('vsQuotaOffer');
+    if (offer) offer.hidden = true;
     byId('vsResultPanel').hidden = true;
     const inputEl = byId(isAudit ? 'vsPdfInput' : 'vsLangInput');
     const errEl = byId(isAudit ? 'vsPdfError' : 'vsLangError');
@@ -271,7 +275,12 @@
       const resp = await fetch(`${state.apiBase}/api/${kind}`, { method: 'POST', credentials: 'include', headers, body: form });
       const data = await resp.json();
       if (source !== state.selectedFile) { clearInterval(state.timers[prefix]); return; }
-      if (resp.status === 402) { window.DocuShieldLicense?.handleQuotaError(data); throw new Error(data.detail || 'Free quota reached.'); }
+      if (resp.status === 402 && !isAudit) {
+        clearInterval(state.timers[prefix]);
+        setProgressView(prefix, 0, 'Free plan limit reached', '', data.detail || 'Pro unlocks more repairs.', 'is-limited');
+        window.DocuShieldLicense?.handleQuotaError(data);
+        return;
+      }
       if (!resp.ok || !data.ok) throw new Error(data.detail || data.error || data.inspection?.error || `${kind} failed (HTTP ${resp.status})`);
       if (isAudit) {
         state.jobId = data.job_id;
