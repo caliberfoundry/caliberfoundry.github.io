@@ -1064,60 +1064,43 @@
     };
   }
 
-  function parseCustomQuestionnaireInput(rawText) {
-    const trimmed = String(rawText || "").trim();
-    if (!trimmed) return [];
-
-    // Try JSON array first
-    if (trimmed.startsWith("[") || trimmed.startsWith("{")) {
-      try {
-        const parsed = JSON.parse(trimmed);
-        const arr = Array.isArray(parsed) ? parsed : parsed.questions || parsed.controls || [];
-        if (arr.length > 0) {
-          return arr.map((item, idx) => {
-            const q = typeof item === "string" ? item : item.question || item.text || item.title || "Control question";
-            const matched = matchQuestionAgainstCorpus(q, idx);
-            if (item.id) matched.id = String(item.id);
-            if (item.domain) matched.domain = String(item.domain);
-            return matched;
-          });
-        }
-      } catch (_) {}
-      return [];
-    }
-
-    // Parse lines (CSV / TSV / Pipe-delimited / Plain lines)
-    const lines = trimmed
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter((l) => l.length > 4 && !/^control_id[,|\t]/i.test(l));
-
-    return lines.map((line, idx) => {
-      let customId = null;
-      let questionPart = line;
-      if (line.includes("|")) {
-        const parts = line.split("|").map((p) => p.trim());
-        if (parts.length >= 2 && parts[0].length <= 24) {
-          customId = parts[0];
-          questionPart = parts.slice(1).join(" | ");
-        }
-      } else if (line.includes("\t")) {
-        const parts = line.split("\t").map((p) => p.trim());
-        if (parts.length >= 2 && parts[0].length <= 24) {
-          customId = parts[0];
-          questionPart = parts.slice(1).join(" ");
-        }
-      } else if (line.includes(",")) {
-        const parts = line.split(",").map((p) => p.replace(/^"|"$/g, "").trim());
-        if (parts.length >= 2 && parts[0].length <= 20 && /[A-Z0-9_-]+/i.test(parts[0])) {
-          customId = parts[0];
-          questionPart = parts.slice(1).join(", ");
-        }
+  async function parseCustomQuestionnaireInput(rawText) {
+    const text = String(rawText || '').trim();
+    if (!text) return [];
+    let records;
+    try {
+      if (text.startsWith('[') || text.startsWith('{')) {
+        const parsed = JSON.parse(text);
+        const items = Array.isArray(parsed) ? parsed : parsed.questions || parsed.controls;
+        if (!Array.isArray(items)) return [];
+        records = items.map(item => typeof item === 'string' ? {question:item} : {
+          question:item.question || item.text || item.title, id:item.id, domain:item.domain
+        });
+      } else {
+        const first = text.split(/\r?\n/, 1)[0];
+        const delimiter = ['\t', '|', ','].find(token => first.includes(token));
+        const structured = delimiter && (delimiter !== ',' || /^(?:"?(?:control_id|id|question|buyer_question|domain|control|[\w.-]{1,24})"?)\s*,/i.test(first));
+        if (structured) {
+          const {parseCsv} = await import('../assets/js/delimited.mjs');
+          const rows = parseCsv(text, delimiter);
+          const headers = rows[0].map(value => value.trim().toLowerCase().replaceAll(' ', '_'));
+          const question = headers.findIndex(h => ['question','buyer_question','question_text','control_question'].includes(h));
+          const id = question < 0 ? 0 : headers.findIndex(h => ['id','control_id','question_id','control'].includes(h));
+          const domain = question < 0 ? -1 : headers.indexOf('domain');
+          records = (question < 0 ? rows : rows.slice(1)).map(row => ({
+            id:row[id], domain:row[domain],
+            question:question < 0 ? row.slice(1).join(delimiter).trim() : row[question]
+          }));
+        } else records = text.split(/\r?\n/).map(line => ({question:line.trim()})).filter(item => item.question);
       }
-      const matched = matchQuestionAgainstCorpus(questionPart, idx);
-      if (customId) matched.id = customId;
-      return matched;
-    });
+      if (records.some(item => typeof item.question !== 'string' || !item.question.trim())) return [];
+      return records.map((item, index) => {
+        const control = matchQuestionAgainstCorpus(item.question.trim(), index);
+        if (item.id) control.id = String(item.id);
+        if (item.domain) control.domain = String(item.domain);
+        return control;
+      });
+    } catch { return []; }
   }
 
   // =========================================================================
@@ -1480,12 +1463,13 @@
           feedback.textContent = "Could not read this file. Choose it again or paste your questions.";
           feedback.classList.remove("hidden");
         };
-        reader.onload = function (evt) {
+        reader.onload = async function (evt) {
           if (revision !== questionnaireRevision) return;
           const content = String(evt.target.result || "");
           const customBox = document.getElementById("customQuestionsTextarea");
           if (customBox) customBox.value = content;
-          const parsed = parseCustomQuestionnaireInput(content);
+          const parsed = await parseCustomQuestionnaireInput(content);
+          if (revision !== questionnaireRevision) return;
           if (!parsed.length) {
             const feedback = document.getElementById('customParseFeedback');
             feedback.textContent = 'No questions found. Choose another file or paste a question.';
@@ -1509,11 +1493,13 @@
 
     const parseCustomBtn = document.getElementById("btnParseCustomQuestions");
     if (parseCustomBtn) {
-      parseCustomBtn.addEventListener("click", () => {
+      parseCustomBtn.addEventListener("click", async () => {
         const customBox = document.getElementById("customQuestionsTextarea");
         const raw = customBox ? customBox.value : "";
         clearQuestionnaire();
-        const parsed = parseCustomQuestionnaireInput(raw);
+        const revision = questionnaireRevision;
+        const parsed = await parseCustomQuestionnaireInput(raw);
+        if (revision !== questionnaireRevision) return;
         if (!parsed.length) {
           const feedback = document.getElementById('customParseFeedback');
           feedback.textContent = 'Enter at least one question, then try again.';
