@@ -1607,7 +1607,7 @@
 
   function openPaywallModal(options) {
     if (document.documentElement.hasAttribute('data-precheck-only')) {
-      showToast('This archive offers a free browser pre-check. Visit DocuShield v2 for repair availability.');
+      showToast('Open DocuShield v2 to run a veraPDF audit, activate Pro, or download a revised PDF.');
       return;
     }
     const opts = options || {};
