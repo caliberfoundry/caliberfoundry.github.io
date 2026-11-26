@@ -203,24 +203,9 @@
   const STORAGE_KEY = 'CONTENTFORGE_STUDIO_STATE_V2026';
 
   const PLAN_PACKAGES = {
-    N8N_SPRINT: {
-      code: 'N8N_SPRINT',
-      name: 'n8n & Content Automation Sprint — $3,000 Fixed',
-      amountUsd: 3000,
-      billingTerms: 'Fixed-Price Turnkey Engineering Sprint (Net 15)'
-    },
-    EVAL_HARNESS: {
-      code: 'EVAL_HARNESS',
-      name: 'Document Extraction & Evaluation Harness — $4,500 Sprint',
-      amountUsd: 4500,
-      billingTerms: 'Turnkey Extraction & Ground-Truth Evaluation Suite'
-    },
-    ENTERPRISE_SUB: {
-      code: 'ENTERPRISE_SUB',
-      name: 'Enterprise Multi-Channel Content Engine — $799 / month',
-      amountUsd: 799,
-      billingTerms: 'Monthly Enterprise Subscription (Unlimited Runs)'
-    }
+    N8N_SPRINT: {code:'N8N_SPRINT', name:'Content automation sprint', amountUsd:2500, billingTerms:'Scoped engineering service'},
+    EVAL_SUITE: {code:'EVAL_SUITE', name:'Document evaluation harness', amountUsd:3000, billingTerms:'Scoped engineering service'},
+    STUDIO_PRO: {code:'STUDIO_PRO', name:'ContentForge Studio Pro', amountUsd:299, billingTerms:'One-time software license'}
   };
 
   function getDefaultState() {
@@ -233,7 +218,7 @@
       licenseKey: null,
       provisionalInvoiceId: null,
       accountUser: null,
-      selectedPlanCode: 'N8N_SPRINT',
+      selectedPlanCode: 'STUDIO_PRO',
       customSourceTitle: firstPreset ? firstPreset.sourceTitle : '',
       customSourceText: firstPreset ? firstPreset.sourceText : '',
       customSchemaText: firstPreset ? firstPreset.schemaTemplate : '',
@@ -273,7 +258,9 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return getDefaultState();
       const parsed = JSON.parse(raw);
-      return Object.assign(getDefaultState(), parsed);
+      const restored = Object.assign(getDefaultState(), parsed);
+      if (!PLAN_PACKAGES[restored.selectedPlanCode]) restored.selectedPlanCode = 'STUDIO_PRO';
+      return restored;
     } catch (e) {
       return getDefaultState();
     }
@@ -1194,7 +1181,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const orgName = String(customOrg || (orgInput && orgInput.value) || 'Enterprise Client LLC').trim();
     const poNumber = String(customPo || (poInput && poInput.value) || 'PO-2026-8841').trim();
 
-    const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.N8N_SPRINT;
+    const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.STUDIO_PRO;
     const invoiceId = `INV-CF-CS-2026-${plan.amountUsd}`;
 
     if (isLocalQaEnvironment()) {
@@ -1238,7 +1225,7 @@ ${JSON.stringify(preview.payload, null, 2)}`;
     const poInput = document.getElementById('invoicePoInput');
     const orgName = orgOverride || (orgInput && orgInput.value) || 'Helmsted Enterprise Systems LLC';
     const poNum = poOverride || (poInput && poInput.value) || 'PO-2026-8841';
-    const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.N8N_SPRINT;
+    const plan = PLAN_PACKAGES[STATE.selectedPlanCode] || PLAN_PACKAGES.STUDIO_PRO;
     const invId = invIdOverride || STATE.provisionalInvoiceId || `INV-CF-CS-2026-${plan.amountUsd}`;
     const dateStr = new Date().toISOString().slice(0, 10);
 
@@ -1606,10 +1593,12 @@ ${JSON.stringify(preview.payload, null, 2)}`;
 
         const gatewayEl = document.querySelector('#cfCardCheckoutForm select');
         const gateway = gatewayEl ? gatewayEl.value : 'gumroad';
-        const targetUrl =
-          gateway === 'contra'
-            ? 'https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio'
-            : 'https://caliberfoundry.gumroad.com/l/contentforge-pro';
+        if (STATE.selectedPlanCode !== 'STUDIO_PRO' || gateway === 'contra') {
+          window.open('https://contra.com/s/smE6EbvO-educational-content-curriculum-and-scorm-ed-tech-studio', '_blank', 'noopener');
+          showToast('Opened the service scope on Contra. Software licenses are sold separately on Gumroad.');
+          return;
+        }
+        const targetUrl = 'https://caliberfoundry.gumroad.com/l/contentforge-pro';
         window.open(targetUrl, '_blank', 'noopener');
         switchPaywallSubTab('key');
         showToast('Opened secure checkout. Enter the license key from your receipt to unlock ContentForge Pro.');

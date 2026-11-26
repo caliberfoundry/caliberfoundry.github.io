@@ -1662,6 +1662,12 @@
         const company = (document.getElementById("chkCompany") || {}).value || "Enterprise SaaS Customer";
         const email = (document.getElementById("chkEmail") || {}).value || "cto@customer.io";
         const gateway = (document.getElementById("chkGatewaySelect") || {}).value || "gumroad";
+        if (gateway === "gumroad" && state.selectedPlanPrice !== "$199.00") {
+          const feedback = document.getElementById("licenseFeedbackBox");
+          feedback.textContent = "The $199 single deal pack is the Gumroad offer. For the selected service, choose a corporate invoice or request its scope.";
+          feedback.classList.remove("hidden");
+          return;
+        }
         const invId = "INV-DSH-2026-" + Math.floor(1000 + Math.random() * 9000);
         const invObj = {
           invoiceId: invId,
