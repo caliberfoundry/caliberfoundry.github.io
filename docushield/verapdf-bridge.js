@@ -50,6 +50,8 @@
   }
 
   function startProgress(prefix, stages, totalEstSec) {
+    const offer = byId('vsQuotaOffer');
+    if (offer) offer.hidden = true;
     clearInterval(state.timers[prefix]);
     const startedAt = Date.now();
     const tick = () => {
@@ -109,8 +111,6 @@
   }
 
   function applySelectedFile(file) {
-    const offer = byId('vsQuotaOffer');
-    if (offer) offer.hidden = true;
     state.selectedFile = file || null;
     state.jobId = null;
     for (const id of ['vsStep2', 'vsStep3', 'vsResultPanel', 'vsAuditProgress', 'vsRemediateProgress']) byId(id).hidden = true;
@@ -234,8 +234,6 @@
     e.preventDefault();
     const isAudit = kind === 'audit';
     const source = state.selectedFile;
-    const offer = byId('vsQuotaOffer');
-    if (offer) offer.hidden = true;
     byId('vsResultPanel').hidden = true;
     const inputEl = byId(isAudit ? 'vsPdfInput' : 'vsLangInput');
     const errEl = byId(isAudit ? 'vsPdfError' : 'vsLangError');
