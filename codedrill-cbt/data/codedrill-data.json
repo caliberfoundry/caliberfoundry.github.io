@@ -10,7 +10,9 @@
     "version": "2026.11-v3.0-SEE",
     "examDurationSeconds": 16200,
     "passingScorePercent": 75,
-    "avgPassRateNational": 15.2
+    "avgPassRateNational": 15.2,
+    "seeReferenceYear": 2025,
+    "seeReferenceUrl": "https://www.irs.gov/tax-professionals/enrolled-agents/enrolled-agents-frequently-asked-questions"
   },
   "corpora": [
     {
@@ -1783,49 +1785,50 @@
       "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
-      "stem": "Atlantic Trade Brokerage Inc., a licensed corporate customs broker headquartered in Newark, NJ, relocates its customs entry record archive to a new facility and designates a new Recordkeeping Point of Contact on October 1. In addition, Atlantic Trade Brokerage is auditing its retention schedule for three categories of documents:\n(1) Standard consumption entry files (CBP Form 7501, commercial invoices, packing lists);\n(2) A corporate Power of Attorney (POA) that was revoked by an active client on June 15, 2024; and\n(3) Records supporting a Modernized Drawback claim that was liquidated and paid on August 10, 2025.\n\nUnder 19 CFR § 111.23 (and § 190.51(f)), where must the broker's original records be maintained, within how many days must the broker notify CBP of the change in record storage location/point of contact, and what are the mandatory retention periods for these three categories of records?",
+      "stem": "A licensed broker keeps original entry files and revoked powers of attorney, including electronic records. Its designated recordkeeping contact changes. A separate modernized drawback claim has liquidated. Which recordkeeping and contact practices should the broker apply?",
       "options": [
         {
           "letter": "A",
-          "text": "Records may be stored anywhere in North America (U.S., Canada, or Mexico); notify CBP within 60 calendar days; retain entry files for 3 years from entry, revoked POAs for 2 years from revocation, and drawback records for 5 years from entry."
+          "text": "Keep originals anywhere in North America and destroy a revoked power of attorney after one year."
         },
         {
           "letter": "B",
-          "text": "Records must be maintained within the customs territory of the United States; notify the Broker Management Branch within 30 calendar days of the change; retain standard entry files for 5 years from the date of entry, revoked POAs for 5 years after the date of revocation (or 5 years after the client ceases to be an active client, whichever is later), and drawback claim records for 3 years after liquidation of the drawback claim."
+          "text": "Keep originals in the U.S. customs territory. Keep ordinary entry records at least five years from entry, and a revoked power of attorney and its revocation letter for five years from revocation or the end of active-client status, whichever is later. Keep drawback support three years from claim liquidation. Keep the designated contact current in CBP’s authorized EDI system."
         },
         {
           "letter": "C",
-          "text": "Records must be maintained within the customs territory of the United States; notify CBP within 10 working days of the change; retain all entry files, revoked POAs, and drawback records for 7 years from the end of the calendar year."
+          "text": "Retain all records only until entry liquidation. Report the new contact in the next triennial status report."
         },
         {
           "letter": "D",
-          "text": "Records must be maintained at the port of entry where each shipment arrived; notify CBP on the Triennial Status Report only; retain entry files for 5 years from liquidation and revoked POAs permanently."
+          "text": "Keep originals only in the district of entry and retain revoked powers of attorney indefinitely."
         },
         {
           "letter": "E",
-          "text": "Records may be stored on foreign cloud servers outside the U.S. customs territory without domestic access; notify CBP within 30 working days; retain entry files and drawback records for 3 years from date of importation."
+          "text": "Keep electronic originals solely outside the U.S. customs territory and keep drawback support for one year after export."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-111-23",
-      "targetCitation": "19 CFR § 111.23(a)–(c) & § 190.51(f)",
+      "targetCitation": "19 CFR §§ 111.21(d), 111.23 and 190.51(a)(2)(xvi)",
       "goldenQuote": "must be retained for at least 5 years after the date of entry",
-      "shortestPathHint": "19 CFR -> Part 111 -> § 111.23 (Retention of records)",
+      "shortestPathHint": "Read § 111.23(a) and (b), then § 111.21(d) and § 190.51(a)(2)(xvi).",
       "socraticHints": [
-        "Hint 1 (Concept): Check the three pillars of broker recordkeeping: geographic location requirement, notification deadline for changing storage location/contact, and specific retention timelines.",
-        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.23(a), (b), and (c), and cross-reference § 190.51(f) for drawback record retention.",
-        "Hint 3 (Trap Check): Original records must be kept within the U.S. customs territory; notification to the Broker Management Branch is due within 30 calendar days; entry records = 5 years from date of entry; revoked POA = 5 years from revocation or last active client date (whichever is later); drawback records = 3 years from liquidation of the drawback claim."
+        "Identify the record type first.",
+        "Read § 111.23(a) and (b), then § 111.21(d) and § 190.51(a)(2)(xvi).",
+        "For a revoked power compare two five-year end dates."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 111.23(a), a licensed customs broker must maintain originals of all required customs records within the customs territory of the United States. Under § 111.23(c), within 30 calendar days of any change to the place of retention of records or the designated recordkeeping point of contact, the broker must notify the Broker Management Branch. Under § 111.23(b), standard entry records must be retained for at least 5 years after the date of entry, while revoked powers of attorney must be retained for 5 years after the date of revocation or 5 years after the date the client ceases to be an 'active client' (whichever period is later). Finally, under 19 CFR § 190.51(f) (and § 163.4(b)(1)), records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim.",
+        "correctReasoning": "Section 111.23 sets the location and ordinary retention rules. Section 111.21(d) requires current contact information in authorized EDI, with written notice to the processing Center when EDI is unavailable. The modernized drawback certification uses three years from liquidation of the claim.",
         "distractors": {
-          "A": "Incorrect on all counts: records cannot be stored outside the U.S. customs territory, notification is 30 calendar days (not 60), and entry/POA retention is 5 years.",
-          "B": "CORRECT: Accurately states the U.S. customs territory requirement, the 30-calendar-day notification window, the 5-year entry and revoked POA rules under § 111.23, and the 3-year post-liquidation drawback retention rule under § 190.51(f).",
-          "C": "Incorrect because notification is 30 calendar days (not 10 working days) and CBP does not use a 7-year tax-style retention period.",
-          "D": "Incorrect because national permit holders maintain records centrally within the U.S. customs territory (not at every arrival port), must notify CBP within 30 calendar days (not wait for the Triennial Status Report), and count the 5-year entry retention period from the date of entry (not liquidation).",
-          "E": "Incorrect because records must be maintained within the U.S. customs territory and entry retention is 5 years from the date of entry."
+          "A": "North America extends beyond the U.S. customs territory. The retention period for a revoked power of attorney is longer.",
+          "B": "Section 111.23 sets the location and ordinary retention rules. Section 111.21(d) requires current contact information in authorized EDI, with written notice to the processing Center when EDI is unavailable. The modernized drawback certification uses three years from liquidation of the claim.",
+          "C": "Ordinary entry retention runs from entry. The designated contact information must remain current.",
+          "D": "The geographical rule applies across the U.S. customs territory. A revoked power of attorney has a defined retention period.",
+          "E": "The location rule includes electronic originals. Drawback claim support runs from claim liquidation."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-111.23"
     },
     {
       "id": "CBLE-Q04",
@@ -1835,49 +1838,50 @@
       "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
       "difficulty": "Hard",
       "targetLookupSeconds": 45,
-      "stem": "BioCare Imports Inc. enters two separate shipments under its continuous Basic Importation and Entry Bond (CBP Form 301):\n• Shipment 1: Restricted medical laser devices with an entered value of $60,000 (and $2,400 in estimated duties/fees) that are refused admission by the FDA for failing federal radiation safety standards.\n• Shipment 2: Non-restricted general ceramic tableware with an entered value of $40,000 (and $3,600 in estimated duties/fees) that is found to lack proper Country of Origin marking.\n\nCBP timely issues a CBP Form 4647 (Notice to Mark and/or Notice to Redeliver) for both shipments, but BioCare has already sold both shipments into domestic commerce and fails to redeliver either shipment to CBP custody. Under 19 CFR § 113.62(d) and (n), within how many days after the CBP Form 4647 demand was BioCare required to redeliver the merchandise, and what are the exact Liquidated Damages assessments for Shipment 1 and Shipment 2?",
+      "stem": "CBP timely demands redelivery of two shipments. The importer misses the deadline specified in each demand. FDA refused admission of restricted laser devices appraised at $60,000. An ordinary shipment of improperly marked tableware is appraised at $40,000 and had $3,600 in estimated duties and fees. No special bond provision or alternative damages rule applies. What liquidated damages follow for the two redelivery defaults?",
       "options": [
         {
           "letter": "A",
-          "text": "10 working days to redeliver; Liquidated Damages are $60,000 for Shipment 1 (1x value) and $40,000 for Shipment 2 (1x value)."
+          "text": "$60,000 and $40,000."
         },
         {
           "letter": "B",
-          "text": "30 calendar days to redeliver; Liquidated Damages are $180,000 for Shipment 1 (three times the total value of the restricted merchandise: 3 x $60,000) and $43,600 for Shipment 2 (one time the value of the non-restricted merchandise plus estimated duties, taxes, and fees: $40,000 + $3,600)."
+          "text": "$180,000 and $40,000."
         },
         {
           "letter": "C",
-          "text": "30 calendar days to redeliver; Liquidated Damages are $187,200 for Shipment 1 (3x value plus 3x duties) and $120,000 for Shipment 2 (3x value)."
+          "text": "$187,200 and $120,000."
         },
         {
           "letter": "D",
-          "text": "15 calendar days to redeliver; Liquidated Damages are capped at a flat $30,000 statutory penalty per shipment for both Shipment 1 and Shipment 2."
+          "text": "$30,000 per shipment."
         },
         {
           "letter": "E",
-          "text": "60 calendar days to redeliver; Liquidated Damages are $62,400 for Shipment 1 (1x value + duties) and $120,000 for Shipment 2 (3x value)."
+          "text": "$180,000 and $43,600."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-113-62",
-      "targetCitation": "19 CFR § 113.62(d) & (n)(1)–(2)",
+      "targetCitation": "19 CFR §§ 113.62(d), (n)(1)–(2) and 141.113(i)",
       "goldenQuote": "three times the value of the merchandise involved in the default",
-      "shortestPathHint": "19 CFR -> Part 113 -> § 113.62 (Basic importation and entry bond conditions)",
+      "shortestPathHint": "Read § 113.62(d), (n)(1)–(2) and § 141.113(i).",
       "socraticHints": [
-        "Hint 1 (Concept): Check the Basic Importation and Entry Bond conditions in 19 CFR Part 113 for the redelivery timeframe after CBP Form 4647 and the two-tier liquidated damages formula.",
-        "Hint 2 (Navigation): Open 19 CFR Part 113 -> § 113.62 and read paragraphs (d) and (n)(1)–(2).",
-        "Hint 3 (Trap Check): Redelivery is due within 30 calendar days of CBP Form 4647. For restricted/prohibited/alcoholic/quota-class goods (Shipment 1), liquidated damages equal 3x value (3 x $60,000 = $180,000). For non-restricted general goods (Shipment 2), liquidated damages equal 1x value PLUS estimated duties, taxes, and fees ($40,000 + $3,600 = $43,600)."
+        "Separate the appraised value from estimated duties.",
+        "Read § 113.62(d), (n)(1)–(2) and § 141.113(i).",
+        "Classify each shipment as restricted or ordinary before applying the multiplier."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 113.62(d), when CBP issues a timely demand for redelivery on CBP Form 4647, the principal (Importer of Record) must return the merchandise to CBP custody within 30 calendar days after the date of the demand. When the principal defaults on redelivery, § 113.62(n) prescribes two distinct liquidated damages formulas for which the principal and surety are jointly and severally liable: (1) Under § 113.62(n)(1), for restricted or prohibited merchandise (such as FDA-refused medical lasers), alcoholic beverages, or quota-class merchandise, liquidated damages equal three times the total value of the merchandise (3 x $60,000 = $180,000); (2) Under § 113.62(n)(2), for non-restricted general merchandise (such as unmarked ceramic tableware), liquidated damages equal the value of the merchandise PLUS the estimated duties, taxes, and fees determined to be due ($40,000 + $3,600 = $43,600).",
+        "correctReasoning": "The restricted devices produce $180,000 at three times $60,000. The ordinary tableware produces $40,000 at its appraised value. Paragraph (n)(2) uses the value determined by CBP. The estimated duties are a separate obligation.",
         "distractors": {
-          "A": "Confuses the 30-calendar-day redelivery period with the 10-working-day Entry Summary period and fails to apply the 3x multiplier for restricted goods and the duty addition for non-restricted goods.",
-          "B": "CORRECT: 30 calendar days for redelivery after CBP Form 4647; $180,000 (3x value) for restricted Shipment 1; $43,600 (1x value + $3,600 duties/fees) for non-restricted Shipment 2.",
-          "C": "Erroneously adds 3x duties to Shipment 1 and applies the 3x restricted multiplier to non-restricted Shipment 2.",
-          "D": "Confuses the 15-calendar-day entry filing period (§ 142.2) and the $30,000 broker penalty cap (§ 111.91) with CBP Form 301 bond liquidated damages.",
-          "E": "Reverses the 3x and 1x+duties formulas between restricted and non-restricted merchandise and uses an incorrect 60-day redelivery window."
+          "A": "The restricted devices trigger the three-times-value measure.",
+          "B": "The restricted devices produce $180,000 at three times $60,000. The ordinary tableware produces $40,000 at its appraised value. Paragraph (n)(2) uses the value determined by CBP. The estimated duties are a separate obligation.",
+          "C": "The restricted multiplier applies only to the restricted merchandise here. Estimate-based additions do not enter this damages calculation.",
+          "D": "The general redelivery default uses the merchandise value and classification.",
+          "E": "Adding the tableware’s $3,600 in estimated duties overstates the damages for redelivery."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-113.62"
     },
     {
       "id": "CBLE-Q05",
@@ -1887,49 +1891,50 @@
       "category": "Broker Compliance & Bonds (19 CFR Parts 111 & 113)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
-      "stem": "Keystone Customs Brokers Inc. (a national permit holder) is conducting a quarterly internal compliance audit covering three regulatory deadlines under 19 CFR Part 111:\n(1) On May 10, Keystone receives a wire transfer of $18,400 from an importer client to pay customs duties on an entry whose payment due date to CBP has already passed;\n(2) On May 12, Keystone receives a $4,200 overpayment from a client in excess of the governmental and brokerage charges properly payable on the client's customs business (and Keystone does not refund or apply the excess funds immediately);\n(3) On April 1, Keystone hired a new full-time entry specialist who completed 30 consecutive days of employment on May 1.\n\nUnder 19 CFR § 111.29(a) and § 111.28(c), what are the exact regulatory deadlines for Keystone to (1) transmit the belatedly received $18,400 duty payment to CBP, (2) provide a written accounting statement to the client for the $4,200 overpayment (if not paid out earlier), and (3) report the new employee's required information to CBP?",
+      "stem": "A national permit holder receives a client’s duty payment after the government due date, retains unrefunded excess client funds, and hires an employee on April 1. How soon must it transmit the late payment, account to the client in writing for the excess, and report the hire?",
       "options": [
         {
           "letter": "A",
-          "text": "(1) Transmit the belated duty payment within 10 working days of receipt; (2) provide a written accounting statement within 30 calendar days of receipt; and (3) report the new employee within 10 calendar days of the hire date."
+          "text": "Ten working days after receipt, 60 days after receipt, and 60 days after hiring."
         },
         {
           "letter": "B",
-          "text": "(1) Transmit the belated duty payment to the Government within 5 working days from receipt by the broker; (2) provide a written statement accounting for the excess funds within 60 calendar days of receipt (unless actual payment is made within that 60-calendar-day period); and (3) report the new employee to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days."
+          "text": "Five working days after receipt, 60 calendar days after receipt, and 30 calendar days from the start of employment."
         },
         {
           "letter": "C",
-          "text": "(1) Transmit the belated duty payment within 24 hours of receipt; (2) provide a written accounting statement within 90 calendar days; and (3) report the new employee only on the next Triennial Status Report."
+          "text": "Two working days after receipt, 30 calendar days after receipt, and 30 days after probation ends."
         },
         {
           "letter": "D",
-          "text": "(1) Transmit the belated duty payment within 5 calendar days of receipt; (2) provide a written accounting statement within 30 working days of receipt; and (3) report the new employee within 60 calendar days of the hire date."
+          "text": "Five calendar days after receipt, 45 calendar days after receipt, and 30 days after completion of the first month."
         },
         {
           "letter": "E",
-          "text": "(1) Transmit the belated duty payment within 15 calendar days of receipt; (2) provide a written accounting statement once every 12 months; and (3) report only licensed employees within 30 working days."
+          "text": "Fifteen calendar days after receipt, one year after receipt, and with the next status report."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-111-29",
-      "targetCitation": "19 CFR § 111.29(a) & § 111.28(c)",
+      "targetCitation": "19 CFR §§ 111.28(b)(2) and 111.29(a)",
       "goldenQuote": "within 5 working days from receipt by the broker",
-      "shortestPathHint": "19 CFR -> Part 111 -> § 111.29 (Diligence in correspondence and paying monies)",
+      "shortestPathHint": "Read § 111.29(a) and the new-employee rule in § 111.28(b)(2).",
       "socraticHints": [
-        "Hint 1 (Concept): Distinguish the three financial and employee reporting clocks in 19 CFR Part 111: belated duty payments received after the due date, client overpayment accounting statements, and new employee list reporting.",
-        "Hint 2 (Navigation): Open 19 CFR Part 111 -> § 111.29(a) for financial settlement deadlines and cross-reference § 111.28(c) for employee list reporting.",
-        "Hint 3 (Trap Check): In § 111.29(a), belatedly received duty funds must be transmitted to CBP within 5 WORKING days from receipt, while a written accounting for excess/refunded funds is due within 60 CALENDAR days of receipt. In § 111.28(c), a new employee must be reported within 30 CALENDAR days after completing 30 consecutive days of employment."
+        "Distinguish working days from calendar days.",
+        "Read § 111.29(a) and the new-employee rule in § 111.28(b)(2).",
+        "Count the hire period once, beginning at the start of employment."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 111.29(a), payments received by a broker from a client after the due date must be transmitted to the Government within 5 working days from receipt by the broker. Furthermore, under § 111.29(a), each broker must provide a written statement to a client accounting for funds received for the client from the Government, or received from a client in excess of the Governmental or other charges properly payable, within 60 calendar days of receipt (unless actual payment of the funds is made within that 60-calendar-day period). Finally, under 19 CFR § 111.28(c), a national permit holder must report any new employees to CBP within 30 calendar days after the new employee has been employed by the broker for 30 consecutive days (and within 30 calendar days of termination for terminated employees).",
+        "correctReasoning": "Section 111.29(a) sets the payment and accounting periods. Section 111.28(b)(2) starts the reporting clock on the employment start date, so the April 1 hire is reportable by May 1.",
         "distractors": {
-          "A": "Confuses the 5-working-day belated payment rule with the 10-working-day Entry Summary deadline and reverses the 60-day and 30-day windows.",
-          "B": "CORRECT: 5 working days for belatedly received duty payments (§ 111.29(a)); 60 calendar days for written accounting of overpayments/refunds (§ 111.29(a)); and 30 calendar days after 30 consecutive days of employment for reporting new employees (§ 111.28(c)).",
-          "C": "Incorrect because 24 hours, 90 calendar days, and waiting for the Triennial Status Report violate § 111.29(a) and § 111.28(c).",
-          "D": "Mixes up working days and calendar days across § 111.29(a) (which specifies 5 working days and 60 calendar days).",
-          "E": "Confuses the 12-month active client payment notice requirement in § 111.29(b)(2)(ii) with the 60-calendar-day overpayment accounting statement in § 111.29(a)."
+          "A": "The late payment and new-hire periods are too long.",
+          "B": "Section 111.29(a) sets the payment and accounting periods. Section 111.28(b)(2) starts the reporting clock on the employment start date, so the April 1 hire is reportable by May 1.",
+          "C": "A probation period does not start the reporting clock. The financial deadlines also differ.",
+          "D": "The payment period uses working days. The employment clock begins on the start date.",
+          "E": "The broker must act on each event within its specific regulatory period."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-111.29"
     },
     {
       "id": "CBLE-Q06",
@@ -2043,49 +2048,50 @@
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
-      "stem": "A cargo aircraft lands at Chicago O'Hare International Airport on May 1 carrying a commercial shipment of Swiss mechanical chronographs consigned to Horology Imports LLC. Due to a dispute between Horology Imports and its overseas lender, no customs broker is instructed to file entry documentation upon arrival. Under 19 CFR § 142.2 and § 142.3, what is the maximum period allowed after landing to file the required entry documentation (CBP Form 3461 package), what happens to the merchandise if entry is not filed within that period, and how long may the merchandise remain unclaimed before CBP is authorized to sell it at public auction?",
+      "stem": "Ordinary commercial watches land from an aircraft. Entry is required. The goods are neither perishable nor subject to an expedited disposal rule. Which timetable controls entry and the ordinary general-order period?",
       "options": [
         {
           "letter": "A",
-          "text": "Entry documentation must be filed within 10 working days after landing; if unentered, the merchandise is immediately forfeited to the U.S. Treasury and auctioned after 30 calendar days."
+          "text": "Ten working days after landing and three months from delivery to the warehouse."
         },
         {
           "letter": "B",
-          "text": "Entry documentation must be filed within 15 calendar days after landing; if unentered within 15 calendar days, the merchandise is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the consignee's risk and expense, and if it remains unentered in General Order for 6 months from the date of importation, it may be sold at public auction or destroyed by CBP."
+          "text": "Enter within 15 calendar days after landing. If the watches remain without entry, general-order procedures apply. The ordinary period before sale expires six months from importation."
         },
         {
           "letter": "C",
-          "text": "Entry documentation must be filed within 30 calendar days after landing; if unentered, the air carrier must return the cargo to Switzerland at the carrier's own expense within 45 days."
+          "text": "Enter within 30 calendar days after landing. The six months run from appraisal."
         },
         {
           "letter": "D",
-          "text": "Entry documentation must be filed within 5 working days after landing; if unentered, the goods are placed in a Foreign Trade Zone (FTZ) where they may remain indefinitely without storage charges."
+          "text": "Enter within five working days after departure from the foreign airport. The goods are sold immediately when the deadline passes."
         },
         {
           "letter": "E",
-          "text": "Entry documentation must be filed within 20 working days after landing; if unentered, the consignee is assessed a $30,000 broker penalty and the goods are auctioned after 1 year."
+          "text": "Enter within 20 working days after arrival. General order lasts one year from importation."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-142-2",
-      "targetCitation": "19 CFR § 142.2(a) & (c)",
+      "targetCitation": "19 CFR §§ 142.2(a), 127.1, 127.4 and 127.11",
       "goldenQuote": "within 15 calendar days after landing from a vessel, aircraft or vehicle",
-      "shortestPathHint": "19 CFR -> Part 142 -> § 142.2 (Time for filing entry)",
+      "shortestPathHint": "Start with § 142.2(a), then read §§ 127.1, 127.4 and 127.11.",
       "socraticHints": [
-        "Hint 1 (Concept): Distinguish the deadline for initial Entry filing after landing (§ 142.2) from the deadline for Entry Summary filing after release (§ 142.12).",
-        "Hint 2 (Navigation): Open 19 CFR Part 142 -> § 142.2 and read paragraphs (a) and (c).",
-        "Hint 3 (Trap Check): Initial entry documentation (§ 142.3) must be filed within 15 CALENDAR days after landing. Failure to make entry within 15 calendar days sends the cargo to a General Order (G.O.) warehouse at the consignee's risk and expense, and after 6 months in G.O. from the date of importation it becomes subject to CBP public auction."
+        "Find the ordinary entry deadline for landed cargo.",
+        "Start with § 142.2(a), then read §§ 127.1, 127.4 and 127.11.",
+        "Anchor the six months to importation."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 142.2(a), the entry documentation required by § 142.3 (CBP Form 3461, evidence of right to make entry, commercial/pro forma invoice, packing list, and bond identification) must be filed within 15 calendar days after landing from a vessel, aircraft, or vehicle (or after arrival at the port of destination for in-bond shipments). Under § 142.2(c) and Part 127, any merchandise for which entry is not filed within 15 calendar days after landing is treated as unclaimed and sent to a General Order (G.O.) warehouse to be held at the risk and expense of the consignee. Merchandise remaining in General Order for 6 months from the date of importation without entry may be sold at public auction or destroyed by CBP.",
+        "correctReasoning": "Section 142.2(a) sets the 15-day entry period. Sections 127.1 and 127.4 govern general order and its six months from importation. Section 127.11 addresses when unpaid goods remaining in Customs custody are unclaimed and abandoned.",
         "distractors": {
-          "A": "Confuses the 15-calendar-day initial entry window (§ 142.2(a)) with the 10-working-day Entry Summary window (§ 142.12(b)).",
-          "B": "CORRECT: 15 calendar days after landing to file entry; transfer to General Order warehouse at consignee's risk and expense if unentered; subject to CBP public auction after 6 months in G.O.",
-          "C": "Incorrect because the statutory pre-G.O. period is 15 calendar days (not 30), and unclaimed goods go to a G.O. warehouse at the consignee's expense.",
-          "D": "Incorrect because 5 working days and automatic placement in a Foreign Trade Zone are not part of 19 CFR Part 142.",
-          "E": "Confuses the carrier's 20-calendar-day G.O. notification deadline with the importer's 15-calendar-day entry filing deadline."
+          "A": "The initial deadline is 15 calendar days and the general-order period runs from importation.",
+          "B": "Section 142.2(a) sets the 15-day entry period. Sections 127.1 and 127.4 govern general order and its six months from importation. Section 127.11 addresses when unpaid goods remaining in Customs custody are unclaimed and abandoned.",
+          "C": "Both the entry deadline and the starting point for the general-order period are wrong.",
+          "D": "The landing starts the entry clock. Ordinary goods have a general-order period before sale.",
+          "E": "The periods are 15 calendar days and six months."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-142.2"
     },
     {
       "id": "CBLE-Q09",
@@ -2095,49 +2101,50 @@
       "category": "Entry Process & Invoices (19 CFR Parts 141 & 142)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
-      "stem": "Licensed customs broker Elena Rostova is onboarding two new commercial clients and reviewing a low-value shipment for each:\n• Client 1 (Redwood Trading Corp., a Delaware corporation) executes a customs Power of Attorney (POA) authorizing Rostova to sign entry declarations on its behalf, and imports a single daily shipment of non-restricted sample plastic phone cases with an aggregate fair retail value in the country of shipment of $650.\n• Client 2 (Sierra Artisan Partners, a California general partnership with three partners) executes a customs Power of Attorney in favor of Rostova, and imports a single daily shipment of Chinese-origin steel threaded rods valued at $700 that are subject to an active Antidumping Duty (AD/CVD) order.\n\nUnder 19 CFR § 141.19 (incorporating § 141.34) and § 141.4(b)(4), what are the maximum legal validity periods for the Powers of Attorney executed by Client 1 and Client 2, and which of the two shipments qualifies for duty-free entry exemption under Section 321 ($800 de minimis)?",
+      "stem": "On October 1, 2025 a corporation and a general partnership grant customs powers of attorney. The corporation imports a $650 commercial shipment of phone cases; the partnership imports $700 of steel rods subject to antidumping duties. Both are ordinary non-postal shipments, with no special exemption. What terms may the powers have, and can either shipment claim the former low-value exemption under 19 U.S.C. 1321(a)(2)(C)?",
       "options": [
         {
           "letter": "A",
-          "text": "Both POAs are valid for a maximum of 2 years; both the $650 phone case shipment and the $700 AD/CVD steel rod shipment qualify for Section 321 duty-free administrative exemption because both are valued under $800."
+          "text": "Both powers may be unlimited, and both shipments qualify."
         },
         {
           "letter": "B",
-          "text": "Client 1's corporate POA may be granted for an unlimited period of time, whereas Client 2's partnership POA is limited to a period not to exceed 2 years from the date of execution (and is automatically revoked by any change in partnership membership); furthermore, ONLY Client 1's $650 phone case shipment qualifies for the Section 321 ($800 de minimis) exemption because merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is ineligible for Section 321 clearance."
+          "text": "The corporate power may be unlimited; the partnership power is limited to two years from execution. Neither shipment qualifies for the suspended low-value treatment on that date."
         },
         {
           "letter": "C",
-          "text": "Client 1's corporate POA is limited to 5 years and Client 2's partnership POA is valid indefinitely; neither shipment qualifies for Section 321 because commercial samples over $250 always require formal entry."
+          "text": "Both powers expire after five years and only the rods qualify."
         },
         {
           "letter": "D",
-          "text": "Client 1's corporate POA is valid indefinitely and Client 2's partnership POA is limited to 2 years, but BOTH shipments qualify for Section 321 clearance because the $800 de minimis threshold overrides all Antidumping Duty orders."
+          "text": "The corporate power may be unlimited and the partnership power is limited to two years, but the phone cases qualify solely on value."
         },
         {
           "letter": "E",
-          "text": "Client 1's corporate POA is limited to 3 years (until the next Triennial Status Report) and Client 2's partnership POA is limited to 1 year; only Client 2's shipment qualifies for Section 321."
+          "text": "The partnership power may be unlimited and the corporate power is limited to two years. Neither shipment qualifies."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-141-34",
-      "targetCitation": "19 CFR § 141.19(c)(1)–(2) (§ 141.34) & § 141.4(b)(4)",
+      "targetCitation": "19 CFR §§ 141.34 and 141.39(b); CBP duty-free de minimis suspension effective August 29, 2025",
       "goldenQuote": "limited to a period not to exceed 2 years from the date of execution",
-      "shortestPathHint": "19 CFR -> Part 141 -> § 141.19 (Declaration of entry and Power of Attorney rules)",
+      "shortestPathHint": "Read § 141.34 and CBP’s August 2025 suspension notice.",
       "socraticHints": [
-        "Hint 1 (Concept): Compare the Power of Attorney validity duration for a corporation versus a general partnership, and check the statutory exclusions from the Section 321 ($800 de minimis) administrative exemption.",
-        "Hint 2 (Navigation): Open 19 CFR Part 141 -> § 141.19(c) for Power of Attorney duration rules, and check § 141.4(b)(4) for Section 321 ($800 de minimis) exclusions.",
-        "Hint 3 (Trap Check): Under § 141.19(c) (§ 141.34), a corporate POA may be granted for an unlimited period, whereas a partnership POA cannot exceed 2 years. Under § 141.4(b)(4), merchandise subject to Antidumping/Countervailing Duties (AD/CVD), quota, or alcohol/tobacco internal revenue taxes is strictly excluded from Section 321 clearance even if valued at $800 or less!"
+        "Use the shipment date in the question.",
+        "Read § 141.34 and CBP’s August 2025 suspension notice.",
+        "Assess the term of each power separately from the shipment exemption."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 141.19(c)(1)–(2) (incorporating § 141.34), a Power of Attorney executed by a corporation or sole proprietor may be granted for an unlimited period of time and remains valid until revoked, whereas a Power of Attorney granted by a partnership is strictly limited to a period not to exceed 2 years from the date of execution (and must list all partners, with any change in partnership membership automatically revoking the POA). Furthermore, under 19 CFR § 141.4(b)(4) (19 U.S.C. 1321(a)(2)(C)), while shipments imported by one person on one day with an aggregate fair retail value of $800 or less generally qualify for the Section 321 de minimis exemption (as with Client 1's $650 phone cases), merchandise subject to Antidumping or Countervailing Duties (AD/CVD) is explicitly excluded from Section 321 clearance and requires formal entry.",
+        "correctReasoning": "Section 141.34 distinguishes partnership and other powers. Section 141.39(b) addresses a change in membership that forms a new firm. CBP suspended the low-value treatment for ordinary shipments from all countries effective August 29, 2025.",
         "distractors": {
-          "A": "Incorrect because corporate POAs are not capped at 2 years, and AD/CVD merchandise is strictly ineligible for Section 321 de minimis clearance.",
-          "B": "CORRECT: Corporate POA is valid for an unlimited period; partnership POA is capped at 2 years; $650 non-restricted shipment qualifies for Section 321, while $700 AD/CVD shipment is excluded from Section 321.",
-          "C": "Incorrect because corporate POAs are not limited to 5 years, partnership POAs are not unlimited, and non-restricted plastic cases under $800 qualify for Section 321.",
-          "D": "Correctly states the POA rules, but erroneously claims that Section 321 applies to merchandise subject to an Antidumping Duty order.",
-          "E": "Incorrect on both POA durations and Section 321 eligibility."
+          "A": "Partnership powers have a two-year limit and the global suspension was in force on the specified date.",
+          "B": "Section 141.34 distinguishes partnership and other powers. Section 141.39(b) addresses a change in membership that forms a new firm. CBP suspended the low-value treatment for ordinary shipments from all countries effective August 29, 2025.",
+          "C": "Neither the five-year period nor the treatment of the rods follows from these rules.",
+          "D": "Value below $800 did not restore eligibility in October 2025.",
+          "E": "The two-year limit applies to the partnership."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-141.34"
     },
     {
       "id": "CBLE-Q10",
@@ -2303,49 +2310,50 @@
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
-      "stem": "Nordic Robotics USA Inc. imports custom-engineered autonomous warehouse shuttles from its wholly owned parent company in Sweden on a consignment basis where no sale for exportation occurs (eliminating Transaction Value of the imported merchandise), and because the shuttles are custom-built prototypes, there are no sales of identical or similar merchandise exported to the United States at or about the same time. Nordic Robotics possesses complete, audited Swedish factory cost-of-production records and prefers to have CBP appraise the shuttles using Computed Value rather than Deductive Value. Under 19 CFR § 152.101, what is the default statutory sequence of the six appraisement methods, and how may Nordic Robotics legally elect to have Computed Value applied before Deductive Value?",
+      "stem": "Custom-engineered imported shuttles cannot be valued by transaction value or by sales of identical or similar goods. The importer has factory cost records and wants computed value considered before deductive value. What is the normal order and when may the importer request the switch?",
       "options": [
         {
           "letter": "A",
-          "text": "The default sequence places Computed Value ahead of Deductive Value automatically, so no election by the importer is required."
+          "text": "Computed value always comes first once transaction value fails."
         },
         {
           "letter": "B",
-          "text": "The default sequential order is: (1) Transaction value, (2) Transaction value of identical merchandise, (3) Transaction value of similar merchandise, (4) Deductive value, (5) Computed value, and (6) Value if other values cannot be determined (fallback); however, upon written request made by the importer at the time of filing the entry summary, the order of Deductive value and Computed value will be reversed so that Computed value is applied before Deductive value."
+          "text": "The sequence is transaction value, identical goods, similar goods, deductive value, computed value, and fallback. The importer may request computed value before deductive value when filing the entry summary with CBP."
         },
         {
           "letter": "C",
-          "text": "The importer may choose any of the six valuation methods in any order at any time up to 180 days after liquidation, or CBP may appraise the goods at the selling price in the United States of merchandise produced in the United States."
+          "text": "The importer may choose any method at any time before liquidation."
         },
         {
           "letter": "D",
-          "text": "The order of Deductive value and Computed value can never be reversed under any circumstances unless the importer obtains a formal Headquarters ruling letter 90 days prior to arrival."
+          "text": "Only CBP can change the order, on a request made after liquidation."
         },
         {
           "letter": "E",
-          "text": "When Transaction Value cannot be determined, CBP must immediately appraise the merchandise using the higher of two alternative values or the domestic market price in Sweden."
+          "text": "The importer must apply fallback before requesting computed value."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-152-101",
-      "targetCitation": "19 CFR § 152.101(a)–(c)",
+      "targetCitation": "19 CFR § 152.101(b)–(c)",
       "goldenQuote": "at the time the entry summary for the merchandise is filed with CBP",
-      "shortestPathHint": "19 CFR -> Part 152 -> § 152.101 (Basis of appraisement)",
+      "shortestPathHint": "Read § 152.101(b) and (c).",
       "socraticHints": [
-        "Hint 1 (Concept): CBP must follow a strict 6-step statutory hierarchy when appraising imported merchandise, with one specific statutory election allowed to the importer.",
-        "Hint 2 (Navigation): Open 19 CFR Part 152 -> § 152.101 and read paragraphs (a), (b), and (c).",
-        "Hint 3 (Trap Check): Check the exact timing required in § 152.101(b) to reverse Deductive Value (Method 4) and Computed Value (Method 5): the importer must make a written request AT THE TIME OF FILING THE ENTRY SUMMARY!"
+        "Identify the two methods whose order may change.",
+        "Read § 152.101(b) and (c).",
+        "Find the event that fixes the request deadline."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 152.101(a), imported merchandise must be appraised in the strict sequential order of: (1) Transaction value (§ 152.103); (2) Transaction value of identical merchandise (§ 152.104); (3) Transaction value of similar merchandise (§ 152.104); (4) Deductive value (§ 152.105); (5) Computed value (§ 152.106); and (6) Fallback value if other values cannot be determined (§ 152.107). Under § 152.101(b), upon a written request made by the importer at the time of filing the entry summary, the order of application of Deductive value (Method 4) and Computed value (Method 5) will be reversed so that Computed value is applied before Deductive value.",
+        "correctReasoning": "Section 152.101(b) lists the methods. Paragraph (c) permits the request at entry-summary filing, at the port or electronically. If computed value then cannot be determined, the rule returns to deductive value if possible.",
         "distractors": {
-          "A": "Incorrect because Deductive value (Method 4) precedes Computed value (Method 5) by default unless the importer timely elects to reverse them.",
-          "B": "CORRECT: States the exact 6-step statutory hierarchy of § 152.101(a) and the written election at the time of filing the entry summary under § 152.101(b).",
-          "C": "Incorrect because the hierarchy is mandatory (not free-choice), and appraising goods based on the U.S. selling price of U.S.-produced goods is explicitly prohibited under § 152.101(c)(1) (§ 152.108).",
-          "D": "Incorrect because § 152.101(b) expressly grants the importer the right to reverse Deductive and Computed value at the time of filing the entry summary without a prior HQ ruling.",
-          "E": "Incorrect because appraising merchandise at the higher of two alternative values or at the domestic price in the country of exportation is strictly prohibited under § 152.101(c)(2) and (c)(3)."
+          "A": "Deductive ordinarily precedes computed value.",
+          "B": "Section 152.101(b) lists the methods. Paragraph (c) permits the request at entry-summary filing, at the port or electronically. If computed value then cannot be determined, the rule returns to deductive value if possible.",
+          "C": "The permitted switch concerns two specified methods and has a filing deadline.",
+          "D": "The importer may request the switch at entry-summary filing.",
+          "E": "Fallback comes after the preceding methods have failed."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-152.101"
     },
     {
       "id": "CBLE-Q14",
@@ -2355,49 +2363,50 @@
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
-      "stem": "Three years ago, U.S. Customs and Border Protection issued a binding tariff classification ruling letter (NY N310455) to Lumina Lighting Inc. classifying its smart LED ceiling panels under an HTSUS subheading with a Free rate of duty. Following a recent Court of International Trade decision on multi-function electronics, CBP Headquarters determines that ruling NY N310455 is legally incorrect and decides to revoke it in favor of a subheading carrying a 3.9% duty rate. Under 19 CFR § 177.9(d) (and 19 U.S.C. 1625(c)), what notice-and-comment procedure and effective-date timeline must CBP follow to revoke a ruling letter that has been in effect for at least 60 days?",
+      "stem": "During its own review CBP proposes to revoke an interpretive classification ruling issued three years ago. No court decision, change of law, exception to publication or extraordinary circumstance applies. The interested person makes no election for early application. Which notice and effective-date timetable governs?",
       "options": [
         {
           "letter": "A",
-          "text": "CBP may revoke the ruling immediately via an internal port directive, and the 3.9% duty rate applies retroactively to all unliquidated and liquidated entries filed during the past 5 years."
+          "text": "Immediate revocation with no publication."
         },
         {
           "letter": "B",
-          "text": "CBP must publish a proposed revocation notice in the Customs Bulletin with at least a 30-calendar-day public comment period, publish the final revocation decision in the Customs Bulletin within 30 calendar days after the close of the comment period, and the final revocation becomes effective 60 calendar days after the date of publication of the final notice."
+          "text": "CBP publishes the proposal in the Customs Bulletin, allows 30 calendar days for written comment, publishes final action ordinarily within 30 calendar days after comments close, and applies the ordinary effective date 60 calendar days after the final publication."
         },
         {
           "letter": "C",
-          "text": "CBP must send a certified letter to the ruling holder giving 10 working days' notice, after which the revocation becomes effective immediately."
+          "text": "CBP sends a private letter with ten working days of notice and no public comment."
         },
         {
           "letter": "D",
-          "text": "Once a binding classification ruling letter has been in effect for more than 1 year, CBP is permanently barred from modifying or revoking it unless Congress amends the HTSUS statute."
+          "text": "CBP may never revoke a ruling more than one year old."
         },
         {
           "letter": "E",
-          "text": "CBP must publish a final revocation notice in the Federal Register that takes effect 180 calendar days after publication, with no prior public comment period required."
+          "text": "CBP publishes one final notice and waits 180 days without taking comments."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-177-12",
-      "targetCitation": "19 CFR § 177.9(d)(1)–(3)",
+      "targetCitation": "19 CFR § 177.12(b), (d) and (e)(2); 19 U.S.C. 1625(c)",
       "goldenQuote": "within 30 calendar days after the close of the public comment period",
-      "shortestPathHint": "19 CFR -> Part 177 -> § 177.9 (Effect of ruling letters; modification or revocation with 60-day notice)",
+      "shortestPathHint": "Read § 177.12(b)(1)–(2) and (e)(2).",
       "socraticHints": [
-        "Hint 1 (Concept): Binding ruling letters in effect for 60 days or more cannot be revoked overnight; federal law mandates publication in a specific CBP periodical with public comment and a delayed effective date.",
-        "Hint 2 (Navigation): Open 19 CFR Part 177 -> § 177.9 and read paragraph (d)(1), (d)(2), and (d)(3).",
-        "Hint 3 (Trap Check): Check the three exact timeframes in § 177.9(d): publication in the Customs Bulletin -> 30 calendar days for public comment -> publication of final decision within 30 calendar days after comment period closes -> effective 60 calendar days after final publication."
+        "Check how long the ruling has been in effect.",
+        "Read § 177.12(b)(1)–(2) and (e)(2).",
+        "Start the final 60 days on publication of the final notice."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 177.9(d)(1)–(3) and 19 U.S.C. 1625(c), when CBP seeks to modify or revoke a prior interpretive ruling or decision that has been in effect for at least 60 calendar days, CBP must: (1) publish a notice of proposed modification or revocation in the Customs Bulletin providing at least 30 calendar days for public comment; (2) publish the final ruling or decision in the Customs Bulletin within 30 calendar days after the close of the public comment period; and (3) delay the effective date of the final modification or revocation until 60 calendar days after the date of publication of the final notice in the Customs Bulletin.",
+        "correctReasoning": "Section 177.12(b)(1)–(2) provides for a 30-day comment period and ordinarily 30 days to final publication. Paragraph (e)(2) supplies the 60-day default. Paragraph (d) exceptions were excluded in the facts.",
         "distractors": {
-          "A": "Incorrect because immediate revocation without notice and retroactive application to entries covered by an existing ruling letter are barred by 19 CFR § 177.9(d).",
-          "B": "CORRECT: Matches the exact statutory and regulatory timeline in 19 CFR § 177.9(d)(1)–(3).",
-          "C": "Incorrect because a 10-working-day private letter bypasses the mandatory Customs Bulletin public notice-and-comment process and 60-day effective date delay.",
-          "D": "Incorrect because CBP always retains legal authority to modify or revoke erroneous rulings prospectively by following the § 177.9(d) procedure.",
-          "E": "Incorrect because proposed revocations are published in the Customs Bulletin with a mandatory 30-day public comment period and a 60-calendar-day (not 180-day) effective date delay."
+          "A": "A ruling in effect at least 60 days normally receives public notice and comment.",
+          "B": "Section 177.12(b)(1)–(2) provides for a 30-day comment period and ordinarily 30 days to final publication. Paragraph (e)(2) supplies the 60-day default. Paragraph (d) exceptions were excluded in the facts.",
+          "C": "The routine process for this longstanding ruling requires publication.",
+          "D": "The long-running ruling can be revoked using the applicable process.",
+          "E": "This misses the comment period and misstates the effective date."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-177.12"
     },
     {
       "id": "CBLE-Q15",
@@ -2459,49 +2468,50 @@
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
       "difficulty": "Medium",
       "targetLookupSeconds": 35,
-      "stem": "Continental Chemicals Inc. imported a shipment of duty-paid specialty polymers on November 15, 2021 (with the underlying import entry summary liquidating on October 1, 2022). Continental uses the polymers in U.S. manufacturing and exports the finished articles on June 20, 2025. Continental is preparing its Modernized Drawback claim in ACE and also wants to know which import charges are legally eligible for a 99% drawback refund and how long drawback records must be kept. Under 19 CFR § 190.51 and § 190.2, what is the final statutory deadline for Continental to file the complete drawback claim, how long must Continental retain the supporting drawback records, and which fees/duties are eligible vs. ineligible for drawback?",
+      "stem": "An importer designates duty-paid polymers imported November 16, 2021 for a complete, otherwise eligible modernized direct-identification manufacturing drawback claim. It exported the finished articles unused in June 2025. No extension or special destination limitation applies. What is the ordinary claim deadline, what is the claim-record period under the § 190.51 certification, and which charges are potentially eligible?",
       "options": [
         {
           "letter": "A",
-          "text": "The drawback claim must be filed by October 1, 2027 (5 years from liquidation of the import entry); records must be retained for 5 years from exportation; both Antidumping Duties (AD/CVD) and Harbor Maintenance Fees (HMF) are 99% refundable."
+          "text": "Five years after liquidation; one year of records; ordinary duties only."
         },
         {
           "letter": "B",
-          "text": "The complete drawback claim must be filed in ACE no later than November 15, 2026 (within 5 years after the date of importation of the designated imported merchandise); supporting drawback records must be retained for at least 3 years after liquidation of the drawback claim; customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are NOT eligible."
+          "text": "November 16, 2026; three years from liquidation of the drawback claim; ordinary customs duties, merchandise processing fees, and harbor maintenance taxes can qualify. Antidumping and countervailing duties cannot."
         },
         {
           "letter": "C",
-          "text": "The complete drawback claim must be filed by June 20, 2028 (within 3 years after the date of exportation); records must be retained for 3 years from the date of filing the claim; MPF is not refundable under TFTEA."
+          "text": "Three years after export; retain records until export; all charges including antidumping duties qualify."
         },
         {
           "letter": "D",
-          "text": "The complete drawback claim must be filed by November 15, 2026 (5 years from importation), or the claimant may obtain a routine 1-year extension from the Port Director; drawback records must be retained for 5 years after payment of the drawback claim."
+          "text": "Five years after manufacture; retain records six months; only harbor maintenance taxes qualify."
         },
         {
           "letter": "E",
-          "text": "The complete drawback claim must be filed within 180 days of exportation; records must be kept for 7 years; 100% of duties, MPF, and HMF are refunded."
+          "text": "180 days after export; retain records seven years; only countervailing duties qualify."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-190-3",
-      "targetCitation": "19 CFR § 190.51(e)–(f) & § 190.2",
+      "targetCitation": "19 CFR §§ 190.3(a)–(b) and 190.51(a)(2)(xvi), (e)(1)",
       "goldenQuote": "Harbor maintenance taxes",
-      "shortestPathHint": "19 CFR -> Part 190 -> § 190.51 (Completion of drawback claims & 5-year timeframe)",
+      "shortestPathHint": "Read § 190.3(a)–(b) and § 190.51(a)(2)(xvi), (e)(1).",
       "socraticHints": [
-        "Hint 1 (Concept): Check the starting date of the 5-year TFTEA drawback filing window, the post-liquidation recordkeeping period for drawback claims, and the eligibility of MPF vs. HMF/AD-CVD.",
-        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.51(e) and (f), and cross-reference § 190.2 ('Drawback' definition).",
-        "Hint 3 (Trap Check): Under § 190.51(e), the 5-year clock runs from the DATE OF IMPORTATION of the designated merchandise (Nov 15, 2021 -> Nov 15, 2026) with no extension allowed. Under § 190.51(f), drawback records must be kept for 3 years after LIQUIDATION of the drawback claim. Under § 190.2, MPF is eligible for drawback, while HMF and AD/CVD are excluded."
+        "Distinguish importation, export and claim liquidation.",
+        "Read § 190.3(a)–(b) and § 190.51(a)(2)(xvi), (e)(1).",
+        "Locate the separate lines for MPF, harbor maintenance taxes and AD/CVD."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 190.51(e) (19 U.S.C. 1313(r)(1)), a complete drawback claim must be filed electronically in ACE within 5 years after the date of importation of the merchandise designated as the basis for the drawback claim (here, 5 years from November 15, 2021 = November 15, 2026), and uncompleted claims are considered abandoned with no discretionary port extension permitted. Under § 190.51(f) (and § 190.38), all records supporting a drawback claim must be retained for at least 3 years after liquidation of the drawback claim. Finally, under § 190.2, regular customs duties and Merchandise Processing Fees (MPF) are eligible for a 99% drawback refund, whereas Harbor Maintenance Fees (HMF) and Antidumping/Countervailing Duties (AD/CVD) are statutorily ineligible.",
+        "correctReasoning": "Section 190.51(e)(1) runs five years from importation; its paragraph (a)(2)(xvi) certification measures three years from liquidation of the claim. Section 190.3(a) includes MPF and harbor maintenance taxes. Paragraph (b) excludes antidumping and countervailing duties.",
         "distractors": {
-          "A": "Erroneously starts the 5-year filing clock from liquidation of the import entry rather than the date of importation, and falsely states that AD/CVD and HMF are refundable.",
-          "B": "CORRECT: 5 years from date of importation (Nov 15, 2026); 3 years record retention after liquidation of the drawback claim; duties and MPF eligible (99%), HMF and AD/CVD ineligible.",
-          "C": "Confuses the pre-TFTEA 3-year post-exportation filing rule with the modernized TFTEA 5-year post-importation rule under Part 190.",
-          "D": "Incorrect because § 190.51(e) prohibits extensions of the 5-year statutory period (absent a declared CBP system outage), and drawback record retention is 3 years (not 5 years) from liquidation of the drawback claim.",
-          "E": "Incorrect on the filing deadline, recordkeeping period, and HMF refundability."
+          "A": "The claim clock starts with the designated importation. The rules allow more than ordinary duties.",
+          "B": "Section 190.51(e)(1) runs five years from importation; its paragraph (a)(2)(xvi) certification measures three years from liquidation of the claim. Section 190.3(a) includes MPF and harbor maintenance taxes. Paragraph (b) excludes antidumping and countervailing duties.",
+          "C": "Export does not start the ordinary five-year claim clock. AD/CVD is excluded.",
+          "D": "Manufacture does not start the filing period and eligible charges extend beyond harbor maintenance taxes.",
+          "E": "Neither the timing nor the eligible charge is correct."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-190.3"
     },
     {
       "id": "CBLE-Q17",
@@ -2563,49 +2573,50 @@
       "category": "Valuation, Rulings & Drawback (19 CFR Parts 152, 177 & 190)",
       "difficulty": "Hard",
       "targetLookupSeconds": 45,
-      "stem": "On June 1, 2024, Solstice Solar Corp. imported 10,000 kg of high-purity silicon wafers classified under 8-digit HTSUS subheading 3818.00.00 on a single entry summary line item, paying $50,000.00 in regular customs duties and $1,000.00 in Merchandise Processing Fee (MPF). In January 2026, Solstice manufactures solar power modules at its Ohio plant using 10,000 kg of domestically produced silicon wafers that are also classified under 8-digit HTSUS subheading 3818.00.00, while keeping all 10,000 kg of the imported silicon wafers in domestic inventory for U.S. sales. Solstice exports the newly manufactured solar power modules to Chile in March 2026 without their having been used in the United States. Under 19 CFR § 190.22 and § 190.2 (Manufacturing Substitution Drawback under 19 U.S.C. 1313(b)), what prerequisite ruling and timeframe conditions must Solstice satisfy, and what is the maximum drawback refund allowable?",
+      "stem": "An Ohio manufacturer imported 10,000 kg of designated wafers on June 1, 2024. Eligible duties and fees total $50,500. In January 2026 it uses domestic wafers of the same eight-digit classification in production and exports the unused finished goods to Germany in March 2026. If imported, the substituted domestic wafers would incur $48,000 of eligible duties and fees. Assume all other quantitative requirements are satisfied. Which ruling and time requirements apply, and what is the export drawback ceiling?",
       "options": [
         {
           "letter": "A",
-          "text": "$0.00, because manufacturing drawback under 19 CFR Part 190 is allowed only when the exact imported duty-paid wafers are physically traced into the exported solar modules via direct identification."
+          "text": "No drawback is possible because the manufacturer kept the designated imports."
         },
         {
           "letter": "B",
-          "text": "Solstice must operate under either an acknowledged General Manufacturing Drawback Ruling or an approved Specific Manufacturing Drawback Ruling, complete manufacture, exportation, and drawback claim filing within 5 years from the date of importation of the designated wafers, and is eligible for a 99% refund of the duties and MPF paid on the designated imported wafers ($51,000.00 x 99% = $50,490.00), even though none of the designated imported wafers were actually used to manufacture the exported modules."
+          "text": "Follow the applicable general manufacturing ruling and notification procedure or obtain a specific ruling. Meet the five-year manufacture and claim-filing limits from designated importation. The export ceiling is $47,520."
         },
         {
           "letter": "C",
-          "text": "Solstice needs no manufacturing drawback ruling prior to claiming 19 U.S.C. 1313(b) drawback, has 7 years from exportation to file, and recovers 100% of duties ($50,000.00) but 0% of MPF."
+          "text": "No manufacturing ruling is needed, and 99% of $50,500 is always payable."
         },
         {
           "letter": "D",
-          "text": "Solstice may claim manufacturing substitution drawback only if the exported solar modules are classified under the same 8-digit HTSUS subheading (3818.00.00) as the imported silicon wafers."
+          "text": "The ceiling is $48,000; no percentage reduction applies."
         },
         {
           "letter": "E",
-          "text": "Solstice must obtain a ruling from the U.S. Court of International Trade and may recover only 50% of the duties ($25,000.00) when domestic merchandise is substituted for imported merchandise."
+          "text": "The ceiling is $50,500 because fees count at 100%."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "19-cfr-190-22",
-      "targetCitation": "19 CFR § 190.22(a)–(c) & § 190.2",
+      "targetCitation": "19 CFR §§ 190.7, 190.8, 190.22(a)(1) and 190.51(e)(1)",
       "goldenQuote": "99 percent of the lesser of",
-      "shortestPathHint": "19 CFR -> Part 190 -> § 190.22 (Manufacturing substitution drawback)",
+      "shortestPathHint": "Read § 190.22(a)(1)(ii)(A) and the manufacturing ruling rules.",
       "socraticHints": [
-        "Hint 1 (Concept): Under 19 U.S.C. 1313(b) Manufacturing Substitution Drawback, check what two inputs must share the same 8-digit HTSUS subheading, whether a manufacturing ruling is required, and whether MPF is refundable.",
-        "Hint 2 (Navigation): Open 19 CFR Part 190 -> § 190.22 and read paragraphs (a), (b), and (c), and check the definition of 'Drawback' in § 190.2.",
-        "Hint 3 (Trap Check): Under § 190.22(a), the imported designated input and the substituted domestic input must share the same 8-digit HTSUS subheading (3818.00.00)—none of the imported wafers need to be physically used in the exported modules! Under § 190.22(b)–(c), the claimant requires a General or Specific Manufacturing Drawback Ruling and must complete all steps within 5 years of importation, recovering 99% of duties + MPF ($51,000 x 0.99 = $50,490.00)."
+        "Compare both duty-and-fee bases.",
+        "Read § 190.22(a)(1)(ii)(A) and the manufacturing ruling rules.",
+        "Apply 99% only after choosing the lower figure."
       ],
       "explanation": {
-        "correctReasoning": "Under 19 CFR § 190.22(a) (19 U.S.C. 1313(b)), if imported duty-paid merchandise and any other merchandise (whether imported or domestic) are classified under the same 8-digit HTSUS subheading (here, 3818.00.00) and are used in the manufacture or production of articles in the United States, then upon the exportation (or destruction under CBP supervision) of the manufactured articles without prior U.S. use, drawback of 99% of the duties, taxes, and fees (including MPF per § 190.2) paid on the designated imported merchandise is allowable—even if none of the designated imported merchandise was actually used to produce the exported articles. Under § 190.22(b), the manufacturer must operate under either a General Manufacturing Drawback Ruling or a Specific Manufacturing Drawback Ruling, and under § 190.22(c), all operations and claim filing must occur within 5 years from the date of importation of the designated imported merchandise. Calculation: ($50,000.00 duty + $1,000.00 MPF) x 99% = $50,490.00.",
+        "correctReasoning": "The ruling rules are in §§ 190.7 and 190.8. The manufacturing and filing clocks start at designated importation. Under § 190.22(a)(1)(ii)(A), 99% of the lesser of $50,500 and $48,000 is $47,520.",
         "distractors": {
-          "A": "Incorrect because § 190.22(a) expressly allows 19 U.S.C. 1313(b) manufacturing substitution drawback 'even if none of the designated imported merchandise was actually used in the manufacture or production of the exported or destroyed articles.'",
-          "B": "CORRECT: Requires a General or Specific Manufacturing Drawback Ruling (§ 190.22(b)), a 5-year post-importation window (§ 190.22(c)), and refunds 99% of duties and MPF ($51,000 x 99% = $50,490.00).",
-          "C": "Incorrect because a manufacturing drawback ruling is mandatory under § 190.22(b), the statutory timeframe is 5 years from importation, and MPF is 99% refundable under TFTEA (§ 190.2).",
-          "D": "Misstates the 8-digit substitution rule: under § 190.22(a), the substituted input wafers must share the same 8-digit subheading as the imported designated input wafers—the finished exported article (solar modules) will naturally have a different HTSUS heading reflecting the manufacturing transformation.",
-          "E": "Incorrect because CBP Headquarters (or a General Ruling acknowledgment), not the Court of International Trade, approves manufacturing rulings, and the drawback rate is 99%."
+          "A": "Manufacturing substitution permits qualifying substitute material in the exported article.",
+          "B": "The ruling rules are in §§ 190.7 and 190.8. The manufacturing and filing clocks start at designated importation. Under § 190.22(a)(1)(ii)(A), 99% of the lesser of $50,500 and $48,000 is $47,520.",
+          "C": "The substituted-merchandise limb limits the refund, and the manufacturing ruling process applies.",
+          "D": "The 99% multiplier still applies to the lower amount.",
+          "E": "The full imported charge base exceeds both the lower comparison and the refund limit."
         }
-      }
+      },
+      "officialSourceUrl": "https://www.ecfr.gov/on/2026-11-24/title-19/section-190.22"
     },
     {
       "id": "CBLE-Q19",
@@ -3098,51 +3109,51 @@
       "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
-      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Victor Alvarez proposes three fee arrangements to three different prospective clients:\n• Client A: A fee equal to 20% of the federal income tax refund shown on Client A's original Form 1040 individual income tax return that Alvarez will prepare and file;\n• Client B: A fee equal to 25% of any tax deficiency reduction achieved by Alvarez in representing Client B during an active IRS audit (examination) of Client B's prior-year original Form 1120 corporate return;\n• Client C: A fee equal to 30% of any abatement obtained on a claim for refund filed solely in connection with the determination of statutory interest and penalties assessed by the IRS.\n\nUnder Treasury Department Circular 230 (31 CFR § 10.27), which of these contingent fee arrangements are legally permissible and which are prohibited?",
+      "stem": "An enrolled agent proposes a contingent fee for each independent engagement in the 2025 exam reference year. A is administrative collection representation to negotiate an installment agreement, with no examination, written challenge, refund claim or judicial proceeding. B is representation during an IRS examination of an original corporate return. C is a refund claim solely about assessed statutory interest and penalties. Which arrangements fall within the express contingent-fee exceptions in § 10.27(b)?",
       "options": [
         {
           "letter": "A",
-          "text": "All three contingent fee arrangements (Client A, Client B, and Client C) are strictly prohibited because Circular 230 bans all percentage-based contingent fees in any matter before the IRS."
+          "text": "None."
         },
         {
           "letter": "B",
-          "text": "All three contingent fee arrangements are permissible provided each client signs a written fee agreement in advance."
+          "text": "A, B and C if the clients agree in writing."
         },
         {
           "letter": "C",
-          "text": "The contingent fee for Client A is strictly PROHIBITED because a practitioner may never charge a contingent fee for preparing or filing an original tax return; however, the contingent fees for Client B (services rendered in connection with an IRS examination of, or challenge to, an original tax return) and Client C (a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties) are explicitly PERMITTED under § 10.27(b)(2) and (b)(3)."
+          "text": "B and C."
         },
         {
           "letter": "D",
-          "text": "Only the contingent fee for Client A (original tax return) is permitted, whereas contingent fees during IRS examinations (Client B) and penalty/interest claims (Client C) are prohibited."
+          "text": "A only."
         },
         {
           "letter": "E",
-          "text": "Client A and Client B are prohibited, and contingent fees are allowed exclusively in U.S. Supreme Court litigation."
+          "text": "C only."
         }
       ],
       "correctOption": "C",
       "targetSectionId": "31-cfr-10-27",
-      "targetCitation": "31 CFR § 10.27(b)(1)–(4) (Circular 230 — Fees)",
+      "targetCitation": "31 CFR § 10.27(b)(1)–(4), 2025 edition",
       "goldenQuote": "the determination of statutory interest or penalties",
-      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.27 (Fees)",
+      "shortestPathHint": "Read § 10.27(b)(1)–(4) in the 2025 edition.",
       "socraticHints": [
-        "Hint 1 (Concept): Circular 230 § 10.27 establishes a general prohibition against contingent fees (such as a percentage of a refund or taxes saved), followed by three specific exceptions.",
-        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.27 and examine paragraphs (b)(1), (b)(2), (b)(3), and (b)(4).",
-        "Hint 3 (Trap Check): Charging a percentage of a refund on an ORIGINAL tax return (Client A) is strictly prohibited under § 10.27(b)(1). However, contingent fees ARE permitted for an IRS examination/challenge to an original return (§ 10.27(b)(2) — Client B), a claim solely regarding statutory interest or penalties (§ 10.27(b)(3) — Client C), and judicial proceedings (§ 10.27(b)(4))."
+        "Separate collection representation from an examination.",
+        "Read § 10.27(b)(1)–(4) in the 2025 edition.",
+        "For C, identify the sole subject of the refund claim."
       ],
       "explanation": {
-        "correctReasoning": "Under 31 CFR § 10.27(b)(1) and (c), a practitioner is strictly prohibited from charging a contingent fee (including a percentage of a tax refund or taxes saved) for preparing or filing an original tax return (Client A). However, § 10.27(b)(2)–(4) carves out three specific exceptions where contingent fees ARE permitted: (1) under § 10.27(b)(2), services rendered in connection with an IRS examination of, or challenge to, an original tax return (or an amended return/claim filed within 120 days of the taxpayer receiving written notice of the examination/challenge) (Client B); (2) under § 10.27(b)(3), a claim for credit or refund filed solely in connection with the determination of statutory interest or penalties assessed by the IRS (Client C); and (3) under § 10.27(b)(4), any judicial proceeding arising under the Internal Revenue Code.",
+        "correctReasoning": "The examination in B fits paragraph (b)(2)(i), and C fits (b)(3). The routine collection representation in A fits none of (b)(2)–(4).",
         "distractors": {
-          "A": "Incorrect because § 10.27(b)(2)–(4) expressly permits contingent fees in IRS examinations/challenges, statutory interest/penalty refund claims, and judicial proceedings.",
-          "B": "Incorrect because a client's written agreement cannot waive the absolute prohibition in § 10.27(b)(1) against charging a contingent fee for preparing an original tax return.",
-          "C": "CORRECT: Client A (original Form 1040 return) is prohibited under § 10.27(b)(1), while Client B (IRS examination under § 10.27(b)(2)) and Client C (statutory interest/penalties under § 10.27(b)(3)) are permitted.",
-          "D": "Reverses the rule and exceptions of 31 CFR § 10.27(b).",
-          "E": "Incorrect because § 10.27(b)(2), (3), and (4) permit contingent fees in IRS examinations, penalty/interest claims, and any judicial proceeding under the IRC."
+          "A": "The regulation lists both the examination and interest-or-penalty exceptions.",
+          "B": "Client consent cannot create an exception.",
+          "C": "The examination in B fits paragraph (b)(2)(i), and C fits (b)(3). The routine collection representation in A fits none of (b)(2)–(4).",
+          "D": "A is outside the exceptions and B and C are inside them.",
+          "E": "B also fits an express exception."
         }
       },
       "seePart": "SEE Part 3",
-      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.27",
+      "officialSourceUrl": "https://www.ecfr.gov/on/2025-12-31/title-31/section-10.27",
       "officialSourceLabel": "eCFR: 31 CFR § 10.27 — Fees (Contingent fee restrictions)",
       "officialGuideUrl": "https://www.irs.gov/publications/p947",
       "officialGuideLabel": "IRS Publication 947 — Practice Before the IRS"
@@ -3212,51 +3223,51 @@
       "category": "IRS SEE Part 3 — Circular 230 (31 CFR Part 10)",
       "difficulty": "Hard",
       "targetLookupSeconds": 40,
-      "stem": "[IRS Enrolled Agent Track — SEE Part 3] Enrolled Agent Marcus Vance is preparing an individual federal income tax return for a client who wants to claim an aggressive business deduction that is NOT a tax shelter or reportable transaction. After researching the Internal Revenue Code, Treasury regulations, and Tax Court precedent, Vance concludes that the deduction has approximately a 25% likelihood of being sustained on its merits—meaning it satisfies the 'Reasonable Basis' standard (~20% or higher) but falls short of 'Substantial Authority' (~40% or higher). In addition, the client hands Vance a handwritten summary of travel expenses that directly contradicts the client's bank statements. Under 31 CFR § 10.34(a), (c), and (d), under what conditions may Vance sign the return containing the deduction, and how must Vance handle the contradictory travel expense summary?",
+      "stem": "A signing preparer evaluates an ordinary deduction for a 2025 return. It involves neither a tax shelter nor a reportable transaction. Supporting authorities establish reasonable basis but fall short of substantial authority. The client also supplies a travel summary that conflicts with bank statements. Which course fits the preparer standards?",
       "options": [
         {
           "letter": "A",
-          "text": "Vance may sign the return without disclosing the deduction because any non-frivolous position (>5% likelihood) is permissible without disclosure, and Vance may accept the client's handwritten travel summary without inquiry because preparers never verify client data."
+          "text": "Sign without disclosure because any nonfrivolous position suffices."
         },
         {
           "letter": "B",
-          "text": "Vance may sign the return containing the deduction ONLY if the position is adequately disclosed to the IRS (e.g., on Form 8275) because it has a Reasonable Basis (~25%) rather than Substantial Authority (~40%), must inform the client of potential penalties and the opportunity to avoid them through disclosure, and MUST make reasonable inquiries regarding the travel expenses because a practitioner may not ignore client-furnished information that appears incorrect, inconsistent, or incomplete."
+          "text": "For the deduction use the applicable adequate-disclosure procedure for a reasonable-basis position. Advise the client about relevant penalties and opportunities for disclosure. Make reasonable inquiries to resolve the inconsistent travel information before relying on it."
         },
         {
           "letter": "C",
-          "text": "Vance is strictly prohibited from signing the return even with Form 8275 disclosure because every position on a tax return must meet the 'More Likely Than Not' (>50%) standard."
+          "text": "Use a numerical probability as the only test and disregard disclosure."
         },
         {
           "letter": "D",
-          "text": "Vance may sign the return without disclosure if the client signs a hold-harmless waiver, but Vance must independently audit every single canceled check and receipt for all categories on the tax return."
+          "text": "Obtain a client waiver and ignore the conflicting statements."
         },
         {
           "letter": "E",
-          "text": "Vance must require a 75% certainty level before signing any tax return and must report the contradictory travel summary to the IRS Office of Professional Responsibility."
+          "text": "Treat every item as requiring more-likely-than-not support and automatically report the client."
         }
       ],
       "correctOption": "B",
       "targetSectionId": "31-cfr-10-34",
-      "targetCitation": "31 CFR § 10.34(a), (c) & (d) (Circular 230 — Tax Return Standards)",
+      "targetCitation": "31 CFR § 10.34(a), (c), (d); 26 CFR §§ 1.6694-2(b)–(d), 1.6662-3(b)(3), 1.6662-4(d)",
       "goldenQuote": "must make reasonable inquiries if the information as furnished appears to be incorrect",
-      "shortestPathHint": "31 CFR Part 10 -> Subpart B -> § 10.34 (Standards with respect to tax returns and documents)",
+      "shortestPathHint": "Read § 10.34 and § 1.6694-2(d).",
       "socraticHints": [
-        "Hint 1 (Concept): Distinguish the confidence threshold required for an UNDISCLOSED tax position ('Substantial Authority') versus an ADEQUATELY DISCLOSED non-tax-shelter position ('Reasonable Basis'), and check the rule on client-furnished information.",
-        "Hint 2 (Navigation): Open 31 CFR Part 10 -> Subpart B -> § 10.34 and read paragraphs (a)(1)-(2), (c), and (d).",
-        "Hint 3 (Trap Check): A non-tax-shelter position with a Reasonable Basis (~25%) can be signed ONLY if adequately disclosed (Form 8275). And under § 10.34(d), while a practitioner generally relies in good faith on client information without audit, the practitioner MUST make reasonable inquiries when the information appears incorrect, inconsistent, or incomplete."
+        "Identify the kind of position and the level of authority.",
+        "Read § 10.34 and § 1.6694-2(d).",
+        "Assess the inconsistency independently of the position-disclosure question."
       ],
       "explanation": {
-        "correctReasoning": "Under 31 CFR § 10.34(a) (incorporating IRC § 6694(a)(2)), a practitioner may not sign a tax return containing a non-tax-shelter position unless it either (1) has 'Substantial Authority' (~40% or greater likelihood of being sustained) if undisclosed, OR (2) has at least a 'Reasonable Basis' (~20% or greater likelihood) AND is adequately disclosed to the IRS on Form 8275 (or Form 8275-R). Since the position has a ~25% likelihood, it satisfies Reasonable Basis and may be signed only if adequately disclosed. Under § 10.34(c), Vance must also inform the client of potential penalties and the opportunity to avoid them through disclosure. Finally, under § 10.34(d), although a practitioner may generally rely in good faith without verification on client-furnished information, the practitioner may NOT ignore the implications of information known to the practitioner and MUST make reasonable inquiries when the furnished information appears incorrect, inconsistent with other facts, or incomplete.",
+        "correctReasoning": "For this ordinary position the facts establish reasonable basis and insufficient substantial authority. Consider the appropriate preparer disclosure steps under § 1.6694-2(d). Circular 230 also requires penalty advice where applicable and reasonable inquiry into an apparent inconsistency.",
         "distractors": {
-          "A": "Incorrect because an undisclosed position requires Substantial Authority (~40%), a mere 'non-frivolous' standard was replaced by 'Reasonable Basis' for disclosed positions, and § 10.34(d) prohibits ignoring contradictory client data.",
-          "B": "CORRECT: Accurately applies the Reasonable Basis + Adequate Disclosure (Form 8275) standard under § 10.34(a), the penalty disclosure rule under § 10.34(c), and the duty of reasonable inquiry for inconsistent client data under § 10.34(d).",
-          "C": "Incorrect because the 'More Likely Than Not' (>50%) standard applies only to tax shelters and reportable transactions, not ordinary business deductions.",
-          "D": "Incorrect because a client waiver cannot override Circular 230 § 10.34 standards, and § 10.34(d) does not require auditing unimpeached client figures that appear consistent and complete.",
-          "E": "Incorrect because neither a 75% certainty threshold nor reporting a client to OPR exists under Circular 230 § 10.34."
+          "A": "A merely nonfrivolous position does not meet the stated preparer standard.",
+          "B": "For this ordinary position the facts establish reasonable basis and insufficient substantial authority. Consider the appropriate preparer disclosure steps under § 1.6694-2(d). Circular 230 also requires penalty advice where applicable and reasonable inquiry into an apparent inconsistency.",
+          "C": "The regulations define legal standards and weigh authorities; this exercise assigns no percentage cutoff.",
+          "D": "A private waiver cannot replace inquiry or the applicable disclosure procedure.",
+          "E": "The ordinary position in this question has a different standard. These facts call for inquiry."
         }
       },
       "seePart": "SEE Part 3",
-      "officialSourceUrl": "https://www.ecfr.gov/current/title-31/section-10.34",
+      "officialSourceUrl": "https://www.ecfr.gov/on/2025-12-31/title-31/section-10.34",
       "officialSourceLabel": "eCFR: 31 CFR § 10.34 — Standards for tax returns and documents",
       "officialGuideUrl": "https://www.ecfr.gov/current/title-26/section-1.6694-2",
       "officialGuideLabel": "eCFR: 26 CFR § 1.6694-2 — Preparer understatement standards"
@@ -3498,7 +3509,7 @@
       "category": "IRS SEE Part 1 — QBI Deduction (IRC § 199A)",
       "difficulty": "Hard",
       "targetLookupSeconds": 45,
-      "stem": "Priya is a high-income single taxpayer whose taxable income before the Section 199A deduction is well above the upper phase-in ceiling for IRC § 199A. She operates two separate domestic Schedule C businesses, each paying $0 in W-2 wages and owning $0 in depreciable property (UBIA): (1) an accounting & tax consulting practice (an SSTB), and (2) an independent structural engineering firm.\n\nUnder IRC § 199A and 26 CFR § 1.199A-1, which statement accurately describes her QBI deduction eligibility above the upper phase-in ceiling?",
+      "stem": "For tax year 2025, Priya is a high-income single taxpayer whose taxable income before the Section 199A deduction is well above the upper phase-in ceiling for IRC § 199A. She operates two separate domestic Schedule C businesses, each paying $0 in W-2 wages and owning $0 in depreciable property (UBIA): (1) an accounting & tax consulting practice (an SSTB), and (2) an independent structural engineering firm.\n\nUnder IRC § 199A and 26 CFR § 1.199A-1, which statement accurately describes her QBI deduction eligibility above the upper phase-in ceiling?",
       "options": [
         {
           "letter": "A",
@@ -3524,7 +3535,7 @@
       "correctOption": "B",
       "targetSectionId": "26-cfr-1-199a-1",
       "targetCitation": "26 CFR § 1.199A-1(d) (IRC § 199A — SSTB & W-2/UBIA Ceiling)",
-      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-1.199A-1",
+      "officialSourceUrl": "https://www.irs.gov/instructions/i8995a",
       "officialSourceLabel": "eCFR: 26 CFR § 1.199A-1 — QBI deduction operational rules",
       "officialGuideUrl": "https://www.irs.gov/publications/p17",
       "officialGuideLabel": "IRS Publication 17 — Your Federal Income Tax",
@@ -4011,51 +4022,51 @@
       "category": "IRS SEE Part 3 — Assessment Statute of Limitations (IRC § 6501)",
       "difficulty": "Hard",
       "targetLookupSeconds": 45,
-      "stem": "Taxpayer Owen timely filed his 2022 Form 1040 on March 10, 2023 (original due date: April 18, 2023). On the return, Owen reported $120,000 of gross income, but inadvertently omitted a $40,000 Schedule C consulting payment (no fraud). Owen did not disclose the omission anywhere on the return.\n\nUnder IRC § 6501(e) and 26 CFR § 301.6501(e)-1, what is the statutory deadline by which the IRS may assess additional tax for Owen’s 2022 return?",
+      "stem": "Owen filed his 2023 calendar-year return on March 11, 2024. Its prescribed filing date was Monday, April 15, 2024. He reported gross income of $120,000 and omitted an undisclosed $40,000 consulting receipt. There was no fraud, extension or suspension. What is the six-year assessment deadline?",
       "options": [
         {
           "letter": "A",
-          "text": "March 10, 2026 (3 years from the actual early filing date)."
+          "text": "March 11, 2027."
         },
         {
           "letter": "B",
-          "text": "April 18, 2026 (3 years from the original statutory due date)."
+          "text": "April 15, 2027."
         },
         {
           "letter": "C",
-          "text": "April 18, 2029 (6 years from the original due date because the $40,000 omission exceeds 25% of the $120,000 stated gross income)."
+          "text": "April 15, 2030."
         },
         {
           "letter": "D",
-          "text": "March 10, 2029 (6 years from the early filing date)."
+          "text": "March 11, 2030."
         },
         {
           "letter": "E",
-          "text": "Unlimited (no statute of limitations applies whenever >25% of gross income is omitted)."
+          "text": "No deadline applies."
         }
       ],
       "correctOption": "C",
       "targetSectionId": "26-cfr-301-6501e-1",
-      "targetCitation": "26 CFR § 301.6501(e)-1(a) (IRC § 6501(e) — 6-Year >25% Omission Statute)",
-      "officialSourceUrl": "https://www.ecfr.gov/current/title-26/section-301.6501(e)-1",
+      "targetCitation": "IRC §§ 6501(b)(1), (e)(1)(A); 26 CFR § 301.6501(e)-1(a)",
+      "officialSourceUrl": "https://www.irs.gov/irm/part25/irm_25-006-001r",
       "officialSourceLabel": "eCFR: 26 CFR § 301.6501(e)-1 — Substantial omission (6-year rule)",
       "officialGuideUrl": "https://www.irs.gov/publications/p556",
       "officialGuideLabel": "IRS Publication 556 — Examination of Returns & Limitations",
       "goldenQuote": "If a taxpayer omits from gross income an amount properly includible therein that is in excess of 25 percent of the amount of gross income stated in the return, the tax may be assessed at any time within 6 years after the return was filed.",
-      "shortestPathHint": "26 CFR / IRC (SEE) → SEE Part 3 → § 301.6501(e)-1 (3-year vs. 6-year >25% omission)",
+      "shortestPathHint": "Read IRC §§ 6501(b)(1), (e)(1)(A) and the study section on substantial omissions.",
       "socraticHints": [
-        "Check two rules: (1) early-filed returns are deemed filed on the original due date (April 18, 2023), and (2) compare the $40,000 omission against 25% of stated gross income ($120,000 × 25% = $30,000).",
-        "Open 26 CFR / IRC (SEE) → SEE Part 3 → § 301.6501(e)-1.",
-        "$40,000 > $30,000 (33.3% omission > 25%), triggering the 6-year statute measured from the April 18, 2023 due date -> April 18, 2029."
+        "Compute the 25% comparison on the reported gross income.",
+        "Read IRC §§ 6501(b)(1), (e)(1)(A) and the study section on substantial omissions.",
+        "Add six years to the prescribed filing date."
       ],
       "explanation": {
-        "correctReasoning": "Under IRC § 6501(b)(1), an early-filed return (March 10, 2023) is deemed filed on its statutory due date (April 18, 2023). Because Owen omitted $40,000 of gross income — which exceeds 25% of his $120,000 stated gross income ($30,000 threshold) — IRC § 6501(e) and 26 CFR § 301.6501(e)-1 extend the assessment period from 3 years to 6 years, running through April 18, 2029.",
+        "correctReasoning": "The omitted $40,000 exceeds 25% of $120,000 ($30,000). The early-filed return is deemed filed April 15, 2024. Six years ends Monday, April 15, 2030.",
         "distractors": {
-          "A": "Incorrect: Early returns run from the due date (not early filing date), and >25% omission extends the period to 6 years.",
-          "B": "Incorrect: The 3-year period is overridden by the 6-year substantial omission rule because $40,000 > 25% of $120,000.",
-          "C": "CORRECT: Deemed filed April 18, 2023 + 6 years (due to >25% gross income omission) = April 18, 2029.",
-          "D": "Incorrect: Under IRC § 6501(b)(1), early returns are deemed filed on the last day prescribed by law (April 18, 2023), not March 10.",
-          "E": "Incorrect: An unlimited statute applies only to fraud with intent to evade tax or failure to file, not an inadvertent >25% omission."
+          "A": "The actual early-filing date does not start this period, and the omission triggers six years.",
+          "B": "The substantial omission extends the period beyond three years.",
+          "C": "The omitted $40,000 exceeds 25% of $120,000 ($30,000). The early-filed return is deemed filed April 15, 2024. Six years ends Monday, April 15, 2030.",
+          "D": "The six years run from the prescribed date in these facts.",
+          "E": "A substantial omission here triggers a six-year period, not an unlimited one."
         }
       }
     },

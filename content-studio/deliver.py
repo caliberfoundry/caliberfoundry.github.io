@@ -5,6 +5,7 @@ import hmac
 import http.client
 import json
 import os
+import ssl
 import sys
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -24,7 +25,8 @@ def main():
     signature = hmac.new(secret.encode(), data, hashlib.sha256).hexdigest()
     headers = {"Content-Type": "application/json", "X-ContentForge-Signature": "sha256=" + signature,
                "Idempotency-Key": hashlib.sha256(data).hexdigest()}
-    connection = http.client.HTTPSConnection(target.hostname, target.port, timeout=20)
+    context = ssl.create_default_context(cafile=os.environ.get("SSL_CERT_FILE") or None)
+    connection = http.client.HTTPSConnection(target.hostname, target.port, timeout=20, context=context)
     try:
         path = (target.path or "/") + ("?" + target.query if target.query else "")
         connection.request("POST", path, data, headers)
