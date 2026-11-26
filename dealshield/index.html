@@ -94,8 +94,10 @@
        ===================================================================== -->
   <section class="evidence-start">
        <div class="deal-heading"><p>Questionnaire review</p><h1 id="dealTitle">Evidence inbox</h1></div>
+       <div id="wbExport" class="xlsx-section" hidden><p id="wbExportSummary"></p><button type="button" id="wbDownload">Download reviewed Excel workbook</button>
+       <progress id="wbProgress" max="100" value="0" hidden aria-label="Preparing workbook"></progress><p id="wbDownloadStatus" role="status"></p></div>
        <p id="evidenceReviewSummary" role="status" tabindex="-1"></p>
-       <div class="deal-actions"><button type="button" id="reviewMissingEvidence">Open first gap</button>
+       <div class="deal-actions"><button type="button" id="chooseWorkbook">Import questionnaire</button><button type="button" id="reviewMissingEvidence">Open first gap</button>
        <button type="button" id="runPipelineBtn">Refresh answers</button><button type="button" class="cf-btn-mini" id="btnDownloadCsvQuick">Download answers (.csv)</button></div>
      </section>
   <main class="cf-split-workbench" id="cfMainWorkbench">
@@ -148,6 +150,9 @@
                 <textarea aria-label="Answer" id="inspectorAnswerTextarea" class="cf-textarea" rows="2"></textarea>
               </div>
               <div class="cf-field-group">
+                <div id="wbInspector" class="xlsx-section" hidden><p id="wbAddress"></p>
+                <label id="wbChoiceLabel" hidden>Workbook response<select id="wbChoice"></select></label>
+                <label>Supporting policy passage<select id="wbEvidence"></select></label><button type="button" id="wbOpenPolicy">Open source policy</button></div>
                 <label for="reviewDecision" class="cf-field-label">Reviewer decision</label>
                 <select id="reviewDecision" class="cf-select">
                   <option value="REVIEW_REQUIRED">Review candidate</option>
@@ -335,18 +340,26 @@
           <summary class="cf-collapsible-summary">
             <div>
               <span class="cf-block-kicker">CUSTOM QUESTIONNAIRE</span>
-              <h2 class="cf-block-title">+ Upload Client .CSV / Paste Questions</h2>
+              <h2 class="cf-block-title">+ Import a questionnaire or paste questions</h2>
             </div>
             <span class="cf-block-tag">Import</span>
           </summary>
           <div class="cf-collapsible-body">
             <div class="dsh-upload-zone">
               <label for="fileInputQuestionnaire" class="cf-field-label" style="cursor:pointer;">
-                Select file (<code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or <code>.txt</code>)
+                Select file (<code>.xlsx</code>, <code>.csv</code>, <code>.tsv</code>, <code>.json</code>, or <code>.txt</code>)
               </label>
-              <input type="file" id="fileInputQuestionnaire" accept=".csv,.tsv,.json,.txt" class="cf-input" style="margin-top:6px;" />
+              <input type="file" id="fileInputQuestionnaire" accept=".xlsx,.csv,.tsv,.json,.txt" class="cf-input" style="margin-top:6px;" />
             </div>
             <div class="cf-field-group" style="margin-top:8px;">
+              <section id="workbookMapping" class="xlsx-section" hidden>
+                <h3>Return the original Excel workbook</h3>
+                <p>Select a sheet and the question and answer columns. Add another range for questions on other sheets. Existing answers and formulas stay in place.</p>
+                <label for="wbSheet">Worksheet</label><select id="wbSheet"></select>
+                <div class="wb-fields"><label>Question column<select id="wbQuestion"></select></label><label>Answer column<select id="wbAnswer"></select></label>
+                <label>Optional explanation column<select id="wbExtra"></select></label><label>From row<input id="wbFirst" type="number" min="1"></label><label>Through row<input id="wbLast" type="number" min="1"></label></div>
+                <p id="wbPreview"></p><button type="button" id="wbAdd" class="cf-btn-secondary">Add questions to review</button>
+                <p id="wbStatus" role="status"></p></section>
               <label for="customQuestionsTextarea" class="cf-field-label">
                 Or paste questions (one per line)
               </label>
@@ -642,6 +655,8 @@
   <script src="../assets/js/gumroad-receipt.js"></script>
   <script src="evidence.js"></script>
   <script src="accessibility-review.js"></script>
+  <script src="workbook.js"></script>
+  <script src="workbook-workflow.js"></script>
   <script src="app.js"></script>
   <script src="../assets/js/cf-telemetry.js?v=20261123k" defer></script>
 </body>

@@ -84,3 +84,8 @@ a {color:#773458;} button,select,input,textarea {font:inherit;} button,summary {
   #gapAuditCardsContainer article {padding:12px;}
   .deal-setup .cf-preset-selector-wrap {display:grid;}
 }
+
+.xlsx-section{margin:.8rem 0;padding:.8rem;border:1px solid #c4aebc;background:#fff;border-radius:6px}
+.xlsx-section label{display:block;font-weight:600}.xlsx-section select,.xlsx-section input{display:block;width:100%;max-width:100%;min-width:0;margin:.25rem 0 .6rem;padding:.3rem}
+.wb-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:.5rem}
+.xlsx-section p{overflow-wrap:anywhere;margin:.4rem 0}.xlsx-section button{white-space:normal}.xlsx-section progress{max-width:100%;vertical-align:middle;margin:.3rem}

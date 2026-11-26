@@ -1,0 +1,3 @@
+:root{background:#f5f6f1;color:#182c25}header,main{max-width:58rem}header{border-bottom-color:#acc2b7}a{color:#195a42}h1{max-width:15ch}section{border-top-color:#c3d1c8}label{display:block;font-weight:600;margin-top:.8rem}
+input,select{font:inherit;max-width:100%;padding:.45rem}input[type=number]{width:9rem}select{display:block;margin:.4rem 0 .8rem}.scroll{overflow:auto;max-height:22rem}th{background:#e7eee6;position:sticky;top:0}
+button{background:#205a43;margin:.4rem 0}summary{cursor:pointer}#providerResult{margin-top:1rem;padding:1rem;border-left:4px solid #317454;background:#e7eee6}#savingTitle{font-size:1.6rem;margin:.2rem 0}#sourceFacts p{margin:.4rem 0}p[role=status]:empty{display:none}[hidden]{display:none!important}

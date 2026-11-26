@@ -403,6 +403,7 @@
   // CORE RENDERING & AUTO-FILL ENGINE
   // =========================================================================
   let questionnaireRevision = 0;
+  let workbookFlow;
 
   function loadPreset(presetId, bypassPaywallCheck, trackSelection = true, restorePolicy = false) {
     const preset = PRESETS[presetId] || PRESETS["caiq-v4"];
@@ -414,6 +415,7 @@
     }
 
     if (trackSelection) window.dispatchEvent(new CustomEvent('cf:workflow', {detail:{stage:'sample_selected'}}));
+    workbookFlow?.clear();
     questionnaireRevision++;
     state.activePresetId = preset.id;
     state.customQuestions = false;
@@ -607,6 +609,7 @@
   function renderSelectedControlInspector() {
     const ctrl = state.controls[state.selectedControlIndex] || state.controls[0];
     document.getElementById('selectedControlInspector').hidden = !ctrl;
+    workbookFlow?.showInspector(ctrl, state.sourceDirty || (!state.isProUnlocked && state.selectedControlIndex>=6));
     if (!ctrl) return;
 
     const freeLimit = 6;
@@ -787,6 +790,7 @@
     renderVpatTab();
     renderGapAuditTab();
     renderExportTab();
+    workbookFlow?.sync();
   }
 
   // =========================================================================
@@ -1039,6 +1043,7 @@
   // EVENT BINDINGS
   // =========================================================================
   function bindEvents() {
+    workbookFlow=window.createDealWorkbookWorkflow({state,makeControl:matchQuestionAgainstCorpus,render:renderAll,inspect:inspectResponse});
     const presetSelect = document.getElementById("presetSelect");
     if (presetSelect) {
       presetSelect.addEventListener("change", (e) => {
@@ -1075,6 +1080,7 @@
     if (corpusTextarea) {
       corpusTextarea.addEventListener("input", () => {
         state.sourceDirty = true;
+        workbookFlow?.sync();
         const titleInput = document.getElementById('sourceTitleInput');
         if (state.samplePolicy && titleInput.value.startsWith('Example: ')) titleInput.value = '';
         state.samplePolicy = false;
@@ -1099,7 +1105,7 @@
         const sections = window.DealShieldEvidence.splitPolicy(corpusTextarea.value);
         state.controls = state.controls.map((ctrl, idx) => {
           const matched = matchQuestionAgainstCorpus(ctrl.question, idx, sections);
-          return {...matched, id:ctrl.id, domain:ctrl.domain};
+          return {...matched, id:ctrl.id, domain:ctrl.domain, wb:ctrl.wb};
         });
       }
       state.sourceDirty = false;
@@ -1160,6 +1166,7 @@
         if (ansEl && !ansEl.disabled && state.controls[state.selectedControlIndex]) {
           const control = state.controls[state.selectedControlIndex];
           const decision = document.getElementById('reviewDecision').value;
+          if (control.wb && !workbookFlow.record(control,decision)) return;
           if (decision === 'REVIEWED' && (!control.evidence || !ansEl.value.trim())) {
             document.getElementById('inspectorSaveStatus').textContent = 'Add supporting policy evidence and a response before marking it reviewed.';
             return;
@@ -1183,6 +1190,7 @@
     }
 
     function clearQuestionnaire() {
+      workbookFlow.clear();
       const feedback = document.getElementById('customParseFeedback');
       feedback.textContent = '';
       feedback.classList.add('hidden');
@@ -1208,6 +1216,17 @@
         const file = e.target.files && e.target.files[0];
         if (!file) return;
         clearQuestionnaire();
+        if (/\.xlsx$/i.test(file.name)) {
+          document.getElementById('customQuestionsTextarea').value='';
+          workbookFlow.open(file);
+          return;
+        }
+        if (/\.xls(?:m|b)?$/i.test(file.name)) {
+          const feedback=document.getElementById('customParseFeedback');
+          feedback.textContent='Save a standard .xlsx copy before importing.';
+          feedback.classList.remove('hidden');
+          return;
+        }
         const revision = questionnaireRevision;
         const reader = new FileReader();
         reader.onerror = () => {

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-cf-private-inputs><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.gumroad.com; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'"><meta http-equiv="X-Content-Type-Options" content="nosniff">
+<title>Provider export savings estimate | FinOpsGuard</title><link rel="stylesheet" href="../assets/css/file-workbench.css"><link rel="stylesheet" href="provider.css">
+<script src="/assets/js/cf-telemetry.js" defer></script><script src="license.js" defer></script><script src="gumroad-license.js" defer></script><script type="module" src="provider-ui.mjs"></script></head>
+<body><header><a href="./">← FinOpsGuard</a><a href="./?mode=cloud">Cloud billing audit</a></header><main>
+<h1>Estimate LLM savings</h1><p>Start with your provider’s own export. Compare a change in cost with what you spent over the dates in the file. Your billing data stays in this browser.</p>
+<section><h2>Import provider files</h2><label for="providerFiles">OpenRouter Activity or Generations CSV, or OpenAI Costs and Completions Usage (CSV or JSON)</label>
+<input id="providerFiles" type="file" accept=".csv,.json" multiple>
+<details><summary>Where to get the file</summary><ul>
+<li><a href="https://openrouter.ai/activity">OpenRouter Activity</a> — export an activity summary or individual generations. Select one financial export for the period.</li>
+<li><a href="https://platform.openai.com/usage">OpenAI Usage</a> — export Cost data. Include line items when available. An activity file can add token counts.</li>
+<li><a href="https://cookbook.openai.com/examples/completions_usage_api">OpenAI organization API</a> — save the JSON returned by costs or completions usage. For paginated reports, collect all buckets in order.</li>
+</ul></details><progress id="loadProgress" max="100" value="0" hidden aria-label="Import progress"></progress><p role="status" id="importNote"></p></section>
+<section id="observed" hidden><h2>Your reported usage</h2><div id="sourceFacts"></div><div class="scroll"><table id="chargeTable"><caption>Reported charges by line item or model</caption><thead><tr><th>Line item / model</th><th>Reported USD</th><th>Candidate USD</th></tr></thead><tbody></tbody></table></div></section>
+<section id="scenario" hidden><h2>Model a change</h2>
+<label for="method">Calculation</label><select id="method"><option value="discount">Apply an effective discount to eligible spend</option><option value="observed">Compare two models’ observed costs per request</option></select>
+<div id="rangeMode"><label for="chargeScope">Apply to</label><select id="chargeScope"></select>
+<div id="allocationBox" hidden><label for="unallocated">Inference spend you can substantiate within the unitemized amount (USD)</label><input id="unallocated" type="number" min="0" step="any" value="0"><p>Leave at zero unless your records identify inference charges within this total. Storage and other services may be included.</p></div>
+<label for="discountPct">Expected effective discount on that work (%)</label><input id="discountPct" type="number" min="0" max="100" step="any" placeholder="e.g. 50"></div>
+<div id="compareMode" hidden><label for="fromModel">Current model</label><select id="fromModel"></select><label for="toModel">Alternative observed in this export</label><select id="toModel"></select><p>The alternative’s average cost per call depends on prompt length, output length and retry rate. Compare equivalent tasks and check quality before switching.</p></div>
+<label for="modelShare">Share of this workload you can actually change (%)</label><input id="modelShare" type="number" min="0" max="100" step="any" placeholder="e.g. 25">
+<button type="button" id="calculateEstimate">Calculate period savings</button><p id="scenarioNote" role="status"></p>
+<div id="providerResult" hidden><h3 id="savingTitle"></h3><p id="savingDetail"></p>
+<button id="downloadEstimate" type="button">Download estimate JSON</button><div id="unlockPanel" hidden>
+<label for="providerLicenseKey">FinOpsGuard Pro license key</label><input id="providerLicenseKey" type="password" autocomplete="off">
+<button id="providerUnlock" type="button">Verify and unlock export</button> <a href="https://caliberfoundry.gumroad.com/l/finopsguard-pro">Buy a license</a>
+</div><p id="exportNote" role="status"></p></div></section></main></body></html>
