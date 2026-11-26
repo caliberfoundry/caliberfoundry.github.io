@@ -386,6 +386,7 @@
   }
 
   function mountFeedbackWidget() {
+    if (document.documentElement.hasAttribute("data-cf-no-feedback")) return;
     if (!document.body || document.getElementById("cfFeedbackDockRoot")) return;
 
     var styleEl = document.createElement("style");
